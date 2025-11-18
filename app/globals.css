@@ -60,7 +60,78 @@ body {
 .profile-section {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 1.5rem;
+}
+
+.tracking-stats {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.tracking-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.tracking-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.tracking-label i {
+  font-size: 0.9rem;
+  color: var(--dashboard-blue);
+}
+
+.tracking-value {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.3rem 0.6rem;
+  background: rgba(76, 175, 80, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: #4caf50;
+  border-radius: 50%;
+  animation: pulse 2s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.2);
+  }
+}
+
+.live-text {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #4caf50;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .profile-image img {
@@ -208,12 +279,12 @@ body {
   display: inline-flex;
   align-items: center;
   padding: 0.15rem 0.5rem;
-  background: linear-gradient(135deg, #ffd700, #ffed4e);
-  color: #8b6914;
+  background: linear-gradient(135deg, #e6c85a, #d4af37);
+  color: #6b5a2a;
   border-radius: 12px;
   font-size: 0.7rem;
   font-weight: 700;
-  box-shadow: 0 2px 4px rgba(255, 215, 0, 0.3);
+  box-shadow: 0 2px 4px rgba(230, 200, 90, 0.4);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -260,8 +331,8 @@ body {
 
 
 .menu-item.locked {
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.05), rgba(255, 215, 0, 0.02));
-  border: 1px solid rgba(255, 215, 0, 0.2);
+  background: linear-gradient(135deg, rgba(230, 200, 90, 0.05), rgba(230, 200, 90, 0.02));
+  border: 1px solid rgba(230, 200, 90, 0.3);
   color: var(--text-secondary);
   cursor: pointer;
   position: relative;
@@ -269,10 +340,10 @@ body {
 }
 
 .menu-item.locked:hover {
-  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 215, 0, 0.05));
-  border-color: rgba(255, 215, 0, 0.4);
+  background: linear-gradient(135deg, rgba(230, 200, 90, 0.1), rgba(230, 200, 90, 0.05));
+  border-color: rgba(230, 200, 90, 0.5);
   transform: translateX(2px);
-  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
+  box-shadow: 0 2px 8px rgba(230, 200, 90, 0.3);
 }
 
 .menu-item.locked i:not(.lock-icon) {
@@ -282,18 +353,18 @@ body {
 
 .lock-icon {
   margin-left: auto;
-  color: #ffd700 !important;
+  color: #e6c85a !important;
   font-size: 1rem !important;
   cursor: pointer;
   transition: all 0.3s ease;
   min-width: 16px !important;
-  text-shadow: 0 0 4px rgba(255, 215, 0, 0.5);
+  text-shadow: 0 0 4px rgba(230, 200, 90, 0.6);
 }
 
 .lock-icon:hover {
-  color: #ffed4e !important;
+  color: #d4af37 !important;
   transform: scale(1.15);
-  text-shadow: 0 0 8px rgba(255, 215, 0, 0.8);
+  text-shadow: 0 0 8px rgba(230, 200, 90, 0.9);
 }
 
 .content-wrapper {
@@ -642,6 +713,41 @@ body {
 /* Mental Health Styles */
 .mental-health-card {
   grid-column: span 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.mental-health-container {
+  flex: 1;
+  overflow: hidden;
+}
+
+.mental-health-recommendations {
+  flex-shrink: 0;
+}
+
+.recommendation-cards {
+  scrollbar-width: thin;
+  scrollbar-color: #4498ca rgba(68, 152, 202, 0.1);
+}
+
+.recommendation-cards::-webkit-scrollbar {
+  height: 6px;
+}
+
+.recommendation-cards::-webkit-scrollbar-track {
+  background: rgba(68, 152, 202, 0.1);
+  border-radius: 10px;
+}
+
+.recommendation-cards::-webkit-scrollbar-thumb {
+  background: #4498ca;
+  border-radius: 10px;
+}
+
+.recommendation-cards::-webkit-scrollbar-thumb:hover {
+  background: #2e6ca3;
 }
 
 .mental-metrics-grid {
@@ -662,6 +768,10 @@ body {
 /* Biomarker Styles */
 .biomarker-dashboard {
   width: 100%;
+}
+
+.biomarker-dashboard > .dashboard-card {
+  margin-bottom: 2rem;
 }
 
 .biomarker-section {

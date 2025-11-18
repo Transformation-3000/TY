@@ -146,6 +146,11 @@ export default function MentalHealthCard() {
             display: 'flex',
             gap: '0.8rem',
             marginBottom: '1rem',
+            overflowX: 'auto',
+            overflowY: 'hidden',
+            paddingBottom: '0.5rem',
+            scrollbarWidth: 'thin',
+            scrollbarColor: '#4498ca rgba(68, 152, 202, 0.1)',
           }}
         >
           {recommendations.map((rec, index) => (
@@ -154,7 +159,8 @@ export default function MentalHealthCard() {
               className={`recommendation-card ${selectedRecommendation === index ? 'active' : ''}`}
               onClick={() => setSelectedRecommendation(index)}
               style={{
-                flex: 1,
+                minWidth: '180px',
+                flexShrink: 0,
                 background: selectedRecommendation === index ? '#f3fafd' : '#fff',
                 border: selectedRecommendation === index ? '2px solid #4498ca' : '2px solid transparent',
                 borderRadius: '12px',
