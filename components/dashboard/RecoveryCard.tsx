@@ -85,8 +85,13 @@ export default function RecoveryCard() {
     },
   };
 
+  const currentScore = data.data[data.data.length - 1];
+  const previousScore = data.data[data.data.length - 2] || data.data[0];
+  const change = currentScore - previousScore;
+  const changeColor = change >= 0 ? '#4caf50' : '#ff6b6b';
+
   return (
-    <div className="dashboard-card">
+    <div className="dashboard-card recovery-card">
       <div className="metric-header">
         <h3>Recovery Score</h3>
         <div className="time-selector">
@@ -110,14 +115,20 @@ export default function RecoveryCard() {
           </button>
         </div>
       </div>
-      <div className="chart-container" style={{ position: 'relative' }}>
-        <Line data={chartData} options={options} />
-        <div style={{ position: 'absolute', top: '45%', left: '50%', transform: 'translate(-50%, -50%)', textAlign: 'center' }}>
-          <div style={{ fontSize: '2rem', fontWeight: 600, color: '#2e6ca3' }}>92%</div>
-          <button style={{ background: 'none', border: 'none', color: '#4498ca', fontSize: '0.9rem', cursor: 'pointer', marginTop: '0.5rem' }}>
-            +3% zur Vorwoche
-          </button>
+      
+      <div className="recovery-score-display">
+        <div className="recovery-score-main">
+          <div className="recovery-score-value">{currentScore}%</div>
+          <div className="recovery-score-label">Aktueller Score</div>
         </div>
+        <div className="recovery-score-change" style={{ color: changeColor }}>
+          <i className={`bi ${change >= 0 ? 'bi-arrow-up' : 'bi-arrow-down'}`}></i>
+          <span>{Math.abs(change)}% {timeRange === 'week' ? 'zur Vorwoche' : timeRange === '6M' ? 'zum Vormonat' : 'zum Vorquartal'}</span>
+        </div>
+      </div>
+
+      <div className="chart-container recovery-chart">
+        <Line data={chartData} options={options} />
       </div>
     </div>
   );

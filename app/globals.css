@@ -112,17 +112,19 @@ body {
   background: #4caf50;
   border-radius: 50%;
   animation: pulse 2s ease-in-out infinite;
-  box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+  box-shadow: 0 0 6px rgba(76, 175, 80, 0.5), 0 0 8px rgba(76, 175, 80, 0.3);
 }
 
 @keyframes pulse {
   0%, 100% {
     opacity: 1;
     transform: scale(1);
+    box-shadow: 0 0 6px rgba(76, 175, 80, 0.5), 0 0 8px rgba(76, 175, 80, 0.3);
   }
   50% {
-    opacity: 0.7;
-    transform: scale(1.2);
+    opacity: 0.8;
+    transform: scale(1.15);
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.7), 0 0 12px rgba(76, 175, 80, 0.4);
   }
 }
 
@@ -132,6 +134,7 @@ body {
   color: #4caf50;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  text-shadow: 0 0 4px rgba(76, 175, 80, 0.3);
 }
 
 .profile-image img {
@@ -441,7 +444,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 
 .metric-header h3 {
@@ -486,6 +489,128 @@ body {
   border-radius: 12px;
   padding: 0.7rem;
   width: 100%;
+}
+
+.recovery-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.recovery-score-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(68, 152, 202, 0.08), rgba(68, 152, 202, 0.03));
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.recovery-score-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.recovery-score-value {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--dashboard-blue-dark);
+  line-height: 1;
+}
+
+.recovery-score-label {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.recovery-score-change {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.5rem 0.8rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 8px;
+}
+
+.recovery-score-change i {
+  font-size: 1rem;
+}
+
+.recovery-chart {
+  background: rgba(68, 152, 202, 0.05);
+  padding: 1rem;
+}
+
+.fitness-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.fitness-metrics-display {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.6rem;
+  padding: 0.7rem;
+  background: linear-gradient(135deg, rgba(68, 152, 202, 0.08), rgba(68, 152, 202, 0.03));
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.fitness-metric-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.4rem;
+  padding: 0.7rem 0.5rem;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  min-width: 0;
+}
+
+.fitness-metric-icon {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(68, 152, 202, 0.15);
+  border-radius: 10px;
+  color: var(--dashboard-blue);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.fitness-metric-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  width: 100%;
+}
+
+.fitness-metric-label {
+  font-size: 0.65rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  line-height: 1.2;
+}
+
+.fitness-metric-value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--dashboard-blue-dark);
+  line-height: 1;
+}
+
+.fitness-chart {
+  background: rgba(68, 152, 202, 0.05);
+  padding: 1rem;
 }
 
 .progress {

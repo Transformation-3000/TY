@@ -79,7 +79,7 @@ export default function FitnessCard() {
   };
 
   return (
-    <div className="dashboard-card">
+    <div className="dashboard-card fitness-card">
       <div className="metric-header">
         <h3>FITNESS</h3>
         <div className="time-selector">
@@ -104,46 +104,37 @@ export default function FitnessCard() {
         </div>
       </div>
 
-      <div
-        className="fitness-metrics-layout"
-        style={{
-          display: 'flex',
-          justifyContent: 'space-around',
-          gap: '1rem',
-          marginBottom: '1.5rem',
-          padding: '1rem',
-        }}
-      >
-        <div className="metric-item" style={{ textAlign: 'center' }}>
-          <div className="metric-label" style={{ fontSize: '0.9rem', color: '#666', marginBottom: '0.5rem' }}>
-            Minuten
+      <div className="fitness-metrics-display">
+        <div className="fitness-metric-item">
+          <div className="fitness-metric-icon">
+            <i className="bi bi-clock"></i>
           </div>
-          <div className="metric-big-value" style={{ fontSize: '2rem', fontWeight: 600, color: '#4498ca' }}>
-            {data.minutes}
+          <div className="fitness-metric-content">
+            <div className="fitness-metric-label">Minuten</div>
+            <div className="fitness-metric-value">{data.minutes}</div>
           </div>
         </div>
-        <div className="metric-item" style={{ textAlign: 'center' }}>
-          <div className="metric-label" style={{ fontSize: '0.9rem', color: '#666', marginBottom: '0.5rem' }}>
-            Trainingsintensität
+        <div className="fitness-metric-item">
+          <div className="fitness-metric-icon">
+            <i className="bi bi-lightning-charge"></i>
           </div>
-          <div className="metric-big-value" style={{ fontSize: '2rem', fontWeight: 600, color: '#4498ca' }}>
-            {data.intensity}
+          <div className="fitness-metric-content">
+            <div className="fitness-metric-label">Intensität</div>
+            <div className="fitness-metric-value">{data.intensity}</div>
           </div>
         </div>
-        <div className="metric-item" style={{ textAlign: 'center' }}>
-          <div className="metric-label" style={{ fontSize: '0.9rem', color: '#666', marginBottom: '0.5rem' }}>
-            Kalorien
+        <div className="fitness-metric-item">
+          <div className="fitness-metric-icon">
+            <i className="bi bi-fire"></i>
           </div>
-          <div className="metric-big-value" style={{ fontSize: '2rem', fontWeight: 600, color: '#4498ca' }}>
-            {data.calories}
+          <div className="fitness-metric-content">
+            <div className="fitness-metric-label">Kalorien</div>
+            <div className="fitness-metric-value">{data.calories}</div>
           </div>
         </div>
       </div>
 
-      <div className="fitness-chart-container" style={{ position: 'relative', minHeight: '200px' }}>
-        <h4 className="chart-title" style={{ fontSize: '1rem', fontWeight: 600, color: '#2e6ca3', marginBottom: '0.5rem' }}>
-          Minuten
-        </h4>
+      <div className="chart-container fitness-chart">
         <Bar data={chartData} options={options} />
       </div>
     </div>

@@ -51,8 +51,8 @@ export default function MentalHealthCard() {
           style={{
             display: 'grid',
             gridTemplateColumns: 'repeat(2, 1fr)',
-            gap: '0.8rem',
-            marginBottom: '1.5rem',
+            gap: '0.6rem',
+            marginBottom: '1rem',
           }}
         >
           {mentalMetrics.map((metric) => (
@@ -62,36 +62,36 @@ export default function MentalHealthCard() {
               style={{
                 background: '#f8fbff',
                 borderRadius: '12px',
-                padding: '1rem',
+                padding: '0.8rem',
                 display: 'flex',
-                gap: '1rem',
+                gap: '0.8rem',
                 alignItems: 'center',
               }}
             >
               <div
                 className="metric-icon"
                 style={{
-                  width: '40px',
-                  height: '40px',
+                  width: '36px',
+                  height: '36px',
                   borderRadius: '10px',
                   background: `${metric.color}20`,
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: metric.color,
-                  fontSize: '1.5rem',
+                  fontSize: '1.3rem',
                 }}
               >
                 <i className={`bi ${metric.icon}`}></i>
               </div>
               <div className="metric-content" style={{ flex: 1 }}>
-                <div className="metric-name" style={{ fontSize: '0.9rem', color: '#666', marginBottom: '0.3rem' }}>
+                <div className="metric-name" style={{ fontSize: '0.85rem', color: '#666', marginBottom: '0.2rem' }}>
                   {metric.name}
                 </div>
-                <div className="metric-value" style={{ fontSize: '1.2rem', fontWeight: 600, color: metric.color, marginBottom: '0.3rem' }}>
+                <div className="metric-value" style={{ fontSize: '1.1rem', fontWeight: 600, color: metric.color, marginBottom: '0.2rem' }}>
                   {metric.value}%
                 </div>
-                <div className="progress" style={{ height: '5px', marginTop: '5px' }}>
+                <div className="progress" style={{ height: '4px', marginTop: '3px' }}>
                   <div
                     className="progress-bar"
                     style={{
@@ -110,8 +110,8 @@ export default function MentalHealthCard() {
       <div
         className="mental-health-recommendations"
         style={{
-          marginTop: '1.5rem',
-          paddingTop: '1.5rem',
+          marginTop: '1rem',
+          paddingTop: '1rem',
           borderTop: '1px solid rgba(0, 0, 0, 0.1)',
         }}
       >
@@ -121,7 +121,7 @@ export default function MentalHealthCard() {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: '1rem',
+            marginBottom: '0.7rem',
           }}
         >
           <h4 style={{ fontSize: '1rem', fontWeight: 600, color: '#2e6ca3', margin: 0 }}>
@@ -144,8 +144,8 @@ export default function MentalHealthCard() {
           className="recommendation-cards"
           style={{
             display: 'flex',
-            gap: '0.8rem',
-            marginBottom: '1rem',
+            gap: '0.6rem',
+            marginBottom: '0.8rem',
             overflowX: 'auto',
             overflowY: 'hidden',
             paddingBottom: '0.5rem',
