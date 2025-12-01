@@ -21,6 +21,7 @@ export default function DashboardTabs({ activeTab, onTabChange }: DashboardTabsP
       >
         <i className="bi bi-droplet"></i>
         Biomarker
+        <i className="bi bi-lock-fill dashboard-tab-lock-icon"></i>
       </button>
     </div>
   );

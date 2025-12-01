@@ -13,10 +13,17 @@ import NutritionCard from '@/components/dashboard/NutritionCard';
 import FitnessCard from '@/components/dashboard/FitnessCard';
 import MentalHealthCard from '@/components/dashboard/MentalHealthCard';
 import BiomarkerDashboard from '@/components/dashboard/biomarker/BiomarkerDashboard';
+import MicroHabitsPage from '@/components/microhabits/MicroHabitsPage';
+import BlackBoardPage from '@/components/blackboard/BlackBoardPage';
+import SettingsPage from '@/components/settings/SettingsPage';
+import LongevityJourneyPage from '@/components/longevity/LongevityJourneyPage';
+import LongevityJourneyPyramidPage from '@/components/longevity/LongevityJourneyPyramidPage';
+import SupplementsPage from '@/components/gold/SupplementsPage';
 import Image from 'next/image';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'lifestyle' | 'biomarker'>('lifestyle');
+  const [activeMenuItem, setActiveMenuItem] = useState<string>('dashboard');
 
   return (
     <main>
@@ -26,8 +33,10 @@ export default function Home() {
       </div>
       
       <div className="main-content">
-        <Sidebar />
+        <Sidebar activeItem={activeMenuItem} onItemClick={setActiveMenuItem} />
         <div className="content-wrapper">
+          {activeMenuItem === 'dashboard' && (
+            <>
           <div style={{ display: 'flex', gap: '2rem', alignItems: 'stretch', width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
             <div style={{ flex: 2 }}>
               <WeeklyPlan />
@@ -63,6 +72,39 @@ export default function Home() {
               </div>
             )}
           </div>
+            </>
+          )}
+
+          {activeMenuItem === 'longevity-journey' && (
+            <LongevityJourneyPage />
+          )}
+
+          {activeMenuItem === 'longevity-journey-2' && (
+            <LongevityJourneyPyramidPage />
+          )}
+
+          {activeMenuItem === 'lisa-ai-voice-coach' && (
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+              <h2>Lisa AI Voice-Coach</h2>
+              <p>Flow Sessions zur Lebensstil-Reflexion & Optimierung</p>
+            </div>
+          )}
+
+          {activeMenuItem === 'black-board' && (
+            <BlackBoardPage />
+          )}
+
+          {activeMenuItem === 'micro-habit-apps' && (
+            <MicroHabitsPage />
+          )}
+
+          {activeMenuItem === 'settings' && (
+            <SettingsPage />
+          )}
+
+          {activeMenuItem === 'supplements' && (
+            <SupplementsPage />
+          )}
         </div>
       </div>
     </main>

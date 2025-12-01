@@ -9,16 +9,17 @@ interface MenuItem {
   label: string;
 }
 
-const lifestyleItems: MenuItem[] = [
-  { id: 'schlafleistung', icon: 'bi-moon-stars', label: 'Schlafleistung' },
-  { id: 'recovery-score', icon: 'bi-heart-pulse', label: 'Recovery Score' },
-  { id: 'tagesschritte', icon: 'bi-activity', label: 'Tagesschritte' },
-  { id: 'ernährung', icon: 'bi-apple', label: 'Ernährung' },
-  { id: 'fitness', icon: 'bi-lightning-charge', label: 'Fitness' },
-  { id: 'mentale-gesundheit', icon: 'bi-emoji-smile', label: 'Mentale Gesundheit' },
+const starterMenuItems: MenuItem[] = [
+  { id: 'dashboard', icon: 'bi-grid-3x3-gap', label: 'Dashboard' },
+  { id: 'longevity-journey', icon: 'bi-compass', label: 'Deine Longevity Reise' },
+  { id: 'longevity-journey-2', icon: 'bi-triangle', label: 'Deine Longevity Reise 2' },
+  { id: 'lisa-ai-voice-coach', icon: 'bi-mic', label: 'Lisa AI Voice-Coach' },
+  { id: 'black-board', icon: 'bi-chat-square-text', label: 'Black Board' },
+  { id: 'micro-habit-apps', icon: 'bi-app', label: 'Micro Habit Apps' },
 ];
 
 const biomarkerItems: MenuItem[] = [
+  { id: 'supplements', icon: 'bi-capsule-pill', label: 'Supplements' },
   { id: 'telomerlängenmessung', icon: 'bi-clipboard-data', label: 'Telomere' },
   { id: 'hormon-balance', icon: 'bi-droplet', label: 'Hormon-Balance' },
   { id: 'kognition', icon: 'bi-cpu', label: 'Kognition' },
@@ -27,11 +28,23 @@ const biomarkerItems: MenuItem[] = [
 
 interface SidebarProps {
   showOnlyLogo?: boolean;
+  activeItem?: string | null;
+  onItemClick?: (itemId: string) => void;
 }
 
-export default function Sidebar({ showOnlyLogo = false }: SidebarProps) {
-  const [activeItem, setActiveItem] = useState<string | null>(null);
+export default function Sidebar({ showOnlyLogo = false, activeItem, onItemClick }: SidebarProps) {
+  const [internalActiveItem, setInternalActiveItem] = useState<string | null>('dashboard');
   const [isGoldUnlocked, setIsGoldUnlocked] = useState(false);
+  
+  const currentActiveItem = activeItem !== undefined ? activeItem : internalActiveItem;
+  
+  const handleItemClick = (itemId: string) => {
+    if (onItemClick) {
+      onItemClick(itemId);
+    } else {
+      setInternalActiveItem(itemId);
+    }
+  };
 
   if (showOnlyLogo) {
     return (
@@ -51,13 +64,15 @@ export default function Sidebar({ showOnlyLogo = false }: SidebarProps) {
     <div className="sidebar-navigation">
       <div className="sidebar-menu-content">
         <div className="menu-section">
-          <div className="menu-section-title">Lifestyle</div>
+          <div className="menu-section-title">
+            Starter Paket
+          </div>
           <ul className="menu-list">
-            {lifestyleItems.map((item) => (
+            {starterMenuItems.map((item) => (
               <li
                 key={item.id}
-                className={`menu-item ${activeItem === item.id ? 'active' : ''}`}
-                onClick={() => setActiveItem(item.id)}
+                className={`menu-item ${currentActiveItem === item.id ? 'active' : ''}`}
+                onClick={() => handleItemClick(item.id)}
               >
                 <i className={`bi ${item.icon}`}></i>
                 <span>{item.label}</span>
@@ -67,19 +82,19 @@ export default function Sidebar({ showOnlyLogo = false }: SidebarProps) {
         </div>
         <div className="menu-section">
           <div className="menu-section-title">
-            Biomarker
+            Gold Paket
             {!isGoldUnlocked && (
-              <span className="gold-badge">Gold</span>
+              <i className="bi bi-plus-circle gold-info-icon"></i>
             )}
           </div>
           <ul className="menu-list">
             {biomarkerItems.map((item) => (
               <li
                 key={item.id}
-                className={`menu-item ${activeItem === item.id ? 'active' : ''} ${!isGoldUnlocked ? 'locked' : ''}`}
+                className={`menu-item ${currentActiveItem === item.id ? 'active' : ''} ${!isGoldUnlocked ? 'locked' : ''}`}
                 onClick={() => {
                   if (isGoldUnlocked) {
-                    setActiveItem(item.id);
+                    handleItemClick(item.id);
                   }
                 }}
               >
@@ -96,6 +111,17 @@ export default function Sidebar({ showOnlyLogo = false }: SidebarProps) {
                 )}
               </li>
             ))}
+          </ul>
+        </div>
+        <div className="menu-section menu-section-bottom">
+          <ul className="menu-list">
+            <li
+              className={`menu-item ${currentActiveItem === 'settings' ? 'active' : ''}`}
+              onClick={() => handleItemClick('settings')}
+            >
+              <i className="bi bi-gear"></i>
+              <span>Einstellungen</span>
+            </li>
           </ul>
         </div>
       </div>
