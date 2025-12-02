@@ -37,22 +37,8 @@ export default function Home() {
         <div className="content-wrapper">
           {activeMenuItem === 'dashboard' && (
             <>
-          <div style={{ display: 'flex', gap: '2rem', alignItems: 'stretch', width: '100%', maxWidth: '1200px', margin: '0 auto' }}>
-            <div style={{ flex: 2 }}>
-              <WeeklyPlan />
-            </div>
-            <div style={{ flex: 1, maxWidth: '400px', display: 'flex', alignItems: 'stretch' }}>
-              <Image
-                src="/images/Chat.png"
-                alt="Chat Assistant"
-                width={400}
-                height={400}
-                style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: '16px' }}
-              />
-            </div>
-          </div>
-
           <div className="dashboard-container">
+            <WeeklyPlan />
             <DashboardTabs activeTab={activeTab} onTabChange={setActiveTab} />
             
             {activeTab === 'lifestyle' && (

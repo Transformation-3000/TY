@@ -6,7 +6,8 @@ import { useState, useEffect } from 'react';
 export default function WelcomeSection() {
   const [steps, setSteps] = useState(3421);
   const [stressLevel, setStressLevel] = useState(23);
-  const [isLive, setIsLive] = useState(true);
+  const [isConnected] = useState(true);
+  const imageVersion = '2';
 
   // Simuliere Live-Updates
   useEffect(() => {
@@ -49,9 +50,21 @@ export default function WelcomeSection() {
             </div>
             <div className="tracking-value">{stressLevel}%</div>
           </div>
-          <div className="live-indicator">
-            <span className="live-dot"></span>
-            <span className="live-text">Live</span>
+          <div className="wearable-status-compact">
+            <Image
+              src={`/images/watch.png?v=${imageVersion}`}
+              alt="Wearable Device"
+              width={40}
+              height={40}
+              style={{ objectFit: 'contain' }}
+              unoptimized
+            />
+            <div className="wearable-status-indicator-compact">
+              <span className={`status-dot-compact ${isConnected ? 'connected' : 'disconnected'}`}></span>
+              <span className="status-text-compact">
+                {isConnected ? 'Verbunden' : 'Getrennt'}
+              </span>
+            </div>
           </div>
         </div>
       </div>

@@ -117,9 +117,27 @@ const currentLevelId = journeyLevels.find((level) => level.status === 'current')
 export default function LongevityJourneyPyramidPage() {
   const [activeLevel, setActiveLevel] = useState<string | null>(null);
   const displayLevels = [...journeyLevels].slice().reverse();
+  
+  const completedCount = journeyLevels.filter(l => l.status === 'completed').length;
+  const totalLevels = journeyLevels.length;
+  const progressPercentage = (completedCount / totalLevels) * 100;
 
   return (
     <div className="pyramid-journey-container">
+      <div className="pyramid-progress-header">
+        <div className="pyramid-progress-info">
+          <h2>Deine Longevity Reise</h2>
+          <p>{completedCount}/{totalLevels} Stufen aktiv</p>
+        </div>
+        <div className="pyramid-progress-bar">
+          <div 
+            className="pyramid-progress-fill" 
+            style={{ width: `${progressPercentage}%` }}
+          >
+            <span className="pyramid-progress-text">{Math.round(progressPercentage)}%</span>
+          </div>
+        </div>
+      </div>
       <div className="pyramid-stack">
         {displayLevels.map((level) => {
           const orderIndex = journeyLevels.length - journeyLevels.findIndex((l) => l.id === level.id);
@@ -143,12 +161,23 @@ export default function LongevityJourneyPyramidPage() {
               role="button"
             >
               <div className="pyramid-level-content">
+                {level.status === 'completed' && (
+                  <div className="pyramid-completed-badge">
+                    <i className="bi bi-check-circle-fill"></i>
+                  </div>
+                )}
                 <span className="pyramid-level-number">{orderIndex}</span>
                 <div className="pyramid-text">
                   <strong>{level.subtitle}</strong>
                   <p>{level.title}</p>
                 </div>
                 <div className="pyramid-level-actions">
+                  {level.status === 'completed' && (
+                    <span className="pyramid-level-chip completed-chip">
+                      <i className="bi bi-check-circle-fill"></i>
+                      Aktiv in deinem Alltag
+                    </span>
+                  )}
                   {level.status === 'current' && (
                     <span className="pyramid-level-chip">
                       <i className="bi bi-bolt-fill"></i>
@@ -165,7 +194,7 @@ export default function LongevityJourneyPyramidPage() {
                     {level.status === 'current'
                       ? 'Aktuelle Stufe'
                       : level.status === 'completed'
-                      ? 'Bereits erreicht'
+                      ? 'Schon Teil deines Alltags'
                       : 'Als nächstes'}
                   </div>
                   <p className="level-description">{level.description}</p>
@@ -176,8 +205,8 @@ export default function LongevityJourneyPyramidPage() {
                     </h3>
                     <ul>
                       {level.highlights.map((item, idx) => (
-                        <li key={idx}>
-                          <i className="bi bi-check-circle-fill"></i>
+                        <li key={idx} className={level.status === 'completed' ? 'completed-item' : ''}>
+                          <i className={`bi ${level.status === 'completed' ? 'bi-check-circle-fill completed-check' : 'bi-check-circle'}`}></i>
                           {item}
                         </li>
                       ))}
@@ -186,12 +215,12 @@ export default function LongevityJourneyPyramidPage() {
 
                   <div className="level-block">
                     <h3>
-                      <i className="bi bi-list-check"></i> Next Steps
+                      <i className="bi bi-list-check"></i> {level.status === 'completed' ? 'Erreichte Ziele' : 'Next Steps'}
                     </h3>
                     <ul>
                       {level.actions.map((item, idx) => (
-                        <li key={idx}>
-                          <i className="bi bi-arrow-right-circle"></i>
+                        <li key={idx} className={level.status === 'completed' ? 'completed-item' : ''}>
+                          <i className={`bi ${level.status === 'completed' ? 'bi-check-circle-fill completed-check' : 'bi-arrow-right-circle'}`}></i>
                           {item}
                         </li>
                       ))}
