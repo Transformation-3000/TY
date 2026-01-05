@@ -15,19 +15,19 @@
     "bootstrap-icons": "^1.13.1",
     "chart.js": "^4.5.1",
     "chartjs-plugin-datalabels": "^2.2.0",
-    "next": "15.3.3",
-    "react": "^18.3.1",
+    "next": "15.3.4",
+    "react": "^19.0.0",
     "react-chartjs-2": "^5.3.1",
-    "react-dom": "^18.3.1",
+    "react-dom": "^19.0.0",
     "three": "^0.181.2"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "15.3.3",
+    "eslint-config-next": "15.3.4",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
