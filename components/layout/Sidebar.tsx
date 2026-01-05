@@ -11,19 +11,23 @@ interface MenuItem {
 
 const starterMenuItems: MenuItem[] = [
   { id: 'dashboard', icon: 'bi-grid-3x3-gap', label: 'Dashboard' },
-  { id: 'longevity-journey', icon: 'bi-compass', label: 'Deine Longevity Reise' },
-  { id: 'longevity-journey-2', icon: 'bi-triangle', label: 'Deine Longevity Reise 2' },
-  { id: 'lisa-ai-voice-coach', icon: 'bi-mic', label: 'Lisa AI Voice-Coach' },
+  { id: 'longevity-journey', icon: 'bi-compass', label: 'Longevity Journey' },
+  { id: 'vogelperspektive', icon: 'bi-eye', label: 'Vogelperspektive' },
+  { id: 'lisa-ai-voice-coach', icon: 'bi-mic', label: 'Lisa AI' },
   { id: 'black-board', icon: 'bi-chat-square-text', label: 'Black Board' },
   { id: 'micro-habit-apps', icon: 'bi-app', label: 'Micro Habit Apps' },
 ];
 
-const biomarkerItems: MenuItem[] = [
-  { id: 'supplements', icon: 'bi-capsule-pill', label: 'Supplements' },
-  { id: 'telomerlängenmessung', icon: 'bi-clipboard-data', label: 'Telomere' },
-  { id: 'hormon-balance', icon: 'bi-droplet', label: 'Hormon-Balance' },
-  { id: 'kognition', icon: 'bi-cpu', label: 'Kognition' },
-  { id: 'entzündungen', icon: 'bi-shield-exclamation', label: 'Entzündungen' },
+const labItems: MenuItem[] = [
+  { id: 'metabo', icon: 'bi-clipboard-data', label: 'Metabo' },
+  { id: 'proteoage', icon: 'bi-droplet', label: 'ProteoAge' },
+];
+
+const shopItems: MenuItem[] = [
+  { id: 'shop-supplements', icon: 'bi-capsule-pill', label: 'Supplements' },
+  { id: 'shop-pflege', icon: 'bi-moisture', label: 'Pflege' },
+  { id: 'shop-regeneration', icon: 'bi-moon-stars', label: 'Regeneration' },
+  { id: 'shop-technologie', icon: 'bi-smartwatch', label: 'Technologie' },
 ];
 
 interface SidebarProps {
@@ -34,7 +38,7 @@ interface SidebarProps {
 
 export default function Sidebar({ showOnlyLogo = false, activeItem, onItemClick }: SidebarProps) {
   const [internalActiveItem, setInternalActiveItem] = useState<string | null>('dashboard');
-  const [isGoldUnlocked, setIsGoldUnlocked] = useState(false);
+  const [isLabUnlocked, setIsLabUnlocked] = useState(false);
   
   const currentActiveItem = activeItem !== undefined ? activeItem : internalActiveItem;
   
@@ -82,30 +86,30 @@ export default function Sidebar({ showOnlyLogo = false, activeItem, onItemClick 
         </div>
         <div className="menu-section">
           <div className="menu-section-title">
-            Gold Paket
-            {!isGoldUnlocked && (
+            LAB
+            {!isLabUnlocked && (
               <i className="bi bi-plus-circle gold-info-icon"></i>
             )}
           </div>
           <ul className="menu-list">
-            {biomarkerItems.map((item) => (
+            {labItems.map((item) => (
               <li
                 key={item.id}
-                className={`menu-item ${currentActiveItem === item.id ? 'active' : ''} ${!isGoldUnlocked ? 'locked' : ''}`}
+                className={`menu-item ${currentActiveItem === item.id ? 'active' : ''} ${!isLabUnlocked ? 'locked' : ''}`}
                 onClick={() => {
-                  if (isGoldUnlocked) {
+                  if (isLabUnlocked) {
                     handleItemClick(item.id);
                   }
                 }}
               >
                 <i className={`bi ${item.icon}`}></i>
                 <span>{item.label}</span>
-                {!isGoldUnlocked && (
+                {!isLabUnlocked && (
                   <i 
                     className="bi bi-lock-fill lock-icon" 
                     onClick={(e) => {
                       e.stopPropagation();
-                      setIsGoldUnlocked(true);
+                      setIsLabUnlocked(true);
                     }}
                   ></i>
                 )}
@@ -114,7 +118,20 @@ export default function Sidebar({ showOnlyLogo = false, activeItem, onItemClick 
           </ul>
         </div>
         <div className="menu-section menu-section-bottom">
+          <div className="menu-section-title">
+            SHOP
+          </div>
           <ul className="menu-list">
+            {shopItems.map((item) => (
+              <li
+                key={item.id}
+                className={`menu-item ${currentActiveItem === item.id ? 'active' : ''}`}
+                onClick={() => handleItemClick(item.id)}
+              >
+                <i className={`bi ${item.icon}`}></i>
+                <span>{item.label}</span>
+              </li>
+            ))}
             <li
               className={`menu-item ${currentActiveItem === 'settings' ? 'active' : ''}`}
               onClick={() => handleItemClick('settings')}

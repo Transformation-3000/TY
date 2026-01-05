@@ -102,7 +102,7 @@ const journeyLevels: JourneyLevel[] = [
       'Vollintegrierte Therapiekette',
     ],
     actions: [
-      'Gold Paket & Medical Board',
+      'LAB Paket & Medical Board',
       '360° Longevity Retreats',
       'Mentoring & Impact Projekte',
     ],

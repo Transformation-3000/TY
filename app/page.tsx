@@ -17,8 +17,10 @@ import MicroHabitsPage from '@/components/microhabits/MicroHabitsPage';
 import BlackBoardPage from '@/components/blackboard/BlackBoardPage';
 import SettingsPage from '@/components/settings/SettingsPage';
 import LongevityJourneyPage from '@/components/longevity/LongevityJourneyPage';
-import LongevityJourneyPyramidPage from '@/components/longevity/LongevityJourneyPyramidPage';
-import SupplementsPage from '@/components/gold/SupplementsPage';
+import LongevityJourney7LevelsPage from '@/components/longevity/LongevityJourney7LevelsPage';
+import ShopPage from '@/components/shop/ShopPage';
+import VogelperspektivePage from '@/components/vogelperspektive/VogelperspektivePage';
+import LiseAIPage from '@/components/lise-ai/LiseAIPage';
 import Image from 'next/image';
 
 export default function Home() {
@@ -62,18 +64,15 @@ export default function Home() {
           )}
 
           {activeMenuItem === 'longevity-journey' && (
-            <LongevityJourneyPage />
+            <LongevityJourney7LevelsPage />
           )}
 
-          {activeMenuItem === 'longevity-journey-2' && (
-            <LongevityJourneyPyramidPage />
+          {activeMenuItem === 'vogelperspektive' && (
+            <VogelperspektivePage />
           )}
 
           {activeMenuItem === 'lisa-ai-voice-coach' && (
-            <div style={{ padding: '2rem', textAlign: 'center' }}>
-              <h2>Lisa AI Voice-Coach</h2>
-              <p>Flow Sessions zur Lebensstil-Reflexion & Optimierung</p>
-            </div>
+            <LiseAIPage />
           )}
 
           {activeMenuItem === 'black-board' && (
@@ -84,12 +83,38 @@ export default function Home() {
             <MicroHabitsPage />
           )}
 
-          {activeMenuItem === 'settings' && (
-            <SettingsPage />
+          {activeMenuItem === 'metabo' && (
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+              <h2>Metabo Test</h2>
+              <p>Metabolische Biomarker-Analyse</p>
+            </div>
           )}
 
-          {activeMenuItem === 'supplements' && (
-            <SupplementsPage />
+          {activeMenuItem === 'proteoage' && (
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+              <h2>ProteoAge Test</h2>
+              <p>Protein-basierte Altersbestimmung</p>
+            </div>
+          )}
+
+          {activeMenuItem === 'shop-supplements' && (
+            <ShopPage category="supplements" />
+          )}
+
+          {activeMenuItem === 'shop-pflege' && (
+            <ShopPage category="pflege" />
+          )}
+
+          {activeMenuItem === 'shop-regeneration' && (
+            <ShopPage category="regeneration" />
+          )}
+
+          {activeMenuItem === 'shop-technologie' && (
+            <ShopPage category="technologie" />
+          )}
+
+          {activeMenuItem === 'settings' && (
+            <SettingsPage />
           )}
         </div>
       </div>
