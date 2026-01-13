@@ -21,6 +21,11 @@ import LongevityJourney7LevelsPage from '@/components/longevity/LongevityJourney
 import ShopPage from '@/components/shop/ShopPage';
 import VogelperspektivePage from '@/components/vogelperspektive/VogelperspektivePage';
 import LiseAIPage from '@/components/lise-ai/LiseAIPage';
+import TrueYearsPrinzipienPage from '@/components/true-years/TrueYearsPrinzipienPage';
+import ZellalterCheckPage from '@/components/checks/ZellalterCheckPage';
+import LongevityBalanceCheckPage from '@/components/checks/LongevityBalanceCheckPage';
+import DatenintegrationPage from '@/components/service/DatenintegrationPage';
+import ExpertengespraechPage from '@/components/service/ExpertengespraechPage';
 import Image from 'next/image';
 
 export default function Home() {
@@ -71,6 +76,10 @@ export default function Home() {
             <VogelperspektivePage />
           )}
 
+          {activeMenuItem === 'true-years-prinzipien' && (
+            <TrueYearsPrinzipienPage />
+          )}
+
           {activeMenuItem === 'lisa-ai-voice-coach' && (
             <LiseAIPage />
           )}
@@ -81,6 +90,14 @@ export default function Home() {
 
           {activeMenuItem === 'micro-habit-apps' && (
             <MicroHabitsPage />
+          )}
+
+          {activeMenuItem === 'zellalter-check' && (
+            <ZellalterCheckPage />
+          )}
+
+          {activeMenuItem === 'longevity-balance-check' && (
+            <LongevityBalanceCheckPage />
           )}
 
           {activeMenuItem === 'metabo' && (
@@ -111,6 +128,14 @@ export default function Home() {
 
           {activeMenuItem === 'shop-technologie' && (
             <ShopPage category="technologie" />
+          )}
+
+          {activeMenuItem === 'datenintegration' && (
+            <DatenintegrationPage />
+          )}
+
+          {activeMenuItem === 'expertengespraech' && (
+            <ExpertengespraechPage />
           )}
 
           {activeMenuItem === 'settings' && (

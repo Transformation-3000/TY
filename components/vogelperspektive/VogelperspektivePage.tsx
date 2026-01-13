@@ -122,20 +122,20 @@ export default function VogelperspektivePage() {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'good':
-        return '#4CAF50';
+        return '#22c55e'; // Grün - Ampel gut
       case 'warning':
-        return '#FFA000';
+        return '#f59e0b'; // Gelb/Orange - Ampel mittel
       case 'critical':
-        return '#EF5350';
+        return '#ef4444'; // Rot - Ampel kritisch
       default:
-        return '#4C99C2';
+        return '#3b82f6'; // Blau
     }
   };
 
   const getTrendColor = (trend: string) => {
-    if (trend.startsWith('+')) return '#4CAF50';
-    if (trend.startsWith('-')) return '#EF5350';
-    return '#7a9ab0';
+    if (trend.startsWith('+')) return '#22c55e';
+    if (trend.startsWith('-')) return '#ef4444';
+    return '#64748b';
   };
 
   const calculatePosition = (angle: number, distance: number) => {
@@ -196,32 +196,32 @@ export default function VogelperspektivePage() {
                 <g key={`ring-${cat.id}`}>
                   <defs>
                     <linearGradient id={gradientId} gradientUnits="userSpaceOnUse" x1={x1} y1={y1} x2={x2} y2={y2}>
-                      <stop offset="0%" stopColor={prevColor} stopOpacity="0.5" />
-                      <stop offset="30%" stopColor={color} stopOpacity="0.8" />
+                      <stop offset="0%" stopColor={prevColor} stopOpacity="0.4" />
+                      <stop offset="25%" stopColor={color} stopOpacity="0.9" />
                       <stop offset="50%" stopColor={color} stopOpacity="1" />
-                      <stop offset="70%" stopColor={color} stopOpacity="0.8" />
-                      <stop offset="100%" stopColor={nextColor} stopOpacity="0.5" />
+                      <stop offset="75%" stopColor={color} stopOpacity="0.9" />
+                      <stop offset="100%" stopColor={nextColor} stopOpacity="0.4" />
                     </linearGradient>
                   </defs>
                   <path
                     d={`M ${x1} ${y1} A ${ringRadius} ${ringRadius} 0 0 1 ${x2} ${y2}`}
                     stroke={`url(#${gradientId})`}
-                    strokeWidth="0.5"
+                    strokeWidth="0.55"
                     fill="none"
                     strokeLinecap="round"
-                    opacity="0.6"
+                    opacity="0.7"
                   />
-                  {/* Subtle breathing */}
+                  {/* Subtle breathing effect */}
                   <path
                     d={`M ${x1} ${y1} A ${ringRadius} ${ringRadius} 0 0 1 ${x2} ${y2}`}
                     stroke={color}
-                    strokeWidth="0.3"
+                    strokeWidth="0.35"
                     fill="none"
                     strokeLinecap="round"
                   >
                     <animate
                       attributeName="opacity"
-                      values="0.25;0.55;0.25"
+                      values="0.2;0.5;0.2"
                       dur="5s"
                       repeatCount="indefinite"
                       begin={`${index * 0.5}s`}
@@ -246,7 +246,7 @@ export default function VogelperspektivePage() {
                 <defs>
                   {/* Animated gradient for smooth wave effect */}
                   <linearGradient id={waveGradId} x1={petalPos.x} y1={petalPos.y} x2={ringPos.x} y2={ringPos.y} gradientUnits="userSpaceOnUse">
-                    <stop offset="0%" stopColor={lineColor} stopOpacity="0.15">
+                    <stop offset="0%" stopColor={lineColor} stopOpacity="0.1">
                       <animate
                         attributeName="offset"
                         values="-0.5;1"
@@ -264,7 +264,7 @@ export default function VogelperspektivePage() {
                         begin={`${index * 0.4}s`}
                       />
                     </stop>
-                    <stop offset="50%" stopColor={lineColor} stopOpacity="0.15">
+                    <stop offset="50%" stopColor={lineColor} stopOpacity="0.1">
                       <animate
                         attributeName="offset"
                         values="0;1.5"
@@ -283,8 +283,8 @@ export default function VogelperspektivePage() {
                   x2={petalPos.x}
                   y2={petalPos.y}
                   stroke={lineColor}
-                  strokeWidth={isHovered ? "0.3" : "0.2"}
-                  strokeOpacity="0.2"
+                  strokeWidth={isHovered ? "0.35" : "0.2"}
+                  strokeOpacity={isHovered ? "0.35" : "0.18"}
                 />
                 
                 {/* Wave pulse line */}
@@ -302,11 +302,11 @@ export default function VogelperspektivePage() {
                 <circle
                   cx={petalPos.x}
                   cy={petalPos.y}
-                  r={isHovered ? "0.6" : "0.4"}
+                  r={isHovered ? "0.6" : "0.45"}
                   fill={lineColor}
                   stroke="white"
-                  strokeWidth="0.12"
-                  opacity="0.6"
+                  strokeWidth="0.15"
+                  opacity={isHovered ? "0.85" : "0.6"}
                 />
               </g>
             );
@@ -408,7 +408,7 @@ export default function VogelperspektivePage() {
         .bird-view-container {
           width: 100%;
           min-height: calc(100vh - 80px);
-          background: linear-gradient(160deg, #a8cce8 0%, #7eb3d9 30%, #b5d4ed 60%, #d4e5f2 100%);
+          background: linear-gradient(145deg, #f0f9ff 0%, #e0f2fe 25%, #f0fdfa 50%, #ecfeff 75%, #f0f9ff 100%);
           position: relative;
           overflow: hidden;
           display: flex;
@@ -422,29 +422,57 @@ export default function VogelperspektivePage() {
           position: absolute;
           inset: 0;
           pointer-events: none;
+          overflow: hidden;
         }
 
         .bg-circle {
           position: absolute;
           border-radius: 50%;
+          animation: float 25s ease-in-out infinite;
+        }
+
+        @keyframes float {
+          0%, 100% { transform: translate(-50%, -50%) scale(1); }
+          50% { transform: translate(-50%, -50%) scale(1.03); }
         }
 
         .bg-circle-1 {
-          width: 800px;
-          height: 800px;
-          background: radial-gradient(circle, rgba(200, 225, 245, 0.4) 0%, transparent 60%);
+          width: 900px;
+          height: 900px;
+          background: radial-gradient(circle, rgba(59, 130, 246, 0.08) 0%, rgba(34, 197, 94, 0.05) 40%, transparent 70%);
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
         }
 
         .bg-circle-2 {
-          width: 1200px;
-          height: 1200px;
-          background: radial-gradient(circle, rgba(220, 235, 250, 0.3) 0%, transparent 50%);
+          width: 1400px;
+          height: 1400px;
+          background: radial-gradient(circle, rgba(6, 182, 212, 0.06) 0%, rgba(59, 130, 246, 0.04) 30%, transparent 60%);
           top: 50%;
           left: 50%;
           transform: translate(-50%, -50%);
+          animation-delay: -12s;
+        }
+
+        /* Subtle ambient light */
+        .bird-view-bg::before {
+          content: '';
+          position: absolute;
+          top: -50%;
+          left: -50%;
+          width: 200%;
+          height: 200%;
+          background: 
+            radial-gradient(ellipse at 20% 30%, rgba(34, 197, 94, 0.06) 0%, transparent 50%),
+            radial-gradient(ellipse at 80% 70%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+            radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.04) 0%, transparent 60%);
+          animation: ambientPulse 20s ease-in-out infinite;
+        }
+
+        @keyframes ambientPulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.6; }
         }
 
         .bird-view-canvas {
@@ -481,10 +509,16 @@ export default function VogelperspektivePage() {
 
         .hub-glow {
           position: absolute;
-          inset: -5px;
+          inset: -15px;
           border-radius: 50%;
           pointer-events: none;
-          background: transparent;
+          background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, rgba(34, 197, 94, 0.06) 50%, transparent 70%);
+          animation: hubGlow 5s ease-in-out infinite;
+        }
+
+        @keyframes hubGlow {
+          0%, 100% { opacity: 0.5; transform: scale(1); }
+          50% { opacity: 0.9; transform: scale(1.02); }
         }
 
         .hub-content {
@@ -492,13 +526,13 @@ export default function VogelperspektivePage() {
           width: 100%;
           height: 100%;
           background: linear-gradient(
-            180deg, 
-            rgba(255, 255, 255, 0.85) 0%, 
-            rgba(248, 252, 255, 0.82) 50%,
-            rgba(255, 255, 255, 0.85) 100%
+            145deg, 
+            rgba(255, 255, 255, 0.95) 0%, 
+            rgba(240, 249, 255, 0.92) 50%,
+            rgba(255, 255, 255, 0.95) 100%
           );
-          backdrop-filter: blur(10px) saturate(1.2);
-          -webkit-backdrop-filter: blur(10px) saturate(1.2);
+          backdrop-filter: blur(20px) saturate(1.3);
+          -webkit-backdrop-filter: blur(20px) saturate(1.3);
           border-radius: 50%;
           display: flex;
           flex-direction: column;
@@ -506,10 +540,12 @@ export default function VogelperspektivePage() {
           justify-content: center;
           padding: 1.5rem;
           box-shadow: 
-            0 4px 24px rgba(0, 100, 150, 0.08),
-            inset 0 1px 0 rgba(255, 255, 255, 0.8),
-            inset 0 -1px 0 rgba(0, 0, 0, 0.03);
-          border: 1px solid rgba(255, 255, 255, 0.5);
+            0 4px 30px rgba(59, 130, 246, 0.1),
+            0 8px 40px rgba(34, 197, 94, 0.05),
+            0 1px 3px rgba(0, 0, 0, 0.05),
+            inset 0 2px 0 rgba(255, 255, 255, 0.9),
+            inset 0 -1px 0 rgba(0, 0, 0, 0.02);
+          border: 1.5px solid rgba(255, 255, 255, 0.8);
         }
 
         .hub-content::before {
@@ -518,9 +554,9 @@ export default function VogelperspektivePage() {
           inset: 0;
           border-radius: 50%;
           background: radial-gradient(
-            circle at 30% 30%,
-            rgba(255, 255, 255, 0.3) 0%,
-            transparent 40%
+            circle at 30% 25%,
+            rgba(255, 255, 255, 0.6) 0%,
+            transparent 50%
           );
           pointer-events: none;
         }
@@ -530,8 +566,10 @@ export default function VogelperspektivePage() {
           height: 95px;
           border-radius: 50%;
           overflow: hidden;
-          border: 3px solid rgba(200, 220, 240, 0.9);
-          box-shadow: 0 4px 20px rgba(0, 100, 150, 0.2);
+          border: 3px solid rgba(59, 130, 246, 0.3);
+          box-shadow: 
+            0 4px 20px rgba(59, 130, 246, 0.15),
+            0 2px 10px rgba(0, 0, 0, 0.08);
           margin-bottom: 0.4rem;
         }
 
@@ -551,7 +589,10 @@ export default function VogelperspektivePage() {
         .score-number {
           font-size: 2.8rem;
           font-weight: 700;
-          color: #2a5070;
+          background: linear-gradient(135deg, #1d4ed8 0%, #0891b2 50%, #059669 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
           letter-spacing: -2px;
           line-height: 1;
         }
@@ -560,7 +601,7 @@ export default function VogelperspektivePage() {
           display: flex;
           flex-direction: column;
           font-size: 0.5rem;
-          color: #5a8aa8;
+          color: #64748b;
           font-weight: 600;
           line-height: 1.3;
         }
@@ -568,53 +609,56 @@ export default function VogelperspektivePage() {
         .score-title {
           font-size: 0.6rem;
           font-weight: 700;
-          color: #3a6a88;
-          letter-spacing: 0.4px;
+          color: #475569;
+          letter-spacing: 0.8px;
           margin-bottom: 0.15rem;
+          text-transform: uppercase;
         }
 
         .score-subtitle {
           font-size: 0.5rem;
-          color: #7a9ab0;
+          color: #94a3b8;
           margin-bottom: 0.5rem;
         }
 
         .hub-actions {
           display: flex;
-          gap: 0.4rem;
+          gap: 0.5rem;
         }
 
         .hub-btn {
-          padding: 0.35rem 0.7rem;
+          padding: 0.4rem 0.8rem;
           border-radius: 20px;
           font-size: 0.5rem;
           font-weight: 700;
-          letter-spacing: 0.2px;
+          letter-spacing: 0.3px;
           cursor: pointer;
-          transition: all 0.2s ease;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
           border: none;
           white-space: nowrap;
         }
 
         .hub-btn-primary {
-          background: linear-gradient(135deg, #3a8ab8 0%, #2a6a98 100%);
+          background: linear-gradient(135deg, #3b82f6 0%, #0891b2 100%);
           color: white;
-          box-shadow: 0 2px 8px rgba(50, 120, 170, 0.3);
+          box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
         }
 
         .hub-btn-primary:hover {
-          transform: translateY(-1px);
-          box-shadow: 0 3px 10px rgba(50, 120, 170, 0.4);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
         }
 
         .hub-btn-secondary {
           background: white;
-          color: #3a8ab8;
-          border: 1.5px solid #3a8ab8;
+          color: #3b82f6;
+          border: 1.5px solid rgba(59, 130, 246, 0.3);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
         }
 
         .hub-btn-secondary:hover {
-          background: #f0f8fc;
+          background: #f0f9ff;
+          border-color: #3b82f6;
         }
 
         /* Cloud-shaped Score Cards */
@@ -623,7 +667,7 @@ export default function VogelperspektivePage() {
           transform: translate(-50%, -50%);
           z-index: 5;
           cursor: pointer;
-          transition: all 0.3s ease;
+          transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .petal-cloud.hovered {
@@ -634,41 +678,64 @@ export default function VogelperspektivePage() {
         .cloud-shape {
           position: absolute;
           inset: 0;
-          background: rgba(255, 255, 255, 0.94);
-          backdrop-filter: blur(10px);
-          border-radius: 35% 35% 40% 40% / 30% 30% 45% 45%;
+          background: linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.98) 0%,
+            rgba(248, 250, 252, 0.95) 100%
+          );
+          backdrop-filter: blur(12px) saturate(1.2);
+          border-radius: 22px;
           box-shadow: 
-            0 4px 25px rgba(0, 60, 100, 0.1),
-            0 2px 10px rgba(0, 0, 0, 0.05),
-            inset 0 2px 15px rgba(255, 255, 255, 0.8);
-          border: 2px solid rgba(200, 220, 240, 0.6);
-          transition: all 0.3s ease;
+            0 4px 20px rgba(0, 0, 0, 0.06),
+            0 1px 3px rgba(0, 0, 0, 0.04),
+            inset 0 2px 0 rgba(255, 255, 255, 0.9);
+          border: 1.5px solid rgba(255, 255, 255, 0.9);
+          transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .petal-cloud.hovered .cloud-shape {
           box-shadow: 
-            0 8px 35px rgba(0, 60, 100, 0.18),
-            0 4px 15px rgba(0, 0, 0, 0.08),
-            inset 0 2px 15px rgba(255, 255, 255, 0.9);
-          border-color: var(--status-color);
+            0 8px 30px rgba(0, 0, 0, 0.1),
+            0 0 0 2px var(--status-color),
+            inset 0 2px 0 rgba(255, 255, 255, 1);
+        }
+
+        .petal-cloud.good .cloud-shape {
+          border-color: rgba(34, 197, 94, 0.25);
+          box-shadow: 
+            0 4px 20px rgba(34, 197, 94, 0.08),
+            0 1px 3px rgba(0, 0, 0, 0.04),
+            inset 0 2px 0 rgba(255, 255, 255, 0.9);
+        }
+
+        .petal-cloud.warning .cloud-shape {
+          border-color: rgba(245, 158, 11, 0.25);
+          box-shadow: 
+            0 4px 20px rgba(245, 158, 11, 0.08),
+            0 1px 3px rgba(0, 0, 0, 0.04),
+            inset 0 2px 0 rgba(255, 255, 255, 0.9);
         }
 
         .petal-cloud.critical .cloud-shape {
-          border-color: rgba(239, 83, 80, 0.4);
+          border-color: rgba(239, 68, 68, 0.3);
+          box-shadow: 
+            0 4px 20px rgba(239, 68, 68, 0.1),
+            0 1px 3px rgba(0, 0, 0, 0.04),
+            inset 0 2px 0 rgba(255, 255, 255, 0.9);
         }
 
         .cloud-pointer {
           position: absolute;
-          width: 10px;
-          height: 10px;
+          width: 12px;
+          height: 12px;
           border-radius: 50%;
           top: 50%;
           left: 50%;
           margin-top: -68px;
-          margin-left: -5px;
-          transform-origin: 5px 73px;
-          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-          border: 2px solid white;
+          margin-left: -6px;
+          transform-origin: 6px 74px;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          border: 2.5px solid white;
         }
 
         .cloud-content {
@@ -685,10 +752,10 @@ export default function VogelperspektivePage() {
         }
 
         .cloud-title {
-          font-size: 0.6rem;
+          font-size: 0.55rem;
           font-weight: 700;
-          color: #4a6a88;
-          letter-spacing: 0.5px;
+          color: #64748b;
+          letter-spacing: 0.6px;
           text-transform: uppercase;
           margin-bottom: 0.2rem;
         }
@@ -709,7 +776,7 @@ export default function VogelperspektivePage() {
         .score-unit {
           font-size: 0.7rem;
           font-weight: 600;
-          color: #7a9ab0;
+          color: #94a3b8;
         }
 
         .info-row {
@@ -721,15 +788,15 @@ export default function VogelperspektivePage() {
 
         .sub-info {
           font-size: 0.55rem;
-          color: #6a8aa8;
+          color: #64748b;
           font-weight: 500;
         }
 
         .trend {
           font-size: 0.6rem;
           font-weight: 700;
-          padding: 0.15rem 0.35rem;
-          border-radius: 4px;
+          padding: 0.2rem 0.4rem;
+          border-radius: 6px;
           background: rgba(0, 0, 0, 0.04);
         }
 
@@ -739,15 +806,21 @@ export default function VogelperspektivePage() {
           display: flex;
           align-items: center;
           gap: 1rem;
-          color: #7a9ab0;
+          color: #94a3b8;
           font-size: 0.8rem;
           font-weight: 500;
-          letter-spacing: 1.5px;
+          letter-spacing: 2px;
         }
 
         .footer-sparkle {
-          color: #5a8aa8;
+          color: #3b82f6;
           font-size: 1.2rem;
+          animation: sparkle 3s ease-in-out infinite;
+        }
+
+        @keyframes sparkle {
+          0%, 100% { opacity: 0.4; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.15); }
         }
 
         @media (max-width: 900px) {
@@ -801,11 +874,15 @@ export default function VogelperspektivePage() {
           }
 
           .cloud-pointer {
-            width: 8px;
-            height: 8px;
+            width: 10px;
+            height: 10px;
             margin-top: -55px;
-            margin-left: -4px;
-            transform-origin: 4px 59px;
+            margin-left: -5px;
+            transform-origin: 5px 60px;
+          }
+
+          .cloud-shape {
+            border-radius: 18px;
           }
         }
 
@@ -891,15 +968,15 @@ export default function VogelperspektivePage() {
           }
 
           .cloud-pointer {
-            width: 6px;
-            height: 6px;
+            width: 8px;
+            height: 8px;
             margin-top: -40px;
-            margin-left: -3px;
-            transform-origin: 3px 43px;
+            margin-left: -4px;
+            transform-origin: 4px 44px;
           }
 
           .cloud-shape {
-            border-radius: 30% 30% 35% 35% / 25% 25% 40% 40%;
+            border-radius: 14px;
           }
         }
       `}</style>
