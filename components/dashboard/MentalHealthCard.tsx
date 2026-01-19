@@ -22,7 +22,7 @@ export default function MentalHealthCard() {
   return (
     <div className="dashboard-card mental-health-card">
       <div className="metric-header">
-        <h3>Mentale Gesundheit</h3>
+        <h3>Mentale Balance</h3>
         <div className="time-selector">
           <button
             className={`time-btn ${timeRange === 'day' ? 'active' : ''}`}

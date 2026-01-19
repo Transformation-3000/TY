@@ -4,15 +4,6 @@ import { useState } from 'react';
 import '@/lib/chartConfig'; // Chart.js initialisieren
 import WelcomeSection from '@/components/layout/WelcomeSection';
 import Sidebar from '@/components/layout/Sidebar';
-import WeeklyPlan from '@/components/layout/WeeklyPlan';
-import DashboardTabs from '@/components/dashboard/DashboardTabs';
-import SleepCard from '@/components/dashboard/SleepCard';
-import RecoveryCard from '@/components/dashboard/RecoveryCard';
-import StepsCard from '@/components/dashboard/StepsCard';
-import NutritionCard from '@/components/dashboard/NutritionCard';
-import FitnessCard from '@/components/dashboard/FitnessCard';
-import MentalHealthCard from '@/components/dashboard/MentalHealthCard';
-import BiomarkerDashboard from '@/components/dashboard/biomarker/BiomarkerDashboard';
 import MicroHabitsPage from '@/components/microhabits/MicroHabitsPage';
 import BlackBoardPage from '@/components/blackboard/BlackBoardPage';
 import SettingsPage from '@/components/settings/SettingsPage';
@@ -20,7 +11,7 @@ import LongevityJourneyPage from '@/components/longevity/LongevityJourneyPage';
 import LongevityJourney7LevelsPage from '@/components/longevity/LongevityJourney7LevelsPage';
 import ShopPage from '@/components/shop/ShopPage';
 import VogelperspektivePage from '@/components/vogelperspektive/VogelperspektivePage';
-import LiseAIPage from '@/components/lise-ai/LiseAIPage';
+import Coaching2Page from '@/components/lise-ai/Coaching2Page';
 import TrueYearsPrinzipienPage from '@/components/true-years/TrueYearsPrinzipienPage';
 import ZellalterCheckPage from '@/components/checks/ZellalterCheckPage';
 import LongevityBalanceCheckPage from '@/components/checks/LongevityBalanceCheckPage';
@@ -29,13 +20,11 @@ import ExpertengespraechPage from '@/components/service/ExpertengespraechPage';
 import Image from 'next/image';
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<'lifestyle' | 'biomarker'>('lifestyle');
   const [activeMenuItem, setActiveMenuItem] = useState<string>('dashboard');
 
   return (
     <main>
       <div className="top-menu-bar">
-        <Sidebar showOnlyLogo={true} />
         <WelcomeSection />
       </div>
       
@@ -43,53 +32,40 @@ export default function Home() {
         <Sidebar activeItem={activeMenuItem} onItemClick={setActiveMenuItem} />
         <div className="content-wrapper">
           {activeMenuItem === 'dashboard' && (
-            <>
-          <div className="dashboard-container">
-            <WeeklyPlan />
-            <DashboardTabs activeTab={activeTab} onTabChange={setActiveTab} />
-            
-            {activeTab === 'lifestyle' && (
-              <div className="dashboard-grid">
-                <SleepCard />
-                <RecoveryCard />
-                <StepsCard />
-                <NutritionCard />
-                <FitnessCard />
-                <MentalHealthCard />
-              </div>
-            )}
-            
-            {activeTab === 'biomarker' && (
-              <div style={{ width: '100%' }}>
-                <BiomarkerDashboard />
-              </div>
-            )}
-          </div>
-            </>
+            <VogelperspektivePage />
           )}
 
           {activeMenuItem === 'longevity-journey' && (
             <LongevityJourney7LevelsPage />
           )}
 
-          {activeMenuItem === 'vogelperspektive' && (
-            <VogelperspektivePage />
+          {activeMenuItem === 'coaching' && (
+            <Coaching2Page />
           )}
 
-          {activeMenuItem === 'true-years-prinzipien' && (
-            <TrueYearsPrinzipienPage />
-          )}
-
-          {activeMenuItem === 'lisa-ai-voice-coach' && (
-            <LiseAIPage />
-          )}
-
-          {activeMenuItem === 'black-board' && (
-            <BlackBoardPage />
+          {activeMenuItem === 'watchlist' && (
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+              <h2>Watchlist</h2>
+              <p>Science | Experts | Events</p>
+            </div>
           )}
 
           {activeMenuItem === 'micro-habit-apps' && (
             <MicroHabitsPage />
+          )}
+
+          {activeMenuItem === 'reports' && (
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+              <h2>Reports</h2>
+              <p>Next Best Actions & Blocker</p>
+            </div>
+          )}
+
+          {activeMenuItem === 'community' && (
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+              <h2>Community</h2>
+              <p>Leitprinzipien | Top100 | Features</p>
+            </div>
           )}
 
           {activeMenuItem === 'zellalter-check' && (
@@ -134,12 +110,75 @@ export default function Home() {
             <DatenintegrationPage />
           )}
 
+          {activeMenuItem === 'integration-starter' && (
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+              <h2>Integration in Starter</h2>
+              <p>Datenintegration in Starter-Bereich</p>
+            </div>
+          )}
+
           {activeMenuItem === 'expertengespraech' && (
             <ExpertengespraechPage />
           )}
 
+          {activeMenuItem === 'shop-daily-essentials' && (
+            <ShopPage category="daily-essentials" />
+          )}
+
+          {activeMenuItem === 'shop-performance' && (
+            <ShopPage category="performance" />
+          )}
+
+          {activeMenuItem === 'shop-recovery' && (
+            <ShopPage category="recovery" />
+          )}
+
+          {activeMenuItem === 'shop-beauty' && (
+            <ShopPage category="beauty" />
+          )}
+
+          {activeMenuItem === 'shop-tech' && (
+            <ShopPage category="tech" />
+          )}
+
           {activeMenuItem === 'settings' && (
             <SettingsPage />
+          )}
+
+          {activeMenuItem === 'settings-abos-profil' && (
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+              <h2>Abos und Profil</h2>
+            </div>
+          )}
+
+          {activeMenuItem === 'settings-ziele' && (
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+              <h2>Ziele & Präferenzen</h2>
+            </div>
+          )}
+
+          {activeMenuItem === 'settings-benachrichtigungen' && (
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+              <h2>Benachrichtigungen</h2>
+            </div>
+          )}
+
+          {activeMenuItem === 'settings-tracking' && (
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+              <h2>Tracking & Metriken</h2>
+            </div>
+          )}
+
+          {activeMenuItem === 'settings-datenschutz' && (
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+              <h2>Datenschutz & Sicherheit</h2>
+            </div>
+          )}
+
+          {activeMenuItem === 'settings-hilfe' && (
+            <div style={{ padding: '2rem', textAlign: 'center' }}>
+              <h2>Hilfe & Rechtliches</h2>
+            </div>
           )}
         </div>
       </div>

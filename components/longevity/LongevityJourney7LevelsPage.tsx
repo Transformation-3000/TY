@@ -108,7 +108,7 @@ const journeyLevels: JourneyLevel[] = [
       'Die erste Masterclass Foundation wird freigeschaltet',
     ],
     status: 'completed',
-    color: '#7FD049',
+    color: '#8B0000', // dunkelrot
     icon: 'bi-compass',
   },
   {
@@ -126,7 +126,7 @@ const journeyLevels: JourneyLevel[] = [
       'Weitere Masterclasses werden freigeschaltet',
     ],
     status: 'completed',
-    color: '#4C99C2',
+    color: '#FF8C00', // orange
     icon: 'bi-bricks',
   },
   {
@@ -148,7 +148,7 @@ const journeyLevels: JourneyLevel[] = [
       '„Experiment-Vorschlag der Woche"',
     ],
     status: 'current',
-    color: '#006EA7',
+    color: '#FFD700', // gelb
     icon: 'bi-graph-up-arrow',
   },
   {
@@ -166,7 +166,7 @@ const journeyLevels: JourneyLevel[] = [
       '„Minimum Effective Dose" je Hebel für Alltag',
     ],
     status: 'upcoming',
-    color: '#FFD700',
+    color: '#87CEEB', // hellblau
     icon: 'bi-puzzle',
   },
   {
@@ -185,7 +185,7 @@ const journeyLevels: JourneyLevel[] = [
       'Protokolle',
     ],
     status: 'upcoming',
-    color: '#FF6B35',
+    color: '#00008B', // dunkelblau
     icon: 'bi-building',
   },
   {
@@ -206,14 +206,14 @@ const journeyLevels: JourneyLevel[] = [
       '„Deep Dives" mit True Years',
     ],
     status: 'upcoming',
-    color: '#9B59B6',
+    color: '#90EE90', // hellgrün
     icon: 'bi-trophy',
   },
   {
     id: 'legacy',
     level: 7,
     title: 'Legacy',
-    subtitle: 'Vorbild & Healthspan',
+    subtitle: 'Vorbild & Lifespan',
     scoreRange: 'L7: 91–100',
     description: 'Du lebst nachhaltige Longevity und kannst andere anleiten.',
     criteria: [
@@ -228,7 +228,7 @@ const journeyLevels: JourneyLevel[] = [
       'Ambassador-Mentor',
     ],
     status: 'upcoming',
-    color: '#E74C3C',
+    color: '#006400', // dunkelgrün
     icon: 'bi-stars',
   },
 ];
@@ -244,7 +244,7 @@ export default function LongevityJourney7LevelsPage() {
   
   // Current user data
   const currentUser = leaderboardData.find(m => m.isCurrentUser)!;
-  const userTrueYears = currentUser.trueYearsScore;
+  const userTrueYears = 36; // Fixed score for Level 3
   const userStreak = currentUser.streak;
   const userRank = currentUser.rank;
   const unlockedAchievements = achievements.filter(a => a.unlocked).length;
@@ -282,11 +282,11 @@ export default function LongevityJourney7LevelsPage() {
             <span>Deine Reise</span>
           </div>
           <h1 className="journey-title">
-            <span className="journey-title-line">Longevity</span>
-            <span className="journey-title-accent">Journey</span>
+            <span className="journey-title-line">Deine</span>
+            <span className="journey-title-accent">Reise</span>
           </h1>
           <p className="journey-subtitle">
-            7 Stufen zur optimalen Gesundheit – von den ersten Schritten bis zur Meisterschaft
+            Du hast Level 3 erreicht: 31–45 Punkte – was jetzt zählt
           </p>
         </div>
 
@@ -328,9 +328,6 @@ export default function LongevityJourney7LevelsPage() {
               
               <div className="true-years-details">
                 <h3>Dein True Years Score</h3>
-                <p className="true-years-explanation">
-                  Dein biologisches Alter im Vergleich zu deinem chronologischen Alter – je höher, desto jünger!
-                </p>
                 <div className="true-years-meta">
                   <div className="meta-item">
                     <i className="bi bi-graph-up-arrow"></i>
@@ -472,6 +469,7 @@ export default function LongevityJourney7LevelsPage() {
                       className={`node-card ${isVisible ? 'visible' : ''}`}
                       style={{ 
                         borderColor: level.status !== 'upcoming' ? level.color : 'transparent',
+                        backgroundColor: level.status === 'current' ? '#FFFACD' : 'white',
                         animationDelay: `${index * 0.15 + 0.3}s`
                       }}
                     >

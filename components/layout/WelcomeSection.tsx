@@ -4,68 +4,68 @@ import Image from 'next/image';
 import { useState, useEffect } from 'react';
 
 export default function WelcomeSection() {
-  const [steps, setSteps] = useState(3421);
-  const [stressLevel, setStressLevel] = useState(23);
   const [isConnected] = useState(true);
   const imageVersion = '2';
 
-  // Simuliere Live-Updates
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setSteps(prev => prev + Math.floor(Math.random() * 3));
-      setStressLevel(prev => {
-        const newValue = prev + (Math.random() > 0.5 ? 1 : -1);
-        return Math.max(10, Math.min(50, newValue));
-      });
-    }, 5000);
+  const handlePlanHeute = () => {
+    // TODO: Implementiere "Plan für heute" Funktionalität
+    console.log('Plan für heute');
+  };
 
-    return () => clearInterval(interval);
-  }, []);
+  const handleCoachingStart = () => {
+    // TODO: Implementiere "Coaching starten" Funktionalität
+    console.log('Coaching starten');
+  };
 
   return (
-    <div className="welcome-section">
-      <div className="profile-section">
-        <div className="profile-image">
+    <div className="top-navigation-content">
+      {/* Logo mit True Years Text - links */}
+      <div className="top-nav-logo-section">
+        <Image
+          src="/images/true logo 2.png"
+          alt="True Years Logo"
+          width={120}
+          height={120}
+          className="top-nav-logo"
+          style={{ objectFit: 'contain' }}
+        />
+        <span className="top-nav-logo-text">
+          <span className="top-nav-logo-text-bold">True</span> Years
+        </span>
+      </div>
+
+      {/* Buttons in der Mitte */}
+      <div className="top-nav-buttons">
+        <button className="top-nav-button" onClick={handlePlanHeute}>
+          Plan für heute
+        </button>
+        <button className="top-nav-button" onClick={handleCoachingStart}>
+          Coaching starten
+        </button>
+      </div>
+
+      {/* Wearable Icon und Profilbild - rechts */}
+      <div className="top-nav-right-section">
+        <div className="top-nav-wearable">
+          <Image
+            src={`/images/watch.png?v=${imageVersion}`}
+            alt="Wearable Device"
+            width={50}
+            height={50}
+            style={{ objectFit: 'contain' }}
+            unoptimized
+          />
+          <span className={`top-nav-status-dot ${isConnected ? 'connected' : 'disconnected'}`}></span>
+        </div>
+        <div className="top-nav-profile">
           <Image
             src="/images/profilepic.png"
-            alt="María's Profile"
-            width={80}
-            height={80}
-            className="rounded-full"
-            style={{ objectFit: 'cover', boxShadow: '0 4px 12px rgba(68, 152, 202, 0.2)' }}
+            alt="Profile"
+            width={60}
+            height={60}
+            className="top-nav-profile-image"
+            style={{ objectFit: 'cover' }}
           />
-        </div>
-        <div className="tracking-stats">
-          <div className="tracking-item">
-            <div className="tracking-label">
-              <i className="bi bi-activity"></i>
-              <span>Schritte</span>
-            </div>
-            <div className="tracking-value">{steps.toLocaleString()}</div>
-          </div>
-          <div className="tracking-item">
-            <div className="tracking-label">
-              <i className="bi bi-heart-pulse"></i>
-              <span>Stresslevel</span>
-            </div>
-            <div className="tracking-value">{stressLevel}%</div>
-          </div>
-          <div className="wearable-status-compact">
-            <Image
-              src={`/images/watch.png?v=${imageVersion}`}
-              alt="Wearable Device"
-              width={40}
-              height={40}
-              style={{ objectFit: 'contain' }}
-              unoptimized
-            />
-            <div className="wearable-status-indicator-compact">
-              <span className={`status-dot-compact ${isConnected ? 'connected' : 'disconnected'}`}></span>
-              <span className="status-text-compact">
-                {isConnected ? 'Verbunden' : 'Getrennt'}
-              </span>
-            </div>
-          </div>
         </div>
       </div>
     </div>

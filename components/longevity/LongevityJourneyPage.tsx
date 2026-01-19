@@ -42,7 +42,7 @@ export default function LongevityJourneyPage() {
   const bodyMetrics: BodyMetric[] = [
     {
       id: 'heart',
-      name: 'Herzgesundheit',
+      name: 'Herzfunktion',
       position: { x: 50, y: 35 },
       current: 85,
       past: 72,
@@ -108,7 +108,7 @@ export default function LongevityJourneyPage() {
     },
     {
       id: 'skin',
-      name: 'Hautgesundheit',
+      name: 'Hautzustand',
       position: { x: 50, y: 30 },
       current: 79,
       past: 71,
@@ -306,9 +306,9 @@ export default function LongevityJourneyPage() {
           <div className="insight-content">
             <h3>Dein Fortschritt</h3>
             <p>
-              Seit dem Start hast du deine Gesamtgesundheit um <strong>{getOverallHealth() - bodyMetrics[0].past}%</strong> verbessert.
+              Seit dem Start hast du deinen Gesamtzustand um <strong>{getOverallHealth() - bodyMetrics[0].past}%</strong> verbessert.
               {selectedTimePoint !== 'current' && selectedTimePoint !== 'start' && (
-                <> In {currentTimePoint.label} wird sie bei <strong>{Math.round(getOverallHealth() + (bodyMetrics[0].future - bodyMetrics[0].current) * 0.5)}%</strong> liegen.</>
+                <> In {currentTimePoint.label} wird er bei <strong>{Math.round(getOverallHealth() + (bodyMetrics[0].future - bodyMetrics[0].current) * 0.5)}%</strong> liegen.</>
               )}
             </p>
           </div>

@@ -69,9 +69,13 @@ body {
   z-index: 200;
   display: flex;
   align-items: center;
-  background: #ffffff;
-  box-shadow: 0 2px 8px rgba(0, 110, 167, 0.1);
-  height: 80px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98) 0%, rgba(255, 255, 255, 0.95) 100%);
+  backdrop-filter: blur(20px);
+  box-shadow: 
+    0 4px 20px rgba(0, 110, 167, 0.12),
+    0 2px 8px rgba(0, 0, 0, 0.05);
+  height: 90px;
+  border-bottom: 4px solid var(--color-30-blue-main);
 }
 
 /* Wearable Status */
@@ -135,7 +139,152 @@ body {
   font-weight: 500;
 }
 
-/* Welcome Section */
+/* Top Navigation Content */
+.top-navigation-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+  height: 100%;
+  gap: 2rem;
+}
+
+/* Logo Section - Links */
+.top-nav-logo-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 280px;
+}
+
+.top-nav-logo {
+  height: 70px;
+  width: auto;
+  object-fit: contain;
+}
+
+.top-nav-logo-text {
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-30-blue-main);
+  letter-spacing: 0.05em;
+}
+
+.top-nav-logo-text-bold {
+  font-weight: 700;
+}
+
+/* Buttons Section - Mitte */
+.top-nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex: 1;
+  justify-content: center;
+}
+
+.top-nav-button {
+  padding: 0.7rem 1.75rem;
+  border-radius: 24px;
+  border: 2px solid var(--color-30-blue-main);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 249, 255, 0.9) 100%);
+  color: var(--color-30-blue-main);
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 2px 8px rgba(0, 110, 167, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.02em;
+}
+
+.top-nav-button:hover {
+  background: linear-gradient(135deg, rgba(0, 110, 167, 0.08) 0%, rgba(76, 153, 194, 0.05) 100%);
+  border-color: var(--blue-medium);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 12px rgba(0, 110, 167, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.top-nav-button:active {
+  transform: translateY(0);
+  box-shadow: 
+    0 2px 6px rgba(0, 110, 167, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.top-nav-button:active {
+  background: rgba(0, 110, 167, 0.1);
+}
+
+/* Right Section - Wearable und Profil */
+.top-nav-right-section {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  min-width: 200px;
+  justify-content: flex-end;
+}
+
+.top-nav-wearable {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.top-nav-status-dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.top-nav-status-dot.connected {
+  background: var(--color-10-green-accent);
+  box-shadow: 0 0 6px rgba(127, 208, 73, 0.5);
+}
+
+.top-nav-status-dot.disconnected {
+  background: var(--grey-medium);
+  animation: none;
+}
+
+.top-nav-profile {
+  display: flex;
+  align-items: center;
+}
+
+.top-nav-profile-image {
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 
+    0 6px 20px rgba(68, 152, 202, 0.25),
+    0 2px 8px rgba(0, 110, 167, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  border: 3.5px solid var(--color-30-blue-main);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+}
+
+.top-nav-profile-image:hover {
+  transform: scale(1.05);
+  box-shadow: 
+    0 8px 25px rgba(68, 152, 202, 0.3),
+    0 4px 12px rgba(0, 110, 167, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Welcome Section (Legacy - für Kompatibilität) */
 .welcome-section {
   flex: 1;
   padding: 0.25rem 2rem;
@@ -331,39 +480,34 @@ body {
   width: 100%;
   min-height: calc(100vh - 200px);
   position: relative;
-  margin-top: 80px;
+  margin-top: 90px;
+  overflow: visible;
 }
 
 /* Sidebar Logo in Menu Bar */
 .sidebar-logo-container {
-  width: 240px;
-  min-width: 240px;
-  display: flex;
-  align-items: center;
-  padding: 0;
-  padding-left: 0;
-  border-right: 4px solid var(--color-30-blue-main);
-  height: 100%;
-  overflow: visible;
+  width: 0;
+  min-width: 0;
+  display: none;
+  border-right: none;
 }
 
 .sidebar-logo-container img {
-  margin-top: -10px;
-  margin-left: -20px;
+  display: none;
 }
 
 /* Sidebar Navigation */
 .sidebar-navigation {
-  width: 220px;
-  min-width: 220px;
+  width: 240px;
+  min-width: 240px;
   background: #ffffff;
   border-radius: 0;
   box-shadow: 2px 0 20px rgba(0, 110, 167, 0.1);
   padding: 1rem;
   position: fixed;
   left: 0;
-  top: 80px;
-  height: calc(100vh - 80px);
+  top: 90px;
+  height: calc(100vh - 90px);
   overflow-y: auto;
   overflow-x: hidden;
   border-right: 4px solid var(--color-30-blue-main);
@@ -412,6 +556,12 @@ body {
   display: flex;
   align-items: center;
   gap: 0.4rem;
+}
+
+.menu-section-main {
+  font-size: 0.875rem; /* 2pt größer als 0.75rem */
+  font-weight: 700; /* fett */
+  text-transform: uppercase; /* Großbuchstaben */
 }
 
 .menu-section-collapsible {
@@ -546,10 +696,11 @@ i[class*="bi-"] {
 .content-wrapper {
   flex: 1;
   min-width: 0;
-  margin-left: 220px;
+  margin-left: 240px;
   padding: 0;
-  max-width: calc(100% - 220px);
+  max-width: calc(100% - 240px);
   width: 100%;
+  overflow: visible;
 }
 
 /* Dashboard Container */

@@ -9,36 +9,42 @@ interface MenuItem {
   label: string;
 }
 
+// 01 STARTER - Unterbereiche
 const starterMenuItems: MenuItem[] = [
   { id: 'dashboard', icon: 'bi-grid-3x3-gap', label: 'Dashboard' },
-  { id: 'longevity-journey', icon: 'bi-compass', label: 'Longevity Journey' },
-  { id: 'vogelperspektive', icon: 'bi-eye', label: 'Vogelperspektive' },
-  { id: 'true-years-prinzipien', icon: 'bi-award', label: 'True Years Prinzipien' },
-  { id: 'lisa-ai-voice-coach', icon: 'bi-mic', label: 'Lisa AI' },
-  { id: 'black-board', icon: 'bi-chat-square-text', label: 'Black Board' },
-  { id: 'micro-habit-apps', icon: 'bi-app', label: 'Micro Habit Apps' },
+  { id: 'longevity-journey', icon: 'bi-compass', label: 'Journey' },
+  { id: 'coaching', icon: 'bi-person-heart', label: 'Coaching' },
+  { id: 'watchlist', icon: 'bi-bookmark', label: 'Watchlist' },
+  { id: 'micro-habit-apps', icon: 'bi-app', label: 'Apps' },
+  { id: 'reports', icon: 'bi-file-earmark-text', label: 'Reports' },
+  { id: 'community', icon: 'bi-people', label: 'Community' },
 ];
 
-const checksItems: MenuItem[] = [
+// 02 LAB - Unterbereiche
+const labItems: MenuItem[] = [
   { id: 'zellalter-check', icon: 'bi-heart-pulse', label: 'Zellalter Check' },
   { id: 'longevity-balance-check', icon: 'bi-clipboard2-pulse', label: 'Longevity Balance Check' },
-];
-
-const labItems: MenuItem[] = [
-  { id: 'metabo', icon: 'bi-clipboard-data', label: 'Metabo' },
-  { id: 'proteoage', icon: 'bi-droplet', label: 'ProteoAge' },
-];
-
-const serviceItems: MenuItem[] = [
-  { id: 'datenintegration', icon: 'bi-cloud-upload', label: 'Datenintegration' },
+  { id: 'integration-starter', icon: 'bi-link-45deg', label: 'Integration in Starter' },
   { id: 'expertengespraech', icon: 'bi-person-video3', label: 'Expertengespräch' },
 ];
 
+// 03 SHOP - Kategorien
 const shopItems: MenuItem[] = [
-  { id: 'shop-supplements', icon: 'bi-capsule-pill', label: 'Supplements' },
-  { id: 'shop-pflege', icon: 'bi-moisture', label: 'Pflege' },
-  { id: 'shop-regeneration', icon: 'bi-moon-stars', label: 'Regeneration' },
-  { id: 'shop-technologie', icon: 'bi-smartwatch', label: 'Technologie' },
+  { id: 'shop-daily-essentials', icon: 'bi-capsule-pill', label: 'Daily Essentials' },
+  { id: 'shop-performance', icon: 'bi-lightning-charge', label: 'Performance' },
+  { id: 'shop-recovery', icon: 'bi-moon-stars', label: 'Recovery' },
+  { id: 'shop-beauty', icon: 'bi-moisture', label: 'Beauty' },
+  { id: 'shop-tech', icon: 'bi-smartwatch', label: 'Tech' },
+];
+
+// 04 EINSTELLUNGEN - Unterbereiche
+const settingsItems: MenuItem[] = [
+  { id: 'settings-abos-profil', icon: 'bi-person-circle', label: 'Abos und Profil' },
+  { id: 'settings-ziele', icon: 'bi-bullseye', label: 'Ziele & Präferenzen' },
+  { id: 'settings-benachrichtigungen', icon: 'bi-bell', label: 'Benachrichtigungen' },
+  { id: 'settings-tracking', icon: 'bi-graph-up', label: 'Tracking & Metriken' },
+  { id: 'settings-datenschutz', icon: 'bi-shield-lock', label: 'Datenschutz & Sicherheit' },
+  { id: 'settings-hilfe', icon: 'bi-question-circle', label: 'Hilfe & Rechtliches' },
 ];
 
 interface SidebarProps {
@@ -49,14 +55,13 @@ interface SidebarProps {
 
 export default function Sidebar({ showOnlyLogo = false, activeItem, onItemClick }: SidebarProps) {
   const [internalActiveItem, setInternalActiveItem] = useState<string | null>('dashboard');
-  const [isLabUnlocked, setIsLabUnlocked] = useState(false);
   
-  // Collapsed states für die aufklappbaren Sektionen
+  // Collapsed states für die aufklappbaren Sektionen - Standardmäßig nur Starter ausgeklappt
   const [collapsedSections, setCollapsedSections] = useState({
-    checks: true,
-    lab: true,
-    service: true,
-    shop: true,
+    starter: false, // false = ausgeklappt
+    lab: true,      // true = eingeklappt
+    shop: true,     // true = eingeklappt
+    settings: true, // true = eingeklappt
   });
   
   const currentActiveItem = activeItem !== undefined ? activeItem : internalActiveItem;
@@ -93,37 +98,18 @@ export default function Sidebar({ showOnlyLogo = false, activeItem, onItemClick 
   return (
     <div className="sidebar-navigation">
       <div className="sidebar-menu-content">
-        {/* Starter Paket - immer offen */}
-        <div className="menu-section">
-          <div className="menu-section-title">
-            Starter Paket
-          </div>
-          <ul className="menu-list">
-            {starterMenuItems.map((item) => (
-              <li
-                key={item.id}
-                className={`menu-item ${currentActiveItem === item.id ? 'active' : ''}`}
-                onClick={() => handleItemClick(item.id)}
-              >
-                <i className={`bi ${item.icon}`}></i>
-                <span>{item.label}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* CHECKS - aufklappbar */}
+        {/* 01 STARTER - Standardmäßig ausgeklappt */}
         <div className="menu-section">
           <div 
-            className="menu-section-title menu-section-collapsible"
-            onClick={() => toggleSection('checks')}
+            className="menu-section-title menu-section-collapsible menu-section-main"
+            onClick={() => toggleSection('starter')}
           >
-            <i className={`bi ${collapsedSections.checks ? 'bi-chevron-right' : 'bi-chevron-down'} section-toggle-icon`}></i>
-            CHECKS
+            <i className={`bi ${collapsedSections.starter ? 'bi-chevron-right' : 'bi-chevron-down'} section-toggle-icon`}></i>
+            01 STARTER
           </div>
-          {!collapsedSections.checks && (
+          {!collapsedSections.starter && (
             <ul className="menu-list">
-              {checksItems.map((item) => (
+              {starterMenuItems.map((item) => (
                 <li
                   key={item.id}
                   className={`menu-item ${currentActiveItem === item.id ? 'active' : ''}`}
@@ -137,61 +123,20 @@ export default function Sidebar({ showOnlyLogo = false, activeItem, onItemClick 
           )}
         </div>
 
-        {/* LAB - aufklappbar */}
+        {/* 02 LAB - aufklappbar */}
         <div className="menu-section">
           <div 
-            className="menu-section-title menu-section-collapsible"
+            className="menu-section-title menu-section-collapsible menu-section-main"
             onClick={() => toggleSection('lab')}
           >
             <i className={`bi ${collapsedSections.lab ? 'bi-chevron-right' : 'bi-chevron-down'} section-toggle-icon`}></i>
-            LAB
-            {!isLabUnlocked && (
-              <i className="bi bi-plus-circle gold-info-icon"></i>
-            )}
+            02 LAB
           </div>
           {!collapsedSections.lab && (
             <ul className="menu-list">
               {labItems.map((item) => (
                 <li
                   key={item.id}
-                  className={`menu-item ${currentActiveItem === item.id ? 'active' : ''} ${!isLabUnlocked ? 'locked' : ''}`}
-                  onClick={() => {
-                    if (isLabUnlocked) {
-                      handleItemClick(item.id);
-                    }
-                  }}
-                >
-                  <i className={`bi ${item.icon}`}></i>
-                  <span>{item.label}</span>
-                  {!isLabUnlocked && (
-                    <i 
-                      className="bi bi-lock-fill lock-icon" 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsLabUnlocked(true);
-                      }}
-                    ></i>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
-
-        {/* SERVICE - aufklappbar */}
-        <div className="menu-section">
-          <div 
-            className="menu-section-title menu-section-collapsible"
-            onClick={() => toggleSection('service')}
-          >
-            <i className={`bi ${collapsedSections.service ? 'bi-chevron-right' : 'bi-chevron-down'} section-toggle-icon`}></i>
-            SERVICE
-          </div>
-          {!collapsedSections.service && (
-            <ul className="menu-list">
-              {serviceItems.map((item) => (
-                <li
-                  key={item.id}
                   className={`menu-item ${currentActiveItem === item.id ? 'active' : ''}`}
                   onClick={() => handleItemClick(item.id)}
                 >
@@ -203,14 +148,14 @@ export default function Sidebar({ showOnlyLogo = false, activeItem, onItemClick 
           )}
         </div>
 
-        {/* SHOP - aufklappbar */}
+        {/* 03 SHOP - aufklappbar */}
         <div className="menu-section">
           <div 
-            className="menu-section-title menu-section-collapsible"
+            className="menu-section-title menu-section-collapsible menu-section-main"
             onClick={() => toggleSection('shop')}
           >
             <i className={`bi ${collapsedSections.shop ? 'bi-chevron-right' : 'bi-chevron-down'} section-toggle-icon`}></i>
-            SHOP
+            03 SHOP
           </div>
           {!collapsedSections.shop && (
             <ul className="menu-list">
@@ -228,17 +173,29 @@ export default function Sidebar({ showOnlyLogo = false, activeItem, onItemClick 
           )}
         </div>
 
-        {/* Einstellungen - immer sichtbar */}
+        {/* 04 EINSTELLUNGEN - aufklappbar */}
         <div className="menu-section">
-          <ul className="menu-list">
-            <li
-              className={`menu-item ${currentActiveItem === 'settings' ? 'active' : ''}`}
-              onClick={() => handleItemClick('settings')}
-            >
-              <i className="bi bi-gear"></i>
-              <span>Einstellungen</span>
-            </li>
-          </ul>
+          <div 
+            className="menu-section-title menu-section-collapsible menu-section-main"
+            onClick={() => toggleSection('settings')}
+          >
+            <i className={`bi ${collapsedSections.settings ? 'bi-chevron-right' : 'bi-chevron-down'} section-toggle-icon`}></i>
+            04 EINSTELLUNGEN
+          </div>
+          {!collapsedSections.settings && (
+            <ul className="menu-list">
+              {settingsItems.map((item) => (
+                <li
+                  key={item.id}
+                  className={`menu-item ${currentActiveItem === item.id ? 'active' : ''}`}
+                  onClick={() => handleItemClick(item.id)}
+                >
+                  <i className={`bi ${item.icon}`}></i>
+                  <span>{item.label}</span>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       </div>
     </div>

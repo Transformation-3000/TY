@@ -9,7 +9,7 @@ export default function TelomereCard() {
             Telomerlängenmessung - Befundinterpretation
           </h2>
           <p style={{ color: '#666', lineHeight: '1.6' }}>
-            Telomere sind die Schutzkappen an den Enden der Chromosomen. Ihre Länge ist ein wichtiger Indikator für das biologische Alter und die Zellgesundheit.
+            Telomere sind die Schutzkappen an den Enden der Chromosomen. Ihre Länge ist ein wichtiger Indikator für das biologische Alter und die Zellvitalität.
           </p>
         </div>
 

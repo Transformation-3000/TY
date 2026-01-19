@@ -20,7 +20,7 @@ const supplements: Supplement[] = [
   {
     name: 'Omega-3 (EPA/DHA)',
     category: 'Essential',
-    description: 'Entzündungsmodulation, Gehirn- & Herzgesundheit.',
+    description: 'Entzündungsmodulation, Gehirn- & Herzfunktion.',
     goal: 'Anti-Inflammation & Neuroprotektion',
     schedule: 'täglich',
     dosage: '2.000 mg EPA/DHA',
@@ -55,7 +55,7 @@ const supplements: Supplement[] = [
   {
     name: 'Ubiquinol (CoQ10)',
     category: 'Performance',
-    description: 'Mitochondriale Energieproduktion & Herzgesundheit.',
+    description: 'Mitochondriale Energieproduktion & Herzfunktion.',
     goal: 'Energie & Herz-Kreislauf',
     schedule: 'täglich',
     dosage: '200 mg',

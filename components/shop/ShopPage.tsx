@@ -22,7 +22,7 @@ const shopCategories: ShopCategory[] = [
     id: 'pflege',
     title: 'Pflege',
     subtitle: 'Hautcremes und Kollagen',
-    description: 'Hochwertige Pflegeprodukte für Hautgesundheit und Kollagenaufbau',
+    description: 'Hochwertige Pflegeprodukte für Hautpflege und Kollagenaufbau',
     icon: 'bi-moisture',
     color: '#7FD049',
   },

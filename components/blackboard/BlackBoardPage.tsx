@@ -60,7 +60,7 @@ const trends: Trend[] = [
     id: '3',
     title: 'KI-gestützte Biomarker-Analyse revolutioniert Prävention',
     category: 'Technologie',
-    description: 'Machine Learning ermöglicht präzisere Vorhersage von Gesundheitsrisiken',
+    description: 'Machine Learning ermöglicht präzisere Vorhersage von Lifestyle-Risiken',
     source: 'Science Daily',
     date: 'Vor 1 Woche',
     icon: 'bi-cpu',

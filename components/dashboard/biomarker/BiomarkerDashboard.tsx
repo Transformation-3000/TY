@@ -6,7 +6,7 @@ import BiomarkerSection from './BiomarkerSection';
 const hormoneBalanceBiomarkers = [
   {
     name: 'Calcium',
-    description: 'Knochengesundheit',
+    description: 'Knochendichte',
     status: 'low' as const,
     value: '6 mg/dL',
   },
@@ -72,7 +72,7 @@ const inflammationBiomarkers = [
   },
   {
     name: 'Vitamin D',
-    description: 'Knochengesundheit & Energie',
+    description: 'Knochendichte & Energie',
     status: 'low' as const,
     value: '9 mg/dL',
   },
