@@ -49,7 +49,7 @@ export default function LongevityJourneyPage() {
       future: 92,
       unit: '%',
       icon: 'bi-heart-pulse',
-      color: '#dc3545',
+      color: '#FFB3BA',
     },
     {
       id: 'brain',
@@ -93,7 +93,7 @@ export default function LongevityJourneyPage() {
       future: 89,
       unit: '%',
       icon: 'bi-fire',
-      color: '#FF6B35',
+      color: '#FFD4A3',
     },
     {
       id: 'immune',
@@ -126,7 +126,7 @@ export default function LongevityJourneyPage() {
       future: 90,
       unit: '%',
       icon: 'bi-battery-full',
-      color: '#FFD700',
+      color: '#FFF9C4',
     },
   ];
 
@@ -169,7 +169,7 @@ export default function LongevityJourneyPage() {
     if (value >= 85) return '#7FD049';
     if (value >= 75) return '#4C99C2';
     if (value >= 65) return '#FFD700';
-    return '#FF6B35';
+    return '#FFD4A3';
   };
 
   const getOverallHealth = () => {

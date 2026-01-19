@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
 // Icons als Komponenten
@@ -46,6 +46,12 @@ const Icons = {
       <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
     </svg>
   ),
+  arrow: (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M5 12h14"></path>
+      <path d="m12 5 7 7-7 7"></path>
+    </svg>
+  ),
 };
 
 // Coaching-Session Topics nach dem Lisa AI Konzept
@@ -78,11 +84,34 @@ export default function Coaching2Page() {
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [sessionTime, setSessionTime] = useState(0);
-  const [currentPhase, setCurrentPhase] = useState<'welcome' | 'topic-select' | 'session'>('welcome');
+  const [currentPhase, setCurrentPhase] = useState<'welcome' | 'session-opening' | 'topic-select' | 'session'>('welcome');
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null);
+  const [lastSessionTopic] = useState<string>('Schlafverhalten'); // Simuliert letztes Thema
+  const [showOptions, setShowOptions] = useState(false);
+  const [typingText, setTypingText] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   // Conversation state für den Dialog
-  const [messages, setMessages] = useState<Array<{type: 'lisa' | 'user', text: string}>>([]);
+  const [messages, setMessages] = useState<Array<{type: 'lisa' | 'user', text: string, isTyping?: boolean}>>([]);
+
+  // Typing Animation Effect
+  const typeMessage = (text: string, onComplete?: () => void) => {
+    setIsTyping(true);
+    setTypingText('');
+    let index = 0;
+    const interval = setInterval(() => {
+      if (index < text.length) {
+        setTypingText(prev => prev + text[index]);
+        index++;
+      } else {
+        clearInterval(interval);
+        setIsTyping(false);
+        if (onComplete) onComplete();
+      }
+    }, 30);
+    return () => clearInterval(interval);
+  };
 
   // Simuliert Timer während der Session
   useEffect(() => {
@@ -95,30 +124,134 @@ export default function Coaching2Page() {
     return () => clearInterval(interval);
   }, [isSessionActive]);
 
+  // Scroll to bottom when new messages appear
+  useEffect(() => {
+    if (dialogRef.current) {
+      dialogRef.current.scrollTop = dialogRef.current.scrollHeight;
+    }
+  }, [messages, typingText]);
+
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Guten Morgen';
+    if (hour < 18) return 'Guten Tag';
+    return 'Guten Abend';
+  };
+
   const startSession = () => {
-    setCurrentPhase('topic-select');
+    setCurrentPhase('session-opening');
+    setIsSpeaking(true);
+    
+    // Lisa begrüßt empathisch
+    const greeting = `${getGreeting()}! Schön, dass du dir Zeit für dich nimmst. Wie möchtest du heute starten?`;
+    
+    setMessages([{ type: 'lisa', text: '', isTyping: true }]);
+    
+    setTimeout(() => {
+      typeMessage(greeting, () => {
+        setMessages([{ type: 'lisa', text: greeting }]);
+        setIsSpeaking(false);
+        // Zeige Optionen mit Verzögerung für smooth animation
+        setTimeout(() => setShowOptions(true), 300);
+      });
+    }, 500);
+  };
+
+  // Session-Eröffnung Auswahlfelder basierend auf Konzept
+  const sessionOpeningOptions = [
+    {
+      id: 'continue',
+      text: `Wollen wir auf „${lastSessionTopic}" aus der letzten Session aufbauen?`,
+      icon: '🔄',
+      color: 'ocean',
+    },
+    {
+      id: 'share',
+      text: 'Möchtest du etwas mitteilen, das dich aktuell besonders bewegt?',
+      icon: '💭',
+      color: 'sage',
+    },
+    {
+      id: 'learn',
+      text: 'Möchtest du etwas Neues kennenlernen?',
+      icon: '✨',
+      color: 'lavender',
+    },
+  ];
+
+  const handleSessionOpening = (optionId: string) => {
+    setShowOptions(false);
+    
+    const selectedOption = sessionOpeningOptions.find(o => o.id === optionId);
+    
+    // Zeige User-Auswahl als Nachricht
+    setMessages(prev => [...prev, { type: 'user', text: selectedOption?.text || '' }]);
+    
+    // Lisa antwortet basierend auf Auswahl
+    setTimeout(() => {
+      setIsSpeaking(true);
+      let lisaResponse = '';
+      
+      if (optionId === 'continue') {
+        lisaResponse = `Wunderbar! Lass uns dort weitermachen, wo wir aufgehört haben. Ich habe mir unsere letzte Session zu „${lastSessionTopic}" gemerkt. Was hat sich seither für dich verändert?`;
+      } else if (optionId === 'share') {
+        lisaResponse = 'Ich bin ganz Ohr für dich. Manchmal hilft es, Dinge auszusprechen. Was liegt dir gerade auf dem Herzen?';
+      } else if (optionId === 'learn') {
+        lisaResponse = 'Wie schön, dass du neugierig bist! Es gibt so viele spannende Themen zu entdecken. Wähle ein Thema, das dich interessiert.';
+      }
+
+      setMessages(prev => [...prev, { type: 'lisa', text: '', isTyping: true }]);
+      
+      setTimeout(() => {
+        typeMessage(lisaResponse, () => {
+          setMessages(prev => {
+            const newMsgs = [...prev];
+            newMsgs[newMsgs.length - 1] = { type: 'lisa', text: lisaResponse };
+            return newMsgs;
+          });
+          setIsSpeaking(false);
+          setCurrentPhase('topic-select');
+          setTimeout(() => setShowOptions(true), 300);
+        });
+      }, 400);
+    }, 600);
   };
 
   const selectTopic = (topicId: string) => {
+    setShowOptions(false);
     setSelectedTopic(topicId);
-    setCurrentPhase('session');
-    setIsSessionActive(true);
-    setIsSpeaking(true);
     
-    // Lisa beginnt zu sprechen
     const topic = sessionTopics.find(t => t.id === topicId);
-    setMessages([
-      { type: 'lisa', text: `Schön, dass du da bist! Lass uns gemeinsam über dein ${topic?.title} sprechen. ${topic?.example}` }
-    ]);
     
-    // Simuliert Ende des Sprechens
-    setTimeout(() => setIsSpeaking(false), 3000);
+    // Zeige Topic-Auswahl als User-Nachricht
+    setMessages(prev => [...prev, { type: 'user', text: `${topic?.icon} ${topic?.title}` }]);
+    
+    setTimeout(() => {
+      setCurrentPhase('session');
+      setIsSessionActive(true);
+      setIsSpeaking(true);
+      
+      const startMessage = `Perfekt! Lass uns gemeinsam über dein ${topic?.title} sprechen. ${topic?.example.replace(/"/g, '')}`;
+      
+      setMessages(prev => [...prev, { type: 'lisa', text: '', isTyping: true }]);
+      
+      setTimeout(() => {
+        typeMessage(startMessage, () => {
+          setMessages(prev => {
+            const newMsgs = [...prev];
+            newMsgs[newMsgs.length - 1] = { type: 'lisa', text: startMessage };
+            return newMsgs;
+          });
+          setIsSpeaking(false);
+        });
+      }, 400);
+    }, 600);
   };
 
   const toggleListening = () => {
@@ -130,9 +263,21 @@ export default function Coaching2Page() {
       // Lisa antwortet
       setTimeout(() => {
         setIsSpeaking(true);
-        setMessages(prev => [...prev, { type: 'lisa', text: 'Das verstehe ich. Manchmal liegt es nicht nur an der Schlafdauer, sondern auch an der Schlafqualität. Gab es vielleicht etwas, das dich vor dem Einschlafen beschäftigt hat?' }]);
-        setTimeout(() => setIsSpeaking(false), 3000);
-      }, 1000);
+        const response = 'Das verstehe ich gut. Manchmal liegt es nicht nur an der Schlafdauer, sondern auch an der Schlafqualität. Gab es vielleicht etwas, das dich vor dem Einschlafen beschäftigt hat?';
+        
+        setMessages(prev => [...prev, { type: 'lisa', text: '', isTyping: true }]);
+        
+        setTimeout(() => {
+          typeMessage(response, () => {
+            setMessages(prev => {
+              const newMsgs = [...prev];
+              newMsgs[newMsgs.length - 1] = { type: 'lisa', text: response };
+              return newMsgs;
+            });
+            setIsSpeaking(false);
+          });
+        }, 400);
+      }, 800);
     } else {
       setIsListening(true);
     }
@@ -146,6 +291,8 @@ export default function Coaching2Page() {
     setSessionTime(0);
     setMessages([]);
     setSelectedTopic(null);
+    setShowOptions(false);
+    setTypingText('');
   };
 
   return (
@@ -153,6 +300,7 @@ export default function Coaching2Page() {
       {/* Background */}
       <div className="coaching2-bg">
         <div className="bg-gradient-soft"></div>
+        <div className="bg-pattern"></div>
         <div className="bg-circles">
           <div className="circle circle-1"></div>
           <div className="circle circle-2"></div>
@@ -168,15 +316,17 @@ export default function Coaching2Page() {
           <div className="lisa-section">
             <div className="lisa-image-container">
               <div className={`lisa-glow ${isSpeaking ? 'speaking' : ''} ${isListening ? 'listening' : ''}`}></div>
-              <Image
-                src="/images/lisa.png"
-                alt="Lisa - Deine KI-Begleiterin"
-                width={500}
-                height={600}
-                className="lisa-image"
-                style={{ objectFit: 'cover', borderRadius: '24px' }}
-                priority
-              />
+              <div className="lisa-frame">
+                <Image
+                  src="/images/lisa.png"
+                  alt="Lisa - Deine KI-Begleiterin"
+                  width={500}
+                  height={600}
+                  className="lisa-image"
+                  style={{ objectFit: 'cover', borderRadius: '24px' }}
+                  priority
+                />
+              </div>
               
               {/* Voice Indicator */}
               {(isSpeaking || isListening) && (
@@ -204,82 +354,74 @@ export default function Coaching2Page() {
             {/* Welcome Phase */}
             {currentPhase === 'welcome' && (
               <div className="welcome-content">
+                <div className="welcome-badge">
+                  <span className="badge-icon">✨</span>
+                  <span>Deine persönliche KI-Begleiterin</span>
+                </div>
+                
                 <div className="welcome-header">
                   <h1>Hallo!</h1>
                   <p className="welcome-subtitle">
-                    Ich bin Lisa, deine persönliche Begleiterin für mehr Wohlbefinden.
+                    Ich bin <strong>Lisa</strong>, deine empathische Begleiterin für mehr Wohlbefinden und Achtsamkeit.
                   </p>
                 </div>
 
                 <div className="intro-card">
-                  <div className="intro-icon">{Icons.heart}</div>
-                  <p className="intro-text">
-                    Hier startest du eine neue Coaching-Session von <strong>5-10 Minuten</strong> mit mir. 
-                    Wir reflektieren gemeinsam über deine Gewohnheiten und entwickeln kleine, 
-                    alltagstaugliche Micro Habits.
-                  </p>
+                  <div className="intro-icon-wrap">
+                    <div className="intro-icon">{Icons.heart}</div>
+                  </div>
+                  <div className="intro-text-wrap">
+                    <p className="intro-text">
+                      Hier startest du eine <strong>Coaching-Session</strong> von 5-10 Minuten mit mir. 
+                      Wir reflektieren gemeinsam über deine Gewohnheiten und entwickeln kleine, 
+                      alltagstaugliche Micro Habits.
+                    </p>
+                  </div>
                 </div>
 
                 <div className="session-info">
                   <div className="info-item">
-                    <span className="info-icon">{Icons.clock}</span>
+                    <div className="info-icon-wrap">
+                      <span className="info-icon">{Icons.clock}</span>
+                    </div>
                     <span>5-10 Minuten</span>
                   </div>
                   <div className="info-item">
-                    <span className="info-icon">{Icons.sparkle}</span>
+                    <div className="info-icon-wrap">
+                      <span className="info-icon">{Icons.sparkle}</span>
+                    </div>
                     <span>Personalisiert für dich</span>
                   </div>
                 </div>
 
                 <button className="start-session-btn" onClick={startSession}>
-                  <span className="btn-icon">{Icons.play}</span>
-                  <span>Session starten</span>
+                  <span className="btn-text">Session starten</span>
+                  <span className="btn-icon">{Icons.arrow}</span>
                 </button>
               </div>
             )}
 
-            {/* Topic Selection Phase */}
-            {currentPhase === 'topic-select' && (
-              <div className="topic-selection">
-                <h2>Worüber möchtest du heute sprechen?</h2>
-                <p className="topic-hint">Wähle ein Thema, das dich gerade beschäftigt</p>
-
-                <div className="topics-grid">
-                  {sessionTopics.map((topic) => (
-                    <button
-                      key={topic.id}
-                      className="topic-card"
-                      onClick={() => selectTopic(topic.id)}
-                    >
-                      <span className="topic-emoji">{topic.icon}</span>
-                      <h3>{topic.title}</h3>
-                      <p className="topic-subtitle">{topic.subtitle}</p>
-                      <p className="topic-example">{topic.example}</p>
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Active Session Phase */}
-            {currentPhase === 'session' && (
-              <div className="session-content">
+            {/* Session Opening + Topic Select + Session - Dialog View */}
+            {currentPhase !== 'welcome' && (
+              <div className="dialog-view">
                 {/* Session Header */}
-                <div className="session-header">
-                  <div className="session-topic">
-                    <span className="topic-emoji-small">
-                      {sessionTopics.find(t => t.id === selectedTopic)?.icon}
-                    </span>
-                    <span>{sessionTopics.find(t => t.id === selectedTopic)?.title}</span>
+                {currentPhase === 'session' && (
+                  <div className="session-header">
+                    <div className="session-topic">
+                      <span className="topic-emoji-small">
+                        {sessionTopics.find(t => t.id === selectedTopic)?.icon}
+                      </span>
+                      <span>{sessionTopics.find(t => t.id === selectedTopic)?.title}</span>
+                    </div>
+                    <div className="session-timer">
+                      <span className="timer-icon">{Icons.clock}</span>
+                      <span>{formatTime(sessionTime)}</span>
+                    </div>
                   </div>
-                  <div className="session-timer">
-                    <span className="timer-icon">{Icons.clock}</span>
-                    <span>{formatTime(sessionTime)}</span>
-                  </div>
-                </div>
-
+                )}
+                
                 {/* Dialog Area */}
-                <div className="dialog-area">
+                <div className="dialog-area" ref={dialogRef}>
                   {messages.map((msg, index) => (
                     <div key={index} className={`dialog-message ${msg.type}`}>
                       {msg.type === 'lisa' && (
@@ -287,54 +429,110 @@ export default function Coaching2Page() {
                           <Image
                             src="/images/lisa.png"
                             alt="Lisa"
-                            width={40}
-                            height={40}
+                            width={44}
+                            height={44}
                             style={{ borderRadius: '50%', objectFit: 'cover' }}
                           />
                         </div>
                       )}
                       <div className="msg-bubble">
-                        <p>{msg.text}</p>
+                        {msg.isTyping ? (
+                          <p className="typing-text">
+                            {typingText}
+                            <span className="typing-cursor">|</span>
+                          </p>
+                        ) : (
+                          <p>{msg.text}</p>
+                        )}
                       </div>
                     </div>
                   ))}
                 </div>
 
-                {/* Voice Control */}
-                <div className="voice-control">
-                  <div className="voice-visualizer">
-                    {[...Array(12)].map((_, i) => (
-                      <div
-                        key={i}
-                        className={`vis-bar ${isListening ? 'active' : ''}`}
-                        style={{ animationDelay: `${i * 0.05}s` }}
-                      ></div>
-                    ))}
-                  </div>
-
-                  <button
-                    className={`voice-btn ${isListening ? 'listening' : ''} ${isSpeaking ? 'speaking' : ''}`}
-                    onClick={toggleListening}
-                    disabled={isSpeaking}
-                  >
-                    <div className="voice-btn-inner">
-                      {isListening ? Icons.stop : Icons.mic}
+                {/* Session Opening Options */}
+                {currentPhase === 'session-opening' && showOptions && (
+                  <div className="options-container session-options">
+                    <div className="options-label">Wähle eine Option:</div>
+                    <div className="options-grid">
+                      {sessionOpeningOptions.map((option, index) => (
+                        <button
+                          key={option.id}
+                          className={`option-card option-${option.color}`}
+                          onClick={() => handleSessionOpening(option.id)}
+                          style={{ animationDelay: `${index * 0.1}s` }}
+                        >
+                          <span className="option-icon">{option.icon}</span>
+                          <span className="option-text">{option.text}</span>
+                          <span className="option-arrow">{Icons.arrow}</span>
+                        </button>
+                      ))}
                     </div>
+                  </div>
+                )}
+
+                {/* Topic Selection Options */}
+                {currentPhase === 'topic-select' && showOptions && (
+                  <div className="options-container topic-options">
+                    <div className="options-label">Wähle ein Thema:</div>
+                    <div className="topics-grid">
+                      {sessionTopics.map((topic, index) => (
+                        <button
+                          key={topic.id}
+                          className="topic-card"
+                          onClick={() => selectTopic(topic.id)}
+                          style={{ animationDelay: `${index * 0.1}s` }}
+                        >
+                          <span className="topic-emoji">{topic.icon}</span>
+                          <div className="topic-info">
+                            <h3>{topic.title}</h3>
+                            <p className="topic-subtitle">{topic.subtitle}</p>
+                          </div>
+                          <span className="topic-arrow">{Icons.arrow}</span>
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Voice Control - Only in active session */}
+                {currentPhase === 'session' && (
+                  <div className="voice-control">
+                    <div className="voice-visualizer">
+                      {[...Array(12)].map((_, i) => (
+                        <div
+                          key={i}
+                          className={`vis-bar ${isListening ? 'active' : ''}`}
+                          style={{ animationDelay: `${i * 0.05}s` }}
+                        ></div>
+                      ))}
+                    </div>
+
+                    <button
+                      className={`voice-btn ${isListening ? 'listening' : ''} ${isSpeaking ? 'speaking' : ''}`}
+                      onClick={toggleListening}
+                      disabled={isSpeaking}
+                    >
+                      <div className="voice-btn-inner">
+                        {isListening ? Icons.stop : Icons.mic}
+                      </div>
+                    </button>
+
+                    <p className="voice-hint-text">
+                      {isSpeaking 
+                        ? 'Lisa spricht gerade...' 
+                        : isListening 
+                          ? 'Ich höre dir zu. Tippe erneut zum Beenden.' 
+                          : 'Tippe zum Sprechen'}
+                    </p>
+                  </div>
+                )}
+
+                {/* End Session Button */}
+                {currentPhase === 'session' && (
+                  <button className="end-session-btn" onClick={endSession}>
+                    Session beenden
                   </button>
-
-                  <p className="voice-hint-text">
-                    {isSpeaking 
-                      ? 'Lisa spricht gerade...' 
-                      : isListening 
-                        ? 'Ich höre dir zu. Tippe erneut zum Beenden.' 
-                        : 'Tippe zum Sprechen'}
-                  </p>
-                </div>
-
-                {/* End Session */}
-                <button className="end-session-btn" onClick={endSession}>
-                  Session beenden
-                </button>
+                )}
               </div>
             )}
           </div>
@@ -343,9 +541,9 @@ export default function Coaching2Page() {
 
       <style jsx>{`
         .coaching2-container {
-          min-height: calc(100vh - 80px);
+          min-height: calc(100vh - 90px);
           position: relative;
-          overflow: hidden;
+          overflow-x: hidden;
           background: linear-gradient(165deg, #f8fcff 0%, #eef6fb 30%, #e5f0f8 60%, #f0f7fc 100%);
         }
 
@@ -361,6 +559,15 @@ export default function Coaching2Page() {
           inset: 0;
           background: radial-gradient(ellipse at 30% 20%, rgba(68, 152, 202, 0.08) 0%, transparent 50%),
                       radial-gradient(ellipse at 70% 80%, rgba(176, 224, 240, 0.12) 0%, transparent 40%);
+        }
+
+        .bg-pattern {
+          position: absolute;
+          inset: 0;
+          opacity: 0.03;
+          background-image: 
+            radial-gradient(circle at 1px 1px, rgba(68, 152, 202, 0.5) 1px, transparent 0);
+          background-size: 32px 32px;
         }
 
         .bg-circles {
@@ -398,13 +605,12 @@ export default function Coaching2Page() {
         .coaching2-content {
           position: relative;
           z-index: 1;
-          height: calc(100vh - 80px);
         }
 
         .coaching2-main {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          height: 100%;
+          min-height: calc(100vh - 90px);
         }
 
         /* Lisa Section */
@@ -415,6 +621,7 @@ export default function Coaching2Page() {
           justify-content: center;
           padding: 2rem;
           position: relative;
+          min-height: calc(100vh - 90px);
         }
 
         .lisa-image-container {
@@ -425,15 +632,26 @@ export default function Coaching2Page() {
           align-items: center;
           justify-content: center;
           border-radius: 24px;
+          overflow: visible;
+          margin: auto 0;
+        }
+
+        .lisa-frame {
+          position: relative;
+          z-index: 1;
+          border-radius: 24px;
           overflow: hidden;
+          box-shadow: 
+            0 25px 50px -12px rgba(0, 60, 120, 0.15),
+            0 0 0 1px rgba(255, 255, 255, 0.8);
         }
 
         .lisa-glow {
           position: absolute;
-          width: 320px;
-          height: 320px;
+          width: 380px;
+          height: 380px;
           border-radius: 50%;
-          background: radial-gradient(circle, rgba(68, 152, 202, 0.15) 0%, transparent 70%);
+          background: radial-gradient(circle, rgba(68, 152, 202, 0.12) 0%, transparent 70%);
           z-index: 0;
           transition: all 0.5s ease;
         }
@@ -441,24 +659,30 @@ export default function Coaching2Page() {
         .lisa-glow.speaking {
           animation: glowPulse 1.5s ease-in-out infinite;
           background: radial-gradient(circle, rgba(68, 152, 202, 0.25) 0%, transparent 70%);
+          width: 420px;
+          height: 420px;
         }
 
         .lisa-glow.listening {
           animation: glowPulse 2s ease-in-out infinite;
           background: radial-gradient(circle, rgba(76, 175, 80, 0.2) 0%, transparent 70%);
+          width: 420px;
+          height: 420px;
         }
 
         @keyframes glowPulse {
           0%, 100% { transform: scale(1); opacity: 0.8; }
-          50% { transform: scale(1.1); opacity: 1; }
+          50% { transform: scale(1.08); opacity: 1; }
         }
 
         .lisa-image {
           position: relative;
           z-index: 1;
-          max-height: 70vh;
+          max-height: calc(100vh - 250px);
+          max-width: 100%;
           width: auto;
-          filter: drop-shadow(0 20px 40px rgba(0, 60, 120, 0.15));
+          height: auto;
+          object-fit: contain;
           border-radius: 24px;
         }
 
@@ -470,20 +694,23 @@ export default function Coaching2Page() {
           display: flex;
           align-items: center;
           gap: 0.75rem;
-          padding: 0.6rem 1.25rem;
-          background: rgba(255, 255, 255, 0.95);
-          backdrop-filter: blur(10px);
+          padding: 0.75rem 1.5rem;
+          background: rgba(255, 255, 255, 0.98);
+          backdrop-filter: blur(16px);
           border-radius: 30px;
-          box-shadow: 0 4px 20px rgba(0, 60, 120, 0.15);
+          box-shadow: 0 4px 24px rgba(0, 60, 120, 0.12);
           z-index: 10;
+          border: 1px solid rgba(255, 255, 255, 0.5);
         }
 
         .voice-indicator.speaking {
-          border: 2px solid rgba(68, 152, 202, 0.4);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 248, 255, 0.98) 100%);
+          border: 1px solid rgba(68, 152, 202, 0.2);
         }
 
         .voice-indicator.listening {
-          border: 2px solid rgba(76, 175, 80, 0.4);
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(240, 255, 244, 0.98) 100%);
+          border: 1px solid rgba(76, 175, 80, 0.2);
         }
 
         .voice-waves {
@@ -496,13 +723,13 @@ export default function Coaching2Page() {
         .wave {
           width: 3px;
           height: 8px;
-          background: #4498ca;
+          background: linear-gradient(180deg, #4498ca 0%, #2c6a8c 100%);
           border-radius: 2px;
           animation: waveAnim 0.8s ease-in-out infinite;
         }
 
         .voice-indicator.listening .wave {
-          background: #4CAF50;
+          background: linear-gradient(180deg, #4CAF50 0%, #388E3C 100%);
         }
 
         @keyframes waveAnim {
@@ -511,9 +738,10 @@ export default function Coaching2Page() {
         }
 
         .voice-indicator span {
-          font-size: 0.8rem;
-          font-weight: 500;
+          font-size: 0.85rem;
+          font-weight: 600;
           color: #2c5a7c;
+          letter-spacing: -0.01em;
         }
 
         .lisa-status {
@@ -521,73 +749,116 @@ export default function Coaching2Page() {
           align-items: center;
           gap: 0.5rem;
           margin-top: 2rem;
-          padding: 0.5rem 1rem;
-          background: rgba(255, 255, 255, 0.7);
-          border-radius: 20px;
+          margin-bottom: 1rem;
+          padding: 0.6rem 1.2rem;
+          background: rgba(255, 255, 255, 0.8);
+          backdrop-filter: blur(8px);
+          border-radius: 24px;
           font-size: 0.85rem;
           color: #4a6a80;
+          border: 1px solid rgba(255, 255, 255, 0.5);
+          box-shadow: 0 2px 12px rgba(0, 60, 120, 0.06);
         }
 
         .status-dot {
           width: 8px;
           height: 8px;
-          background: #4CAF50;
+          background: linear-gradient(135deg, #4CAF50 0%, #81C784 100%);
           border-radius: 50%;
           animation: blink 2s ease-in-out infinite;
+          box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
         }
 
         @keyframes blink {
           0%, 100% { opacity: 1; }
-          50% { opacity: 0.5; }
+          50% { opacity: 0.6; }
         }
 
         /* Interface Section */
         .interface-section {
           display: flex;
           flex-direction: column;
-          justify-content: center;
-          padding: 3rem;
-          background: rgba(255, 255, 255, 0.4);
-          backdrop-filter: blur(10px);
+          justify-content: flex-start;
+          padding: 2.5rem 3rem;
+          background: rgba(255, 255, 255, 0.5);
+          backdrop-filter: blur(16px);
+          min-height: calc(100vh - 90px);
+          border-left: 1px solid rgba(255, 255, 255, 0.6);
         }
 
         /* Welcome Content */
         .welcome-content {
-          max-width: 480px;
+          max-width: 500px;
+          margin-top: 2rem;
+        }
+
+        .welcome-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.5rem 1rem;
+          background: linear-gradient(135deg, rgba(68, 152, 202, 0.1) 0%, rgba(68, 152, 202, 0.05) 100%);
+          border-radius: 24px;
+          font-size: 0.8rem;
+          color: #4498ca;
+          font-weight: 500;
+          margin-bottom: 1.5rem;
+          border: 1px solid rgba(68, 152, 202, 0.15);
+        }
+
+        .badge-icon {
+          font-size: 1rem;
         }
 
         .welcome-header h1 {
           font-family: 'Playfair Display', Georgia, serif;
-          font-size: 3rem;
+          font-size: 3.5rem;
           font-weight: 600;
-          color: #2c5a7c;
-          margin: 0 0 0.5rem 0;
-          letter-spacing: -1px;
+          color: #1a3a50;
+          margin: 0 0 0.75rem 0;
+          letter-spacing: -1.5px;
+          line-height: 1.1;
         }
 
         .welcome-subtitle {
           font-size: 1.2rem;
           color: #5a8aa8;
-          line-height: 1.6;
-          margin: 0 0 2rem 0;
+          line-height: 1.7;
+          margin: 0 0 2.5rem 0;
+          font-weight: 400;
+        }
+
+        .welcome-subtitle strong {
+          color: #4498ca;
+          font-weight: 600;
         }
 
         .intro-card {
           display: flex;
-          gap: 1rem;
-          padding: 1.5rem;
-          background: rgba(255, 255, 255, 0.8);
-          border-radius: 16px;
-          border: 1px solid rgba(68, 152, 202, 0.15);
+          gap: 1.25rem;
+          padding: 1.75rem;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 252, 255, 0.9) 100%);
+          border-radius: 20px;
+          border: 1px solid rgba(68, 152, 202, 0.1);
           margin-bottom: 2rem;
+          box-shadow: 0 4px 20px rgba(0, 60, 120, 0.05);
+        }
+
+        .intro-icon-wrap {
+          width: 48px;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, rgba(229, 115, 115, 0.15) 0%, rgba(229, 115, 115, 0.08) 100%);
+          border-radius: 14px;
+          flex-shrink: 0;
         }
 
         .intro-icon {
           width: 24px;
           height: 24px;
           color: #e57373;
-          flex-shrink: 0;
-          margin-top: 2px;
         }
 
         .intro-icon :global(svg) {
@@ -595,15 +866,20 @@ export default function Coaching2Page() {
           height: 100%;
         }
 
+        .intro-text-wrap {
+          flex: 1;
+        }
+
         .intro-text {
           font-size: 0.95rem;
           color: #4a6a80;
-          line-height: 1.65;
+          line-height: 1.7;
           margin: 0;
         }
 
         .intro-text strong {
           color: #2c5a7c;
+          font-weight: 600;
         }
 
         .session-info {
@@ -615,9 +891,20 @@ export default function Coaching2Page() {
         .info-item {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 0.75rem;
           font-size: 0.9rem;
           color: #5a8aa8;
+          font-weight: 500;
+        }
+
+        .info-icon-wrap {
+          width: 36px;
+          height: 36px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, rgba(68, 152, 202, 0.12) 0%, rgba(68, 152, 202, 0.06) 100%);
+          border-radius: 10px;
         }
 
         .info-icon {
@@ -635,29 +922,40 @@ export default function Coaching2Page() {
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0.75rem;
+          gap: 1rem;
           width: 100%;
-          max-width: 280px;
-          padding: 1rem 2rem;
+          max-width: 300px;
+          padding: 1.1rem 2rem;
           background: linear-gradient(135deg, #4498ca 0%, #2c6a8c 100%);
           color: white;
           border: none;
-          border-radius: 50px;
+          border-radius: 16px;
           font-size: 1.1rem;
           font-weight: 600;
           cursor: pointer;
-          transition: all 0.3s ease;
-          box-shadow: 0 8px 25px rgba(68, 152, 202, 0.35);
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 8px 30px rgba(68, 152, 202, 0.35);
+          letter-spacing: -0.01em;
         }
 
         .start-session-btn:hover {
           transform: translateY(-3px);
-          box-shadow: 0 12px 35px rgba(68, 152, 202, 0.45);
+          box-shadow: 0 12px 40px rgba(68, 152, 202, 0.45);
+        }
+
+        .start-session-btn:active {
+          transform: translateY(-1px);
+        }
+
+        .btn-text {
+          flex: 1;
+          text-align: center;
         }
 
         .btn-icon {
           width: 20px;
           height: 20px;
+          opacity: 0.9;
         }
 
         .btn-icon :global(svg) {
@@ -665,112 +963,47 @@ export default function Coaching2Page() {
           height: 100%;
         }
 
-        /* Topic Selection */
-        .topic-selection {
-          max-width: 520px;
-        }
-
-        .topic-selection h2 {
-          font-family: 'Playfair Display', Georgia, serif;
-          font-size: 1.75rem;
-          color: #2c5a7c;
-          margin: 0 0 0.5rem 0;
-        }
-
-        .topic-hint {
-          font-size: 0.95rem;
-          color: #7a9ab0;
-          margin: 0 0 2rem 0;
-        }
-
-        .topics-grid {
-          display: flex;
-          flex-direction: column;
-          gap: 1rem;
-        }
-
-        .topic-card {
-          text-align: left;
-          padding: 1.25rem 1.5rem;
-          background: rgba(255, 255, 255, 0.85);
-          border: 1px solid rgba(68, 152, 202, 0.12);
-          border-radius: 16px;
-          cursor: pointer;
-          transition: all 0.3s ease;
-        }
-
-        .topic-card:hover {
-          background: #fff;
-          border-color: rgba(68, 152, 202, 0.3);
-          transform: translateX(8px);
-          box-shadow: 0 8px 25px rgba(0, 60, 120, 0.1);
-        }
-
-        .topic-emoji {
-          font-size: 1.75rem;
-          margin-bottom: 0.5rem;
-          display: block;
-        }
-
-        .topic-card h3 {
-          font-size: 1.1rem;
-          font-weight: 600;
-          color: #2c5a7c;
-          margin: 0 0 0.25rem 0;
-        }
-
-        .topic-subtitle {
-          font-size: 0.8rem;
-          color: #7a9ab0;
-          margin: 0 0 0.5rem 0;
-        }
-
-        .topic-example {
-          font-size: 0.85rem;
-          color: #5a8aa8;
-          font-style: italic;
-          margin: 0;
-        }
-
-        /* Session Content */
-        .session-content {
+        /* Dialog View */
+        .dialog-view {
           display: flex;
           flex-direction: column;
           height: 100%;
-          max-height: calc(100vh - 160px);
+          max-height: calc(100vh - 140px);
         }
 
         .session-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding-bottom: 1rem;
+          padding: 1rem 0 1.25rem 0;
           border-bottom: 1px solid rgba(68, 152, 202, 0.1);
           margin-bottom: 1rem;
+          flex-shrink: 0;
         }
 
         .session-topic {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
-          font-size: 0.95rem;
-          font-weight: 500;
+          gap: 0.6rem;
+          font-size: 1rem;
+          font-weight: 600;
           color: #2c5a7c;
         }
 
         .topic-emoji-small {
-          font-size: 1.25rem;
+          font-size: 1.35rem;
         }
 
         .session-timer {
           display: flex;
           align-items: center;
-          gap: 0.4rem;
+          gap: 0.5rem;
           font-size: 0.9rem;
           color: #7a9ab0;
-          padding: 0.4rem 0.8rem;
+          padding: 0.5rem 1rem;
           background: rgba(68, 152, 202, 0.08);
           border-radius: 20px;
+          font-weight: 500;
         }
 
         .timer-icon {
@@ -790,13 +1023,40 @@ export default function Coaching2Page() {
           padding: 1rem 0;
           display: flex;
           flex-direction: column;
-          gap: 1rem;
+          gap: 1.25rem;
+          scrollbar-width: thin;
+          scrollbar-color: rgba(68, 152, 202, 0.2) transparent;
+        }
+
+        .dialog-area::-webkit-scrollbar {
+          width: 4px;
+        }
+
+        .dialog-area::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        .dialog-area::-webkit-scrollbar-thumb {
+          background: rgba(68, 152, 202, 0.2);
+          border-radius: 4px;
         }
 
         .dialog-message {
           display: flex;
-          gap: 0.75rem;
+          gap: 0.85rem;
           max-width: 90%;
+          animation: messageIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @keyframes messageIn {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
         }
 
         .dialog-message.lisa {
@@ -809,35 +1069,245 @@ export default function Coaching2Page() {
         }
 
         .msg-avatar {
-          width: 40px;
-          height: 40px;
+          width: 44px;
+          height: 44px;
           flex-shrink: 0;
           border-radius: 50%;
           overflow: hidden;
-          border: 2px solid #4498ca;
+          border: 2px solid rgba(68, 152, 202, 0.2);
+          box-shadow: 0 2px 8px rgba(0, 60, 120, 0.1);
         }
 
         .msg-bubble {
-          padding: 1rem 1.25rem;
-          border-radius: 18px;
+          padding: 1.1rem 1.4rem;
+          border-radius: 20px;
           background: #fff;
-          border: 1px solid rgba(68, 152, 202, 0.1);
+          border: 1px solid rgba(68, 152, 202, 0.08);
+          box-shadow: 0 2px 12px rgba(0, 60, 120, 0.04);
         }
 
         .dialog-message.lisa .msg-bubble {
-          border-bottom-left-radius: 4px;
+          border-bottom-left-radius: 6px;
+          background: linear-gradient(135deg, #fff 0%, #f8fcff 100%);
         }
 
         .dialog-message.user .msg-bubble {
-          background: rgba(68, 152, 202, 0.1);
-          border-bottom-right-radius: 4px;
+          background: linear-gradient(135deg, rgba(68, 152, 202, 0.12) 0%, rgba(68, 152, 202, 0.08) 100%);
+          border-bottom-right-radius: 6px;
+          border: 1px solid rgba(68, 152, 202, 0.15);
         }
 
         .msg-bubble p {
-          font-size: 0.9rem;
-          color: #3a5a70;
-          line-height: 1.55;
+          font-size: 0.95rem;
+          color: #2c5a7c;
+          line-height: 1.65;
           margin: 0;
+        }
+
+        .typing-text {
+          display: inline;
+        }
+
+        .typing-cursor {
+          display: inline-block;
+          animation: cursorBlink 0.8s infinite;
+          color: #4498ca;
+          font-weight: 300;
+          margin-left: 1px;
+        }
+
+        @keyframes cursorBlink {
+          0%, 50% { opacity: 1; }
+          51%, 100% { opacity: 0; }
+        }
+
+        /* Options Container */
+        .options-container {
+          padding: 1.5rem 0;
+          flex-shrink: 0;
+          border-top: 1px solid rgba(68, 152, 202, 0.08);
+          margin-top: auto;
+        }
+
+        .options-label {
+          font-size: 0.85rem;
+          color: #7a9ab0;
+          margin-bottom: 1rem;
+          font-weight: 500;
+        }
+
+        .options-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+
+        .option-card {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          text-align: left;
+          padding: 1.1rem 1.4rem;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 252, 255, 0.95) 100%);
+          border: 1px solid rgba(68, 152, 202, 0.12);
+          border-radius: 16px;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          animation: optionSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+        }
+
+        @keyframes optionSlideIn {
+          from {
+            opacity: 0;
+            transform: translateX(-16px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
+          }
+        }
+
+        .option-card:hover {
+          background: #fff;
+          border-color: rgba(68, 152, 202, 0.35);
+          transform: translateX(6px);
+          box-shadow: 0 8px 28px rgba(0, 60, 120, 0.1);
+        }
+
+        .option-card.option-ocean:hover {
+          border-color: rgba(68, 152, 202, 0.5);
+          box-shadow: 0 8px 28px rgba(68, 152, 202, 0.15);
+        }
+
+        .option-card.option-sage:hover {
+          border-color: rgba(76, 175, 80, 0.4);
+          box-shadow: 0 8px 28px rgba(76, 175, 80, 0.12);
+        }
+
+        .option-card.option-lavender:hover {
+          border-color: rgba(156, 136, 255, 0.4);
+          box-shadow: 0 8px 28px rgba(156, 136, 255, 0.12);
+        }
+
+        .option-icon {
+          font-size: 1.6rem;
+          flex-shrink: 0;
+          width: 44px;
+          height: 44px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: rgba(68, 152, 202, 0.08);
+          border-radius: 12px;
+        }
+
+        .option-card.option-sage .option-icon {
+          background: rgba(76, 175, 80, 0.08);
+        }
+
+        .option-card.option-lavender .option-icon {
+          background: rgba(156, 136, 255, 0.08);
+        }
+
+        .option-text {
+          flex: 1;
+          font-size: 0.95rem;
+          color: #2c5a7c;
+          line-height: 1.5;
+          font-weight: 500;
+        }
+
+        .option-arrow {
+          width: 20px;
+          height: 20px;
+          color: #b0c8d8;
+          flex-shrink: 0;
+          transition: all 0.3s ease;
+        }
+
+        .option-arrow :global(svg) {
+          width: 100%;
+          height: 100%;
+        }
+
+        .option-card:hover .option-arrow {
+          color: #4498ca;
+          transform: translateX(4px);
+        }
+
+        /* Topics Grid */
+        .topics-grid {
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+        }
+
+        .topic-card {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          text-align: left;
+          padding: 1.1rem 1.4rem;
+          background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 252, 255, 0.95) 100%);
+          border: 1px solid rgba(68, 152, 202, 0.12);
+          border-radius: 16px;
+          cursor: pointer;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          animation: optionSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1) backwards;
+        }
+
+        .topic-card:hover {
+          background: #fff;
+          border-color: rgba(68, 152, 202, 0.35);
+          transform: translateX(6px);
+          box-shadow: 0 8px 28px rgba(0, 60, 120, 0.1);
+        }
+
+        .topic-emoji {
+          font-size: 1.75rem;
+          width: 52px;
+          height: 52px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background: linear-gradient(135deg, rgba(68, 152, 202, 0.1) 0%, rgba(68, 152, 202, 0.05) 100%);
+          border-radius: 14px;
+          flex-shrink: 0;
+        }
+
+        .topic-info {
+          flex: 1;
+        }
+
+        .topic-card h3 {
+          font-size: 1.05rem;
+          font-weight: 600;
+          color: #2c5a7c;
+          margin: 0 0 0.2rem 0;
+        }
+
+        .topic-subtitle {
+          font-size: 0.8rem;
+          color: #7a9ab0;
+          margin: 0;
+        }
+
+        .topic-arrow {
+          width: 20px;
+          height: 20px;
+          color: #b0c8d8;
+          flex-shrink: 0;
+          transition: all 0.3s ease;
+        }
+
+        .topic-arrow :global(svg) {
+          width: 100%;
+          height: 100%;
+        }
+
+        .topic-card:hover .topic-arrow {
+          color: #4498ca;
+          transform: translateX(4px);
         }
 
         /* Voice Control */
@@ -848,6 +1318,8 @@ export default function Coaching2Page() {
           gap: 1rem;
           padding: 1.5rem 0;
           margin-top: auto;
+          flex-shrink: 0;
+          border-top: 1px solid rgba(68, 152, 202, 0.08);
         }
 
         .voice-visualizer {
@@ -860,7 +1332,7 @@ export default function Coaching2Page() {
         .vis-bar {
           width: 4px;
           height: 8px;
-          background: rgba(68, 152, 202, 0.3);
+          background: rgba(68, 152, 202, 0.25);
           border-radius: 2px;
           transition: all 0.15s ease;
         }
@@ -879,7 +1351,7 @@ export default function Coaching2Page() {
           width: 72px;
           height: 72px;
           border-radius: 50%;
-          border: 3px solid rgba(68, 152, 202, 0.3);
+          border: 3px solid rgba(68, 152, 202, 0.25);
           background: transparent;
           cursor: pointer;
           position: relative;
@@ -915,10 +1387,12 @@ export default function Coaching2Page() {
           align-items: center;
           justify-content: center;
           color: white;
+          box-shadow: 0 4px 16px rgba(68, 152, 202, 0.3);
         }
 
         .voice-btn.listening .voice-btn-inner {
           background: linear-gradient(135deg, #4CAF50 0%, #388E3C 100%);
+          box-shadow: 0 4px 16px rgba(76, 175, 80, 0.3);
         }
 
         .voice-btn-inner :global(svg) {
@@ -931,23 +1405,25 @@ export default function Coaching2Page() {
           color: #7a9ab0;
           text-align: center;
           margin: 0;
+          font-weight: 500;
         }
 
         .end-session-btn {
-          margin-top: 1rem;
+          margin-top: 0.5rem;
           padding: 0.75rem 1.5rem;
           background: transparent;
           color: #7a9ab0;
-          border: 1px solid rgba(68, 152, 202, 0.2);
+          border: 1px solid rgba(68, 152, 202, 0.15);
           border-radius: 25px;
           font-size: 0.85rem;
+          font-weight: 500;
           cursor: pointer;
           transition: all 0.2s ease;
           align-self: center;
         }
 
         .end-session-btn:hover {
-          background: rgba(239, 83, 80, 0.1);
+          background: rgba(239, 83, 80, 0.08);
           border-color: rgba(239, 83, 80, 0.3);
           color: #EF5350;
         }
@@ -961,6 +1437,8 @@ export default function Coaching2Page() {
 
           .lisa-section {
             padding: 1.5rem;
+            min-height: auto;
+            justify-content: center;
           }
 
           .lisa-image-container {
@@ -968,17 +1446,23 @@ export default function Coaching2Page() {
           }
 
           .lisa-image {
-            max-height: 40vh;
+            max-height: 50vh;
           }
 
           .interface-section {
-            padding: 2rem;
+            padding: 1.5rem 2rem;
+            min-height: auto;
+            justify-content: flex-start;
+          }
+          
+          .dialog-view {
+            max-height: 60vh;
           }
         }
 
         @media (max-width: 600px) {
           .welcome-header h1 {
-            font-size: 2.25rem;
+            font-size: 2.5rem;
           }
 
           .welcome-subtitle {
@@ -988,6 +1472,10 @@ export default function Coaching2Page() {
           .session-info {
             flex-direction: column;
             gap: 0.75rem;
+          }
+          
+          .option-card, .topic-card {
+            padding: 1rem 1.2rem;
           }
         }
       `}</style>

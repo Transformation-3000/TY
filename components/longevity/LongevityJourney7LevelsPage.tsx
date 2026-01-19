@@ -84,10 +84,10 @@ const achievements: Achievement[] = [
   { id: 'first-week', title: 'Erste Woche', description: '7 Tage in Folge aktiv', icon: 'bi-calendar-check', color: '#7FD049', unlocked: true },
   { id: 'habit-master', title: 'Habit Master', description: '30 Habits abgeschlossen', icon: 'bi-check2-all', color: '#4C99C2', unlocked: true },
   { id: 'data-driven', title: 'Data Driven', description: 'Wearable 30 Tage verbunden', icon: 'bi-smartwatch', color: '#006EA7', unlocked: true },
-  { id: 'early-bird', title: 'Early Bird', description: '14x vor 6 Uhr aufgestanden', icon: 'bi-sunrise', color: '#FFD700', unlocked: false, progress: 9, maxProgress: 14 },
+  { id: 'early-bird', title: 'Early Bird', description: '14x vor 6 Uhr aufgestanden', icon: 'bi-sunrise', color: '#FFF9C4', unlocked: false, progress: 9, maxProgress: 14 },
   { id: 'sleep-champion', title: 'Sleep Champion', description: '7 Tage optimaler Schlaf', icon: 'bi-moon-stars', color: '#9B59B6', unlocked: false, progress: 4, maxProgress: 7 },
-  { id: 'marathon', title: 'Marathon', description: '100 Tage Streak', icon: 'bi-fire', color: '#E74C3C', unlocked: false, progress: 42, maxProgress: 100 },
-  { id: 'community-star', title: 'Community Star', description: '10 Mitglieder inspiriert', icon: 'bi-people', color: '#FF6B35', unlocked: false, progress: 3, maxProgress: 10 },
+  { id: 'marathon', title: 'Marathon', description: '100 Tage Streak', icon: 'bi-fire', color: '#FFB3BA', unlocked: false, progress: 42, maxProgress: 100 },
+  { id: 'community-star', title: 'Community Star', description: '10 Mitglieder inspiriert', icon: 'bi-people', color: '#FFD4A3', unlocked: false, progress: 3, maxProgress: 10 },
   { id: 'bio-hacker', title: 'Bio-Hacker', description: '5 Experimente erfolgreich', icon: 'bi-lightning', color: '#00CED1', unlocked: true },
 ];
 
@@ -108,7 +108,7 @@ const journeyLevels: JourneyLevel[] = [
       'Die erste Masterclass Foundation wird freigeschaltet',
     ],
     status: 'completed',
-    color: '#8B0000', // dunkelrot
+    color: '#FFB3BA', // pastellrot
     icon: 'bi-compass',
   },
   {
@@ -126,7 +126,7 @@ const journeyLevels: JourneyLevel[] = [
       'Weitere Masterclasses werden freigeschaltet',
     ],
     status: 'completed',
-    color: '#FF8C00', // orange
+    color: '#FFD4A3', // pastellorange
     icon: 'bi-bricks',
   },
   {
@@ -148,7 +148,7 @@ const journeyLevels: JourneyLevel[] = [
       '„Experiment-Vorschlag der Woche"',
     ],
     status: 'current',
-    color: '#FFD700', // gelb
+    color: '#FFF9C4', // pastellgelb
     icon: 'bi-graph-up-arrow',
   },
   {

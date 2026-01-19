@@ -559,7 +559,7 @@ body {
 }
 
 .menu-section-main {
-  font-size: 0.875rem; /* 2pt größer als 0.75rem */
+  font-size: 0.96rem; /* 1pt größer als vorher (0.875rem) */
   font-weight: 700; /* fett */
   text-transform: uppercase; /* Großbuchstaben */
 }
@@ -4923,7 +4923,7 @@ i[class*="bi-"] {
 .journey-bg-orb-3 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, #FFD700 0%, transparent 70%);
+  background: radial-gradient(circle, #FFF9C4 0%, transparent 70%);
   bottom: 5%;
   left: 10%;
   animation-delay: -16s;
@@ -4999,7 +4999,7 @@ i[class*="bi-"] {
 
 .journey-title-accent {
   display: block;
-  background: linear-gradient(135deg, #7FD049, #4C99C2, #FFD700);
+  background: linear-gradient(135deg, #7FD049, #4C99C2, #FFF9C4);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -5512,7 +5512,7 @@ i[class*="bi-"] {
 .info-banner-icon {
   width: 45px;
   height: 45px;
-  background: linear-gradient(135deg, #FFD700, #FF6B35);
+  background: linear-gradient(135deg, #FFF9C4, #FFD4A3);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -6051,11 +6051,11 @@ i[class*="bi-"] {
 }
 
 .category-island.warning {
-  border-color: #FFD700;
+  border-color: #FFF9C4;
 }
 
 .category-island.critical {
-  border-color: #FF6B35;
+  border-color: #FFD4A3;
 }
 
 @media (max-width: 1200px) {
