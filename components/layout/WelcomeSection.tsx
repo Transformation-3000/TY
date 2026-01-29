@@ -22,16 +22,13 @@ export default function WelcomeSection() {
       {/* Logo mit True Years Text - links */}
       <div className="top-nav-logo-section">
         <Image
-          src="/images/true logo 2.png"
+          src="/images/logoneu.png"
           alt="True Years Logo"
-          width={120}
-          height={120}
+          width={160}
+          height={160}
           className="top-nav-logo"
           style={{ objectFit: 'contain' }}
         />
-        <span className="top-nav-logo-text">
-          <span className="top-nav-logo-text-bold">True</span> Years
-        </span>
       </div>
 
       {/* Buttons in der Mitte */}

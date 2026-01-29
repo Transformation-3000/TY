@@ -97,12 +97,20 @@ export default function Coaching2Page() {
 
   // Typing Animation Effect
   const typeMessage = (text: string, onComplete?: () => void) => {
+    if (!text || text.length === 0) {
+      if (onComplete) onComplete();
+      return;
+    }
+    
     setIsTyping(true);
-    setTypingText('');
-    let index = 0;
+    let currentText = text[0]; // Starte mit dem ersten Zeichen
+    setTypingText(currentText);
+    let index = 1;
+    
     const interval = setInterval(() => {
       if (index < text.length) {
-        setTypingText(prev => prev + text[index]);
+        currentText += text[index];
+        setTypingText(currentText);
         index++;
       } else {
         clearInterval(interval);

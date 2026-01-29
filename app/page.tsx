@@ -17,6 +17,8 @@ import ZellalterCheckPage from '@/components/checks/ZellalterCheckPage';
 import LongevityBalanceCheckPage from '@/components/checks/LongevityBalanceCheckPage';
 import DatenintegrationPage from '@/components/service/DatenintegrationPage';
 import ExpertengespraechPage from '@/components/service/ExpertengespraechPage';
+import MasterclassesPage from '@/components/masterclasses/MasterclassesPage';
+import CommunityPage from '@/components/community/CommunityPage';
 import Image from 'next/image';
 
 export default function Home() {
@@ -43,11 +45,12 @@ export default function Home() {
             <Coaching2Page />
           )}
 
+          {activeMenuItem === 'masterclasses' && (
+            <MasterclassesPage />
+          )}
+
           {activeMenuItem === 'watchlist' && (
-            <div style={{ padding: '2rem', textAlign: 'center' }}>
-              <h2>Watchlist</h2>
-              <p>Science | Experts | Events</p>
-            </div>
+            <BlackBoardPage />
           )}
 
           {activeMenuItem === 'micro-habit-apps' && (
@@ -62,10 +65,7 @@ export default function Home() {
           )}
 
           {activeMenuItem === 'community' && (
-            <div style={{ padding: '2rem', textAlign: 'center' }}>
-              <h2>Community</h2>
-              <p>Leitprinzipien | Top100 | Features</p>
-            </div>
+            <CommunityPage />
           )}
 
           {activeMenuItem === 'zellalter-check' && (

@@ -2491,6 +2491,286 @@ i[class*="bi-"] {
   color: var(--dashboard-blue);
 }
 
+/* ===== NEW WATCHLIST STYLES ===== */
+.watchlist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.5rem;
+}
+
+.watchlist-card {
+  background: #ffffff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  border: 1px solid rgba(68, 152, 202, 0.1);
+}
+
+.watchlist-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(68, 152, 202, 0.2);
+}
+
+.watchlist-thumbnail {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.watchlist-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.watchlist-card:hover .watchlist-image {
+  transform: scale(1.08);
+}
+
+.watchlist-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(0, 0, 0, 0.6) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.watchlist-card:hover .watchlist-overlay {
+  opacity: 1;
+}
+
+.watchlist-play-btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.95);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.watchlist-play-btn i {
+  font-size: 1.5rem;
+  color: var(--dashboard-blue);
+  margin-left: 3px;
+}
+
+.watchlist-play-btn:hover {
+  transform: scale(1.1);
+  background: var(--dashboard-blue);
+}
+
+.watchlist-play-btn:hover i {
+  color: white;
+}
+
+.watchlist-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  padding: 0.4rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  backdrop-filter: blur(10px);
+}
+
+.expert-badge {
+  background: rgba(76, 153, 194, 0.9);
+  color: white;
+}
+
+.science-badge {
+  background: rgba(46, 108, 163, 0.9);
+  color: white;
+}
+
+.event-badge {
+  background: rgba(90, 175, 222, 0.9);
+  color: white;
+}
+
+.watchlist-content {
+  padding: 1.5rem;
+}
+
+.watchlist-card h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--dashboard-blue-dark);
+  margin: 0 0 0.5rem 0;
+  line-height: 1.4;
+}
+
+.watchlist-subtitle {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin: 0 0 1rem 0;
+}
+
+.watchlist-description {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 1rem 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Expert Card Specific Styles */
+.expert-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.expert-tag {
+  background: linear-gradient(135deg, rgba(68, 152, 202, 0.1), rgba(68, 152, 202, 0.2));
+  color: var(--dashboard-blue);
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.watchlist-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(68, 152, 202, 0.1);
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.meta-item i {
+  color: var(--dashboard-blue);
+  font-size: 0.9rem;
+}
+
+.watchlist-update {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  color: var(--dashboard-blue-dark);
+  background: linear-gradient(135deg, rgba(68, 152, 202, 0.08), rgba(68, 152, 202, 0.15));
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+}
+
+.watchlist-update i {
+  color: #f59e0b;
+}
+
+/* Science Card Specific Styles */
+.watchlist-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(68, 152, 202, 0.1);
+}
+
+.source-tag, .date-tag {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.source-tag i {
+  color: var(--color-10-green-accent);
+}
+
+.date-tag i {
+  color: var(--dashboard-blue);
+}
+
+/* Event Card Specific Styles */
+.event-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.event-info-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+
+.event-info-item i {
+  color: var(--dashboard-blue);
+  width: 16px;
+  text-align: center;
+}
+
+.event-speaker {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--dashboard-blue-dark);
+  background: linear-gradient(135deg, rgba(68, 152, 202, 0.1), rgba(68, 152, 202, 0.2));
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+}
+
+.event-speaker i {
+  color: var(--dashboard-blue);
+}
+
+/* Responsive Watchlist */
+@media (max-width: 768px) {
+  .watchlist-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .watchlist-thumbnail {
+    height: 180px;
+  }
+  
+  .watchlist-content {
+    padding: 1.25rem;
+  }
+  
+  .watchlist-card h3 {
+    font-size: 1.1rem;
+  }
+}
+
 @media (max-width: 768px) {
   .mental-health-card {
     grid-column: span 1;

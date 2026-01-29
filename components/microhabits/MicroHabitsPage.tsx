@@ -80,6 +80,25 @@ const habitApps: HabitApp[] = [
       { date: 'So, 14.01', duration: '18 Min', score: 89 },
     ],
   },
+  {
+    id: 'relax',
+    title: 'Entspannung',
+    icon: 'bi-sun',
+    description: 'Geführte Entspannungsübungen für Stressabbau',
+    color: '#3A8AB8',
+    gradient: 'linear-gradient(135deg, #3A8AB8, #7BBDD9)',
+    stats: [
+      { label: 'Diese Woche', value: '6 Sessions', change: '+2' },
+      { label: 'Durchschnitt', value: '12 Min', change: '+3 Min' },
+      { label: 'Streak', value: '4 Tage', change: '🔥' },
+    ],
+    sessions: [
+      { date: 'Heute', duration: '15 Min', score: 94 },
+      { date: 'Gestern', duration: '12 Min', score: 90 },
+      { date: 'Mo, 15.01', duration: '10 Min', score: 88 },
+      { date: 'So, 14.01', duration: '8 Min', score: 86 },
+    ],
+  },
 ];
 
 export default function MicroHabitsPage() {
