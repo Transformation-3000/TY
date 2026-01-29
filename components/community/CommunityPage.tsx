@@ -45,7 +45,7 @@ const challenges = [
 
 export default function CommunityPage() {
   const [activeExperiments, setActiveExperiments] = useState<Set<string>>(new Set());
-  const [hoveredPrinciple, setHoveredPrinciple] = useState<number | null>(null);
+  const [currentPrinciple, setCurrentPrinciple] = useState(0);
   const [currentExperiment, setCurrentExperiment] = useState(0);
 
   const toggleExperiment = (id: string) => {
@@ -66,30 +66,58 @@ export default function CommunityPage() {
     setCurrentExperiment((prev) => (prev - 1 + experiments.length) % experiments.length);
   };
 
+  const nextPrinciple = () => {
+    setCurrentPrinciple((prev) => (prev + 1) % principles.length);
+  };
+
+  const prevPrinciple = () => {
+    setCurrentPrinciple((prev) => (prev - 1 + principles.length) % principles.length);
+  };
+
   const currentExp = experiments[currentExperiment];
+  const currentPrin = principles[currentPrinciple];
 
   return (
     <div className="community-page">
-      {/* Leitprinzipien */}
-      <div className="section">
+      {/* Leitprinzipien Karussell */}
+      <div className="section principles-section">
         <div className="section-title">Leitprinzipien</div>
-        <div className="principles-row">
-          {principles.map((p) => (
-            <div 
-              key={p.id} 
-              className="principle-chip"
-              onMouseEnter={() => setHoveredPrinciple(p.id)}
-              onMouseLeave={() => setHoveredPrinciple(null)}
-            >
-              <span className="principle-num">{p.id}</span>
-              <span className="principle-title">{p.title}</span>
-              {hoveredPrinciple === p.id && (
-                <div className="principle-tooltip">
-                  {p.description}
-                </div>
-              )}
+        
+        <div className="carousel">
+          <button className="carousel-btn prev" onClick={prevPrinciple}>
+            <i className="bi bi-chevron-left"></i>
+          </button>
+          
+          <div className="carousel-content">
+            <div className="carousel-indicator">
+              {currentPrinciple + 1} / {principles.length}
             </div>
-          ))}
+            
+            <div className="principle-card">
+              <div className="principle-card-header">
+                <div className="principle-card-num">{currentPrin.id}</div>
+                <div className="principle-card-icon">
+                  <i className={`bi ${currentPrin.icon}`}></i>
+                </div>
+                <h3>{currentPrin.title}</h3>
+              </div>
+              <p className="principle-card-desc">{currentPrin.description}</p>
+            </div>
+
+            <div className="carousel-dots">
+              {principles.map((_, idx) => (
+                <button 
+                  key={idx} 
+                  className={`dot ${idx === currentPrinciple ? 'active' : ''}`}
+                  onClick={() => setCurrentPrinciple(idx)}
+                />
+              ))}
+            </div>
+          </div>
+          
+          <button className="carousel-btn next" onClick={nextPrinciple}>
+            <i className="bi bi-chevron-right"></i>
+          </button>
         </div>
       </div>
 
@@ -247,67 +275,70 @@ export default function CommunityPage() {
           margin-bottom: 0;
         }
 
-        /* Leitprinzipien */
-        .principles-row {
-          display: flex;
-          flex-wrap: wrap;
-          gap: 0.5rem;
+        /* Leitprinzipien Carousel */
+        .principles-section .carousel {
+          justify-content: center;
         }
 
-        .principle-chip {
+        .principles-section .carousel-content {
+          max-width: 500px;
+          width: 100%;
+        }
+
+        .principle-card {
+          width: 100%;
+          padding: 1.5rem;
+          background: #fafafa;
+          border: 2px solid #eee;
+          border-radius: 12px;
+          text-align: center;
+        }
+
+        .principle-card-header {
           display: flex;
           align-items: center;
-          gap: 0.4rem;
-          padding: 0.4rem 0.7rem;
-          background: #f5f5f5;
-          border-radius: 6px;
-          cursor: default;
-          position: relative;
-          transition: all 0.15s;
-          border: 1px solid transparent;
+          justify-content: center;
+          gap: 0.75rem;
+          margin-bottom: 1rem;
         }
 
-        .principle-chip:hover {
-          background: #e8f4f8;
-          border-color: #b8d4e3;
-        }
-
-        .principle-num {
-          font-size: 0.65rem;
-          font-weight: 600;
-          color: #0d7377;
-        }
-
-        .principle-title {
-          font-size: 0.75rem;
-          font-weight: 500;
-          color: #333;
-        }
-
-        .principle-tooltip {
-          position: absolute;
-          bottom: calc(100% + 8px);
-          left: 50%;
-          transform: translateX(-50%);
-          width: 280px;
-          padding: 0.85rem;
+        .principle-card-num {
+          width: 28px;
+          height: 28px;
           background: #14506c;
-          color: #fff;
-          font-size: 0.72rem;
-          line-height: 1.5;
           border-radius: 8px;
-          z-index: 100;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 0.8rem;
+          font-weight: 700;
+          color: #fff;
         }
 
-        .principle-tooltip::after {
-          content: '';
-          position: absolute;
-          top: 100%;
-          left: 50%;
-          transform: translateX(-50%);
-          border: 6px solid transparent;
-          border-top-color: #14506c;
+        .principle-card-icon {
+          width: 40px;
+          height: 40px;
+          background: #e8f4f8;
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.1rem;
+          color: #14506c;
+        }
+
+        .principle-card-header h3 {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #1a1a1a;
+          margin: 0;
+        }
+
+        .principle-card-desc {
+          font-size: 0.85rem;
+          color: #666;
+          line-height: 1.6;
+          margin: 0;
         }
 
         /* Two Columns */
