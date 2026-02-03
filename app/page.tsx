@@ -19,6 +19,7 @@ import DatenintegrationPage from '@/components/service/DatenintegrationPage';
 import ExpertengespraechPage from '@/components/service/ExpertengespraechPage';
 import MasterclassesPage from '@/components/masterclasses/MasterclassesPage';
 import CommunityPage from '@/components/community/CommunityPage';
+import ReportsPage from '@/components/reports/ReportsPage';
 import Image from 'next/image';
 
 export default function Home() {
@@ -27,7 +28,7 @@ export default function Home() {
   return (
     <main>
       <div className="top-menu-bar">
-        <WelcomeSection />
+        <WelcomeSection onNavigate={setActiveMenuItem} />
       </div>
       
       <div className="main-content">
@@ -58,10 +59,7 @@ export default function Home() {
           )}
 
           {activeMenuItem === 'reports' && (
-            <div style={{ padding: '2rem', textAlign: 'center' }}>
-              <h2>Reports</h2>
-              <p>Next Best Actions & Blocker</p>
-            </div>
+            <ReportsPage />
           )}
 
           {activeMenuItem === 'community' && (

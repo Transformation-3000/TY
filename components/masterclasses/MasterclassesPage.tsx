@@ -354,32 +354,24 @@ export default function MasterclassesPage() {
                 </div>
               </div>
 
-              {/* Video Section */}
+              {/* Video Section - Echtes Video */}
               <div style={{ background: 'white', borderRadius: '16px', marginBottom: '1.5rem', overflow: 'hidden', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
-                <div style={{ position: 'relative', paddingTop: '56.25%', background: 'linear-gradient(135deg, #1e3a5f 0%, #2d4a6f 100%)' }}>
-                  <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
-                    <div
-                      onClick={() => setVideoWatched(true)}
-                      style={{
-                        width: '80px',
-                        height: '80px',
-                        borderRadius: '50%',
-                        background: videoWatched ? '#7FD049' : 'rgba(255,255,255,0.2)',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        cursor: 'pointer',
-                        transition: 'all 0.3s ease',
-                        marginBottom: '1rem',
-                      }}
-                    >
-                      <i className={`bi ${videoWatched ? 'bi-check-lg' : 'bi-play-fill'}`} style={{ fontSize: '2rem', marginLeft: videoWatched ? 0 : '4px' }} />
-                    </div>
-                    <div style={{ fontSize: '1.1rem', fontWeight: 600 }}>
-                      {videoWatched ? 'Video abgeschlossen' : 'Video starten'}
-                    </div>
-                    <div style={{ fontSize: '0.85rem', opacity: 0.8 }}>Dr. Sarah Müller · 12:34 Min</div>
-                  </div>
+                <div style={{ position: 'relative', paddingTop: '56.25%', background: '#000' }}>
+                  <iframe
+                    style={{
+                      position: 'absolute',
+                      top: 0,
+                      left: 0,
+                      width: '100%',
+                      height: '100%',
+                      border: 'none',
+                    }}
+                    src="https://www.youtube.com/embed/5MuIMqhT8DM?rel=0&modestbranding=1"
+                    title="Schlaf & Longevity - Warum guter Schlaf so wichtig ist"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    onLoad={() => setVideoWatched(true)}
+                  />
                   {videoWatched && (
                     <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '4px', background: '#7FD049' }} />
                   )}
@@ -387,13 +379,13 @@ export default function MasterclassesPage() {
                 <div style={{ padding: '1rem 1.5rem', borderTop: '1px solid #E2E3E4', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <div>
                     <div style={{ fontWeight: 600, color: '#374A5A' }}>Die Wissenschaft des Schlafs</div>
-                    <div style={{ fontSize: '0.85rem', color: '#7D8087' }}>Experten-Video mit Dr. Sarah Müller</div>
+                    <div style={{ fontSize: '0.85rem', color: '#7D8087' }}>Experten-Video · Warum Schlaf der Schlüssel zu Langlebigkeit ist</div>
                   </div>
-                  {videoWatched && <span style={{ background: '#DBF2CC', color: '#2D7A0F', padding: '0.375rem 0.75rem', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 500 }}><i className="bi bi-check-circle-fill" /> Angesehen</span>}
+                  {videoWatched && <span style={{ background: '#DBF2CC', color: '#2D7A0F', padding: '0.375rem 0.75rem', borderRadius: '6px', fontSize: '0.8rem', fontWeight: 500 }}><i className="bi bi-check-circle-fill" /> Gestartet</span>}
                 </div>
               </div>
 
-              {/* Text Content */}
+              {/* Text Content - Mit mehr visuellen Elementen */}
               <div style={{ background: 'white', borderRadius: '16px', padding: '2rem', marginBottom: '1.5rem', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
                   <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#B3E0F0', color: '#006EA7', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -407,16 +399,41 @@ export default function MasterclassesPage() {
                 </div>
 
                 <div style={{ color: '#374A5A', lineHeight: 1.8, fontSize: '1rem' }}>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: '#1a365d' }}>
+                  <h3 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: '1rem', color: '#1a365d', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <i className="bi bi-moon-stars-fill" style={{ color: '#006EA7' }} />
                     Schlaf als Fundament der Longevity
                   </h3>
                   <p style={{ marginBottom: '1.25rem' }}>
                     Während wir schlafen, passiert in unserem Körper Erstaunliches: Zellen werden repariert, Giftstoffe aus dem Gehirn gespült, Erinnerungen gefestigt und Hormone reguliert. <strong>Schlaf ist keine passive Erholung</strong> – er ist eine der aktivsten Phasen für Regeneration und Heilung.
                   </p>
+
+                  {/* Visuelles Schaubild - Was passiert im Schlaf */}
+                  <div style={{ background: 'linear-gradient(135deg, #1a365d 0%, #2c5282 100%)', borderRadius: '16px', padding: '1.5rem', marginBottom: '1.5rem', color: 'white' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '1.25rem' }}>
+                      <i className="bi bi-stars" style={{ fontSize: '1.5rem', marginBottom: '0.5rem', display: 'block' }} />
+                      <div style={{ fontWeight: 600, fontSize: '1.1rem' }}>Während du schläfst...</div>
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.75rem' }}>
+                      {[
+                        { icon: 'bi-arrow-repeat', label: 'Zellreparatur', value: '↑ 300%' },
+                        { icon: 'bi-droplet', label: 'Toxin-Abbau', value: 'Glymphatisch' },
+                        { icon: 'bi-cpu', label: 'Gedächtnis', value: 'Konsolidierung' },
+                        { icon: 'bi-heart-pulse', label: 'HGH-Release', value: '↑ Peak' },
+                      ].map((item, i) => (
+                        <div key={i} style={{ textAlign: 'center', padding: '0.75rem', background: 'rgba(255,255,255,0.1)', borderRadius: '12px' }}>
+                          <i className={`bi ${item.icon}`} style={{ fontSize: '1.5rem', marginBottom: '0.375rem', display: 'block' }} />
+                          <div style={{ fontSize: '0.7rem', opacity: 0.8, marginBottom: '0.25rem' }}>{item.label}</div>
+                          <div style={{ fontSize: '0.85rem', fontWeight: 600 }}>{item.value}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                   
                   <div style={{ background: '#F0F9FF', border: '1px solid #B3E0F0', borderRadius: '12px', padding: '1.25rem', marginBottom: '1.25rem' }}>
                     <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.75rem' }}>
-                      <i className="bi bi-lightbulb" style={{ color: '#006EA7', fontSize: '1.25rem', marginTop: '2px' }} />
+                      <div style={{ width: '44px', height: '44px', borderRadius: '50%', background: '#006EA7', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                        <i className="bi bi-lightbulb-fill" style={{ fontSize: '1.25rem' }} />
+                      </div>
                       <div>
                         <div style={{ fontWeight: 600, color: '#006EA7', marginBottom: '0.375rem' }}>Wichtige Erkenntnis</div>
                         <div style={{ color: '#374A5A' }}>
@@ -426,41 +443,105 @@ export default function MasterclassesPage() {
                     </div>
                   </div>
 
-                  <h4 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.75rem', marginTop: '1.5rem' }}>
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.75rem', marginTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <i className="bi bi-diagram-3-fill" style={{ color: '#006EA7' }} />
                     Die 4 Säulen des erholsamen Schlafs
                   </h4>
                   
                   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', marginBottom: '1.25rem' }}>
                     {[
-                      { icon: 'bi-clock', title: 'Dauer', desc: '7-9 Stunden pro Nacht' },
-                      { icon: 'bi-graph-up', title: 'Qualität', desc: 'Tiefschlaf & REM optimal' },
-                      { icon: 'bi-calendar-check', title: 'Regelmäßigkeit', desc: 'Konstante Schlafzeiten' },
-                      { icon: 'bi-sunrise', title: 'Timing', desc: 'Mit dem Biorhythmus' },
+                      { icon: 'bi-clock-fill', title: 'Dauer', desc: '7-9 Stunden pro Nacht', color: '#006EA7', bg: '#B3E0F0' },
+                      { icon: 'bi-bar-chart-fill', title: 'Qualität', desc: 'Tiefschlaf & REM optimal', color: '#2D7A0F', bg: '#DBF2CC' },
+                      { icon: 'bi-calendar-check-fill', title: 'Regelmäßigkeit', desc: 'Konstante Schlafzeiten', color: '#7C3AED', bg: '#EDE9FE' },
+                      { icon: 'bi-sunrise-fill', title: 'Timing', desc: 'Mit dem Biorhythmus', color: '#D97706', bg: '#FEF3C7' },
                     ].map((item, i) => (
-                      <div key={i} style={{ background: '#F8FAFC', borderRadius: '10px', padding: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: '#006EA7', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                      <div key={i} style={{ background: item.bg, borderRadius: '12px', padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1rem', border: `1px solid ${item.color}20` }}>
+                        <div style={{ width: '50px', height: '50px', borderRadius: '12px', background: item.color, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.25rem', flexShrink: 0 }}>
                           <i className={`bi ${item.icon}`} />
                         </div>
                         <div>
-                          <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>{item.title}</div>
-                          <div style={{ fontSize: '0.8rem', color: '#7D8087' }}>{item.desc}</div>
+                          <div style={{ fontWeight: 700, fontSize: '1rem', color: item.color }}>{item.title}</div>
+                          <div style={{ fontSize: '0.85rem', color: '#374A5A' }}>{item.desc}</div>
                         </div>
                       </div>
                     ))}
                   </div>
 
-                  <h4 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.75rem', marginTop: '1.5rem' }}>
+                  {/* Visuelles Schaubild - Schlafphasen */}
+                  <div style={{ background: '#F8FAFC', borderRadius: '16px', padding: '1.5rem', marginBottom: '1.5rem', border: '1px solid #E2E3E4' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
+                      <i className="bi bi-activity" style={{ color: '#006EA7', fontSize: '1.1rem' }} />
+                      <span style={{ fontWeight: 600, color: '#374A5A' }}>Dein Schlafzyklus (90 Min)</span>
+                    </div>
+                    <div style={{ display: 'flex', alignItems: 'end', gap: '4px', height: '80px', marginBottom: '0.75rem' }}>
+                      {/* Schlafphasen-Visualisierung */}
+                      {[
+                        { height: '30%', color: '#B3E0F0', label: 'Wach' },
+                        { height: '50%', color: '#4C99C2', label: 'Leicht' },
+                        { height: '85%', color: '#006EA7', label: 'Tief' },
+                        { height: '100%', color: '#1a365d', label: 'Tief' },
+                        { height: '70%', color: '#006EA7', label: 'Tief' },
+                        { height: '45%', color: '#4C99C2', label: 'Leicht' },
+                        { height: '60%', color: '#7C3AED', label: 'REM' },
+                        { height: '40%', color: '#4C99C2', label: 'Leicht' },
+                      ].map((phase, i) => (
+                        <div key={i} style={{ flex: 1, height: phase.height, background: phase.color, borderRadius: '4px 4px 0 0', transition: 'all 0.3s' }} />
+                      ))}
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#7D8087' }}>
+                      <span>0 Min</span>
+                      <span>45 Min</span>
+                      <span>90 Min</span>
+                    </div>
+                    <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                      {[
+                        { color: '#4C99C2', label: 'Leichtschlaf' },
+                        { color: '#006EA7', label: 'Tiefschlaf' },
+                        { color: '#7C3AED', label: 'REM-Schlaf' },
+                      ].map((item, i) => (
+                        <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+                          <div style={{ width: '12px', height: '12px', borderRadius: '3px', background: item.color }} />
+                          <span style={{ fontSize: '0.8rem', color: '#374A5A' }}>{item.label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  <h4 style={{ fontSize: '1.1rem', fontWeight: 600, marginBottom: '0.75rem', marginTop: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <i className="bi bi-exclamation-triangle-fill" style={{ color: '#DC2626' }} />
                     Was passiert bei Schlafmangel?
                   </h4>
                   <p style={{ marginBottom: '1rem' }}>
                     Chronischer Schlafmangel beschleunigt die biologische Alterung messbar. Studien zeigen:
                   </p>
-                  <ul style={{ paddingLeft: '1.25rem', marginBottom: '1.25rem' }}>
-                    <li style={{ marginBottom: '0.5rem' }}>Erhöhte Entzündungsmarker (CRP, IL-6)</li>
-                    <li style={{ marginBottom: '0.5rem' }}>Beschleunigte Telomerverkürzung</li>
-                    <li style={{ marginBottom: '0.5rem' }}>Gestörte Glukoseregulation</li>
-                    <li style={{ marginBottom: '0.5rem' }}>Beeinträchtigte Immunfunktion</li>
-                  </ul>
+                  
+                  {/* Visuelle Liste mit Icons */}
+                  <div style={{ display: 'grid', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                    {[
+                      { icon: 'bi-fire', text: 'Erhöhte Entzündungsmarker (CRP, IL-6)', color: '#DC2626', bg: '#FEE2E2' },
+                      { icon: 'bi-hourglass-split', text: 'Beschleunigte Telomerverkürzung', color: '#D97706', bg: '#FEF3C7' },
+                      { icon: 'bi-droplet-half', text: 'Gestörte Glukoseregulation', color: '#7C3AED', bg: '#EDE9FE' },
+                      { icon: 'bi-shield-exclamation', text: 'Beeinträchtigte Immunfunktion', color: '#006EA7', bg: '#B3E0F0' },
+                    ].map((item, i) => (
+                      <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.875rem 1rem', background: item.bg, borderRadius: '10px', border: `1px solid ${item.color}30` }}>
+                        <div style={{ width: '36px', height: '36px', borderRadius: '8px', background: item.color, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                          <i className={`bi ${item.icon}`} />
+                        </div>
+                        <span style={{ fontWeight: 500 }}>{item.text}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Statistik-Karte */}
+                  <div style={{ background: 'linear-gradient(135deg, #DC2626 0%, #B91C1C 100%)', borderRadius: '12px', padding: '1.25rem', color: 'white', display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
+                    <div style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(255,255,255,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                      <i className="bi bi-graph-down-arrow" style={{ fontSize: '1.75rem' }} />
+                    </div>
+                    <div>
+                      <div style={{ fontSize: '2rem', fontWeight: 700, lineHeight: 1 }}>-11 Jahre</div>
+                      <div style={{ fontSize: '0.9rem', opacity: 0.9, marginTop: '0.25rem' }}>Lebenserwartung bei chronischem Schlafmangel (&lt;6h/Nacht)</div>
+                    </div>
+                  </div>
                 </div>
               </div>
 

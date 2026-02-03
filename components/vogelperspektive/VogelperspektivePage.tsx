@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 interface CategoryPetal {
   id: string;
+  number: number;
   title: string;
   status: 'positive' | 'negative' | 'neutral';
   angle: number;
@@ -13,60 +14,70 @@ interface CategoryPetal {
 const categories: CategoryPetal[] = [
   {
     id: 'sleep',
+    number: 1,
     title: 'Schlaf & Erholung',
     status: 'positive',
     angle: 0,
   },
   {
     id: 'movement',
+    number: 2,
     title: 'Bewegung & Sport',
     status: 'positive',
     angle: 36,
   },
   {
     id: 'nutrition',
+    number: 3,
     title: 'Ernährung',
     status: 'negative',
     angle: 72,
   },
   {
     id: 'cell-protection',
+    number: 4,
     title: 'Zellschutz & Zellreinigung',
     status: 'neutral',
     angle: 108,
   },
   {
     id: 'molecular',
+    number: 5,
     title: 'Molekulare Biologie',
     status: 'positive',
     angle: 144,
   },
   {
     id: 'gut',
+    number: 6,
     title: 'Darm & Immunsystem',
     status: 'neutral',
     angle: 180,
   },
   {
     id: 'social',
+    number: 7,
     title: 'Soziales Umfeld',
     status: 'positive',
     angle: 216,
   },
   {
     id: 'toxins',
+    number: 8,
     title: 'Umweltgifte',
     status: 'negative',
     angle: 252,
   },
   {
     id: 'therapies',
+    number: 9,
     title: 'High End Therapien',
     status: 'neutral',
     angle: 288,
   },
   {
     id: 'mental',
+    number: 10,
     title: 'Mentale Resilienz',
     status: 'negative',
     angle: 324,
@@ -220,7 +231,24 @@ const recommendedActions = [
 
 export default function VogelperspektivePage() {
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
-  const [benefitMessage, setBenefitMessage] = useState<string>('Wie fühlst du dich heute?');
+
+  // Aktuelles Datum und Uhrzeit für Begrüßung
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+    if (hour < 12) return 'Guten Morgen';
+    if (hour < 18) return 'Guten Tag';
+    return 'Guten Abend';
+  };
+
+  const getCurrentDate = () => {
+    const options: Intl.DateTimeFormatOptions = { 
+      weekday: 'long', 
+      day: 'numeric', 
+      month: 'long', 
+      year: 'numeric' 
+    };
+    return new Date().toLocaleDateString('de-DE', options);
+  };
 
   const getStatusColor = (status: string) => {
     switch (status) {
@@ -272,6 +300,13 @@ export default function VogelperspektivePage() {
 
   return (
     <div className="bird-view-container">
+      {/* Willkommens-Header */}
+      <div className="welcome-header">
+        <span className="welcome-date-badge">{getCurrentDate()}</span>
+        <h1 className="welcome-greeting">{getGreeting()}, <span className="user-name">Sarah</span></h1>
+        <p className="welcome-subtitle">Dein persönlicher Longevity-Kompass – alle 10 Lebensbereiche auf einen Blick.</p>
+      </div>
+
       {/* Animierter Hintergrund */}
       <div className="animated-background">
         <div className="bg-gradient-orb bg-gradient-orb-1"></div>
@@ -395,19 +430,18 @@ export default function VogelperspektivePage() {
             <div className="sun-image-wrapper">
               <div className="sun-image-glow"></div>
               <Image
-                src="/images/profile-large2.png"
+                src="/images/woman3.png"
                 alt="Profile"
                 width={400}
                 height={400}
                 className="sun-profile-image"
+                style={{ objectFit: 'cover', aspectRatio: '1' }}
               />
             </div>
             
             {/* Scores als Overlay über dem Bild */}
             <div className="sun-overlay-section">
-            <div className="sun-benefit-text">
-              {benefitMessage}
-              </div>
+              <div className="sun-benefit-text">Dein Longevity Score</div>
               <div className="sun-score-badge">
                 <span className="sun-score-value">78</span>
                 <span className="sun-score-label">/100</span>
@@ -438,7 +472,7 @@ export default function VogelperspektivePage() {
                     <div className="icon-bg"></div>
                     {getCategoryIcon(category.id, statusColor)}
                   </div>
-                  <div className="category-title">{category.title}</div>
+                  <div className="category-title">{category.number}. {category.title}</div>
                 </div>
               </div>
             );
@@ -494,8 +528,65 @@ export default function VogelperspektivePage() {
           overflow-y: visible;
           display: flex;
           flex-direction: column;
-          padding: 1rem 2.5rem 2.5rem 2.5rem;
+          padding: 0.5rem 2.5rem 2.5rem 2.5rem;
           animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        /* Willkommens-Header */
+        .welcome-header {
+          text-align: center;
+          padding: 1rem 0 0 0;
+          z-index: 10;
+          position: relative;
+          margin-bottom: -5rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 0.25rem;
+        }
+
+        .welcome-date-badge {
+          font-size: 0.65rem;
+          color: #64748b;
+          background: rgba(255, 255, 255, 0.7);
+          padding: 0.25rem 0.6rem;
+          border-radius: 20px;
+          font-weight: 500;
+          letter-spacing: 0.02em;
+          margin-bottom: 0.15rem;
+        }
+
+        .welcome-greeting {
+          font-size: 2rem;
+          font-weight: 400;
+          color: #475569;
+          margin: 0;
+          letter-spacing: -0.01em;
+        }
+
+        .user-name {
+          background: linear-gradient(135deg, #0891b2 0%, #0d9488 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          font-weight: 600;
+        }
+
+        .welcome-subtitle {
+          font-size: 0.95rem;
+          color: #64748b;
+          margin: 0;
+          font-weight: 400;
+          letter-spacing: 0.01em;
+        }
+
+        .sun-score-description {
+          font-size: 0.65rem;
+          color: rgba(255, 255, 255, 0.9);
+          text-align: center;
+          margin-top: 0.4rem;
+          text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+          letter-spacing: 0.02em;
         }
 
         @keyframes backgroundShift {
@@ -673,7 +764,7 @@ export default function VogelperspektivePage() {
           width: 100%;
           max-width: 1000px;
           aspect-ratio: 1;
-          margin: 0 auto 2rem;
+          margin: -6rem auto 1.5rem;
           padding-top: 0;
         }
 
@@ -697,7 +788,7 @@ export default function VogelperspektivePage() {
           left: 50%;
           transform: translate(-50%, -50%);
           width: ${ringRadius * 2}%;
-          height: ${ringRadius * 2}%;
+          aspect-ratio: 1;
           border-radius: 50%;
           background: radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.98) 0%, rgba(240, 249, 255, 0.95) 50%, rgba(224, 242, 254, 0.9) 100%);
           backdrop-filter: blur(30px);
@@ -811,8 +902,10 @@ export default function VogelperspektivePage() {
         }
 
         .sun-profile-image {
-          width: 70%;
-          height: 70%;
+          width: 88% !important;
+          height: 88% !important;
+          min-width: 88%;
+          min-height: 88%;
           object-fit: cover;
           object-position: center 20%;
           display: block;
@@ -823,6 +916,8 @@ export default function VogelperspektivePage() {
           position: relative;
           z-index: 2;
           animation: imagePulse 3s ease-in-out infinite;
+          border: 3px solid rgba(255, 255, 255, 0.8);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         }
 
         @keyframes imagePulse {
@@ -849,7 +944,7 @@ export default function VogelperspektivePage() {
           flex-direction: column;
           align-items: center;
           justify-content: flex-end;
-          padding: 1rem 0.75rem;
+          padding: 0 1.5rem 2rem 1.5rem;
           position: absolute;
           bottom: 0;
           left: 0;
@@ -1037,7 +1132,7 @@ export default function VogelperspektivePage() {
           grid-template-columns: 1fr 1fr;
           gap: 1.5rem;
           max-width: 1100px;
-          margin: -2rem auto 0;
+          margin: -8rem auto 0;
           padding: 0 1rem;
         }
 

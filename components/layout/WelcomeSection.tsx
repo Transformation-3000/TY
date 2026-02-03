@@ -1,21 +1,15 @@
 'use client';
 
 import Image from 'next/image';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
-export default function WelcomeSection() {
+type WelcomeSectionProps = {
+  onNavigate?: (menuItem: string) => void;
+};
+
+export default function WelcomeSection({ onNavigate }: WelcomeSectionProps) {
   const [isConnected] = useState(true);
   const imageVersion = '2';
-
-  const handlePlanHeute = () => {
-    // TODO: Implementiere "Plan für heute" Funktionalität
-    console.log('Plan für heute');
-  };
-
-  const handleCoachingStart = () => {
-    // TODO: Implementiere "Coaching starten" Funktionalität
-    console.log('Coaching starten');
-  };
 
   return (
     <div className="top-navigation-content">
@@ -31,12 +25,18 @@ export default function WelcomeSection() {
         />
       </div>
 
-      {/* Buttons in der Mitte */}
+      {/* Buttons in der Mitte: Reports | Lisa AI (Coaching) */}
       <div className="top-nav-buttons">
-        <button className="top-nav-button" onClick={handlePlanHeute}>
+        <button
+          className="top-nav-button"
+          onClick={() => onNavigate?.('reports')}
+        >
           Plan für heute
         </button>
-        <button className="top-nav-button" onClick={handleCoachingStart}>
+        <button
+          className="top-nav-button"
+          onClick={() => onNavigate?.('coaching')}
+        >
           Coaching starten
         </button>
       </div>
@@ -56,7 +56,7 @@ export default function WelcomeSection() {
         </div>
         <div className="top-nav-profile">
           <Image
-            src="/images/profilepic.png"
+            src="/images/woman3.png"
             alt="Profile"
             width={60}
             height={60}

@@ -75,7 +75,7 @@ const sessionTopics = [
     title: 'Stressmanagement',
     subtitle: 'Muster erkennen & verstehen',
     example: '"Gab es heute einen stressigen Moment?"',
-    icon: '🧘',
+    icon: '🧠',
   },
 ];
 
@@ -145,19 +145,13 @@ export default function Coaching2Page() {
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Guten Morgen';
-    if (hour < 18) return 'Guten Tag';
-    return 'Guten Abend';
-  };
-
   const startSession = () => {
     setCurrentPhase('session-opening');
+    setIsSessionActive(true); // Timer startet sofort
     setIsSpeaking(true);
     
-    // Lisa begrüßt empathisch
-    const greeting = `${getGreeting()}! Schön, dass du dir Zeit für dich nimmst. Wie möchtest du heute starten?`;
+    // Lisa begrüßt empathisch (Begrüßung haben wir schon auf der Welcome-Seite)
+    const greeting = 'Schön, dass du dir Zeit für dich nimmst. Wie möchtest du heute starten?';
     
     setMessages([{ type: 'lisa', text: '', isTyping: true }]);
     
@@ -242,7 +236,7 @@ export default function Coaching2Page() {
     
     setTimeout(() => {
       setCurrentPhase('session');
-      setIsSessionActive(true);
+      // Timer läuft bereits seit startSession
       setIsSpeaking(true);
       
       const startMessage = `Perfekt! Lass uns gemeinsam über dein ${topic?.title} sprechen. ${topic?.example.replace(/"/g, '')}`;
@@ -368,9 +362,9 @@ export default function Coaching2Page() {
                 </div>
                 
                 <div className="welcome-header">
-                  <h1>Hallo!</h1>
+                  <h1>Einen wundervollen Tag.</h1>
                   <p className="welcome-subtitle">
-                    Ich bin <strong>Lisa</strong>, deine empathische Begleiterin für mehr Wohlbefinden und Achtsamkeit.
+                    Ich bin <strong>Lisa AI</strong>, deine empathische Begleiterin für Vitalität und Langlebigkeit.
                   </p>
                 </div>
 
@@ -381,8 +375,8 @@ export default function Coaching2Page() {
                   <div className="intro-text-wrap">
                     <p className="intro-text">
                       Hier startest du eine <strong>Coaching-Session</strong> von 5-10 Minuten mit mir. 
-                      Wir reflektieren gemeinsam über deine Gewohnheiten und entwickeln kleine, 
-                      alltagstaugliche Micro Habits.
+                      Wir reflektieren gemeinsam über deine Gewohnheiten und entwickeln neue, 
+                      alltagstaugliche Gewohnheiten, die dir helfen, deinen Zielen Schritt für Schritt näher zu kommen.
                     </p>
                   </div>
                 </div>
@@ -412,21 +406,28 @@ export default function Coaching2Page() {
             {/* Session Opening + Topic Select + Session - Dialog View */}
             {currentPhase !== 'welcome' && (
               <div className="dialog-view">
-                {/* Session Header */}
-                {currentPhase === 'session' && (
-                  <div className="session-header">
-                    <div className="session-topic">
-                      <span className="topic-emoji-small">
-                        {sessionTopics.find(t => t.id === selectedTopic)?.icon}
-                      </span>
-                      <span>{sessionTopics.find(t => t.id === selectedTopic)?.title}</span>
-                    </div>
-                    <div className="session-timer">
-                      <span className="timer-icon">{Icons.clock}</span>
-                      <span>{formatTime(sessionTime)}</span>
-                    </div>
+                {/* Session Header mit prominenter Uhr - erscheint sofort bei Gesprächsstart */}
+                <div className="session-header">
+                  <div className="session-topic">
+                    {selectedTopic ? (
+                      <>
+                        <span className="topic-emoji-small">
+                          {sessionTopics.find(t => t.id === selectedTopic)?.icon}
+                        </span>
+                        <span>{sessionTopics.find(t => t.id === selectedTopic)?.title}</span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="topic-emoji-small">💬</span>
+                        <span>Coaching Session</span>
+                      </>
+                    )}
                   </div>
-                )}
+                  <div className="session-timer session-timer-prominent">
+                    <span className="timer-icon">{Icons.clock}</span>
+                    <span className="timer-value">{formatTime(sessionTime)}</span>
+                  </div>
+                </div>
                 
                 {/* Dialog Area */}
                 <div className="dialog-area" ref={dialogRef}>
@@ -984,9 +985,11 @@ export default function Coaching2Page() {
           justify-content: space-between;
           align-items: center;
           padding: 1rem 0 1.25rem 0;
+          padding-top: 3rem;
           border-bottom: 1px solid rgba(68, 152, 202, 0.1);
           margin-bottom: 1rem;
           flex-shrink: 0;
+          position: relative;
         }
 
         .session-topic {
@@ -1012,6 +1015,30 @@ export default function Coaching2Page() {
           background: rgba(68, 152, 202, 0.08);
           border-radius: 20px;
           font-weight: 500;
+        }
+
+        .session-timer-prominent {
+          position: absolute;
+          top: 0;
+          right: 0;
+          font-size: 1.35rem;
+          font-weight: 700;
+          color: #2c5a7c;
+          padding: 0.65rem 1.25rem;
+          background: rgba(68, 152, 202, 0.12);
+          border: 1px solid rgba(68, 152, 202, 0.2);
+          border-radius: 16px;
+          box-shadow: 0 2px 12px rgba(68, 152, 202, 0.1);
+        }
+
+        .session-timer-prominent .timer-icon {
+          width: 22px;
+          height: 22px;
+        }
+
+        .session-timer-prominent .timer-value {
+          font-variant-numeric: tabular-nums;
+          letter-spacing: 0.02em;
         }
 
         .timer-icon {

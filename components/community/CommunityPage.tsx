@@ -3,13 +3,13 @@
 import { useState } from 'react';
 
 const principles = [
-  { id: 1, title: 'Verantwortung', description: 'Wir übernehmen Verantwortung für unsere Lebenszeit: Langlebigkeit beginnt bei uns selbst. Wir handeln informiert und bewusst – jeden Tag.', icon: 'bi-heart-pulse-fill' },
-  { id: 2, title: 'Weitsicht', description: 'Wir denken in Jahren – und handeln heute: Longevity ist kein Sprint, sondern ein intelligenter Marathon mit kleinen, klugen Entscheidungen.', icon: 'bi-hourglass-split' },
-  { id: 3, title: 'Weisheit', description: 'Wir verbinden Wissenschaft mit Weisheit: Daten geben Orientierung, Erfahrung gibt Tiefe. Wir nutzen beides.', icon: 'bi-lightbulb-fill' },
-  { id: 4, title: 'Ganzheit', description: 'Wir optimieren nicht nur den Körper – sondern das ganze Leben: Energie, Schlaf, Geist, Beziehungen und Sinn gehören zusammen.', icon: 'bi-infinity' },
-  { id: 5, title: 'Kontinuität', description: 'Wir setzen auf Kontinuität statt Perfektion: Nicht der perfekte Tag zählt – sondern die Richtung.', icon: 'bi-compass-fill' },
-  { id: 6, title: 'Gemeinschaft', description: 'Wir wachsen gemeinsam – nicht im Alleingang: Longevity entsteht im Austausch, im Spiegeln, im Miteinander. Gemeinschaft verstärkt diese Wirkung.', icon: 'bi-people-fill' },
-  { id: 7, title: 'Lebensfreude', description: 'Wir gestalten Zukunft – voller Klarheit und lebendig: Longevity ist Lebensfreude mit Perspektive. Wir investieren nicht in Sorge vor dem Altern, sondern in Lust am Leben.', icon: 'bi-sun-fill' },
+  { id: 1, title: 'Verantwortung', description: 'Wir übernehmen Verantwortung für unsere Lebenszeit: Langlebigkeit beginnt bei uns selbst. Wir handeln informiert und bewusst – jeden Tag.', icon: 'bi-heart-pulse-fill', image: '/images/prinzip-verantwortung.jpg', gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+  { id: 2, title: 'Weitsicht', description: 'Wir denken in Jahren – und handeln heute: Longevity ist kein Sprint, sondern ein intelligenter Marathon mit kleinen, klugen Entscheidungen.', icon: 'bi-hourglass-split', image: '/images/prinzip-weitsicht.jpg', gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)' },
+  { id: 3, title: 'Weisheit', description: 'Wir verbinden Wissenschaft mit Weisheit: Daten geben Orientierung, Erfahrung gibt Tiefe. Wir nutzen beides.', icon: 'bi-lightbulb-fill', image: '/images/prinzip-weisheit.jpg', gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)' },
+  { id: 4, title: 'Ganzheit', description: 'Wir optimieren nicht nur den Körper – sondern das ganze Leben: Energie, Schlaf, Geist, Beziehungen und Sinn gehören zusammen.', icon: 'bi-infinity', image: '/images/prinzip-ganzheit.jpg', gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)' },
+  { id: 5, title: 'Kontinuität', description: 'Wir setzen auf Kontinuität statt Perfektion: Nicht der perfekte Tag zählt – sondern die Richtung.', icon: 'bi-compass-fill', image: '/images/prinzip-kontinuitaet.jpg', gradient: 'linear-gradient(135deg, #fa709a 0%, #fee140 100%)' },
+  { id: 6, title: 'Gemeinschaft', description: 'Wir wachsen gemeinsam – nicht im Alleingang: Longevity entsteht im Austausch, im Spiegeln, im Miteinander. Gemeinschaft verstärkt diese Wirkung.', icon: 'bi-people-fill', image: '/images/prinzip-gemeinschaft.jpg', gradient: 'linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%)' },
+  { id: 7, title: 'Lebensfreude', description: 'Wir gestalten Zukunft – voller Klarheit und lebendig: Longevity ist Lebensfreude mit Perspektive. Wir investieren nicht in Sorge vor dem Altern, sondern in Lust am Leben.', icon: 'bi-sun-fill', image: '/images/prinzip-lebensfreude.jpg', gradient: 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)' },
 ];
 
 const topRanking = [
@@ -24,23 +24,23 @@ const topRanking = [
 ];
 
 const experiments = [
-  { id: '1', title: 'Koffein Cutoff', desc: 'nach 14:00 Uhr', icon: 'bi-cup-hot-fill' },
-  { id: '2', title: 'Tageslicht am Morgen', desc: '10 Min.', icon: 'bi-sunrise-fill' },
-  { id: '3', title: 'Evening-Screen Cutoff', desc: '60 Min. bildschirmfrei', icon: 'bi-phone-vibrate' },
-  { id: '4', title: 'Walk-after-Meals', desc: '10 Min.', icon: 'bi-person-walking' },
-  { id: '5', title: 'Protein-First Frühstück', desc: 'mit 30g+', icon: 'bi-egg-fried' },
-  { id: '6', title: 'Alkohol-Pause', desc: '14 Tage', icon: 'bi-slash-circle' },
-  { id: '7', title: 'Fiber-Boost', desc: 'mit 10g+ Ballaststoffe', icon: 'bi-tree-fill' },
-  { id: '8', title: 'Hydration-Reset', desc: '500ml Wasser in 60 Min.', icon: 'bi-droplet-fill' },
-  { id: '9', title: 'Magnesium-Abendroutine', desc: '1h vor dem Einschlafen', icon: 'bi-capsule' },
-  { id: '10', title: 'Breathwork', desc: '3x 5 Min. täglich', icon: 'bi-wind' },
-  { id: '11', title: 'Meal-Timing', desc: '3h+ vor Schlafengehen', icon: 'bi-clock-fill' },
+  { id: '1', title: 'Koffein Cutoff', desc: 'nach 14:00 Uhr', icon: 'bi-cup-hot-fill', color: '#8B5A2B' },
+  { id: '2', title: 'Tageslicht am Morgen', desc: '10 Min.', icon: 'bi-sunrise-fill', color: '#F59E0B' },
+  { id: '3', title: 'Evening-Screen Cutoff', desc: '60 Min. bildschirmfrei', icon: 'bi-phone-vibrate', color: '#6366F1' },
+  { id: '4', title: 'Walk-after-Meals', desc: '10 Min.', icon: 'bi-person-walking', color: '#10B981' },
+  { id: '5', title: 'Protein-First Frühstück', desc: 'mit 30g+', icon: 'bi-egg-fried', color: '#F97316' },
+  { id: '6', title: 'Alkohol-Pause', desc: '14 Tage', icon: 'bi-slash-circle', color: '#EF4444' },
+  { id: '7', title: 'Fiber-Boost', desc: 'mit 10g+ Ballaststoffe', icon: 'bi-tree-fill', color: '#22C55E' },
+  { id: '8', title: 'Hydration-Reset', desc: '500ml Wasser in 60 Min.', icon: 'bi-droplet-fill', color: '#3B82F6' },
+  { id: '9', title: 'Magnesium-Abendroutine', desc: '1h vor dem Einschlafen', icon: 'bi-capsule', color: '#8B5CF6' },
+  { id: '10', title: 'Breathwork', desc: '3x 5 Min. täglich', icon: 'bi-wind', color: '#06B6D4' },
+  { id: '11', title: 'Meal-Timing', desc: '3h+ vor Schlafengehen', icon: 'bi-clock-fill', color: '#EC4899' },
 ];
 
 const challenges = [
-  { id: '1', title: '30 Tage Schlaf-Optimierung', desc: 'Verbessere deine Schlafqualität', participants: 247, progress: 45, active: true, icon: 'bi-moon-stars-fill' },
-  { id: '2', title: 'Protein Challenge', desc: '30g Protein zum Frühstück', participants: 189, active: false, icon: 'bi-egg-fried' },
-  { id: '3', title: 'Digital Detox Abend', desc: '60 Min. bildschirmfrei', participants: 312, active: false, icon: 'bi-phone-vibrate' },
+  { id: '1', title: '30 Tage Schlaf-Optimierung', desc: 'Verbessere deine Schlafqualität', participants: 247, progress: 45, active: true, icon: 'bi-moon-stars-fill', color: '#6366F1' },
+  { id: '2', title: 'Protein Challenge', desc: '30g Protein zum Frühstück', participants: 189, active: false, icon: 'bi-egg-fried', color: '#F97316' },
+  { id: '3', title: 'Digital Detox Abend', desc: '60 Min. bildschirmfrei', participants: 312, active: false, icon: 'bi-phone-vibrate', color: '#8B5CF6' },
 ];
 
 export default function CommunityPage() {
@@ -94,14 +94,16 @@ export default function CommunityPage() {
             </div>
             
             <div className="principle-card">
-              <div className="principle-card-header">
-                <div className="principle-card-num">{currentPrin.id}</div>
-                <div className="principle-card-icon">
+              <div className="principle-card-image" style={{ background: currentPrin.gradient }}>
+                <div className="principle-card-image-icon">
                   <i className={`bi ${currentPrin.icon}`}></i>
                 </div>
-                <h3>{currentPrin.title}</h3>
+                <div className="principle-card-num">{currentPrin.id}</div>
               </div>
-              <p className="principle-card-desc">{currentPrin.description}</p>
+              <div className="principle-card-body">
+                <h3>{currentPrin.title}</h3>
+                <p>{currentPrin.description}</p>
+              </div>
             </div>
 
             <div className="carousel-dots">
@@ -129,18 +131,18 @@ export default function CommunityPage() {
           <div className="list">
             {challenges.map((c) => (
               <div key={c.id} className={`list-item ${c.active ? 'active' : ''}`}>
-                <div className="item-icon">
+                <div className="item-icon" style={{ background: c.color }}>
                   <i className={`bi ${c.icon}`}></i>
                 </div>
                 <div className="item-content">
                   <div className="item-title">{c.title}</div>
                   <div className="item-meta">
                     {c.participants} Teilnehmer
-                    {c.active && <span className="tag-active">Aktiv · {c.progress}%</span>}
+                    {c.active && <span className="tag-active" style={{ color: c.color }}>Aktiv · {c.progress}%</span>}
                   </div>
                 </div>
                 {!c.active && (
-                  <button className="btn-secondary">Beitreten</button>
+                  <button className="btn-secondary" style={{ borderColor: c.color, color: c.color }}>Beitreten</button>
                 )}
               </div>
             ))}
@@ -200,7 +202,7 @@ export default function CommunityPage() {
               className={`carousel-card ${activeExperiments.has(currentExp.id) ? 'selected' : ''}`}
               onClick={() => toggleExperiment(currentExp.id)}
             >
-              <div className="carousel-icon">
+              <div className="carousel-icon" style={{ background: currentExp.color }}>
                 <i className={`bi ${currentExp.icon}`}></i>
               </div>
               <div className="carousel-text">
@@ -209,12 +211,12 @@ export default function CommunityPage() {
               </div>
               <div className="carousel-action">
                 {activeExperiments.has(currentExp.id) ? (
-                  <div className="check-badge">
+                  <div className="check-badge" style={{ background: currentExp.color }}>
                     <i className="bi bi-check-lg"></i>
                     Ausgewählt
                   </div>
                 ) : (
-                  <button className="btn-add">
+                  <button className="btn-add" style={{ borderColor: currentExp.color, color: currentExp.color }}>
                     <i className="bi bi-plus"></i>
                     Hinzufügen
                   </button>
@@ -281,60 +283,68 @@ export default function CommunityPage() {
         }
 
         .principles-section .carousel-content {
-          max-width: 500px;
+          max-width: 480px;
           width: 100%;
         }
 
         .principle-card {
           width: 100%;
-          padding: 1.5rem;
-          background: #fafafa;
-          border: 2px solid #eee;
-          border-radius: 12px;
-          text-align: center;
+          background: #fff;
+          border-radius: 16px;
+          overflow: hidden;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.08);
         }
 
-        .principle-card-header {
+        .principle-card-image {
+          height: 140px;
           display: flex;
           align-items: center;
           justify-content: center;
-          gap: 0.75rem;
-          margin-bottom: 1rem;
+          position: relative;
         }
 
-        .principle-card-num {
-          width: 28px;
-          height: 28px;
-          background: #14506c;
-          border-radius: 8px;
+        .principle-card-image-icon {
+          width: 70px;
+          height: 70px;
+          background: rgba(255,255,255,0.25);
+          backdrop-filter: blur(10px);
+          border-radius: 20px;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 0.8rem;
-          font-weight: 700;
+          font-size: 2rem;
           color: #fff;
         }
 
-        .principle-card-icon {
-          width: 40px;
-          height: 40px;
-          background: #e8f4f8;
+        .principle-card-num {
+          position: absolute;
+          top: 12px;
+          left: 12px;
+          width: 32px;
+          height: 32px;
+          background: rgba(255,255,255,0.9);
           border-radius: 10px;
           display: flex;
           align-items: center;
           justify-content: center;
-          font-size: 1.1rem;
-          color: #14506c;
+          font-size: 0.9rem;
+          font-weight: 700;
+          color: #333;
         }
 
-        .principle-card-header h3 {
-          font-size: 1.1rem;
+        .principle-card-body {
+          padding: 1.25rem 1.5rem 1.5rem;
+          text-align: center;
+        }
+
+        .principle-card-body h3 {
+          font-size: 1.15rem;
           font-weight: 600;
           color: #1a1a1a;
-          margin: 0;
+          margin: 0 0 0.75rem;
         }
 
-        .principle-card-desc {
+        .principle-card-body p {
           font-size: 0.85rem;
           color: #666;
           line-height: 1.6;
@@ -380,20 +390,15 @@ export default function CommunityPage() {
         }
 
         .item-icon {
-          width: 36px;
-          height: 36px;
-          background: #eee;
-          border-radius: 8px;
+          width: 42px;
+          height: 42px;
+          border-radius: 12px;
           display: flex;
           align-items: center;
           justify-content: center;
-          color: #666;
-          font-size: 0.95rem;
-        }
-
-        .list-item.active .item-icon {
-          background: #14506c;
           color: #fff;
+          font-size: 1.1rem;
+          box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
 
         .item-content {
@@ -627,23 +632,16 @@ export default function CommunityPage() {
         }
 
         .carousel-icon {
-          width: 60px;
-          height: 60px;
-          background: #fff;
-          border: 1px solid #eee;
-          border-radius: 16px;
+          width: 70px;
+          height: 70px;
+          border-radius: 20px;
           display: flex;
           align-items: center;
           justify-content: center;
           margin: 0 auto 1rem;
-          font-size: 1.5rem;
-          color: #14506c;
-        }
-
-        .carousel-card.selected .carousel-icon {
-          background: #14506c;
-          border-color: #14506c;
+          font-size: 1.75rem;
           color: #fff;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.15);
         }
 
         .carousel-text h3 {

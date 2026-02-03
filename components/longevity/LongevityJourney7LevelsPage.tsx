@@ -277,13 +277,8 @@ export default function LongevityJourney7LevelsPage() {
       {/* Header Section */}
       <header className={`journey-hero ${isVisible ? 'visible' : ''}`}>
         <div className="journey-hero-content">
-          <div className="journey-badge">
-            <i className="bi bi-rocket-takeoff"></i>
-            <span>Deine Reise</span>
-          </div>
-          <h1 className="journey-title">
-            <span className="journey-title-line">Deine</span>
-            <span className="journey-title-accent">Reise</span>
+          <h1 className="journey-title journey-title-single">
+            Deine Reise
           </h1>
           <p className="journey-subtitle">
             Du hast Level 3 erreicht: 31–45 Punkte – was jetzt zählt
