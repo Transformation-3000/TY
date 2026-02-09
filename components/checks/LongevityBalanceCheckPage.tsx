@@ -9,7 +9,7 @@ export default function LongevityBalanceCheckPage() {
         {/* Text 1/3 links */}
         <div className="lab-check-info-section">
           <div className="lab-check-header">
-            <h1 className="lab-check-title">Analyse <span style={{ whiteSpace: 'nowrap' }}>Longevity-Balance</span></h1>
+            <h1 className="lab-check-title">Longevity-Balance</h1>
             <p className="lab-check-subtitle">
               Ganzheitliche Stoffwechselanalyse mit über 250 Biomarkern – für ein ganzheitliches Bild deiner metabolischen Gesundheit. Die Ampelfarben zeigen an, in welchem Status sich deine wichtigsten 10 Systeme und Organe aktuell befinden.
             </p>

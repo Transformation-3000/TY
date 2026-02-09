@@ -7637,7 +7637,7 @@ i[class*="bi-"] {
   align-items: center;
   justify-content: center;
   padding: 2.5rem;
-  background: linear-gradient(135deg, var(--color-60-calm-sky) 0%, rgba(179, 224, 240, 0.6) 100%);
+  background: linear-gradient(135deg, #2c5282 0%, #3182ce 50%, #2b6cb0 100%);
 }
 
 .lab-check-image-wrapper {
@@ -7717,9 +7717,17 @@ i[class*="bi-"] {
   font-weight: 500;
 }
 
+.lab-check-image-section .provider-name {
+  color: rgba(255, 255, 255, 0.9);
+}
+
 .provider-type {
   font-size: 0.75rem;
   color: var(--text-tertiary);
+}
+
+.lab-check-image-section .provider-type {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Infobereich */
