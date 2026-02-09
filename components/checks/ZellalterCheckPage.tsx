@@ -9,17 +9,13 @@ export default function ZellalterCheckPage() {
         {/* Text 1/3 links */}
         <div className="lab-check-info-section">
           <div className="lab-check-header">
-            <h1 className="lab-check-title">Zellalter Check</h1>
+            <h1 className="lab-check-title">Analyse Zell-Alter</h1>
             <p className="lab-check-subtitle">
               Messe dein biologisches Alter auf Basis Tausender Proteine. Und bekomme einen Eindruck zu deiner aktuellen Alterungsgeschwindigkeit und wo du bei den Hallmarks of Aging stehst.
             </p>
           </div>
 
           <div className="lab-check-footer">
-            <div className="lab-price-info">
-              <span className="lab-price-label">Ab</span>
-              <span className="lab-price">€249,90</span>
-            </div>
             <a 
               href="https://moleqlar.com/products/epi-proteomics-test" 
               target="_blank" 

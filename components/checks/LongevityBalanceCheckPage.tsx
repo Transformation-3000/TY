@@ -9,17 +9,13 @@ export default function LongevityBalanceCheckPage() {
         {/* Text 1/3 links */}
         <div className="lab-check-info-section">
           <div className="lab-check-header">
-            <h1 className="lab-check-title">Longevity Balance Check</h1>
+            <h1 className="lab-check-title">Analyse <span style={{ whiteSpace: 'nowrap' }}>Longevity-Balance</span></h1>
             <p className="lab-check-subtitle">
               Ganzheitliche Stoffwechselanalyse mit über 250 Biomarkern – für ein ganzheitliches Bild deiner metabolischen Gesundheit. Die Ampelfarben zeigen an, in welchem Status sich deine wichtigsten 10 Systeme und Organe aktuell befinden.
             </p>
           </div>
 
           <div className="lab-check-footer">
-            <div className="lab-price-info">
-              <span className="lab-price-label">MetaboPRO</span>
-              <span className="lab-price-note">Preis auf Anfrage</span>
-            </div>
             <a 
               href="https://lifespin.health/products-and-services/" 
               target="_blank" 
