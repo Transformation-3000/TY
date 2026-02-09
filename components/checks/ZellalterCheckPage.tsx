@@ -42,10 +42,10 @@ export default function ZellalterCheckPage() {
           <div className="lab-check-image-wrapper">
             <div className="lab-check-image-real">
               <Image
-                src="/images/molecular.webp"
+                src="/images/molecular.jpeg"
                 alt="Moleqlar Epi-Proteomics Test"
-                width={400}
-                height={400}
+                width={950}
+                height={950}
                 className="lab-check-product-image"
                 style={{ objectFit: 'contain' }}
               />

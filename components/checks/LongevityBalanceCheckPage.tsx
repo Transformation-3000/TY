@@ -72,10 +72,10 @@ export default function LongevityBalanceCheckPage() {
           <div className="lab-check-image-wrapper">
             <div className="lab-check-image-real">
               <Image
-                src="/images/lifespin.webp"
+                src="/images/agespeed.jpeg"
                 alt="Lifespin MetaboPRO"
-                width={400}
-                height={400}
+                width={950}
+                height={950}
                 className="lab-check-product-image"
                 style={{ objectFit: 'contain' }}
               />

@@ -23,8 +23,8 @@ const starterMenuItems: MenuItem[] = [
 
 // 02 LAB - Unterbereiche
 const labItems: MenuItem[] = [
-  { id: 'zellalter-check', icon: 'bi-heart-pulse', label: 'Zellalter Check' },
-  { id: 'longevity-balance-check', icon: 'bi-clipboard2-pulse', label: 'Longevity Balance Check' },
+  { id: 'zellalter-check', icon: 'bi-heart-pulse', label: 'Analyse Zellstatus' },
+  { id: 'longevity-balance-check', icon: 'bi-clipboard2-pulse', label: 'Analyse Longevity Balance' },
   { id: 'integration-starter', icon: 'bi-link-45deg', label: 'Integration in Starter' },
   { id: 'expertengespraech', icon: 'bi-person-video3', label: 'Expertengespräch' },
 ];
