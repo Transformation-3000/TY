@@ -7606,7 +7606,26 @@ i[class*="bi-"] {
   overflow: hidden;
 }
 
-.lab-check-container.lab-check-reverse {
+/* 1/3 Text links, 2/3 Bild rechts */
+.lab-check-container.lab-check-split {
+  display: flex;
+  flex-direction: row;
+  max-width: 1200px;
+}
+
+.lab-check-container.lab-check-split .lab-check-info-section {
+  flex: 0 0 33.333%;
+  max-width: 33.333%;
+  min-width: 0;
+}
+
+.lab-check-container.lab-check-split .lab-check-image-section {
+  flex: 0 0 66.666%;
+  max-width: 66.666%;
+  min-width: 0;
+}
+
+.lab-check-container.lab-check-reverse:not(.lab-check-split) {
   flex-direction: row-reverse;
 }
 
@@ -7852,8 +7871,15 @@ i[class*="bi-"] {
 /* Responsive für Lab Check Pages */
 @media (max-width: 900px) {
   .lab-check-container,
-  .lab-check-container.lab-check-reverse {
+  .lab-check-container.lab-check-reverse,
+  .lab-check-container.lab-check-split {
     flex-direction: column;
+  }
+
+  .lab-check-container.lab-check-split .lab-check-info-section,
+  .lab-check-container.lab-check-split .lab-check-image-section {
+    flex: 1 1 100%;
+    max-width: 100%;
   }
 
   .lab-check-image-section {
