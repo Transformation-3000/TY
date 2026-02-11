@@ -25,6 +25,16 @@ npm run dev
 
 Öffne [http://localhost:3000](http://localhost:3000) im Browser.
 
+### Passwortschutz (optional)
+
+Das Dashboard kann mit einem gemeinsamen Passwort geschützt werden:
+
+1. Datei `.env.local` im Projektroot anlegen (oder `.env`).
+2. Variable setzen: `LONGIVITY_DASHBOARD_PASSWORD=dein-passwort`
+3. Server neu starten. Beim Aufruf der App erscheint die Login-Seite; nach korrektem Passwort bleibt der Zugriff 7 Tage gültig (Cookie).
+
+Ohne gesetzte Variable ist die App ohne Passwort erreichbar (z. B. für lokale Entwicklung).
+
 ## Projektstruktur
 
 ```
