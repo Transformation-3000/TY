@@ -4,6 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Longevity Dashboard",
   description: "Longevity Dashboard - Gesundheitsüberwachung",
+  robots: "noindex",
 };
 
 export default function RootLayout({
