@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 240" width="400" height="240">
+  <defs>
+    <linearGradient id="g3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#4C99C2;stop-opacity:0.4"/>
+      <stop offset="100%" style="stop-color:#4C99C2;stop-opacity:1"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="240" fill="url(#g3)"/>
+  <text x="200" y="115" font-family="system-ui,sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">Schlaf + Stressreduktion</text>
+  <text x="200" y="135" font-family="system-ui,sans-serif" font-size="14" font-weight="600" fill="white" text-anchor="middle">+ Erholung</text>
+  <text x="200" y="160" font-family="system-ui,sans-serif" font-size="12" fill="rgba(255,255,255,0.9)" text-anchor="middle">Supplement-Bundle · 3 Monate</text>
+</svg>

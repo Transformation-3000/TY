@@ -34,6 +34,7 @@ interface Expert {
   latestUpdate: string;
   followers: string;
   videos: number;
+  videoUrl?: string;
 }
 
 const science: Science[] = [
@@ -107,10 +108,11 @@ const experts: Expert[] = [
     name: 'Bryan Johnson',
     title: 'Unternehmer & Biohacker',
     expertise: ['Blueprint Protocol', 'Anti-Aging', 'Biohacking'],
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=500&fit=crop&crop=face',
+    image: 'https://img.youtube.com/vi/uq1Vzi-52dA/maxresdefault.jpg',
     latestUpdate: 'Blueprint Protocol: Neues Update zur Schlafoptimierung',
     followers: '1.2M',
     videos: 156,
+    videoUrl: 'https://www.youtube.com/watch?v=uq1Vzi-52dA',
   },
   {
     id: '2',
@@ -190,9 +192,21 @@ export default function BlackBoardPage() {
                     className="watchlist-image"
                   />
                   <div className="watchlist-overlay">
-                    <button className="watchlist-play-btn">
-                      <i className="bi bi-play-fill"></i>
-                    </button>
+                    {expert.videoUrl ? (
+                      <a
+                        href={expert.videoUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="watchlist-play-btn"
+                        aria-label={`Video von ${expert.name} ansehen`}
+                      >
+                        <i className="bi bi-play-fill"></i>
+                      </a>
+                    ) : (
+                      <button className="watchlist-play-btn">
+                        <i className="bi bi-play-fill"></i>
+                      </button>
+                    )}
                   </div>
                   <div className="watchlist-badge expert-badge">
                     <i className="bi bi-patch-check-fill"></i> Verifiziert

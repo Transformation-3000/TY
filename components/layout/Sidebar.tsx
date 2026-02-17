@@ -31,11 +31,12 @@ const labItems: MenuItem[] = [
 
 // 03 SHOP - Kategorien
 const shopItems: MenuItem[] = [
+  { id: 'shop', icon: 'bi-shop', label: 'Shop' },
   { id: 'shop-daily-essentials', icon: 'bi-capsule-pill', label: 'Daily Essentials' },
-  { id: 'shop-performance', icon: 'bi-lightning-charge', label: 'Performance' },
-  { id: 'shop-recovery', icon: 'bi-moon-stars', label: 'Recovery' },
-  { id: 'shop-beauty', icon: 'bi-moisture', label: 'Beauty' },
-  { id: 'shop-tech', icon: 'bi-smartwatch', label: 'Tech' },
+  { id: 'shop-performance-energy', icon: 'bi-lightning-charge', label: 'Performance + Energy' },
+  { id: 'shop-schlaf-stress-erholung', icon: 'bi-moon-stars', label: 'Schlaf + Stress + Erholung' },
+  { id: 'shop-hautcremes', icon: 'bi-moisture', label: 'High-Tech-Hautcremes' },
+  { id: 'shop-high-tech', icon: 'bi-smartwatch', label: 'High-Tech-Produkte' },
 ];
 
 // 04 EINSTELLUNGEN - Unterbereiche

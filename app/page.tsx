@@ -88,20 +88,28 @@ export default function Home() {
             </div>
           )}
 
-          {activeMenuItem === 'shop-supplements' && (
-            <ShopPage category="supplements" />
+          {activeMenuItem === 'shop' && (
+            <ShopPage onNavigate={setActiveMenuItem} />
           )}
 
-          {activeMenuItem === 'shop-pflege' && (
-            <ShopPage category="pflege" />
+          {activeMenuItem === 'shop-daily-essentials' && (
+            <ShopPage category="daily-essentials" />
           )}
 
-          {activeMenuItem === 'shop-regeneration' && (
-            <ShopPage category="regeneration" />
+          {activeMenuItem === 'shop-performance-energy' && (
+            <ShopPage category="performance-energy" />
           )}
 
-          {activeMenuItem === 'shop-technologie' && (
-            <ShopPage category="technologie" />
+          {activeMenuItem === 'shop-schlaf-stress-erholung' && (
+            <ShopPage category="schlaf-stress-erholung" />
+          )}
+
+          {activeMenuItem === 'shop-hautcremes' && (
+            <ShopPage category="hautcremes" />
+          )}
+
+          {activeMenuItem === 'shop-high-tech' && (
+            <ShopPage category="high-tech" />
           )}
 
           {activeMenuItem === 'datenintegration' && (
@@ -117,26 +125,6 @@ export default function Home() {
 
           {activeMenuItem === 'expertengespraech' && (
             <ExpertengespraechPage />
-          )}
-
-          {activeMenuItem === 'shop-daily-essentials' && (
-            <ShopPage category="daily-essentials" />
-          )}
-
-          {activeMenuItem === 'shop-performance' && (
-            <ShopPage category="performance" />
-          )}
-
-          {activeMenuItem === 'shop-recovery' && (
-            <ShopPage category="recovery" />
-          )}
-
-          {activeMenuItem === 'shop-beauty' && (
-            <ShopPage category="beauty" />
-          )}
-
-          {activeMenuItem === 'shop-tech' && (
-            <ShopPage category="tech" />
           )}
 
           {activeMenuItem === 'settings' && (
