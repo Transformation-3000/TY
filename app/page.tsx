@@ -46,6 +46,17 @@ export default function Home() {
             <Coaching2Page />
           )}
 
+          {activeMenuItem === 'lisa-test' && (
+            <div className="lisa-test-container">
+              <iframe
+                src="https://embed.liveavatar.com/v1/95a58601-22c4-4146-be6a-6423a8406cd6"
+                allow="microphone"
+                title="LiveAvatar Embed"
+                style={{ aspectRatio: '16/9', width: '100%', maxWidth: '900px', border: 'none', borderRadius: '12px' }}
+              />
+            </div>
+          )}
+
           {activeMenuItem === 'masterclasses' && (
             <MasterclassesPage />
           )}

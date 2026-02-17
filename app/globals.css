@@ -5926,6 +5926,18 @@ i[class*="bi-"] {
 }
 
 /* Shop Page Styles */
+.lisa-test-container {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 400px;
+}
+
+.lisa-test-container iframe {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
 .shop-container {
   padding: 2rem;
   max-width: 1400px;
