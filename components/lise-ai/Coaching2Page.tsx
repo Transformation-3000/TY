@@ -79,7 +79,11 @@ const sessionTopics = [
   },
 ];
 
-export default function Coaching2Page() {
+interface Coaching2PageProps {
+  onOpenAvatar?: () => void;
+}
+
+export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
   const [isSessionActive, setIsSessionActive] = useState(false);
   const [isListening, setIsListening] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
@@ -316,7 +320,15 @@ export default function Coaching2Page() {
           
           {/* Lisa Section - Halber Bildschirm */}
           <div className="lisa-section">
-            <div className="lisa-image-container">
+            <div
+              className="lisa-image-container"
+              role={onOpenAvatar ? 'button' : undefined}
+              tabIndex={onOpenAvatar ? 0 : undefined}
+              onClick={onOpenAvatar}
+              onKeyDown={onOpenAvatar ? (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onOpenAvatar(); } } : undefined}
+              title={onOpenAvatar ? 'Mit Lisa (Avatar) sprechen' : undefined}
+              style={onOpenAvatar ? { cursor: 'pointer' } : undefined}
+            >
               <div className={`lisa-glow ${isSpeaking ? 'speaking' : ''} ${isListening ? 'listening' : ''}`}></div>
               <div className="lisa-frame">
                 <Image
@@ -346,7 +358,7 @@ export default function Coaching2Page() {
             {/* Lisa Status */}
             <div className="lisa-status">
               <div className="status-dot"></div>
-              <span>Lisa ist bereit für dich</span>
+              <span>Lisa ist bereit für dich{onOpenAvatar && ' – Klicke auf das Bild für Video-Chat'}</span>
             </div>
           </div>
 

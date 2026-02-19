@@ -14,7 +14,6 @@ const starterMenuItems: MenuItem[] = [
   { id: 'dashboard', icon: 'bi-grid-3x3-gap', label: 'Dashboard' },
   { id: 'longevity-journey', icon: 'bi-compass', label: 'Journey' },
   { id: 'coaching', icon: 'bi-person-heart', label: 'Coaching' },
-  { id: 'lisa-test', icon: 'bi-robot', label: 'Lisa Test' },
   { id: 'masterclasses', icon: 'bi-mortarboard', label: 'Masterclasses' },
   { id: 'watchlist', icon: 'bi-bookmark', label: 'Watchlist' },
   { id: 'micro-habit-apps', icon: 'bi-app', label: 'Apps' },

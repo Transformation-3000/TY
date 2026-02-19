@@ -43,11 +43,18 @@ export default function Home() {
           )}
 
           {activeMenuItem === 'coaching' && (
-            <Coaching2Page />
+            <Coaching2Page onOpenAvatar={() => setActiveMenuItem('lisa-test')} />
           )}
 
           {activeMenuItem === 'lisa-test' && (
             <div className="lisa-test-container">
+              <button
+                type="button"
+                className="lisa-test-back"
+                onClick={() => setActiveMenuItem('coaching')}
+              >
+                ← Zurück zum Coaching
+              </button>
               <iframe
                 src="https://embed.liveavatar.com/v1/95a58601-22c4-4146-be6a-6423a8406cd6"
                 allow="microphone"
