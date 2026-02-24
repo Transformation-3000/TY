@@ -91,18 +91,30 @@ export default function ShopPage({ category, onNavigate }: ShopPageProps) {
 
   return (
     <div className="shop-container">
-      <div className="shop-header">
-        <div className="shop-header-content">
-          <h1>
-            <span className="shop-brand-blue">True Years</span>{' '}
-            <span className="shop-brand-green">SHOP</span>
-          </h1>
-          <p className="shop-tagline shop-intro">
-            Ausschließlich von Fachexperten qualitätsgesicherte Produkte mit
-            wissenschaftlich belegten Vorteilen zur Unterstützung der persönlichen
-            Longevity-Reise. True Years Starter-Kunden erhalten im Shop einen
-            Rabatt von 10% auf alle Produkte.
+      <div className="shop-hero">
+        <div className="shop-hero-bg">
+          <Image
+            src="/images/shop/shop-hero-couple.png"
+            alt="Personalized Longevity Journey"
+            fill
+            className="shop-hero-image"
+            priority
+          />
+          <div className="shop-hero-overlay" />
+        </div>
+        <div className="shop-hero-content">
+          <h1>Dein Shop für mehr Vitalität</h1>
+          <p>
+            Kuratierte Produktauswahl für deine persönliche Reise für mehr Langlebigkeit und Vitalität
           </p>
+          <div className="shop-usp-badges">
+            <span className="shop-usp-badge-hero">
+              <i className="bi bi-shield-check"></i> Von Experten geprüft
+            </span>
+            <span className="shop-usp-badge-hero">
+              <i className="bi bi-star-fill"></i> Kuratierte Auswahl
+            </span>
+          </div>
         </div>
       </div>
 
@@ -117,6 +129,9 @@ export default function ShopPage({ category, onNavigate }: ShopPageProps) {
             role="button"
             tabIndex={0}
           >
+            <div className="shop-card-badge">
+              <i className="bi bi-shield-check"></i> Geprüft
+            </div>
             <div className="shop-category-image-wrap">
               <Image
                 src={cat.image}

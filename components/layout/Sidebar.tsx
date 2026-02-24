@@ -31,7 +31,7 @@ const labItems: MenuItem[] = [
 
 // 03 SHOP - Kategorien
 const shopItems: MenuItem[] = [
-  { id: 'shop', icon: 'bi-shop', label: 'Shop' },
+  { id: 'shop', icon: 'bi-shop', label: 'Startseite' },
   { id: 'shop-daily-essentials', icon: 'bi-capsule-pill', label: 'Daily Essentials' },
   { id: 'shop-performance-energy', icon: 'bi-lightning-charge', label: 'Performance + Energy' },
   { id: 'shop-schlaf-stress-erholung', icon: 'bi-moon-stars', label: 'Schlaf + Stress + Erholung' },
