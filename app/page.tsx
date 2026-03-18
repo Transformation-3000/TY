@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '@/lib/chartConfig'; // Chart.js initialisieren
 import WelcomeSection from '@/components/layout/WelcomeSection';
 import Sidebar from '@/components/layout/Sidebar';
@@ -24,15 +24,28 @@ import Image from 'next/image';
 
 export default function Home() {
   const [activeMenuItem, setActiveMenuItem] = useState<string>('dashboard');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  useEffect(() => {
+    const onResize = () => { if (window.innerWidth > 992) setSidebarOpen(false); };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  const navigate = (id: string) => { setActiveMenuItem(id); setSidebarOpen(false); };
 
   return (
-    <main>
+    <main className={sidebarOpen ? 'sidebar-open' : ''}>
       <div className="top-menu-bar">
-        <WelcomeSection onNavigate={setActiveMenuItem} />
+        <button className="hamburger-btn" onClick={() => setSidebarOpen(o => !o)} aria-label="Menü">
+          <i className={`bi ${sidebarOpen ? 'bi-x-lg' : 'bi-list'}`}></i>
+        </button>
+        <WelcomeSection onNavigate={navigate} />
       </div>
       
       <div className="main-content">
-        <Sidebar activeItem={activeMenuItem} onItemClick={setActiveMenuItem} />
+        {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
+        <Sidebar activeItem={activeMenuItem} onItemClick={navigate} />
         <div className="content-wrapper">
           {activeMenuItem === 'dashboard' && (
             <VogelperspektivePage />

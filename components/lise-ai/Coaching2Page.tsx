@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 
-type Coach = 'lisa' | 'tom';
-type CoachStyle = 'ruhig' | 'klar' | 'aktivierend';
+type CoachVariant = 'lisa-jung' | 'lisa-alt' | 'tom-jung' | 'tom-alt';
 type FormatTab = 'text' | 'audio' | 'video';
 type SessionPhase = 'entry' | 'checkin-energy' | 'checkin-stress' | 'checkin-focus' | 'data-pull' | 'verstehen' | 'fokus' | 'empfehlung' | 'commitment' | 'syncing' | 'closing';
 type ViewMode = 'welcome' | 'setup' | 'session';
+type SetupStep = 'coach' | 'personality';
 
 interface ChatMsg {
   id: number;
@@ -17,14 +17,25 @@ interface ChatMsg {
   answered?: boolean;
 }
 
-const coachProfiles: Record<Coach, { name: string; image: string; desc: string }> = {
-  lisa: { name: 'Lisa', image: '/images/lisa.png', desc: 'Empathisch & einfühlsam' },
-  tom: { name: 'Tom', image: '/images/profile-large2.png', desc: 'Motivierend & strukturiert' },
+const coachVariants: Record<CoachVariant, { name: string; image: string; desc: string; voice: string; greeting: string }> = {
+  'lisa-jung': { name: 'Lisa', image: '/images/lisa.png', desc: 'Jung, modern & empathisch', voice: 'nova', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.' },
+  'lisa-alt': { name: 'Lisa', image: '/images/lisa_alt.png', desc: 'Erfahren, weise & warmherzig', voice: 'shimmer', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.' },
+  'tom-jung': { name: 'Tom', image: '/images/tom_jung.png', desc: 'Dynamisch, motivierend & direkt', voice: 'echo', greeting: 'Hallo, ich bin Tom – dein persönlicher Coach.' },
+  'tom-alt': { name: 'Tom', image: '/images/tom_alt.png', desc: 'Gelassen, strukturiert & erfahren', voice: 'onyx', greeting: 'Hallo, ich bin Tom – dein persönlicher Coach.' },
 };
-const styleOptions: Record<CoachStyle, { label: string; desc: string }> = {
-  ruhig: { label: 'Ruhig & besonnen', desc: 'Sanfte Begleitung mit viel Raum' },
-  klar: { label: 'Klar & strukturiert', desc: 'Fokussiert und auf den Punkt' },
-  aktivierend: { label: 'Aktivierend & fordernd', desc: 'Pusht dich zu deinem Besten' },
+const getPersonalityDesc = (x: number, y: number) => {
+  const r = (1-x)*(1-y), ye = x*(1-y), g = x*y, b = (1-x)*y;
+  const types = [
+    { w: r, color: 'Rot', desc: 'direkt & entschlossen' },
+    { w: ye, color: 'Gelb', desc: 'optimistisch & kommunikativ' },
+    { w: g, color: 'Grün', desc: 'empathisch & geduldig' },
+    { w: b, color: 'Blau', desc: 'analytisch & strukturiert' },
+  ].filter(t => t.w > 0.12).sort((a, b) => b.w - a.w);
+  if (!types.length) return { primary: 'Ausgewogen', desc: 'Vereint alle Qualitäten' };
+  const p = types[0];
+  const sec = types[1];
+  if (p.w > 0.5) return { primary: p.color, desc: `Stark ${p.desc}` };
+  return { primary: p.color, desc: sec ? `${p.desc}, mit Tendenz ${sec.desc}` : p.desc };
 };
 const focusTopics = [
   { id: 'schlaf', label: 'Schlaf', icon: '' },
@@ -69,8 +80,10 @@ interface Coaching2PageProps { onOpenAvatar?: () => void; }
 
 export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
   const [view, setView] = useState<ViewMode>('welcome');
-  const [coach, setCoach] = useState<Coach>('lisa');
-  const [coachStyle, setCoachStyle] = useState<CoachStyle>('klar');
+  const [coachVariant, setCoachVariant] = useState<CoachVariant>('lisa-jung');
+  const [setupStep, setSetupStep] = useState<SetupStep>('coach');
+  const [personalityPos, setPersonalityPos] = useState({ x: 0.65, y: 0.7 });
+  const [playingVoice, setPlayingVoice] = useState<CoachVariant | null>(null);
   const [formatTab, setFormatTab] = useState<FormatTab>('text');
   const [sessionTime, setSessionTime] = useState(0);
   const [phase, setPhase] = useState<SessionPhase>('entry');
@@ -88,8 +101,10 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
   const [isAnimating, setIsAnimating] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const chatRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
 
-  const c = coachProfiles[coach];
+  const c = coachVariants[coachVariant];
   const focusData = focusTopics.find(t => t.id === focusTopic);
 
   useEffect(() => {
@@ -140,10 +155,74 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
 
   const formatTime = (s: number) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
 
+  const speakText = async (text: string) => {
+    if (!text || formatTab !== 'audio') return;
+    try {
+      const res = await fetch('/api/tts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text, voice: c.voice }) });
+      if (!res.ok) return;
+      const blob = await res.blob();
+      const url = URL.createObjectURL(blob);
+      if (audioRef.current) { audioRef.current.pause(); }
+      const audio = new Audio(url);
+      audioRef.current = audio;
+      audio.onended = () => URL.revokeObjectURL(url);
+      await audio.play();
+    } catch (e) { console.error('TTS error:', e); }
+  };
+
+  const playVoiceSample = (variant: CoachVariant) => {
+    if (playingVoice === variant) {
+      if (audioRef.current) { audioRef.current.pause(); audioRef.current = null; }
+      setPlayingVoice(null); return;
+    }
+    if (audioRef.current) { audioRef.current.pause(); }
+    setPlayingVoice(variant);
+    const audio = new Audio(`/audio/${variant}.mp3`);
+    audioRef.current = audio;
+    audio.onended = () => setPlayingVoice(null);
+    audio.play().catch(() => setPlayingVoice(null));
+  };
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      const chunks: Blob[] = [];
+      recorder.ondataavailable = (e) => chunks.push(e.data);
+      recorder.onstop = async () => {
+        stream.getTracks().forEach(t => t.stop());
+        const blob = new Blob(chunks, { type: 'audio/webm' });
+        const fd = new FormData();
+        fd.append('audio', blob, 'audio.webm');
+        try {
+          const res = await fetch('/api/whisper', { method: 'POST', body: fd });
+          const data = await res.json();
+          if (data.text) handleUserReply(data.text);
+        } catch (e) { console.error('Whisper error:', e); }
+      };
+      recorder.start();
+      mediaRecorderRef.current = recorder;
+      setIsListening(true);
+    } catch (e) { console.error('Mic error:', e); }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorderRef.current?.state === 'recording') mediaRecorderRef.current.stop();
+    setIsListening(false);
+  };
+
+  const handlePfPointer = useCallback((e: React.PointerEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    setPersonalityPos({
+      x: Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width)),
+      y: Math.max(0, Math.min(1, (e.clientY - rect.top) / rect.height)),
+    });
+  }, []);
+
   const addCoachMsg = (text: string, widget?: ChatMsg['widget'], delay = 800) => {
     setIsTyping(true); setIsSpeaking(true);
     return new Promise<void>(res => {
-      setTimeout(() => { setMessages(p => [...p, { id: Date.now() + Math.random(), from: 'coach', text, widget }]); setIsTyping(false); setIsSpeaking(false); res(); }, delay);
+      setTimeout(() => { setMessages(p => [...p, { id: Date.now() + Math.random(), from: 'coach', text, widget }]); setIsTyping(false); setIsSpeaking(false); if (text) speakText(text); res(); }, delay);
     });
   };
   const addUserMsg = (text: string) => setMessages(p => [...p, { id: Date.now() + Math.random(), from: 'user', text }]);
@@ -247,18 +326,76 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
           </div>
         )}
 
-        {/* SETUP */}
+        {/* SETUP MODAL */}
         {view === 'setup' && (
-          <div className="sv">
-            <button className="bback" onClick={() => setView('welcome')}>← Zurück</button>
-            <h2 className="stit">Coach & Einstellungen</h2>
-            <div className="ssec"><label className="slab">Dein Coach</label>
-              <div className="cgrid">{(['lisa','tom'] as Coach[]).map(ci => (<button key={ci} className={`copt ${coach===ci?'sel':''}`} onClick={() => setCoach(ci)}><Image src={coachProfiles[ci].image} alt={coachProfiles[ci].name} width={72} height={72} style={{objectFit:'cover',borderRadius:'50%'}} /><strong>{coachProfiles[ci].name}</strong><span>{coachProfiles[ci].desc}</span>{coach===ci&&<span className="chk">✓</span>}</button>))}</div>
+          <div className="smod">
+            <div className="smod-in">
+              <div className="smod-h">
+                <button className="smod-back" onClick={() => { if (setupStep === 'personality') setSetupStep('coach'); else { setView('welcome'); setSetupStep('coach'); } }}>
+                  {setupStep === 'personality' ? '← Zurück' : '← Abbrechen'}
+                </button>
+                <div className="smod-steps">
+                  <span className={`smod-s ${setupStep === 'coach' ? 'act' : 'done'}`}>1 Coach</span>
+                  <span className="smod-sep" />
+                  <span className={`smod-s ${setupStep === 'personality' ? 'act' : ''}`}>2 Persönlichkeit</span>
+                </div>
+                <div style={{width:80}} />
+              </div>
+
+              {setupStep === 'coach' && (
+                <div className="smod-cnt">
+                  <h2 className="smod-t">Wähle deinen Coach</h2>
+                  <div className="cgrid">
+                    {(['lisa-jung','lisa-alt','tom-jung','tom-alt'] as CoachVariant[]).map(v => {
+                      const cv = coachVariants[v];
+                      return (
+                        <button key={v} className={`ccard ${coachVariant===v?'sel':''}`} onClick={() => setCoachVariant(v)}>
+                          <div className="ccard-img"><Image src={cv.image} alt={cv.name} width={88} height={88} style={{objectFit:'cover',borderRadius:'50%'}} />{coachVariant===v&&<span className="ccard-chk">✓</span>}</div>
+                          <strong className="ccard-name">{cv.name}</strong>
+                          <span className="ccard-desc">{cv.desc}</span>
+                          <button className={`ccard-voice ${playingVoice===v?'playing':''}`} onClick={(e) => { e.stopPropagation(); playVoiceSample(v); }}>
+                            {playingVoice===v ? (
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
+                            ) : (
+                              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5,3 19,12 5,21"/></svg>
+                            )}
+                            <span>Stimme hören</span>
+                          </button>
+                        </button>
+                      );
+                    })}
+                  </div>
+                  <button className="smod-next" onClick={() => setSetupStep('personality')}>Weiter</button>
+                </div>
+              )}
+
+              {setupStep === 'personality' && (
+                <div className="smod-cnt">
+                  <h2 className="smod-t">Deine Persönlichkeit</h2>
+                  <p className="smod-sub">Setze den Punkt dort, wo du dich am ehesten wiederfindest.</p>
+                  <div className="pf-wrap">
+                    <div className="pf-labels">
+                      <span className="pf-l pf-tl">Rot<br/><small>Dominant</small></span>
+                      <span className="pf-l pf-tr">Gelb<br/><small>Inspirierend</small></span>
+                      <span className="pf-l pf-bl">Blau<br/><small>Gewissenhaft</small></span>
+                      <span className="pf-l pf-br">Grün<br/><small>Stetig</small></span>
+                    </div>
+                    <div
+                      className="pf-field"
+                      onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); handlePfPointer(e); }}
+                      onPointerMove={(e) => { if (e.currentTarget.hasPointerCapture(e.pointerId)) handlePfPointer(e); }}
+                    >
+                      <div className="pf-dot" style={{left:`${personalityPos.x*100}%`,top:`${personalityPos.y*100}%`}} />
+                    </div>
+                  </div>
+                  <div className="pf-result">
+                    <span className={`pf-badge pf-${getPersonalityDesc(personalityPos.x, personalityPos.y).primary.toLowerCase()}`}>{getPersonalityDesc(personalityPos.x, personalityPos.y).primary}</span>
+                    <span className="pf-rdesc">{getPersonalityDesc(personalityPos.x, personalityPos.y).desc}</span>
+                  </div>
+                  <button className="smod-next" onClick={() => { setView('welcome'); setSetupStep('coach'); }}>Abschließen</button>
+                </div>
+              )}
             </div>
-            <div className="ssec"><label className="slab">Stil</label>
-              <div className="sgrid">{(['ruhig','klar','aktivierend'] as CoachStyle[]).map(s => (<button key={s} className={`sopt ${coachStyle===s?'sel':''}`} onClick={() => setCoachStyle(s)}><strong>{styleOptions[s].label}</strong><span>{styleOptions[s].desc}</span></button>))}</div>
-            </div>
-            <button className="bstart" onClick={() => setView('welcome')}>Speichern</button>
           </div>
         )}
 
@@ -343,7 +480,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
               {formatTab==='audio'&&(
                 <div className="airow">
                   <div className="avis">{[...Array(16)].map((_,i)=>(<div key={i} className={`vbar ${isListening?'act':''}`} style={{animationDelay:`${i*0.05}s`}}/>))}</div>
-                  <button className={`mbtn ${isListening?'lis':''}`} onClick={()=>{if(isListening){setIsListening(false);const r=getQuickReplies();if(r[0])handleUserReply(r[0]);}else setIsListening(true);}}>
+                  <button className={`mbtn ${isListening?'lis':''}`} onClick={()=>{if(isListening){stopRecording();}else{startRecording();}}}>
                     <div className="minn">{isListening?<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>:<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>}</div>
                   </button>
                   <p className="mhint">{isListening?'Ich höre zu...':'Tippe zum Sprechen'}</p>
@@ -399,23 +536,56 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .ps-output{display:inline-flex;align-items:center;padding:.25rem .6rem;border-radius:7px;background:rgba(68,152,202,.05);border:1px solid rgba(68,152,202,.07)}
         .ps-ol{font-size:.74rem;font-weight:600;color:#2c6a8c}
 
-        .sv{padding:2rem;max-width:600px;margin:0 auto;animation:fu .4s ease both}
-        .bback{background:none;border:none;color:#7a9ab0;font-size:.9rem;cursor:pointer;padding:0;margin-bottom:1.5rem;font-weight:500}
-        .bback:hover{color:#4498ca}
-        .stit{font-size:1.4rem;color:#1a3a50;margin:0 0 1.5rem;font-weight:700}
-        .ssec{margin-bottom:1.5rem}
-        .slab{display:block;font-size:.9rem;font-weight:600;color:#2c5a7c;margin-bottom:.75rem}
-        .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-        .copt{display:flex;flex-direction:column;align-items:center;gap:.4rem;padding:1.25rem;border-radius:18px;border:2px solid rgba(68,152,202,.1);background:rgba(255,255,255,.85);cursor:pointer;transition:all .25s;position:relative}
-        .copt:hover{border-color:rgba(68,152,202,.3);background:#fff}
-        .copt.sel{border-color:#4498ca;background:rgba(68,152,202,.05)}
-        .copt :global(img){border:2px solid rgba(68,152,202,.15)}
-        .copt strong{font-size:1rem;color:#1a3a50}.copt span{font-size:.8rem;color:#7a9ab0}
-        .chk{position:absolute;top:10px;right:10px;width:24px;height:24px;background:#4498ca;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:700}
-        .sgrid{display:flex;flex-direction:column;gap:.6rem}
-        .sopt{display:flex;flex-direction:column;gap:.15rem;text-align:left;padding:1rem 1.25rem;border-radius:14px;border:2px solid rgba(68,152,202,.1);background:rgba(255,255,255,.85);cursor:pointer;transition:all .25s}
-        .sopt:hover{border-color:rgba(68,152,202,.3)}.sopt.sel{border-color:#4498ca;background:rgba(68,152,202,.05)}
-        .sopt strong{font-size:.9rem;color:#1a3a50}.sopt span{font-size:.8rem;color:#7a9ab0}
+        .smod{position:fixed;inset:0;z-index:900;background:rgba(15,30,45,.45);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;animation:smodIn .3s ease both}
+        @keyframes smodIn{from{opacity:0}to{opacity:1}}
+        .smod-in{width:94%;max-width:580px;max-height:90vh;background:#fff;border-radius:24px;box-shadow:0 24px 80px rgba(0,40,80,.18);display:flex;flex-direction:column;overflow:hidden;animation:smodUp .35s ease both}
+        @keyframes smodUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+        .smod-h{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:1px solid rgba(68,152,202,.08)}
+        .smod-back{background:none;border:none;color:#7a9ab0;font-size:.85rem;cursor:pointer;font-weight:500;padding:0;width:80px;text-align:left}
+        .smod-back:hover{color:#4498ca}
+        .smod-steps{display:flex;align-items:center;gap:.6rem}
+        .smod-s{font-size:.8rem;color:#b0c4d0;font-weight:500;transition:color .2s}
+        .smod-s.act{color:#2c5a7c;font-weight:600}
+        .smod-s.done{color:#4498ca}
+        .smod-sep{width:20px;height:2px;background:rgba(68,152,202,.15);border-radius:1px}
+        .smod-cnt{padding:1.5rem;overflow-y:auto;flex:1;text-align:center}
+        .smod-t{font-size:1.3rem;font-weight:700;color:#1a3a50;margin:0 0 1.25rem}
+        .smod-sub{font-size:.88rem;color:#7a9ab0;margin:-.75rem 0 1.5rem;line-height:1.5}
+        .smod-next{display:inline-flex;padding:.85rem 2.2rem;border:none;border-radius:14px;background:linear-gradient(135deg,#4498ca,#2c6a8c);color:#fff;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(68,152,202,.3);transition:all .3s;margin-top:1.25rem}
+        .smod-next:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(68,152,202,.4)}
+
+        .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:.85rem}
+        .ccard{display:flex;flex-direction:column;align-items:center;gap:.45rem;padding:1.2rem 1rem;border-radius:18px;border:2px solid rgba(68,152,202,.08);background:rgba(248,252,255,.9);cursor:pointer;transition:all .25s;position:relative}
+        .ccard:hover{border-color:rgba(68,152,202,.25);background:#fff;box-shadow:0 4px 16px rgba(0,60,120,.06)}
+        .ccard.sel{border-color:#4498ca;background:rgba(68,152,202,.04);box-shadow:0 4px 20px rgba(68,152,202,.12)}
+        .ccard-img{position:relative;margin-bottom:.2rem}
+        .ccard-img :global(img){border:3px solid rgba(68,152,202,.12);box-shadow:0 6px 20px rgba(0,60,120,.08)}
+        .ccard-chk{position:absolute;top:-2px;right:-2px;width:24px;height:24px;background:#4498ca;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;border:2px solid #fff}
+        .ccard-name{font-size:.95rem;color:#1a3a50;font-weight:600}
+        .ccard-desc{font-size:.78rem;color:#7a9ab0;line-height:1.35}
+        .ccard-voice{display:inline-flex;align-items:center;gap:.35rem;padding:.35rem .7rem;border-radius:10px;border:1.5px solid rgba(68,152,202,.12);background:rgba(255,255,255,.9);color:#4498ca;font-size:.74rem;font-weight:500;cursor:pointer;transition:all .2s;margin-top:.2rem}
+        .ccard-voice:hover{border-color:#4498ca;background:rgba(68,152,202,.06)}
+        .ccard-voice.playing{border-color:#4498ca;background:rgba(68,152,202,.08);color:#2c5a7c}
+
+        .pf-wrap{position:relative;width:280px;margin:0 auto 1rem}
+        .pf-labels{position:relative;width:100%;margin-bottom:.4rem}
+        .pf-l{position:absolute;font-size:.72rem;font-weight:600;line-height:1.25;white-space:nowrap}
+        .pf-l small{font-weight:400;color:#93a8b8;font-size:.68rem}
+        .pf-tl{top:-4px;left:-4px;color:#E53935;text-align:left}
+        .pf-tr{top:-4px;right:-4px;color:#F9A825;text-align:right}
+        .pf-bl{bottom:-4px;left:-4px;color:#1E88E5;text-align:left}
+        .pf-br{bottom:-4px;right:-4px;color:#43A047;text-align:right}
+        .pf-labels{height:280px}
+        .pf-field{position:absolute;inset:28px;border-radius:20px;cursor:crosshair;touch-action:none;background:radial-gradient(ellipse at 0% 0%,rgba(229,57,53,.35) 0%,transparent 55%),radial-gradient(ellipse at 100% 0%,rgba(249,168,37,.35) 0%,transparent 55%),radial-gradient(ellipse at 0% 100%,rgba(30,136,229,.35) 0%,transparent 55%),radial-gradient(ellipse at 100% 100%,rgba(67,160,71,.35) 0%,transparent 55%),#f5f8fa;box-shadow:inset 0 0 0 1px rgba(68,152,202,.08)}
+        .pf-dot{position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid #2c5a7c;box-shadow:0 2px 10px rgba(0,40,80,.2);transform:translate(-50%,-50%);transition:left .08s,top .08s;pointer-events:none}
+        .pf-result{display:flex;align-items:center;gap:.6rem;justify-content:center;margin-top:.5rem}
+        .pf-badge{padding:.3rem .75rem;border-radius:10px;font-size:.8rem;font-weight:600;color:#fff}
+        .pf-rot{background:#E53935}
+        .pf-gelb{background:#F9A825;color:#5a4500}
+        .pf-grün{background:#43A047}
+        .pf-blau{background:#1E88E5}
+        .pf-ausgewogen{background:linear-gradient(135deg,#4498ca,#2c6a8c)}
+        .pf-rdesc{font-size:.84rem;color:#5a8aa8;font-weight:500}
 
         .ftabs{display:flex;gap:.3rem;padding:.25rem;background:rgba(68,152,202,.06);border-radius:12px}
         .ftab{flex:1;padding:.5rem .7rem;border:none;border-radius:9px;background:transparent;color:#7a9ab0;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .25s;white-space:nowrap}
@@ -554,13 +724,58 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .mhint{font-size:.8rem;color:#7a9ab0;margin:0;font-weight:500}
         .vihin{text-align:center;padding:.5rem}.vihin p{font-size:.85rem;color:#7a9ab0;margin:0}
 
+        @media(max-width:992px){
+          .cr{min-height:calc(100vh - 90px)}
+          .smod-in{width:96%;max-width:520px}
+          .cgrid{gap:.7rem}
+          .ccard{padding:1rem .8rem}
+          .ccard-img :global(img){width:72px!important;height:72px!important}
+        }
         @media(max-width:768px){
+          .cr{min-height:calc(100vh - 60px)}
+          .cr-in{min-height:calc(100vh - 60px)}
+          .wv{min-height:calc(100vh - 60px);padding:2rem 1.25rem}
+          .wav :global(video),.wav :global(img){width:140px!important;height:140px!important}
+          .wgreeting{font-size:1.2rem}
+          .bstart{padding:.85rem 1.8rem;font-size:.95rem}
+          .wv-btns{flex-direction:column;width:100%;max-width:280px}
+          .wv-btn{width:100%}
+          .smod{align-items:flex-end}
+          .smod-in{width:100%;max-width:100%;max-height:92vh;border-radius:20px 20px 0 0;animation:smodSlide .3s ease both}
+          @keyframes smodSlide{from{transform:translateY(100%)}to{transform:translateY(0)}}
+          .smod-t{font-size:1.15rem}
+          .cgrid{grid-template-columns:1fr 1fr;gap:.6rem}
+          .ccard-img :global(img){width:64px!important;height:64px!important}
+          .ccard-name{font-size:.85rem}
+          .ccard-desc{font-size:.72rem}
+          .ccard-voice{font-size:.68rem;padding:.3rem .55rem}
+          .pf-wrap{width:240px}
+          .pf-labels{height:240px}
+          .pf-l{font-size:.65rem}
+          .smod-next{width:100%;justify-content:center}
           .crow{max-width:92%}.crow.system{max-width:98%}
           .drg{grid-template-columns:1fr}
           .sftabs{display:none}
           .stop{padding:.6rem 1rem}
           .chat{padding:1rem}
           .iarea,.qrs{padding-left:1rem;padding-right:1rem}
+        }
+        @media(max-width:480px){
+          .cr{min-height:calc(100vh - 54px)}
+          .cr-in{min-height:calc(100vh - 54px)}
+          .wv{min-height:calc(100vh - 54px);padding:1.5rem 1rem}
+          .wav :global(video),.wav :global(img){width:110px!important;height:110px!important}
+          .wgreeting{font-size:1.05rem}
+          .wstatus{flex-direction:column;gap:.4rem;align-items:center}
+          .smod-cnt{padding:1rem}
+          .cgrid{grid-template-columns:1fr 1fr;gap:.5rem}
+          .ccard{padding:.85rem .65rem;border-radius:14px}
+          .ccard-img :global(img){width:52px!important;height:52px!important}
+          .pf-wrap{width:200px}
+          .pf-labels{height:200px}
+          .stop{padding:.5rem .75rem}
+          .tav{width:32px;height:32px}
+          .ebtn{font-size:.75rem;padding:.35rem .7rem}
         }
       `}</style>
     </div>
