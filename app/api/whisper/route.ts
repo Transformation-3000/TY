@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
-
 export async function POST(req: NextRequest) {
   try {
     const formData = await req.formData();
@@ -12,6 +10,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'audio file is required' }, { status: 400 });
     }
 
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
     const transcription = await openai.audio.transcriptions.create({
       file: audioFile,
       model: 'whisper-1',
