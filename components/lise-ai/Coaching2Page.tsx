@@ -102,6 +102,12 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
   const [isAnimating, setIsAnimating] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [rightTab, setRightTab] = useState<'today'|'history'|'customize'>('today');
+  const [selectedSessionId, setSelectedSessionId] = useState<number | null>(null);
+
+  useEffect(() => {
+    setSelectedSessionId(null);
+  }, [rightTab]);
+
   const chatRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -365,17 +371,67 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
                 {rightTab === 'history' && (
                   <div className="wi-card wi-journey">
                     <div className="wij-scroll">
-                      <div className="wij-item upcoming">
-                        <div className="wiji-date">Freitag, 18:00 – Geplant</div>
-                        <div className="wiji-topic">Deep Dive & Wochenabschluss</div>
-                      </div>
-                      {pastSessions.map(s => (
-                        <div key={s.id} className="wij-item">
-                          <div className="wiji-date">{s.date} <span className="wiji-dur">{s.duration}</span></div>
-                          <div className="wiji-topic">{s.focus}</div>
-                          <div className="wiji-summary">{s.summary}</div>
+                      {selectedSessionId !== null ? (
+                        <div className="wij-detail-view">
+                          <button className="wij-back-btn" onClick={() => setSelectedSessionId(null)}>
+                            <i className="bi bi-chevron-left"></i> Zurück zur Übersicht
+                          </button>
+                          
+                          {(() => {
+                            const s = pastSessions.find(sess => sess.id === selectedSessionId);
+                            if (!s) return null;
+                            return (
+                              <div className="wij-detail-content">
+                                <div className="wijd-header">
+                                  <div className="wijd-date">{s.date}</div>
+                                  <h3 className="wijd-title">{s.focus}</h3>
+                                  <div className="wijd-badges">
+                                    <span className="wijd-badge dur"><i className="bi bi-clock"></i> {s.duration}</span>
+                                    <span className="wijd-badge type"><i className="bi bi-record-circle"></i> Abgeschlossen</span>
+                                  </div>
+                                </div>
+
+                                <div className="wijd-section">
+                                  <h4 className="wijd-sec-title">Zusammenfassung</h4>
+                                  <p className="wijd-sec-text">{s.summary}</p>
+                                </div>
+
+                                <div className="wijd-section">
+                                  <h4 className="wijd-sec-title">Ergebnis & Action Points</h4>
+                                  <div className="wijd-output-card">
+                                    <i className="bi bi-journal-check"></i>
+                                    <div className="wijd-output-info">
+                                      <div className="wijd-output-label">Wichtigstes Ergebnis:</div>
+                                      <div className="wijd-output-val">{s.output}</div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div className="wijd-footer">
+                                  <button className="wijd-share-btn">E-Mail Protokoll senden</button>
+                                </div>
+                              </div>
+                            );
+                          })()}
                         </div>
-                      ))}
+                      ) : (
+                        <>
+                          <div className="wij-item upcoming">
+                            <div className="wiji-date">Freitag, 18:00 – Geplant</div>
+                            <div className="wiji-topic">Deep Dive & Wochenabschluss</div>
+                          </div>
+                          {pastSessions.map(s => (
+                            <div key={s.id} className="wij-item">
+                              <div className="wiji-top">
+                                <div className="wiji-date">{s.date} <span className="wiji-dur">{s.duration}</span></div>
+                                <button className="wiji-detail-btn" onClick={() => setSelectedSessionId(s.id)}>Details</button>
+                              </div>
+                              <div className="wiji-topic">{s.focus}</div>
+                              <div className="wiji-summary">{s.summary}</div>
+                            </div>
+                          ))}
+                        </>
+                      )}
                     </div>
                   </div>
                 )}
@@ -572,7 +628,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         {view === 'session' && (
           <div className={`sess ${isAnimating ? 'sess-anim' : ''}`}>
             <div className="s-bg">
-              <div className="p-aurora-bg" style={{opacity: 0.35, filter: 'blur(30px)'}}>
+              <div className="p-aurora-bg" style={{opacity: 0.5}}>
                 <div className="p-orb p-orb-1" />
                 <div className="p-orb p-orb-2" />
                 <div className="p-orb p-orb-3" />
@@ -580,14 +636,64 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
             </div>
             <div className="stop">
               <div className="stl"><div className="tav"><Image src={c.image} alt={c.name} width={40} height={40} style={{objectFit:'cover',borderRadius:'50%'}} />{isSpeaking&&<span className="sring"/>}</div><div className="tinf"><strong>{c.name}</strong><span className="tst">{isSpeaking?'spricht...':isListening?'hört zu...':phase==='data-pull'?'analysiert Daten...':phase==='syncing'?'überträgt...':'online'}</span></div></div>
-              <div className="s-center-cal"><span className="we-countdown-sm">Nächste Session: <span>2 Tagen 3 Std.</span></span></div>
-              <div className="ftabs sftabs">{(['text','audio','video'] as FormatTab[]).map(f => (<button key={f} className={`ftab ${formatTab===f?'act':''}`} onClick={() => setFormatTab(f)}>{f==='text'?'Text':f==='audio'?'Audio':'Video'}</button>))}</div>
+              <div className="s-center-cal"><span className="we-countdown-sm">Live heute, 18:00 Uhr</span></div>
               <div className="str"><div className="stimer"><span className="tval">{formatTime(sessionTime)}</span></div><button className="ebtn" onClick={handleEndSession}>Beenden</button></div>
             </div>
             <div className="pbar"><div className="pfill" style={{width:`${phaseProgress[phase]}%`}}/><span className="plab">{phaseLabels[phase]}</span></div>
-            {formatTab==='video'&&(<div className="vidarea"><Image src={c.image} alt={c.name} width={200} height={200} style={{objectFit:'cover',borderRadius:'20px',opacity:0.9}} /><div className="vov"><div className="vdot"/><span>Live</span></div>{onOpenAvatar&&<button className="vrbtn" onClick={onOpenAvatar}>Echten Video-Chat öffnen</button>}</div>)}
 
-            <div className="chat" ref={chatRef}>
+            {/* TWO-COLUMN BODY */}
+            <div className="s-body">
+              {/* LEFT – Lisa presence (audio central) */}
+              <div className="s-left">
+
+                {/* Format tab bar – small, at top */}
+                <div className="s-fmt-tabs">
+                  {(['text','audio','video'] as FormatTab[]).map(f => (
+                    <button key={f} className={`s-ftab ${formatTab===f?'act':''}`} onClick={() => setFormatTab(f)}>
+                      {f==='text'?'Text':f==='audio'?'Sprache':'Video'}
+                    </button>
+                  ))}
+                </div>
+
+                {/* Lisa with wave rings */}
+                <div className="s-lisa-scene">
+                  {/* Outward wave rings – visible in audio mode */}
+                  {formatTab==='audio' && (<>
+                    <div className={`s-wave s-wave-1 ${isListening||isSpeaking?'act':''}`} />
+                    <div className={`s-wave s-wave-2 ${isListening||isSpeaking?'act':''}`} />
+                    <div className={`s-wave s-wave-3 ${isListening||isSpeaking?'act':''}`} />
+                  </>)}
+                  <div className="s-lisa-wrap">
+                    <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="s-lisa-vid" />
+                    <div className="s-lisa-glow" />
+                  </div>
+                </div>
+
+                {/* Name + status */}
+                <div className="s-lisa-info">
+                  <span className="s-lisa-name">{c.name}</span>
+                  <span className="s-lisa-status">{isSpeaking ? '● spricht' : isListening ? '● hört zu' : '○ bereit'}</span>
+                </div>
+
+                {/* Mic button – only in audio mode */}
+                {formatTab==='audio' && (
+                  <div className="s-mic-wrap">
+                    <button className={`s-mbtn ${isListening?'lis':''}`} onClick={()=>{if(isListening){stopRecording();}else{startRecording();}}}>
+                      <div className="s-minn">
+                        {isListening
+                          ? <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
+                          : <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+                        }
+                      </div>
+                    </button>
+                    <span className="s-mhint">{isListening ? 'Tippen zum Stoppen' : 'Sprechen'}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* RIGHT – Chat */}
+              <div className="s-right">
+                <div className="chat" ref={chatRef}>
               {messages.map(msg => (
                 <div key={msg.id} className={`crow ${msg.from}`}>
                   {msg.from==='coach'&&<div className="cav"><Image src={c.image} alt={c.name} width={32} height={32} style={{objectFit:'cover',borderRadius:'50%'}} /></div>}
@@ -648,23 +754,23 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
                 </div>
               ))}
               {isTyping&&(<div className="crow coach"><div className="cav"><Image src={c.image} alt={c.name} width={32} height={32} style={{objectFit:'cover',borderRadius:'50%'}}/></div><div className="ccont coach"><div className="bub coach tbub"><div className="tdots"><span/><span/><span/></div></div></div></div>)}
-            </div>
+                </div> {/* end chat */}
 
-            {showQR&&(<div className="qrs">{getQuickReplies().map((r,i)=>(<button key={i} className="qrb" onClick={()=>handleUserReply(r)}>{r}</button>))}</div>)}
+                {showQR&&(<div className="qrs">{getQuickReplies().map((r,i)=>(<button key={i} className="qrb" onClick={()=>handleUserReply(r)}>{r}</button>))}</div>)}
 
-            <div className="iarea">
-              {formatTab==='text'&&(<div className="tirow"><input type="text" placeholder="Nachricht eingeben..." className="tinp" readOnly/><button className="sbtn">↑</button></div>)}
-              {formatTab==='audio'&&(
-                <div className="airow">
-                  <div className="avis">{[...Array(16)].map((_,i)=>(<div key={i} className={`vbar ${isListening?'act':''}`} style={{animationDelay:`${i*0.05}s`}}/>))}</div>
-                  <button className={`mbtn ${isListening?'lis':''}`} onClick={()=>{if(isListening){stopRecording();}else{startRecording();}}}>
-                    <div className="minn">{isListening?<svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>:<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>}</div>
-                  </button>
-                  <p className="mhint">{isListening?'Ich höre zu...':'Tippe zum Sprechen'}</p>
-                </div>
-              )}
-              {formatTab==='video'&&(<div className="vihin"><p>Sprich direkt mit {c.name} – Antworten werden live verarbeitet.</p></div>)}
-            </div>
+                {/* Input area – only text mode here; audio mic is in left column */}
+                {formatTab==='text' && (
+                  <div className="iarea">
+                    <div className="tirow"><input type="text" placeholder="Nachricht eingeben..." className="tinp" readOnly/><button className="sbtn">↑</button></div>
+                  </div>
+                )}
+                {formatTab==='video' && (
+                  <div className="iarea">
+                    <div className="vihin"><p>Sprich direkt mit {c.name} – Antworten werden live verarbeitet.</p></div>
+                  </div>
+                )}
+                </div> {/* end s-right */}
+            </div> {/* end s-body */}
           </div>
         )}
       </div>
@@ -819,24 +925,56 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .ftab{flex:1;padding:.5rem .7rem;border:none;border-radius:9px;background:transparent;color:#7a9ab0;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .25s;white-space:nowrap}
         .ftab.act{background:#fff;color:#2c5a7c;box-shadow:0 2px 8px rgba(0,60,120,.08);font-weight:600}
 
-        .sess{position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;display:flex;flex-direction:column;background:#f4f9fca8;opacity:1;transform:scale(1);transition:all .3s cubic-bezier(.4,0,.2,1)}
-        .s-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+        .sess{position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;display:flex;flex-direction:column;background:#07111e;opacity:1;transform:scale(1);transition:all .3s cubic-bezier(.4,0,.2,1)}
+        .s-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse at 20% 50%,rgba(30,60,100,.6) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(50,30,80,.4) 0%,transparent 55%),#07111e}
         .sess-anim{opacity:0;transform:scale(.97)}
-        .stop{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.4);background:rgba(255,255,255,.5);backdrop-filter:blur(24px);gap:1rem;box-shadow:0 4px 30px rgba(68,152,202,.05)}
+        .stop{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(10,20,35,.7);backdrop-filter:blur(24px);gap:1rem}
         .stl{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
         .tav{position:relative;width:44px;height:44px;flex-shrink:0}
-        .tav :global(img){border:2px solid rgba(255,255,255,0.8);box-shadow:0 4px 12px rgba(68,152,202,.15)}
-        .sring{position:absolute;inset:-4px;border-radius:50%;border:2px solid #4498ca;animation:sp 1.5s ease-in-out infinite}
-        @keyframes sp{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:1;transform:scale(1.1)}}
-        .tinf strong{display:block;font-size:.9rem;color:#1a3a50}.tst{font-size:.75rem;color:#7a9ab0}
-        .sftabs{flex:0 1 320px}
+        .tav :global(img){border:2px solid rgba(255,255,255,0.15);box-shadow:0 4px 12px rgba(0,0,0,.3)}
+        .sring{position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(100,200,255,.6);animation:sp 1.5s ease-in-out infinite}
+        @keyframes sp{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
+        .tinf strong{display:block;font-size:.9rem;color:rgba(255,255,255,.9)}.tst{font-size:.75rem;color:rgba(180,210,240,.5)}
+        .sftabs{flex:0 1 280px}
         .str{display:flex;align-items:center;gap:.65rem;flex-shrink:0}
-        .stimer{display:flex;align-items:center;gap:.3rem;padding:.35rem .75rem;border-radius:10px;background:rgba(255,255,255,.6);border:1px solid rgba(255,255,255,.5);backdrop-filter:blur(8px);font-size:.82rem;font-weight:600;color:#2c5a7c;font-variant-numeric:tabular-nums}
-        .ebtn{padding:.35rem .8rem;border-radius:10px;border:1.5px solid rgba(239,83,80,.3);background:rgba(255,255,255,.5);backdrop-filter:blur(8px);color:#e57373;font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s}
-        .ebtn:hover{background:rgba(239,83,80,.1);border-color:#e57373;color:#d32f2f}
-        .pbar{position:relative;z-index:2;height:4px;background:rgba(68,152,202,.1);overflow:hidden}
-        .pfill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,#4498ca,#2c6a8c);transition:width .6s ease;box-shadow:0 0 10px rgba(68,152,202,.4)}
-        .plab{position:absolute;z-index:1;top:8px;left:50%;transform:translateX(-50%);font-size:.65rem;font-weight:600;color:#5a8aa8;letter-spacing:.05em;text-transform:uppercase;background:rgba(255,255,255,.8);padding:0.1rem 0.6rem;border-radius:10px;backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,.5)}
+        .stimer{display:flex;align-items:center;gap:.3rem;padding:.35rem .75rem;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:.82rem;font-weight:600;color:rgba(255,255,255,.7);font-variant-numeric:tabular-nums}
+        .ebtn{padding:.35rem .8rem;border-radius:10px;border:1px solid rgba(255,100,100,.2);background:transparent;color:rgba(255,120,120,.7);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s}
+        .ebtn:hover{background:rgba(255,80,80,.1);border-color:rgba(255,100,100,.5)}
+        .pbar{position:relative;z-index:2;height:2px;background:rgba(255,255,255,.05);overflow:hidden}
+        .pfill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(80,160,255,.6),rgba(120,80,255,.6));transition:width .6s ease}
+        .plab{display:none}
+
+        /* Two-column session body */
+        .s-body{position:relative;z-index:2;flex:1;display:flex;overflow:hidden}
+        .s-left{width:46%;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 2rem 2.5rem;border-right:1px solid rgba(255,255,255,.05);gap:1.4rem}
+        .s-right{flex:1;display:flex;flex-direction:column;overflow:hidden}
+        .s-fmt-tabs{display:flex;gap:.25rem;padding:.3rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:12px;align-self:stretch;justify-content:center}
+        .s-ftab{flex:1;padding:.4rem .6rem;border:none;border-radius:9px;background:transparent;color:rgba(180,210,240,.5);font-size:.78rem;font-weight:500;cursor:pointer;transition:all .25s;letter-spacing:.02em}
+        .s-ftab.act{background:rgba(255,255,255,.1);color:rgba(220,240,255,.9);font-weight:600}
+        .s-lisa-scene{position:relative;display:flex;align-items:center;justify-content:center;width:300px;height:300px}
+        .s-lisa-wrap{position:relative;width:240px;height:240px;border-radius:50%;overflow:hidden;flex-shrink:0;z-index:2}
+        .s-lisa-vid{width:100%;height:100%;object-fit:cover;border-radius:50%}
+        .s-lisa-glow{position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle,rgba(80,160,255,.2),transparent 65%);animation:lg 4s ease-in-out infinite;pointer-events:none;z-index:1}
+        @keyframes lg{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.9;transform:scale(1.1)}}
+        .s-wave{position:absolute;border-radius:50%;border:1.5px solid rgba(80,160,255,.25);top:50%;left:50%;transform:translate(-50%,-50%) scale(1);opacity:0;pointer-events:none}
+        .s-wave-1{width:260px;height:260px}
+        .s-wave-2{width:292px;height:292px}
+        .s-wave-3{width:324px;height:324px}
+        .s-wave.act{animation:sw 2.4s ease-out infinite}
+        .s-wave-2.act{animation-delay:.65s}
+        .s-wave-3.act{animation-delay:1.3s}
+        @keyframes sw{0%{opacity:.55;transform:translate(-50%,-50%) scale(.92)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.18)}}
+        .s-lisa-info{text-align:center}
+        .s-lisa-name{display:block;font-size:1.15rem;font-weight:600;color:rgba(255,255,255,.85);letter-spacing:.02em;margin-bottom:.3rem}
+        .s-lisa-status{display:block;font-size:.8rem;color:rgba(120,180,240,.55);letter-spacing:.05em}
+        .s-mic-wrap{display:flex;flex-direction:column;align-items:center;gap:.6rem}
+        .s-mbtn{width:56px;height:56px;border-radius:50%;border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center}
+        .s-mbtn:hover{border-color:rgba(100,180,255,.3);background:rgba(100,180,255,.1)}
+        .s-mbtn.lis{border-color:rgba(80,200,160,.4);animation:mp 1.8s ease-in-out infinite;background:rgba(80,200,160,.08)}
+        @keyframes mp{0%,100%{box-shadow:0 0 0 0 rgba(80,200,160,.2)}50%{box-shadow:0 0 0 14px rgba(80,200,160,0)}}
+        .s-minn{color:rgba(200,225,255,.8);display:flex;align-items:center;justify-content:center}
+        .s-mbtn.lis .s-minn{color:rgba(80,200,160,.9)}
+        .s-mhint{font-size:.72rem;color:rgba(120,165,210,.5);letter-spacing:.04em;font-weight:500}
 
         .vidarea{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:1.5rem;background:linear-gradient(135deg,rgba(26,58,80,.8),rgba(44,90,124,.8));backdrop-filter:blur(16px);min-height:160px;border-bottom:1px solid rgba(255,255,255,.2)}
         .vov{position:absolute;top:12px;left:12px;display:flex;align-items:center;gap:.4rem;padding:.3rem .7rem;border-radius:8px;background:rgba(0,0,0,.5);font-size:.75rem;color:#fff;font-weight:600}
@@ -844,17 +982,17 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         @keyframes bl{0%,100%{opacity:1}50%{opacity:.4}}
         .vrbtn{position:absolute;bottom:12px;right:12px;padding:.5rem 1rem;border-radius:10px;border:none;background:rgba(255,255,255,.2);color:#fff;font-size:.8rem;cursor:pointer;backdrop-filter:blur(8px)}
 
-        .chat{position:relative;z-index:2;flex:1;overflow-y:auto;padding:2rem;display:flex;flex-direction:column;gap:1.25rem;scrollbar-width:thin;scrollbar-color:rgba(68,152,202,.15) transparent}
-        .chat::-webkit-scrollbar{width:6px}.chat::-webkit-scrollbar-thumb{background:rgba(68,152,202,.25);border-radius:4px}
-        .crow{display:flex;gap:.75rem;max-width:75%;animation:mi .4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both}
-        .crow.coach{align-self:flex-start}.crow.user{align-self:flex-end;flex-direction:row-reverse}.crow.system{align-self:flex-start;max-width:90%;margin:1rem auto}
+        .chat{position:relative;z-index:2;flex:1;overflow-y:auto;padding:1.75rem 1.5rem;display:flex;flex-direction:column;gap:1.1rem;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent}
+        .chat::-webkit-scrollbar{width:5px}.chat::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px}
+        .crow{display:flex;gap:.75rem;max-width:80%;animation:mi .4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both}
+        .crow.coach{align-self:flex-start}.crow.user{align-self:flex-end;flex-direction:row-reverse}.crow.system{align-self:flex-start;max-width:95%;margin:.5rem auto}
         @keyframes mi{from{opacity:0;transform:translateY(12px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
-        .cav{width:36px;height:36px;flex-shrink:0;border-radius:50%;overflow:hidden;margin-top:4px;box-shadow:0 4px 12px rgba(68,152,202,.15);border:2px solid rgba(255,255,255,0.8)}
-        .ccont{display:flex;flex-direction:column;gap:.5rem;min-width:0}.ccont.system{width:100%}
-        .bub{padding:.9rem 1.25rem;border-radius:20px;backdrop-filter:blur(24px)}
-        .bub.coach{background:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.6);border-bottom-left-radius:6px;box-shadow:0 4px 20px rgba(68,152,202,.06)}
-        .bub.user{background:linear-gradient(135deg,rgba(68,152,202,0.9),rgba(44,106,140,0.9));border:1px solid rgba(255,255,255,.2);border-bottom-right-radius:6px;box-shadow:0 6px 20px rgba(44,106,140,.25)}
-        .bub p{font-size:.95rem;line-height:1.6;margin:0;letter-spacing:0.01em}.bub.coach p{color:#1a3a50}.bub.user p{color:#fff}
+        .cav{width:34px;height:34px;flex-shrink:0;border-radius:50%;overflow:hidden;margin-top:4px;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1.5px solid rgba(255,255,255,.12)}
+        .ccont{display:flex;flex-direction:column;gap:.4rem;min-width:0}.ccont.system{width:100%}
+        .bub{padding:.85rem 1.15rem;border-radius:18px;backdrop-filter:blur(16px)}
+        .bub.coach{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-bottom-left-radius:5px}
+        .bub.user{background:rgba(80,140,200,.25);border:1px solid rgba(100,160,255,.2);border-bottom-right-radius:5px}
+        .bub p{font-size:.93rem;line-height:1.6;margin:0;letter-spacing:0.01em}.bub.coach p{color:rgba(220,235,255,.9)}.bub.user p{color:rgba(200,225,255,.95)}
         .tbub{padding:.75rem 1.15rem}.tdots{display:flex;gap:5px;align-items:center}.tdots span{width:6px;height:6px;border-radius:50%;background:rgba(68,152,202,0.4);animation:db 1.4s ease-in-out infinite}.tdots span:nth-child(2){animation-delay:.2s;background:rgba(68,152,202,0.6)}.tdots span:nth-child(3){animation-delay:.4s;background:rgba(68,152,202,0.8)}
         @keyframes db{0%,60%,100%{transform:translateY(0) scale(1)}30%{transform:translateY(-5px) scale(1.1)}}
 
@@ -930,14 +1068,15 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .clob{padding:.7rem 1.5rem;border-radius:14px;border:none;background:linear-gradient(135deg,#4498ca,#2c6a8c);color:#fff;font-size:.9rem;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(68,152,202,.25);transition:all .25s}
         .clob:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(68,152,202,.35)}
 
-        .qrs{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:.5rem;padding:.75rem 2rem;border-top:1px solid rgba(255,255,255,0.4);background:rgba(255,255,255,.3);backdrop-filter:blur(16px)}
-        .qrb{padding:.6rem 1.1rem;border-radius:20px;border:1px solid rgba(255,255,255,0.6);background:rgba(255,255,255,.7);font-size:.82rem;color:#2c5a7c;font-weight:600;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(68,152,202,0.05)}
-        .qrb:hover{border-color:#4498ca;background:#fff;transform:translateY(-2px);box-shadow:0 6px 16px rgba(68,152,202,0.15)}
+        .qrs{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:.4rem;padding:.65rem 1.5rem;border-top:1px solid rgba(255,255,255,.06);background:rgba(10,20,35,.5);backdrop-filter:blur(16px)}
+        .qrb{padding:.5rem 1rem;border-radius:18px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);font-size:.8rem;color:rgba(180,210,245,.8);font-weight:500;cursor:pointer;transition:all .2s}
+        .qrb:hover{border-color:rgba(100,160,255,.35);background:rgba(100,160,255,.1);color:rgba(200,230,255,.95)}
 
-        .iarea{position:relative;z-index:2;padding:1rem 2rem 1.5rem;border-top:1px solid rgba(255,255,255,0.4);background:rgba(255,255,255,.4);backdrop-filter:blur(24px);box-shadow:0 -4px 20px rgba(0,0,0,0.02)}
+        .iarea{position:relative;z-index:2;padding:.85rem 1.5rem 1.2rem;border-top:1px solid rgba(255,255,255,.05);background:rgba(10,20,35,.6);backdrop-filter:blur(24px)}
         .tirow{display:flex;gap:.5rem}
-        .tinp{flex:1;padding:.85rem 1.15rem;border-radius:16px;border:1px solid rgba(255,255,255,0.8);background:rgba(255,255,255,0.8);backdrop-filter:blur(12px);font-size:.95rem;color:#1a3a50;outline:none;box-shadow:inset 0 2px 6px rgba(0,0,0,0.02)}
-        .tinp:focus{border-color:#4498ca;background:#fff;box-shadow:inset 0 2px 6px rgba(68,152,202,0.05), 0 0 0 3px rgba(68,152,202,0.1)}
+        .tinp{flex:1;padding:.8rem 1.1rem;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);font-size:.93rem;color:rgba(220,240,255,.9);outline:none}
+        .tinp::placeholder{color:rgba(150,180,210,.4)}
+        .tinp:focus{border-color:rgba(100,160,255,.3);background:rgba(255,255,255,.09)}
         .sbtn{width:44px;height:44px;border-radius:14px;border:none;background:linear-gradient(135deg,#4498ca,#2c6a8c);color:#fff;font-size:1.2rem;font-weight:700;cursor:pointer}
         .airow{display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:.5rem 0}
         .avis{display:flex;align-items:center;gap:3px;height:28px}
@@ -1161,14 +1300,50 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .wij-scroll { display: flex; flex-direction: column; gap: 0.8rem; overflow-y: auto; scrollbar-width: none; padding-bottom: 1rem;}
         .wij-scroll::-webkit-scrollbar { display: none; }
         .wij-item {
-          padding: 1.2rem; border-radius: 16px; background: rgba(255,255,255,0.7);
-          border: 1px solid rgba(226, 232, 240, 0.6); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          padding: 1.2rem; border-radius: 16px; background: #fff;
+          border: 1px solid rgba(226, 232, 240, 0.8); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
-        .wij-item:hover { background: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.03); transform: translateX(4px); }
-        .wij-item.upcoming { background: linear-gradient(to right, #ffffff, #f8fafc); border-left: 3px solid #818cf8; box-shadow: 0 4px 12px rgba(129, 140, 248, 0.05); }
-        .wiji-date { font-size: 0.75rem; color: #94a3b8; font-weight: 600; margin-bottom: 0.4rem; display: flex; justify-content: space-between; }
-        .wiji-topic { font-size: 0.95rem; color: #1e293b; font-weight: 600; margin-bottom: 0.4rem; }
-        .wiji-summary { font-size: 0.8rem; color: #64748b; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .wij-item:hover { box-shadow: 0 12px 25px rgba(129, 140, 248, 0.08); transform: translateY(-3px); border-color: rgba(129, 140, 248, 0.3); }
+        .wij-item.upcoming { background: linear-gradient(to right, #ffffff, #f8fafc); border-left: 3px solid #818cf8; }
+        .wiji-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+        .wiji-date { font-size: 0.72rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+        .wiji-dur { margin-left: 0.6rem; color: #cbd5e1; }
+        .wiji-detail-btn { background: rgba(99, 102, 241, 0.08); color: #6366f1; border: 1px solid rgba(99, 102, 241, 0.15); border-radius: 8px; padding: 0.3rem 0.7rem; font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .wiji-detail-btn:hover { background: #6366f1; color: #fff; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2); }
+        .wiji-topic { font-size: 1rem; color: #1e293b; font-weight: 600; margin-bottom: 0.4rem; }
+        .wiji-summary { font-size: 0.85rem; color: #64748b; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+        /* Journey Detail View - Premium */
+        .wij-detail-view { display: flex; flex-direction: column; gap: 1.5rem; animation: slideInRight 0.4s cubic-bezier(0.16, 1, 0.3, 1); padding: 0.5rem; }
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(20px); } to { opacity: 1; transform: translateX(0); } }
+        .wij-back-btn { background: transparent; border: none; color: #6366f1; font-size: 0.85rem; font-weight: 600; display: flex; align-items: center; gap: 0.4rem; cursor: pointer; padding: 0; margin-bottom: 0.5rem; transition: color 0.2s; }
+        .wij-back-btn:hover { color: #4f46e5; }
+        .wij-detail-content { display: flex; flex-direction: column; gap: 1.5rem; }
+        .wijd-header { border-bottom: 2px solid #f1f5f9; padding-bottom: 1.25rem; }
+        .wijd-date { font-size: 0.75rem; color: #94a3b8; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+        .wijd-title { font-size: 1.4rem; font-weight: 700; color: #1e293b; margin: 0 0 1rem; line-height: 1.2; }
+        .wijd-badges { display: flex; gap: 0.75rem; }
+        .wijd-badge { font-size: 0.7rem; font-weight: 600; padding: 0.4rem 0.75rem; border-radius: 12px; display: flex; align-items: center; gap: 0.4rem; }
+        .wijd-badge.dur { background: #f8fafc; color: #64748b; border: 1px solid #e2e8f0; }
+        .wijd-badge.type { background: #f0fdf4; color: #16a34a; border: 1px solid #dcfce7; }
+        .wijd-sec-title { font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 0.6rem; }
+        .wijd-sec-text { font-size: 0.95rem; color: #475569; line-height: 1.6; font-weight: 400; }
+        .wijd-output-card { 
+          background: linear-gradient(135deg, #f0f7ff, #f5f3ff); border: 1px solid rgba(99, 102, 241, 0.15); 
+          border-radius: 20px; padding: 1.25rem; display: flex; align-items: center; gap: 1rem;
+          box-shadow: 0 4px 15px rgba(99, 102, 241, 0.05);
+        }
+        .wijd-output-card i { font-size: 1.75rem; color: #6366f1; }
+        .wijd-output-info { display: flex; flex-direction: column; gap: 0.2rem; }
+        .wijd-output-label { font-size: 0.7rem; color: #64748b; text-transform: uppercase; font-weight: 700; letter-spacing: 0.02em; }
+        .wijd-output-val { font-size: 1rem; font-weight: 700; color: #312e81; }
+        .wijd-footer { margin-top: 0.5rem; }
+        .wijd-share-btn { 
+          width: 100%; padding: 1rem; background: #fff; border: 1.5px solid #e2e8f0; border-radius: 16px; 
+          color: #475569; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s;
+        }
+        .wijd-share-btn:hover { background: #f8fafc; border-color: #6366f1; color: #6366f1; }
 
         /* SESSION VIEW UNDO DARK MODE */
         .sess { background: #F8FAFC; }

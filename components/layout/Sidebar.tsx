@@ -98,8 +98,8 @@ export default function Sidebar({ showOnlyLogo = false, activeItem, onItemClick 
   }
 
   return (
-    <div className="sidebar-navigation">
-      <div className="sidebar-menu-content">
+    <div className="sidebar-navigation" style={{display:'flex',flexDirection:'column'}}>
+      <div className="sidebar-menu-content" style={{flex:1}}>
         {/* 01 STARTER - Standardmäßig ausgeklappt */}
         <div className="menu-section">
           <div 
@@ -199,6 +199,47 @@ export default function Sidebar({ showOnlyLogo = false, activeItem, onItemClick 
             </ul>
           )}
         </div>
+      </div>
+
+      {/* Referral Card – compact */}
+      <div style={{
+        margin:'0.5rem 0.25rem 0.75rem',
+        padding:'0.65rem 0.85rem',
+        borderRadius:'12px',
+        background:'linear-gradient(135deg, #e8f4ff 0%, #eaf6f0 100%)',
+        border:'1.5px solid rgba(68,152,202,0.18)',
+        boxShadow:'0 2px 10px rgba(68,152,202,0.08)',
+        flexShrink:0,
+      }}>
+        <div style={{display:'flex',alignItems:'center',gap:'0.6rem',marginBottom:'0.5rem'}}>
+          <div style={{
+            width:'28px',height:'28px',borderRadius:'8px',flexShrink:0,
+            background:'linear-gradient(135deg,#4498ca,#2c6a8c)',
+            display:'flex',alignItems:'center',justifyContent:'center',
+          }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/>
+              <line x1="12" y1="22" x2="12" y2="7"/>
+              <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/>
+              <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>
+            </svg>
+          </div>
+          <div style={{minWidth:0}}>
+            <div style={{fontSize:'0.72rem',fontWeight:700,color:'#1a3a50',lineHeight:1.2}}>Empfiehl TrueYears</div>
+            <div style={{fontSize:'0.7rem',fontWeight:600,color:'#4498ca',lineHeight:1.2}}>3 Monate kostenlos</div>
+          </div>
+        </div>
+        <button style={{
+          width:'100%',padding:'0.42rem 0',border:'none',borderRadius:'8px',
+          background:'linear-gradient(135deg,#4498ca,#2c6a8c)',color:'#fff',
+          fontSize:'0.74rem',fontWeight:600,cursor:'pointer',letterSpacing:'0.02em',
+          boxShadow:'0 3px 8px rgba(68,152,202,0.22)',transition:'all 0.2s',
+        }}
+        onMouseEnter={e=>(e.currentTarget.style.transform='translateY(-1px)')}
+        onMouseLeave={e=>(e.currentTarget.style.transform='')}
+        >
+          Jetzt empfehlen →
+        </button>
       </div>
     </div>
   );
