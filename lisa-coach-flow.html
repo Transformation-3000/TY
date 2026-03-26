@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lisa AI Coach – Flow & Datenmodell</title>
+<style>
+  :root {
+    --bg: #0f1419;
+    --surface: #1a2332;
+    --surface2: #1e2a3a;
+    --border: rgba(68,152,202,.15);
+    --border-hi: rgba(68,152,202,.4);
+    --accent: #4498ca;
+    --accent2: #2c6a8c;
+    --text: #c8dce8;
+    --text2: #7a9ab0;
+    --text3: #4a6a80;
+    --white: #e8f4fc;
+    --green: #43A047;
+    --orange: #FFA726;
+    --red: #EF5350;
+    --purple: #AB47BC;
+    --yellow: #F9A825;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); overflow: hidden; height: 100vh; }
+
+  /* TOP BAR */
+  .topbar { display:flex; align-items:center; justify-content:space-between; height:52px; padding:0 20px; background:var(--surface); border-bottom:1px solid var(--border); z-index:100; position:relative; }
+  .topbar-left { display:flex; align-items:center; gap:14px; }
+  .topbar-logo { font-size:18px; font-weight:700; background:linear-gradient(135deg,var(--accent),var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .topbar-sep { width:1px; height:24px; background:var(--border); }
+  .topbar-title { font-size:13px; color:var(--text2); font-weight:500; }
+  .topbar-actions { display:flex; gap:8px; }
+  .tbtn { padding:7px 14px; border-radius:8px; border:1px solid var(--border); background:transparent; color:var(--text2); font-size:12px; font-weight:500; cursor:pointer; transition:all .2s; display:flex; align-items:center; gap:6px; }
+  .tbtn:hover { border-color:var(--border-hi); color:var(--white); background:rgba(68,152,202,.08); }
+  .tbtn.primary { background:linear-gradient(135deg,var(--accent),var(--accent2)); border-color:transparent; color:#fff; }
+  .tbtn.primary:hover { box-shadow:0 4px 16px rgba(68,152,202,.3); }
+  .tbtn.danger { border-color:rgba(239,83,80,.2); color:var(--red); }
+  .tbtn.danger:hover { background:rgba(239,83,80,.08); }
+
+  /* LAYOUT */
+  .layout { display:flex; height:calc(100vh - 52px); }
+
+  /* SIDEBAR */
+  .sidebar { width:260px; background:var(--surface); border-right:1px solid var(--border); display:flex; flex-direction:column; flex-shrink:0; }
+  .sidebar-header { padding:16px; border-bottom:1px solid var(--border); }
+  .sidebar-header h3 { font-size:12px; text-transform:uppercase; letter-spacing:.06em; color:var(--text3); font-weight:600; margin-bottom:10px; }
+  .sidebar-search { width:100%; padding:8px 10px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text); font-size:12px; outline:none; }
+  .sidebar-search:focus { border-color:var(--accent); }
+  .sidebar-body { flex:1; overflow-y:auto; padding:8px; }
+  .sidebar-body::-webkit-scrollbar { width:4px; }
+  .sidebar-body::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
+  .sb-group { margin-bottom:14px; }
+  .sb-group-title { font-size:11px; font-weight:600; color:var(--text3); text-transform:uppercase; letter-spacing:.05em; padding:6px 8px; }
+  .sb-item { display:flex; align-items:center; gap:10px; padding:9px 10px; border-radius:10px; cursor:grab; transition:all .2s; border:1px solid transparent; user-select:none; }
+  .sb-item:hover { background:rgba(68,152,202,.06); border-color:var(--border); }
+  .sb-item:active { cursor:grabbing; }
+  .sb-icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0; }
+  .sb-item-info { flex:1; min-width:0; }
+  .sb-item-name { font-size:12px; font-weight:600; color:var(--text); display:block; }
+  .sb-item-desc { font-size:10px; color:var(--text3); display:block; margin-top:1px; }
+
+  /* CANVAS */
+  .canvas-wrap { flex:1; position:relative; overflow:hidden; background:var(--bg); }
+  .canvas-grid { position:absolute; inset:0; opacity:.3; background-image:radial-gradient(circle at 1px 1px, rgba(68,152,202,.25) 1px, transparent 0); background-size:24px 24px; pointer-events:none; }
+  .canvas { position:absolute; inset:0; }
+  .canvas svg { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:1; }
+  .canvas svg path { pointer-events:stroke; cursor:pointer; }
+  .canvas svg path:hover { stroke:var(--accent) !important; stroke-width:3 !important; }
+
+  /* NODES */
+  .node { position:absolute; border-radius:14px; border:1.5px solid var(--border); background:var(--surface2); min-width:200px; max-width:280px; cursor:move; transition:box-shadow .2s, border-color .2s; z-index:10; user-select:none; }
+  .node:hover { border-color:var(--border-hi); box-shadow:0 8px 32px rgba(0,0,0,.3); z-index:20; }
+  .node.selected { border-color:var(--accent); box-shadow:0 0 0 3px rgba(68,152,202,.2), 0 8px 32px rgba(0,0,0,.3); z-index:30; }
+  .node-header { display:flex; align-items:center; gap:8px; padding:12px 14px 8px; }
+  .node-icon { width:28px; height:28px; border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:13px; flex-shrink:0; }
+  .node-title { font-size:13px; font-weight:600; color:var(--white); flex:1; }
+  .node-phase { font-size:9px; font-weight:600; text-transform:uppercase; letter-spacing:.05em; padding:2px 7px; border-radius:5px; background:rgba(68,152,202,.1); color:var(--accent); }
+  .node-body { padding:4px 14px 12px; }
+  .node-desc { font-size:11px; color:var(--text2); line-height:1.5; }
+  .node-meta { display:flex; flex-wrap:wrap; gap:4px; margin-top:8px; }
+  .node-tag { font-size:9px; font-weight:600; padding:3px 7px; border-radius:5px; background:rgba(68,152,202,.08); color:var(--text3); }
+  .node-ports { display:flex; justify-content:space-between; padding:0 14px 10px; }
+  .port { width:10px; height:10px; border-radius:50%; border:2px solid var(--text3); background:var(--surface2); cursor:crosshair; transition:all .15s; position:relative; z-index:50; }
+  .port:hover { border-color:var(--accent); background:var(--accent); transform:scale(1.3); }
+  .port-out { margin-left:auto; }
+  .port-in { margin-right:auto; }
+
+  /* NODE COLORS */
+  .node-type-phase .node-icon { background:rgba(68,152,202,.15); color:var(--accent); }
+  .node-type-input .node-icon { background:rgba(67,160,71,.15); color:var(--green); }
+  .node-type-data .node-icon { background:rgba(171,71,188,.15); color:var(--purple); }
+  .node-type-action .node-icon { background:rgba(255,167,38,.15); color:var(--orange); }
+  .node-type-output .node-icon { background:rgba(239,83,80,.15); color:var(--red); }
+  .node-type-system .node-icon { background:rgba(249,168,37,.15); color:var(--yellow); }
+
+  /* DETAIL PANEL */
+  .detail-panel { width:320px; background:var(--surface); border-left:1px solid var(--border); display:flex; flex-direction:column; flex-shrink:0; transform:translateX(100%); transition:transform .3s cubic-bezier(.4,0,.2,1); position:absolute; right:0; top:0; bottom:0; z-index:50; }
+  .detail-panel.open { transform:translateX(0); }
+  .dp-header { display:flex; align-items:center; justify-content:space-between; padding:16px; border-bottom:1px solid var(--border); }
+  .dp-header h3 { font-size:14px; font-weight:600; color:var(--white); }
+  .dp-close { width:28px; height:28px; border-radius:7px; border:none; background:transparent; color:var(--text3); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+  .dp-close:hover { background:rgba(68,152,202,.1); color:var(--text); }
+  .dp-body { flex:1; overflow-y:auto; padding:16px; }
+  .dp-body::-webkit-scrollbar { width:4px; }
+  .dp-body::-webkit-scrollbar-thumb { background:var(--border); border-radius:4px; }
+  .dp-field { margin-bottom:14px; }
+  .dp-label { display:block; font-size:11px; font-weight:600; color:var(--text3); text-transform:uppercase; letter-spacing:.04em; margin-bottom:5px; }
+  .dp-input { width:100%; padding:8px 10px; border-radius:8px; border:1px solid var(--border); background:var(--bg); color:var(--text); font-size:12px; outline:none; font-family:inherit; }
+  .dp-input:focus { border-color:var(--accent); }
+  .dp-textarea { resize:vertical; min-height:60px; }
+  .dp-select { appearance:none; background-image:url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%237a9ab0' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 10px center; padding-right:28px; }
+  .dp-tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:6px; }
+  .dp-tag { display:flex; align-items:center; gap:4px; padding:3px 8px; border-radius:6px; background:rgba(68,152,202,.1); font-size:10px; color:var(--accent); font-weight:500; }
+  .dp-tag button { background:none; border:none; color:var(--text3); font-size:12px; cursor:pointer; padding:0; line-height:1; }
+  .dp-tag button:hover { color:var(--red); }
+  .dp-actions { padding:16px; border-top:1px solid var(--border); display:flex; gap:8px; }
+
+  /* MINIMAP */
+  .minimap { position:absolute; bottom:16px; right:16px; width:180px; height:120px; background:var(--surface); border:1px solid var(--border); border-radius:10px; z-index:40; overflow:hidden; opacity:.7; transition:opacity .2s; }
+  .minimap:hover { opacity:1; }
+  .minimap-viewport { position:absolute; border:1px solid var(--accent); background:rgba(68,152,202,.08); pointer-events:none; }
+
+  /* ZOOM CONTROLS */
+  .zoom-controls { position:absolute; bottom:16px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:2px; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:4px; z-index:40; }
+  .zoom-btn { width:32px; height:32px; border:none; border-radius:7px; background:transparent; color:var(--text2); font-size:16px; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .15s; }
+  .zoom-btn:hover { background:rgba(68,152,202,.1); color:var(--white); }
+  .zoom-label { font-size:11px; font-weight:600; color:var(--text3); padding:0 8px; min-width:45px; text-align:center; }
+
+  /* CONTEXT MENU */
+  .context-menu { position:absolute; z-index:200; background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:4px; min-width:180px; box-shadow:0 12px 40px rgba(0,0,0,.4); display:none; }
+  .context-menu.show { display:block; }
+  .cm-item { display:flex; align-items:center; gap:8px; padding:8px 10px; border-radius:7px; border:none; background:none; color:var(--text); font-size:12px; cursor:pointer; width:100%; text-align:left; transition:all .15s; font-family:inherit; }
+  .cm-item:hover { background:rgba(68,152,202,.1); }
+  .cm-item.danger { color:var(--red); }
+  .cm-sep { height:1px; background:var(--border); margin:4px 0; }
+
+  /* TOAST */
+  .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:10px 18px; font-size:12px; color:var(--text); z-index:300; transition:transform .3s cubic-bezier(.4,0,.2,1); box-shadow:0 8px 32px rgba(0,0,0,.3); }
+  .toast.show { transform:translateX(-50%) translateY(0); }
+
+  /* CONNECTION DRAWING */
+  .conn-temp { stroke:var(--accent); stroke-width:2; stroke-dasharray:6 4; fill:none; opacity:.7; }
+
+  /* LEGEND */
+  .legend { position:absolute; top:16px; left:16px; background:var(--surface); border:1px solid var(--border); border-radius:10px; padding:12px 14px; z-index:40; font-size:11px; }
+  .legend-title { font-weight:600; color:var(--text2); margin-bottom:8px; font-size:10px; text-transform:uppercase; letter-spacing:.05em; }
+  .legend-item { display:flex; align-items:center; gap:8px; margin-bottom:4px; color:var(--text3); }
+  .legend-dot { width:10px; height:10px; border-radius:3px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-logo">Lisa AI Coach</span>
+    <span class="topbar-sep"></span>
+    <span class="topbar-title">Flow & Datenmodell Editor</span>
+  </div>
+  <div class="topbar-actions">
+    <button class="tbtn" onclick="resetView()">⌂ Reset View</button>
+    <button class="tbtn" onclick="exportJSON()">↓ Export JSON</button>
+    <button class="tbtn" onclick="importJSON()">↑ Import JSON</button>
+    <button class="tbtn danger" onclick="clearAll()">✕ Alles löschen</button>
+    <button class="tbtn primary" onclick="saveToLocal()">💾 Speichern</button>
+  </div>
+</div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <h3>Bausteine</h3>
+      <input type="text" class="sidebar-search" placeholder="Suchen..." oninput="filterSidebar(this.value)">
+    </div>
+    <div class="sidebar-body" id="sidebarBody"></div>
+  </div>
+
+  <!-- CANVAS -->
+  <div class="canvas-wrap" id="canvasWrap">
+    <div class="canvas-grid" id="canvasGrid"></div>
+    <div class="canvas" id="canvas">
+      <svg id="connSvg"></svg>
+    </div>
+
+    <div class="legend">
+      <div class="legend-title">Knotentypen</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--accent)"></span> Phase</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--green)"></span> User Input</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--purple)"></span> Daten</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--orange)"></span> Aktion</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--red)"></span> Output</div>
+      <div class="legend-item"><span class="legend-dot" style="background:var(--yellow)"></span> System</div>
+    </div>
+
+    <div class="zoom-controls">
+      <button class="zoom-btn" onclick="zoomCanvas(-0.1)">−</button>
+      <span class="zoom-label" id="zoomLabel">100%</span>
+      <button class="zoom-btn" onclick="zoomCanvas(0.1)">+</button>
+      <button class="zoom-btn" onclick="resetZoom()" title="Reset">⟳</button>
+    </div>
+  </div>
+
+  <!-- DETAIL PANEL -->
+  <div class="detail-panel" id="detailPanel">
+    <div class="dp-header">
+      <h3 id="dpTitle">Details</h3>
+      <button class="dp-close" onclick="closeDetail()">✕</button>
+    </div>
+    <div class="dp-body" id="dpBody"></div>
+    <div class="dp-actions" id="dpActions"></div>
+  </div>
+</div>
+
+<!-- CONTEXT MENU -->
+<div class="context-menu" id="contextMenu"></div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- HIDDEN FILE INPUT -->
+<input type="file" id="fileInput" accept=".json" style="display:none" onchange="handleImport(event)">
+
+<script>
+// ======================== STATE ========================
+let nodes = [];
+let connections = [];
+let selectedNodeId = null;
+let dragNode = null;
+let dragOffset = { x: 0, y: 0 };
+let pan = { x: 0, y: 0 };
+let zoom = 1;
+let isPanning = false;
+let panStart = { x: 0, y: 0 };
+let connStart = null; // { nodeId, type:'out' }
+let tempConn = null;
+let nextId = 1;
+
+// ======================== NODE TEMPLATES ========================
+const nodeTemplates = [
+  // Phasen
+  { group:'Phasen', type:'phase', icon:'🎬', name:'Einstieg / Entry', desc:'Begrüßung und Auswahl des Session-Typs', tags:['greeting','choice'], phase:'entry' },
+  { group:'Phasen', type:'phase', icon:'💡', name:'Check-in', desc:'Energie, Stress & Fokus erfassen', tags:['energy','stress','focus'], phase:'checkin' },
+  { group:'Phasen', type:'phase', icon:'📊', name:'Datenanalyse', desc:'Wearable- und Lifestyle-Daten laden & auswerten', tags:['data-pull','wearable'], phase:'data-pull' },
+  { group:'Phasen', type:'phase', icon:'🔍', name:'Verstehen', desc:'Tieferes Verständnis durch gezielte Fragen', tags:['deep-dive','questions'], phase:'verstehen' },
+  { group:'Phasen', type:'phase', icon:'🎯', name:'Fokus setzen', desc:'Konkrete Problemstellung eingrenzen', tags:['focus','narrow-down'], phase:'fokus' },
+  { group:'Phasen', type:'phase', icon:'💊', name:'Empfehlung', desc:'Action Plan mit konkreten Maßnahmen', tags:['recommendation','action-plan'], phase:'empfehlung' },
+  { group:'Phasen', type:'phase', icon:'🤝', name:'Commitment', desc:'Nutzer bestätigt, passt an oder lehnt ab', tags:['accept','adjust','decline'], phase:'commitment' },
+  { group:'Phasen', type:'phase', icon:'🔄', name:'Syncing', desc:'Plan ins System übertragen (Erinnerungen, Tracking)', tags:['sync','reminders'], phase:'syncing' },
+  { group:'Phasen', type:'phase', icon:'👋', name:'Abschluss', desc:'Session beenden, nächsten Check-in planen', tags:['closing','next-session'], phase:'closing' },
+
+  // User Inputs
+  { group:'User Inputs', type:'input', icon:'⚡', name:'Energie-Rating', desc:'Nutzer bewertet Energie 1-5', tags:['slider','rating'] },
+  { group:'User Inputs', type:'input', icon:'😰', name:'Stress-Rating', desc:'Nutzer bewertet Stress 1-5', tags:['slider','rating'] },
+  { group:'User Inputs', type:'input', icon:'🏷️', name:'Fokus-Auswahl', desc:'Schlaf, Bewegung, Stress, Ernährung, Motivation', tags:['pills','selection'] },
+  { group:'User Inputs', type:'input', icon:'💬', name:'Freitext / Quick Reply', desc:'Offene Antwort oder vorgefertigte Optionen', tags:['text','quick-reply'] },
+  { group:'User Inputs', type:'input', icon:'🎤', name:'Voice Input', desc:'Spracheingabe via Whisper STT', tags:['audio','whisper'] },
+  { group:'User Inputs', type:'input', icon:'✅', name:'Commitment-Wahl', desc:'Akzeptieren / Anpassen / Ablehnen', tags:['choice','3-options'] },
+
+  // Datenquellen
+  { group:'Datenquellen', type:'data', icon:'⌚', name:'Apple Watch', desc:'Schritte, Ruhepuls, HRV', tags:['wearable','healthkit'] },
+  { group:'Datenquellen', type:'data', icon:'💍', name:'Oura Ring', desc:'Schlafqualität, HRV, Readiness', tags:['wearable','sleep'] },
+  { group:'Datenquellen', type:'data', icon:'📈', name:'TrueYears', desc:'Biomarker, Lifestyle-Scores', tags:['biomarker','score'] },
+  { group:'Datenquellen', type:'data', icon:'📋', name:'Session History', desc:'Vergangene Sessions & Commitments', tags:['history','context'] },
+  { group:'Datenquellen', type:'data', icon:'👤', name:'Nutzerprofil', desc:'Persönlichkeitstyp (DISC), Präferenzen', tags:['profile','personality'] },
+
+  // Aktionen
+  { group:'Aktionen', type:'action', icon:'📝', name:'Action Plan erstellen', desc:'Konkreter Plan mit Schwierigkeit & Wirkung', tags:['plan','metrics'] },
+  { group:'Aktionen', type:'action', icon:'⏰', name:'Erinnerung setzen', desc:'Push-Notification zu definierter Uhrzeit', tags:['reminder','notification'] },
+  { group:'Aktionen', type:'action', icon:'📊', name:'Tracking aktivieren', desc:'Metrik-Tracking für definierten Zeitraum', tags:['tracking','metric'] },
+  { group:'Aktionen', type:'action', icon:'🔁', name:'Follow-up planen', desc:'Nächsten Check-in terminieren', tags:['schedule','follow-up'] },
+  { group:'Aktionen', type:'action', icon:'🧠', name:'Kontext merken', desc:'Erkenntnisse für zukünftige Sessions speichern', tags:['memory','context'] },
+
+  // Outputs
+  { group:'Outputs', type:'output', icon:'🗣️', name:'Coach-Nachricht', desc:'Textantwort des Coaches an den Nutzer', tags:['message','text'] },
+  { group:'Outputs', type:'output', icon:'🔊', name:'TTS Audio', desc:'Text-to-Speech via OpenAI API', tags:['audio','tts'] },
+  { group:'Outputs', type:'output', icon:'🎥', name:'Video Avatar', desc:'Animierter Video-Avatar des Coaches', tags:['video','avatar'] },
+  { group:'Outputs', type:'output', icon:'📱', name:'Widget', desc:'Interaktives UI-Element (Karten, Slider, etc.)', tags:['ui','interactive'] },
+
+  // System
+  { group:'System', type:'system', icon:'🤖', name:'LLM / AI Engine', desc:'GPT-basierte Antwortgenerierung', tags:['openai','gpt'] },
+  { group:'System', type:'system', icon:'🧬', name:'Persönlichkeits-Engine', desc:'Anpassung an DISC-Typ des Nutzers', tags:['disc','personality'] },
+  { group:'System', type:'system', icon:'📡', name:'API Gateway', desc:'Routing zwischen Frontend & Services', tags:['api','routing'] },
+  { group:'System', type:'system', icon:'🔒', name:'Auth / Session', desc:'Authentifizierung & Session-Management', tags:['auth','supabase'] },
+];
+
+// ======================== INIT ========================
+function init() {
+  renderSidebar();
+  loadFromLocal();
+  if (nodes.length === 0) loadDefaultFlow();
+  render();
+  setupCanvasEvents();
+}
+
+function loadDefaultFlow() {
+  const defaultNodes = [
+    { id:1, templateIdx:0, x:80, y:60, title:'Einstieg / Entry', desc:'Begrüßung: "Hallo Hendrik! Schön, dass du dir Zeit für dich nimmst."\n\n3 Optionen:\n• Letzte Session fortsetzen\n• Akutes Thema besprechen\n• Neuer Check-in', type:'phase', icon:'🎬', tags:['greeting','choice'], phase:'entry', custom:{} },
+    { id:2, templateIdx:1, x:80, y:300, title:'Check-in: Energie', desc:'Energie-Level abfragen (1-5 Skala)\n"Bevor wir starten – wie ist deine Energie heute?"', type:'phase', icon:'💡', tags:['energy'], phase:'checkin-energy', custom:{} },
+    { id:3, templateIdx:1, x:80, y:500, title:'Check-in: Stress', desc:'Stress-Level abfragen (1-5 Skala)\n"Und wie hoch ist dein Stress gerade?"', type:'phase', icon:'💡', tags:['stress'], phase:'checkin-stress', custom:{} },
+    { id:4, templateIdx:1, x:80, y:700, title:'Check-in: Fokus', desc:'Fokusthema wählen lassen:\n• Schlaf\n• Bewegung\n• Stress\n• Ernährung\n• Motivation & Routinen', type:'phase', icon:'💡', tags:['focus'], phase:'checkin-focus', custom:{} },
+    { id:5, templateIdx:2, x:420, y:700, title:'Datenanalyse', desc:'Wearable-Daten laden:\n• Apple Watch (Schritte, Puls)\n• Oura Ring (Schlaf, HRV)\n• TrueYears (Biomarker)\n\nAnimierter Ladevorgang, Daten-Karten mit Trends anzeigen.', type:'phase', icon:'📊', tags:['data-pull','wearable'], phase:'data-pull', custom:{} },
+    { id:6, templateIdx:3, x:420, y:950, title:'Verstehen', desc:'Coach analysiert Daten und fragt nach:\n"Was beschäftigt dich beim Thema [Fokus] am meisten?"\n\nQuick Replies verfügbar:\n• Ich schlafe genug, aber wache unausgeruht auf\n• Abends komme ich schwer zur Ruhe\n• Mein Schlafrhythmus ist durcheinander', type:'phase', icon:'🔍', tags:['deep-dive','questions'], phase:'verstehen', custom:{} },
+    { id:7, templateIdx:4, x:420, y:1230, title:'Fokus setzen', desc:'Coach grenzt Problem ein basierend auf Daten + Antwort.\n"Was passiert bei dir in der letzten Stunde vor dem Schlafen?"\n\nQuick Replies:\n• Ich bin abends oft noch am Handy\n• Ich schaue meistens noch Serien\n• Ich grüble über den nächsten Tag', type:'phase', icon:'🎯', tags:['focus','narrow-down'], phase:'fokus', custom:{} },
+    { id:8, templateIdx:5, x:420, y:1500, title:'Empfehlung / Action Plan', desc:'Konkreter Plan auf Basis der Daten:\n"Handy ab 21:30 aus dem Schlafzimmer"\n\nMetriken:\n• Schwierigkeit: Leicht (25%)\n• Wirkung: Hoch (85%)\n\nZusätzliche Schritte:\n• 5-Min Atemübung um 21:15\n• 10 Min Tageslicht am Morgen', type:'phase', icon:'💊', tags:['recommendation','action-plan'], phase:'empfehlung', custom:{} },
+    { id:9, templateIdx:6, x:420, y:1780, title:'Commitment', desc:'3 Optionen:\n✅ "Ja, mache ich heute" → Syncing\n🔄 "Anpassen" → Alternative vorschlagen → Syncing\n❌ "Nicht realistisch" → Closing', type:'phase', icon:'🤝', tags:['accept','adjust','decline'], phase:'commitment', custom:{} },
+    { id:10, templateIdx:7, x:420, y:2030, title:'Syncing', desc:'Plan wird ins System übertragen:\n1. Action Plan erstellt\n2. Erinnerung: 21:15 – Atemübung starten\n3. Erinnerung: 21:30 – Handy aus Schlafzimmer\n4. Tracking aktiviert: Schlafqualität\n5. Nächster Check-in: Morgen, 20:00 Uhr', type:'phase', icon:'🔄', tags:['sync','reminders'], phase:'syncing', custom:{} },
+    { id:11, templateIdx:8, x:420, y:2290, title:'Abschluss', desc:'"Alles eingerichtet! Für heute zählt nur ein Schritt: Handy um 21:30 raus."\n\nNächster Check-in anzeigen.\nSession beenden Button.', type:'phase', icon:'👋', tags:['closing','next-session'], phase:'closing', custom:{} },
+
+    // Datenquellen
+    { id:12, templateIdx:16, x:780, y:600, title:'Apple Watch', desc:'Schritte/Tag, Ruhepuls (bpm), HRV (ms)', type:'data', icon:'⌚', tags:['wearable','healthkit'], custom:{} },
+    { id:13, templateIdx:17, x:780, y:740, title:'Oura Ring', desc:'Schlafqualität, Schlaf-Score, REM/Deep Sleep', type:'data', icon:'💍', tags:['wearable','sleep'], custom:{} },
+    { id:14, templateIdx:18, x:780, y:880, title:'TrueYears', desc:'Biomarker-Scores, Lifestyle-Daten', type:'data', icon:'📈', tags:['biomarker','score'], custom:{} },
+
+    // System
+    { id:15, templateIdx:30, x:780, y:1100, title:'LLM / AI Engine', desc:'Generiert personalisierte Antworten basierend auf:\n• Nutzerprofil (DISC)\n• Aktuelle Daten\n• Session-Historie\n• Konversationskontext', type:'system', icon:'🤖', tags:['openai','gpt'], custom:{} },
+    { id:16, templateIdx:20, x:780, y:1350, title:'Nutzerprofil', desc:'DISC-Persönlichkeitstyp:\n• Rot: direkt & entschlossen\n• Gelb: optimistisch & kommunikativ\n• Grün: empathisch & geduldig\n• Blau: analytisch & strukturiert', type:'data', icon:'👤', tags:['profile','personality'], custom:{} },
+
+    // Outputs
+    { id:17, templateIdx:26, x:780, y:1560, title:'TTS / Audio Output', desc:'OpenAI Text-to-Speech\nStimmen: nova, shimmer, echo, onyx', type:'output', icon:'🔊', tags:['audio','tts'], custom:{} },
+  ];
+
+  const defaultConnections = [
+    { from:1, to:2, label:'Auswahl getroffen' },
+    { from:2, to:3, label:'Energie erfasst' },
+    { from:3, to:4, label:'Stress erfasst' },
+    { from:4, to:5, label:'Fokus gewählt' },
+    { from:5, to:6, label:'Daten geladen' },
+    { from:6, to:7, label:'Antwort erhalten' },
+    { from:7, to:8, label:'Problem eingegrenzt' },
+    { from:8, to:9, label:'Plan präsentiert' },
+    { from:9, to:10, label:'Akzeptiert / Angepasst' },
+    { from:9, to:11, label:'Abgelehnt' },
+    { from:10, to:11, label:'Sync fertig' },
+    { from:12, to:5, label:'' },
+    { from:13, to:5, label:'' },
+    { from:14, to:5, label:'' },
+    { from:15, to:6, label:'Antwort' },
+    { from:15, to:7, label:'Antwort' },
+    { from:15, to:8, label:'Plan generiert' },
+    { from:16, to:15, label:'Persönlichkeit' },
+  ];
+
+  nodes = defaultNodes;
+  connections = defaultConnections;
+  nextId = 18;
+}
+
+// ======================== SIDEBAR ========================
+function renderSidebar() {
+  const body = document.getElementById('sidebarBody');
+  const groups = {};
+  nodeTemplates.forEach((t, idx) => {
+    if (!groups[t.group]) groups[t.group] = [];
+    groups[t.group].push({ ...t, idx });
+  });
+
+  let html = '';
+  for (const [group, items] of Object.entries(groups)) {
+    html += `<div class="sb-group"><div class="sb-group-title">${group}</div>`;
+    items.forEach(t => {
+      html += `<div class="sb-item" draggable="true" data-idx="${t.idx}" ondragstart="handleDragStart(event, ${t.idx})">
+        <div class="sb-icon" style="background:${getTypeColor(t.type, .15)}; color:${getTypeColor(t.type, 1)}">${t.icon}</div>
+        <div class="sb-item-info"><span class="sb-item-name">${t.name}</span><span class="sb-item-desc">${t.desc.substring(0, 40)}${t.desc.length > 40 ? '...' : ''}</span></div>
+      </div>`;
+    });
+    html += '</div>';
+  }
+  body.innerHTML = html;
+}
+
+function filterSidebar(query) {
+  const items = document.querySelectorAll('.sb-item');
+  const q = query.toLowerCase();
+  items.forEach(item => {
+    const name = item.querySelector('.sb-item-name').textContent.toLowerCase();
+    const desc = item.querySelector('.sb-item-desc').textContent.toLowerCase();
+    item.style.display = (!q || name.includes(q) || desc.includes(q)) ? 'flex' : 'none';
+  });
+}
+
+function getTypeColor(type, alpha) {
+  const colors = { phase:'68,152,202', input:'67,160,71', data:'171,71,188', action:'255,167,38', output:'239,83,80', system:'249,168,37' };
+  return `rgba(${colors[type] || '68,152,202'},${alpha})`;
+}
+
+// ======================== DRAG & DROP ========================
+function handleDragStart(e, idx) {
+  e.dataTransfer.setData('text/plain', idx);
+  e.dataTransfer.effectAllowed = 'copy';
+}
+
+// ======================== RENDER ========================
+function render() {
+  renderNodes();
+  renderConnections();
+}
+
+function renderNodes() {
+  const canvas = document.getElementById('canvas');
+  // Remove old node elements
+  canvas.querySelectorAll('.node').forEach(el => el.remove());
+
+  nodes.forEach(node => {
+    const el = document.createElement('div');
+    el.className = `node node-type-${node.type}${node.id === selectedNodeId ? ' selected' : ''}`;
+    el.id = `node-${node.id}`;
+    el.style.left = `${node.x * zoom + pan.x}px`;
+    el.style.top = `${node.y * zoom + pan.y}px`;
+    el.style.transform = `scale(${zoom})`;
+    el.style.transformOrigin = 'top left';
+
+    const tagsHtml = (node.tags || []).slice(0, 3).map(t => `<span class="node-tag">${t}</span>`).join('');
+    const phaseHtml = node.phase ? `<span class="node-phase">${node.phase}</span>` : '';
+
+    el.innerHTML = `
+      <div class="node-header">
+        <div class="node-icon">${node.icon}</div>
+        <span class="node-title">${node.title}</span>
+        ${phaseHtml}
+      </div>
+      <div class="node-body">
+        <div class="node-desc">${(node.desc || '').split('\n')[0].substring(0, 80)}${(node.desc || '').length > 80 ? '...' : ''}</div>
+        <div class="node-meta">${tagsHtml}</div>
+      </div>
+      <div class="node-ports">
+        <div class="port port-in" data-node="${node.id}" data-port="in" onmousedown="startConnection(event, ${node.id}, 'in')"></div>
+        <div class="port port-out" data-node="${node.id}" data-port="out" onmousedown="startConnection(event, ${node.id}, 'out')"></div>
+      </div>
+    `;
+
+    el.addEventListener('mousedown', (e) => {
+      if (e.target.classList.contains('port')) return;
+      e.stopPropagation();
+      selectNode(node.id);
+      dragNode = node;
+      const rect = el.getBoundingClientRect();
+      dragOffset.x = e.clientX - rect.left;
+      dragOffset.y = e.clientY - rect.top;
+    });
+
+    el.addEventListener('dblclick', (e) => {
+      e.stopPropagation();
+      openDetail(node.id);
+    });
+
+    el.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      showContextMenu(e.clientX, e.clientY, node.id);
+    });
+
+    canvas.appendChild(el);
+  });
+}
+
+function renderConnections() {
+  const svg = document.getElementById('connSvg');
+  let html = '';
+
+  connections.forEach((conn, idx) => {
+    const fromNode = nodes.find(n => n.id === conn.from);
+    const toNode = nodes.find(n => n.id === conn.to);
+    if (!fromNode || !toNode) return;
+
+    const fromEl = document.getElementById(`node-${conn.from}`);
+    const toEl = document.getElementById(`node-${conn.to}`);
+    if (!fromEl || !toEl) return;
+
+    const fromPort = fromEl.querySelector('.port-out');
+    const toPort = toEl.querySelector('.port-in');
+    if (!fromPort || !toPort) return;
+
+    const canvasRect = document.getElementById('canvas').getBoundingClientRect();
+    const fp = fromPort.getBoundingClientRect();
+    const tp = toPort.getBoundingClientRect();
+
+    const x1 = fp.left + fp.width / 2 - canvasRect.left;
+    const y1 = fp.top + fp.height / 2 - canvasRect.top;
+    const x2 = tp.left + tp.width / 2 - canvasRect.left;
+    const y2 = tp.top + tp.height / 2 - canvasRect.top;
+
+    const dx = Math.abs(x2 - x1) * 0.5;
+    const dy = Math.abs(y2 - y1) * 0.3;
+    const cx = Math.max(dx, dy, 50);
+
+    const path = `M ${x1} ${y1} C ${x1 + cx} ${y1}, ${x2 - cx} ${y2}, ${x2} ${y2}`;
+
+    const typeColor = getTypeColor(fromNode.type, 0.4);
+
+    html += `<path d="${path}" stroke="${typeColor}" stroke-width="2" fill="none" data-conn="${idx}" onclick="selectConnection(${idx})" />`;
+
+    // Arrow
+    const t = 0.95;
+    const mt = 1 - t;
+    const ax = mt*mt*mt*x1 + 3*mt*mt*t*(x1+cx) + 3*mt*t*t*(x2-cx) + t*t*t*x2;
+    const ay = mt*mt*mt*y1 + 3*mt*mt*t*y1 + 3*mt*t*t*y2 + t*t*t*y2;
+    const angle = Math.atan2(y2 - ay, x2 - ax);
+    const aSize = 7;
+    const a1x = x2 - aSize * Math.cos(angle - 0.4);
+    const a1y = y2 - aSize * Math.sin(angle - 0.4);
+    const a2x = x2 - aSize * Math.cos(angle + 0.4);
+    const a2y = y2 - aSize * Math.sin(angle + 0.4);
+    html += `<polygon points="${x2},${y2} ${a1x},${a1y} ${a2x},${a2y}" fill="${typeColor}" />`;
+
+    // Label
+    if (conn.label) {
+      const mx = (x1 + x2) / 2;
+      const my = (y1 + y2) / 2 - 8;
+      html += `<text x="${mx}" y="${my}" text-anchor="middle" font-size="10" fill="rgba(122,154,176,.8)" font-family="inherit" font-weight="500">${conn.label}</text>`;
+    }
+  });
+
+  // Temp connection
+  if (tempConn) {
+    html += `<path d="${tempConn}" class="conn-temp" />`;
+  }
+
+  svg.innerHTML = html;
+}
+
+// ======================== CANVAS EVENTS ========================
+function setupCanvasEvents() {
+  const wrap = document.getElementById('canvasWrap');
+
+  wrap.addEventListener('dragover', (e) => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; });
+  wrap.addEventListener('drop', (e) => {
+    e.preventDefault();
+    const idx = parseInt(e.dataTransfer.getData('text/plain'));
+    if (isNaN(idx)) return;
+    const template = nodeTemplates[idx];
+    const rect = wrap.getBoundingClientRect();
+    const x = (e.clientX - rect.left - pan.x) / zoom;
+    const y = (e.clientY - rect.top - pan.y) / zoom;
+    addNode(template, x, y);
+  });
+
+  wrap.addEventListener('mousedown', (e) => {
+    if (e.target === wrap || e.target.id === 'canvasGrid' || e.target.id === 'canvas') {
+      if (e.button === 0) {
+        isPanning = true;
+        panStart = { x: e.clientX - pan.x, y: e.clientY - pan.y };
+        wrap.style.cursor = 'grabbing';
+        deselectNode();
+        hideContextMenu();
+      }
+    }
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (isPanning) {
+      pan.x = e.clientX - panStart.x;
+      pan.y = e.clientY - panStart.y;
+      render();
+    }
+
+    if (dragNode) {
+      const rect = document.getElementById('canvasWrap').getBoundingClientRect();
+      dragNode.x = (e.clientX - rect.left - dragOffset.x) / zoom - pan.x / zoom + dragOffset.x / zoom;
+      dragNode.y = (e.clientY - rect.top - dragOffset.y) / zoom - pan.y / zoom + dragOffset.y / zoom;
+      render();
+    }
+
+    if (connStart) {
+      const rect = document.getElementById('canvas').getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      const fromEl = document.getElementById(`node-${connStart.nodeId}`);
+      if (fromEl) {
+        const port = fromEl.querySelector(`.port-${connStart.type === 'out' ? 'out' : 'in'}`);
+        if (port) {
+          const pr = port.getBoundingClientRect();
+          const px = pr.left + pr.width / 2 - rect.left;
+          const py = pr.top + pr.height / 2 - rect.top;
+          const cx = Math.abs(mx - px) * 0.5 || 50;
+          if (connStart.type === 'out') {
+            tempConn = `M ${px} ${py} C ${px + cx} ${py}, ${mx - cx} ${my}, ${mx} ${my}`;
+          } else {
+            tempConn = `M ${mx} ${my} C ${mx + cx} ${my}, ${px - cx} ${py}, ${px} ${py}`;
+          }
+          renderConnections();
+        }
+      }
+    }
+  });
+
+  document.addEventListener('mouseup', (e) => {
+    if (isPanning) {
+      isPanning = false;
+      wrap.style.cursor = '';
+    }
+    dragNode = null;
+
+    if (connStart) {
+      // Check if dropped on a port
+      const target = document.elementFromPoint(e.clientX, e.clientY);
+      if (target && target.classList.contains('port')) {
+        const targetNodeId = parseInt(target.dataset.node);
+        const targetPort = target.dataset.port;
+        if (targetNodeId !== connStart.nodeId) {
+          const from = connStart.type === 'out' ? connStart.nodeId : targetNodeId;
+          const to = connStart.type === 'out' ? targetNodeId : connStart.nodeId;
+          if (!connections.find(c => c.from === from && c.to === to)) {
+            connections.push({ from, to, label: '' });
+          }
+        }
+      }
+      connStart = null;
+      tempConn = null;
+      render();
+    }
+  });
+
+  wrap.addEventListener('wheel', (e) => {
+    e.preventDefault();
+    const delta = e.deltaY > 0 ? -0.08 : 0.08;
+    zoomCanvas(delta);
+  }, { passive: false });
+
+  wrap.addEventListener('dblclick', (e) => {
+    if (e.target === wrap || e.target.id === 'canvasGrid' || e.target.id === 'canvas') {
+      // Add generic phase node at click position
+      const rect = wrap.getBoundingClientRect();
+      const x = (e.clientX - rect.left - pan.x) / zoom;
+      const y = (e.clientY - rect.top - pan.y) / zoom;
+      addNode({ type:'phase', icon:'📦', name:'Neuer Baustein', desc:'Doppelklick zum Bearbeiten', tags:[], phase:'' }, x, y);
+    }
+  });
+
+  wrap.addEventListener('contextmenu', (e) => {
+    e.preventDefault();
+    if (e.target === wrap || e.target.id === 'canvasGrid' || e.target.id === 'canvas') {
+      showCanvasContextMenu(e.clientX, e.clientY);
+    }
+  });
+
+  document.addEventListener('click', () => hideContextMenu());
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Delete' || e.key === 'Backspace') {
+      if (selectedNodeId && document.activeElement.tagName !== 'INPUT' && document.activeElement.tagName !== 'TEXTAREA') {
+        deleteNode(selectedNodeId);
+      }
+    }
+    if (e.key === 'Escape') {
+      deselectNode();
+      closeDetail();
+      hideContextMenu();
+      connStart = null;
+      tempConn = null;
+      renderConnections();
+    }
+    if (e.ctrlKey && e.key === 's') {
+      e.preventDefault();
+      saveToLocal();
+    }
+  });
+}
+
+// ======================== NODE OPERATIONS ========================
+function addNode(template, x, y) {
+  const node = {
+    id: nextId++,
+    type: template.type,
+    icon: template.icon,
+    title: template.name,
+    desc: template.desc,
+    tags: [...(template.tags || [])],
+    phase: template.phase || '',
+    x, y,
+    custom: {}
+  };
+  nodes.push(node);
+  render();
+  selectNode(node.id);
+  showToast(`"${node.title}" hinzugefügt`);
+}
+
+function deleteNode(id) {
+  nodes = nodes.filter(n => n.id !== id);
+  connections = connections.filter(c => c.from !== id && c.to !== id);
+  if (selectedNodeId === id) { selectedNodeId = null; closeDetail(); }
+  render();
+  showToast('Knoten gelöscht');
+}
+
+function duplicateNode(id) {
+  const node = nodes.find(n => n.id === id);
+  if (!node) return;
+  const newNode = { ...node, id: nextId++, x: node.x + 30, y: node.y + 30, tags: [...node.tags], custom: { ...node.custom } };
+  nodes.push(newNode);
+  render();
+  selectNode(newNode.id);
+  showToast('Knoten dupliziert');
+}
+
+function selectNode(id) {
+  selectedNodeId = id;
+  render();
+}
+
+function deselectNode() {
+  selectedNodeId = null;
+  render();
+}
+
+// ======================== CONNECTIONS ========================
+function startConnection(e, nodeId, portType) {
+  e.stopPropagation();
+  e.preventDefault();
+  connStart = { nodeId, type: portType };
+}
+
+function selectConnection(idx) {
+  const conn = connections[idx];
+  if (!conn) return;
+  const label = prompt('Verbindungs-Label:', conn.label || '');
+  if (label !== null) {
+    conn.label = label;
+    render();
+  }
+}
+
+function deleteConnection(idx) {
+  connections.splice(idx, 1);
+  render();
+  showToast('Verbindung gelöscht');
+}
+
+// ======================== DETAIL PANEL ========================
+function openDetail(id) {
+  const node = nodes.find(n => n.id === id);
+  if (!node) return;
+  selectedNodeId = id;
+
+  const panel = document.getElementById('detailPanel');
+  const title = document.getElementById('dpTitle');
+  const body = document.getElementById('dpBody');
+  const actions = document.getElementById('dpActions');
+
+  title.textContent = node.title;
+
+  body.innerHTML = `
+    <div class="dp-field">
+      <label class="dp-label">Titel</label>
+      <input class="dp-input" value="${escHtml(node.title)}" onchange="updateNodeField(${id},'title',this.value)">
+    </div>
+    <div class="dp-field">
+      <label class="dp-label">Typ</label>
+      <select class="dp-input dp-select" onchange="updateNodeField(${id},'type',this.value)">
+        ${['phase','input','data','action','output','system'].map(t => `<option value="${t}" ${node.type===t?'selected':''}>${t.charAt(0).toUpperCase()+t.slice(1)}</option>`).join('')}
+      </select>
+    </div>
+    <div class="dp-field">
+      <label class="dp-label">Phase-ID</label>
+      <input class="dp-input" value="${escHtml(node.phase || '')}" onchange="updateNodeField(${id},'phase',this.value)" placeholder="z.B. entry, checkin-energy...">
+    </div>
+    <div class="dp-field">
+      <label class="dp-label">Icon (Emoji)</label>
+      <input class="dp-input" value="${node.icon}" onchange="updateNodeField(${id},'icon',this.value)" style="font-size:18px;">
+    </div>
+    <div class="dp-field">
+      <label class="dp-label">Beschreibung</label>
+      <textarea class="dp-input dp-textarea" rows="8" onchange="updateNodeField(${id},'desc',this.value)">${escHtml(node.desc)}</textarea>
+    </div>
+    <div class="dp-field">
+      <label class="dp-label">Tags</label>
+      <input class="dp-input" placeholder="Tag hinzufügen + Enter" onkeydown="if(event.key==='Enter'){addTag(${id},this.value);this.value='';event.preventDefault();}">
+      <div class="dp-tags" id="dpTags-${id}">
+        ${(node.tags||[]).map((t,i) => `<span class="dp-tag">${t}<button onclick="removeTag(${id},${i})">×</button></span>`).join('')}
+      </div>
+    </div>
+    <div class="dp-field">
+      <label class="dp-label">Verbindungen von diesem Knoten</label>
+      <div style="font-size:11px; color:var(--text3); margin-top:4px;">
+        ${connections.filter(c => c.from === id).map((c, ci) => {
+          const target = nodes.find(n => n.id === c.to);
+          const realIdx = connections.indexOf(c);
+          return `<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;padding:4px 8px;background:rgba(68,152,202,.05);border-radius:6px;">
+            <span style="color:var(--text2);">→ ${target ? target.title : '???'}</span>
+            <span style="color:var(--text3);flex:1">${c.label ? `(${c.label})` : ''}</span>
+            <button style="background:none;border:none;color:var(--red);cursor:pointer;font-size:12px;" onclick="deleteConnection(${realIdx})">×</button>
+          </div>`;
+        }).join('') || '<span style="color:var(--text3)">Keine</span>'}
+      </div>
+    </div>
+    <div class="dp-field">
+      <label class="dp-label">Verbindungen zu diesem Knoten</label>
+      <div style="font-size:11px; color:var(--text3); margin-top:4px;">
+        ${connections.filter(c => c.to === id).map((c) => {
+          const source = nodes.find(n => n.id === c.from);
+          const realIdx = connections.indexOf(c);
+          return `<div style="display:flex;align-items:center;gap:6px;margin-bottom:4px;padding:4px 8px;background:rgba(68,152,202,.05);border-radius:6px;">
+            <span style="color:var(--text2);">← ${source ? source.title : '???'}</span>
+            <span style="color:var(--text3);flex:1">${c.label ? `(${c.label})` : ''}</span>
+            <button style="background:none;border:none;color:var(--red);cursor:pointer;font-size:12px;" onclick="deleteConnection(${realIdx})">×</button>
+          </div>`;
+        }).join('') || '<span style="color:var(--text3)">Keine</span>'}
+      </div>
+    </div>
+    <div class="dp-field">
+      <label class="dp-label">Position</label>
+      <div style="display:flex;gap:8px;">
+        <input class="dp-input" type="number" value="${Math.round(node.x)}" onchange="updateNodeField(${id},'x',parseInt(this.value))" style="flex:1" placeholder="X">
+        <input class="dp-input" type="number" value="${Math.round(node.y)}" onchange="updateNodeField(${id},'y',parseInt(this.value))" style="flex:1" placeholder="Y">
+      </div>
+    </div>
+  `;
+
+  actions.innerHTML = `
+    <button class="tbtn" onclick="duplicateNode(${id})" style="flex:1">⎘ Duplizieren</button>
+    <button class="tbtn danger" onclick="deleteNode(${id})" style="flex:1">✕ Löschen</button>
+  `;
+
+  panel.classList.add('open');
+  render();
+}
+
+function closeDetail() {
+  document.getElementById('detailPanel').classList.remove('open');
+}
+
+function updateNodeField(id, field, value) {
+  const node = nodes.find(n => n.id === id);
+  if (!node) return;
+  node[field] = value;
+  if (field === 'title') document.getElementById('dpTitle').textContent = value;
+  render();
+}
+
+function addTag(id, tag) {
+  if (!tag.trim()) return;
+  const node = nodes.find(n => n.id === id);
+  if (!node) return;
+  node.tags = node.tags || [];
+  node.tags.push(tag.trim());
+  openDetail(id);
+}
+
+function removeTag(id, idx) {
+  const node = nodes.find(n => n.id === id);
+  if (!node || !node.tags) return;
+  node.tags.splice(idx, 1);
+  openDetail(id);
+}
+
+// ======================== CONTEXT MENU ========================
+function showContextMenu(x, y, nodeId) {
+  const menu = document.getElementById('contextMenu');
+  menu.innerHTML = `
+    <button class="cm-item" onclick="openDetail(${nodeId}); hideContextMenu();">✏️ Bearbeiten</button>
+    <button class="cm-item" onclick="duplicateNode(${nodeId}); hideContextMenu();">⎘ Duplizieren</button>
+    <div class="cm-sep"></div>
+    <button class="cm-item danger" onclick="deleteNode(${nodeId}); hideContextMenu();">🗑️ Löschen</button>
+  `;
+  menu.style.left = x + 'px';
+  menu.style.top = y + 'px';
+  menu.classList.add('show');
+}
+
+function showCanvasContextMenu(x, y) {
+  const menu = document.getElementById('contextMenu');
+  const rect = document.getElementById('canvasWrap').getBoundingClientRect();
+  const cx = (x - rect.left - pan.x) / zoom;
+  const cy = (y - rect.top - pan.y) / zoom;
+  menu.innerHTML = `
+    <button class="cm-item" onclick="addNode({type:'phase',icon:'📦',name:'Neuer Baustein',desc:'Beschreibung...',tags:[],phase:''}, ${cx}, ${cy}); hideContextMenu();">➕ Neuen Baustein hier</button>
+    <button class="cm-item" onclick="resetView(); hideContextMenu();">⌂ View zurücksetzen</button>
+    <div class="cm-sep"></div>
+    <button class="cm-item" onclick="saveToLocal(); hideContextMenu();">💾 Speichern</button>
+  `;
+  menu.style.left = x + 'px';
+  menu.style.top = y + 'px';
+  menu.classList.add('show');
+}
+
+function hideContextMenu() {
+  document.getElementById('contextMenu').classList.remove('show');
+}
+
+// ======================== ZOOM & PAN ========================
+function zoomCanvas(delta) {
+  zoom = Math.max(0.2, Math.min(2, zoom + delta));
+  document.getElementById('zoomLabel').textContent = Math.round(zoom * 100) + '%';
+  const grid = document.getElementById('canvasGrid');
+  const size = Math.round(24 * zoom);
+  grid.style.backgroundSize = `${size}px ${size}px`;
+  render();
+}
+
+function resetZoom() {
+  zoom = 1;
+  document.getElementById('zoomLabel').textContent = '100%';
+  const grid = document.getElementById('canvasGrid');
+  grid.style.backgroundSize = '24px 24px';
+  render();
+}
+
+function resetView() {
+  zoom = 1;
+  pan = { x: 20, y: 20 };
+  document.getElementById('zoomLabel').textContent = '100%';
+  const grid = document.getElementById('canvasGrid');
+  grid.style.backgroundSize = '24px 24px';
+  render();
+}
+
+// ======================== PERSISTENCE ========================
+function saveToLocal() {
+  const data = { nodes, connections, nextId, pan, zoom };
+  localStorage.setItem('lisa-coach-flow', JSON.stringify(data));
+  showToast('✅ Gespeichert (localStorage)');
+}
+
+function loadFromLocal() {
+  try {
+    const raw = localStorage.getItem('lisa-coach-flow');
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    nodes = data.nodes || [];
+    connections = data.connections || [];
+    nextId = data.nextId || nodes.length + 1;
+    if (data.pan) pan = data.pan;
+    if (data.zoom) {
+      zoom = data.zoom;
+      document.getElementById('zoomLabel').textContent = Math.round(zoom * 100) + '%';
+    }
+  } catch (e) { console.warn('Load error:', e); }
+}
+
+function exportJSON() {
+  const data = { nodes, connections, nextId, exportDate: new Date().toISOString() };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `lisa-coach-flow-${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+  URL.revokeObjectURL(url);
+  showToast('📁 JSON exportiert');
+}
+
+function importJSON() {
+  document.getElementById('fileInput').click();
+}
+
+function handleImport(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      nodes = data.nodes || [];
+      connections = data.connections || [];
+      nextId = data.nextId || nodes.length + 1;
+      render();
+      saveToLocal();
+      showToast('📂 Import erfolgreich');
+    } catch (err) { showToast('❌ Import-Fehler: ' + err.message); }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function clearAll() {
+  if (!confirm('Wirklich alles löschen? Das kann nicht rückgängig gemacht werden.')) return;
+  nodes = [];
+  connections = [];
+  nextId = 1;
+  selectedNodeId = null;
+  closeDetail();
+  render();
+  localStorage.removeItem('lisa-coach-flow');
+  showToast('Alles gelöscht');
+}
+
+// ======================== UTILITIES ========================
+function escHtml(s) {
+  return (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
+function showToast(msg) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 2200);
+}
+
+// ======================== START ========================
+init();
+</script>
+</body>
+</html>

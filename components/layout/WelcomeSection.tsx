@@ -37,7 +37,7 @@ export default function WelcomeSection({ onNavigate }: WelcomeSectionProps) {
           className="top-nav-button"
           onClick={() => onNavigate?.('coaching')}
         >
-          Coaching starten
+          Coaching starten • Heute, 18:00
         </button>
       </div>
 
