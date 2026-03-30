@@ -8517,3 +8517,14 @@ i[class*="bi-"] {
     top: 54px;
   }
 }
+
+/* ---- Bottom Nav: content spacing + hamburger hide on mobile ---- */
+@media (max-width: 992px) {
+  .content-with-bottom-nav {
+    padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px)) !important;
+  }
+
+  .hamburger-btn {
+    display: none !important;
+  }
+}

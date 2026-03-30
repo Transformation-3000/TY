@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import '@/lib/chartConfig'; // Chart.js initialisieren
 import WelcomeSection from '@/components/layout/WelcomeSection';
 import Sidebar from '@/components/layout/Sidebar';
+import BottomNav from '@/components/layout/BottomNav';
 import MicroHabitsPage from '@/components/microhabits/MicroHabitsPage';
 import BlackBoardPage from '@/components/blackboard/BlackBoardPage';
 import InsightsPage from '@/components/insights/InsightsPage';
@@ -48,7 +49,7 @@ export default function Home() {
       <div className="main-content">
         {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
         <Sidebar activeItem={activeMenuItem} onItemClick={navigate} />
-        <div className="content-wrapper">
+        <div className="content-wrapper content-with-bottom-nav">
           {activeMenuItem === 'dashboard' && (
             <VogelperspektivePage />
           )}
@@ -209,6 +210,7 @@ export default function Home() {
           )}
         </div>
       </div>
+      <BottomNav activeItem={activeMenuItem} onItemClick={navigate} />
     </main>
   );
 }
