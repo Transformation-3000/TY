@@ -322,36 +322,39 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
                 
                 <div className="wb-format-cards">
                   <button className="wb-fmt-card" onClick={startSession}>
-                    <div className="wb-fmt-icon" style={{background:'linear-gradient(135deg,#4498ca,#2c6a8c)'}}>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                    </div>
+                    <div className="wb-fmt-num">01</div>
                     <div className="wb-fmt-body">
                       <div className="wb-fmt-title">Lisa Daily</div>
                       <div className="wb-fmt-desc">Kurzer Check-in · Stimmung & Kontext</div>
                     </div>
-                    <div className="wb-fmt-time">~5 Min</div>
+                    <div className="wb-fmt-right">
+                      <span className="wb-fmt-time">~5 Min</span>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </div>
                   </button>
 
                   <button className="wb-fmt-card" onClick={startSession}>
-                    <div className="wb-fmt-icon" style={{background:'linear-gradient(135deg,#22c55e,#16a34a)'}}>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                    </div>
+                    <div className="wb-fmt-num">02</div>
                     <div className="wb-fmt-body">
                       <div className="wb-fmt-title">Lisa Weekly</div>
                       <div className="wb-fmt-desc">Wochenreflexion · Habits & Ziele</div>
                     </div>
-                    <div className="wb-fmt-time">~10 Min</div>
+                    <div className="wb-fmt-right">
+                      <span className="wb-fmt-time">~10 Min</span>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </div>
                   </button>
 
                   <button className="wb-fmt-card" onClick={startSession}>
-                    <div className="wb-fmt-icon" style={{background:'linear-gradient(135deg,#f59e0b,#d97706)'}}>
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-                    </div>
+                    <div className="wb-fmt-num">03</div>
                     <div className="wb-fmt-body">
                       <div className="wb-fmt-title">Lisa Quarterly</div>
                       <div className="wb-fmt-desc">Tiefe Verhaltensreflexion · Strategie</div>
                     </div>
-                    <div className="wb-fmt-time">~15 Min</div>
+                    <div className="wb-fmt-right">
+                      <span className="wb-fmt-time">~15 Min</span>
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    </div>
                   </button>
                 </div>
               </div>
@@ -841,19 +844,20 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .wv-btns{display:flex;gap:.6rem;justify-content:center}
         .wv-btn{padding:.55rem 1.1rem;border-radius:12px;border:1.5px solid rgba(68,152,202,.15);background:rgba(255,255,255,.7);color:#5a8aa8;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .25s;backdrop-filter:blur(8px)}
         .wv-btn:hover{border-color:rgba(68,152,202,.35);color:#2c5a7c;background:rgba(255,255,255,.95)}
-        .wb-hero-xl{min-height:62vh !important;}
+        .wb-hero-xl{width:min(360px,72vw) !important;height:min(360px,72vw) !important;margin-bottom:1.5rem;}
         .wb-hero-overlay{position:absolute;bottom:0;left:0;right:0;padding:1.5rem 2rem;background:linear-gradient(0deg,rgba(0,0,0,0.55) 0%,transparent 100%);display:flex;align-items:flex-end;gap:0.85rem;z-index:5}
         .wb-hero-name{font-size:2rem;font-weight:700;color:#fff;letter-spacing:-0.01em;line-height:1;text-shadow:0 2px 12px rgba(0,0,0,0.3)}
         .wb-hero-status{display:flex;align-items:center;gap:0.4rem;font-size:0.82rem;color:rgba(255,255,255,0.85);margin-bottom:0.3rem;align-self:flex-end}
         .wb-hero-dot{width:8px;height:8px;border-radius:50%;background:#4CAF50;flex-shrink:0;box-shadow:0 0 6px rgba(76,175,80,0.8);animation:dotpulse 2s infinite}
-        .wb-format-cards{display:flex;flex-direction:column;gap:0.6rem;margin-top:0.5rem}
-        .wb-fmt-card{display:flex;align-items:center;gap:0.85rem;padding:0.85rem 1rem;border-radius:14px;border:1.5px solid rgba(68,152,202,0.12);background:rgba(255,255,255,0.85);cursor:pointer;transition:all 0.22s;text-align:left;width:100%;backdrop-filter:blur(8px)}
-        .wb-fmt-card:hover{border-color:rgba(68,152,202,0.35);background:#fff;box-shadow:0 6px 20px rgba(68,152,202,0.12);transform:translateX(3px)}
-        .wb-fmt-icon{width:38px;height:38px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+        .wb-format-cards{display:flex;flex-direction:column;gap:0.55rem;margin-top:0.5rem}
+        .wb-fmt-card{display:flex;align-items:center;gap:1rem;padding:0.9rem 1.1rem;border-radius:16px;border:1px solid rgba(201,169,110,0.18);background:rgba(255,255,255,0.65);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer;transition:all 0.25s cubic-bezier(0.16,1,0.3,1);text-align:left;width:100%;box-shadow:0 2px 12px rgba(201,169,110,0.04)}
+        .wb-fmt-card:hover{border-color:rgba(201,169,110,0.45);background:rgba(255,255,255,0.92);box-shadow:0 8px 28px rgba(201,169,110,0.12);transform:translateX(4px)}
+        .wb-fmt-num{font-size:1.05rem;font-weight:700;color:rgba(201,169,110,0.45);letter-spacing:-0.02em;flex-shrink:0;min-width:26px;font-variant-numeric:tabular-nums}
         .wb-fmt-body{flex:1;min-width:0}
-        .wb-fmt-title{font-size:0.88rem;font-weight:700;color:#1a3a50;line-height:1.2}
-        .wb-fmt-desc{font-size:0.72rem;color:#7a9ab0;line-height:1.3}
-        .wb-fmt-time{font-size:0.7rem;font-weight:700;color:#4498ca;background:rgba(68,152,202,0.1);padding:0.25rem 0.55rem;border-radius:8px;white-space:nowrap;flex-shrink:0}
+        .wb-fmt-title{font-size:0.9rem;font-weight:700;color:#1e293b;line-height:1.2}
+        .wb-fmt-desc{font-size:0.72rem;color:#94a3b8;line-height:1.3;margin-top:0.15rem}
+        .wb-fmt-right{display:flex;flex-direction:column;align-items:flex-end;gap:0.25rem;flex-shrink:0}
+        .wb-fmt-time{font-size:0.7rem;font-weight:600;color:#8B7355;background:rgba(201,169,110,0.1);padding:0.22rem 0.55rem;border-radius:8px;border:1px solid rgba(201,169,110,0.2);white-space:nowrap}
 
         .ps-wrap{width:100%;max-width:560px;margin-top:1.5rem;animation:fu .35s ease both}
         .ps-list{display:flex;flex-direction:column;gap:.6rem}
@@ -1268,7 +1272,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
           display: flex; flex-direction: column; align-items: center; justify-content: center;
           position: relative; overflow: hidden; padding: 3rem; text-align: center;
         }
-        .wb-hero { position: relative; width: 220px; height: 220px; margin-bottom: 2rem; }
+        .wb-hero { position: relative; width: 220px; height: 220px; margin-bottom: 2rem; border-radius: 50%; overflow: hidden; }
         .wb-video { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; position: relative; z-index: 10; box-shadow: 0 16px 40px rgba(201, 169, 110, 0.18); }
         .wav-glow-1 { position: absolute; inset: -30%; border-radius: 50%; background: conic-gradient(from 0deg, #C9A96E, #D4A0A0, #E8D5C4, #C9A96E); filter: blur(30px); opacity: 0.25; animation: spin 20s linear infinite; }
         .wav-glow-2 { position: absolute; inset: -50%; border-radius: 50%; background: radial-gradient(circle, rgba(201, 169, 110, 0.15) 0%, transparent 60%); animation: breathGlowCalm 8s alternate infinite; }

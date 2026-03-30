@@ -247,6 +247,61 @@ export default function VogelperspektivePage() {
         </div>
       </div>
 
+      {/* ── MOBILE LAYOUT: replaces SVG sun on small screens ── */}
+      <div className="mobile-dashboard">
+        {/* Mobile Header */}
+        <div className="mob-header">
+          <div className="mob-profile">
+            <Image src="/images/woman3.png" alt="Profile" width={52} height={52}
+              style={{ borderRadius: '50%', objectFit: 'cover', objectPosition: 'center 15%', border: '2.5px solid rgba(68,152,202,0.4)' }} />
+            <div>
+              <div className="mob-greeting">{getGreeting()}, <span className="mob-name">Hendrik</span></div>
+              <div className="mob-date">{getCurrentDate()}</div>
+            </div>
+          </div>
+          <div className="mob-stars-pill">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="#4498ca"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+            {todayStars}/{maxStars} heute
+          </div>
+        </div>
+
+        {/* Stars progress bar */}
+        <div className="mob-progress-wrap">
+          <div className="mob-progress-track">
+            <div className="mob-progress-fill" style={{ width: `${(todayStars / maxStars) * 100}%` }} />
+          </div>
+          <span className="mob-progress-label">{maxStars - todayStars === 0 ? '🎉 Tagesziel erreicht!' : `Noch ${maxStars - todayStars} Sterne bis Tagesziel`}</span>
+        </div>
+
+        {/* Category Cards Grid */}
+        <div className="mob-cat-grid">
+          {categories.map(cat => {
+            const statusColor = getStatusColor(cat.status);
+            return (
+              <div key={cat.id} className="mob-cat-card" style={{ '--mob-color': statusColor } as React.CSSProperties}>
+                <div className="mob-cat-icon-wrap" style={{ background: `${statusColor}18` }}>
+                  {getCategoryIcon(cat.id, statusColor)}
+                </div>
+                <div className="mob-cat-body">
+                  <div className="mob-cat-title">{cat.title}</div>
+                  <div className="mob-cat-sub">{cat.subtitle}</div>
+                  <div className="mob-cat-stars">
+                    {Array.from({ length: cat.maxStars }).map((_, i) => (
+                      <svg key={i} width="10" height="10" viewBox="0 0 24 24"
+                        fill={i < cat.stars ? '#4498ca' : '#e2e8f0'}
+                        style={{ filter: i < cat.stars ? 'drop-shadow(0 0 2px rgba(68,152,202,0.6))' : 'none' }}>
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                      </svg>
+                    ))}
+                  </div>
+                </div>
+                <div className="mob-cat-status-dot" style={{ background: statusColor }} />
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
       {/* Bottom Two-Column Section */}
       <div className="bottom-section">
         {/* LEFT: Level & Journey */}
@@ -598,15 +653,46 @@ export default function VogelperspektivePage() {
         }
         .lisa-daily-card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(68,152,202,0.18); }
 
+        /* Mobile-only layout */
+        .mobile-dashboard { display: none; padding: 0 1rem; }
+
+        .mob-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.85rem; }
+        .mob-profile { display: flex; align-items: center; gap: 0.75rem; }
+        .mob-greeting { font-size: 1rem; font-weight: 600; color: #1a3a50; }
+        .mob-name { background: linear-gradient(135deg, #4498ca, #2c6a8c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .mob-date { font-size: 0.65rem; color: #94a3b8; margin-top: 1px; }
+        .mob-stars-pill { display: flex; align-items: center; gap: 0.3rem; padding: 0.35rem 0.75rem; border-radius: 20px; background: rgba(68,152,202,0.1); border: 1.5px solid rgba(68,152,202,0.2); font-size: 0.78rem; font-weight: 700; color: #4498ca; white-space: nowrap; flex-shrink: 0; }
+
+        .mob-progress-wrap { margin-bottom: 1rem; }
+        .mob-progress-track { width: 100%; height: 6px; background: rgba(68,152,202,0.1); border-radius: 3px; overflow: hidden; margin-bottom: 0.35rem; }
+        .mob-progress-fill { height: 100%; background: linear-gradient(90deg, #4498ca, #2c6a8c); border-radius: 3px; transition: width 0.8s ease; }
+        .mob-progress-label { font-size: 0.68rem; color: #64748b; }
+
+        .mob-cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.65rem; margin-bottom: 1.25rem; }
+        .mob-cat-card {
+          display: flex; align-items: center; gap: 0.6rem;
+          background: rgba(255,255,255,0.95); border-radius: 12px; padding: 0.7rem 0.75rem;
+          border: 1.5px solid rgba(var(--mob-color), 0.15);
+          box-shadow: 0 2px 10px rgba(0,40,80,0.05); position: relative; overflow: hidden;
+          border-color: color-mix(in srgb, var(--mob-color) 20%, transparent);
+        }
+        .mob-cat-icon-wrap { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .mob-cat-body { flex: 1; min-width: 0; }
+        .mob-cat-title { font-size: 0.72rem; font-weight: 700; color: #1a3a50; line-height: 1.2; }
+        .mob-cat-sub { font-size: 0.6rem; color: #94a3b8; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .mob-cat-stars { display: flex; gap: 2px; margin-top: 4px; }
+        .mob-cat-status-dot { position: absolute; top: 0.5rem; right: 0.5rem; width: 7px; height: 7px; border-radius: 50%; }
+
         @media (max-width: 1100px) {
           .bottom-section { grid-template-columns: 1fr; margin: -3rem auto 0; }
           .bird-view-canvas { max-width: 700px; }
         }
         @media (max-width: 700px) {
           .bird-view-container { padding: 0.5rem 1rem 2rem; }
-          .bird-view-canvas { max-width: 500px; }
-          .category-box-content { min-width: 95px; padding: 0.4rem 0.55rem; }
-          .category-title { font-size: 0.6rem; }
+          .welcome-header { display: none; }
+          .bird-view-layout { display: none; }
+          .mobile-dashboard { display: block; padding-top: 0.75rem; }
+          .bottom-section { margin-top: 0 !important; padding: 0 1rem; }
         }
       `}</style>
     </div>
