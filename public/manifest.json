@@ -1,0 +1,44 @@
+{
+  "name": "TrueYears – Longevity Dashboard",
+  "short_name": "TrueYears",
+  "description": "Dein täglicher Longevity-Companion für Verhalten, Motivation und ein längeres Leben.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f0f9ff",
+  "theme_color": "#4498ca",
+  "orientation": "portrait-primary",
+  "categories": ["health", "lifestyle", "fitness"],
+  "lang": "de",
+  "icons": [
+    {
+      "src": "/images/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/images/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Lisa Daily",
+      "short_name": "Daily",
+      "description": "Starte deinen täglichen Check-in mit Lisa",
+      "url": "/?tab=coaching",
+      "icons": [{ "src": "/images/logo.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Activity Tracker",
+      "short_name": "Tracker",
+      "description": "Aktivitäten schnell eintragen",
+      "url": "/?tab=entwicklung",
+      "icons": [{ "src": "/images/logo.png", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [],
+  "prefer_related_applications": false
+}

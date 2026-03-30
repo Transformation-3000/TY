@@ -6,6 +6,8 @@ import WelcomeSection from '@/components/layout/WelcomeSection';
 import Sidebar from '@/components/layout/Sidebar';
 import MicroHabitsPage from '@/components/microhabits/MicroHabitsPage';
 import BlackBoardPage from '@/components/blackboard/BlackBoardPage';
+import InsightsPage from '@/components/insights/InsightsPage';
+import EntwicklungPage from '@/components/entwicklung/EntwicklungPage';
 import SettingsPage from '@/components/settings/SettingsPage';
 import LongevityJourneyPage from '@/components/longevity/LongevityJourneyPage';
 import LongevityJourney7LevelsPage from '@/components/longevity/LongevityJourney7LevelsPage';
@@ -83,6 +85,14 @@ export default function Home() {
 
           {activeMenuItem === 'watchlist' && (
             <BlackBoardPage />
+          )}
+
+          {activeMenuItem === 'insights' && (
+            <InsightsPage />
+          )}
+
+          {activeMenuItem === 'entwicklung' && (
+            <EntwicklungPage />
           )}
 
           {activeMenuItem === 'micro-habit-apps' && (
