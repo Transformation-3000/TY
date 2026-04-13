@@ -2,7 +2,7 @@
 
 import { useState, useMemo } from 'react';
 
-type SubTab = 'tracker' | 'rewards' | 'trends' | 'nutrition';
+type SubTab = 'tracker' | 'rewards' | 'trends';
 
 interface Measure {
   id: string;
@@ -96,13 +96,12 @@ const pastReports = [
 ];
 
 export default function EntwicklungPage() {
-  const [activeTab, setActiveTab] = useState<SubTab>('tracker');
+  const [activeTab, setActiveTab] = useState<SubTab>('trends');
   const [checkedIds, setCheckedIds] = useState<string[]>(['M-01', 'M-05', 'M-11']);
   const [starAnim, setStarAnim] = useState<string | null>(null);
   const [filterCluster, setFilterCluster] = useState<string>('Alle');
   const [searchQuery, setSearchQuery] = useState('');
   const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [nutritionScanDone, setNutritionScanDone] = useState(false);
 
   const clusters = ['Alle', ...Object.keys(CLUSTER_COLORS)];
 
@@ -152,7 +151,6 @@ export default function EntwicklungPage() {
       <div className="entw-tabs">
         {([
           { id: 'tracker', label: 'Maßnahmen', icon: 'bi-check2-square' },
-          { id: 'nutrition', label: 'Nutrition Scan', icon: 'bi-camera' },
           { id: 'rewards', label: 'Rewards', icon: 'bi-trophy' },
           { id: 'trends', label: 'Trends', icon: 'bi-graph-up' },
         ] as { id: SubTab; label: string; icon: string }[]).map(tab => (
@@ -163,7 +161,6 @@ export default function EntwicklungPage() {
           >
             <i className={`bi ${tab.icon}`} />
             {tab.label}
-            {tab.id === 'nutrition' && <span className="tab-new-badge">NEU</span>}
           </button>
         ))}
       </div>

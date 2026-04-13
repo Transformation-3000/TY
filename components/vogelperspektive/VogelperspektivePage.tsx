@@ -419,7 +419,7 @@ export default function VogelperspektivePage() {
           {/* Quick Tracker */}
           <div className="qt-card">
             <div className="qt-header">
-              <h2 className="section-heading" style={{ margin: 0 }}>Aktivität protokollieren</h2>
+              <h2 className="section-heading" style={{ margin: 0 }}>Aktivität eintragen</h2>
               <div className="qt-header-actions">
                 <button className={`qt-mic-btn ${isListening ? 'listening' : ''}`} onClick={startListening} title="Spracheingabe">
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
