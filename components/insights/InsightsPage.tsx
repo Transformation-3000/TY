@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import ReelsFocusView from './ReelsFocusView';
 
 type Tab = 'experten' | 'science' | 'events' | 'hacks' | 'gespeichert';
 
@@ -17,6 +18,7 @@ interface Reel {
   image: string;
   tag: string;
   tagColor: string;
+  videoSrc?: string;
   saved?: boolean;
 }
 
@@ -26,14 +28,14 @@ const reels: Reel[] = [
     title: 'Warum Schlaf das mächtigste Longevity-Tool ist',
     teaser: 'Prof. Dr. Walker erklärt, wie 7–9 Stunden Schlaf Telomere schützt und die biologische Uhr verlangsamt.',
     fullText: 'Während des Schlafs repariert der Körper DNA-Schäden, leert das glymphatische System (Abfallentsorgung im Gehirn) und reguliert Entzündungsmarker. Chronischer Schlafmangel – bereits unter 6 Stunden – erhöht das Alzheimer-Risiko um bis zu 40%. Die Lösung: Schlafroutine, kühle Raumtemperatur (18–19°C) und vollständige Dunkelheit.',
-    author: 'Prof. Dr. Matthew Walker', role: 'Schlafforscher, UC Berkeley', readTime: '3 Min', image: '/images/woman3.png', tag: 'EXPERTE', tagColor: '#4498ca', saved: true,
+    author: 'Prof. Dr. Matthew Walker', role: 'Schlafforscher, UC Berkeley', readTime: '3 Min', image: '/images/woman3.png', tag: 'EXPERTE', tagColor: '#4498ca', videoSrc: '/videos/reels/reel1.mp4', saved: true,
   },
   {
     id: 'r2', category: 'science',
     title: 'Intermittierendes Fasten & Autophagie: Was sagt die Forschung?',
     teaser: 'Neue Metaanalyse mit 47 Studien zeigt: 16:8-Fasten reduziert Entzündungsmarker um durchschnittlich 28%.',
     fullText: 'Autophagie – der zelluläre Reinigungsprozess – wird durch Fastenperioden massiv aktiviert. Bei 16:8 beginnt die Autophagie nach 12–14 Stunden ohne Nahrung. Wichtig: Kaffee (schwarz) und Wasser brechen das Fasten nicht. Voraussichtlich größter Benefit bei Kombination mit Krafttraining am Ende des Fastenfensters.',
-    author: 'Nature Aging Journal', role: 'Peer-reviewed, 2024', readTime: '4 Min', image: '/images/woman3.png', tag: 'STUDIE', tagColor: '#22c55e', saved: false,
+    author: 'Nature Aging Journal', role: 'Peer-reviewed, 2024', readTime: '4 Min', image: '/images/woman3.png', tag: 'STUDIE', tagColor: '#22c55e', videoSrc: '/videos/reels/reel2.mp4', saved: false,
   },
   {
     id: 'r3', category: 'hacks',
@@ -84,27 +86,56 @@ export default function InsightsPage() {
   const [activeTab, setActiveTab] = useState<Tab>('experten');
   const [savedIds, setSavedIds] = useState<string[]>(['r1', 'r6']);
   const [expandedId, setExpandedId] = useState<string | null>(null);
+  const [focusOpen, setFocusOpen] = useState(false);
+  const [focusStartIdx, setFocusStartIdx] = useState(0);
 
   const toggleSave = (id: string) => {
     setSavedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+  };
+
+  const openFocus = (startIdx: number) => {
+    setFocusStartIdx(startIdx);
+    setFocusOpen(true);
   };
 
   const filteredReels = activeTab === 'gespeichert'
     ? reels.filter(r => savedIds.includes(r.id))
     : reels.filter(r => r.category === activeTab);
 
+  const focusReels = reels.map(r => ({
+    id: r.id,
+    title: r.title,
+    author: r.author,
+    role: r.role,
+    tag: r.tag,
+    tagColor: r.tagColor,
+    teaser: r.teaser,
+    fullText: r.fullText,
+    videoSrc: r.videoSrc,
+    image: r.image,
+  }));
+
   return (
     <div className="insights-page">
+      {/* Focus View */}
+      {focusOpen && (
+        <ReelsFocusView
+          reels={focusReels}
+          startIndex={focusStartIdx}
+          onClose={() => setFocusOpen(false)}
+        />
+      )}
+
       {/* Header */}
       <div className="ins-header">
         <div>
           <h1 className="ins-title">Insights</h1>
           <p className="ins-subtitle">Expertenwissen · Science · Events · Hacks</p>
         </div>
-        <div className="ins-badge">
+        <button className="ins-badge" onClick={() => openFocus(0)} title="Reels öffnen">
           <i className="bi bi-play-circle-fill" style={{ color: '#4498ca', marginRight: '0.4rem' }} />
           Reels Format
-        </div>
+        </button>
       </div>
 
       {/* Tab Navigation */}
@@ -132,19 +163,27 @@ export default function InsightsPage() {
         </div>
       ) : (
         <div className="reels-grid">
-          {filteredReels.map(reel => (
+          {filteredReels.map(reel => {
+            const globalIdx = reels.findIndex(r => r.id === reel.id);
+            return (
             <div key={reel.id} className={`reel-card ${expandedId === reel.id ? 'expanded' : ''}`}>
               {/* Thumbnail */}
-              <div className="reel-thumb">
+              <div className="reel-thumb" onClick={() => openFocus(globalIdx)} style={{ cursor: 'pointer' }}>
                 <Image src={reel.image} alt={reel.title} fill style={{ objectFit: 'cover', objectPosition: 'center 15%' }} />
                 <div className="reel-thumb-overlay" />
                 <span className="reel-tag" style={{ background: reel.tagColor }}>{reel.tag}</span>
+                {/* Play button overlay */}
+                <div className="reel-play-overlay">
+                  <div className="reel-play-btn">
+                    <i className={`bi ${reel.videoSrc ? 'bi-play-fill' : 'bi-book-fill'}`} />
+                  </div>
+                </div>
                 <button
                   className={`reel-save-btn ${savedIds.includes(reel.id) ? 'saved' : ''}`}
-                  onClick={() => toggleSave(reel.id)}
+                  onClick={e => { e.stopPropagation(); toggleSave(reel.id); }}
                   title={savedIds.includes(reel.id) ? 'Gespeichert' : 'Speichern'}
                 >
-                  <i className={`bi ${savedIds.includes(reel.id) ? 'bi-bookmark-fill' : 'bi-bookmark'}`} />
+                  <i className={`bi ${savedIds.includes(reel.id) ? 'bi-heart-fill' : 'bi-heart'}`} />
                 </button>
               </div>
 
@@ -187,7 +226,8 @@ export default function InsightsPage() {
                 </div>
               </div>
             </div>
-          ))}
+          );
+          })}
         </div>
       )}
 
@@ -207,7 +247,29 @@ export default function InsightsPage() {
           display: flex; align-items: center; padding: 0.4rem 0.85rem; border-radius: 20px;
           background: rgba(68,152,202,0.1); border: 1px solid rgba(68,152,202,0.2);
           font-size: 0.75rem; font-weight: 600; color: #4498ca;
+          cursor: pointer; transition: all 0.2s;
         }
+        .ins-badge:hover {
+          background: rgba(68,152,202,0.18);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(68,152,202,0.2);
+        }
+
+        .reel-play-overlay {
+          position: absolute; inset: 0;
+          display: flex; align-items: center; justify-content: center;
+          opacity: 0; transition: opacity 0.2s;
+        }
+        .reel-thumb:hover .reel-play-overlay { opacity: 1; }
+        .reel-play-btn {
+          width: 52px; height: 52px; border-radius: 50%;
+          background: rgba(255,255,255,0.9); backdrop-filter: blur(8px);
+          display: flex; align-items: center; justify-content: center;
+          font-size: 1.4rem; color: #006ea7;
+          box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+          transform: scale(0.85); transition: transform 0.2s;
+        }
+        .reel-thumb:hover .reel-play-btn { transform: scale(1); }
 
         .ins-tabs {
           display: flex; gap: 0.4rem; margin-bottom: 1.5rem;
@@ -275,7 +337,7 @@ export default function InsightsPage() {
           cursor: pointer; font-size: 0.85rem; color: #64748b; transition: all 0.2s;
           box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
-        .reel-save-btn.saved { color: #4498ca; background: rgba(68,152,202,0.15); }
+        .reel-save-btn.saved { color: #ef4444; background: rgba(239,68,68,0.12); }
         .reel-save-btn:hover { transform: scale(1.1); }
 
         .reel-body { padding: 1rem 1.15rem 0.85rem; }

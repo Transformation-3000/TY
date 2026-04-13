@@ -506,18 +506,20 @@ body {
 .sidebar-navigation {
   width: 240px;
   min-width: 240px;
-  background: #ffffff;
+  background: rgba(249, 251, 253, 0.97);
   border-radius: 0;
-  box-shadow: 2px 0 20px rgba(0, 110, 167, 0.1);
-  padding: 1rem;
+  box-shadow: 1px 0 0 rgba(15, 23, 42, 0.07);
+  padding: 0;
   position: fixed;
   left: 0;
   top: 90px;
   height: calc(100vh - 90px);
   overflow-y: auto;
   overflow-x: hidden;
-  border-right: 4px solid var(--color-30-blue-main);
+  border-right: none;
   z-index: 100;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar-header {
@@ -8528,3 +8530,398 @@ i[class*="bi-"] {
     display: none !important;
   }
 }
+
+/* ============================================================
+   Sticky Referral Button
+   ============================================================ */
+.sticky-referral-btn {
+  position: fixed;
+  bottom: 100px;
+  right: 1.5rem;
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1.25rem 0.75rem 1rem;
+  border-radius: 50px;
+  border: none;
+  background: linear-gradient(135deg, var(--color-30-blue-main) 0%, #004f78 100%);
+  color: #fff;
+  cursor: pointer;
+  box-shadow:
+    0 6px 20px rgba(0, 110, 167, 0.4),
+    0 2px 8px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  max-width: 220px;
+}
+
+.sticky-referral-btn:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    0 10px 28px rgba(0, 110, 167, 0.5),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(135deg, #0081c4 0%, var(--color-30-blue-main) 100%);
+}
+
+.sticky-referral-btn:active {
+  transform: translateY(-1px) scale(1.01);
+}
+
+.sticky-referral-icon {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+  color: var(--color-10-green-accent);
+  filter: drop-shadow(0 0 4px rgba(127, 208, 73, 0.5));
+}
+
+.sticky-referral-text {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  line-height: 1.2;
+}
+
+.sticky-referral-main {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.sticky-referral-sub {
+  font-size: 0.75rem;
+  font-weight: 500;
+  opacity: 0.9;
+  color: var(--color-10-green-accent);
+}
+
+@media (max-width: 768px) {
+  .sticky-referral-btn {
+    bottom: 80px;
+    right: 1rem;
+    padding: 0.65rem 1rem 0.65rem 0.85rem;
+  }
+}
+
+/* ============================================================
+   Nav Button Variants
+   ============================================================ */
+.top-nav-button--daily {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0081c4 0%, var(--color-30-blue-main) 60%, #004f78 100%) !important;
+  border-color: transparent !important;
+  color: #fff !important;
+  box-shadow: 0 4px 14px rgba(0, 110, 167, 0.4) !important;
+  animation: daily-pulse 2.4s ease-in-out infinite;
+}
+
+.top-nav-button--daily::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+  animation: daily-shimmer 2.4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes daily-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,110,167,0.45), 0 4px 14px rgba(0,110,167,0.4); transform: scale(1); }
+  50%       { box-shadow: 0 0 0 8px rgba(0,110,167,0),  0 6px 18px rgba(0,110,167,0.5); transform: scale(1.025); }
+}
+
+@keyframes daily-shimmer {
+  0%        { left: -75%; }
+  60%, 100% { left: 125%; }
+}
+
+.top-nav-button--daily:hover {
+  background: linear-gradient(135deg, #009de0 0%, #0081c4 60%, var(--color-30-blue-main) 100%) !important;
+  box-shadow: 0 0 0 6px rgba(0,110,167,0.15), 0 6px 20px rgba(0,110,167,0.5) !important;
+  animation: none;
+  transform: translateY(-2px) scale(1.03);
+}
+
+.top-nav-button--weekly {
+  font-size: 0.85rem !important;
+  white-space: nowrap;
+}
+
+/* Wearable button reset */
+.top-nav-wearable--btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+/* ============================================================
+   Wearable Selection Dialog
+   ============================================================ */
+.wearable-dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: rgba(0, 30, 60, 0.55);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: overlayIn 0.2s ease;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.wearable-dialog {
+  background: #fff;
+  border-radius: 20px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 600px;
+  box-shadow:
+    0 24px 60px rgba(0, 50, 100, 0.25),
+    0 8px 20px rgba(0, 0, 0, 0.1);
+  animation: dialogIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes dialogIn {
+  from { opacity: 0; transform: scale(0.9) translateY(20px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.wearable-dialog-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.75rem;
+}
+
+.wearable-dialog-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.wearable-dialog-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--grey-medium);
+  cursor: pointer;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.wearable-dialog-close:hover {
+  background: var(--grey-light);
+  color: var(--text-primary);
+}
+
+.wearable-dialog-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+.wearable-card {
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--grey-light);
+  border-radius: 16px;
+  overflow: hidden;
+  cursor: pointer;
+  background: #fff;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  padding: 0;
+}
+
+.wearable-card:hover {
+  border-color: var(--color-30-blue-main);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 110, 167, 0.18);
+}
+
+.wearable-card--selected {
+  border-color: var(--color-10-green-accent) !important;
+  box-shadow: 0 6px 20px rgba(127, 208, 73, 0.3) !important;
+}
+
+.wearable-card-image {
+  position: relative;
+  width: 100%;
+  padding-bottom: 70%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 140px;
+}
+
+.wearable-card-icon {
+  font-size: 4rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.4));
+}
+
+.wearable-card-check {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  font-size: 1.4rem;
+  color: var(--color-10-green-accent);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+.wearable-card-body {
+  padding: 0.85rem 1rem;
+  border-top: 1px solid var(--grey-light);
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.wearable-card-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.wearable-card-desc {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+@media (max-width: 500px) {
+  .wearable-dialog {
+    padding: 1.25rem;
+  }
+
+  .wearable-dialog-grid {
+    gap: 0.85rem;
+  }
+
+  .wearable-dialog-title {
+    font-size: 1.1rem;
+  }
+}
+
+/* ============================================================
+   Wearable Bluetooth Connecting Screen
+   ============================================================ */
+.wearable-connecting {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+  padding: 0.5rem 0 0.5rem;
+}
+
+.wearable-connecting-badge {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bt-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid;
+  opacity: 0;
+  animation: bt-expand 2.1s ease-out infinite;
+}
+.bt-ring-1 { animation-delay: 0s; }
+.bt-ring-2 { animation-delay: 0.7s; }
+.bt-ring-3 { animation-delay: 1.4s; }
+
+@keyframes bt-expand {
+  0%   { transform: scale(0.85); opacity: 0.7; }
+  100% { transform: scale(2.4);  opacity: 0; }
+}
+
+.wearable-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 280px;
+}
+
+.wearable-step {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 12px;
+  background: var(--grey-light);
+  border: 1.5px solid transparent;
+  opacity: 0.4;
+  transition: all 0.4s ease;
+}
+
+.wearable-step--active {
+  opacity: 1;
+  background: rgba(0, 110, 167, 0.07);
+  border-color: rgba(0, 110, 167, 0.2);
+}
+
+.wearable-step--done {
+  opacity: 0.9;
+  background: rgba(127, 208, 73, 0.08);
+  border-color: rgba(127, 208, 73, 0.3);
+}
+
+.wearable-step-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  color: var(--grey-medium);
+}
+.wearable-step--active .wearable-step-icon { color: var(--color-30-blue-main); }
+.wearable-step--done   .wearable-step-icon { color: var(--color-10-green-accent); }
+
+.wearable-step-label {
+  flex: 1;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.wearable-step--active .wearable-step-label { color: var(--text-primary); }
+.wearable-step--done   .wearable-step-label { color: var(--color-10-green-accent); }
+
+.wearable-step-dots {
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+.wearable-step-dots span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-30-blue-main);
+  animation: dot-bounce 1.2s ease-in-out infinite;
+}
+.wearable-step-dots span:nth-child(2) { animation-delay: 0.2s; }
+.wearable-step-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes dot-bounce {
+  0%, 80%, 100% { transform: translateY(0);   opacity: 0.5; }
+  40%           { transform: translateY(-5px); opacity: 1; }
+}
+
+.spin { animation: spin 1s linear infinite; display: inline-block; }
+@keyframes spin { to { transform: rotate(360deg); } }

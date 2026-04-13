@@ -4,7 +4,8 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 
 type CoachVariant = 'lisa-jung' | 'lisa-alt' | 'tom-jung' | 'tom-alt';
-type FormatTab = 'text' | 'audio' | 'video';
+type FormatTab = 'text' | 'voice' | 'video';
+type SessionType = 'daily' | 'weekly' | 'quarterly';
 type SessionPhase = 'entry' | 'checkin-energy' | 'checkin-stress' | 'checkin-focus' | 'data-pull' | 'verstehen' | 'fokus' | 'empfehlung' | 'commitment' | 'syncing' | 'closing';
 type ViewMode = 'welcome' | 'setup' | 'preparing' | 'session';
 type SetupStep = 'coach' | 'personality' | 'data';
@@ -38,11 +39,12 @@ const getPersonalityDesc = (x: number, y: number) => {
   return { primary: p.color, desc: sec ? `${p.desc}, mit Tendenz ${sec.desc}` : p.desc };
 };
 const focusTopics = [
-  { id: 'schlaf', label: 'Schlaf', icon: '' },
-  { id: 'bewegung', label: 'Bewegung', icon: '' },
-  { id: 'stress', label: 'Stress', icon: '' },
-  { id: 'ernaehrung', label: 'Ernährung', icon: '' },
-  { id: 'motivation', label: 'Motivation & Routinen', icon: '' },
+  { id: 'erholung', label: 'Erholung', icon: '🌙', desc: 'Schlaf & Regeneration' },
+  { id: 'kraft', label: 'Kraft & Ausdauer', icon: '⚡', desc: 'Bewegung & Sport' },
+  { id: 'vitalitaet', label: 'Vitalität & Schutz', icon: '🌿', desc: 'Zellgesundheit & Ernährung' },
+  { id: 'selbstfuersorge', label: 'Selbstfürsorge', icon: '🎯', desc: 'Routinen & Mentales' },
+  { id: 'balance', label: 'Balance & Entlastung', icon: '🧠', desc: 'Stress & Soziales' },
+  { id: 'resilienz', label: 'Resilienz', icon: '♾️', desc: 'Adaptionsfähigkeit' },
 ];
 const phaseLabels: Record<SessionPhase, string> = {
   'entry': 'Einstieg', 'checkin-energy': 'Check-in', 'checkin-stress': 'Check-in',
@@ -56,10 +58,14 @@ const phaseProgress: Record<SessionPhase, number> = {
   'commitment': 85, 'syncing': 95, 'closing': 100,
 };
 const dataLabels = [
-  { icon: '', label: 'Bewegung', loading: 'Sportdaten werden geladen...', val: '6.420', unit: 'Schritte/Tag', sub: '↓ 18% vs. Vorwoche', trend: 'down', pct: 55 },
-  { icon: '', label: 'Schlaf', loading: 'Schlafdaten werden geladen...', val: '6h 12min', unit: 'Durchschnitt', sub: '↓ Qualität gesunken', trend: 'down', pct: 48 },
-  { icon: '', label: 'HRV', loading: 'HRV-Daten werden geladen...', val: '38 ms', unit: 'Durchschnitt', sub: '↓ unter deinem Baseline', trend: 'down', pct: 40 },
-  { icon: '', label: 'Ruhepuls', loading: 'Vitaldaten werden geladen...', val: '72 bpm', unit: 'Durchschnitt', sub: '↑ leicht erhöht', trend: 'up', pct: 62 },
+  { icon: '🏃', label: 'Bewegung', loading: 'Sportdaten werden geladen...', val: '6.420', unit: 'Schritte/Tag', sub: '↓ 18% vs. Vorwoche', trend: 'down', pct: 55,
+    spark: '0,2 10,5 20,20 30,22 40,13 50,27 60,17', sparkColor: 'rgba(220,100,80,.9)' },
+  { icon: '😴', label: 'Schlaf', loading: 'Schlafdaten werden geladen...', val: '6h 12min', unit: 'Durchschnitt', sub: '↓ Qualität gesunken', trend: 'down', pct: 48,
+    spark: '0,8 10,2 20,14 30,20 40,27 50,25 60,21', sparkColor: 'rgba(220,100,80,.9)' },
+  { icon: '❤️', label: 'HRV', loading: 'HRV-Daten werden geladen...', val: '38 ms', unit: 'Durchschnitt', sub: '↓ unter deinem Baseline', trend: 'down', pct: 40,
+    spark: '0,2 10,9 20,14 30,19 40,27 50,22 60,19', sparkColor: 'rgba(220,100,80,.9)' },
+  { icon: '💓', label: 'Ruhepuls', loading: 'Vitaldaten werden geladen...', val: '72 bpm', unit: 'Durchschnitt', sub: '↑ leicht erhöht', trend: 'up', pct: 62,
+    spark: '0,26 10,18 20,14 30,10 40,2 50,6 60,10', sparkColor: 'rgba(220,140,60,.9)' },
 ];
 const syncItems = [
   { label: 'Action Plan erstellt' },
@@ -69,10 +75,10 @@ const syncItems = [
   { label: 'Nächster Check-in: Morgen, 20:00 Uhr' },
 ];
 const pastSessions = [
-  { id: 1, date: '21. März, 14:30', focus: 'Ad-Hoc: Jetlag & Bio-Sync', summary: 'Kurzfristiges Einzelgespräch nach deinem Flug. Protokoll für Melatonin-Timing und Licht-Exposure erarbeitet.', output: 'Reise-Protokoll', duration: '12 Min.' },
-  { id: 2, date: '18. März, 18:00', focus: 'Wöchentlicher Check-in', summary: 'Fokus auf Schlaf und HRV. Abendroutine optimiert – digitales Detox ab 21:30.', output: 'Schlaf-Routine erstellt', duration: '18 Min.' },
-  { id: 3, date: '11. März, 18:00', focus: 'Wöchentlicher Check-in', summary: 'Entzündungshemmende Lebensmittel besprochen. Wochenplan mit Omega-3-Quellen optimiert.', output: 'Ernährungsplan', duration: '20 Min.' },
-  { id: 4, date: '04. März, 18:00', focus: 'Wöchentlicher Check-in', summary: 'Baseline-Check und Monats-Zielsetzung besprochen. Mikro-Routinen in den Arbeitsalltag integriert.', output: 'Baseline definiert', duration: '25 Min.' },
+  { id: 1, date: '21. März, 14:30', focus: 'Ad-Hoc: Jetlag & Bio-Sync', summary: 'Kurzfristiges Einzelgespräch nach deinem Flug. Protokoll für Melatonin-Timing und Licht-Exposure erarbeitet.', output: 'Reise-Protokoll', duration: '12 Min.', type: 'Daily' },
+  { id: 2, date: '18. März, 18:00', focus: 'Wöchentlicher Check-in', summary: 'Fokus auf Schlaf und HRV. Abendroutine optimiert – digitales Detox ab 21:30.', output: 'Schlaf-Routine erstellt', duration: '18 Min.', type: 'Weekly' },
+  { id: 3, date: '11. März, 18:00', focus: 'Wöchentlicher Check-in', summary: 'Entzündungshemmende Lebensmittel besprochen. Wochenplan mit Omega-3-Quellen optimiert.', output: 'Ernährungsplan', duration: '20 Min.', type: 'Weekly' },
+  { id: 4, date: '04. März, 18:00', focus: 'Wöchentlicher Check-in', summary: 'Baseline-Check und Monats-Zielsetzung besprochen. Mikro-Routinen in den Arbeitsalltag integriert.', output: 'Baseline definiert', duration: '25 Min.', type: 'Quarterly' },
 ];
 
 interface Coaching2PageProps { onOpenAvatar?: () => void; }
@@ -102,6 +108,9 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
   const [isAnimating, setIsAnimating] = useState(false);
   const [showHistory, setShowHistory] = useState(false);
   const [rightTab, setRightTab] = useState<'today'|'history'|'customize'>('today');
+  const [sessionType, setSessionType] = useState<SessionType>('daily');
+  const [showMoreRecs, setShowMoreRecs] = useState(false);
+  const [historySearch, setHistorySearch] = useState('');
   const [selectedSessionId, setSelectedSessionId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -164,7 +173,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
   const formatTime = (s: number) => `${Math.floor(s / 60)}:${(s % 60).toString().padStart(2, '0')}`;
 
   const speakText = async (text: string) => {
-    if (!text || formatTab !== 'audio') return;
+    if (!text || formatTab !== 'voice') return;
     try {
       const res = await fetch('/api/tts', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text, voice: c.voice }) });
       if (!res.ok) return;
@@ -237,7 +246,8 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
   const addSystemMsg = (text: string, widget?: ChatMsg['widget']) => setMessages(p => [...p, { id: Date.now() + Math.random(), from: 'system', text, widget }]);
   const markAnswered = () => setMessages(p => { const cp = [...p]; for (let i = cp.length - 1; i >= 0; i--) { if (cp[i].widget && !cp[i].answered) { cp[i] = { ...cp[i], answered: true }; break; } } return cp; });
 
-  const startSession = async () => {
+  const startSession = async (type: SessionType = 'daily') => {
+    setSessionType(type);
     setView('preparing');
     setTimeout(async () => {
       setSessionTime(0); setMessages([]); setPhase('entry');
@@ -306,195 +316,103 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         {view === 'welcome' && (
           <div className="w-bento">
             <div className="wb-main">
-              <div className="wb-hero wb-hero-xl">
-                <div className="wav-glow-1"></div>
-                <div className="wav-glow-2"></div>
-                <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="wb-video" />
-                <div className="wb-hero-overlay">
-                  <div className="wb-hero-name">Lisa</div>
-                  <div className="wb-hero-status"><span className="wb-hero-dot" />Online · bereit für dich</div>
-                </div>
+              <div className="wb-hero-lg">
+                <div className="wbl-glow"></div>
+                <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="wbl-video" />
               </div>
-              
-              <div className="wb-content">
-                <h1 className="wb-title">Willkommen zurück, Hendrik.</h1>
-                <p className="wb-sub">Wähle dein Format für heute.</p>
-                
-                <div className="wb-format-cards">
-                  <button className="wb-fmt-card" onClick={startSession}>
-                    <div className="wb-fmt-num">01</div>
-                    <div className="wb-fmt-body">
-                      <div className="wb-fmt-title">Lisa Daily</div>
-                      <div className="wb-fmt-desc">Kurzer Check-in · Stimmung & Kontext</div>
-                    </div>
-                    <div className="wb-fmt-right">
-                      <span className="wb-fmt-time">~5 Min</span>
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </div>
-                  </button>
-
-                  <button className="wb-fmt-card" onClick={startSession}>
-                    <div className="wb-fmt-num">02</div>
-                    <div className="wb-fmt-body">
-                      <div className="wb-fmt-title">Lisa Weekly</div>
-                      <div className="wb-fmt-desc">Wochenreflexion · Habits & Ziele</div>
-                    </div>
-                    <div className="wb-fmt-right">
-                      <span className="wb-fmt-time">~10 Min</span>
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </div>
-                  </button>
-
-                  <button className="wb-fmt-card" onClick={startSession}>
-                    <div className="wb-fmt-num">03</div>
-                    <div className="wb-fmt-body">
-                      <div className="wb-fmt-title">Lisa Quarterly</div>
-                      <div className="wb-fmt-desc">Tiefe Verhaltensreflexion · Strategie</div>
-                    </div>
-                    <div className="wb-fmt-right">
-                      <span className="wb-fmt-time">~15 Min</span>
-                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#C9A96E" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                    </div>
-                  </button>
-                </div>
-              </div>
+              <div className="wbl-name">Lisa</div>
+              <div className="wbl-status"><span className="wbl-dot" />Online · bereit für dich</div>
+              <p className="wb-tagline">Dein persönlicher Longevity-Coach</p>
             </div>
             
             <div className="wb-sidebar">
-              <div className="wb-sidebar-tabs">
-                <button className={`wb-st-btn ${rightTab==='today'?'act':''}`} onClick={()=>setRightTab('today')}>Heute</button>
-                <button className={`wb-st-btn ${rightTab==='history'?'act':''}`} onClick={()=>setRightTab('history')}>Journey</button>
-                <button className={`wb-st-btn ${rightTab==='customize'?'act':''}`} onClick={()=>setRightTab('customize')}>Anpassen</button>
+              <div className="wbs-header">
+                <h1 className="wb-title">Willkommen zurück, Hendrik.</h1>
+                <p className="wb-sub">Wähle dein Session-Typ für heute.</p>
               </div>
 
-              <div className="wb-sidebar-content">
-                {rightTab === 'today' && (
-                  <div className="wb-tab-today">
-                    <div className="wi-card wi-hero-card">
-                      <div className="wih-top">
-                        <div className="wih-indicator">
-                          <span className="wih-dot pulse"></span>
-                          <span className="wih-lbl">Live heute, 18:00 Uhr</span>
-                        </div>
-                      </div>
-                      <h3 className="wih-focus">Deep Dive: Schlaf & Erholung</h3>
-                      <p className="wih-desc">Basierend auf deinen jüngsten Vitaldaten liegt dein Fokus heute auf der Stabilisierung deiner Tiefschlafphasen und der HRV-Regulation.</p>
-                      
-                      <div className="wih-metrics">
-                        <div className="wih-metric">
-                          <span className="wihm-val">6h 12m</span>
-                          <span className="wihm-lbl">Ø Schlaf</span>
-                        </div>
-                        <div className="wih-metric">
-                          <span className="wihm-val">38 ms</span>
-                          <span className="wihm-lbl">HRV Trend</span>
-                        </div>
-                        <div className="wih-metric">
-                          <span className="wihm-val">72 bpm</span>
-                          <span className="wihm-lbl">Ruhepuls</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div className="wi-card wi-status">
-                      <div className="wis-section">
-                        <div className="wis-row"><span className="wis-dot pulse"></span><span>Oura-Live-Sync aktiv</span></div>
-                        <div className="wis-row"><span className="wis-dot pulse-slow"></span><span>Neuro-Kontext geladen</span></div>
-                        <div className="wis-row"><span className="wis-dot on"></span><span>Apple Health verknüpft</span></div>
-                      </div>
+              <div className="wb-session-btns">
+                <button className="wb-stype-btn" onClick={() => startSession('daily')}>
+                  <div className="wbsb-left">
+                    <div className="wbsb-num">01</div>
+                    <div className="wbsb-body">
+                      <div className="wbsb-title">Lisa Daily</div>
+                      <div className="wbsb-desc">Kurzer Tages-Check-in · Energie & Stimmung analysieren · sofortige Micro-Maßnahme</div>
                     </div>
                   </div>
-                )}
+                  <div className="wbsb-right">
+                    <span className="wbsb-time">~5 Min</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                  </div>
+                </button>
 
-                {rightTab === 'history' && (
-                  <div className="wi-card wi-journey">
-                    <div className="wij-scroll">
-                      {selectedSessionId !== null ? (
-                        <div className="wij-detail-view">
-                          <button className="wij-back-btn" onClick={() => setSelectedSessionId(null)}>
-                            <i className="bi bi-chevron-left"></i> Zurück zur Übersicht
-                          </button>
-                          
-                          {(() => {
-                            const s = pastSessions.find(sess => sess.id === selectedSessionId);
-                            if (!s) return null;
-                            return (
-                              <div className="wij-detail-content">
-                                <div className="wijd-header">
-                                  <div className="wijd-date">{s.date}</div>
-                                  <h3 className="wijd-title">{s.focus}</h3>
-                                  <div className="wijd-badges">
-                                    <span className="wijd-badge dur"><i className="bi bi-clock"></i> {s.duration}</span>
-                                    <span className="wijd-badge type"><i className="bi bi-record-circle"></i> Abgeschlossen</span>
-                                  </div>
-                                </div>
-
-                                <div className="wijd-section">
-                                  <h4 className="wijd-sec-title">Zusammenfassung</h4>
-                                  <p className="wijd-sec-text">{s.summary}</p>
-                                </div>
-
-                                <div className="wijd-section">
-                                  <h4 className="wijd-sec-title">Ergebnis & Action Points</h4>
-                                  <div className="wijd-output-card">
-                                    <i className="bi bi-journal-check"></i>
-                                    <div className="wijd-output-info">
-                                      <div className="wijd-output-label">Wichtigstes Ergebnis:</div>
-                                      <div className="wijd-output-val">{s.output}</div>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="wijd-footer">
-                                  <button className="wijd-share-btn">E-Mail Protokoll senden</button>
-                                </div>
-                              </div>
-                            );
-                          })()}
-                        </div>
-                      ) : (
-                        <>
-                          <div className="wij-item upcoming">
-                            <div className="wiji-date">Freitag, 18:00 – Geplant</div>
-                            <div className="wiji-topic">Deep Dive & Wochenabschluss</div>
-                          </div>
-                          {pastSessions.map(s => (
-                            <div key={s.id} className="wij-item">
-                              <div className="wiji-top">
-                                <div className="wiji-date">{s.date} <span className="wiji-dur">{s.duration}</span></div>
-                                <button className="wiji-detail-btn" onClick={() => setSelectedSessionId(s.id)}>Details</button>
-                              </div>
-                              <div className="wiji-topic">{s.focus}</div>
-                              <div className="wiji-summary">{s.summary}</div>
-                            </div>
-                          ))}
-                        </>
-                      )}
+                <button className="wb-stype-btn" onClick={() => startSession('weekly')}>
+                  <div className="wbsb-left">
+                    <div className="wbsb-num">02</div>
+                    <div className="wbsb-body">
+                      <div className="wbsb-title">Lisa Weekly</div>
+                      <div className="wbsb-desc">Wochenreflexion · Habit-Analyse · Zielabgleich & neue Prioritäten</div>
                     </div>
                   </div>
-                )}
+                  <div className="wbsb-right">
+                    <span className="wbsb-time">~10 Min</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                  </div>
+                </button>
 
-                {rightTab === 'customize' && (
-                  <div className="wi-card wi-customize">
-                    <div className="wic-section">
-                      <h4 className="wic-title">Coach Setup</h4>
-                      <p className="wic-desc">Passe Lisa an dich an.</p>
-                      <button className="wic-btn" onClick={() => setView('setup')}>Persönlichkeit anpassen</button>
-                    </div>
-
-                    <div className="wic-section">
-                      <h4 className="wic-title">Format</h4>
-                      <div className="wb-tabs-format">
-                        {(['text','audio','video'] as FormatTab[]).map(f => (
-                          <button key={f} className={`wb-tab ${formatTab===f?'act':''}`} onClick={() => setFormatTab(f)}>
-                            {f==='text'?'Text':f==='audio'?'Audio':'Video'}
-                          </button>
-                        ))}
-                      </div>
+                <button className="wb-stype-btn" onClick={() => startSession('quarterly')}>
+                  <div className="wbsb-left">
+                    <div className="wbsb-num">03</div>
+                    <div className="wbsb-body">
+                      <div className="wbsb-title">Lisa Quarterly</div>
+                      <div className="wbsb-desc">Tiefe Verhaltensreflexion · Biomarker-Trend · langfristige Strategie</div>
                     </div>
                   </div>
-                )}
+                  <div className="wbsb-right">
+                    <span className="wbsb-time">~15 Min</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                  </div>
+                </button>
               </div>
+
+              <div className="wb-bottom-btns">
+                <button className="wb-bottom-btn" onClick={() => setRightTab('history')}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                  Gesprächshistorie
+                </button>
+                <button className="wb-bottom-btn" onClick={() => setView('setup')}>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                  Konfiguration Assistant
+                </button>
+              </div>
+
+              {rightTab === 'history' && (
+                <div className="wb-history-overlay">
+                  <div className="wbh-header">
+                    <button className="wij-back-btn" onClick={() => setRightTab('today')}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Zurück
+                    </button>
+                    <h3 className="wbh-title">Gesprächshistorie</h3>
+                  </div>
+                  <div className="wbh-search">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input className="wbh-inp" placeholder="Session suchen..." value={historySearch} onChange={e => setHistorySearch(e.target.value)} />
+                  </div>
+                  <div className="wbh-list">
+                    {pastSessions.filter(s => !historySearch || s.focus.toLowerCase().includes(historySearch.toLowerCase())).map(s => (
+                      <div key={s.id} className="wbh-item" onClick={() => { setSelectedSessionId(s.id); }}>
+                        <div className="wbhi-meta">
+                          <span className="wbhi-type">{s.type || 'Daily'}</span>
+                          <span className="wbhi-date">{s.date}</span>
+                          <span className="wbhi-dur">{s.duration}</span>
+                        </div>
+                        <div className="wbhi-focus">{s.focus}</div>
+                        <div className="wbhi-sum">{s.summary}</div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -673,7 +591,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
               </div>
             </div>
             <div className="stop">
-              <div className="stl"><div className="tav"><Image src={c.image} alt={c.name} width={40} height={40} style={{objectFit:'cover',borderRadius:'50%'}} />{isSpeaking&&<span className="sring"/>}</div><div className="tinf"><strong>{c.name}</strong><span className="tst">{isSpeaking?'spricht...':isListening?'hört zu...':phase==='data-pull'?'analysiert Daten...':phase==='syncing'?'überträgt...':'online'}</span></div></div>
+              <div className="stl"><div className="tav"><Image src={c.image} alt={c.name} width={40} height={40} style={{objectFit:'cover',borderRadius:'50%'}} />{isSpeaking&&<span className="sring"/>}</div><div className="tinf"><strong>{c.name}</strong><span className="tst">{isSpeaking?'spricht...':isListening?'hört zu...':phase==='data-pull'?'analysiert Daten...':phase==='syncing'?'überträgt...':'online'}</span></div><span className="s-type-badge">{sessionType==='daily'?'Daily':sessionType==='weekly'?'Weekly':'Quarterly'}</span></div>
               <div className="s-center-cal"><span className="we-countdown-sm">Live heute, 18:00 Uhr</span></div>
               <div className="str"><div className="stimer"><span className="tval">{formatTime(sessionTime)}</span></div><button className="ebtn" onClick={handleEndSession}>Beenden</button></div>
             </div>
@@ -686,9 +604,15 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
 
                 {/* Format tab bar – small, at top */}
                 <div className="s-fmt-tabs">
-                  {(['text','audio','video'] as FormatTab[]).map(f => (
+                  {(['text','voice','video'] as FormatTab[]).map(f => (
                     <button key={f} className={`s-ftab ${formatTab===f?'act':''}`} onClick={() => setFormatTab(f)}>
-                      {f==='text'?'Text':f==='audio'?'Sprache':'Video'}
+                      {f==='text' ? <>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:4,flexShrink:0}}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text
+                      </> : f==='voice' ? <>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:4,flexShrink:0}}><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>Voice
+                      </> : <>
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:4,flexShrink:0}}><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>Video
+                      </>}
                     </button>
                   ))}
                 </div>
@@ -696,7 +620,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
                 {/* Lisa with wave rings */}
                 <div className="s-lisa-scene">
                   {/* Outward wave rings – visible in audio mode */}
-                  {formatTab==='audio' && (<>
+                  {formatTab==='voice' && (<>
                     <div className={`s-wave s-wave-1 ${isListening||isSpeaking?'act':''}`} />
                     <div className={`s-wave s-wave-2 ${isListening||isSpeaking?'act':''}`} />
                     <div className={`s-wave s-wave-3 ${isListening||isSpeaking?'act':''}`} />
@@ -714,7 +638,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
                 </div>
 
                 {/* Mic button – only in audio mode */}
-                {formatTab==='audio' && (
+                {formatTab==='voice' && (
                   <div className="s-mic-wrap">
                     <button className={`s-mbtn ${isListening?'lis':''}`} onClick={()=>{if(isListening){stopRecording();}else{startRecording();}}}>
                       <div className="s-minn">
@@ -740,14 +664,26 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
 
                     {msg.widget==='entry-options'&&!msg.answered&&(
                       <div className="wcards">
-                        <button className="wcd" onClick={() => handleEntryChoice('Letzte Session fortsetzen')}><div><strong>Letzte Session fortsetzen</strong><span>Beim letzten Commitment weitermachen.</span></div></button>
-                        <button className="wcd" onClick={() => handleEntryChoice('Akutes Thema besprechen')}><div><strong>Akutes Thema besprechen</strong><span>Was dich gerade bewegt.</span></div></button>
-                        <button className="wcd" onClick={() => handleEntryChoice('Neuer Check-in')}><div><strong>Neuer Check-in</strong><span>Strukturierter Coaching-Flow.</span></div></button>
+                        <button className="wcd" onClick={() => handleEntryChoice('Letzte Session fortsetzen')}>
+                          <div className="wcd-icon">🔄</div>
+                          <div className="wcd-body"><strong>Letzte Session fortsetzen</strong><span>Beim letzten Commitment weitermachen.</span></div>
+                          <svg className="wcd-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button className="wcd" onClick={() => handleEntryChoice('Akutes Thema besprechen')}>
+                          <div className="wcd-icon">💬</div>
+                          <div className="wcd-body"><strong>Akutes Thema besprechen</strong><span>Was dich gerade bewegt.</span></div>
+                          <svg className="wcd-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
+                        <button className="wcd" onClick={() => handleEntryChoice('Neuer Check-in')}>
+                          <div className="wcd-icon">📊</div>
+                          <div className="wcd-body"><strong>Neuer Check-in</strong><span>Strukturierter Coaching-Flow.</span></div>
+                          <svg className="wcd-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                        </button>
                       </div>
                     )}
                     {msg.widget==='energy'&&!msg.answered&&(<div className="wrate">{[1,2,3,4,5].map(n=>(<button key={n} className="rbtn en" onClick={()=>handleEnergy(n)}>{n}</button>))}<div className="rlabs"><span>niedrig</span><span>hoch</span></div></div>)}
                     {msg.widget==='stress'&&!msg.answered&&(<div className="wrate">{[1,2,3,4,5].map(n=>(<button key={n} className="rbtn st" onClick={()=>handleStress(n)}>{n}</button>))}<div className="rlabs"><span>niedrig</span><span>hoch</span></div></div>)}
-                    {msg.widget==='focus'&&!msg.answered&&(<div className="wpills">{focusTopics.map(t=>(<button key={t.id} className="plbtn" onClick={()=>handleFocus(t.id)}>{t.label}</button>))}</div>)}
+                    {msg.widget==='focus'&&!msg.answered&&(<div className="wpills">{focusTopics.map(t=>(<button key={t.id} className="plbtn" onClick={()=>handleFocus(t.id)}><span className="plbtn-icon">{t.icon}</span><span className="plbtn-body"><span className="plbtn-lbl">{t.label}</span><span className="plbtn-desc">{t.desc}</span></span></button>))}</div>)}
 
                     {msg.widget==='data-pull'&&dataLoadStage<2&&(
                       <div className="wdp">
@@ -759,24 +695,79 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
 
                     {msg.widget==='data-result'&&(
                       <div className="wdr">
-                        <div className="drh"><span className="drt">Deine Daten der letzten 3 Tage</span><span className="drs">Apple Watch · Oura Ring · TrueYears</span></div>
-                        <div className="drg">{dataLabels.map((d,i)=>(<div key={i} className="drc" style={{animationDelay:`${i*0.12}s`}}><div className="drct"><span className="drcl">{d.label}</span></div><div className="drcv">{d.val}</div><div className="drcu">{d.unit}</div><div className="drbar"><div className={`drfl ${d.trend}`} style={{width:`${d.pct}%`}}/></div><div className={`drsub ${d.trend}`}>{d.sub}</div></div>))}</div>
+                        <div className="drh"><span className="drt">Deine Daten der letzten 7 Tage</span><span className="drs">Oura Ring · Apple Watch · TrueYears</span></div>
+                        <div className="drg">{dataLabels.map((d,i)=>(
+                          <div key={i} className="drc" style={{animationDelay:`${i*0.12}s`}}>
+                            <div className="drct">
+                              <span className="drc-icon">{d.icon}</span>
+                              <span className="drcl">{d.label}</span>
+                            </div>
+                            <div className="drcv">{d.val}</div>
+                            <div className="drcu">{d.unit}</div>
+                            <svg className="dr-spark" viewBox="0 0 60 28" preserveAspectRatio="none" width="100%" height="28">
+                              <defs>
+                                <linearGradient id={`sg${i}`} x1="0" y1="0" x2="0" y2="1">
+                                  <stop offset="0%" stopColor={d.sparkColor} stopOpacity="0.25"/>
+                                  <stop offset="100%" stopColor={d.sparkColor} stopOpacity="0"/>
+                                </linearGradient>
+                              </defs>
+                              <polygon points={`0,28 ${d.spark} 60,28`} fill={`url(#sg${i})`}/>
+                              <polyline points={d.spark} fill="none" stroke={d.sparkColor} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                            </svg>
+                            <div className={`drsub ${d.trend}`}>{d.sub}</div>
+                          </div>
+                        ))}</div>
                       </div>
                     )}
 
                     {msg.widget==='action-plan'&&!msg.answered&&(
                       <div className="wap">
-                        <div className="apb">Empfehlung auf Basis deiner Daten</div>
-                        <h3 className="apt">Handy ab 21:30 aus dem Schlafzimmer legen</h3>
-                        <p className="apw">Dein HRV-Verlauf zeigt: deine Erholung startet erst spät. Ohne Bildschirmreize ab 21:30 kann dein Nervensystem 30–45 Min. früher in den Erholungsmodus wechseln.</p>
-                        <div className="apm"><div className="apmi"><span>Schwierigkeit</span><div className="apmbar"><div className="apmf lo" style={{width:'25%'}}/></div><strong>Leicht</strong></div><div className="apmi"><span>Wirkung</span><div className="apmbar"><div className="apmf hi" style={{width:'85%'}}/></div><strong>Hoch</strong></div></div>
-                        <div className="aps"><div className="apsi"><span>5-Min. Atemübung um 21:15</span></div><div className="apsi"><span>Morgen 10 Min. Tageslicht am Morgen</span></div></div>
+                        <div className="apb">2 Empfehlungen auf Basis deiner Daten</div>
+                        <div className="ap-rec">
+                          <div className="ap-rec-num">1</div>
+                          <div className="ap-rec-body">
+                            <h3 className="apt">Handy ab 21:30 aus dem Schlafzimmer legen</h3>
+                            <p className="apw">Dein HRV-Verlauf zeigt: deine Erholung startet erst spät. Ohne Bildschirmreize kann dein Nervensystem 30–45 Min. früher in den Erholungsmodus wechseln.</p>
+                            <div className="apm"><div className="apmi"><span>Schwierigkeit</span><div className="apmbar"><div className="apmf lo" style={{width:'25%'}}/></div><strong>Leicht</strong></div><div className="apmi"><span>Wirkung</span><div className="apmbar"><div className="apmf hi" style={{width:'85%'}}/></div><strong>Hoch</strong></div></div>
+                          </div>
+                        </div>
+                        <div className="ap-rec">
+                          <div className="ap-rec-num">2</div>
+                          <div className="ap-rec-body">
+                            <h3 className="apt">5-Min. Box-Breathing um 21:15 Uhr</h3>
+                            <p className="apw">Aktiviert deinen Parasympathikus und senkt Cortisol. In Kombination erhöhst du deine HRV innerhalb von 7 Tagen messbar.</p>
+                            <div className="apm"><div className="apmi"><span>Schwierigkeit</span><div className="apmbar"><div className="apmf lo" style={{width:'15%'}}/></div><strong>Sehr leicht</strong></div><div className="apmi"><span>Wirkung</span><div className="apmbar"><div className="apmf hi" style={{width:'75%'}}/></div><strong>Mittel-Hoch</strong></div></div>
+                          </div>
+                        </div>
+                        {!showMoreRecs&&<button className="ap-more-btn" onClick={()=>setShowMoreRecs(true)}>Weitere Empfehlungen anzeigen →</button>}
+                        {showMoreRecs&&(
+                          <div className="ap-rec ap-rec-extra">
+                            <div className="ap-rec-num">3</div>
+                            <div className="ap-rec-body">
+                              <h3 className="apt">Morgens 10 Min. Tageslicht direkt nach dem Aufwachen</h3>
+                              <p className="apw">Setzt deinen zirkadianen Rhythmus zurück und erhöht die Wachheit. Besonders wirksam bei spätem Einschlafen.</p>
+                            </div>
+                          </div>
+                        )}
                         <button className="apcb" onClick={handleShowCommitment}>Klingt gut – weiter</button>
                       </div>
                     )}
 
                     {msg.widget==='commitment'&&!msg.answered&&(
-                      <div className="wcm"><button className="cmb ac" onClick={()=>handleCommitment('accept')}>Ja, mache ich heute</button><button className="cmb ad" onClick={()=>handleCommitment('adjust')}>Anpassen</button><button className="cmb de" onClick={()=>handleCommitment('decline')}>Nicht realistisch</button></div>
+                      <div className="wcm">
+                        <p className="wcm-q">Möchtest du diese Maßnahmen für heute verbindlich einplanen?</p>
+                        <div className="wcm-btns">
+                          <button className="cmb ac" onClick={()=>handleCommitment('accept')}>
+                            <span className="cmb-icon">✓</span> Ja, ich mache das
+                          </button>
+                          <button className="cmb ad" onClick={()=>handleCommitment('adjust')}>
+                            <span className="cmb-icon">✎</span> Ich passe es an
+                          </button>
+                          <button className="cmb de" onClick={()=>handleCommitment('decline')}>
+                            <span className="cmb-icon">✗</span> Heute nicht
+                          </button>
+                        </div>
+                      </div>
                     )}
 
                     {msg.widget==='system-sync'&&(
@@ -814,10 +805,8 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
       </div>
 
       <style jsx>{`
-        .cr{min-height:calc(100vh - 90px);position:relative;overflow-x:hidden;background:linear-gradient(165deg,#f8fcff 0%,#eef6fb 30%,#e5f0f8 60%,#f0f7fc 100%)}
+        .cr{min-height:calc(100vh - 90px);position:relative;overflow-x:hidden}
         .cr-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-        .cr-g{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(68,152,202,.08) 0%,transparent 50%),radial-gradient(ellipse at 70% 80%,rgba(176,224,240,.12) 0%,transparent 40%)}
-        .cr-d{position:absolute;inset:0;opacity:.03;background-image:radial-gradient(circle at 1px 1px,rgba(68,152,202,.5) 1px,transparent 0);background-size:32px 32px}
         .cr-in{position:relative;min-height:calc(100vh - 90px)}
 
         .wv{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:calc(100vh - 90px);padding:2.5rem 2rem;animation:fu .5s ease both}
@@ -844,20 +833,48 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .wv-btns{display:flex;gap:.6rem;justify-content:center}
         .wv-btn{padding:.55rem 1.1rem;border-radius:12px;border:1.5px solid rgba(68,152,202,.15);background:rgba(255,255,255,.7);color:#5a8aa8;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .25s;backdrop-filter:blur(8px)}
         .wv-btn:hover{border-color:rgba(68,152,202,.35);color:#2c5a7c;background:rgba(255,255,255,.95)}
-        .wb-hero-xl{width:min(360px,72vw) !important;height:min(360px,72vw) !important;margin-bottom:1.5rem;}
-        .wb-hero-overlay{position:absolute;bottom:0;left:0;right:0;padding:1.5rem 2rem;background:linear-gradient(0deg,rgba(0,0,0,0.55) 0%,transparent 100%);display:flex;align-items:flex-end;gap:0.85rem;z-index:5}
-        .wb-hero-name{font-size:2rem;font-weight:700;color:#fff;letter-spacing:-0.01em;line-height:1;text-shadow:0 2px 12px rgba(0,0,0,0.3)}
-        .wb-hero-status{display:flex;align-items:center;gap:0.4rem;font-size:0.82rem;color:rgba(255,255,255,0.85);margin-bottom:0.3rem;align-self:flex-end}
-        .wb-hero-dot{width:8px;height:8px;border-radius:50%;background:#4CAF50;flex-shrink:0;box-shadow:0 0 6px rgba(76,175,80,0.8);animation:dotpulse 2s infinite}
-        .wb-format-cards{display:flex;flex-direction:column;gap:0.55rem;margin-top:0.5rem}
-        .wb-fmt-card{display:flex;align-items:center;gap:1rem;padding:0.9rem 1.1rem;border-radius:16px;border:1px solid rgba(201,169,110,0.18);background:rgba(255,255,255,0.65);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer;transition:all 0.25s cubic-bezier(0.16,1,0.3,1);text-align:left;width:100%;box-shadow:0 2px 12px rgba(201,169,110,0.04)}
-        .wb-fmt-card:hover{border-color:rgba(201,169,110,0.45);background:rgba(255,255,255,0.92);box-shadow:0 8px 28px rgba(201,169,110,0.12);transform:translateX(4px)}
-        .wb-fmt-num{font-size:1.05rem;font-weight:700;color:rgba(201,169,110,0.45);letter-spacing:-0.02em;flex-shrink:0;min-width:26px;font-variant-numeric:tabular-nums}
-        .wb-fmt-body{flex:1;min-width:0}
-        .wb-fmt-title{font-size:0.9rem;font-weight:700;color:#1e293b;line-height:1.2}
-        .wb-fmt-desc{font-size:0.72rem;color:#94a3b8;line-height:1.3;margin-top:0.15rem}
-        .wb-fmt-right{display:flex;flex-direction:column;align-items:flex-end;gap:0.25rem;flex-shrink:0}
-        .wb-fmt-time{font-size:0.7rem;font-weight:600;color:#8B7355;background:rgba(201,169,110,0.1);padding:0.22rem 0.55rem;border-radius:8px;border:1px solid rgba(201,169,110,0.2);white-space:nowrap}
+        /* NEW WELCOME: Lisa left panel */
+        .wb-hero-lg{position:relative;width:min(300px,64vw);height:min(300px,64vw);border-radius:50%;overflow:hidden;margin-bottom:1.25rem;flex-shrink:0}
+        .wbl-glow{position:absolute;inset:-20%;border-radius:50%;background:conic-gradient(from 0deg,rgba(68,152,202,0.4),rgba(30,80,160,0.3),rgba(68,152,202,0.4));filter:blur(28px);opacity:0.5;animation:spin 18s linear infinite}
+        .wbl-video{position:relative;z-index:2;width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid rgba(68,152,202,0.25);box-shadow:0 16px 60px rgba(0,20,80,0.45)}
+        .wbl-name{font-size:2.2rem;font-weight:300;letter-spacing:-0.02em;color:#e8f0fa;margin-bottom:0.2rem}
+        .wbl-status{display:flex;align-items:center;gap:0.45rem;font-size:0.85rem;color:rgba(180,210,240,0.7);margin-bottom:0.5rem}
+        .wbl-dot{width:8px;height:8px;border-radius:50%;background:#4CAF50;flex-shrink:0;box-shadow:0 0 6px rgba(76,175,80,0.8);animation:dotpulse 2s infinite}
+        .wb-tagline{font-size:0.9rem;color:rgba(180,210,240,0.45);margin:0;letter-spacing:0.04em;text-transform:uppercase}
+        /* NEW WELCOME: right session buttons */
+        .wbs-header{margin-bottom:0.5rem}
+        .wb-session-btns{display:flex;flex-direction:column;gap:0.7rem;flex:1}
+        .wb-stype-btn{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.05rem 1.25rem;border-radius:18px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer;transition:all 0.25s cubic-bezier(0.16,1,0.3,1);text-align:left;width:100%;color:#e2eaf4}
+        .wb-stype-btn:hover{border-color:rgba(68,152,202,0.45);background:rgba(68,152,202,0.12);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,20,80,0.25)}
+        .wbsb-left{display:flex;align-items:flex-start;gap:0.9rem;flex:1;min-width:0}
+        .wbsb-num{font-size:1rem;font-weight:700;color:rgba(68,152,202,0.5);letter-spacing:-0.02em;flex-shrink:0;min-width:26px;font-variant-numeric:tabular-nums;padding-top:0.05rem}
+        .wbsb-body{flex:1;min-width:0}
+        .wbsb-title{font-size:0.95rem;font-weight:700;color:#e8f0fa;line-height:1.2;margin-bottom:0.2rem}
+        .wbsb-desc{font-size:0.72rem;color:rgba(180,210,240,0.55);line-height:1.4}
+        .wbsb-right{display:flex;flex-direction:column;align-items:flex-end;gap:0.3rem;flex-shrink:0;color:rgba(68,152,202,0.6)}
+        .wbsb-time{font-size:0.68rem;font-weight:600;color:rgba(68,152,202,0.8);background:rgba(68,152,202,0.1);padding:0.2rem 0.5rem;border-radius:8px;border:1px solid rgba(68,152,202,0.2);white-space:nowrap}
+        /* bottom history/config buttons */
+        .wb-bottom-btns{display:flex;gap:0.6rem;margin-top:0.5rem}
+        .wb-bottom-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.75rem 1rem;border-radius:14px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:rgba(180,210,240,0.65);font-size:0.8rem;font-weight:500;cursor:pointer;transition:all 0.25s}
+        .wb-bottom-btn:hover{border-color:rgba(68,152,202,0.35);color:rgba(180,210,240,0.95);background:rgba(68,152,202,0.1)}
+        /* history overlay */
+        .wb-history-overlay{position:absolute;inset:0;border-radius:32px;background:rgba(11,23,48,0.96);backdrop-filter:blur(20px);padding:1.5rem;display:flex;flex-direction:column;gap:0.85rem;overflow:hidden;z-index:10}
+        .wbh-header{display:flex;align-items:center;gap:1rem;margin-bottom:0.25rem}
+        .wbh-title{font-size:1.1rem;font-weight:600;color:#e8f0fa;margin:0}
+        .wbh-search{display:flex;align-items:center;gap:0.6rem;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:0.6rem 1rem}
+        .wbh-search svg{color:rgba(180,210,240,0.4);flex-shrink:0}
+        .wbh-inp{background:transparent;border:none;outline:none;color:#e2eaf4;font-size:0.85rem;width:100%}
+        .wbh-inp::placeholder{color:rgba(180,210,240,0.35)}
+        .wbh-list{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:0.55rem;scrollbar-width:none}
+        .wbh-list::-webkit-scrollbar{display:none}
+        .wbh-item{padding:0.85rem 1rem;border-radius:14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);cursor:pointer;transition:all 0.2s}
+        .wbh-item:hover{background:rgba(68,152,202,0.1);border-color:rgba(68,152,202,0.3)}
+        .wbhi-meta{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;flex-wrap:wrap}
+        .wbhi-type{font-size:0.65rem;font-weight:700;background:rgba(68,152,202,0.2);color:rgba(68,152,202,0.9);padding:0.15rem 0.5rem;border-radius:6px;text-transform:uppercase;letter-spacing:0.04em}
+        .wbhi-date{font-size:0.7rem;color:rgba(180,210,240,0.5);font-weight:500}
+        .wbhi-dur{font-size:0.68rem;color:rgba(180,210,240,0.35);margin-left:auto}
+        .wbhi-focus{font-size:0.82rem;font-weight:600;color:#e8f0fa;margin-bottom:0.2rem}
+        .wbhi-sum{font-size:0.75rem;color:rgba(180,210,240,0.5);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
         .ps-wrap{width:100%;max-width:560px;margin-top:1.5rem;animation:fu .35s ease both}
         .ps-list{display:flex;flex-direction:column;gap:.6rem}
@@ -977,51 +994,52 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .ftab{flex:1;padding:.5rem .7rem;border:none;border-radius:9px;background:transparent;color:#7a9ab0;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .25s;white-space:nowrap}
         .ftab.act{background:#fff;color:#2c5a7c;box-shadow:0 2px 8px rgba(0,60,120,.08);font-weight:600}
 
-        .sess{position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;display:flex;flex-direction:column;background:#07111e;opacity:1;transform:scale(1);transition:all .3s cubic-bezier(.4,0,.2,1)}
-        .s-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse at 20% 50%,rgba(30,60,100,.6) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(50,30,80,.4) 0%,transparent 55%),#07111e}
+        .sess{position:fixed;top:0;left:0;right:0;bottom:0;z-index:1000;display:flex;flex-direction:column;background:#060d18;opacity:1;transform:scale(1);transition:all .3s cubic-bezier(.4,0,.2,1)}
+        .s-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse at 20% 50%,rgba(30,70,120,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(20,50,90,.1) 0%,transparent 55%),#060d18}
         .sess-anim{opacity:0;transform:scale(.97)}
-        .stop{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.07);background:rgba(10,20,35,.7);backdrop-filter:blur(24px);gap:1rem}
+        .stop{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.05);background:rgba(6,13,24,.75);backdrop-filter:blur(24px);gap:1rem}
         .stl{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
+        .s-type-badge{font-size:.65rem;font-weight:600;background:rgba(255,255,255,.06);color:#cbd5e1;border:1px solid rgba(255,255,255,.1);padding:.18rem .55rem;border-radius:8px;text-transform:uppercase;letter-spacing:.06em;margin-left:.3rem}
         .tav{position:relative;width:44px;height:44px;flex-shrink:0}
-        .tav :global(img){border:2px solid rgba(255,255,255,0.15);box-shadow:0 4px 12px rgba(0,0,0,.3)}
-        .sring{position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(100,200,255,.6);animation:sp 1.5s ease-in-out infinite}
-        @keyframes sp{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:1;transform:scale(1.12)}}
-        .tinf strong{display:block;font-size:.9rem;color:rgba(255,255,255,.9)}.tst{font-size:.75rem;color:rgba(180,210,240,.5)}
+        .tav :global(img){border:1px solid rgba(255,255,255,0.1);box-shadow:0 4px 12px rgba(0,0,0,.4)}
+        .sring{position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(255,255,255,.15);animation:sp 1.5s ease-in-out infinite}
+        @keyframes sp{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.6;transform:scale(1.12)}}
+        .tinf strong{display:block;font-size:.9rem;color:#f8fafc;letter-spacing:.01em}.tst{font-size:.75rem;color:#94a3b8}
         .sftabs{flex:0 1 280px}
         .str{display:flex;align-items:center;gap:.65rem;flex-shrink:0}
-        .stimer{display:flex;align-items:center;gap:.3rem;padding:.35rem .75rem;border-radius:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:.82rem;font-weight:600;color:rgba(255,255,255,.7);font-variant-numeric:tabular-nums}
-        .ebtn{padding:.35rem .8rem;border-radius:10px;border:1px solid rgba(255,100,100,.2);background:transparent;color:rgba(255,120,120,.7);font-size:.8rem;font-weight:600;cursor:pointer;transition:all .2s}
-        .ebtn:hover{background:rgba(255,80,80,.1);border-color:rgba(255,100,100,.5)}
-        .pbar{position:relative;z-index:2;height:2px;background:rgba(255,255,255,.05);overflow:hidden}
-        .pfill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(80,160,255,.6),rgba(120,80,255,.6));transition:width .6s ease}
+        .stimer{display:flex;align-items:center;gap:.3rem;padding:.35rem .75rem;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:.82rem;font-weight:500;color:#e2e8f0;font-variant-numeric:tabular-nums;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+        .ebtn{padding:.35rem .8rem;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:#cbd5e1;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.2)}
+        .ebtn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#f8fafc}
+        .pbar{position:relative;z-index:2;height:3px;background:rgba(255,255,255,.05);overflow:hidden}
+        .pfill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(100,180,255,.7),rgba(60,200,200,.6));transition:width .6s ease}
         .plab{display:none}
 
         /* Two-column session body */
         .s-body{position:relative;z-index:2;flex:1;display:flex;overflow:hidden}
-        .s-left{width:46%;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 2rem 2.5rem;border-right:1px solid rgba(255,255,255,.05);gap:1.4rem}
+        .s-left{width:52%;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 1.5rem 2.5rem;border-right:1px solid rgba(255,255,255,.1);gap:1.4rem}
         .s-right{flex:1;display:flex;flex-direction:column;overflow:hidden}
-        .s-fmt-tabs{display:flex;gap:.25rem;padding:.3rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:12px;align-self:stretch;justify-content:center}
-        .s-ftab{flex:1;padding:.4rem .6rem;border:none;border-radius:9px;background:transparent;color:rgba(180,210,240,.5);font-size:.78rem;font-weight:500;cursor:pointer;transition:all .25s;letter-spacing:.02em}
-        .s-ftab.act{background:rgba(255,255,255,.1);color:rgba(220,240,255,.9);font-weight:600}
-        .s-lisa-scene{position:relative;display:flex;align-items:center;justify-content:center;width:300px;height:300px}
-        .s-lisa-wrap{position:relative;width:240px;height:240px;border-radius:50%;overflow:hidden;flex-shrink:0;z-index:2}
+        .s-fmt-tabs{display:flex;gap:.25rem;padding:.3rem;background:rgba(0,0,0,.2);border:1px solid rgba(255,255,255,.06);border-radius:12px;align-self:stretch;justify-content:center;box-shadow:inset 0 2px 10px rgba(0,0,0,.2)}
+        .s-ftab{flex:1;padding:.5rem .7rem;border:none;border-radius:9px;background:transparent;color:#94a3b8;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .25s;letter-spacing:.02em;display:flex;align-items:center;justify-content:center}
+        .s-ftab.act{background:rgba(255,255,255,.08);color:#f8fafc;font-weight:600;border:1px solid rgba(255,255,255,.1);box-shadow:0 4px 12px rgba(0,0,0,.2)}
+        .s-lisa-scene{position:relative;display:flex;align-items:center;justify-content:center;width:min(520px,44vw);height:min(520px,44vw)}
+        .s-lisa-wrap{position:relative;width:min(440px,37vw);height:min(440px,37vw);border-radius:50%;overflow:hidden;flex-shrink:0;z-index:2;box-shadow:0 28px 80px rgba(0,0,0,.65),0 0 0 2px rgba(255,255,255,.1)}
         .s-lisa-vid{width:100%;height:100%;object-fit:cover;border-radius:50%}
-        .s-lisa-glow{position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle,rgba(80,160,255,.2),transparent 65%);animation:lg 4s ease-in-out infinite;pointer-events:none;z-index:1}
-        @keyframes lg{0%,100%{opacity:.4;transform:scale(1)}50%{opacity:.9;transform:scale(1.1)}}
-        .s-wave{position:absolute;border-radius:50%;border:1.5px solid rgba(80,160,255,.25);top:50%;left:50%;transform:translate(-50%,-50%) scale(1);opacity:0;pointer-events:none}
-        .s-wave-1{width:260px;height:260px}
-        .s-wave-2{width:292px;height:292px}
-        .s-wave-3{width:324px;height:324px}
+        .s-lisa-glow{position:absolute;inset:-30px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.05),transparent 65%);animation:lg 4s ease-in-out infinite;pointer-events:none;z-index:1}
+        @keyframes lg{0%,100%{opacity:.3;transform:scale(1)}50%{opacity:.7;transform:scale(1.1)}}
+        .s-wave{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.1);top:50%;left:50%;transform:translate(-50%,-50%) scale(1);opacity:0;pointer-events:none}
+        .s-wave-1{width:min(390px,33vw);height:min(390px,33vw)}
+        .s-wave-2{width:min(460px,39vw);height:min(460px,39vw)}
+        .s-wave-3{width:min(510px,43vw);height:min(510px,43vw)}
         .s-wave.act{animation:sw 2.4s ease-out infinite}
         .s-wave-2.act{animation-delay:.65s}
         .s-wave-3.act{animation-delay:1.3s}
-        @keyframes sw{0%{opacity:.55;transform:translate(-50%,-50%) scale(.92)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.18)}}
+        @keyframes sw{0%{opacity:.4;transform:translate(-50%,-50%) scale(.92)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.18)}}
         .s-lisa-info{text-align:center}
-        .s-lisa-name{display:block;font-size:1.15rem;font-weight:600;color:rgba(255,255,255,.85);letter-spacing:.02em;margin-bottom:.3rem}
-        .s-lisa-status{display:block;font-size:.8rem;color:rgba(120,180,240,.55);letter-spacing:.05em}
+        .s-lisa-name{display:block;font-size:1.15rem;font-weight:600;color:#f8fafc;letter-spacing:.02em;margin-bottom:.3rem}
+        .s-lisa-status{display:block;font-size:.8rem;color:#94a3b8;letter-spacing:.05em}
         .s-mic-wrap{display:flex;flex-direction:column;align-items:center;gap:.6rem}
-        .s-mbtn{width:56px;height:56px;border-radius:50%;border:1.5px solid rgba(255,255,255,.12);background:rgba(255,255,255,.07);cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center}
-        .s-mbtn:hover{border-color:rgba(100,180,255,.3);background:rgba(100,180,255,.1)}
+        .s-mbtn{width:56px;height:56px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.05)}
+        .s-mbtn:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.08);transform:translateY(-2px)}
         .s-mbtn.lis{border-color:rgba(80,200,160,.4);animation:mp 1.8s ease-in-out infinite;background:rgba(80,200,160,.08)}
         @keyframes mp{0%,100%{box-shadow:0 0 0 0 rgba(80,200,160,.2)}50%{box-shadow:0 0 0 14px rgba(80,200,160,0)}}
         .s-minn{color:rgba(200,225,255,.8);display:flex;align-items:center;justify-content:center}
@@ -1041,95 +1059,114 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         @keyframes mi{from{opacity:0;transform:translateY(12px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
         .cav{width:34px;height:34px;flex-shrink:0;border-radius:50%;overflow:hidden;margin-top:4px;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1.5px solid rgba(255,255,255,.12)}
         .ccont{display:flex;flex-direction:column;gap:.4rem;min-width:0}.ccont.system{width:100%}
-        .bub{padding:.85rem 1.15rem;border-radius:18px;backdrop-filter:blur(16px)}
-        .bub.coach{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-bottom-left-radius:5px}
-        .bub.user{background:rgba(80,140,200,.25);border:1px solid rgba(100,160,255,.2);border-bottom-right-radius:5px}
-        .bub p{font-size:.93rem;line-height:1.6;margin:0;letter-spacing:0.01em}.bub.coach p{color:rgba(220,235,255,.9)}.bub.user p{color:rgba(200,225,255,.95)}
-        .tbub{padding:.75rem 1.15rem}.tdots{display:flex;gap:5px;align-items:center}.tdots span{width:6px;height:6px;border-radius:50%;background:rgba(68,152,202,0.4);animation:db 1.4s ease-in-out infinite}.tdots span:nth-child(2){animation-delay:.2s;background:rgba(68,152,202,0.6)}.tdots span:nth-child(3){animation-delay:.4s;background:rgba(68,152,202,0.8)}
+        .bub{padding:.85rem 1.15rem;border-radius:18px;backdrop-filter:blur(16px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+        .bub.coach{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-bottom-left-radius:5px}
+        .bub.user{background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.15);border-bottom-right-radius:5px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1), 0 8px 24px rgba(0,0,0,.2)}
+        .bub p{font-size:.93rem;line-height:1.6;margin:0;letter-spacing:0.01em;font-weight:400}.bub.coach p{color:#e2e8f0}.bub.user p{color:#f8fafc}
+        .tbub{padding:.75rem 1.15rem}.tdots{display:flex;gap:5px;align-items:center}.tdots span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.4);animation:db 1.4s ease-in-out infinite}.tdots span:nth-child(2){animation-delay:.2s;background:rgba(255,255,255,0.6)}.tdots span:nth-child(3){animation-delay:.4s;background:rgba(255,255,255,0.8)}
         @keyframes db{0%,60%,100%{transform:translateY(0) scale(1)}30%{transform:translateY(-5px) scale(1.1)}}
 
         .wcards{display:flex;flex-direction:column;gap:.55rem}
-        .wcd{display:flex;align-items:center;gap:.75rem;text-align:left;padding:.9rem 1.15rem;border-radius:16px;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.5);backdrop-filter:blur(16px);cursor:pointer;transition:all .3s;box-shadow:0 1px 6px rgba(0,0,0,.03)}
-        .wcd:hover{background:rgba(255,255,255,.85);transform:translateX(4px);box-shadow:0 6px 18px rgba(68,152,202,.08);border-color:rgba(68,152,202,.25)}
-        .wcd strong{display:block;font-size:.87rem;color:#1a3a50;font-weight:700;margin-bottom:.1rem}.wcd span{font-size:.76rem;color:#7a9ab0}
+        .wcd{display:flex;align-items:center;gap:.75rem;text-align:left;padding:1rem 1.2rem;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(24px);cursor:pointer;transition:all .3s cubic-bezier(.16,1,.3,1);box-shadow:0 8px 32px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.05)}
+        .wcd:hover{background:rgba(255,255,255,.06);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);border-color:rgba(255,255,255,.15)}
+        .wcd-icon{font-size:1.35rem;flex-shrink:0;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+        .wcd-body{flex:1;min-width:0}
+        .wcd-body strong{display:block;font-size:.88rem;color:#f8fafc;font-weight:600;margin-bottom:.15rem;letter-spacing:.01em}
+        .wcd-body span{font-size:.76rem;color:#94a3b8}
+        .wcd-arrow{color:rgba(255,255,255,.3);flex-shrink:0;transition:transform .25s}.wcd:hover .wcd-arrow{transform:translateX(3px);color:rgba(255,255,255,.8)}
         .wrate{display:flex;flex-wrap:wrap;gap:.5rem}
-        .rbtn{width:50px;height:50px;border-radius:14px;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.5);backdrop-filter:blur(12px);font-size:1rem;font-weight:600;color:#3a6a8c;cursor:pointer;transition:all .25s;box-shadow:0 1px 6px rgba(0,0,0,.04)}
-        .rbtn:hover{transform:scale(1.08);background:rgba(255,255,255,.9);box-shadow:0 4px 14px rgba(68,152,202,.12)}.rbtn.en:hover{border-color:rgba(68,152,202,.4);background:rgba(68,152,202,.12)}.rbtn.st:hover{border-color:rgba(148,163,184,.5);background:rgba(148,163,184,.12)}
-        .rlabs{width:100%;display:flex;justify-content:space-between;font-size:.7rem;color:#94a3b8;font-weight:500}
-        .wpills{display:flex;flex-wrap:wrap;gap:.45rem}
-        .plbtn{padding:.55rem 1rem;border-radius:22px;border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.5);backdrop-filter:blur(12px);font-size:.84rem;color:#2c5a7c;font-weight:500;cursor:pointer;transition:all .25s}
-        .plbtn:hover{border-color:rgba(68,152,202,.35);background:rgba(255,255,255,.85);box-shadow:0 4px 12px rgba(68,152,202,.08);transform:translateY(-1px)}
+        .rbtn{width:48px;height:48px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(12px);font-size:1rem;font-weight:600;color:#cbd5e1;cursor:pointer;transition:all .25s;box-shadow:0 4px 12px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.05)}
+        .rbtn:hover{transform:scale(1.1);background:rgba(255,255,255,.08);box-shadow:0 8px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);color:#f8fafc;border-color:rgba(255,255,255,.15)}
+        .rlabs{width:100%;display:flex;justify-content:space-between;font-size:.7rem;color:#64748b;font-weight:500}
+        .wpills{display:flex;flex-direction:column;gap:.45rem}
+        .plbtn{display:flex;align-items:center;gap:.75rem;padding:.8rem 1.1rem;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(12px);font-size:.84rem;color:#e2e8f0;font-weight:500;cursor:pointer;transition:all .25s;text-align:left;width:100%;box-shadow:0 8px 24px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.05)}
+        .plbtn:hover{border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.06);box-shadow:0 12px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);transform:translateY(-2px)}
+        .plbtn-icon{font-size:1.15rem;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);flex-shrink:0}
+        .plbtn-body{flex:1;min-width:0;display:flex;flex-direction:column}
+        .plbtn-lbl{font-size:.87rem;font-weight:600;color:#f8fafc;line-height:1.25;letter-spacing:.01em}
+        .plbtn-desc{font-size:.72rem;color:#94a3b8;margin-top:.1rem}
 
-        .wdp{padding:1.25rem;border-radius:18px;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.4);backdrop-filter:blur(16px)}
-        .dph{display:flex;align-items:center;gap:.65rem;margin-bottom:.75rem;font-size:.88rem;font-weight:600;color:#1a3a50}
-        .dpspin{width:16px;height:16px;border:2px solid rgba(68,152,202,.2);border-top-color:#4498ca;border-radius:50%;animation:sn .8s linear infinite;flex-shrink:0}
+        .wdp{padding:1.25rem;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(24px);box-shadow:0 12px 40px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.05)}
+        .dph{display:flex;align-items:center;gap:.65rem;margin-bottom:.75rem;font-size:.88rem;font-weight:600;color:#f8fafc;letter-spacing:.01em}
+        .dpspin{width:16px;height:16px;border:2px solid rgba(255,255,255,.1);border-top-color:#fff;border-radius:50%;animation:sn .8s linear infinite;flex-shrink:0}
         @keyframes sn{to{transform:rotate(360deg)}}
         .dpsrc{display:flex;gap:.4rem;margin-bottom:.85rem}
-        .dps{padding:.22rem .6rem;border-radius:16px;font-size:.7rem;font-weight:600;background:rgba(68,152,202,.08);color:#4498ca;border:1px solid rgba(68,152,202,.12)}
+        .dps{padding:.22rem .6rem;border-radius:16px;font-size:.7rem;font-weight:600;background:rgba(255,255,255,.05);color:#cbd5e1;border:1px solid rgba(255,255,255,.1)}
         .dpits{display:flex;flex-direction:column;gap:.45rem}
-        .dpi{display:flex;align-items:center;gap:.6rem;padding:.5rem .65rem;border-radius:10px;background:rgba(255,255,255,.3);border:1px solid rgba(255,255,255,.2);transition:all .5s;opacity:.4}
-        .dpi.ld{opacity:1;background:rgba(255,255,255,.65);border-color:rgba(255,255,255,.5)}
-        .dpii{font-size:.95rem}.dpil{flex:1;font-size:.8rem;color:#5a8aa8;font-weight:500}.dpi.ld .dpil{color:#1a3a50}
-        .dpib{flex:0 0 72px;height:2px;background:rgba(68,152,202,.08);border-radius:2px;overflow:hidden}
-        .dpif{height:100%;width:0;background:linear-gradient(90deg,rgba(68,152,202,.5),#4498ca);border-radius:2px;animation:lb 1.5s ease forwards}
-        .dpif.dn{width:100%!important;background:linear-gradient(90deg,#81C784,#43A047)}
+        .dpi{display:flex;align-items:center;gap:.6rem;padding:.5rem .65rem;border-radius:12px;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.04);transition:all .5s;opacity:.45}
+        .dpi.ld{opacity:1;background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.08);box-shadow:0 4px 12px rgba(0,0,0,.1)}
+        .dpii{font-size:.95rem}.dpil{flex:1;font-size:.8rem;color:#94a3b8;font-weight:500}.dpi.ld .dpil{color:#e2e8f0}
+        .dpib{flex:0 0 72px;height:2px;background:rgba(255,255,255,.05);border-radius:2px;overflow:hidden}
+        .dpif{height:100%;width:0;background:linear-gradient(90deg,rgba(255,255,255,.4),#fff);border-radius:2px;animation:lb 1.5s ease forwards}
+        .dpif.dn{width:100%!important;background:linear-gradient(90deg,rgba(80,200,120,.6),#50c878)}
         @keyframes lb{0%{width:0}50%{width:70%}100%{width:95%}}
 
-        .wdr{padding:1.4rem;border-radius:20px;background:rgba(255,255,255,.55);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.65);box-shadow:0 4px 20px rgba(0,40,80,.05)}
-        .drh{margin-bottom:1rem}.drt{display:block;font-size:.92rem;font-weight:700;color:#1a3a50;margin-bottom:.2rem}.drs{font-size:.72rem;color:#7a9ab0}
+        .wdr{padding:1.4rem;border-radius:20px;background:rgba(255,255,255,.03);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 40px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.05)}
+        .drh{margin-bottom:1rem}.drt{display:block;font-size:.92rem;font-weight:600;color:#f8fafc;margin-bottom:.2rem;letter-spacing:.01em}.drs{font-size:.72rem;color:#94a3b8}
         .drg{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
-        .drc{padding:.85rem;border-radius:14px;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.55);backdrop-filter:blur(6px);animation:ci .5s cubic-bezier(.175,.885,.32,1.275) both}
+        .drc{padding:.85rem;border-radius:14px;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.04);backdrop-filter:blur(6px);animation:ci .5s cubic-bezier(.175,.885,.32,1.275) both}
         @keyframes ci{from{opacity:0;transform:scale(.96) translateY(4px)}to{opacity:1;transform:scale(1) translateY(0)}}
-        .drct{display:flex;align-items:center;gap:.4rem;margin-bottom:.3rem}.drcl{font-size:.7rem;color:#7a9ab0;font-weight:700;text-transform:uppercase;letter-spacing:.05em}
-        .drcv{font-size:1.35rem;font-weight:800;color:#1a3a50;line-height:1.1;letter-spacing:-.02em}.drcu{font-size:.7rem;color:#93b3c8;margin-bottom:.4rem}
-        .drbar{height:3px;background:rgba(68,152,202,.08);border-radius:2px;overflow:hidden;margin-bottom:.3rem}
-        .drfl{height:100%;border-radius:2px;transition:width 1s cubic-bezier(.4,0,.2,1)}
-        .drfl.down{background:rgba(200,100,80,.5)}.drfl.up{background:rgba(180,150,60,.5)}.drfl.stable{background:rgba(80,160,100,.5)}
-        .drsub{font-size:.7rem;font-weight:600}.drsub.down{color:#b06050}.drsub.up{color:#9a8040}.drsub.stable{color:#4a9060}
+        .drct{display:flex;align-items:center;gap:.35rem;margin-bottom:.2rem}
+        .drc-icon{font-size:.85rem;line-height:1}
+        .drcl{font-size:.68rem;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+        .drcv{font-size:1.25rem;font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.02em}
+        .drcu{font-size:.66rem;color:#64748b;margin-bottom:.35rem}
+        .dr-spark{display:block;margin:.35rem 0;border-radius:4px;overflow:visible}
+        .drsub{font-size:.68rem;font-weight:500;margin-top:.3rem}
+        .drsub.down{color:rgba(240,120,100,.9)}.drsub.up{color:rgba(240,160,80,.9)}.drsub.stable{color:rgba(100,220,140,.9)}
 
-        .wap{padding:1.4rem;border-radius:20px;background:rgba(255,255,255,.55);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,.65);box-shadow:0 4px 20px rgba(0,40,80,.05)}
-        .apb{display:inline-block;padding:.25rem .65rem;border-radius:16px;background:rgba(68,152,202,.08);color:#4498ca;font-size:.67rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.65rem;border:1px solid rgba(68,152,202,.15)}
-        .apt{font-size:1rem;color:#1a3a50;margin:0 0 .5rem;font-weight:700;line-height:1.35}
-        .apw{font-size:.86rem;color:#5a8aa8;line-height:1.6;margin:0 0 .9rem}
-        .apm{display:flex;gap:.6rem;margin-bottom:.8rem}
-        .apmi{flex:1;padding:.6rem;background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.55);border-radius:12px}
-        .apmi span{display:block;font-size:.67rem;color:#7a9ab0;margin-bottom:.15rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em}.apmi strong{display:block;font-size:.8rem;color:#1a3a50;margin-top:.15rem;font-weight:700}
-        .apmbar{height:3px;background:rgba(68,152,202,.08);border-radius:2px;overflow:hidden;margin:.3rem 0 0}.apmf{height:100%;border-radius:2px}.apmf.lo{background:rgba(80,160,100,.6)}.apmf.hi{background:rgba(68,152,202,.5)}
-        .aps{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.9rem}
-        .apsi{display:flex;align-items:center;gap:.6rem;font-size:.83rem;color:#5a8aa8;padding:.45rem .7rem;background:rgba(255,255,255,.4);border-radius:10px;border:1px solid rgba(255,255,255,.5)}
-        .apcb{width:100%;padding:.8rem;border:none;border-radius:14px;background:linear-gradient(135deg,#4498ca,#2c6a8c);color:#fff;font-size:.9rem;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(68,152,202,.25);transition:all .3s}
-        .apcb:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(68,152,202,.35)}
+        .wap{padding:1.4rem;border-radius:20px;background:rgba(255,255,255,.03);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 40px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.05);display:flex;flex-direction:column;gap:.85rem}
+        .apb{display:inline-block;padding:.25rem .65rem;border-radius:16px;background:rgba(255,255,255,.06);color:#cbd5e1;font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;border:1px solid rgba(255,255,255,.1)}
+        .ap-rec{display:flex;gap:.85rem;align-items:flex-start;padding:.9rem 1rem;border-radius:14px;background:rgba(0,0,0,.15);border:1px solid rgba(255,255,255,.04)}
+        .ap-rec-extra{border-color:rgba(255,255,255,.1);background:rgba(255,255,255,.03)}
+        .ap-rec-num{font-size:.75rem;font-weight:700;color:#cbd5e1;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.2rem .5rem;flex-shrink:0;margin-top:.15rem;font-variant-numeric:tabular-nums}
+        .ap-rec-body{flex:1;min-width:0}
+        .apt{font-size:.92rem;color:#f8fafc;margin:0 0 .4rem;font-weight:600;line-height:1.35;letter-spacing:.01em}
+        .apw{font-size:.82rem;color:#94a3b8;line-height:1.55;margin:0 0 .65rem}
+        .apm{display:flex;gap:.6rem}
+        .apmi{flex:1;padding:.45rem .6rem;background:rgba(255,255,255,.03);border-radius:10px;border:1px solid rgba(255,255,255,.06);font-size:.72rem;color:#cbd5e1}
+        .apmbar{height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden;margin:.3rem 0 0}.apmf{height:100%;border-radius:2px}.apmf.lo{background:rgba(80,200,120,.6)}.apmf.hi{background:rgba(255,255,255,.4)}
+        .ap-more-btn{background:transparent;border:1px dashed rgba(255,255,255,.15);border-radius:12px;color:#94a3b8;font-size:.82rem;font-weight:500;padding:.65rem 1rem;cursor:pointer;transition:all .25s;text-align:center;width:100%}
+        .ap-more-btn:hover{border-color:rgba(255,255,255,.3);color:#f8fafc;background:rgba(255,255,255,.04)}
+        .apcb{width:100%;padding:.85rem;border:none;border-radius:14px;background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.2);color:#fff;font-size:.9rem;font-weight:600;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1);transition:all .3s}
+        .apcb:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.15);background:linear-gradient(135deg,rgba(255,255,255,.2),rgba(255,255,255,.08))}
 
-        .wcm{display:flex;flex-direction:column;gap:.45rem}
-        .cmb{padding:.8rem 1.1rem;border-radius:14px;border:1px solid rgba(255,255,255,.5);background:rgba(255,255,255,.5);backdrop-filter:blur(12px);font-size:.9rem;font-weight:500;color:#1a3a50;cursor:pointer;transition:all .25s;text-align:left}
-        .cmb:hover{background:rgba(255,255,255,.82);transform:translateX(3px);box-shadow:0 4px 14px rgba(68,152,202,.08);border-color:rgba(68,152,202,.2)}
-        .cmb.ac:hover{border-color:rgba(80,160,100,.35);background:rgba(240,250,244,.7)}.cmb.ad:hover{border-color:rgba(180,150,60,.35);background:rgba(250,248,235,.7)}
+        .wcm{display:flex;flex-direction:column;gap:.55rem;padding:.2rem 0}
+        .wcm-q{font-size:.88rem;color:#f8fafc;font-weight:500;margin:0 0 .25rem;line-height:1.5}
+        .wcm-btns{display:flex;flex-direction:column;gap:.4rem}
+        .cmb{display:flex;align-items:center;gap:.65rem;padding:.85rem 1.1rem;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(12px);font-size:.9rem;font-weight:500;color:#cbd5e1;cursor:pointer;transition:all .25s;text-align:left;box-shadow:0 8px 24px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.05)}
+        .cmb:hover{background:rgba(255,255,255,.08);transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.1);border-color:rgba(255,255,255,.15);color:#f8fafc}
+        .cmb.ac:hover{border-color:rgba(100,220,140,.4);background:rgba(100,220,140,.08);color:rgba(180,250,200,.9)}
+        .cmb.ad:hover{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.1)}
+        .cmb.de:hover{border-color:rgba(255,100,100,.3);background:rgba(255,80,80,.07);color:rgba(255,160,160,.85)}
+        .cmb-icon{font-size:1rem;width:28px;height:28px;display:flex;align-items:center;justify-content:center;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);flex-shrink:0}
 
-        .wsy{padding:1.25rem;border-radius:18px;border:1px solid rgba(255,255,255,.6);background:rgba(255,255,255,.4);backdrop-filter:blur(16px)}
-        .syh{display:flex;align-items:center;gap:.65rem;margin-bottom:.8rem;font-size:.9rem;font-weight:600;color:#1a3a50}
-        .syok{font-size:1rem}
+        .wsy{padding:1.25rem;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(24px);box-shadow:0 12px 40px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.05)}
+        .syh{display:flex;align-items:center;gap:.65rem;margin-bottom:.8rem;font-size:.9rem;font-weight:600;color:#f8fafc;letter-spacing:.01em}
+        .syok{font-size:1rem;color:#50c878}
         .syis{display:flex;flex-direction:column;gap:.4rem}
-        .syi{display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;border-radius:12px;background:rgba(255,255,255,.3);transition:all .6s cubic-bezier(.4,0,.2,1);opacity:.4;transform:translateX(-8px);border:1px solid rgba(255,255,255,.2)}
-        .syi.done{opacity:1;background:rgba(255,255,255,.65);transform:translateX(0)}
-        .syck{font-size:.82rem;flex-shrink:0}.syil{font-size:.82rem;color:#2c5a7c;font-weight:500}
-        .syft{margin-top:.75rem;padding:.65rem .85rem;border-radius:10px;background:rgba(68,152,202,.04);border:1px solid rgba(68,152,202,.1);font-size:.82rem;color:#2c6a8c;font-weight:600}
+        .syi{display:flex;align-items:center;gap:.5rem;padding:.55rem .75rem;border-radius:12px;background:rgba(0,0,0,.15);transition:all .6s cubic-bezier(.4,0,.2,1);opacity:.35;transform:translateX(-8px);border:1px solid rgba(255,255,255,.04)}
+        .syi.done{opacity:1;background:rgba(255,255,255,.04);transform:translateX(0);border-color:rgba(255,255,255,.08)}
+        .syck{font-size:.82rem;flex-shrink:0;color:#50c878}.syil{font-size:.82rem;color:#cbd5e1;font-weight:500}
+        .syft{margin-top:.75rem;padding:.65rem .85rem;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-size:.82rem;color:#e2e8f0;font-weight:500}
 
         .wclo{margin-top:.25rem}
-        .cloi{padding:.75rem 1rem;border-radius:14px;background:rgba(255,255,255,.45);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.55);font-size:.85rem;color:#5a8aa8;margin-bottom:.65rem}
-        .cloi strong{color:#1a3a50;font-weight:700}
-        .clob{padding:.7rem 1.5rem;border-radius:14px;border:none;background:linear-gradient(135deg,#4498ca,#2c6a8c);color:#fff;font-size:.9rem;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(68,152,202,.25);transition:all .25s}
-        .clob:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(68,152,202,.35)}
+        .cloi{padding:.75rem 1rem;border-radius:14px;background:rgba(255,255,255,.04);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);font-size:.85rem;color:#cbd5e1;margin-bottom:.65rem}
+        .cloi strong{color:#f8fafc;font-weight:600}
+        .clob{padding:.7rem 1.5rem;border-radius:14px;border:1px solid rgba(255,255,255,.15);background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.03));color:#fff;font-size:.9rem;font-weight:600;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1);transition:all .25s}
+        .clob:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.15);background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.06))}
 
         .qrs{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:.5rem;padding:0.75rem 1.5rem;background:transparent;border:none}
-        .qrb{padding:.5rem 1.1rem;border-radius:24px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.05);backdrop-filter:blur(8px);font-size:.82rem;color:rgba(220,235,255,.8);font-weight:500;cursor:pointer;transition:all .3s ease;box-shadow:0 2px 8px rgba(0,0,0,0.1)}
-        .qrb:hover{border-color:rgba(129,140,248,.4);background:rgba(129,140,248,.1);color:#fff;transform:translateY(-2px);box-shadow:0 4px 12px rgba(99,102,241,.2)}
+        .qrb{padding:.5rem 1.1rem;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);backdrop-filter:blur(12px);font-size:.82rem;color:#cbd5e1;font-weight:500;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 12px rgba(0,0,0,.1),inset 0 1px 0 rgba(255,255,255,.05)}
+        .qrb:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#f8fafc;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1)}
 
-        .iarea{position:relative;z-index:2;padding:.85rem 1.5rem 1.2rem;border-top:1px solid rgba(255,255,255,.05);background:rgba(10,20,35,.6);backdrop-filter:blur(24px)}
+        .iarea{position:relative;z-index:2;padding:.85rem 1.5rem 1.2rem;border-top:1px solid rgba(255,255,255,.05);background:rgba(6,13,24,.75);backdrop-filter:blur(24px)}
         .tirow{display:flex;gap:.5rem}
-        .tinp{flex:1;padding:.8rem 1.1rem;border-radius:14px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);font-size:.93rem;color:rgba(220,240,255,.9);outline:none}
-        .tinp::placeholder{color:rgba(150,180,210,.4)}
-        .tinp:focus{border-color:rgba(100,160,255,.3);background:rgba(255,255,255,.09)}
-        .sbtn{width:44px;height:44px;border-radius:14px;border:none;background:linear-gradient(135deg,#4498ca,#2c6a8c);color:#fff;font-size:1.2rem;font-weight:700;cursor:pointer}
+        .tinp{flex:1;padding:.8rem 1.1rem;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(0,0,0,.2);font-size:.93rem;color:#f8fafc;outline:none;box-shadow:inset 0 2px 8px rgba(0,0,0,.2)}
+        .tinp::placeholder{color:#64748b}
+        .tinp:focus{border-color:rgba(255,255,255,.15);background:rgba(0,0,0,.3)}
+        .sbtn{width:44px;height:44px;border-radius:14px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.08);color:#f8fafc;font-size:1.2rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.05)}
+        .sbtn:hover{background:rgba(255,255,255,.15);border-color:rgba(255,255,255,.25);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1)}
         .airow{display:flex;flex-direction:column;align-items:center;gap:.6rem;padding:.5rem 0}
         .avis{display:flex;align-items:center;gap:3px;height:28px}
         .vbar{width:3px;height:6px;background:rgba(68,152,202,.2);border-radius:2px;transition:all .15s}
@@ -1205,34 +1242,31 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         }
         
         /* =============== ULTIMATE PREMIUM AESTHETIC (CALMING & ELEGANT) =============== */
+        /* ============================================= */
         .cr {
-          background: #FDF8F3;
-          color: #3D2C2E;
+          background: linear-gradient(160deg,#091221 0%,#0f1d33 40%,#080e1a 70%,#0a1424 100%);
+          color: #f1f5f9;
           font-family: 'DM Sans', Georgia, 'Segoe UI', sans-serif;
         }
-        .cr-bg {
-          opacity: 0.9;
-          background: linear-gradient(140deg, #FDF8F3 0%, #FFFFFF 100%);
-        }
+        .cr-bg { opacity: 1; background: none; }
         .cr-g {
-          background: radial-gradient(circle at 10% 30%, rgba(201, 169, 110, 0.06) 0%, transparent 45%),
-                      radial-gradient(circle at 90% 70%, rgba(212, 160, 160, 0.06) 0%, transparent 45%),
-                      radial-gradient(circle at 50% 50%, rgba(232, 213, 196, 0.05) 0%, transparent 50%);
+          background: radial-gradient(circle at 10% 30%, rgba(255,255,255,0.03) 0%, transparent 45%),
+                      radial-gradient(circle at 90% 70%, rgba(255,255,255,0.02) 0%, transparent 45%);
         }
         
         /* PREP SCREEN - ORGANIC FLUID MESH */
         .prep-screen {
           position: fixed; inset: 0; z-index: 2000;
           display: flex; align-items: center; justify-content: center;
-          background: #0B1120;
+          background: #080e1a;
           overflow: hidden;
           color: #f8fafc;
         }
-        .p-aurora-bg { position: absolute; inset: 0; filter: blur(90px); opacity: 0.6; }
+        .p-aurora-bg { position: absolute; inset: 0; filter: blur(80px); opacity: 0.4; }
         .p-orb { position: absolute; border-radius: 50%; animation: fluidOrb 12s ease-in-out infinite alternate; mix-blend-mode: screen; }
-        .p-orb-1 { width: 60vw; height: 60vw; background: #C9A96E; top: -10%; left: -10%; }
-        .p-orb-2 { width: 50vw; height: 50vw; background: #D4A0A0; bottom: -20%; right: -10%; animation-delay: -3s; }
-        .p-orb-3 { width: 55vw; height: 55vw; background: #E8D5C4; top: 30%; left: 30%; animation-delay: -6s; }
+        .p-orb-1 { width: 60vw; height: 60vw; background: #102a4a; top: -10%; left: -10%; }
+        .p-orb-2 { width: 50vw; height: 50vw; background: #0c1f38; bottom: -20%; right: -10%; animation-delay: -3s; }
+        .p-orb-3 { width: 55vw; height: 55vw; background: #14345c; top: 30%; left: 30%; animation-delay: -6s; }
         @keyframes fluidOrb { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(10vw, -10vh) scale(1.1); } }
         
         .prep-content {
@@ -1240,15 +1274,15 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
           display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
         .pc-lens {
-          width: 130px; height: 130px; border-radius: 50%; margin-bottom: 2.5rem;
-          background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+          width: 300px; height: 300px; border-radius: 50%; margin-bottom: 2.5rem;
+          background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255,255,255,0.08);
+          backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
           display: flex; align-items: center; justify-content: center;
-          box-shadow: 0 0 40px rgba(201, 169, 110, 0.3);
+          box-shadow: 0 0 80px rgba(255,255,255,0.05), 0 24px 70px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.05);
           animation: lensFloat 4s ease-in-out infinite;
           overflow: hidden;
         }
-        .pc-avatar { width: 110px; height: 110px; border-radius: 50%; opacity: 0.9; object-fit: cover; }
+        .pc-avatar { width: 300px; height: 300px; border-radius: 50%; opacity: 0.95; object-fit: cover; }
         @keyframes lensFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
         
         .pc-title { font-size: 2.2rem; font-weight: 200; letter-spacing: -0.02em; margin-bottom: 3.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
@@ -1261,14 +1295,14 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
 
         /* WELCOME BENTO LAYOUT (SPACE OPTIMIZED & EXPERT UX) */
         .w-bento {
-          display: grid; grid-template-columns: 1.2fr 1fr; gap: 2rem;
+          display: grid; grid-template-columns: 1fr 1.1fr; gap: 2rem;
           max-width: 1200px; margin: 0 auto; height: auto; min-height: calc(100vh - 120px);
-          padding: 2rem; color: #0f172a; animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+          padding: 2rem; color: #e2eaf4; animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
         .wb-main {
-          background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-          border-radius: 32px; border: 1px solid rgba(255, 255, 255, 0.5);
-          box-shadow: 0 24px 80px rgba(201, 169, 110, 0.12);
+          background: rgba(255,255,255,0.06); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
+          border-radius: 32px; border: 1px solid rgba(255,255,255,0.1);
+          box-shadow: 0 24px 80px rgba(0,20,60,0.4);
           display: flex; flex-direction: column; align-items: center; justify-content: center;
           position: relative; overflow: hidden; padding: 3rem; text-align: center;
         }
@@ -1277,8 +1311,8 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .wav-glow-1 { position: absolute; inset: -30%; border-radius: 50%; background: conic-gradient(from 0deg, #C9A96E, #D4A0A0, #E8D5C4, #C9A96E); filter: blur(30px); opacity: 0.25; animation: spin 20s linear infinite; }
         .wav-glow-2 { position: absolute; inset: -50%; border-radius: 50%; background: radial-gradient(circle, rgba(201, 169, 110, 0.15) 0%, transparent 60%); animation: breathGlowCalm 8s alternate infinite; }
         
-        .wb-title { font-size: 2.6rem; font-weight: 300; letter-spacing: -0.03em; margin: 0 0 0.5rem; color: #0f172a; line-height: 1.1; }
-        .wb-sub { font-size: 1.15rem; color: #64748b; font-weight: 400; margin-bottom: 2.5rem; }
+        .wb-title { font-size: 2.6rem; font-weight: 300; letter-spacing: -0.03em; margin: 0 0 0.5rem; color: #e8f0fa; line-height: 1.1; }
+        .wb-sub { font-size: 1.15rem; color: rgba(180,210,240,0.7); font-weight: 400; margin-bottom: 2.5rem; }
         
         .wb-actions { display: flex; flex-direction: column; gap: 1rem; width: 100%; max-width: 320px; margin: 0 auto; }
         .wb-start {
@@ -1291,8 +1325,8 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .wb-start:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 32px rgba(201, 169, 110, 0.4); }
         .wb-start-glow { position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); transform: skewX(-20deg); animation: buttonShine 5s infinite; }
         
-        .wb-sidebar { display: flex; flex-direction: column; gap: 1rem; }
-        .wb-sidebar-tabs { display: flex; gap: 0.5rem; background: rgba(255, 255, 255, 0.4); padding: 0.5rem; border-radius: 20px; box-shadow: 0 4px 20px rgba(129, 140, 248, 0.05); }
+        .wb-sidebar { display: flex; flex-direction: column; gap: 0.85rem; position: relative; overflow: hidden; min-width: 0; }
+        .wb-sidebar-tabs { display: none; }
         .wb-st-btn {
           flex: 1; padding: 0.75rem 0; border-radius: 14px; border: none; background: transparent;
           color: #64748b; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -1312,9 +1346,9 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .wb-tab.act { background: #fff; border-color: rgba(201, 169, 110, 0.35); color: #8B7355; box-shadow: 0 4px 12px rgba(201, 169, 110, 0.08); }
         
         .wi-card {
-          background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-          border-radius: 24px; border: 1px solid rgba(255, 255, 255, 0.6);
-          box-shadow: 0 12px 40px rgba(201, 169, 110, 0.06); padding: 1.5rem; transition: transform 0.3s ease;
+          background: rgba(255,255,255,0.07); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+          border-radius: 24px; border: 1px solid rgba(255,255,255,0.1);
+          box-shadow: 0 12px 40px rgba(0,20,60,0.2); padding: 1.5rem; transition: transform 0.3s ease;
         }
         .wi-card:hover { transform: translateY(-3px); box-shadow: 0 16px 50px rgba(201, 169, 110, 0.1); }
         
@@ -1398,313 +1432,15 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         }
         .wijd-share-btn:hover { background: #FDF8F3; border-color: #C9A96E; color: #8B7355; }
 
-        /* =============== WARM SANCTUARY SESSION DESIGN =============== */
-        
-        .sess {
-          background: #FDF8F3;
-          font-family: 'DM Sans', Georgia, 'Segoe UI', sans-serif;
-        }
-        .s-bg {
-          background:
-            radial-gradient(ellipse at 20% 30%, rgba(253, 235, 211, 0.6) 0%, transparent 55%),
-            radial-gradient(ellipse at 80% 70%, rgba(212, 160, 160, 0.2) 0%, transparent 50%),
-            radial-gradient(ellipse at 50% 90%, rgba(201, 169, 110, 0.1) 0%, transparent 45%),
-            #FDF8F3 !important;
-          opacity: 1 !important;
-        }
-        .s-bg .p-aurora-bg { display: none; }
-
-        .stop {
-          background: rgba(253, 248, 243, 0.85) !important;
-          border-bottom: 1px solid rgba(201, 169, 110, 0.15) !important;
-          backdrop-filter: blur(20px) saturate(1.2);
-          -webkit-backdrop-filter: blur(20px) saturate(1.2);
-        }
-        .tinf strong { color: #3D2C2E !important; font-weight: 600; letter-spacing: -0.01em; }
-        .tst { color: #A0887A !important; font-weight: 400; }
-        .tav :global(img) { border-color: rgba(201, 169, 110, 0.3) !important; box-shadow: 0 4px 16px rgba(61, 44, 46, 0.08) !important; }
-        .sring { border-color: rgba(201, 169, 110, 0.5) !important; }
-        .s-center-cal { text-align: center; font-size: 0.82rem; color: #A0887A; }
-        .s-center-cal span span { font-weight: 600; color: #C9A96E; }
-        .stimer { background: rgba(201, 169, 110, 0.08) !important; border-color: rgba(201, 169, 110, 0.12) !important; color: #8B7355 !important; }
-        .ebtn { color: #C9A96E !important; border-color: rgba(201, 169, 110, 0.25) !important; background: transparent !important; font-weight: 500; }
-        .ebtn:hover { background: rgba(201, 169, 110, 0.08) !important; border-color: rgba(201, 169, 110, 0.5) !important; color: #A0887A !important; }
-        
-        .pbar { background: rgba(201, 169, 110, 0.08) !important; }
-        .pfill { background: linear-gradient(90deg, rgba(201, 169, 110, 0.5), rgba(212, 160, 160, 0.6)) !important; }
-
-        /* LEFT PANEL – Lisa presence */
-        .s-left {
-          border-right-color: rgba(201, 169, 110, 0.08) !important;
-          background: linear-gradient(180deg, rgba(253, 248, 243, 0.3) 0%, rgba(253, 235, 211, 0.15) 100%);
-        }
-        .s-fmt-tabs { background: rgba(201, 169, 110, 0.06) !important; border-color: rgba(201, 169, 110, 0.1) !important; }
-        .s-ftab { color: #A0887A !important; }
-        .s-ftab.act { background: rgba(253, 248, 243, 0.9) !important; color: #5C4033 !important; }
-        .s-lisa-glow { background: radial-gradient(circle, rgba(201, 169, 110, 0.2), rgba(212, 160, 160, 0.1), transparent 65%) !important; }
-        .s-wave { border-color: rgba(201, 169, 110, 0.2) !important; }
-        .s-lisa-name { color: #3D2C2E !important; font-weight: 500; letter-spacing: 0.02em; }
-        .s-lisa-status { color: rgba(160, 136, 122, 0.6) !important; }
-        .s-mbtn { border-color: rgba(201, 169, 110, 0.2) !important; background: rgba(253, 248, 243, 0.6) !important; }
-        .s-mbtn:hover { border-color: rgba(201, 169, 110, 0.5) !important; background: rgba(253, 235, 211, 0.4) !important; }
-        .s-mbtn.lis { border-color: rgba(160, 180, 140, 0.5) !important; background: rgba(220, 235, 210, 0.15) !important; }
-        .s-minn { color: #8B7355 !important; }
-        .s-mhint { color: rgba(160, 136, 122, 0.5) !important; }
-
-        /* CHAT – warm, breathing, intimate */
-        .chat {
-          background: transparent !important;
-          padding: 2rem 2rem !important;
-          gap: 1.4rem !important;
-          scrollbar-color: rgba(201, 169, 110, 0.15) transparent !important;
-        }
-        .chat::-webkit-scrollbar-thumb { background: rgba(201, 169, 110, 0.15) !important; }
-        
-        .crow { animation-duration: 0.5s !important; }
-        .cav { border-color: rgba(201, 169, 110, 0.2) !important; box-shadow: 0 3px 12px rgba(61, 44, 46, 0.06) !important; }
-        
-        .bub {
-          border-radius: 22px !important;
-          backdrop-filter: blur(12px) !important;
-        }
-        .bub.coach {
-          background: rgba(255, 255, 255, 0.85) !important;
-          border: 1px solid rgba(201, 169, 110, 0.12) !important;
-          border-bottom-left-radius: 6px !important;
-          box-shadow: 0 2px 16px rgba(61, 44, 46, 0.04), 0 1px 3px rgba(201, 169, 110, 0.06) !important;
-        }
-        .bub.coach p {
-          color: #3D2C2E !important;
-          font-size: 0.95rem !important;
-          line-height: 1.7 !important;
-          letter-spacing: 0.005em !important;
-        }
-        .bub.user {
-          background: linear-gradient(135deg, #E8D5C4, #D4A0A0) !important;
-          border: none !important;
-          border-bottom-right-radius: 6px !important;
-          box-shadow: 0 4px 18px rgba(212, 160, 160, 0.2) !important;
-        }
-        .bub.user p { color: #3D2C2E !important; font-weight: 500; }
-        
-        .tbub { background: rgba(255, 255, 255, 0.7) !important; border: 1px solid rgba(201, 169, 110, 0.1) !important; }
-        .tdots span { background: rgba(201, 169, 110, 0.3) !important; }
-        .tdots span:nth-child(2) { background: rgba(201, 169, 110, 0.5) !important; }
-        .tdots span:nth-child(3) { background: rgba(201, 169, 110, 0.7) !important; }
-
-        /* WIDGETS – warm glass cards */
-        .wcd {
-          background: rgba(255, 255, 255, 0.9) !important;
-          border: 1px solid rgba(201, 169, 110, 0.12) !important;
-          border-left: 3px solid rgba(201, 169, 110, 0.4) !important;
-          border-radius: 18px !important;
-          box-shadow: 0 2px 12px rgba(61, 44, 46, 0.03) !important;
-          transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        }
-        .wcd:hover {
-          background: #fff !important;
-          border-left-color: #C9A96E !important;
-          box-shadow: 0 8px 24px rgba(201, 169, 110, 0.1) !important;
-          transform: translateX(4px) !important;
-        }
-        .wcd strong { color: #3D2C2E !important; }
-        .wcd span { color: #A0887A !important; }
-
-        .rbtn {
-          border-color: rgba(201, 169, 110, 0.2) !important;
-          background: rgba(255, 255, 255, 0.85) !important;
-          color: #5C4033 !important;
-          box-shadow: 0 2px 8px rgba(61, 44, 46, 0.03) !important;
-        }
-        .rbtn:hover {
-          background: rgba(253, 235, 211, 0.5) !important;
-          border-color: rgba(201, 169, 110, 0.4) !important;
-          box-shadow: 0 4px 14px rgba(201, 169, 110, 0.12) !important;
-          transform: scale(1.08) !important;
-        }
-        .rbtn.en:hover { border-color: rgba(201, 169, 110, 0.5) !important; background: rgba(253, 235, 211, 0.6) !important; }
-        .rbtn.st:hover { border-color: rgba(180, 160, 140, 0.4) !important; background: rgba(240, 230, 220, 0.4) !important; }
-        .rlabs { color: #A0887A !important; }
-
-        .plbtn {
-          border-color: rgba(201, 169, 110, 0.15) !important;
-          background: rgba(255, 255, 255, 0.85) !important;
-          color: #5C4033 !important;
-          font-weight: 500 !important;
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        }
-        .plbtn:hover {
-          border-color: rgba(201, 169, 110, 0.35) !important;
-          background: #fff !important;
-          box-shadow: 0 4px 16px rgba(201, 169, 110, 0.1) !important;
-          transform: translateY(-2px) !important;
-          color: #3D2C2E !important;
-        }
-
-        /* DATA WIDGETS – warm tones */
-        .wdp {
-          border-color: rgba(201, 169, 110, 0.15) !important;
-          background: rgba(255, 255, 255, 0.8) !important;
-        }
-        .dph { color: #3D2C2E !important; }
-        .dpspin { border-color: rgba(201, 169, 110, 0.2) !important; border-top-color: #C9A96E !important; }
-        .dps { background: rgba(201, 169, 110, 0.08) !important; color: #8B7355 !important; border-color: rgba(201, 169, 110, 0.15) !important; }
-        .dpi { background: rgba(255, 255, 255, 0.4) !important; border-color: rgba(201, 169, 110, 0.08) !important; }
-        .dpi.ld { background: rgba(255, 255, 255, 0.75) !important; border-color: rgba(201, 169, 110, 0.15) !important; }
-        .dpi.ld .dpil { color: #3D2C2E !important; }
-        .dpif { background: linear-gradient(90deg, rgba(201, 169, 110, 0.4), #C9A96E) !important; }
-
-        .wdr {
-          background: rgba(255, 255, 255, 0.8) !important;
-          border-color: rgba(201, 169, 110, 0.15) !important;
-          box-shadow: 0 4px 24px rgba(61, 44, 46, 0.04) !important;
-        }
-        .drt { color: #3D2C2E !important; }
-        .drs { color: #A0887A !important; }
-        .drc {
-          background: rgba(255, 255, 255, 0.6) !important;
-          border-color: rgba(201, 169, 110, 0.1) !important;
-        }
-        .drcl { color: #A0887A !important; }
-        .drcv { color: #3D2C2E !important; }
-        .drcu { color: #B5A08E !important; }
-        .drbar { background: rgba(201, 169, 110, 0.08) !important; }
-
-        /* ACTION PLAN – warm & inviting */
-        .wap {
-          background: rgba(255, 255, 255, 0.8) !important;
-          border-color: rgba(201, 169, 110, 0.15) !important;
-          box-shadow: 0 4px 24px rgba(61, 44, 46, 0.04) !important;
-        }
-        .apb { background: rgba(201, 169, 110, 0.1) !important; color: #8B7355 !important; border-color: rgba(201, 169, 110, 0.2) !important; }
-        .apt { color: #3D2C2E !important; }
-        .apw { color: #6B5A4E !important; }
-        .apmi { background: rgba(253, 248, 243, 0.6) !important; border-color: rgba(201, 169, 110, 0.1) !important; }
-        .apmi span { color: #A0887A !important; }
-        .apmi strong { color: #3D2C2E !important; }
-        .apmbar { background: rgba(201, 169, 110, 0.08) !important; }
-        .apmf.lo { background: rgba(160, 180, 140, 0.6) !important; }
-        .apmf.hi { background: rgba(201, 169, 110, 0.5) !important; }
-        .apsi { background: rgba(253, 248, 243, 0.5) !important; border-color: rgba(201, 169, 110, 0.1) !important; color: #5C4033 !important; }
-        .apcb {
-          background: linear-gradient(135deg, #C9A96E, #B5936B) !important;
-          box-shadow: 0 6px 20px rgba(201, 169, 110, 0.25) !important;
-          border-radius: 16px !important;
-          letter-spacing: 0.02em;
-        }
-        .apcb:hover { box-shadow: 0 10px 28px rgba(201, 169, 110, 0.35) !important; transform: translateY(-2px) !important; }
-
-        /* COMMITMENT */
-        .cmb {
-          border-color: rgba(201, 169, 110, 0.15) !important;
-          background: rgba(255, 255, 255, 0.85) !important;
-          color: #3D2C2E !important;
-          border-radius: 16px !important;
-        }
-        .cmb:hover {
-          background: #fff !important;
-          border-color: rgba(201, 169, 110, 0.3) !important;
-          box-shadow: 0 4px 16px rgba(201, 169, 110, 0.08) !important;
-          transform: translateX(4px) !important;
-        }
-        .cmb.ac:hover { border-color: rgba(160, 180, 140, 0.5) !important; background: rgba(235, 245, 230, 0.6) !important; }
-        .cmb.ad:hover { border-color: rgba(201, 169, 110, 0.4) !important; background: rgba(253, 248, 243, 0.8) !important; }
-
-        /* SYNC */
-        .wsy {
-          border-color: rgba(201, 169, 110, 0.15) !important;
-          background: rgba(255, 255, 255, 0.75) !important;
-        }
-        .syh { color: #3D2C2E !important; }
-        .syi { background: rgba(253, 248, 243, 0.4) !important; border-color: rgba(201, 169, 110, 0.08) !important; }
-        .syi.done { background: rgba(255, 255, 255, 0.7) !important; }
-        .syil { color: #5C4033 !important; }
-        .syft { background: rgba(201, 169, 110, 0.04) !important; border-color: rgba(201, 169, 110, 0.12) !important; color: #6B5A4E !important; }
-
-        /* CLOSING */
-        .cloi {
-          background: rgba(255, 255, 255, 0.7) !important;
-          border-color: rgba(201, 169, 110, 0.12) !important;
-          color: #6B5A4E !important;
-        }
-        .cloi strong { color: #3D2C2E !important; }
-        .clob {
-          background: linear-gradient(135deg, #C9A96E, #B5936B) !important;
-          box-shadow: 0 4px 16px rgba(201, 169, 110, 0.25) !important;
-        }
-        .clob:hover { box-shadow: 0 8px 24px rgba(201, 169, 110, 0.35) !important; }
-
-        /* QUICK REPLIES – soft warm pills */
-        .qrs { background: transparent !important; border: none !important; padding: 0.75rem 2rem !important; }
-        .qrb {
-          background: rgba(255, 255, 255, 0.8) !important;
-          border: 1px solid rgba(201, 169, 110, 0.15) !important;
-          color: #5C4033 !important;
-          border-radius: 28px !important;
-          padding: 0.6rem 1.2rem !important;
-          font-size: 0.87rem !important;
-          font-weight: 500 !important;
-          box-shadow: 0 2px 10px rgba(61, 44, 46, 0.03) !important;
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-        }
-        .qrb:hover {
-          background: #fff !important;
-          border-color: rgba(201, 169, 110, 0.4) !important;
-          color: #3D2C2E !important;
-          transform: translateY(-2px) !important;
-          box-shadow: 0 6px 18px rgba(201, 169, 110, 0.1) !important;
-        }
-
-        /* INPUT AREA – warm & inviting */
-        .iarea {
-          background: rgba(253, 248, 243, 0.7) !important;
-          backdrop-filter: blur(24px) saturate(1.2) !important;
-          -webkit-backdrop-filter: blur(24px) saturate(1.2) !important;
-          border-top: 1px solid rgba(201, 169, 110, 0.1) !important;
-          padding: 1rem 2rem 1.25rem !important;
-        }
-        .tirow { display: flex; gap: 0.85rem; align-items: center; }
-        .tinp {
-          background: rgba(255, 255, 255, 0.9) !important;
-          border: 1px solid rgba(201, 169, 110, 0.15) !important;
-          color: #3D2C2E !important;
-          border-radius: 28px !important;
-          padding: 0.9rem 1.5rem !important;
-          font-size: 0.95rem !important;
-          box-shadow: 0 2px 12px rgba(61, 44, 46, 0.02) !important;
-          transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
-          flex: 1;
-        }
-        .tinp::placeholder { color: rgba(160, 136, 122, 0.5) !important; }
-        .tinp:focus {
-          background: #fff !important;
-          border-color: rgba(201, 169, 110, 0.4) !important;
-          box-shadow: 0 4px 20px rgba(201, 169, 110, 0.08), 0 0 0 1px rgba(201, 169, 110, 0.05) !important;
-          outline: none !important;
-        }
-        .sbtn {
-          width: 48px; height: 48px; border-radius: 50%; border: none;
-          background: linear-gradient(135deg, #C9A96E, #B5936B) !important;
-          color: white !important;
-          display: flex; align-items: center; justify-content: center; font-size: 1.4rem;
-          cursor: pointer;
-          box-shadow: 0 4px 16px rgba(201, 169, 110, 0.3) !important;
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-          flex-shrink: 0;
-        }
-        .sbtn:hover { transform: scale(1.08) translateY(-2px); box-shadow: 0 8px 24px rgba(201, 169, 110, 0.4) !important; }
-        .sbtn:active { transform: scale(0.92); }
-        
-        .vihin p { color: #A0887A !important; }
-
         /* MEDIA QUERIES FOR ROBUST LAYOUT */
         @media (max-width: 992px) {
           .w-bento { grid-template-columns: 1fr; height: auto; padding: 1rem; }
           .wb-main { padding: 2rem 1.5rem; }
+          .wb-hero-lg { width: min(200px,55vw); height: min(200px,55vw); }
           .s-body { flex-direction: column !important; }
-          .s-left { width: 100% !important; padding: 1rem !important; border-right: none !important; border-bottom: 1px solid rgba(201, 169, 110, 0.08) !important; }
-          .s-lisa-scene { width: 200px !important; height: 200px !important; }
-          .s-lisa-wrap { width: 160px !important; height: 160px !important; }
+          .s-left { width: 100% !important; padding: 1rem !important; border-right: none !important; border-bottom: 1px solid rgba(68,152,202,0.08) !important; }
+          .s-lisa-scene { width: 260px !important; height: 260px !important; }
+          .s-lisa-wrap { width: 210px !important; height: 210px !important; }
           .s-right { flex: 1; }
         }
 

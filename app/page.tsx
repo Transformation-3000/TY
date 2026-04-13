@@ -211,6 +211,15 @@ export default function Home() {
         </div>
       </div>
       <BottomNav activeItem={activeMenuItem} onItemClick={navigate} />
+
+      {/* Sticky Referral Button */}
+      <button className="sticky-referral-btn" title="True Years empfehlen">
+        <i className="bi bi-gift-fill sticky-referral-icon"></i>
+        <span className="sticky-referral-text">
+          <span className="sticky-referral-main">True Years empfehlen</span>
+          <span className="sticky-referral-sub">– 1 Gratismonat</span>
+        </span>
+      </button>
     </main>
   );
 }
