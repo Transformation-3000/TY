@@ -1,0 +1,620 @@
+/* ================================================================
+   Simple Dashboard – clean 3-column layout
+   ================================================================ */
+.page {
+  padding: 1.75rem 2rem 3rem;
+  background: #f6f8fb;
+  min-height: calc(100vh - 90px);
+  font-family: inherit;
+  color: #0f172a;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(280px, 1fr) minmax(320px, 1.2fr) minmax(320px, 1.1fr);
+  gap: 1.25rem;
+  align-items: stretch;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (max-width: 1100px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+  .colCenter { grid-column: span 2; order: -1; }
+}
+
+@media (max-width: 720px) {
+  .page { padding: 1rem; }
+  .grid { grid-template-columns: 1fr; }
+  .colCenter { grid-column: auto; order: 0; }
+}
+
+.col { display: flex; flex-direction: column; gap: 1.25rem; }
+
+/* pushes last card to bottom so columns bottom-align */
+.pushBottom { margin-top: auto; }
+
+/* ---------- generic card ---------- */
+.card {
+  background: #ffffff;
+  border: 1px solid #eaeef5;
+  border-radius: 20px;
+  padding: 1.25rem 1.35rem;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.85rem;
+}
+
+.cardIcon {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+}
+
+.cardTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.cardSubtitle {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0.15rem 0 0;
+}
+
+/* ---------- greeting / header ---------- */
+.dateLabel {
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  color: #94a3b8;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.greeting {
+  font-size: 1.85rem;
+  font-weight: 500;
+  color: #0f172a;
+  margin: 0.3rem 0 0.25rem;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+}
+
+.greetingName { color: #2563eb; font-weight: 600; }
+
+.profileWrap {
+  display: flex;
+  justify-content: center;
+  margin: 0.25rem 0 1.25rem;
+}
+
+.profileImg {
+  width: 260px;
+  height: 260px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 10px 30px rgba(37, 99, 235, 0.15);
+  border: 6px solid #fff;
+}
+
+/* ---------- Belohnungen ---------- */
+.rewardStats {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  justify-content: center;
+  padding: 0.5rem 0 0.75rem;
+}
+
+.rewardStat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.rewardValue {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1;
+}
+
+.rewardLabel {
+  font-size: 0.78rem;
+  color: #64748b;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.diamond { color: #3b82f6; }
+
+.rewardNote {
+  margin-top: 0.4rem;
+  background: #ecfdf5;
+  color: #047857;
+  border: 1px solid #d1fae5;
+  border-radius: 12px;
+  padding: 0.65rem 0.85rem;
+  font-size: 0.85rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ---------- Wochen-Fokus ---------- */
+.focusTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin: 0 0 0.2rem;
+  color: #0f172a;
+}
+
+.focusDesc {
+  font-size: 0.85rem;
+  color: #64748b;
+  margin: 0 0 1rem;
+}
+
+.focusProgress {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.75rem;
+}
+
+.focusDots {
+  display: flex;
+  gap: 0.45rem;
+}
+
+.dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.dotDone {
+  background: #22c55e;
+  color: #fff;
+}
+
+.dotOpen {
+  background: #fff;
+  border: 2px solid #e2e8f0;
+}
+
+.focusCount {
+  font-size: 0.82rem;
+  color: #475569;
+  margin-left: auto;
+  text-align: right;
+  line-height: 1.25;
+}
+
+.focusHint {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  background: #eff6ff;
+  border: 1px dashed #bfdbfe;
+  padding: 0.65rem 0.85rem;
+  border-radius: 12px;
+  color: #1d4ed8;
+  font-size: 0.8rem;
+}
+
+/* ---------- Tageskompass (horizontal, light) ---------- */
+.compass {
+  padding: 1.35rem 1.4rem 1.15rem;
+}
+
+.compass .cardHeader { margin-bottom: 1rem; }
+
+.compassBody {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.1rem;
+  padding: 0.1rem 0 1rem;
+}
+
+.compassSunWrap {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #fef3c7 0%, #fcd34d 100%);
+  box-shadow: 0 10px 22px -10px rgba(251, 191, 36, 0.6);
+}
+
+.compassSun {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.compassText {
+  flex: 1;
+  text-align: left;
+}
+
+.compassQuestion {
+  font-size: 0.82rem;
+  color: #94a3b8;
+  margin: 0 0 0.35rem;
+  font-weight: 400;
+}
+
+.compassTitle {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1d4ed8;
+  margin: 0 0 0.55rem;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.compassDesc {
+  font-size: 0.82rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.compassStep {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: #eef4ff;
+  border: 1px solid #dbe7fb;
+  border-radius: 14px;
+  padding: 0.8rem 1rem;
+  font-size: 0.9rem;
+  color: #1d4ed8;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.compassStep:hover {
+  background: #e2ebff;
+  border-color: #bfd3f5;
+}
+
+.compassStepBody {
+  flex: 1;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.compassStepLabel {
+  font-size: 0.72rem;
+  color: #60a5fa;
+  font-weight: 500;
+}
+
+.compassStepValue {
+  font-size: 0.92rem;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.compassStepChevron {
+  color: #60a5fa;
+  font-size: 1.1rem;
+}
+
+/* ---------- Level card ---------- */
+.levelCard {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.9rem;
+  background: #fff;
+  border: 1px solid #eaeef5;
+  border-radius: 16px;
+  padding: 0.7rem 1rem;
+  margin-left: auto;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+  min-width: 210px;
+}
+
+.levelStar {
+  color: #f59e0b;
+  font-size: 1rem;
+}
+
+.levelInfo { flex: 1; }
+
+.levelValue {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+.levelTag {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin-left: 0.6rem;
+}
+
+.levelBar {
+  height: 5px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 0.35rem;
+}
+
+.levelBarFill {
+  height: 100%;
+  background: linear-gradient(90deg, #60a5fa, #2563eb);
+  border-radius: 999px;
+}
+
+/* ---------- Aktivität eintragen ---------- */
+.activityHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-bottom: 0.9rem;
+}
+
+.activityHeaderText .cardTitle { margin-bottom: 0.15rem; }
+
+.activityInputWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 0.5rem 0.55rem 0.5rem 1rem;
+}
+
+.activityInput {
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  font-size: 0.88rem;
+  color: #0f172a;
+  padding: 0.4rem 0;
+}
+
+.activityInput::placeholder { color: #94a3b8; }
+
+.iconBtn {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: transparent;
+  color: #64748b;
+  transition: background 0.15s ease;
+}
+
+.iconBtn:hover { background: #e2e8f0; }
+
+.iconBtnPrimary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.iconBtnPrimary:hover { background: #1d4ed8; }
+
+.sectionLabel {
+  font-size: 0.78rem;
+  color: #64748b;
+  margin: 0.75rem 0 0.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sectionLabelLink {
+  color: #2563eb;
+  font-size: 0.78rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+.sectionLabelLink:hover { text-decoration: underline; }
+
+.chipRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.chip:hover {
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+.chipIcon { color: #2563eb; font-size: 0.9rem; }
+
+.chipMuted {
+  background: #f1f5f9;
+  border-color: #f1f5f9;
+  color: #475569;
+}
+
+.recentChip {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #f8fafc;
+  border: 1px solid #eaeef5;
+  border-radius: 12px;
+  padding: 0.5rem 0.85rem;
+  gap: 0.15rem;
+  min-width: auto;
+}
+
+.recentChipTop {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: #0f172a;
+  font-weight: 500;
+}
+
+.recentChipTime {
+  font-size: 0.7rem;
+  color: #94a3b8;
+}
+
+/* ---------- Lina AI Check-in ---------- */
+.linaCard {
+  background: linear-gradient(135deg, #fff7ed 0%, #fef3f2 55%, #fff1f2 100%);
+  border: 1px solid #fee2e2;
+  border-radius: 20px;
+  padding: 1.15rem 1.25rem;
+  display: flex;
+  gap: 1.1rem;
+  align-items: stretch;
+  box-shadow: 0 10px 30px -18px rgba(244, 114, 182, 0.35), 0 1px 2px rgba(15, 23, 42, 0.04);
+  position: relative;
+  overflow: hidden;
+}
+
+.linaCard::before {
+  content: '';
+  position: absolute;
+  top: -30px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(251, 207, 232, 0.5) 0%, rgba(251, 207, 232, 0) 70%);
+  pointer-events: none;
+}
+
+.linaImage {
+  flex: 0 0 130px;
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  min-height: 180px;
+  box-shadow: 0 6px 18px -8px rgba(15, 23, 42, 0.15);
+}
+
+.linaImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.linaContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.linaBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.75rem;
+  color: #ec4899;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.linaTitle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #0f172a;
+  margin: 0 0 0.4rem;
+  line-height: 1.3;
+}
+
+.linaText {
+  font-size: 0.82rem;
+  color: #64748b;
+  line-height: 1.45;
+  margin: 0 0 0.9rem;
+}
+
+.linaBtn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.65rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  transition: background 0.15s ease;
+  width: 100%;
+}
+
+.linaBtn:hover { background: #1d4ed8; }
+
+.linaLater {
+  text-align: center;
+  margin-top: 0.5rem;
+  font-size: 0.78rem;
+  color: #94a3b8;
+  cursor: pointer;
+}
+.linaLater:hover { color: #64748b; }
+
+/* right column top row: align level card to the right */
+.rightTop {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 720px) {
+  .profileImg { width: 200px; height: 200px; }
+  .greeting { font-size: 1.6rem; }
+  .linaCard { flex-direction: column; }
+  .linaImage { flex: 0 0 160px; min-height: 160px; }
+}
