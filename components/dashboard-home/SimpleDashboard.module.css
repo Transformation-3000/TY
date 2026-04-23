@@ -3,7 +3,7 @@
    ================================================================ */
 .page {
   padding: 1.75rem 2rem 3rem;
-  background: #f6f8fb;
+  background: #eef1f6;
   min-height: calc(100vh - 90px);
   font-family: inherit;
   color: #0f172a;
@@ -18,21 +18,93 @@
   margin: 0 auto;
 }
 
-@media (max-width: 1100px) {
-  .grid { grid-template-columns: 1fr 1fr; }
-  .colCenter { grid-column: span 2; order: -1; }
-}
-
-@media (max-width: 720px) {
-  .page { padding: 1rem; }
-  .grid { grid-template-columns: 1fr; }
-  .colCenter { grid-column: auto; order: 0; }
-}
-
 .col { display: flex; flex-direction: column; gap: 1.25rem; }
 
 /* pushes last card to bottom so columns bottom-align */
 .pushBottom { margin-top: auto; }
+
+/* ensures Wochen-Fokus and Tageskompass share the same height */
+.equalHeight {
+  min-height: 360px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ================ Responsive ================ */
+/* Tablet landscape: 2 columns, center goes on top full-width */
+@media (max-width: 1180px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .colCenter {
+    grid-column: span 2;
+    order: -1;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .colCenter > * { flex: 1; }
+  .profileImg { width: 200px; height: 200px; }
+  /* remove bottom push when layout breaks */
+  .pushBottom { margin-top: 0; }
+}
+
+/* Tablet portrait: single column, center stays on top */
+@media (max-width: 900px) {
+  .page { padding: 1.25rem 1rem 2rem; }
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .colCenter {
+    grid-column: auto;
+    order: -1;
+    flex-direction: column;
+  }
+  .profileImg { width: 220px; height: 220px; }
+  .greeting { font-size: 1.5rem; }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+  .page { padding: 1rem 0.85rem 2rem; }
+  .col { gap: 1rem; }
+  .card { padding: 1rem 1.1rem; border-radius: 16px; }
+
+  .greeting { font-size: 1.35rem; margin: 0.2rem 0 0.15rem; }
+  .dateLabel { font-size: 0.68rem; }
+  .profileImg { width: 180px; height: 180px; border-width: 4px; }
+
+  .rewardStats { gap: 1.25rem; }
+  .rewardValue { font-size: 1.3rem; }
+
+  .compassBody {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+  }
+  .compassText { text-align: center; }
+  .compassTitle { font-size: 1.15rem; }
+
+  .activityInputWrap { padding: 0.4rem 0.45rem 0.4rem 0.85rem; }
+  .iconBtn { width: 34px; height: 34px; }
+  .chip { padding: 0.35rem 0.7rem; font-size: 0.78rem; }
+
+  .linaCard {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 1rem;
+  }
+  .linaImage {
+    flex: 0 0 auto;
+    width: 100%;
+    min-height: 180px;
+    max-height: 220px;
+  }
+  .linaTitle { font-size: 1rem; }
+}
 
 /* ---------- generic card ---------- */
 .card {
@@ -60,7 +132,7 @@
 }
 
 .cardTitle {
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #0f172a;
   margin: 0;
@@ -68,14 +140,14 @@
 }
 
 .cardSubtitle {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: #64748b;
-  margin: 0.15rem 0 0;
+  margin: 0.2rem 0 0;
 }
 
 /* ---------- greeting / header ---------- */
 .dateLabel {
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   letter-spacing: 0.18em;
   color: #94a3b8;
   text-transform: uppercase;
@@ -83,10 +155,10 @@
 }
 
 .greeting {
-  font-size: 1.85rem;
+  font-size: 2.25rem;
   font-weight: 500;
   color: #0f172a;
-  margin: 0.3rem 0 0.25rem;
+  margin: 0.4rem 0 0.3rem;
   letter-spacing: -0.02em;
   line-height: 1.15;
 }
@@ -125,17 +197,17 @@
 }
 
 .rewardValue {
-  font-size: 1.5rem;
+  font-size: 1.85rem;
   font-weight: 600;
   color: #0f172a;
   line-height: 1;
 }
 
 .rewardLabel {
-  font-size: 0.78rem;
+  font-size: 0.9rem;
   color: #64748b;
   text-align: center;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .diamond { color: #3b82f6; }
@@ -146,22 +218,22 @@
   color: #047857;
   border: 1px solid #d1fae5;
   border-radius: 12px;
-  padding: 0.65rem 0.85rem;
-  font-size: 0.85rem;
+  padding: 0.75rem 0.95rem;
+  font-size: 0.95rem;
   text-align: center;
   font-weight: 500;
 }
 
 /* ---------- Wochen-Fokus ---------- */
 .focusTitle {
-  font-size: 1rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  margin: 0 0 0.2rem;
+  margin: 0 0 0.25rem;
   color: #0f172a;
 }
 
 .focusDesc {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   color: #64748b;
   margin: 0 0 1rem;
 }
@@ -200,23 +272,24 @@
 }
 
 .focusCount {
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   color: #475569;
   margin-left: auto;
   text-align: right;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .focusHint {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.6rem;
   background: #eff6ff;
   border: 1px dashed #bfdbfe;
-  padding: 0.65rem 0.85rem;
+  padding: 0.75rem 0.95rem;
   border-radius: 12px;
   color: #1d4ed8;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
+  margin-top: auto;
 }
 
 /* ---------- Tageskompass (horizontal, light) ---------- */
@@ -256,23 +329,23 @@
 }
 
 .compassQuestion {
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   color: #94a3b8;
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.4rem;
   font-weight: 400;
 }
 
 .compassTitle {
-  font-size: 1.3rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: #1d4ed8;
-  margin: 0 0 0.55rem;
+  margin: 0 0 0.6rem;
   letter-spacing: -0.015em;
   line-height: 1.2;
 }
 
 .compassDesc {
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   color: #64748b;
   line-height: 1.5;
   margin: 0;
@@ -286,12 +359,13 @@
   background: #eef4ff;
   border: 1px solid #dbe7fb;
   border-radius: 14px;
-  padding: 0.8rem 1rem;
-  font-size: 0.9rem;
+  padding: 0.9rem 1.1rem;
+  font-size: 1rem;
   color: #1d4ed8;
   font-weight: 500;
   cursor: pointer;
   width: 100%;
+  margin-top: auto;
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 
@@ -309,13 +383,13 @@
 }
 
 .compassStepLabel {
-  font-size: 0.72rem;
+  font-size: 0.82rem;
   color: #60a5fa;
   font-weight: 500;
 }
 
 .compassStepValue {
-  font-size: 0.92rem;
+  font-size: 1.05rem;
   color: #0f172a;
   font-weight: 600;
 }
@@ -398,9 +472,9 @@
   outline: none;
   background: transparent;
   flex: 1;
-  font-size: 0.88rem;
+  font-size: 0.98rem;
   color: #0f172a;
-  padding: 0.4rem 0;
+  padding: 0.45rem 0;
 }
 
 .activityInput::placeholder { color: #94a3b8; }
@@ -429,9 +503,9 @@
 .iconBtnPrimary:hover { background: #1d4ed8; }
 
 .sectionLabel {
-  font-size: 0.78rem;
+  font-size: 0.88rem;
   color: #64748b;
-  margin: 0.75rem 0 0.5rem;
+  margin: 0.85rem 0 0.55rem;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -440,7 +514,7 @@
 
 .sectionLabelLink {
   color: #2563eb;
-  font-size: 0.78rem;
+  font-size: 0.88rem;
   cursor: pointer;
   text-decoration: none;
 }
@@ -455,13 +529,13 @@
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
   background: #fff;
   border: 1px solid #e2e8f0;
   color: #334155;
   border-radius: 999px;
-  padding: 0.4rem 0.85rem;
-  font-size: 0.8rem;
+  padding: 0.5rem 0.95rem;
+  font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -494,14 +568,14 @@
 .recentChipTop {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  font-size: 0.82rem;
+  gap: 0.45rem;
+  font-size: 0.92rem;
   color: #0f172a;
   font-weight: 500;
 }
 
 .recentChipTime {
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   color: #94a3b8;
 }
 
@@ -555,26 +629,26 @@
 .linaBadge {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  font-size: 0.75rem;
+  gap: 0.35rem;
+  font-size: 0.88rem;
   color: #ec4899;
   font-weight: 500;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.45rem;
 }
 
 .linaTitle {
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   font-weight: 600;
   color: #0f172a;
-  margin: 0 0 0.4rem;
+  margin: 0 0 0.45rem;
   line-height: 1.3;
 }
 
 .linaText {
-  font-size: 0.82rem;
+  font-size: 0.92rem;
   color: #64748b;
-  line-height: 1.45;
-  margin: 0 0 0.9rem;
+  line-height: 1.5;
+  margin: 0 0 1rem;
 }
 
 .linaBtn {
@@ -582,14 +656,14 @@
   color: #fff;
   border: none;
   border-radius: 12px;
-  padding: 0.65rem 1rem;
-  font-size: 0.88rem;
+  padding: 0.75rem 1.1rem;
+  font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.45rem;
   transition: background 0.15s ease;
   width: 100%;
 }
@@ -598,8 +672,8 @@
 
 .linaLater {
   text-align: center;
-  margin-top: 0.5rem;
-  font-size: 0.78rem;
+  margin-top: 0.6rem;
+  font-size: 0.88rem;
   color: #94a3b8;
   cursor: pointer;
 }
@@ -612,9 +686,3 @@
   margin-bottom: 0.25rem;
 }
 
-@media (max-width: 720px) {
-  .profileImg { width: 200px; height: 200px; }
-  .greeting { font-size: 1.6rem; }
-  .linaCard { flex-direction: column; }
-  .linaImage { flex: 0 0 160px; min-height: 160px; }
-}

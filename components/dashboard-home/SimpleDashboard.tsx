@@ -17,13 +17,6 @@ const today = () => {
 export default function SimpleDashboard({ onNavigate }: Props) {
   const focusDays = [true, true, false, false];
 
-  const quickAdd = [
-    { icon: 'bi-person-walking', label: 'Spazieren' },
-    { icon: 'bi-droplet-fill', label: 'Wasser 2,5 L' },
-    { icon: 'bi-wind', label: 'Atmung' },
-    { icon: 'bi-three-dots', label: 'Mehr', muted: true },
-  ];
-
   const recent = [
     { icon: 'bi-wind', label: '10 Min. Atmung', time: 'Heute' },
     { icon: 'bi-droplet-fill', label: 'Wasser 2,5 L', time: 'Heute' },
@@ -69,7 +62,7 @@ export default function SimpleDashboard({ onNavigate }: Props) {
           </div>
 
           {/* Wochen-Fokus */}
-          <div className={`${styles.card} ${styles.pushBottom}`}>
+          <div className={`${styles.card} ${styles.pushBottom} ${styles.equalHeight}`}>
             <div className={styles.cardHeader}>
               <span className={styles.cardIcon}>
                 <i className="bi bi-bullseye" />
@@ -114,7 +107,7 @@ export default function SimpleDashboard({ onNavigate }: Props) {
           </div>
 
           {/* Tageskompass */}
-          <div className={`${styles.card} ${styles.compass} ${styles.pushBottom}`}>
+          <div className={`${styles.card} ${styles.compass} ${styles.pushBottom} ${styles.equalHeight}`}>
             <div className={styles.cardHeader}>
               <span className={styles.cardIcon}>
                 <i className="bi bi-compass" />
@@ -171,18 +164,6 @@ export default function SimpleDashboard({ onNavigate }: Props) {
               <button className={`${styles.iconBtn} ${styles.iconBtnPrimary}`} aria-label="Hinzufügen">
                 <i className="bi bi-plus-lg" />
               </button>
-            </div>
-
-            <div className={styles.sectionLabel}>
-              <span>Schnell hinzufügen</span>
-            </div>
-            <div className={styles.chipRow}>
-              {quickAdd.map((c) => (
-                <button key={c.label} className={`${styles.chip} ${c.muted ? styles.chipMuted : ''}`}>
-                  <i className={`bi ${c.icon} ${styles.chipIcon}`} />
-                  <span>{c.label}</span>
-                </button>
-              ))}
             </div>
 
             <div className={styles.sectionLabel}>
