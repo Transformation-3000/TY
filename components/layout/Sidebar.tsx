@@ -157,7 +157,6 @@ export default function Sidebar({ showOnlyLogo = false, activeItem, onItemClick 
               </span>
               <span className="sb-item-text">
                 <span className="sb-item-label">{item.label}</span>
-                <span className="sb-item-sub">{item.sublabel}</span>
               </span>
               {isActive && <span className="sb-item-dot" />}
             </button>
@@ -204,97 +203,170 @@ export default function Sidebar({ showOnlyLogo = false, activeItem, onItemClick 
       </div>
 
       <style jsx>{`
+        /* ===== Profile chip ===== */
         .sb-profile {
-          display: flex; align-items: center; gap: 0.65rem;
-          padding: 1rem 1rem 0.85rem;
+          display: flex; align-items: center; gap: 0.6rem;
+          padding: 0.9rem 0.85rem 0.8rem;
           flex-shrink: 0;
         }
         .sb-avatar { position: relative; flex-shrink: 0; }
+        .sb-avatar img {
+          box-shadow: 0 2px 6px -2px rgba(15, 23, 42, 0.15);
+        }
         .sb-avatar-online {
           position: absolute; bottom: 1px; right: 1px;
-          width: 9px; height: 9px; border-radius: 50%;
+          width: 10px; height: 10px; border-radius: 50%;
           background: #22c55e; border: 2px solid #fff;
+          box-shadow: 0 0 0 1px rgba(34,197,94,0.3);
         }
         .sb-profile-text { flex: 1; min-width: 0; }
-        .sb-profile-name { display: block; font-size: 0.82rem; font-weight: 700; color: #0f172a; line-height: 1.2; }
-        .sb-profile-sub { display: block; font-size: 0.65rem; color: #94a3b8; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sb-profile-name {
+          display: block;
+          font-size: 0.85rem; font-weight: 600;
+          color: #0f172a; line-height: 1.2;
+          letter-spacing: -0.005em;
+        }
+        .sb-profile-sub {
+          display: block;
+          font-size: 0.7rem; color: #64748b;
+          margin-top: 2px;
+          white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
         .sb-level-badge {
-          flex-shrink: 0; font-size: 0.62rem; font-weight: 800;
-          color: #4498ca; background: rgba(68,152,202,0.1);
-          border: 1.5px solid rgba(68,152,202,0.2);
-          border-radius: 6px; padding: 0.2rem 0.38rem;
+          flex-shrink: 0;
+          font-size: 0.62rem; font-weight: 700;
+          color: #64748b;
+          background: #f1f5f9;
+          border: 1px solid #e2e8f0;
+          border-radius: 6px;
+          padding: 0.2rem 0.4rem;
           letter-spacing: 0.04em;
         }
 
+        /* ===== Divider ===== */
         .sb-divider {
-          height: 1px; background: rgba(15,23,42,0.06);
-          margin: 0 1rem;
+          height: 1px;
+          background: #edf0f5;
+          margin: 0.2rem 0.85rem;
         }
 
+        /* ===== Main nav ===== */
         .sb-nav {
-          padding: 0.6rem 0.6rem 0.4rem;
-          display: flex; flex-direction: column; gap: 0.15rem;
+          padding: 0.5rem 0.5rem 0.3rem;
+          display: flex; flex-direction: column; gap: 0.1rem;
         }
         .sb-section-label {
-          display: block; font-size: 0.58rem; font-weight: 700;
-          color: #b8c4cc; letter-spacing: 0.1em; text-transform: uppercase;
-          padding: 0.3rem 0.5rem 0.4rem;
+          display: block;
+          font-size: 0.58rem; font-weight: 600;
+          color: #b4bdc8;
+          letter-spacing: 0.1em; text-transform: uppercase;
+          padding: 0.3rem 0.55rem 0.4rem;
         }
 
         .sb-item {
-          display: flex; align-items: center; gap: 0.7rem;
-          width: 100%; padding: 0.6rem 0.65rem;
-          border-radius: 10px; border: none; background: transparent;
-          cursor: pointer; text-align: left; position: relative;
-          transition: background 0.15s, color 0.15s;
+          display: flex; align-items: center; gap: 0.6rem;
+          width: 100%;
+          padding: 0.5rem 0.6rem;
+          border-radius: 8px;
+          border: none;
+          background: transparent;
+          cursor: pointer; text-align: left;
+          position: relative;
+          transition: background 0.15s ease, color 0.15s ease;
         }
-        .sb-item:hover { background: rgba(68,152,202,0.06); }
-        .sb-item--active { background: rgba(68,152,202,0.1) !important; }
-        .sb-item--active .sb-item-label { color: #1a3a50; font-weight: 700; }
-        .sb-item--active .sb-item-icon { color: #4498ca; background: rgba(68,152,202,0.14); }
+        .sb-item:hover {
+          background: #f6f8fb;
+        }
+        .sb-item--active {
+          background: #f1f5f9 !important;
+        }
+        .sb-item--active .sb-item-label {
+          color: #0f172a;
+          font-weight: 600;
+        }
+        .sb-item--active .sb-item-icon {
+          color: #4498ca;
+          background: transparent;
+        }
 
         .sb-item-icon {
-          width: 32px; height: 32px; border-radius: 8px;
+          width: 26px; height: 26px; border-radius: 6px;
           display: flex; align-items: center; justify-content: center;
-          color: #94a3b8; background: rgba(100,116,139,0.07);
-          flex-shrink: 0; transition: all 0.15s;
+          color: #94a3b8;
+          background: transparent;
+          flex-shrink: 0;
+          transition: color 0.15s ease;
         }
-        .sb-item:hover .sb-item-icon { color: #4498ca; background: rgba(68,152,202,0.1); }
+        .sb-item:hover .sb-item-icon {
+          color: #64748b;
+        }
 
         .sb-item-text { flex: 1; min-width: 0; }
-        .sb-item-label { display: block; font-size: 0.8rem; font-weight: 500; color: #475569; line-height: 1.2; }
-        .sb-item-sub { display: block; font-size: 0.63rem; color: #b8c4cc; margin-top: 1px; }
-        .sb-item:hover .sb-item-label { color: #1e3a50; }
+        .sb-item-label {
+          display: block;
+          font-size: 0.82rem; font-weight: 500;
+          color: #475569; line-height: 1.2;
+        }
+        .sb-item:hover .sb-item-label { color: #1e293b; }
 
         .sb-item-dot {
-          width: 6px; height: 6px; border-radius: 50%;
-          background: linear-gradient(135deg, #4498ca, #2c6a8c);
+          width: 4px; height: 4px; border-radius: 50%;
+          background: #4498ca;
           flex-shrink: 0;
         }
 
+        /* ===== Secondary nav ===== */
         .sb-secondary {
-          padding: 0.4rem 0.6rem;
+          padding: 0.25rem 0.5rem 1rem;
           flex: 1;
         }
         .sb-sec-header {
-          display: flex; align-items: center; gap: 0.55rem;
-          width: 100%; padding: 0.45rem 0.5rem; border-radius: 8px;
-          border: none; background: transparent; cursor: pointer;
-          transition: background 0.15s;
+          display: flex; align-items: center; gap: 0.5rem;
+          width: 100%;
+          padding: 0.45rem 0.6rem;
+          border-radius: 8px;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          transition: background 0.15s ease;
         }
-        .sb-sec-header:hover { background: rgba(68,152,202,0.05); }
-        .sb-sec-label { font-size: 0.75rem; font-weight: 500; color: #64748b; flex: 1; text-align: left; }
+        .sb-sec-header:hover { background: #f6f8fb; }
+        .sb-sec-header :global(i:first-child) {
+          color: #94a3b8 !important;
+          font-size: 0.85rem !important;
+        }
+        .sb-sec-header:hover :global(i:first-child) { color: #64748b !important; }
+        .sb-sec-label {
+          font-size: 0.78rem; font-weight: 500;
+          color: #64748b; flex: 1; text-align: left;
+        }
 
-        .sb-sec-items { padding-left: 1.5rem; display: flex; flex-direction: column; gap: 0.1rem; margin-bottom: 0.25rem; }
+        .sb-sec-items {
+          padding-left: 1.75rem;
+          display: flex; flex-direction: column; gap: 0.05rem;
+          margin-bottom: 0.25rem;
+          margin-top: 0.05rem;
+        }
         .sb-sec-item {
           display: flex; align-items: center; gap: 0.55rem;
-          padding: 0.4rem 0.6rem; border-radius: 7px;
-          border: none; background: transparent; cursor: pointer;
-          font-size: 0.74rem; color: #64748b; text-align: left; width: 100%;
-          transition: background 0.15s, color 0.15s;
+          padding: 0.35rem 0.6rem;
+          border-radius: 6px;
+          border: none;
+          background: transparent;
+          cursor: pointer;
+          font-size: 0.76rem; color: #64748b;
+          text-align: left; width: 100%;
+          transition: background 0.15s ease, color 0.15s ease;
         }
-        .sb-sec-item:hover { background: rgba(68,152,202,0.06); color: #334155; }
-        .sb-sec-item.active { background: rgba(68,152,202,0.08); color: #4498ca; font-weight: 600; }
+        .sb-sec-item:hover {
+          background: #f6f8fb;
+          color: #0f172a;
+        }
+        .sb-sec-item.active {
+          background: #f1f5f9;
+          color: #0f172a;
+          font-weight: 600;
+        }
 
         .sb-footer { display: none; }
       `}</style>

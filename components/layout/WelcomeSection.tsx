@@ -8,6 +8,13 @@ type WelcomeSectionProps = {
   onNavigate?: (menuItem: string) => void;
 };
 
+const getTodayLabel = () => {
+  const d = new Date();
+  const weekdays = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+  const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+  return `${weekdays[d.getDay()]}, ${d.getDate()}. ${months[d.getMonth()]} ${d.getFullYear()}`;
+};
+
 const WEARABLES = [
   {
     id: 'whoop',
@@ -98,15 +105,13 @@ export default function WelcomeSection({ onNavigate }: WelcomeSectionProps) {
           />
         </div>
 
-        {/* Buttons in der Mitte */}
+        {/* Greeting links neben Logo, Weekly-Button in der Mitte */}
+        <div className="top-nav-greeting top-nav-greeting--left">
+          <span className="top-nav-greeting-date">{getTodayLabel()}</span>
+          <span className="top-nav-greeting-text">Guten Tag, <b>Monique</b></span>
+        </div>
+
         <div className="top-nav-buttons">
-          <button
-            className="top-nav-button top-nav-button--daily"
-            onClick={() => onNavigate?.('coaching')}
-          >
-            <i className="bi bi-play-circle-fill" style={{ marginRight: '0.4rem' }}></i>
-            Daily starten
-          </button>
           <button
             className="top-nav-button top-nav-button--weekly"
             onClick={() => onNavigate?.('coaching')}
@@ -116,7 +121,7 @@ export default function WelcomeSection({ onNavigate }: WelcomeSectionProps) {
           </button>
         </div>
 
-        {/* Wearable Icon und Profilbild - rechts */}
+        {/* Wearable Icon, Greeting und Profilbild - rechts */}
         <div className="top-nav-right-section">
           <button
             className="top-nav-wearable top-nav-wearable--btn"
