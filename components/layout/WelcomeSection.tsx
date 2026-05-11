@@ -17,7 +17,7 @@ export default function WelcomeSection({ onNavigate }: { onNavigate?: (menuItem:
         <div className="header-area wearable-area">
           <span className="status-text-active">AKTIV</span>
           <div className="wearable-wrapper">
-            <Image src="/images/whoop_v2.png" alt="Wearable" width={42} height={42} style={{ objectFit: 'contain' }} />
+            <Image src="/images/whoop_v2.png" alt="Wearable" width={38} height={38} style={{ objectFit: 'contain' }} />
             <div className="status-dot-badge"></div>
           </div>
         </div>
@@ -25,7 +25,15 @@ export default function WelcomeSection({ onNavigate }: { onNavigate?: (menuItem:
         {/* AREA 2: PROFILE */}
         <div className="header-area profile-area" onClick={() => onNavigate?.('settings')}>
           <div className="profile-border-circle">
-            <Image src="/images/woman_53_blonde.png" alt="Profile" width={48} height={48} className="profile-img-header" />
+            <div className="profile-img-container">
+              <Image 
+                src="/images/woman_53_blonde.png" 
+                alt="Profile" 
+                width={60} 
+                height={60} 
+                className="profile-img-header" 
+              />
+            </div>
           </div>
         </div>
 
@@ -53,7 +61,7 @@ export default function WelcomeSection({ onNavigate }: { onNavigate?: (menuItem:
         .top-nav-right-section {
           display: flex;
           align-items: center;
-          gap: 1.5rem;
+          gap: 1.25rem;
         }
 
         .header-area {
@@ -65,28 +73,25 @@ export default function WelcomeSection({ onNavigate }: { onNavigate?: (menuItem:
         .header-area:hover { transform: translateY(-1px); }
 
         /* AREA 1: WEARABLE */
-        .wearable-area { gap: 0.8rem; }
+        .wearable-area { gap: 0.6rem; }
         .status-text-active {
-          font-size: 0.9rem;
-          font-weight: 800;
+          font-size: 0.85rem;
+          font-weight: 850;
           color: #7FD049;
-          letter-spacing: 0.02em;
+          letter-spacing: 0.04em;
         }
         .wearable-wrapper {
           position: relative;
-          background: #f1f5f9;
-          padding: 4px;
-          border-radius: 8px;
           display: flex;
           align-items: center;
           justify-content: center;
         }
         .status-dot-badge {
           position: absolute;
-          top: -5px;
-          right: -5px;
-          width: 18px;
-          height: 18px;
+          top: -2px;
+          right: -2px;
+          width: 14px;
+          height: 14px;
           background: #7FD049;
           border: 2px solid white;
           border-radius: 50%;
@@ -95,19 +100,28 @@ export default function WelcomeSection({ onNavigate }: { onNavigate?: (menuItem:
 
         /* AREA 2: PROFILE */
         .profile-border-circle {
-          width: 58px;
-          height: 58px;
+          width: 52px;
+          height: 52px;
           border-radius: 50%;
-          border: 2.5px solid #006EA7;
+          border: 1.8px solid #006EA7;
           display: flex;
           align-items: center;
           justify-content: center;
           padding: 2px;
-          box-shadow: 0 4px 12px rgba(0, 110, 167, 0.15);
+          box-shadow: 0 4px 10px rgba(0, 110, 167, 0.1);
+        }
+        .profile-img-container {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          overflow: hidden;
+          position: relative;
         }
         .profile-img-header {
           border-radius: 50%;
           object-fit: cover;
+          object-position: center 20%;
+          transform: scale(1.6);
         }
 
         /* AREA 3: SETTINGS */
@@ -116,13 +130,13 @@ export default function WelcomeSection({ onNavigate }: { onNavigate?: (menuItem:
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          padding: 0.5rem 1.2rem;
+          padding: 0.5rem 1rem;
           background: #fff;
           border: 1px solid #f1f5f9;
           border-radius: 100px;
-          box-shadow: 0 2px 10px rgba(0,0,0,0.04);
+          box-shadow: 0 2px 8px rgba(0,0,0,0.04);
           gap: 2px;
-          min-width: 110px;
+          min-width: 105px;
         }
         .settings-icon-top {
           font-size: 1.2rem;
