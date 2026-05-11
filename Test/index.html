@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Longevity Deutschland | Lebe Dein bestes Leben</title>
+    <meta name="description" content="Entdecken Sie die Freude an einem langen, gesunden Leben. Wissenschaft trifft auf Lebensfreude.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">Longevity <span>DE</span></div>
+            <ul class="nav-links">
+                <li><a href="#stats">Wissen</a></li>
+                <li><a href="#pillars">Strategien</a></li>
+                <li><a href="#research">Forschung</a></li>
+                <li><a href="#cta" class="nav-cta">Starten</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <header>
+        <div class="hero-grid">
+            <div class="hero-content">
+                <h1>Mehr Jahre zum <span>Leben</span>, mehr Leben in den Jahren.</h1>
+                <p>Langlebigkeit ist kein Zufall, sondern eine Entscheidung. Entdecken Sie, wie Sie Ihre Gesundheit in die eigenen Hände nehmen und jeden Moment mit voller Energie genießen.</p>
+                <a href="#pillars" class="btn">Jetzt Entdecken</a>
+            </div>
+            <div class="hero-image-container">
+                <img src="hero_emotional.png" id="hero-img" alt="Glückliches Leben in Deutschland">
+            </div>
+        </div>
+    </header>
+
+    <section id="stats">
+        <h2 class="reveal">Das Potential ist in Dir</h2>
+        <div class="stats-container reveal">
+            <div class="stat-item">
+                <span class="stat-number">100</span>
+                <span class="stat-label">ist das neue 80</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">80%</span>
+                <span class="stat-label">Deiner Gesundheit steuerst Du</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">+15</span>
+                <span class="stat-label">Jahre pure Vitalität möglich</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="pillars">
+        <h2 class="reveal">Deine Reise beginnt hier</h2>
+        <div class="grid">
+            <div class="card reveal">
+                <span class="icon">🥗</span>
+                <h3>Genussvolle Energie</h3>
+                <p>Essen, das heilt und schmeckt. Entdecken Sie die Kraft der Pflanzen und die Wissenschaft der zellulären Verjüngung.</p>
+            </div>
+            <div class="card reveal">
+                <span class="icon">🏃‍♂️</span>
+                <h3>Freude an Bewegung</h3>
+                <p>Es geht nicht um Leistung, sondern um Freiheit. Bleiben Sie beweglich, stark und abenteuerlustig – in jedem Alter.</p>
+            </div>
+            <div class="card reveal">
+                <span class="icon">✨</span>
+                <h3>Innere Ruhe</h3>
+                <p>Ein wacher Geist in einem entspannten Körper. Finden Sie Ihre Balance in einer hektischen Welt.</p>
+            </div>
+            <div class="card reveal">
+                <span class="icon">🤝</span>
+                <h3>Echte Verbindung</h3>
+                <p>Gemeinsam wachsen. Starke soziale Bindungen sind der stärkste Prädiktor für ein langes, erfülltes Leben.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="research" style="background: #fff; padding: 10rem 2rem; margin-top: 4rem; border-radius: 60px 60px 0 0;">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <h2 class="reveal">Deutschland forscht für Dich</h2>
+            <p class="reveal" style="font-size: 1.4rem; line-height: 1.8; color: var(--text-dim);">An Standorten wie Köln, Heidelberg und München arbeiten Visionäre daran, das Altern nicht nur zu verstehen, sondern es neu zu definieren. Wir bringen diese Wissenschaft direkt in Deinen Alltag.</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Longevity Deutschland. Mit Liebe zum Detail gestaltet.</p>
+        <p>Deine Zukunft beginnt heute.</p>
+    </footer>
+
+    <script>
+        // Navigation scroll effect
+        const nav = document.querySelector('.main-nav');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scroll reveal logic
+        const observerOptions = {
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

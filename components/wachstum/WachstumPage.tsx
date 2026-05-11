@@ -1,0 +1,226 @@
+'use client';
+
+import { useState } from 'react';
+import Image from 'next/image';
+
+interface QuickWin {
+  id: string;
+  title: string;
+  desc: string;
+  maturityRequired: number;
+  unlocked: boolean;
+  category: string;
+}
+
+const QUICK_WINS: QuickWin[] = [
+  { id: 'qw1', category: 'Schlaf', title: 'Magnesium vor dem Schlaf', desc: 'Verbessert die Muskelentspannung.', maturityRequired: 1, unlocked: true },
+  { id: 'qw2', category: 'Schlaf', title: 'Blaulichtfilter ab 20 Uhr', desc: 'Schont die Melatonin-Produktion.', maturityRequired: 2, unlocked: true },
+  
+  { id: 'qw4', category: 'Zellversorgung', title: '14h Fastenfenster', desc: 'Erster Schritt zur Autophagie.', maturityRequired: 1, unlocked: true },
+  { id: 'qw5', category: 'Zellversorgung', title: 'Spermidin-reiche Kost', desc: 'Unterstützt die Zellreinigung.', maturityRequired: 2, unlocked: false },
+
+  { id: 'qw7', category: 'Kraft', title: 'Täglich 8.000 Schritte', desc: 'Basis für kardiovaskuläre Fitness.', maturityRequired: 1, unlocked: true },
+  { id: 'qw8', category: 'Kraft', title: 'Zone 2 Training (30 Min.)', desc: 'Optimiert die Mitochondrien.', maturityRequired: 2, unlocked: true },
+];
+
+const OPTIMIZATION_FIELDS = [
+  { id: 'Schlaf', label: 'Schlaf & Erholung', icon: 'bi-moon-stars', color: '#4498ca', maturity: 65, level: 2, active: true },
+  { id: 'Kraft', label: 'Kraft & Ausdauer', icon: 'bi-fire', color: '#22c55e', maturity: 42, level: 1, active: true },
+  { id: 'Zellversorgung', label: 'Zellerneuerung & Wachstum', icon: 'bi-cup-hot', color: '#f59e0b', maturity: 15, level: 0, active: false },
+  { id: 'Immunbalance', label: 'Immunbalance & Entlastung', icon: 'bi-wind', color: '#8b5cf6', maturity: 30, level: 0, active: false },
+  { id: 'Soziale Bindungen', label: 'Selbstfürsorge & Soziale Bindungen', icon: 'bi-people', color: '#ec4899', maturity: 80, level: 0, active: false },
+  { id: 'Mindset', label: 'Mentale Resilienz & Mindset', icon: 'bi-stars', color: '#06b6d4', maturity: 50, level: 0, active: false },
+];
+
+export default function WachstumPage() {
+  const [selectedField, setSelectedField] = useState(OPTIMIZATION_FIELDS[0]);
+  const userMaturity = 2; // Beispiel-Reifegrad für die Logik rechts
+
+  const filteredWins = QUICK_WINS.filter(win => win.category === selectedField.id && win.maturityRequired <= userMaturity);
+
+  return (
+    <div className="wachstum-container" style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+      <header style={{ marginBottom: '2.5rem' }}>
+        <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Quick Wins</h1>
+        <p style={{ color: '#64748b', fontSize: '1.1rem', marginTop: '0.5rem' }}>Do Longevity yourself: Deine sofort umsetzbaren Bausteine</p>
+      </header>
+
+      <div className="wachstum-layout" style={{ display: 'grid', gridTemplateColumns: '380px 1fr', gap: '2.5rem' }}>
+        
+        {/* Links: Auswahl Optimierungsfelder */}
+        <section className="fields-section">
+          <div className="fields-grid" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {OPTIMIZATION_FIELDS.map((field) => (
+              <button
+                key={field.id}
+                onClick={() => field.active && setSelectedField(field)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '1rem',
+                  padding: '1.25rem',
+                  borderRadius: '20px',
+                  border: selectedField.id === field.id ? `2px solid ${field.color}` : '2px solid #f1f5f9',
+                  background: selectedField.id === field.id ? '#fff' : '#f8fafc',
+                  cursor: field.active ? 'pointer' : 'not-allowed',
+                  textAlign: 'left',
+                  transition: 'all 0.2s ease',
+                  boxShadow: selectedField.id === field.id ? '0 10px 20px rgba(0,0,0,0.05)' : 'none',
+                  opacity: field.active ? 1 : 0.6,
+                  filter: field.active ? 'none' : 'grayscale(0.8)'
+                }}
+              >
+                <div style={{ 
+                  width: '44px', height: '44px', borderRadius: '12px', 
+                  background: selectedField.id === field.id ? field.color : '#fff',
+                  color: selectedField.id === field.id ? '#fff' : (field.active ? field.color : '#94a3b8'),
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  fontSize: '1.3rem', transition: 'all 0.2s'
+                }}>
+                  <i className={`bi ${field.active ? field.icon : 'bi-lock'}`}></i>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: '1rem', fontWeight: 700, color: field.active ? '#1e293b' : '#64748b' }}>{field.label}</div>
+                  {field.active && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.4rem' }}>
+                      <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b' }}>
+                        Level {field.level}
+                      </div>
+                      <div style={{ 
+                        padding: '2px 8px', borderRadius: '6px', background: selectedField.id === field.id ? field.color : '#e2e8f0',
+                        color: selectedField.id === field.id ? '#fff' : '#64748b', fontSize: '0.65rem', fontWeight: 800,
+                        textTransform: 'uppercase', letterSpacing: '0.02em'
+                      }}>
+                        Auswählen
+                      </div>
+                    </div>
+                  )}
+                  <div style={{ marginTop: '0.5rem', height: '6px', background: '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
+                    <div style={{ width: `${field.maturity}%`, height: '100%', background: field.active ? field.color : '#cbd5e1' }} />
+                  </div>
+                </div>
+                {field.active ? (
+                  <div style={{ textAlign: 'right', marginLeft: '0.5rem' }}>
+                    <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#1e293b', lineHeight: 1 }}>
+                      {field.maturity}<span style={{ fontSize: '0.9rem', opacity: 0.6 }}>%</span>
+                    </div>
+                    <div style={{ fontSize: '0.6rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginTop: '2px' }}>Reifegrad</div>
+                  </div>
+                ) : (
+                  <div style={{ fontSize: '0.65rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Inaktiv</div>
+                )}
+              </button>
+            ))}
+          </div>
+        </section>
+
+        {/* Rechts: Quick Wins Navigator */}
+        <section className="navigator-section">
+          <div style={{ background: '#f8fafc', borderRadius: '32px', padding: '1.75rem 2.5rem 2.5rem' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
+              <div>
+                <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 800, color: '#1e293b' }}>
+                  Fokus: {selectedField.label}
+                </h2>
+              </div>
+            </div>
+
+            <div className="quick-wins-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
+              {filteredWins.map((win) => (
+                <div key={win.id} style={{
+                  background: '#fff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '24px',
+                  padding: '1.5rem',
+                  display: 'flex',
+                  gap: '1.5rem',
+                  alignItems: 'center',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.02)'
+                }}>
+                  <div style={{ 
+                    width: '60px', height: '60px', borderRadius: '50%', 
+                    background: `${selectedField.color}15`,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '1.5rem', color: selectedField.color
+                  }}>
+                    <i className="bi bi-check2-circle"></i>
+                  </div>
+                  
+                  <div style={{ flex: 1 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.2rem' }}>
+                      <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#1e293b' }}>
+                        {win.title}
+                      </h4>
+                    </div>
+                    <p style={{ margin: 0, fontSize: '0.9rem', color: '#64748b', lineHeight: 1.5 }}>
+                      {win.desc}
+                    </p>
+                  </div>
+                  <div style={{ color: selectedField.color, fontSize: '1.2rem', opacity: 0.5 }}>
+                    <i className="bi bi-chevron-right"></i>
+                  </div>
+                </div>
+              ))}
+              {filteredWins.length === 0 && (
+                <div style={{ padding: '3rem', textAlign: 'center', color: '#94a3b8' }}>
+                  <i className="bi bi-info-circle" style={{ fontSize: '2rem', display: 'block', marginBottom: '1rem' }}></i>
+                  Aktuell keine weiteren Quick Wins für diesen Bereich verfügbar.
+                </div>
+              )}
+            </div>
+
+            <div 
+              style={{ 
+                marginTop: '2rem', padding: '1.25rem 1.5rem', borderRadius: '24px', 
+                background: 'linear-gradient(135deg, #006EA7, #1e293b)', 
+                color: '#fff', display: 'flex', alignItems: 'center', gap: '1.25rem',
+                cursor: 'pointer', boxShadow: '0 10px 25px rgba(0, 110, 167, 0.2)',
+                transition: 'transform 0.2s ease',
+                position: 'relative',
+                overflow: 'hidden'
+              }}
+              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+            >
+              <div style={{ 
+                width: '64px', height: '64px', borderRadius: '50%', 
+                border: '2px solid rgba(255,255,255,0.3)',
+                overflow: 'hidden', flexShrink: 0,
+                boxShadow: '0 0 15px rgba(255,255,255,0.2)'
+              }}>
+                <Image 
+                  src="/images/lisa.png" 
+                  alt="Lisa AI" 
+                  width={64} 
+                  height={64} 
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+              <div style={{ flex: 1 }}>
+                <div style={{ fontWeight: 800, fontSize: '1.1rem', letterSpacing: '0.01em', lineHeight: 1.3 }}>
+                  Starte jetzt Lisa AI Daily <span style={{ fontWeight: 400, opacity: 0.9 }}>(max. 5 Min.)</span>
+                </div>
+                <div style={{ fontSize: '0.85rem', opacity: 0.9, marginTop: '0.2rem' }}>
+                  Vertiefe deine Fortschritte im Bereich {selectedField.label} in einem kurzen Check-in.
+                </div>
+              </div>
+              <div style={{ fontSize: '1.2rem' }}>
+                <i className="bi bi-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <style jsx>{`
+        .wachstum-container {
+          animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      `}</style>
+    </div>
+  );
+}
