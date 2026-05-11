@@ -120,7 +120,7 @@ export default function WelcomeSection({ onNavigate }: { onNavigate?: (menuItem:
         .profile-img-header {
           border-radius: 50%;
           object-fit: cover;
-          object-position: center 30%;
+          object-position: center 20%;
           transform: scale(1.6);
         }
 
