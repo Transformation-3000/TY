@@ -6,6 +6,8 @@ import Image from 'next/image';
 export default function VogelperspektivePage() {
   const [currentDate] = useState('SONNTAG, 10. MAI 2026');
 
+  const [activeModal, setActiveModal] = useState<'activity' | 'voice' | 'photo' | null>(null);
+
   return (
     <div className="dashboard-container">
       {/* TOP ROW: 3 COLUMNS */}
@@ -60,9 +62,9 @@ export default function VogelperspektivePage() {
             <h2 className="box-label">Activity Tracker</h2>
           </div>
           <div className="tracker-top-btns">
-            <button className="add-btn">+</button>
-            <button className="voice-btn"><i className="bi bi-mic"></i> Sprechen</button>
-            <button className="photo-btn"><i className="bi bi-camera"></i> Foto</button>
+            <button className="add-btn" onClick={() => setActiveModal('activity')}>+</button>
+            <button className="voice-btn" onClick={() => setActiveModal('voice')}><i className="bi bi-mic"></i> Sprechen</button>
+            <button className="photo-btn" onClick={() => setActiveModal('photo')}><i className="bi bi-camera"></i> Foto</button>
           </div>
           <div className="tracker-label">LETZTE 3 AKTIVITÄTEN</div>
           <div className="activities-grid">
@@ -145,6 +147,63 @@ export default function VogelperspektivePage() {
 
       </div>
 
+      {/* --- MODALS --- */}
+      {activeModal && (
+        <div className="modal-overlay" onClick={() => setActiveModal(null)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <button className="modal-close-btn" onClick={() => setActiveModal(null)}><i className="bi bi-x-lg"></i></button>
+            
+            {activeModal === 'activity' && (
+              <div className="modal-body">
+                <h3 className="modal-title">Aktivität hinzufügen</h3>
+                <div className="activity-options">
+                  <div className="act-opt-card active"><i className="bi bi-bicycle"></i><span>Radfahren</span></div>
+                  <div className="act-opt-card"><i className="bi bi-lightning-charge"></i><span>Krafttraining</span></div>
+                  <div className="act-opt-card"><i className="bi bi-person-walking"></i><span>Spazieren</span></div>
+                  <div className="act-opt-card"><i className="bi bi-droplet"></i><span>Schwimmen</span></div>
+                  <div className="act-opt-card"><i className="bi bi-heart-pulse"></i><span>Yoga</span></div>
+                  <div className="act-opt-card"><i className="bi bi-plus-circle"></i><span>Mehr</span></div>
+                </div>
+                <div className="input-group">
+                  <label>Dauer (Minuten)</label>
+                  <input type="number" defaultValue="30" />
+                </div>
+                <button className="save-btn" onClick={() => setActiveModal(null)}>Speichern</button>
+              </div>
+            )}
+
+            {activeModal === 'voice' && (
+              <div className="modal-body voice-body">
+                <h3 className="modal-title">Sprechen</h3>
+                <p className="voice-hint">„Ich war gerade 30 Minuten Radfahren.“</p>
+                <div className="voice-visualizer">
+                  <div className="v-bar"></div><div className="v-bar"></div><div className="v-bar active"></div><div className="v-bar"></div><div className="v-bar"></div>
+                </div>
+                <div className="mic-circle pulse">
+                  <i className="bi bi-mic-fill"></i>
+                </div>
+                <button className="save-btn" onClick={() => setActiveModal(null)}>Stoppen & Analysieren</button>
+              </div>
+            )}
+
+            {activeModal === 'photo' && (
+              <div className="modal-body">
+                <h3 className="modal-title">Mahlzeit</h3>
+                <p className="photo-hint">Fotografiere dein Essen für die KI-Analyse</p>
+                <div className="camera-preview">
+                  <div className="cam-image-overlay" style={{ backgroundImage: 'url(/images/meal_preview.png)' }}></div>
+                  <i className="bi bi-camera"></i>
+                  <span className="cam-text">Kamera wird gestartet...</span>
+                </div>
+                <div className="photo-btns">
+                  <button className="save-btn" onClick={() => setActiveModal(null)}>Fotografieren und analysieren</button>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       <style jsx>{`
         .dashboard-container { padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; gap: 2rem; }
         
@@ -188,13 +247,15 @@ export default function VogelperspektivePage() {
 
         /* BOX 2: TRACKER */
         .tracker-top-btns { display: grid; grid-template-columns: 55px 1fr 1fr; gap: 0.6rem; margin-bottom: 1.25rem; }
-        .add-btn { height: 55px; background: #6099cf; color: #fff; border: none; border-radius: 16px; font-size: 1.4rem; cursor: pointer; box-shadow: 0 4px 10px rgba(96, 153, 207, 0.25); }
+        .add-btn { height: 55px; background: #6099cf; color: #fff; border: none; border-radius: 16px; font-size: 1.4rem; cursor: pointer; box-shadow: 0 4px 10px rgba(96, 153, 207, 0.25); transition: all 0.2s; }
+        .add-btn:hover { background: #4498ca; transform: translateY(-2px); }
         .voice-btn, .photo-btn { 
           height: 55px; background: #fff; border: 1px solid #f1f5f9; border-radius: 16px; 
           display: flex; align-items: center; justify-content: center; gap: 0.5rem; 
           font-weight: 700; color: #334155; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-          font-size: 0.9rem;
+          font-size: 0.9rem; transition: all 0.2s;
         }
+        .voice-btn:hover, .photo-btn:hover { background: #f8fafc; transform: translateY(-2px); border-color: #cbd5e1; }
         .voice-btn i, .photo-btn i { font-size: 1.1rem; color: #6099cf; }
 
         .tracker-label { font-size: 0.6rem; font-weight: 800; color: #94a3b8; letter-spacing: 0.08em; margin-bottom: 0.75rem; text-transform: uppercase; }
@@ -227,15 +288,102 @@ export default function VogelperspektivePage() {
 
         /* BOTTOM BOXES */
         .entry-items-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .entry-h-card { background: #f8fafc; border-radius: 20px; padding: 1rem; display: flex; align-items: center; gap: 1rem; border: 1px solid #f1f5f9; cursor: pointer; }
+        .entry-h-card { background: #f8fafc; border-radius: 20px; padding: 1rem; display: flex; align-items: center; gap: 1rem; border: 1px solid #f1f5f9; cursor: pointer; transition: all 0.2s; }
+        .entry-h-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         .ehc-img { width: 45px; height: 45px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
 
         .fg-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .fg-h-card { background: #f8fafc; border-radius: 20px; padding: 0.75rem; display: flex; align-items: center; gap: 1rem; border: 1px solid #f1f5f9; cursor: pointer; }
+        .fg-h-card { background: #f8fafc; border-radius: 20px; padding: 0.75rem; display: flex; align-items: center; gap: 1rem; border: 1px solid #f1f5f9; cursor: pointer; transition: all 0.2s; }
+        .fg-h-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         .fgh-img { width: 50px; height: 50px; border-radius: 14px; overflow: hidden; position: relative; flex-shrink: 0; }
         .fgh-txt { display: flex; flex-direction: column; }
         .fgh-txt strong { font-size: 0.9rem; color: #1e293b; }
         .fgh-txt span { font-size: 0.75rem; color: #64748b; }
+
+        /* MODALS */
+        .modal-overlay {
+          position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+          background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(8px);
+          z-index: 10000; display: flex; align-items: center; justify-content: center;
+          padding: 1.5rem;
+        }
+        .modal-content {
+          background: #fff; width: 100%; max-width: 500px; border-radius: 32px;
+          padding: 2.5rem; position: relative; box-shadow: 0 40px 80px rgba(0,0,0,0.15);
+        }
+        .modal-close-btn {
+          position: absolute; top: 1.5rem; right: 1.5rem;
+          background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%;
+          display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b;
+        }
+        .modal-title { font-size: 1.6rem; font-weight: 850; color: #1e293b; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+        
+        .activity-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .act-opt-card { 
+          background: #f8fafc; border: 2px solid transparent; border-radius: 20px;
+          padding: 1.25rem 0.5rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+          cursor: pointer; transition: all 0.2s;
+        }
+        .act-opt-card i { font-size: 1.6rem; color: #6099cf; }
+        .act-opt-card span { font-size: 0.8rem; font-weight: 700; color: #475569; }
+        .act-opt-card.active { background: #e0f2fe; border-color: #6099cf; }
+        .act-opt-card.active i { color: #0369a1; }
+        .act-opt-card.active span { color: #0369a1; }
+
+        .input-group { margin-bottom: 2rem; }
+        .input-group label { display: block; font-size: 0.9rem; font-weight: 700; color: #64748b; margin-bottom: 0.5rem; }
+        .input-group input { 
+          width: 100%; padding: 1rem; border-radius: 16px; border: 1.5px solid #e2e8f0;
+          font-size: 1.1rem; font-weight: 700; color: #1e293b; outline: none;
+        }
+        .input-group input:focus { border-color: #6099cf; }
+
+        .save-btn {
+          width: 100%; padding: 1.2rem; background: #0f172a; color: #fff; border: none;
+          border-radius: 18px; font-size: 1.1rem; font-weight: 700; cursor: pointer;
+          transition: all 0.2s;
+        }
+        .save-btn:hover { background: #4498ca; transform: translateY(-2px); }
+
+        .voice-body { text-align: center; }
+        .voice-hint { color: #64748b; margin-bottom: 2.5rem; font-weight: 500; font-style: italic; }
+        .voice-visualizer { display: flex; justify-content: center; gap: 4px; height: 30px; margin-bottom: 2rem; align-items: center; }
+        .v-bar { width: 4px; height: 10px; background: #e2e8f0; border-radius: 2px; }
+        .v-bar.active { height: 25px; background: #6099cf; animation: pulse-bar 1s infinite; }
+        @keyframes pulse-bar { 0%, 100% { height: 15px; } 50% { height: 30px; } }
+        
+        .mic-circle {
+          width: 80px; height: 80px; border-radius: 50%; background: #6099cf;
+          color: #fff; display: flex; align-items: center; justify-content: center;
+          font-size: 2.2rem; margin: 0 auto 3rem;
+        }
+        .mic-circle.pulse { animation: pulse-mic 2s infinite; }
+        @keyframes pulse-mic { 0% { box-shadow: 0 0 0 0 rgba(96, 153, 207, 0.4); } 70% { box-shadow: 0 0 0 25px rgba(96, 153, 207, 0); } 100% { box-shadow: 0 0 0 0 rgba(96, 153, 207, 0); } }
+
+        .camera-preview {
+          width: 100%; height: 250px; background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); border-radius: 24px;
+          display: flex; flex-direction: column; align-items: center; justify-content: center;
+          color: #64748b; gap: 1rem; margin-bottom: 2rem; border: 1.5px dashed #cbd5e1;
+          position: relative; overflow: hidden;
+        }
+        .cam-image-overlay {
+          position: absolute; inset: 0;
+          background-size: cover; background-position: center;
+          opacity: 1; z-index: 0;
+        }
+        .camera-preview i, .camera-preview .cam-text { position: relative; z-index: 1; }
+        .camera-preview i { font-size: 3rem; opacity: 0.5; color: #4498ca; }
+        .cam-text { font-size: 0.9rem; font-weight: 600; opacity: 0.8; color: #1e293b; }
+        .photo-btns { display: flex; justify-content: center; }
+        .cam-shutter { 
+          width: 70px; height: 70px; border-radius: 50%; border: 4px solid #fff;
+          background: transparent; position: relative; cursor: pointer;
+        }
+        .cam-shutter::after {
+          content: ''; position: absolute; inset: 4px; border-radius: 50%; background: #fff;
+          transition: transform 0.1s;
+        }
+        .cam-shutter:active::after { transform: scale(0.9); }
       `}</style>
     </div>
   );

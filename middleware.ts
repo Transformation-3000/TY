@@ -20,20 +20,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  const cookie = request.cookies.get(AUTH_COOKIE);
-  const expected = process.env.LONGIVITY_DASHBOARD_PASSWORD;
-
-  if (!expected) {
-    // Kein Passwort konfiguriert → Zugriff erlauben (Dev-Fallback)
-    return NextResponse.next();
-  }
-
-  if (!cookie?.value || cookie.value !== expected) {
-    const loginUrl = new URL('/login', request.url);
-    loginUrl.searchParams.set('from', pathname);
-    return NextResponse.redirect(loginUrl);
-  }
-
+  // Passwortschutz deaktiviert - Zugriff immer erlauben
   return NextResponse.next();
 }
 

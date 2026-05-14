@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import LongevityJourney7LevelsPage from '@/components/longevity/LongevityJourney7LevelsPage';
 
 type SubTab = 'trends' | 'goals' | 'activities' | 'reports' | 'journey';
 type TrendPeriod = '3m' | '6m' | '12m';
@@ -224,23 +225,7 @@ export default function EntwicklungPage() {
 
       {/* ── JOURNEY ── */}
       {activeTab === 'journey' && (
-        <div className="journey-view">
-          <div className="journey-hero">
-            <div className="jh-badge">Level 3</div>
-            <div className="jh-info">
-              <h2>Longevity Explorer</h2>
-              <p>Noch 53 Sterne bis Level 4</p>
-            </div>
-          </div>
-          <div className="journey-map">
-            {[1,2,3,4,5,6,7].map(l => (
-              <div key={l} className={`map-node ${l <= 3 ? 'active' : ''}`}>
-                <div className="node-num">{l}</div>
-                <div className="node-label">Level {l}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <LongevityJourney7LevelsPage />
       )}
 
       {/* ── BIO AGE DETAILS MODAL ── */}

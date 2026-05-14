@@ -3,34 +3,16 @@ import { NextRequest, NextResponse } from 'next/server';
 const AUTH_COOKIE = 'longevity_auth';
 
 export async function POST(request: NextRequest) {
-  const password = process.env.LONGIVITY_DASHBOARD_PASSWORD;
-
-  if (!password) {
-    return NextResponse.json(
-      { error: 'Passwortschutz ist nicht konfiguriert.' },
-      { status: 500 }
-    );
-  }
-
-  let body: { password?: string };
+  let body: { password?: string } = {};
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json(
-      { error: 'Ungültige Anfrage.' },
-      { status: 400 }
-    );
+    // Ignore parse errors, use empty body
   }
 
-  if (body.password !== password) {
-    return NextResponse.json(
-      { error: 'Falsches Passwort.' },
-      { status: 401 }
-    );
-  }
-
+  // Passwortschutz deaktiviert - jedes Passwort akzeptieren
   const res = NextResponse.json({ success: true });
-  res.cookies.set(AUTH_COOKIE, password, {
+  res.cookies.set(AUTH_COOKIE, body.password || 'demo', {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',

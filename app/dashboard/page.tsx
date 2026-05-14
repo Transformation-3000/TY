@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import '@/lib/chartConfig'; // Chart.js initialisieren
 import WelcomeSection from '@/components/layout/WelcomeSection';
 import Sidebar from '@/components/layout/Sidebar';
-import BottomNav from '@/components/layout/BottomNav';
 import MicroHabitsPage from '@/components/microhabits/MicroHabitsPage';
 import BlackBoardPage from '@/components/blackboard/BlackBoardPage';
 import InsightsPage from '@/components/insights/InsightsPage';
@@ -25,6 +24,8 @@ import CommunityPage from '@/components/community/CommunityPage';
 import ReportsPage from '@/components/reports/ReportsPage';
 import MehrPage from '@/components/mehr/MehrPage';
 import WachstumPage from '@/components/wachstum/WachstumPage';
+import InspirationPage from '@/components/inspiration/InspirationPage';
+import BiomarkerDashboard from '@/components/dashboard/biomarker/BiomarkerDashboard';
 import Image from 'next/image';
 
 export default function Dashboard() {
@@ -58,9 +59,13 @@ export default function Dashboard() {
       <div className="main-content">
         {sidebarOpen && <div className="sidebar-overlay" onClick={() => setSidebarOpen(false)} />}
         <Sidebar activeItem={activeMenuItem} onItemClick={navigate} />
-        <div className="content-wrapper content-with-bottom-nav">
+        <div className="content-wrapper">
           {activeMenuItem === 'dashboard' && (
             <VogelperspektivePage />
+          )}
+
+          {activeMenuItem === 'quick-wins' && (
+            <WachstumPage />
           )}
 
           {activeMenuItem === 'longevity-journey' && (
@@ -98,7 +103,7 @@ export default function Dashboard() {
           )}
 
           {activeMenuItem === 'insights' && (
-            <InsightsPage />
+            <InspirationPage />
           )}
 
           {activeMenuItem === 'entwicklung' && (
@@ -212,9 +217,31 @@ export default function Dashboard() {
             </div>
           )}
 
-          {activeMenuItem === 'settings-hilfe' && (
-            <div style={{ padding: '2rem', textAlign: 'center' }}>
-              <h2>Hilfe & Rechtliches</h2>
+          {activeMenuItem === 'live-events' && (
+            <div style={{ padding: '2rem' }}>
+              <button onClick={() => setActiveMenuItem('mehr')} className="btn-back">← Zurück zu Mehr</button>
+              <MasterclassesPage />
+            </div>
+          )}
+
+          {activeMenuItem === 'activity-tracker' && (
+            <div style={{ padding: '2rem' }}>
+              <button onClick={() => setActiveMenuItem('mehr')} className="btn-back">← Zurück zu Mehr</button>
+              <VogelperspektivePage />
+            </div>
+          )}
+
+          {activeMenuItem === 'quick-win-library' && (
+            <div style={{ padding: '2rem' }}>
+              <button onClick={() => setActiveMenuItem('mehr')} className="btn-back">← Zurück zu Mehr</button>
+              <WachstumPage />
+            </div>
+          )}
+
+          {activeMenuItem === 'lab' && (
+            <div style={{ padding: '2rem' }}>
+              <button onClick={() => setActiveMenuItem('mehr')} className="btn-back">← Zurück zu Mehr</button>
+              <BiomarkerDashboard />
             </div>
           )}
 
@@ -223,16 +250,7 @@ export default function Dashboard() {
           )}
         </div>
       </div>
-      <BottomNav activeItem={activeMenuItem} onItemClick={navigate} />
 
-      {/* Sticky Referral Button */}
-      <button className="sticky-referral-btn" title="True Years empfehlen">
-        <i className="bi bi-gift-fill sticky-referral-icon"></i>
-        <span className="sticky-referral-text">
-          <span className="sticky-referral-main">Empfehle mich weiter</span>
-          <span className="sticky-referral-sub">Erhalte 1 Gratismonat</span>
-        </span>
-      </button>
     </main>
   );
 }

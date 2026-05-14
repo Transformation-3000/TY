@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import ReelsFocusView from './ReelsFocusView';
 
-type Tab = 'experten' | 'science' | 'events' | 'hacks' | 'gespeichert';
+type Tab = 'experten' | 'science' | 'hacks' | 'gespeichert';
 
 interface Reel {
   id: string;
@@ -45,13 +45,6 @@ const reels: Reel[] = [
     author: 'Dr. Andrew Huberman', role: 'Neurowissenschaft, Stanford', readTime: '2 Min', image: '/images/insights-kaelte.jpeg', tag: 'IMMUN', tagColor: '#8b5cf6', saved: false,
   },
   {
-    id: 'r4', category: 'events',
-    title: 'Longevity & Biohacking: Mindset für 2025',
-    teaser: 'Exklusiver Expert-Talk mit Dr. Peter Attia und Prof. Valter Longo über mentale Resilienz.',
-    fullText: 'Wie beeinflusst unsere Einstellung zum Altern unsere tatsächliche biologische Alterung? Dr. Peter Attia erklärt die psychologischen Komponenten von Longevity. Es geht nicht nur um Gene, sondern um den Umgang mit Stress und die langfristige Planung von Gesundheit.',
-    author: 'TrueYears Insights', role: 'Experten-Panel', readTime: '1 Min', image: '/images/insights-event.jpeg', tag: 'MINDSET', tagColor: '#06b6d4', saved: false,
-  },
-  {
     id: 'r5', category: 'science',
     title: 'Resveratrol & NMN: Update 2024',
     teaser: 'Landmark-Studie von Dr. Sinclair zeigt: NMN erhöht NAD+-Spiegel signifikant – aber der Timing-Faktor ist entscheidend.',
@@ -75,10 +68,9 @@ const reels: Reel[] = [
 ];
 
 const tabLabels: { id: Tab; label: string; icon: string }[] = [
-  { id: 'experten', label: 'Experten', icon: 'bi-star-fill' },
+  { id: 'experten', label: 'Biohacking', icon: 'bi-star-fill' },
   { id: 'science', label: 'Science', icon: 'bi-journal-medical' },
-  { id: 'events', label: 'Events', icon: 'bi-calendar-event' },
-  { id: 'hacks', label: 'Biohacker', icon: 'bi-lightning-charge' },
+  { id: 'hacks', label: 'Hacks', icon: 'bi-lightning-charge' },
   { id: 'gespeichert', label: 'Gespeichert', icon: 'bi-bookmark-fill' },
 ];
 
