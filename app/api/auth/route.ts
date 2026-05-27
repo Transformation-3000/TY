@@ -10,9 +10,16 @@ export async function POST(request: NextRequest) {
     // Ignore parse errors, use empty body
   }
 
-  // Passwortschutz deaktiviert - jedes Passwort akzeptieren
+  // Passwortschutz aktivieren - Passwort prüfen
+  if (body.password !== 'Longevity100') {
+    return NextResponse.json(
+      { error: 'Ungültiges Passwort.' },
+      { status: 401 }
+    );
+  }
+
   const res = NextResponse.json({ success: true });
-  res.cookies.set(AUTH_COOKIE, body.password || 'demo', {
+  res.cookies.set(AUTH_COOKIE, body.password, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',

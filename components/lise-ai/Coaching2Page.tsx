@@ -74,11 +74,22 @@ const syncItems = [
   { label: 'Tracking aktiviert: Schlafqualität' },
   { label: 'Nächster Check-in: Morgen, 20:00 Uhr' },
 ];
+const getRelativeDate = (daysAgo: number, timeStr: string): string => {
+  if (daysAgo === 1) return `Gestern, ${timeStr}`;
+  if (daysAgo < 7) return `Vor ${daysAgo} Tagen, ${timeStr}`;
+  
+  const d = new Date();
+  d.setDate(d.getDate() - daysAgo);
+  const day = d.getDate();
+  const months = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+  return `${day}. ${months[d.getMonth()]}, ${timeStr}`;
+};
+
 const pastSessions = [
-  { id: 1, date: '21. März, 14:30', focus: 'Ad-Hoc: Jetlag & Bio-Sync', summary: 'Kurzfristiges Einzelgespräch nach deinem Flug. Protokoll für Melatonin-Timing und Licht-Exposure erarbeitet.', output: 'Reise-Protokoll', duration: '12 Min.', type: 'Daily' },
-  { id: 2, date: '18. März, 18:00', focus: 'Wöchentlicher Check-in', summary: 'Fokus auf Schlaf und HRV. Abendroutine optimiert – digitales Detox ab 21:30.', output: 'Schlaf-Routine erstellt', duration: '18 Min.', type: 'Weekly' },
-  { id: 3, date: '11. März, 18:00', focus: 'Wöchentlicher Check-in', summary: 'Entzündungshemmende Lebensmittel besprochen. Wochenplan mit Omega-3-Quellen optimiert.', output: 'Ernährungsplan', duration: '20 Min.', type: 'Weekly' },
-  { id: 4, date: '04. März, 18:00', focus: 'Wöchentlicher Check-in', summary: 'Baseline-Check und Monats-Zielsetzung besprochen. Mikro-Routinen in den Arbeitsalltag integriert.', output: 'Baseline definiert', duration: '25 Min.', type: 'Quarterly' },
+  { id: 1, date: getRelativeDate(1, '14:30'), focus: 'Ad-Hoc: Jetlag & Bio-Sync', summary: 'Kurzfristiges Einzelgespräch nach deinem Flug. Protokoll für Melatonin-Timing und Licht-Exposure erarbeitet.', output: 'Reise-Protokoll', duration: '12 Min.', type: 'Lisa AI Daily' },
+  { id: 2, date: getRelativeDate(3, '18:00'), focus: 'Wöchentlicher Check-in', summary: 'Fokus auf Schlaf und HRV. Abendroutine optimiert – digitales Detox ab 21:30.', output: 'Schlaf-Routine erstellt', duration: '18 Min.', type: 'Lisa AI Weekly' },
+  { id: 3, date: getRelativeDate(7, '18:00'), focus: 'Wöchentlicher Check-in', summary: 'Entzündungshemmende Lebensmittel besprochen. Wochenplan mit Omega-3-Quellen optimiert.', output: 'Ernährungsplan', duration: '20 Min.', type: 'Lisa AI Weekly' },
+  { id: 4, date: getRelativeDate(8, '18:00'), focus: 'Wöchentlicher Check-in', summary: 'Baseline-Check und Monats-Zielsetzung besprochen. Mikro-Routinen in den Arbeitsalltag integriert.', output: 'Baseline definiert', duration: '25 Min.', type: 'Lisa AI Quarterly' },
 ];
 
 interface Coaching2PageProps { onOpenAvatar?: () => void; }
@@ -318,69 +329,62 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
             <div className="wb-main">
               <div className="wb-hero-lg">
                 <div className="wbl-glow"></div>
-                <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="wbl-video" />
+                <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="wbl-video" onCanPlay={(e) => { e.currentTarget.playbackRate = 0.75; }} />
               </div>
-              <div className="wbl-name">Lisa</div>
+              <div className="wbl-name">Lisa AI</div>
               <div className="wbl-status"><span className="wbl-dot" />Online · bereit für dich</div>
-              <p className="wb-tagline">Dein persönlicher Longevity-Coach</p>
+              <p className="wb-tagline">Dein persönlicher Executive Coach</p>
             </div>
             
             <div className="wb-sidebar">
               <div className="wbs-header">
-                <h1 className="wb-title">Willkommen zurück, Hendrik.</h1>
-                <p className="wb-sub">Wähle dein Session-Typ für heute.</p>
+                <h1 className="wb-title">Wähle deine Session</h1>
               </div>
 
               <div className="wb-session-btns">
                 <button className="wb-stype-btn" onClick={() => startSession('daily')}>
                   <div className="wbsb-left">
-                    <div className="wbsb-num">01</div>
                     <div className="wbsb-body">
-                      <div className="wbsb-title">Lisa Daily</div>
-                      <div className="wbsb-desc">Kurzer Tages-Check-in · Energie & Stimmung analysieren · sofortige Micro-Maßnahme</div>
+                      <div className="wbsb-title">Daily</div>
+                      <div className="wbsb-desc">Kurzer täglicher Check-In zur Tagesverfassung</div>
                     </div>
                   </div>
                   <div className="wbsb-right">
-                    <span className="wbsb-time">~5 Min</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    <span className="wbsb-time">5 Min</span>
                   </div>
                 </button>
 
                 <button className="wb-stype-btn" onClick={() => startSession('weekly')}>
                   <div className="wbsb-left">
-                    <div className="wbsb-num">02</div>
                     <div className="wbsb-body">
-                      <div className="wbsb-title">Lisa Weekly</div>
-                      <div className="wbsb-desc">Wochenreflexion · Habit-Analyse · Zielabgleich & neue Prioritäten</div>
+                      <div className="wbsb-title">Weekly</div>
+                      <div className="wbsb-desc">Wöchentliche Session zum Aufbau neuer Routinen</div>
                     </div>
                   </div>
                   <div className="wbsb-right">
-                    <span className="wbsb-time">~10 Min</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    <span className="wbsb-time">10 Min</span>
                   </div>
                 </button>
 
                 <button className="wb-stype-btn" onClick={() => startSession('quarterly')}>
                   <div className="wbsb-left">
-                    <div className="wbsb-num">03</div>
                     <div className="wbsb-body">
-                      <div className="wbsb-title">Lisa Quarterly</div>
-                      <div className="wbsb-desc">Tiefe Verhaltensreflexion · Biomarker-Trend · langfristige Strategie</div>
+                      <div className="wbsb-title">Quarterly</div>
+                      <div className="wbsb-desc">Quartalsweise Reflexion der Longevity-Reise</div>
                     </div>
                   </div>
                   <div className="wbsb-right">
-                    <span className="wbsb-time">~15 Min</span>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                    <span className="wbsb-time">15 Min</span>
                   </div>
                 </button>
               </div>
 
               <div className="wb-bottom-btns">
-                <button className="wb-bottom-btn" onClick={() => setRightTab('history')}>
+                <button className="wb-bottom-btn btn-history" onClick={() => setRightTab('history')}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                   Gesprächshistorie
                 </button>
-                <button className="wb-bottom-btn" onClick={() => setView('setup')}>
+                <button className="wb-bottom-btn btn-config" onClick={() => setView('setup')}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
                   Konfiguration Assistant
                 </button>
@@ -427,7 +431,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
             </div>
             <div className="prep-content">
               <div className="pc-lens">
-                <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="pc-avatar" />
+                <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="pc-avatar" onCanPlay={(e) => { e.currentTarget.playbackRate = 0.75; }} />
               </div>
               <h2 className="pc-title">Mindspace wird vorbereitet</h2>
               <div className="pc-steps-container">
@@ -591,7 +595,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
               </div>
             </div>
             <div className="stop">
-              <div className="stl"><div className="tav"><Image src={c.image} alt={c.name} width={40} height={40} style={{objectFit:'cover',borderRadius:'50%'}} />{isSpeaking&&<span className="sring"/>}</div><div className="tinf"><strong>{c.name}</strong><span className="tst">{isSpeaking?'spricht...':isListening?'hört zu...':phase==='data-pull'?'analysiert Daten...':phase==='syncing'?'überträgt...':'online'}</span></div><span className="s-type-badge">{sessionType==='daily'?'Daily':sessionType==='weekly'?'Weekly':'Quarterly'}</span></div>
+              <div className="stl"><div className="tav"><Image src={c.image} alt={c.name} width={40} height={40} style={{objectFit:'cover',borderRadius:'50%'}} />{isSpeaking&&<span className="sring"/>}</div><div className="tinf"><strong>{c.name}</strong><span className="tst">{isSpeaking?'spricht...':isListening?'hört zu...':phase==='data-pull'?'analysiert Daten...':phase==='syncing'?'überträgt...':'online'}</span></div><span className="s-type-badge">{sessionType==='daily'?'Lisa AI Daily':sessionType==='weekly'?'Lisa AI Weekly':'Lisa AI Quarterly'}</span></div>
               <div className="s-center-cal"><span className="we-countdown-sm">Live heute, 18:00 Uhr</span></div>
               <div className="str"><div className="stimer"><span className="tval">{formatTime(sessionTime)}</span></div><button className="ebtn" onClick={handleEndSession}>Beenden</button></div>
             </div>
@@ -626,7 +630,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
                     <div className={`s-wave s-wave-3 ${isListening||isSpeaking?'act':''}`} />
                   </>)}
                   <div className="s-lisa-wrap">
-                    <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="s-lisa-vid" />
+                    <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="s-lisa-vid" onCanPlay={(e) => { e.currentTarget.playbackRate = 0.75; }} />
                     <div className="s-lisa-glow" />
                   </div>
                 </div>
@@ -834,29 +838,37 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .wv-btn{padding:.55rem 1.1rem;border-radius:12px;border:1.5px solid rgba(68,152,202,.15);background:rgba(255,255,255,.7);color:#5a8aa8;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .25s;backdrop-filter:blur(8px)}
         .wv-btn:hover{border-color:rgba(68,152,202,.35);color:#2c5a7c;background:rgba(255,255,255,.95)}
         /* NEW WELCOME: Lisa left panel */
-        .wb-hero-lg{position:relative;width:min(300px,64vw);height:min(300px,64vw);border-radius:50%;overflow:hidden;margin-bottom:1.25rem;flex-shrink:0}
+        .wb-hero-lg{position:relative;width:min(400px,84vw);height:min(400px,84vw);border-radius:50%;overflow:hidden;margin-bottom:1.25rem;flex-shrink:0}
         .wbl-glow{position:absolute;inset:-20%;border-radius:50%;background:conic-gradient(from 0deg,rgba(68,152,202,0.4),rgba(30,80,160,0.3),rgba(68,152,202,0.4));filter:blur(28px);opacity:0.5;animation:spin 18s linear infinite}
         .wbl-video{position:relative;z-index:2;width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid rgba(68,152,202,0.25);box-shadow:0 16px 60px rgba(0,20,80,0.45)}
         .wbl-name{font-size:2.2rem;font-weight:300;letter-spacing:-0.02em;color:#e8f0fa;margin-bottom:0.2rem}
-        .wbl-status{display:flex;align-items:center;gap:0.45rem;font-size:0.85rem;color:rgba(180,210,240,0.7);margin-bottom:0.5rem}
+        .wbl-status{display:flex;align-items:center;gap:0.45rem;font-size:0.98rem;color:rgba(180,210,240,0.7);margin-bottom:0.6rem}
         .wbl-dot{width:8px;height:8px;border-radius:50%;background:#4CAF50;flex-shrink:0;box-shadow:0 0 6px rgba(76,175,80,0.8);animation:dotpulse 2s infinite}
-        .wb-tagline{font-size:0.9rem;color:rgba(180,210,240,0.45);margin:0;letter-spacing:0.04em;text-transform:uppercase}
+        .wb-tagline{font-size:1.05rem;color:rgba(180,210,240,0.45);margin:0;letter-spacing:0.04em;text-transform:uppercase}
         /* NEW WELCOME: right session buttons */
-        .wbs-header{margin-bottom:0.5rem}
-        .wb-session-btns{display:flex;flex-direction:column;gap:0.7rem;flex:1}
+        .wbs-header{margin-bottom:0.8rem;padding-top:20px}
+        .wbs-header .wb-title{font-size:1.7rem;font-weight:400;letter-spacing:-0.02em}
+        .wb-session-btns{display:flex;flex-direction:column;gap:0.7rem;flex:1;padding:8px;margin:-8px}
         .wb-stype-btn{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.05rem 1.25rem;border-radius:18px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer;transition:all 0.25s cubic-bezier(0.16,1,0.3,1);text-align:left;width:100%;color:#e2eaf4}
-        .wb-stype-btn:hover{border-color:rgba(68,152,202,0.45);background:rgba(68,152,202,0.12);transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,20,80,0.25)}
+        .wb-stype-btn:hover{border-color:#fff;background:#7dd3fc;color:#091221;transform:translateY(-3px) scale(1.01);box-shadow:0 0 0 1px #fff, 0 0 0 3px #0284c7, 0 0 15px 4px rgba(125,211,252,0.45), 0 12px 32px rgba(0,20,60,0.35)}
+        .wb-stype-btn:hover .wbsb-title{color:#091221}
+        .wb-stype-btn:hover .wbsb-desc{color:#1e293b}
+        .wb-stype-btn:hover .wbsb-num{color:#0284c7}
+        .wb-stype-btn:hover .wbsb-time{color:#ffffff;background:#0284c7;border-color:#0284c7;box-shadow:0 4px 12px rgba(2,132,199,0.25)}
         .wbsb-left{display:flex;align-items:flex-start;gap:0.9rem;flex:1;min-width:0}
         .wbsb-num{font-size:1rem;font-weight:700;color:rgba(68,152,202,0.5);letter-spacing:-0.02em;flex-shrink:0;min-width:26px;font-variant-numeric:tabular-nums;padding-top:0.05rem}
         .wbsb-body{flex:1;min-width:0}
-        .wbsb-title{font-size:0.95rem;font-weight:700;color:#e8f0fa;line-height:1.2;margin-bottom:0.2rem}
-        .wbsb-desc{font-size:0.72rem;color:rgba(180,210,240,0.55);line-height:1.4}
-        .wbsb-right{display:flex;flex-direction:column;align-items:flex-end;gap:0.3rem;flex-shrink:0;color:rgba(68,152,202,0.6)}
-        .wbsb-time{font-size:0.68rem;font-weight:600;color:rgba(68,152,202,0.8);background:rgba(68,152,202,0.1);padding:0.2rem 0.5rem;border-radius:8px;border:1px solid rgba(68,152,202,0.2);white-space:nowrap}
+        .wbsb-title{font-size:1.38rem;font-weight:700;color:#e8f0fa;line-height:1.2;margin-bottom:0.35rem}
+        .wbsb-desc{font-size:1.12rem;color:rgba(180,210,240,0.6);line-height:1.45}
+        .wbsb-right{display:flex;flex-direction:row;align-items:center;gap:0.75rem;flex-shrink:0;color:rgba(68,152,202,0.6)}
+        .wbsb-time{font-size:1.18rem;font-weight:600;color:rgba(68,152,202,0.8);background:rgba(68,152,202,0.1);padding:0.4rem 0.8rem;border-radius:12px;border:1px solid rgba(68,152,202,0.2);white-space:nowrap}
         /* bottom history/config buttons */
-        .wb-bottom-btns{display:flex;gap:0.6rem;margin-top:0.5rem}
-        .wb-bottom-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:0.5rem;padding:0.75rem 1rem;border-radius:14px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.05);color:rgba(180,210,240,0.65);font-size:0.8rem;font-weight:500;cursor:pointer;transition:all 0.25s}
-        .wb-bottom-btn:hover{border-color:rgba(68,152,202,0.35);color:rgba(180,210,240,0.95);background:rgba(68,152,202,0.1)}
+        .wb-bottom-btns{display:flex;gap:0.6rem;margin-top:0.8rem;margin-bottom:160px}
+        .wb-bottom-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:0.5rem;height:60px;padding:0 1.2rem;border-radius:14px;font-size:1.12rem;font-weight:500;cursor:pointer;transition:all 0.25s}
+        .wb-bottom-btn.btn-history{background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.06);color:#cbd5e1}
+        .wb-bottom-btn.btn-history:hover{background:rgba(15,23,42,0.85);border-color:#38bdf8;color:#38bdf8;box-shadow:0 0 18px rgba(56,189,248,0.3)}
+        .wb-bottom-btn.btn-config{background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.06);color:#cbd5e1}
+        .wb-bottom-btn.btn-config:hover{background:rgba(15,23,42,0.85);border-color:#c084fc;color:#c084fc;box-shadow:0 0 18px rgba(192,132,252,0.3)}
         /* history overlay */
         .wb-history-overlay{position:absolute;inset:0;border-radius:32px;background:rgba(11,23,48,0.96);backdrop-filter:blur(20px);padding:1.5rem;display:flex;flex-direction:column;gap:0.85rem;overflow:hidden;z-index:10}
         .wbh-header{display:flex;align-items:center;gap:1rem;margin-bottom:0.25rem}
@@ -1304,7 +1316,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
           border-radius: 32px; border: 1px solid rgba(255,255,255,0.1);
           box-shadow: 0 24px 80px rgba(0,20,60,0.4);
           display: flex; flex-direction: column; align-items: center; justify-content: center;
-          position: relative; overflow: hidden; padding: 3rem; text-align: center;
+          position: relative; overflow: hidden; padding: 1.5rem 3rem 3rem; text-align: center;
         }
         .wb-hero { position: relative; width: 220px; height: 220px; margin-bottom: 2rem; border-radius: 50%; overflow: hidden; }
         .wb-video { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; position: relative; z-index: 10; box-shadow: 0 16px 40px rgba(201, 169, 110, 0.18); }
@@ -1325,7 +1337,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .wb-start:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 32px rgba(201, 169, 110, 0.4); }
         .wb-start-glow { position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); transform: skewX(-20deg); animation: buttonShine 5s infinite; }
         
-        .wb-sidebar { display: flex; flex-direction: column; gap: 0.85rem; position: relative; overflow: hidden; min-width: 0; }
+        .wb-sidebar { display: flex; flex-direction: column; gap: 0.85rem; position: relative; overflow: visible; min-width: 0; padding-top: 20px; }
         .wb-sidebar-tabs { display: none; }
         .wb-st-btn {
           flex: 1; padding: 0.75rem 0; border-radius: 14px; border: none; background: transparent;
@@ -1436,7 +1448,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         @media (max-width: 992px) {
           .w-bento { grid-template-columns: 1fr; height: auto; padding: 1rem; }
           .wb-main { padding: 2rem 1.5rem; }
-          .wb-hero-lg { width: min(200px,55vw); height: min(200px,55vw); }
+          .wb-hero-lg { width: min(265px,72vw); height: min(265px,72vw); }
           .s-body { flex-direction: column !important; }
           .s-left { width: 100% !important; padding: 1rem !important; border-right: none !important; border-bottom: 1px solid rgba(68,152,202,0.08) !important; }
           .s-lisa-scene { width: 260px !important; height: 260px !important; }

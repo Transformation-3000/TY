@@ -153,21 +153,21 @@ export default function VogelperspektivePage() {
           <div className="focus-main-content">
             <div className="focus-hero-row">
               <div className="sunflower-circle">
-                <Image src="/images/photo_sunflower.png" width={60} height={60} alt="Focus" />
+                <Image src="/images/focus_landscape.png" width={84} height={84} alt="Focus" style={{ borderRadius: '50%', objectFit: 'cover' }} />
               </div>
               <div className="focus-text-content">
                 <h3 className="focus-title">Stress reduzieren</h3>
-                <p className="focus-desc">Komm kurz runter und finde zurück in Ruhe. Gönn dir eine kleine Auszeit für mehr Energie. Jeder Moment der Achtsamkeit bringt dich deinem Ziel näher.</p>
+                <p className="focus-desc">Senke aktiv dein Cortisollevel und stärke deine Herzratenvariabilität (HRV) durch gezielte Entlastungsphasen und mentale Regeneration im Alltag.</p>
               </div>
             </div>
             <div className="focus-cards-row">
               <div className="f-card">
-                <div className="f-card-img"><Image src="/images/photo_meditation.png" fill alt="Atem" style={{ objectFit: 'cover' }} /></div>
+                <div className="f-card-img"><Image src="/images/photo_breath_v2.png" fill alt="Atem" style={{ objectFit: 'cover' }} /></div>
                 <span className="f-card-label">Atemübung</span>
               </div>
               <div className="f-card">
                 <div className="f-card-img"><Image src="/images/photo_walk.png" fill alt="Walk" style={{ objectFit: 'cover' }} /></div>
-                <span className="f-card-label">Spaziergang</span>
+                <span className="f-card-label">Waldbaden</span>
               </div>
             </div>
           </div>
@@ -181,7 +181,7 @@ export default function VogelperspektivePage() {
           </div>
           <div className="avatar-outer-circle">
             <div className="avatar-inner">
-              <Image src="/images/woman_53_blonde.png" width={240} height={240} alt="Monique" priority />
+              <Image src="/images/woman_53_blonde.png" width={288} height={288} alt="Monique" priority />
             </div>
           </div>
         </div>
@@ -461,16 +461,47 @@ export default function VogelperspektivePage() {
             )}
 
             {activeModal === 'photo' && (
-              <div className="modal-body">
+              <div className="modal-body" style={{ position: 'relative' }}>
                 <h3 className="modal-title">Mahlzeit erfassen</h3>
                 <p className="photo-hint">Fotografiere dein Essen für die KI-Analyse</p>
                 <div className="camera-preview">
                   <div className="cam-image-overlay" style={{ backgroundImage: 'url(/images/meal_preview.png)' }}></div>
-                  <i className="bi bi-camera"></i>
-                  <span className="cam-text">Kamera wird gestartet...</span>
+                  <div className="camera-grid-lines"></div>
+                  <div className="camera-focus-bracket"></div>
+                  <div className="camera-flash-overlay"></div>
+                  
+                  <div className="camera-live-badge">
+                    <span className="live-dot"></span> LIVE-SUCHER
+                  </div>
+                  
+                  {/* Dynamic camera status text */}
+                  {(() => {
+                    return (
+                      <div className="camera-toast-container">
+                        <span className="cam-text-toast"><i className="bi bi-camera-fill" style={{ marginRight: '6px' }}></i> KI-Bildoptimierung aktiv</span>
+                      </div>
+                    );
+                  })()}
                 </div>
-                <div className="photo-btns">
-                  <button className="save-btn" style={{ width: 'auto', padding: '1rem 3rem' }} onClick={() => setActiveModal(null)}>Jetzt Foto machen</button>
+                <div className="photo-btns" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.8rem' }}>
+                  <button 
+                    className="save-btn" 
+                    style={{ width: 'auto', padding: '0.8rem 2.5rem', background: '#006EA7', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1rem', borderRadius: '14px', boxShadow: '0 4px 12px rgba(0, 110, 167, 0.2)', textAlign: 'center' }} 
+                    onClick={(e) => {
+                      const flash = document.querySelector('.camera-flash-overlay');
+                      if (flash) {
+                        flash.classList.add('flash-active');
+                        setTimeout(() => {
+                          flash.classList.remove('flash-active');
+                          setActiveModal(null);
+                        }, 500);
+                      } else {
+                        setActiveModal(null);
+                      }
+                    }}
+                  >
+                    Jetzt Bild machen
+                  </button>
                 </div>
               </div>
             )}
@@ -704,21 +735,25 @@ export default function VogelperspektivePage() {
 
         /* BOX 1: FOCUS */
         .focus-hero-row { display: flex; gap: 1.25rem; align-items: center; margin-bottom: 1.5rem; }
-        .sunflower-circle { width: 70px; height: 70px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
+        .sunflower-circle { width: 84px; height: 84px; border-radius: 50%; overflow: hidden; flex-shrink: 0; }
         .focus-title { font-size: 1.4rem; font-weight: 800; color: #4498ca; margin: 0; }
         .focus-desc { font-size: 0.85rem; color: #64748b; margin: 4px 0 0; line-height: 1.4; }
         .focus-cards-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .f-card { background: #fff; border: 1px solid #f1f5f9; border-radius: 20px; padding: 0.6rem; text-align: center; }
+        .f-card { background: #fff; border: 1px solid #f1f5f9; border-radius: 20px; padding: 0.6rem; text-align: center; cursor: pointer; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .f-card:hover { transform: translateY(-4px); border-color: #cbd5e1; box-shadow: 0 10px 24px rgba(0,0,0,0.06); }
         .f-card-img { height: 110px; border-radius: 16px; overflow: hidden; position: relative; margin-bottom: 0.5rem; }
-        .f-card-label { font-size: 0.85rem; font-weight: 700; color: #1e293b; }
+        .f-card-img :global(img) { transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); }
+        .f-card:hover .f-card-img :global(img) { transform: scale(1.08); }
+        .f-card-label { font-size: 0.85rem; font-weight: 700; color: #1e293b; transition: color 0.2s; }
+        .f-card:hover .f-card-label { color: #006ea7; }
 
         /* CENTER SECTION */
         .center-section { text-align: center; }
-        .date-display { font-size: 0.75rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
+        .date-display { font-size: 1.15rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
         .greeting-h1 { font-size: 2.2rem; font-weight: 500; color: #1e293b; margin: 0.4rem 0 1.5rem; line-height: 1.1; }
         .name-blue { color: #4498ca; font-weight: 800; }
         .avatar-outer-circle { display: inline-block; padding: 10px; border-radius: 50%; background: #fff; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        .avatar-inner { width: 240px; height: 240px; border-radius: 50%; overflow: hidden; }
+        .avatar-inner { width: 288px; height: 288px; border-radius: 50%; overflow: hidden; }
 
         /* BOX 2: TRACKER */
         .tracker-top-btns { display: grid; grid-template-columns: 55px 1fr 1fr; gap: 0.6rem; margin-bottom: 1.25rem; }
@@ -748,8 +783,8 @@ export default function VogelperspektivePage() {
           padding: 1rem 0.4rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
         }
         .act-icon-wrap { font-size: 1.4rem; color: #6099cf; margin-bottom: 0.1rem; }
-        .activity-card strong { font-size: 0.8rem; color: #1e293b; }
-        .act-duration { font-size: 0.7rem; color: #94a3b8; font-weight: 600; }
+        .activity-card strong { font-size: 0.85rem; color: #1e293b; }
+        .act-duration { font-size: 0.8rem; color: #4498ca; font-weight: 500; }
 
         .diamonds-footer-pill { 
           background: linear-gradient(90deg, #eefdf8 0%, #e8f4f8 100%); 
@@ -764,7 +799,7 @@ export default function VogelperspektivePage() {
           box-shadow: 0 6px 15px rgba(115, 196, 128, 0.15);
         }
         .diamonds-title { font-size: 1rem; font-weight: 800; color: #2d4a57; margin-bottom: 1px; }
-        .diamonds-sub { font-size: 0.75rem; color: #64748b; font-weight: 600; }
+        .diamonds-sub { font-size: 0.9rem; color: #64748b; font-weight: 600; }
         
         .diamonds-score-pill {
           background: #fff; border: 2.2px solid #73c480; border-radius: 50px;
@@ -913,19 +948,101 @@ export default function VogelperspektivePage() {
 
         .photo-hint { color: #64748b; margin-bottom: 1.5rem; font-weight: 500; font-size: 1.15rem; text-align: center; }
         .camera-preview {
-          width: 100%; height: 250px; background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); border-radius: 24px;
+          width: 100%; aspect-ratio: 16 / 9; background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%); border-radius: 24px;
           display: flex; flex-direction: column; align-items: center; justify-content: center;
           color: #64748b; gap: 1rem; margin-bottom: 2rem; border: 1.5px dashed #cbd5e1;
           position: relative; overflow: hidden;
+        }
+        @keyframes cameraPan {
+          0% {
+            transform: scale(1.0) translate(0px, 0px) rotate(0deg);
+          }
+          50% {
+            transform: scale(1.12) translate(-14px, -8px) rotate(0.6deg);
+          }
+          100% {
+            transform: scale(1.0) translate(0px, 0px) rotate(0deg);
+          }
         }
         .cam-image-overlay {
           position: absolute; inset: 0;
           background-size: cover; background-position: center;
           opacity: 1; z-index: 0;
+          animation: cameraPan 6s ease-in-out infinite;
+          transform-origin: center;
         }
-        .camera-preview i, .camera-preview .cam-text { position: relative; z-index: 1; }
-        .camera-preview i { font-size: 3rem; opacity: 0.5; color: #4498ca; }
-        .cam-text { font-size: 1.1rem; font-weight: 700; opacity: 0.9; color: #1e293b; }
+        
+        /* Camera UI elements */
+        .camera-grid-lines {
+          position: absolute; inset: 0;
+          pointer-events: none; z-index: 1;
+          background: 
+            linear-gradient(to right, rgba(255,255,255,0.15) 1px, transparent 1px) 33.33% 0,
+            linear-gradient(to right, rgba(255,255,255,0.15) 1px, transparent 1px) 66.66% 0,
+            linear-gradient(to bottom, rgba(255,255,255,0.15) 1px, transparent 1px) 0 33.33%,
+            linear-gradient(to bottom, rgba(255,255,255,0.15) 1px, transparent 1px) 0 66.66%;
+          background-size: 100% 100%;
+        }
+        
+        .camera-focus-bracket {
+          position: absolute; top: 50%; left: 50%;
+          transform: translate(-50%, -50%);
+          width: 80px; height: 80px;
+          pointer-events: none; z-index: 2;
+          border: 2px dashed rgba(255, 255, 255, 0.6);
+          border-radius: 12px;
+          animation: focusPulse 2s infinite ease-in-out;
+        }
+        @keyframes focusPulse {
+          0%, 100% { transform: translate(-50%, -50%) scale(1); border-color: rgba(255, 255, 255, 0.4); }
+          50% { transform: translate(-50%, -50%) scale(1.05); border-color: rgba(0, 110, 167, 0.8); }
+        }
+        
+        .camera-flash-overlay {
+          position: absolute; inset: 0;
+          background: #fff;
+          opacity: 0; z-index: 999;
+          pointer-events: none;
+          transition: opacity 0.05s ease-out;
+        }
+        .camera-flash-overlay.flash-active {
+          opacity: 1;
+          transition: none;
+        }
+        
+        .camera-live-badge {
+          position: absolute; top: 1.25rem; left: 1.25rem;
+          background: rgba(15, 23, 42, 0.6);
+          backdrop-filter: blur(4px);
+          color: #fff; font-size: 0.7rem; font-weight: 800;
+          padding: 0.4rem 0.8rem; border-radius: 50px;
+          display: flex; align-items: center; gap: 0.4rem;
+          letter-spacing: 0.05em; z-index: 2;
+        }
+        .live-dot {
+          width: 6px; height: 6px; border-radius: 50%;
+          background: #ef4444;
+          animation: blinkDot 1s infinite steps(2);
+        }
+        @keyframes blinkDot {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0; }
+        }
+        
+        .camera-toast-container {
+          position: absolute; bottom: 1.25rem;
+          left: 50%; transform: translateX(-50%);
+          z-index: 2;
+        }
+        .cam-text-toast {
+          background: rgba(15, 23, 42, 0.75);
+          backdrop-filter: blur(4px);
+          color: #fff; font-size: 0.8rem; font-weight: 600;
+          padding: 0.5rem 1.2rem; border-radius: 12px;
+          display: inline-flex; align-items: center;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        
         .photo-btns { display: flex; justify-content: center; }
         .cam-shutter { 
           width: 70px; height: 70px; border-radius: 50%; border: 4px solid #fff;

@@ -4,12 +4,12 @@ import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 function LoginForm() {
-  const [password, setPassword] = useState('');
+  const [password, setPassword] = useState('Longevity100');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
-  const from = searchParams.get('from') || '/';
+  const from = searchParams.get('from') || '/dashboard';
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

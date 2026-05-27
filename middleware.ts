@@ -6,8 +6,12 @@ const AUTH_COOKIE = 'longevity_auth';
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Login-Seite und API-Auth immer erlauben
-  if (pathname === '/login' || pathname.startsWith('/api/auth')) {
+  // Startseite, Login-Seite und API-Auth immer erlauben
+  if (
+    pathname === '/' ||
+    pathname === '/login' ||
+    pathname.startsWith('/api/auth')
+  ) {
     return NextResponse.next();
   }
 
@@ -20,7 +24,16 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Passwortschutz deaktiviert - Zugriff immer erlauben
+  // Passwortschutz aktivieren
+  const hasCookie = request.cookies.has(AUTH_COOKIE);
+  const cookieValue = request.cookies.get(AUTH_COOKIE)?.value;
+
+  if (!hasCookie || cookieValue !== 'Longevity100') {
+    const loginUrl = new URL('/login', request.url);
+    loginUrl.searchParams.set('from', pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
   return NextResponse.next();
 }
 
