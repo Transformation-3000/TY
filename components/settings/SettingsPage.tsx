@@ -6,22 +6,25 @@ export default function SettingsPage() {
   const [notifications, setNotifications] = useState({
     email: true,
     push: false,
-    weekly: true,
+    monthly: true,
   });
 
   const [privacy, setPrivacy] = useState({
     profileVisible: true,
     dataSharing: false,
+    biometricLock: false,
   });
 
   const [language, setLanguage] = useState('de');
+  const [firstDayOfWeek, setFirstDayOfWeek] = useState('monday');
   const [theme, setTheme] = useState('light');
+  const [fontSize, setFontSize] = useState('normal');
 
   const [wearables, setWearables] = useState({
-    appleWatch: true,
-    fitbit: false,
-    garmin: false,
+    whoop: true,
     oura: false,
+    appleWatch: false,
+    garmin: false,
     autoSync: true,
   });
 
@@ -32,20 +35,26 @@ export default function SettingsPage() {
   });
 
   const [profileData, setProfileData] = useState({
-    firstName: 'Maria',
-    lastName: 'Schmidt',
-    email: 'maria.schmidt@example.com',
-    phone: '+49 123 456789',
+    firstName: 'Monique',
+    lastName: 'Müller',
+    email: 'monique.mueller@gmx.de',
+    phone: '0163-3024747',
     birthDate: '1985-05-15',
     gender: 'weiblich',
   });
 
-  const [payment, setPayment] = useState({
-    paymentMethod: 'credit-card',
-    cardNumber: '**** **** **** 1234',
-    expiryDate: '12/25',
-    autoRenewal: true,
-    plan: 'Starter Paket',
+  const [payment, setPayment] = useState(() => {
+    const now = new Date();
+    const mm = String(now.getMonth() + 1).padStart(2, '0');
+    const yyyy = now.getFullYear() + 2; // Dynamically sets year to 2028 when current year is 2026
+    return {
+      paymentMethod: 'credit-card',
+      cardNumber: '**** **** **** 1234',
+      expiryDate: `${mm}/${yyyy}`,
+      autoRenewal: true,
+      plan: 'Starter',
+      startDate: '15.05.2025',
+    };
   });
 
   return (
@@ -60,7 +69,7 @@ export default function SettingsPage() {
             <div className="settings-option">
               <div className="settings-option-info">
                 <h3>App-Benachrichtigungen</h3>
-                <p>Erhalte Benachrichtigungen in der App</p>
+                <p>Erhalte Benachrichtungen in der App</p>
               </div>
               <label className="toggle-switch">
                 <input
@@ -73,8 +82,8 @@ export default function SettingsPage() {
             </div>
             <div className="settings-option">
               <div className="settings-option-info">
-                <h3>E-Mail-Benachrichtigungen</h3>
-                <p>Erhalte wichtige Updates per E-Mail</p>
+                <h3>E-Mail Benachrichtigungen</h3>
+                <p>Erhalte Benachrichtigungen per E-Mail</p>
               </div>
               <label className="toggle-switch">
                 <input
@@ -87,14 +96,14 @@ export default function SettingsPage() {
             </div>
             <div className="settings-option">
               <div className="settings-option-info">
-                <h3>Wöchentliche Zusammenfassung</h3>
-                <p>Erhalte eine wöchentliche Übersicht deiner Fortschritte</p>
+                <h3>Monatsreports</h3>
+                <p>Erhalte eine monatliche Zusammenfassung deiner Fortschritte</p>
               </div>
               <label className="toggle-switch">
                 <input
                   type="checkbox"
-                  checked={notifications.weekly}
-                  onChange={(e) => setNotifications({ ...notifications, weekly: e.target.checked })}
+                  checked={notifications.monthly}
+                  onChange={(e) => setNotifications({ ...notifications, monthly: e.target.checked })}
                 />
                 <span className="toggle-slider"></span>
               </label>
@@ -124,8 +133,8 @@ export default function SettingsPage() {
             </div>
             <div className="settings-option">
               <div className="settings-option-info">
-                <h3>Daten teilen</h3>
-                <p>Erlaube anonymisierte Daten für Forschungszwecke</p>
+                <h3>KI-Analysen optimieren</h3>
+                <p>Erlaube anonymisierte Daten für unsere KI, damit deine persönlichen Coachings und Empfehlungen kontinuierlich präziser werden.</p>
               </div>
               <label className="toggle-switch">
                 <input
@@ -136,13 +145,27 @@ export default function SettingsPage() {
                 <span className="toggle-slider"></span>
               </label>
             </div>
+            <div className="settings-option">
+              <div className="settings-option-info">
+                <h3 style={{ whiteSpace: 'nowrap' }}>Biometrische Sperre (Face/Touch/PIN)</h3>
+                <p>Sichere Zugriff auf dein Profil über Gesichtserkennung, Fingerabdruck oder PIN</p>
+              </div>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={privacy.biometricLock}
+                  onChange={(e) => setPrivacy({ ...privacy, biometricLock: e.target.checked })}
+                />
+                <span className="toggle-slider"></span>
+              </label>
+            </div>
           </div>
         </div>
 
         <div className="settings-section">
           <div className="settings-section-header">
             <i className="bi bi-globe"></i>
-            <h2>Sprache & Region</h2>
+            <h2>Sprache & Wochentag</h2>
           </div>
           <div className="settings-options">
             <div className="settings-option">
@@ -159,6 +182,20 @@ export default function SettingsPage() {
                 <option value="en">English</option>
                 <option value="fr">Français</option>
                 <option value="es">Español</option>
+              </select>
+            </div>
+            <div className="settings-option">
+              <div className="settings-option-info">
+                <h3>Erster Wochentag</h3>
+                <p>Wähle aus, ob deine Wochenpläne montags oder sonntags starten sollen.</p>
+              </div>
+              <select
+                className="settings-select"
+                value={firstDayOfWeek}
+                onChange={(e) => setFirstDayOfWeek(e.target.value)}
+              >
+                <option value="monday">Montag</option>
+                <option value="sunday">Sonntag</option>
               </select>
             </div>
           </div>
@@ -182,7 +219,21 @@ export default function SettingsPage() {
               >
                 <option value="light">Hell</option>
                 <option value="dark">Dunkel</option>
-                <option value="auto">Automatisch</option>
+              </select>
+            </div>
+            <div className="settings-option">
+              <div className="settings-option-info">
+                <h3>Textgröße</h3>
+                <p>Passe die Textgröße der App für eine optimale Lesbarkeit an</p>
+              </div>
+              <select
+                className="settings-select"
+                value={fontSize}
+                onChange={(e) => setFontSize(e.target.value)}
+              >
+                <option value="small">Kleiner</option>
+                <option value="normal">Normal</option>
+                <option value="large">Größer</option>
               </select>
             </div>
           </div>
@@ -194,6 +245,34 @@ export default function SettingsPage() {
             <h2>Wearables</h2>
           </div>
           <div className="settings-options">
+            <div className="settings-option">
+              <div className="settings-option-info">
+                <h3>Whoop Armband</h3>
+                <p>Daten von Whoop Armband synchronisieren</p>
+              </div>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={wearables.whoop}
+                  onChange={(e) => setWearables({ ...wearables, whoop: e.target.checked })}
+                />
+                <span className="toggle-slider"></span>
+              </label>
+            </div>
+            <div className="settings-option">
+              <div className="settings-option-info">
+                <h3>Oura Ring</h3>
+                <p>Daten von Oura Ring synchronisieren</p>
+              </div>
+              <label className="toggle-switch">
+                <input
+                  type="checkbox"
+                  checked={wearables.oura}
+                  onChange={(e) => setWearables({ ...wearables, oura: e.target.checked })}
+                />
+                <span className="toggle-slider"></span>
+              </label>
+            </div>
             <div className="settings-option">
               <div className="settings-option-info">
                 <h3>Apple Watch</h3>
@@ -210,42 +289,14 @@ export default function SettingsPage() {
             </div>
             <div className="settings-option">
               <div className="settings-option-info">
-                <h3>Fitbit</h3>
-                <p>Daten von Fitbit synchronisieren</p>
-              </div>
-              <label className="toggle-switch">
-                <input
-                  type="checkbox"
-                  checked={wearables.fitbit}
-                  onChange={(e) => setWearables({ ...wearables, fitbit: e.target.checked })}
-                />
-                <span className="toggle-slider"></span>
-              </label>
-            </div>
-            <div className="settings-option">
-              <div className="settings-option-info">
-                <h3>Garmin</h3>
-                <p>Daten von Garmin synchronisieren</p>
+                <h3>Garmin Watch</h3>
+                <p>Daten von Garmin Watch synchronisieren</p>
               </div>
               <label className="toggle-switch">
                 <input
                   type="checkbox"
                   checked={wearables.garmin}
                   onChange={(e) => setWearables({ ...wearables, garmin: e.target.checked })}
-                />
-                <span className="toggle-slider"></span>
-              </label>
-            </div>
-            <div className="settings-option">
-              <div className="settings-option-info">
-                <h3>Oura Ring</h3>
-                <p>Daten von Oura Ring synchronisieren</p>
-              </div>
-              <label className="toggle-switch">
-                <input
-                  type="checkbox"
-                  checked={wearables.oura}
-                  onChange={(e) => setWearables({ ...wearables, oura: e.target.checked })}
                 />
                 <span className="toggle-slider"></span>
               </label>
@@ -270,7 +321,7 @@ export default function SettingsPage() {
         <div className="settings-section">
           <div className="settings-section-header">
             <i className="bi bi-rulers"></i>
-            <h2>Einheiten</h2>
+            <h2>Metriken</h2>
           </div>
           <div className="settings-options">
             <div className="settings-option">
@@ -384,17 +435,28 @@ export default function SettingsPage() {
         <div className="settings-section">
           <div className="settings-section-header">
             <i className="bi bi-credit-card"></i>
-            <h2>Payment</h2>
+            <h2>Abo & Payment</h2>
           </div>
           <div className="settings-options">
             <div className="settings-option">
               <div className="settings-option-info">
                 <h3>Aktuelles Paket</h3>
-                <p>{payment.plan}</p>
+                <p>Ändere dein aktives Abo</p>
               </div>
-              <button className="settings-action-btn-small">
-                Ändern
-              </button>
+              <select
+                className="settings-select"
+                value={payment.plan}
+                onChange={(e) => setPayment({ ...payment, plan: e.target.value })}
+              >
+                <option value="Starter">Starter</option>
+                <option value="Premium">Premium</option>
+              </select>
+            </div>
+            <div className="settings-option">
+              <div className="settings-option-info">
+                <h3>Programmbeginn</h3>
+                <p>{payment.startDate}</p>
+              </div>
             </div>
             <div className="settings-option">
               <div className="settings-option-info">
@@ -417,7 +479,7 @@ export default function SettingsPage() {
             <div className="settings-option">
               <div className="settings-option-info">
                 <h3>Automatische Verlängerung</h3>
-                <p>Paket automatisch verlängern</p>
+                <p>Abo verlängert sich automatisch um ein weiteres Jahr. Ich werde 2 Wochen vor Ablauf darüber informiert.</p>
               </div>
               <label className="toggle-switch">
                 <input
@@ -439,12 +501,32 @@ export default function SettingsPage() {
           <div className="settings-options">
             <div className="settings-option">
               <div className="settings-option-info">
-                <h3>Daten exportieren</h3>
-                <p>Lade alle deine Daten herunter</p>
+                <h3>Monatsreports herunterladen</h3>
+                <p>Lade deine monatlichen Langlebigkeitsberichte <br /> als PDF herunter</p>
               </div>
               <button className="settings-action-btn-small">
                 <i className="bi bi-download"></i>
-                Exportieren
+                Herunterladen
+              </button>
+            </div>
+            <div className="settings-option">
+              <div className="settings-option-info">
+                <h3>Support kontaktieren</h3>
+                <p>Bei Fragen oder Problemen mit deinen Daten hilft dir unser Support-Team</p>
+              </div>
+              <button className="settings-action-btn-small">
+                <i className="bi bi-headset"></i>
+                Support
+              </button>
+            </div>
+            <div className="settings-option">
+              <div className="settings-option-info">
+                <h3>Konto pausieren</h3>
+                <p>Pausiere deine Mitgliedschaft und Datensynchronisation vorübergehend</p>
+              </div>
+              <button className="settings-action-btn-small">
+                <i className="bi bi-pause-circle"></i>
+                Pausieren
               </button>
             </div>
             <div className="settings-option">
@@ -452,7 +534,7 @@ export default function SettingsPage() {
                 <h3>Konto löschen</h3>
                 <p>Alle Daten werden unwiderruflich gelöscht</p>
               </div>
-              <button className="settings-action-btn-small settings-action-btn-danger">
+              <button className="settings-action-btn-small">
                 <i className="bi bi-trash"></i>
                 Löschen
               </button>

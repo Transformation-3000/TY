@@ -15,6 +15,7 @@ export interface ReelItem {
   fullText: string;
   videoSrc?: string;
   image: string;
+  authorImage?: string;
 }
 
 interface Props {
@@ -138,7 +139,7 @@ export default function ReelsFocusView({ reels, startIndex = 0, onClose }: Props
 
           <div className="rfv-author">
             <Image
-              src={cur.image}
+              src={cur.authorImage || cur.image}
               alt={cur.author}
               width={32}
               height={32}
@@ -160,8 +161,7 @@ export default function ReelsFocusView({ reels, startIndex = 0, onClose }: Props
           )}
 
           <button className="rfv-deepbtn" onClick={() => setExpanded(e => !e)}>
-            <i className={`bi ${expanded ? 'bi-chevron-up' : 'bi-journal-bookmark-fill'}`} />
-            {expanded ? 'Schließen' : 'Deep Dive lesen'}
+            {expanded ? 'Schließen' : 'Mehr erfahren'}
           </button>
         </div>
 

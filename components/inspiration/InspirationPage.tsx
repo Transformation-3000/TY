@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import ReelsFocusView from './ReelsFocusView';
 
@@ -20,6 +20,7 @@ interface Reel {
   tagColor: string;
   videoSrc?: string;
   saved?: boolean;
+  authorImage?: string;
 }
 
 const reels: Reel[] = [
@@ -32,13 +33,13 @@ const reels: Reel[] = [
   },
   {
     id: 'r2', category: 'science',
-    title: 'Intermittierendes Fasten & Autophagie: Was sagt die Forschung?',
+    title: 'Intermittiertes Fasten & Autophagie: Was sagt die Forschung?',
     teaser: 'Neue Metaanalyse mit 47 Studien zeigt: 16:8-Fasten reduziert Entzündungsmarker um durchschnittlich 28%.',
     fullText: 'Autophagie – der zelluläre Reinigungsprozess – wird durch Fastenperioden massiv aktiviert. Bei 16:8 beginnt die Autophagie nach 12–14 Stunden ohne Nahrung. Wichtig: Kaffee (schwarz) und Wasser brechen das Fasten nicht. Voraussichtlich größter Benefit bei Kombination mit Krafttraining am Ende des Fastenfensters.',
-    author: 'Nature Aging Journal', role: 'Peer-reviewed, 2024', readTime: '4 Min', image: '/images/insights-fasten.jpeg', tag: 'ZELLEN', tagColor: '#f59e0b', videoSrc: '/videos/reels/reel2.mp4', saved: false,
+    author: 'Nature Aging Journal', role: 'Peer-reviewed, 2022', readTime: '4 Min', image: '/images/insights-fasten.jpeg', tag: 'ZELLEN', tagColor: '#f59e0b', videoSrc: '/videos/reels/reel2.mp4', saved: false,
   },
   {
-    id: 'r3', category: 'hacks',
+    id: 'r3', category: 'experten',
     title: 'Cold Exposure: Der 2-Minuten-Protokoll',
     teaser: 'Tägliche 2-Minuten Kaltdusche erhöht Dopamin um bis zu 250% – laut Stanford-Studie anhaltend für mehrere Stunden.',
     fullText: 'Das Protokoll: Beginne mit 30 Sekunden kaltem Wasser am Ende deiner normalen Dusche. Steigere auf 2 Minuten in 2 Wochen. Optimal ist 14°C. Die neurochemischen Effekte: massiver Norepinephrin-Anstieg (+300%), nachhaltiger Dopaminanstieg, verbesserte Stimmung. Achtung: Nicht unmittelbar nach dem Aufwachen – erst nach 90 Minuten für optimale Cortisol-Nutzung.',
@@ -46,10 +47,17 @@ const reels: Reel[] = [
   },
   {
     id: 'r5', category: 'science',
-    title: 'Resveratrol & NMN: Update 2024',
+    title: 'Resveratrol & NMN: Der Epigenetik-Durchbruch',
     teaser: 'Landmark-Studie von Dr. Sinclair zeigt: NMN erhöht NAD+-Spiegel signifikant – aber der Timing-Faktor ist entscheidend.',
-    fullText: 'NAD+ ist der zentrale Energieträger in Zellen und sinkt mit dem Alter. NMN (Nicotinamid-Mononukleotid) ist ein direkter Vorläufer. Optimales Timing: morgens mit Nahrung. Kombination mit Resveratrol aktiviert Sirtuine. Caveat: Qualitätsunterschiede bei Supplements sind massiv – nur kristallines NMN wählen.',
-    author: 'Cell Metabolism, 2024', role: 'Harvard Medical School', readTime: '5 Min', image: '/images/insights-nmn.jpeg', tag: 'VITALITÄT', tagColor: '#f59e0b', saved: false,
+    fullText: 'NAD+ ist der zentrale Energieträger in Zellen und sinkt mit dem Alter. NMN (Nicotinamid-Mononukleotid) is ein direkter Vorläufer. Optimales Timing: morgens mit Nahrung. Kombination mit Resveratrol aktiviert Sirtuine. Caveat: Qualitätsunterschiede bei Supplements sind massiv – nur kristallines NMN wählen.',
+    author: 'Cell Metabolism', role: 'Harvard Medical School, 2021', readTime: '5 Min', image: '/images/insights-nmn.jpeg', tag: 'VITALITÄT', tagColor: '#f59e0b', saved: false,
+  },
+  {
+    id: 'r8', category: 'science',
+    title: 'Epigenetische Uhr: Zellverjüngung durch Reprogrammierung',
+    teaser: 'Harvard-Studie belegt: Kontrollierte Aktivierung von Yamanaka-Faktoren setzt das biologische Zellalter sicher zurück.',
+    fullText: 'Durch die gezielte epigenetische Reprogrammierung gelang es Forschern, gealtertes Gewebe zu verjüngen und die Regeneration zu beschleunigen. Der Ansatz setzt die Methylierungsmuster der DNA zurück, wodurch Zellen ihre jugendliche Funktion wiedererlangen. Ein revolutionärer Meilenstein der modernen Altersforschung.',
+    author: 'Cell Journal', role: 'Harvard Medical School, 2023', readTime: '3 Min', image: '/images/insights-epigenetik.png', tag: 'EPIGENETIK', tagColor: '#ef4444', saved: false,
   },
   {
     id: 'r6', category: 'experten',
@@ -59,30 +67,157 @@ const reels: Reel[] = [
     author: 'Dr. Peter Attia', role: 'Longevity-Arzt & Autor', readTime: '4 Min', image: '/images/insights-zone2.jpeg', tag: 'KRAFT', tagColor: '#22c55e', saved: true,
   },
   {
-    id: 'r7', category: 'experten',
+    id: 'r7', category: 'science',
     title: 'Soziale Bindungen als Überlebensfaktor',
     teaser: 'Studien belegen: Starke soziale Netzwerke reduzieren das Sterberisiko um bis zu 50%.',
     fullText: 'Einsamkeit hat den gleichen Effekt auf die Gesundheit wie das Rauchen von 15 Zigaretten am Tag. Soziale Interaktion senkt Cortisol und stärkt das Immunsystem. Praktische Tipps: Quality-Time priorisieren, regelmäßige Treffen mit Freunden, aktives Zuhören.',
-    author: 'Blue Zones Research', role: 'Longevity Community', readTime: '3 Min', image: '/images/insights-morgen.jpeg', tag: 'SOZIALES', tagColor: '#ec4899', saved: false,
+    author: 'PLOS Medicine Journal', role: 'Meta-Analysis, 2010', readTime: '3 Min', image: '/images/hero_emotional.jpg', tag: 'SOZIALES', tagColor: '#ec4899', saved: false,
+  },
+  {
+    id: 'r_taurine', category: 'science',
+    title: 'Taurin-Therapie: Signifikante Verlangsamung der zellulären Alterung',
+    teaser: 'Landmark-Studie 2026 belegt: Eine gezielte Taurin-Supplementierung bremst Mitochondrien-Verfall und verlängert die gesunde Lebensspanne.',
+    fullText: 'Eine im Frühjahr 2026 veröffentlichte multizentrische Studie untersuchte den Einfluss der Aminosäure Taurin auf den Alterungsprozess des Menschen. Da der Taurinspiegel im Alter um bis zu 80% sinkt, führt eine Ergänzung zur Reaktivierung geschwächter Stammzellen, reduziert DNA-Schäden und stärkt die mitochondriale Energieproduktion. Die behandelten Gruppen zeigten eine signifikant verbesserte Muskelkraft und kardiovaskuläre Elastizität.',
+    author: 'Science Journal', role: 'Peer-Reviewed, 2026', readTime: '4 Min', image: '/images/lab_preview_2.png', tag: 'VITALITÄT', tagColor: '#f59e0b', saved: false, authorImage: '/images/lab_preview_2.png',
+  },
+  {
+    id: 'r_reprogramming', category: 'science',
+    title: 'Zelluläre Reprogrammierung: Durchbruch bei Gewebeverjüngung',
+    teaser: 'Klinische Phase-I-Studie 2026 belegt erstmals die Sicherheit der partiellen Yamanaka-Reprogrammierung an alterndem Gewebe.',
+    fullText: 'In einer bahnbrechenden klinischen Studie aus dem Jahr 2026 gelang Wissenschaftlern ein historischer Meilenstein: Durch eine kontrollierte, zeitlich präzise begrenzte Aktivierung der Yamanaka-Faktoren (OSKM) konnten gealterte Haut- und Gefäßzellen biologisch verjüngt werden, ohne ihre zelluläre Identität zu verlieren. Die Studie demonstriert erstmals die absolute Sicherheit dieser Gen-Therapie beim Menschen.',
+    author: 'Nature Medicine', role: 'Clinical Trial, 2026', readTime: '4 Min', image: '/images/lab_preview_3.png', tag: 'ZELLEN', tagColor: '#10b981', saved: false, authorImage: '/images/lab_preview_3.png',
+  },
+  {
+    id: 'r_bryan', category: 'experten',
+    title: 'Blueprint: Bryan Johnsons Sauna-Protokoll zur Zellreparatur',
+    teaser: '4-mal wöchentlich 20 Minuten bei 80°C: Wie Bryan Johnson die Infrarotsauna gezielt zur Verlängerung seiner gesunden Lebensspanne nutzt.',
+    fullText: 'In seinem berühmten "Project Blueprint" setzt Bryan Johnson die Sauna gezielt zur Aktivierung von Hitzeschockproteinen (HSPs) ein. Diese Proteine reparieren fehlerhafte zelluläre Strukturen und schützen vor altersbedingtem Verfall. Johnsons optimiertes Protokoll sieht 4 Sitzungen pro Woche bei ca. 80-90°C vor. Seine klinischen Messdaten belegen eine signifikante Senkung der Entzündungsmarker (hs-CRP) und eine Steigerung seiner Herzfrequenzvariabilität (HRV) um über 25%!',
+    author: 'Bryan Johnson', role: 'Blueprint-Gründer & Biohacker', readTime: '3 Min', image: '/images/bryan-johnson-sauna.png', tag: 'SAUNA', tagColor: '#ef4444', saved: false, authorImage: '/images/bryan-johnson-sauna.png',
+  },
+  {
+    id: 'r_sinclair', category: 'experten',
+    title: 'Harvard-Protokoll: Wie Dr. David Sinclair sein biologisches Alter senkt',
+    teaser: 'Mit NMN, Resveratrol und intermittierendem Fasten: Das wissenschaftliche Langlebigkeits-Regime des berühmtesten Altersforschers.',
+    fullText: 'Dr. David Sinclair, weltberühmter Harvard-Professor, erforscht die epigenetischen Ursachen des Alterns. Sein persönliches, tägliches Langlebigkeits-Protokoll umfasst: 1. 1g NMN am Morgen zur Anhebung der NAD+-Spiegel, 2. 1g Resveratrol mit etwas Joghurt zur Aktivierung der Langlebigkeitsgene (Sirtuine), 3. Ein striktes 18:6 Fastenfenster. Seine biologischen Messungen zeigen, dass sein epigenetisches Alter um über 20 Jahre unter seinem chronologischen Alter liegt!',
+    author: 'Dr. David Sinclair', role: 'Harvard-Professor & Bestseller-Autor', readTime: '4 Min', image: '/images/sinclair.png', tag: 'EPIGENETIK', tagColor: '#ef4444', saved: false, authorImage: '/images/sinclair.png',
+  },
+  {
+    id: 'r_huberman', category: 'experten',
+    title: 'Huberman Lab: Das Morgen-Protokoll für maximalen Fokus & Energie',
+    teaser: '10 Minuten Sonnenlicht direkt nach dem Aufwachen und gezieltes Kältebaden: Dr. Andrew Hubermans Biohacking-Routine.',
+    fullText: 'Stanford-Professor Dr. Andrew Huberman hat mit seinem Podcast das Biohacking revolutioniert. Sein Morgen-Protokoll ist weltberühmt: 1. Direkt nach dem Aufwachen 10-15 Minuten in die Sonne blicken, um den circadianen Rhythmus und Cortisol-Peak zu synchronisieren, 2. Eine 3-minütige Eisbad-Session (Cold Plunge) zur Erhöhung des Dopaminspiegels um 250%. Dies steigert seinen Fokus und seine mentale Energie nachhaltig!',
+    author: 'Dr. Andrew Huberman', role: 'Stanford-Professor & Podcast-Host', readTime: '4 Min', image: '/images/insights-kaelte.jpeg', tag: 'FOKUS', tagColor: '#f59e0b', saved: false, authorImage: '/images/insights-kaelte.jpeg',
+  },
+  {
+    id: 'r_hamilton', category: 'experten',
+    title: 'Extreme Vitalität: Laird Hamiltons Pool-Training & Kontrast-Therapie',
+    teaser: 'Gewichtstraining unter Wasser und 100°C Sauna gefolgt von Eisbädern: Laird Hamiltons Protokoll für extreme zelluläre Vitalität.',
+    fullText: 'Surfer-Legende Laird Hamilton gilt im Alter von über 60 Jahren als Musterbeispiel für aktive Langlebigkeit. Sein Biohacking-Protokoll umfasst extremes Unterwasser-Krafttraining mit Gewichten zur Maximierung der Lungenkapazität und Stressresistenz. Zudem schwört er auf täglichen Hitze-Kälte-Kontrast (20 Min. Sauna bei 100°C gefolgt von 3 Min. im 2°C Eisbad) zur zellulären Entgiftung und Immun-Aktivierung!',
+    author: 'Laird Hamilton', role: 'Big-Wave-Surfer & Langlebigkeits-Ikone', readTime: '4 Min', image: '/images/insights-zone2.jpeg', tag: 'VITALITÄT', tagColor: '#3b82f6', saved: false, authorImage: '/images/insights-zone2.jpeg',
+  },
+  {
+    id: 'r_asprey', category: 'experten',
+    title: 'Bulletproof Kaffee: Mitochondrien-Power durch MCT',
+    teaser: 'Dave Asprey erklärt, wie hochwertige Fette und gezieltes Neurofeedback deine mentale Leistungsfähigkeit verdoppeln.',
+    fullText: 'Der Pionier des Biohackings Dave Asprey prägte den Begriff durch die Optimierung zellulärer Energie. Sein bekanntester Hack ist der Bulletproof Coffee (Kaffee mit Weidebutter und C8-MCT-Öl) für langanhaltende Keton-Energie ohne Blutzuckerschwankungen. Asprey setzt zudem auf Rotlichttherapie, Mitochondrien-Training und tägliche Kälteexposition zur Aktivierung der Langlebigkeit.',
+    author: 'Dave Asprey', role: 'Vater des Biohackings & Autor', readTime: '3 Min', image: '/images/dave-asprey.png', tag: 'FOKUS', tagColor: '#f59e0b', saved: false, authorImage: '/images/dave-asprey.png',
+  },
+  {
+    id: 'h1', category: 'hacks',
+    title: 'Was passiert, wenn du frisches Felsquellwasser trinkst?',
+    teaser: 'Reines, unfiltriertes Quellwasser steckt voller natürlicher Mineralien, die deine zelluläre Hydration sofort maximieren.',
+    fullText: 'Frisches Felsquellwasser ist hexagonal strukturiert und reich an essenziellen Elektrolyten wie Magnesium, Calcium und Kieselsäure. Diese natürliche Struktur ermöglicht es deinen Zellen, das Wasser viel schneller aufzunehmen als behandeltes Leitungswasser. Zudem ist es frei von Mikroplastik und Chlor-Rückständen, was deine Mitochondrien-Gesundheit schützt!',
+    author: 'Lisa AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/photo_water.png', tag: 'HYDRATION', tagColor: '#3b82f6', saved: false, authorImage: '/images/lisa.png',
+  },
+  {
+    id: 'h2', category: 'hacks',
+    title: 'Was passiert, wenn du nur 6 Stunden oder weniger schläfst?',
+    teaser: 'Schon eine einzige Nacht unter 6 Stunden Schlaf lässt dein Gehirn um Jahre altern und blockiert die zelluläre Entgiftung.',
+    fullText: 'Wenn du unter 6 Stunden schläfst, bleibt das glymphatische System – die Müllabfuhr deines Gehirns – inaktiv. Toxische Proteine (Amyloid-Beta) können nicht abgebaut werden. Zudem sinkt deine Testosteronausschüttung und deine Genexpression für Entzündungen steigt sprunghaft an. Dauerhafter Schlafmangel verkürzt deine Telomere massiv!',
+    author: 'Tom AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/hacks-schlaf.png', tag: 'REGENERATION', tagColor: '#ef4444', saved: false, authorImage: '/images/tom_jung.png',
+  },
+  {
+    id: 'h3_steps', category: 'hacks',
+    title: 'Warum 1.000 Schritte mehr pro Tag einen großen Unterschied machen',
+    teaser: 'Nur 1.000 zusätzliche Schritte täglich senken dein Sterberisiko signifikant und kurbeln deine mitochondriale Energie an.',
+    fullText: 'Jeder Schritt aktiviert die Muskelpumpe und verbessert den Lymphfluss. Bereits 1.000 Schritte mehr pro Tag kurbeln deine Mitochondrien an und steigern deine Insulinsensitivität. Studien zeigen: Ein kleiner Spaziergang nach dem Essen glättet Blutzuckerspitzen um bis zu 30% und verlängert deine gesunde Lebensspanne aktiv!',
+    author: 'Lisa AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/photo_walk.png', tag: 'BEWEGUNG', tagColor: '#10b981', saved: false, authorImage: '/images/lisa.png',
+  },
+  {
+    id: 'h4_coffee', category: 'hacks',
+    title: 'Kaffee-Timing: Warum du morgens 90 Minuten warten solltest',
+    teaser: 'Direkt nach dem Aufwachen blockiert Koffein die natürliche Cortisol-Ausschüttung und sorgt für das berüchtigte Nachmittags-Tief.',
+    fullText: 'Beim Erwachen schüttet dein Körper natürliches Cortisol aus, um dich wach zu machen. Wenn du sofort Kaffee trinkst, stört das Koffein diesen Prozess und erhöht die Toleranz. Zudem blockiert es Adenosin-Rezeptoren. Sobald die Wirkung nachlässt, folgt der Crash. Die Lösung: Warte 90 bis 120 Minuten mit der ersten Tasse!',
+    author: 'Lisa AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/hacks-coffee.png', tag: 'FOKUS', tagColor: '#f59e0b', saved: false, authorImage: '/images/lisa.png',
+  },
+  {
+    id: 'h5_breath', category: 'hacks',
+    title: '4-7-8 Atmung: Stress-Kill in nur 60 Sekunden',
+    teaser: 'Diese einfache Atemtechnik schaltet dein vegetatives Nervensystem blitzschnell von Stress auf pure Entspannung um.',
+    fullText: 'Das Protokoll: 4 Sek. durch die Nase einatmen, 7 Sek. den Atem anhalten, 8 Sek. hörbar durch den Mund ausatmen. Wiederhole das viermal. Das zwingt deinen Puls nach unten, aktiviert den Vagusnerv und signalisiert deinem Gehirn sofortige Sicherheit. Perfekt bei akutem Stress oder direkt vor dem Einschlafen!',
+    author: 'Tom AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/hacks-breath.png', tag: 'REGENERATION', tagColor: '#ef4444', saved: false, authorImage: '/images/tom_jung.png',
+  },
+  {
+    id: 'h6_light', category: 'hacks',
+    title: 'Rotlicht am Abend: Der simple Trick für tieferen Schlaf',
+    teaser: 'Blaues Bildschirmlicht zerstört deine nächtliche Melatoninsynthese – warmes Rotlicht schützt sie aktiv.',
+    fullText: 'Unsere Netzhaut reagiert empfindlich auf blaues Licht von Displays. Es signalisiert dem Gehirn "Tag" und unterdrückt das Schlafhormon Melatonin um bis zu 90%. Wenn du ab 20:00 Uhr auf warmes, rotes Licht umsteigst, bleibt deine Melatoninsynthese intakt. Du schläfst schneller ein und steigerst deine Tiefschlafphasen spürbar!',
+    author: 'Lisa AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/hacks-redlight.png', tag: 'SCHLAF', tagColor: '#3b82f6', saved: false, authorImage: '/images/lisa.png',
+  },
+  {
+    id: 'h7_cold', category: 'hacks',
+    title: 'Kalt duschen: Der 30-Sekunden Dopamin-Booster',
+    teaser: 'Schon 30 Sekunden kaltes Wasser am Ende deiner Dusche steigern dein Dopamin um 250% – anhaltend für Stunden.',
+    fullText: 'Das kalte Wasser aktiviert Thermorezeptoren in der Haut, was eine massive Ausschüttung von Norepinephrin (+300%) und Dopamin (+250%) triggert. Der Dopaminanstieg ist sanft und langanhaltend – ohne das anschließende Tief von Zucker oder Koffein. Zudem stärkt es dein Immunsystem durch die Anregung weißer Blutkörperchen!',
+    author: 'Tom AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/hacks-cold.png', tag: 'IMMUN', tagColor: '#8b5cf6', saved: false, authorImage: '/images/tom_jung.png',
+  },
+  {
+    id: 'h8_hiit', category: 'hacks',
+    title: 'HIIT: 60 Sekunden Sprint für mehr Gehirnzellen',
+    teaser: 'Ein einziger hochintensiver Sprint kurbelt das neuronale Wachstumsprotein BDNF massiv an und schützt dein Gehirn.',
+    fullText: 'Bei maximaler Anstrengung schüttet das Gehirn BDNF (Brain-Derived Neurotrophic Factor) aus – eine Art "Dünger" für Nervenzellen. BDNF fördert die Neuroplastizität, verbessert das Gedächtnis und schützt vor kognitivem Verfall. Schon ein 60-sekündiger Sprint (z. B. auf dem Fahrrad) reicht aus, um den Level signifikant anzuheben!',
+    author: 'Tom AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/hacks-hiit.png', tag: 'GEHIRN', tagColor: '#ec4899', saved: false, authorImage: '/images/tom_jung.png',
+  },
+  {
+    id: 'h9_olive', category: 'hacks',
+    title: 'Olivenöl: Der Autophagie-Turbo für deine Zellen',
+    teaser: 'Zwei Esslöffel hochwertiges Olivenöl am Tag aktivieren Langlebigkeitsgene und kurbeln das zelluläre Recycling an.',
+    fullText: 'Kaltgepresstes Olivenöl (Extra Vergine) ist extrem reich an Polyphenolen wie Oleocanthal. Diese bioaktiven Stoffe aktivieren Sirtuine (Langlebigkeitsgene) und stimulieren die zelluläre Autophagie – die Müllabfuhr deiner Zellen, die beschädigte Proteine abbaut. Zudem schützt es deine Gefäße und senkt Entzündungswerte nachhaltig!',
+    author: 'Lisa AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/hacks-olive.png', tag: 'ZELLEN', tagColor: '#10b981', saved: false, authorImage: '/images/lisa.png',
   },
 ];
 
 const tabLabels: { id: Tab; label: string; icon: string }[] = [
+  { id: 'hacks', label: 'Longevity Snacks', icon: 'bi-lightning-charge' },
   { id: 'experten', label: 'Biohacking', icon: 'bi-star-fill' },
-  { id: 'science', label: 'Science', icon: 'bi-journal-medical' },
-  { id: 'hacks', label: 'Hacks', icon: 'bi-lightning-charge' },
+  { id: 'science', label: 'Wissenschaft', icon: 'bi-journal-medical' },
   { id: 'gespeichert', label: 'Gespeichert', icon: 'bi-bookmark-fill' },
 ];
 
 export default function InspirationPage() {
-  const [activeTab, setActiveTab] = useState<Tab>('experten');
+  const [activeTab, setActiveTab] = useState<Tab>('hacks');
   const [savedIds, setSavedIds] = useState<string[]>(['r1', 'r6']);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [focusOpen, setFocusOpen] = useState(false);
   const [focusStartIdx, setFocusStartIdx] = useState(0);
 
+  useEffect(() => {
+    const saved = localStorage.getItem('ty_saved_reels');
+    if (saved) {
+      try {
+        setSavedIds(JSON.parse(saved));
+      } catch (e) {
+        console.error('Failed to parse saved reels', e);
+      }
+    }
+  }, []);
+
   const toggleSave = (id: string) => {
-    setSavedIds(prev => prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id]);
+    setSavedIds(prev => {
+      const next = prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id];
+      localStorage.setItem('ty_saved_reels', JSON.stringify(next));
+      return next;
+    });
   };
 
   const openFocus = (startIdx: number) => {
@@ -105,6 +240,7 @@ export default function InspirationPage() {
     fullText: r.fullText,
     videoSrc: r.videoSrc,
     image: r.image,
+    authorImage: r.authorImage,
   }));
 
   return (
@@ -182,7 +318,7 @@ export default function InspirationPage() {
                 {/* Content */}
                 <div className="reel-body">
                   <div className="reel-author-row">
-                    <Image src={reel.image} alt={reel.author} width={28} height={28} style={{ borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />
+                    <Image src={reel.authorImage || reel.image} alt={reel.author} width={34} height={34} style={{ borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />
                     <div className="reel-author-info">
                       <span className="reel-author-name">{reel.author}</span>
                       <span className="reel-author-role">{reel.role}</span>
@@ -207,9 +343,9 @@ export default function InspirationPage() {
                       onClick={() => setExpandedId(expandedId === reel.id ? null : reel.id)}
                     >
                       {expandedId === reel.id ? (
-                        <><i className="bi bi-chevron-up" /> Weniger anzeigen</>
+                        <>Weniger anzeigen</>
                       ) : (
-                        <><i className="bi bi-book" /> Deep Dive lesen</>
+                        <>Mehr erfahren</>
                       )}
                     </button>
                     <button className="reel-share-btn">
@@ -277,8 +413,14 @@ export default function InspirationPage() {
           color: white; border-color: transparent;
           box-shadow: 0 4px 12px rgba(68,152,202,0.25);
         }
+        .ins-tab.active i {
+          color: white;
+        }
         .ins-tab:hover:not(.active) {
           border-color: rgba(68,152,202,0.3);
+          color: #4498ca;
+        }
+        .ins-tab:hover:not(.active) i {
           color: #4498ca;
         }
         .ins-tab-count {
@@ -331,7 +473,13 @@ export default function InspirationPage() {
           cursor: pointer; font-size: 0.85rem; color: #64748b; transition: all 0.2s;
           box-shadow: 0 2px 8px rgba(0,0,0,0.15);
         }
-        .reel-save-btn.saved { color: #ef4444; background: rgba(239,68,68,0.12); }
+        .reel-save-btn.saved {
+          background: rgba(239, 68, 68, 0.12);
+          font-size: 1.3rem;
+        }
+        .reel-save-btn.saved i {
+          color: #ef4444 !important;
+        }
         .reel-save-btn:hover { transform: scale(1.1); }
 
         .reel-body { padding: 1rem 1.15rem 0.85rem; }
@@ -340,16 +488,16 @@ export default function InspirationPage() {
           display: flex; align-items: center; gap: 0.55rem; margin-bottom: 0.65rem;
         }
         .reel-author-info { flex: 1; min-width: 0; }
-        .reel-author-name { display: block; font-size: 0.75rem; font-weight: 700; color: #1a3a50; line-height: 1.2; }
-        .reel-author-role { display: block; font-size: 0.65rem; color: #94a3b8; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .reel-read-time { font-size: 0.65rem; color: #94a3b8; white-space: nowrap; flex-shrink: 0; }
+        .reel-author-name { display: block; font-size: 0.9rem; font-weight: 700; color: #1a3a50; line-height: 1.2; }
+        .reel-author-role { display: block; font-size: 0.8rem; color: #94a3b8; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .reel-read-time { font-size: 0.8rem; color: #94a3b8; white-space: nowrap; flex-shrink: 0; }
 
         .reel-title {
-          font-size: 0.9rem; font-weight: 700; color: #1a3a50;
+          font-size: 1.15rem; font-weight: 700; color: #1a3a50;
           margin: 0 0 0.45rem; line-height: 1.35;
         }
         .reel-teaser {
-          font-size: 0.78rem; color: #475569; line-height: 1.5; margin: 0 0 0.85rem;
+          font-size: 0.95rem; color: #475569; line-height: 1.5; margin: 0 0 0.85rem;
         }
 
         .reel-full-text {
@@ -358,15 +506,15 @@ export default function InspirationPage() {
           border-left: 3px solid #4498ca; animation: slideDown 0.25s ease;
         }
         @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
-        .reel-full-text p { font-size: 0.78rem; color: #334155; line-height: 1.65; margin: 0; }
+        .reel-full-text p { font-size: 0.95rem; color: #334155; line-height: 1.65; margin: 0; }
 
         .reel-footer { display: flex; align-items: center; gap: 0.5rem; }
         .reel-deepdive-btn {
-          display: flex; align-items: center; gap: 0.35rem;
-          padding: 0.45rem 0.85rem; border-radius: 8px; border: none;
+          display: inline-flex; align-items: center; gap: 0.35rem;
+          padding: 0.45rem 1rem; border-radius: 8px; border: none;
           background: linear-gradient(135deg, #4498ca, #2c6a8c); color: white;
           font-size: 0.75rem; font-weight: 600; cursor: pointer;
-          transition: all 0.2s; flex: 1;
+          transition: all 0.2s;
         }
         .reel-deepdive-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(68,152,202,0.3); }
         .reel-share-btn {

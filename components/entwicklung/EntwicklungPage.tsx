@@ -8,18 +8,19 @@ type TrendPeriod = '3m' | '6m' | '12m';
 
 export default function EntwicklungPage() {
   const [activeTab, setActiveTab] = useState<SubTab>('trends');
+  const [selectedMetric, setSelectedMetric] = useState<'chronological' | 'difference' | 'dna'>('difference');
   const [trendPeriod, setTrendPeriod] = useState<TrendPeriod>('12m');
   const [showBioAgeDetails, setShowBioAgeDetails] = useState(false);
 
-  // --- DATA SETS ---
+
 
   const trendData = [
-    { title: 'Schlaf & Erholung', data: [65, 66, 67, 68, 68, 69, 69, 70, 71, 72, 72, 72] },
-    { title: 'Kraft & Ausdauer', data: [60, 62, 65, 68, 70, 72, 74, 76, 78, 80, 82, 85] },
-    { title: 'Zellversorgung', data: [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 82] },
-    { title: 'Immunbalance', data: [80, 78, 76, 74, 72, 70, 68, 66, 64, 62, 60, 58] },
-    { title: 'Selbstfürsorge', data: [75, 74, 73, 72, 71, 70, 69, 68, 67, 66, 65, 64] },
-    { title: 'Mentale Resilienz', data: [60, 61, 62, 63, 64, 66, 68, 70, 72, 75, 78, 81] },
+    { title: 'Schlaf & Erholung', data: [62, 60, 68, 64, 70, 67, 72, 70, 75, 72, 78, 75] },
+    { title: 'Kraft & Ausdauer', data: [55, 58, 60, 63, 67, 70, 72, 75, 78, 80, 83, 84] },
+    { title: 'Zellerneuerung & Wachstum', data: [64, 66, 63, 68, 70, 72, 71, 75, 77, 76, 82, 81] },
+    { title: 'Immunbalance & Entlastung', data: [82, 78, 80, 74, 76, 70, 72, 65, 68, 60, 64, 62] },
+    { title: 'Selbstfürsorge & Soziale Bindungen', data: [72, 71, 73, 72, 72, 74, 73, 71, 72, 73, 72, 73] },
+    { title: 'Mentale Resilienz & Mindset', data: [56, 55, 57, 56, 55, 56, 57, 55, 56, 57, 56, 57] },
   ];
 
   const activities = [
@@ -32,6 +33,10 @@ export default function EntwicklungPage() {
   ];
 
   const monthNames = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+
+  // --- DYNAMIC METRICS FOR CIRCLE ---
+  const circleValue = selectedMetric === 'chronological' ? '46,7' : selectedMetric === 'difference' ? '42,5' : '0,82';
+  const circleLabel = selectedMetric === 'dna' ? 'DNA' : 'Jahre';
 
   return (
     <div className="entw-page">
@@ -47,7 +52,7 @@ export default function EntwicklungPage() {
           { id: 'goals', label: 'Wochenziele' },
           { id: 'activities', label: 'Aktivitäten' },
           { id: 'reports', label: 'Reports' },
-          { id: 'journey', label: 'Journey' },
+          { id: 'journey', label: 'Reise' }, // Geändert von Journey zu Reise analog zum Screenshot
         ].map(tab => (
           <button
             key={tab.id}
@@ -62,84 +67,198 @@ export default function EntwicklungPage() {
       {/* ── TRENDS TAB ── */}
       {activeTab === 'trends' && (
         <div className="trends-view">
-          {/* BioAge Module */}
-          <div className="bioage-hero" onClick={() => setShowBioAgeDetails(true)} style={{ cursor: 'pointer' }}>
-            <div className="bah-content">
-              <div className="bah-label">Biologisches Alter</div>
-              <div className="bah-value">34.2 <span className="bah-unit">Jahre</span></div>
-              <div className="bah-status">
-                <span className="status-pill positive">-2.8 Jahre vs. Chronologisch</span>
-              </div>
-              <div className="bah-hint">Klicken für Details</div>
-            </div>
-            <div className="bah-visual">
-              <div className="bah-circle">
-                <div className="bah-circle-inner">34</div>
-                <svg className="bah-ring" viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="8" />
-                  <circle cx="50" cy="50" r="45" fill="none" stroke="#4498ca" strokeWidth="8" strokeDasharray="283" strokeDashoffset="70" strokeLinecap="round" />
+          {/* Aktuelles True Years BioAge Headline */}
+          <div className="bioage-headline-row">
+            <span className="blue-bar"></span>
+            <h2>Aktuelles True Years BioAge</h2>
+          </div>
+
+          {/* BioAge Card */}
+          <div className="bioage-card-new">
+            <div className="bac-left">
+              <div className="bac-circle-container">
+                <svg className="bac-circle-svg" viewBox="0 0 100 100">
+                  <defs>
+                    <linearGradient id="ageScoreGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#4498ca" />
+                      <stop offset="100%" stopColor="#22c55e" />
+                    </linearGradient>
+                    <filter id="softGlow" x="-10%" y="-10%" width="120%" height="120%">
+                      <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#3b82f6" floodOpacity="0.15" />
+                    </filter>
+                  </defs>
+                  {/* Background Track */}
+                  <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="6" />
+                  {/* Active Arc with Rounded Caps */}
+                  <circle 
+                    cx="50" 
+                    cy="50" 
+                    r="41" 
+                    fill="none" 
+                    stroke="url(#ageScoreGrad)" 
+                    strokeWidth="6.5" 
+                    strokeDasharray="257.6" 
+                    strokeDashoffset="65" 
+                    strokeLinecap="round" 
+                    filter="url(#softGlow)"
+                    transform="rotate(-90 50 50)"
+                  />
                 </svg>
+                <div className="bac-circle-text-box">
+                  <span className="bac-circle-val">{circleValue}</span>
+                  <span className="bac-circle-lab">{circleLabel}</span>
+                </div>
+              </div>
+            </div>
+            
+            <div className="bac-right">
+              <div className="bac-badges-row">
+                <span className="badge-pill badge-excellent">
+                  <span className="dot-green"></span>Exzellenter Status
+                </span>
+                <span className="badge-pill badge-top5">
+                  Top 5% deiner Altersgruppe
+                </span>
+              </div>
+              
+              <h3 className="bac-main-text">
+                Du alterst aktuell <strong>15,5% langsamer</strong> als der Durchschnitt.
+              </h3>
+              
+              <div className="bac-stats-grid">
+                <div 
+                  className={`bac-stat-card ${selectedMetric === 'chronological' ? 'active-metric' : ''}`}
+                  onClick={() => setSelectedMetric('chronological')}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <span className="bac-stat-label">CHRONOLOGISCH</span>
+                  <span className="bac-stat-val" style={{ fontSize: '1.15rem' }}>46,7 Jahre</span>
+                </div>
+                <div 
+                  className={`bac-stat-card ${selectedMetric === 'difference' ? 'active-metric-green' : ''}`}
+                  onClick={() => {
+                    setSelectedMetric('difference');
+                    setShowBioAgeDetails(true);
+                  }}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <span className="bac-stat-label">DIFFERENZ</span>
+                  <span className="bac-stat-val" style={{ fontSize: '1.15rem' }}>-4,2 Jahre jünger</span>
+                </div>
+                <div 
+                  className={`bac-stat-card ${selectedMetric === 'dna' ? 'active-metric' : ''}`}
+                  onClick={() => setSelectedMetric('dna')}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <span className="bac-stat-label">DNA-ALTERUNG</span>
+                  <span className="bac-stat-val" style={{ fontSize: '1.15rem' }}>0.82x</span>
+                </div>
+              </div>
+              
+              <div className="bac-footer-info">
+                <i className="bi bi-info-circle" style={{ marginRight: '6px', color: '#3b82f6', fontSize: '1.05rem', flexShrink: 0 }}></i>
+                <span>Basierend auf deiner HRV, Schlafqualität und 12 weiteren Vitalwerten der letzten 30 Tage.</span>
               </div>
             </div>
           </div>
 
-          {/* Period Selector */}
-          <div className="period-selector">
-            {(['3m', '6m', '12m'] as TrendPeriod[]).map(p => (
-              <button 
-                key={p} 
-                className={`period-btn ${trendPeriod === p ? 'active' : ''}`}
-                onClick={() => setTrendPeriod(p)}
-              >
-                {p === '3m' ? '3 Monate' : p === '6m' ? '6 Monate' : '12 Monate'}
-              </button>
-            ))}
+          {/* Headline & Period Selector Row */}
+          <div className="trends-opt-header">
+            <div className="bioage-headline-row" style={{ marginBottom: 0 }}>
+              <span className="blue-bar"></span>
+              <h2>Trends Optimierungsfelder</h2>
+            </div>
+            
+            <div className="period-selector" style={{ marginBottom: 0 }}>
+              {(['3m', '6m', '12m'] as TrendPeriod[]).map(p => (
+                <button 
+                  key={p} 
+                  className={`period-btn ${trendPeriod === p ? 'active' : ''}`}
+                  onClick={() => setTrendPeriod(p)}
+                >
+                  {p === '3m' ? '3 Monate' : p === '6m' ? '6 Monate' : '12 Monate'}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* 6 Optimization Fields */}
+          {/* 6 Optimization Fields Grid */}
           <div className="tac-grid">
             {trendData.map((t, i) => {
-              const baseline = t.data[0];
               const periodLen = trendPeriod === '3m' ? 3 : trendPeriod === '6m' ? 6 : 12;
-              const displayData = t.data.slice(0, periodLen);
-              const labels = monthNames.slice(0, periodLen);
+              const displayData = t.data.slice(-periodLen);
+              const baseline = displayData[0];
+              
+              // Dynamic month generation ending in May (index 4)
+              const currentMonthIdx = 4; // Mai (2026)
+              const labels = Array.from({ length: periodLen }, (_, idx) => {
+                const mIdx = (currentMonthIdx - (periodLen - 1 - idx) + 12) % 12;
+                const name = monthNames[mIdx];
+                return periodLen === 12 ? name.charAt(0) : name;
+              });
               
               const currentVal = displayData[displayData.length - 1];
-              const avgScore = Math.round(displayData.reduce((a, b) => a + b, 0) / displayData.length);
               const changePct = Math.round(((currentVal - baseline) / baseline) * 100);
               
-              const isPositive = changePct > 1;
-              const isNegative = changePct < -1;
-              const color = isPositive ? '#22c55e' : isNegative ? '#ef4444' : '#4498ca';
-              const trendIcon = isPositive ? '↑' : isNegative ? '↓' : '→';
+              const isPositive = changePct >= 0;
+              const color = isPositive ? '#22c55e' : '#ef4444';
+              const trendIcon = isPositive ? '↗' : '↘';
+              const formattedPct = `${trendIcon} ${isPositive ? '+' : ''}${changePct}%`;
 
-              const max = Math.max(...displayData, 100);
-              const min = Math.min(...displayData, 0);
+              const dataMin = Math.min(...displayData);
+              const dataMax = Math.max(...displayData);
+              const dataRange = dataMax - dataMin || 1;
+              
+              // Add a bit of padding to top and bottom so the line doesn't hit the absolute edges
+              const min = Math.max(0, dataMin - dataRange * 0.1);
+              const max = Math.min(100, dataMax + dataRange * 0.1);
               const range = max - min || 1;
+              
+              // Sparkline points
               const points = displayData.map((v, idx) => {
                 const x = (idx / (displayData.length - 1)) * 100;
-                const y = 80 - ((v - min) / range) * 60;
+                const y = 75 - ((v - min) / range) * 60; // Keep slightly away from borders
                 return `${x},${y}`;
               }).join(' ');
 
+              // Area fill polygon points
+              const areaPoints = `${points} 100,80 0,80`;
+
+              const gradId = `sparkGrad-${i}`;
+
               return (
-                <div key={i} className={`tac-item ${isPositive ? 'pos' : isNegative ? 'neg' : 'neu'}`}>
+                <div key={i} className={`tac-item ${isPositive ? 'pos' : 'neg'}`}>
                   <div className="taci-header">
-                    <span className="taci-label">{t.title}</span>
-                    <span className="taci-trend" style={{ color }}>{trendIcon} {Math.abs(changePct)}%</span>
+                    <span className="taci-label">
+                      {t.title.split(' & ').map((part, idx, arr) => (
+                        <span key={idx} style={{ display: 'block', lineHeight: '1.25' }}>
+                          {part}{idx < arr.length - 1 ? ' &' : ''}
+                        </span>
+                      ))}
+                    </span>
+                    <span className="taci-trend" style={{ color }}>{formattedPct}</span>
                   </div>
                   <div className="taci-score-row">
-                    <span className="taci-score">{avgScore}</span>
+                    <span className="taci-score">{Math.round(currentVal)}</span>
                     <span className="taci-unit">Pkt</span>
                   </div>
                   <div className="taci-sparkline">
-                    <svg viewBox="0 0 100 80" preserveAspectRatio="none">
-                      <polyline points={points} fill="none" stroke={color} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" />
+                    <svg viewBox="0 0 100 80" preserveAspectRatio="none" style={{ width: '100%', height: '100%' }}>
+                      <defs>
+                        <linearGradient id={gradId} x1="0%" y1="0%" x2="0%" y2="100%">
+                          <stop offset="0%" stopColor={color} stopOpacity="0.22" />
+                          <stop offset="100%" stopColor={color} stopOpacity="0.00" />
+                        </linearGradient>
+                      </defs>
+                      {/* Area Fill */}
+                      <polygon points={areaPoints} fill={`url(#${gradId})`} />
+                      {/* Line */}
+                      <polyline points={points} fill="none" stroke={color} strokeWidth="3.5" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
                     </svg>
                   </div>
                   <div className="taci-labels">
                     {labels.map((l, idx) => (
-                      <span key={idx} className={(idx === 0 || idx === labels.length - 1) ? 'visible' : ''}>{l}</span>
+                      <span key={idx} className="visible">{l}</span>
                     ))}
                   </div>
                 </div>
@@ -231,53 +350,49 @@ export default function EntwicklungPage() {
       {/* ── BIO AGE DETAILS MODAL ── */}
       {showBioAgeDetails && (
         <div className="modal-overlay" onClick={() => setShowBioAgeDetails(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setShowBioAgeDetails(false)}>&times;</button>
+          <div className="modal-content" onClick={e => e.stopPropagation()} style={{ width: '100%', maxWidth: '740px', borderRadius: '28px', padding: '2.5rem' }}>
+            <button className="modal-close" onClick={() => setShowBioAgeDetails(false)} style={{ background: '#f1f5f9', border: 'none', width: '36px', height: '36px', borderRadius: '50%', color: '#64748b', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', position: 'absolute', top: '1.5rem', right: '1.5rem' }}>
+              <i className="bi bi-x-lg" style={{ fontSize: '1rem' }}></i>
+            </button>
             
-            <div className="modal-header">
-              <h2>Biologisches Alter Analyse</h2>
-              <p>Basierend auf deinen aktuellsten Biomarkern und Messwerten</p>
+            <div className="modal-header-custom">
+              <h2 className="modal-title-custom">BioAge Optimierungsfelder</h2>
+              <p className="modal-subtitle-custom">Diese 6 Säulen bestimmen dein aktuelles biologisches Alter</p>
             </div>
 
-            <div className="modal-body">
-              <div className="bio-summary-grid">
-                <div className="bsg-item">
-                  <span className="bsg-label">Chronologisch</span>
-                  <span className="bsg-value">37.0</span>
-                </div>
-                <div className="bsg-item highlight">
-                  <span className="bsg-label">Biologisch</span>
-                  <span className="bsg-value">34.2</span>
-                </div>
-                <div className="bsg-item">
-                  <span className="bsg-label">Differenz</span>
-                  <span className="bsg-value text-green">-2.8</span>
-                </div>
-              </div>
-
-              <h3 className="section-title">Einflussfaktoren</h3>
-              <div className="factors-list">
-                {[
-                  { label: 'Herz-Kreislauf (V02 Max)', age: 31.5, status: 'Exzellent' },
-                  { label: 'Zelluläre Gesundheit (HBA1C)', age: 35.8, status: 'Gut' },
-                  { label: 'Inflammations-Marker (hs-CRP)', age: 33.1, status: 'Exzellent' },
-                  { label: 'Muskelmasse & Kraft', age: 32.4, status: 'Sehr Gut' },
-                  { label: 'Kognitive Leistung', age: 36.2, status: 'Normal' },
-                ].map((f, i) => (
-                  <div key={i} className="factor-row">
-                    <div className="fr-label">
-                      <strong>{f.label}</strong>
-                      <span>Status: {f.status}</span>
+            <div className="opt-modal-grid">
+              {[
+                { title: 'Schlaf & Erholung', val: '-1.5 J.', icon: 'bi-moon-stars', type: 'green' },
+                { title: 'Kraft & Ausdauer', val: '-1.2 J.', icon: 'bi-lightning-charge', type: 'green' },
+                { title: 'Zellversorgung', val: '-0.9 J.', icon: 'bi-cup-hot', type: 'green' },
+                { title: 'Immunbalance', val: '+0.5 J.', icon: 'bi-wind', type: 'red' },
+                { title: 'Soziale Bindungen', val: '-0.6 J.', icon: 'bi-people', type: 'green' },
+                { title: 'Mindset', val: '-0.5 J.', icon: 'bi-stars', type: 'green' },
+              ].map((item, idx) => (
+                <div key={idx} className={`opt-pill-card ${item.type === 'green' ? 'green-tint' : 'red-tint'}`}>
+                  <div className="opt-pill-left">
+                    <div className="opt-pill-icon">
+                      <i className={`bi ${item.icon}`}></i>
                     </div>
-                    <div className="fr-value">{f.age} J.</div>
+                    <span className="opt-pill-label">{item.title}</span>
                   </div>
-                ))}
-              </div>
+                  <span className={`opt-pill-val ${item.type === 'green' ? 'green-text' : 'red-text'}`}>
+                    {item.val}
+                  </span>
+                </div>
+              ))}
+            </div>
 
-              <div className="modal-info-box">
-                <i className="bi bi-info-circle"></i>
-                <p>Dein biologisches Alter spiegelt die Funktionsfähigkeit deiner Zellen und Organe wider. Durch gezielte Interventionen in den Bereichen Krafttraining und Zellversorgung konnte dein Wert im letzten Quartal um 0.4 Jahre gesenkt werden.</p>
-              </div>
+            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '2rem' }}>
+              <button 
+                className="opt-modal-btn"
+                onClick={() => {
+                  setActiveTab('journey');
+                  setShowBioAgeDetails(false);
+                }}
+              >
+                Zur Longevity Reise <i className="bi bi-arrow-right" style={{ marginLeft: '4px' }}></i>
+              </button>
             </div>
           </div>
         </div>
@@ -298,28 +413,70 @@ export default function EntwicklungPage() {
         .entw-tab:hover { background: #fff; border-color: #4498ca; color: #4498ca; }
         .entw-tab.active { background: #4498ca; color: white; border-color: #4498ca; box-shadow: 0 4px 15px rgba(68,152,202,0.3); }
 
-        /* BIOAGE HERO */
-        .bioage-hero { 
-          display: flex; justify-content: space-between; align-items: center;
-          background: #0f172a; padding: 2.5rem; border-radius: 28px; color: white; margin-bottom: 2.5rem;
-          box-shadow: 0 20px 40px rgba(0,0,0,0.15); transition: transform 0.2s;
+        /* BIOAGE HERO RESTORED */
+        .bioage-headline-row { display: flex; align-items: center; margin-bottom: 1.5rem; }
+        .blue-bar { display: inline-block; width: 4px; height: 22px; background: #4498ca; margin-right: 12px; border-radius: 4px; }
+        .bioage-headline-row h2 { font-size: 1.45rem; font-weight: 800; color: #1e3a5f; margin: 0; }
+
+        .bioage-card-new {
+          background: white; border-radius: 28px; padding: 2.25rem;
+          box-shadow: 0 10px 30px rgba(68,152,202,0.06), 0 1px 8px rgba(0,0,0,0.02);
+          border: 1px solid #f1f5f9; display: flex; gap: 2.5rem; align-items: center; margin-bottom: 2.25rem;
         }
-        .bioage-hero:hover { transform: scale(1.01); }
-        .bah-label { font-size: 1rem; opacity: 0.7; font-weight: 600; margin-bottom: 0.4rem; }
-        .bah-value { font-size: 4.2rem; font-weight: 900; letter-spacing: -0.05em; color: #4498ca; line-height: 1; }
-        .bah-unit { font-size: 1.2rem; opacity: 0.8; font-weight: 600; }
-        .bah-status { margin-top: 1.2rem; }
-        .status-pill { padding: 0.5rem 1.2rem; border-radius: 100px; font-size: 0.9rem; font-weight: 700; }
-        .status-pill.positive { background: rgba(34,197,94,0.2); color: #4ade80; }
-        .bah-hint { margin-top: 1.5rem; font-size: 0.8rem; opacity: 0.4; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; }
-        
-        .bah-visual { position: relative; width: 150px; height: 150px; }
-        .bah-circle { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; position: relative; }
-        .bah-circle-inner { font-size: 2.8rem; font-weight: 900; color: white; z-index: 2; }
-        .bah-ring { position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform: rotate(-90deg); }
+        .bac-left { display: flex; justify-content: center; align-items: center; flex-shrink: 0; }
+        .bac-circle-container {
+          position: relative; width: 210px; height: 210px;
+          display: flex; align-items: center; justify-content: center;
+        }
+        .bac-circle-svg {
+          position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+        .bac-circle-text-box {
+          position: relative; z-index: 2; display: flex; flex-direction: column;
+          align-items: center; justify-content: center; text-align: center;
+        }
+        .bac-circle-val { font-size: 3.4rem; font-weight: 900; color: #1c2b3e; line-height: 1; letter-spacing: -0.02em; }
+        .bac-circle-lab { font-size: 1.25rem; font-weight: 700; color: #8fa0b5; margin-top: 2px; }
+
+        .bac-right { flex: 1; }
+        .bac-badges-row { display: flex; gap: 0.75rem; margin-bottom: 0.85rem; flex-wrap: wrap; }
+        .badge-pill {
+          padding: 0.35rem 0.85rem; border-radius: 100px; font-size: 0.78rem; font-weight: 700;
+          display: inline-flex; align-items: center; gap: 0.35rem;
+        }
+        .badge-excellent { background: rgba(34,197,94,0.1); color: #22c55e; }
+        .dot-green { width: 6px; height: 6px; border-radius: 50%; background: #22c55e; }
+        .badge-top5 { background: rgba(68,152,202,0.1); color: #4498ca; }
+
+        .bac-main-text { font-size: 1.45rem; font-weight: 700; color: #1e293b; margin: 0 0 1.25rem 0; line-height: 1.3; }
+        .bac-main-text strong { font-weight: 850; color: #0f172a; }
+
+        .bac-stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.25rem; }
+        .bac-stat-card {
+          background: #f8fafc; border-radius: 16px; padding: 1rem 1.25rem;
+          border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 0.25rem;
+        }
+        .bac-stat-card.active-metric { background: #4498ca; border-color: #4498ca; color: white; transition: all 0.2s; }
+        .bac-stat-card.active-metric-green { background: #22c55e; border-color: #22c55e; color: white; transition: all 0.2s; }
+        .bac-stat-label { font-size: 0.72rem; font-weight: 750; color: #94a3b8; letter-spacing: 0.05em; }
+        .bac-stat-card.active-metric .bac-stat-label,
+        .bac-stat-card.active-metric-green .bac-stat-label { color: rgba(255,255,255,0.85); }
+        .bac-stat-val { font-size: 1.4rem; font-weight: 900; color: #0f172a; }
+        .bac-stat-card.active-metric .bac-stat-val,
+        .bac-stat-card.active-metric-green .bac-stat-val { color: white; }
+
+        .bac-footer-info { display: flex; align-items: center; font-size: 0.82rem; color: #64748b; font-weight: 600; line-height: 1.4; }
+
+        .trends-opt-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-top: 3.5rem;
+          margin-bottom: 1.5rem;
+        }
 
         /* PERIOD SELECTOR */
-        .period-selector { display: flex; gap: 0.5rem; background: #f1f5f9; padding: 0.35rem; border-radius: 12px; width: fit-content; margin-bottom: 1.8rem; }
+        .period-selector { display: flex; gap: 0.5rem; background: #f1f5f9; padding: 0.35rem; border-radius: 12px; width: fit-content; }
         .period-btn { padding: 0.45rem 1.2rem; border-radius: 9px; border: none; background: transparent; color: #64748b; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
         .period-btn.active { background: white; color: #1e293b; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
@@ -330,16 +487,15 @@ export default function EntwicklungPage() {
           transition: all 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
         .tac-item:hover { border-color: #4498ca; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
-        .taci-header { display: flex; justify-content: space-between; margin-bottom: 0.5rem; }
-        .taci-label { font-size: 1rem; font-weight: 700; color: #64748b; }
-        .taci-trend { font-size: 0.9rem; font-weight: 800; }
+        .taci-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.6rem; }
+        .taci-label { font-size: 1.25rem; font-weight: 800; color: #1e3a5f; }
+        .taci-trend { font-size: 1.2rem; font-weight: 900; margin-top: 2px; }
         .taci-score-row { display: flex; align-items: baseline; gap: 0.3rem; margin-bottom: 1.2rem; }
-        .taci-score { font-size: 2.4rem; font-weight: 900; color: #0f172a; }
-        .taci-unit { font-size: 0.9rem; font-weight: 700; color: #94a3b8; }
-        .taci-sparkline { height: 70px; margin-bottom: 1rem; }
-        .taci-labels { display: flex; justify-content: space-between; }
-        .taci-labels span { font-size: 0.7rem; font-weight: 700; color: #cbd5e1; opacity: 0; }
-        .taci-labels span.visible { opacity: 1; }
+        .taci-score { font-size: 2.4rem; font-weight: 900; color: #1c2b3e; }
+        .taci-unit { font-size: 0.9rem; font-weight: 700; color: #94a3b8; margin-left: 2px; }
+        .taci-sparkline { height: 70px; margin-bottom: 1.25rem; }
+        .taci-labels { display: flex; justify-content: space-between; padding: 0 0.25rem; }
+        .taci-labels span { font-size: 0.75rem; font-weight: 700; color: #a1b0cb; opacity: 1 !important; }
 
         /* MODAL */
         .modal-overlay { 
@@ -351,25 +507,27 @@ export default function EntwicklungPage() {
           overflow-y: auto; position: relative; padding: 3rem; box-shadow: 0 30px 60px rgba(0,0,0,0.3);
         }
         .modal-close { position: absolute; top: 1.5rem; right: 1.5rem; border: none; background: #f1f5f9; width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .modal-header h2 { font-size: 1.8rem; font-weight: 850; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
-        .modal-header p { color: #64748b; margin-bottom: 2rem; font-weight: 500; }
-
-        .bio-summary-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2.5rem; }
-        .bsg-item { background: #f8fafc; padding: 1.5rem; border-radius: 20px; text-align: center; }
-        .bsg-item.highlight { background: #0f172a; color: white; }
-        .bsg-label { display: block; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; opacity: 0.7; }
-        .bsg-value { font-size: 1.8rem; font-weight: 900; }
-        .text-green { color: #22c55e; }
-
-        .section-title { font-size: 1.1rem; font-weight: 800; margin-bottom: 1.2rem; }
-        .factor-row { display: flex; justify-content: space-between; align-items: center; padding: 1.2rem 0; border-bottom: 1px solid #f1f5f9; }
-        .fr-label strong { display: block; font-size: 1rem; color: #1e293b; }
-        .fr-label span { font-size: 0.85rem; color: #94a3b8; font-weight: 600; }
-        .fr-value { font-size: 1.1rem; font-weight: 800; color: #4498ca; }
-
-        .modal-info-box { background: #f0f7ff; padding: 1.5rem; border-radius: 20px; margin-top: 2rem; display: flex; gap: 1rem; }
-        .modal-info-box i { font-size: 1.4rem; color: #4498ca; }
-        .modal-info-box p { font-size: 0.9rem; color: #1e293b; line-height: 1.6; font-weight: 500; margin: 0; }
+        .modal-header-custom { margin-bottom: 2rem; text-align: left; }
+        .modal-title-custom { font-size: 2.1rem; font-weight: 850; color: #1e2b3e; letter-spacing: -0.03em; margin: 0 0 0.4rem 0; }
+        .modal-subtitle-custom { color: #70849e; font-size: 1.15rem; font-weight: 600; margin: 0; }
+ 
+        .opt-modal-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.1rem; margin: 2rem 0; }
+        .opt-pill-card { display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.25rem; border-radius: 20px; border: 1.5px solid #f1f5f9; background: #f8fafc; transition: all 0.2s; }
+        .opt-pill-card.green-tint { background: #f4fbf7; border-color: rgba(34,197,94,0.1); }
+        .opt-pill-card.red-tint { background: #fdf4f4; border-color: rgba(239,68,68,0.1); }
+        
+        .opt-pill-left { display: flex; align-items: center; gap: 0.95rem; }
+        .opt-pill-icon { width: 44px; height: 44px; border-radius: 12px; background: white; border: 1.5px solid #f1f5f9; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #2e3e5c; box-shadow: 0 2px 8px rgba(0,0,0,0.03); }
+        .opt-pill-card.green-tint .opt-pill-icon { color: #2e3e5c; }
+        .opt-pill-card.red-tint .opt-pill-icon { color: #2e3e5c; }
+        
+        .opt-pill-label { font-size: 1.05rem; font-weight: 750; color: #1c2b3e; white-space: nowrap; }
+        .opt-pill-val { font-size: 1.1rem; font-weight: 850; letter-spacing: -0.01em; white-space: nowrap; }
+        .opt-pill-val.green-text { color: #22c55e; }
+        .opt-pill-val.red-text { color: #ef4444; }
+        
+        .opt-modal-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: #0f172a; color: white; border: none; padding: 1rem 2.5rem; border-radius: 100px; font-weight: 800; font-size: 1rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 12px rgba(15,23,42,0.15); }
+        .opt-modal-btn:hover { background: #1e293b; transform: translateY(-1px); box-shadow: 0 6px 16px rgba(15,23,42,0.2); }
 
         /* GOALS / ACTIVITIES / JOURNEY (Shorter styles for brevity) */
         .goal-hero-card { background: #f8fafc; border-radius: 20px; padding: 2rem; margin-bottom: 1.5rem; border: 1px solid #e2e8f0; }

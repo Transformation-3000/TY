@@ -39,6 +39,15 @@ interface Expert {
 
 const science: Science[] = [
   {
+    id: '4',
+    title: 'Zellverjüngung: Durchbruch bei epigenetischer Reprogrammierung',
+    category: 'Genetik',
+    description: 'Neue Therapieverfahren ermöglichen die sichere Rücksetzung des biologischen Zellalters ohne Funktionsverlust.',
+    source: 'Cell Stem Cell',
+    date: 'Vor 1 Tag',
+    thumbnail: 'https://images.unsplash.com/photo-1507413245164-6160d8298b31?w=400&h=250&fit=crop',
+  },
+  {
     id: '1',
     title: 'NAD+ Supplementierung zeigt vielversprechende Ergebnisse',
     category: 'Longevity',
