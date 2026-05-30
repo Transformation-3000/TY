@@ -6,6 +6,7 @@ interface MainNavItem {
   id: string;
   label: string;
   icon: React.ReactNode;
+  special?: boolean;
 }
 
 const mainNavItems: MainNavItem[] = [
@@ -15,7 +16,7 @@ const mainNavItems: MainNavItem[] = [
   { id: 'insights', label: 'Inspiration', icon: <i className="bi bi-stars"></i> },
   { id: 'entwicklung', label: 'Entwicklung', icon: <i className="bi bi-graph-up-arrow"></i> },
   { id: 'mehr', label: 'Mehr', icon: <i className="bi bi-three-dots"></i> },
-  { id: 'referral', label: 'Empfehlen', icon: <i className="bi bi-gift-fill"></i>, special: true },
+  { id: 'referral', label: 'Weiterempfehlen', icon: <i className="bi bi-gift-fill"></i>, special: true },
 ];
 
 export default function Sidebar({ activeItem, onItemClick }: { activeItem?: string | null, onItemClick?: (id: string) => void }) {
@@ -91,7 +92,7 @@ export default function Sidebar({ activeItem, onItemClick }: { activeItem?: stri
         .sb-item-icon { font-size: 1.5rem; display: flex; align-items: center; justify-content: center; width: 32px; flex-shrink: 0; }
         .sb-item-content { display: flex; flex-direction: column; align-items: flex-start; }
         .sb-item-label { font-size: 0.95rem; font-weight: 700; }
-        .sb-item-sub { font-size: 0.65rem; font-weight: 800; color: #006EA7; text-transform: uppercase; margin-top: -2px; }
+        .sb-item-sub { font-size: 0.8rem; font-weight: 800; color: #006EA7; text-transform: uppercase; margin-top: 2px; }
         .sb-item-dot { width: 4px; height: 4px; border-radius: 50%; background: #006EA7; position: absolute; right: 12px; }
         
         .sb-item--special { background: #004D77 !important; margin-top: 1rem; border-radius: 12px; border-bottom: none !important; color: #fff !important; }

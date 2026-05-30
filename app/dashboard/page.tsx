@@ -26,6 +26,7 @@ import MehrPage from '@/components/mehr/MehrPage';
 import WachstumPage from '@/components/wachstum/WachstumPage';
 import InspirationPage from '@/components/inspiration/InspirationPage';
 import BiomarkerDashboard from '@/components/dashboard/biomarker/BiomarkerDashboard';
+import BottomNav from '@/components/layout/BottomNav';
 import Image from 'next/image';
 
 export default function Dashboard() {
@@ -250,7 +251,7 @@ export default function Dashboard() {
           )}
         </div>
       </div>
-
+      <BottomNav activeTab={activeMenuItem} onTabChange={navigate} />
     </main>
   );
 }

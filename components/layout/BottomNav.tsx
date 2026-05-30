@@ -4,11 +4,10 @@ import { useState } from 'react';
 
 export default function BottomNav({ activeTab, onTabChange }: { activeTab: string, onTabChange: (tab: string) => void }) {
   const tabs = [
-    { id: 'dashboard', label: 'Heute', icon: 'bi-house-door' },
-    { id: 'longevity-journey', label: 'Wachstum', icon: 'bi-rocket-takeoff' },
-    { id: 'coaching', label: 'Befähigung', icon: 'bi-person-badge' },
+    { id: 'quick-wins', label: 'Quick Wins', icon: 'bi-rocket-takeoff' },
+    { id: 'coaching', label: 'Personal Trainer', icon: 'bi-person-circle' },
+    { id: 'insights', label: 'Inspiration', icon: 'bi-stars' },
     { id: 'entwicklung', label: 'Entwicklung', icon: 'bi-graph-up-arrow' },
-    { id: 'mehr', label: 'Mehr', icon: 'bi-three-dots' },
   ];
 
   return (
@@ -30,30 +29,55 @@ export default function BottomNav({ activeTab, onTabChange }: { activeTab: strin
           bottom: 0;
           left: 0;
           right: 0;
-          height: 70px;
-          background: rgba(255, 255, 255, 0.9);
-          backdrop-filter: blur(10px);
+          height: 72px;
+          background: rgba(255, 255, 255, 0.92);
+          backdrop-filter: blur(12px);
           display: flex;
           justify-content: space-around;
           align-items: center;
-          border-top: 1px solid #e2e8f0;
+          border-top: 1px solid rgba(226, 232, 240, 0.8);
+          box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
           z-index: 1000;
           padding: 0 1rem;
+          padding-bottom: env(safe-area-inset-bottom); /* Support modern notches/home bars */
         }
         .nav-item {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 0.25rem;
+          gap: 0.2rem;
           background: none;
           border: none;
           color: #94a3b8;
           cursor: pointer;
           flex: 1;
+          transition: all 0.2s ease;
+          padding: 6px 0;
         }
-        .nav-item i { font-size: 1.4rem; }
-        .nav-label { font-size: 0.7rem; font-weight: 700; }
-        .nav-item.active { color: #4498ca; }
+        .nav-item i { 
+          font-size: 1.45rem; 
+          transition: transform 0.2s ease;
+        }
+        .nav-item:active i {
+          transform: scale(0.9);
+        }
+        .nav-label { 
+          font-size: 0.72rem; 
+          font-weight: 700; 
+          letter-spacing: -0.01em;
+        }
+        .nav-item.active { 
+          color: #006ea7; 
+        }
+        .nav-item.active i {
+          transform: scale(1.05);
+        }
+
+        @media (min-width: 993px) {
+          .bottom-nav {
+            display: none !important;
+          }
+        }
       `}</style>
     </div>
   );

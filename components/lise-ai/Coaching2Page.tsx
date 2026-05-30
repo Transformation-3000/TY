@@ -333,7 +333,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
               </div>
               <div className="wbl-name">Lisa AI</div>
               <div className="wbl-status"><span className="wbl-dot" />Online · bereit für dich</div>
-              <p className="wb-tagline">Dein persönlicher Executive Coach</p>
+              <p className="wb-tagline">Deine persönliche Longevity Trainerin</p>
             </div>
             
             <div className="wb-sidebar">

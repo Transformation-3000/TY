@@ -16,6 +16,105 @@ export default function VogelperspektivePage() {
     const formattedDate = new Intl.DateTimeFormat('de-DE', dateOptions).format(new Date());
     setCurrentDate(formattedDate.toUpperCase());
   }, []);
+ 
+  const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [liveCallDateStr, setLiveCallDateStr] = useState('');
+ 
+  useEffect(() => {
+    const calculateLiveCall = () => {
+      const now = new Date();
+      // Add 14 days
+      const futureDate = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000);
+      // Find the next Monday
+      const day = futureDate.getDay();
+      const daysToMonday = (1 - day + 7) % 7 || 7;
+      const targetDate = new Date(futureDate.getTime() + daysToMonday * 24 * 60 * 60 * 1000);
+      targetDate.setHours(18, 0, 0, 0);
+ 
+      const dateOptions: Intl.DateTimeFormatOptions = { 
+        weekday: 'long', 
+        day: 'numeric', 
+        month: 'long' 
+      };
+      const formatted = new Intl.DateTimeFormat('de-DE', dateOptions).format(targetDate);
+      setLiveCallDateStr(formatted);
+ 
+      return targetDate;
+    };
+ 
+    const targetDate = calculateLiveCall();
+ 
+    const updateTimer = () => {
+      const diff = targetDate.getTime() - new Date().getTime();
+      if (diff <= 0) {
+        setCountdown({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
+      const days = Math.floor(diff / (24 * 60 * 60 * 1000));
+      const hours = Math.floor((diff % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+      const minutes = Math.floor((diff % (60 * 60 * 1000)) / (60 * 1000));
+      const seconds = Math.floor((diff % (60 * 1000)) / 1000);
+      setCountdown({ days, hours, minutes, seconds });
+    };
+ 
+    updateTimer();
+    const interval = setInterval(updateTimer, 1000);
+ 
+    return () => clearInterval(interval);
+  }, []);
+
+  const [outlookCalls, setOutlookCalls] = useState({
+    call1: { dateStr: '', month: '', day: '', fullDateStr: '' },
+    call2: { dateStr: '', month: '', day: '', fullDateStr: '' }
+  });
+
+  useEffect(() => {
+    const getMiddleMonday = (year: number, month: number) => {
+      const d = new Date(year, month, 15);
+      const day = d.getDay();
+      let dateNum = 15;
+      if (day === 0) dateNum = 16;
+      else if (day === 2) dateNum = 14;
+      else if (day === 3) dateNum = 13;
+      else if (day === 4) dateNum = 12;
+      else if (day === 5) dateNum = 18;
+      else if (day === 6) dateNum = 17;
+      
+      const res = new Date(year, month, dateNum);
+      res.setHours(18, 0, 0, 0);
+      return res;
+    };
+
+    const now = new Date();
+    // Calculate the upcoming main call date
+    const futureDate = new Date(now.getTime() + 14 * 24 * 60 * 60 * 1000);
+    const day = futureDate.getDay();
+    const daysToMonday = (1 - day + 7) % 7 || 7;
+    const mainCallDate = new Date(futureDate.getTime() + daysToMonday * 24 * 60 * 60 * 1000);
+
+    // Call 1 is the month after the main call (July)
+    const call1Date = getMiddleMonday(mainCallDate.getFullYear(), mainCallDate.getMonth() + 1);
+    // Call 2 is the month after Call 1 (August)
+    const call2Date = getMiddleMonday(mainCallDate.getFullYear(), mainCallDate.getMonth() + 2);
+
+    const monthOptions: Intl.DateTimeFormatOptions = { month: 'short' };
+    const dateOptions: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long' };
+
+    setOutlookCalls({
+      call1: {
+        dateStr: call1Date.toLocaleDateString('de-DE', dateOptions),
+        month: call1Date.toLocaleDateString('de-DE', monthOptions).toUpperCase().replace('.', ''),
+        day: call1Date.getDate().toString(),
+        fullDateStr: `Montag, ${call1Date.getDate()}. ${call1Date.toLocaleDateString('de-DE', { month: 'long' })}`
+      },
+      call2: {
+        dateStr: call2Date.toLocaleDateString('de-DE', dateOptions),
+        month: call2Date.toLocaleDateString('de-DE', monthOptions).toUpperCase().replace('.', ''),
+        day: call2Date.getDate().toString(),
+        fullDateStr: `Montag, ${call2Date.getDate()}. ${call2Date.toLocaleDateString('de-DE', { month: 'long' })}`
+      }
+    });
+  }, []);
 
   const [activeModal, setActiveModal] = useState<'activity' | 'voice' | 'photo' | 'diamonds' | null>(null);
   const [isRecording, setIsRecording] = useState(false);
@@ -240,20 +339,99 @@ export default function VogelperspektivePage() {
       {/* BOTTOM ROW: 2 COLUMNS */}
       <div className="bottom-row">
 
-        {/* BOX 3: DIREKT-EINSTIEG */}
-        <div className="dash-card entry-box-full">
+        {/* BOX 3: DIREKT-EINSTIEG (NÄCHSTER LIVE CALL) */}
+        <div className="dash-card entry-box-full live-call-box">
           <div className="box-header">
-            <i className="bi bi-grid-fill entry-grid-icon"></i>
-            <h2 className="box-label">Direkt-Einstieg</h2>
+            <i className="bi bi-display live-call-icon" style={{ color: '#4498ca', fontSize: '1.2rem' }}></i>
+            <h2 className="box-label">Nächster Live Call</h2>
           </div>
-          <div className="entry-items-row">
-            <div className="entry-h-card">
-              <div className="ehc-img"><Image src="/images/longevity_sphere_final.png" width={40} height={40} alt="Lab" /></div>
-              <span>Longevity Lab</span>
+          <div className="live-call-body">
+            {/* LEFT COLUMN: Main Upcoming Call */}
+            <div className="lc-left-col">
+              <div className="live-call-img-container">
+                <Image src="/images/hacks-schlaf.png" fill alt="Schlafforschung" style={{ objectFit: 'cover', borderRadius: '14px' }} />
+              </div>
+              <div className="live-call-details">
+                <span className="live-call-date-text">{liveCallDateStr}, <span style={{ fontWeight: 500 }}>18:00-18:45 Uhr</span></span>
+                <span style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600, marginTop: '1px', lineHeight: 1.4 }}>Schwerpunkt: "Neues aus der Schlafforschung: Wie du deinen Schlaf optimierst, um jeden Tag voller Energie und Fokus zu starten!"</span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '8px', marginBottom: '4px' }}>
+                  <div style={{ width: '45px', height: '45px', borderRadius: '50%', overflow: 'hidden', position: 'relative', border: '2px solid #4498ca', flexShrink: 0, boxShadow: '0 2px 8px rgba(68,152,202,0.15)' }}>
+                    <Image src="/images/albrecht_keller.png" fill alt="Dr. med. Albrecht Keller" style={{ objectFit: 'cover' }} />
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.1rem' }}>
+                    <span style={{ fontSize: '0.68rem', color: '#94a3b8', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Experte</span>
+                    <span style={{ fontSize: '0.85rem', color: '#4498ca', fontWeight: 800 }}>Schlafmediziner Dr. med. Albrecht Keller</span>
+                  </div>
+                </div>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', width: 'fit-content', marginTop: 'auto', alignItems: 'stretch' }}>
+                  <div className="live-countdown-grid">
+                    <div className="live-countdown-item">
+                      <span className="lc-num">{countdown.days}</span>
+                      <span className="lc-label">Tage</span>
+                    </div>
+                    <div className="live-countdown-item">
+                      <span className="lc-num">{countdown.hours}</span>
+                      <span className="lc-label">Std</span>
+                    </div>
+                    <div className="live-countdown-item">
+                      <span className="lc-num">{countdown.minutes}</span>
+                      <span className="lc-label">Min</span>
+                    </div>
+                    <div className="live-countdown-item">
+                      <span className="lc-num">{countdown.seconds}</span>
+                      <span className="lc-label">Sek</span>
+                    </div>
+                  </div>
+                  
+                  <button className="live-call-join-btn" onClick={() => alert('Erfolgreich zum Live-Call angemeldet!')}>
+                    Jetzt anmelden
+                  </button>
+                </div>
+              </div>
             </div>
-            <div className="entry-h-card">
-              <div className="ehc-img"><Image src="/images/photo_sunflower.png" width={40} height={40} alt="Shop" /></div>
-              <span>Longevity Shop</span>
+
+            {/* RIGHT COLUMN: Outlook (Ausblick) */}
+            <div className="lc-right-col">
+              <h3 className="outlook-title">Vorschau auf die folgenden Live-Calls</h3>
+              
+              <div className="outlook-items-list">
+                {/* CALL 1 */}
+                <div className="outlook-item">
+                  <div className="outlook-date-badge">
+                    <span className="badge-month">{outlookCalls.call1.month}</span>
+                    <span className="badge-day">{outlookCalls.call1.day}</span>
+                  </div>
+                  <div className="outlook-details">
+                    <span className="outlook-date-str" style={{ whiteSpace: 'nowrap' }}>{outlookCalls.call1.fullDateStr}</span>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 500, marginTop: '-2px' }}>18:00-18:45 Uhr</span>
+                    <div className="outlook-topics">
+                      <span className="topic-pill">Fastenpraxis</span>
+                    </div>
+                    <span style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>Prof. Dr. Andreas Michalsen</span>
+                  </div>
+                </div>
+
+                {/* CALL 2 */}
+                <div className="outlook-item">
+                  <div className="outlook-date-badge">
+                    <span className="badge-month">{outlookCalls.call2.month}</span>
+                    <span className="badge-day">{outlookCalls.call2.day}</span>
+                  </div>
+                  <div className="outlook-details">
+                    <span className="outlook-date-str" style={{ whiteSpace: 'nowrap' }}>{outlookCalls.call2.fullDateStr}</span>
+                    <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 500, marginTop: '-2px' }}>18:00-18:45 Uhr</span>
+                    <div className="outlook-topics">
+                      <span className="topic-pill">HRV-Resilienz</span>
+                    </div>
+                    <span style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>Stressmanagement-Expertin Prof. Dr. Nadine Galandi</span>
+                  </div>
+                </div>
+              </div>
+
+              <button className="live-call-calendar-btn" style={{ marginTop: 'auto' }} onClick={() => alert('Erfolgreich zum Kalender hinzugefügt!')}>
+                In Kalender eintragen
+              </button>
             </div>
           </div>
         </div>
@@ -265,13 +443,40 @@ export default function VogelperspektivePage() {
             <h2 className="box-label">Feel-Good-Area</h2>
           </div>
           <div className="fg-items-grid">
-            <div className="fg-h-card">
-              <div className="fgh-img green"><Image src="/images/photo_walk.png" fill alt="Nature" style={{ objectFit: 'cover' }} /></div>
-              <div className="fgh-txt"><strong>Nature Break</strong><span>30-Sek. Natur-Clips</span></div>
+            {/* CARD 1: ENERGIETANKSTELLE */}
+            <div className="fg-v-card">
+              <div className="fgh-img-16-9"><Image src="/images/feelgood_energy.png" fill alt="Energie" style={{ objectFit: 'cover' }} /></div>
+              <div className="fgh-content">
+                <strong>Energietankstelle</strong>
+                <span>Sofort-Impulse für mehr Energie</span>
+              </div>
             </div>
-            <div className="fg-h-card">
-              <div className="fgh-img orange"><Image src="/images/photo_sunflower.png" fill alt="Mindful" style={{ objectFit: 'cover' }} /></div>
-              <div className="fgh-txt"><strong>Mindful Eating</strong><span>Bewussteres Essen</span></div>
+
+            {/* CARD 2: KLARHEITSRAUM */}
+            <div className="fg-v-card">
+              <div className="fgh-img-16-9"><Image src="/images/feelgood_clarity.png" fill alt="Fokus" style={{ objectFit: 'cover' }} /></div>
+              <div className="fgh-content">
+                <strong>Klarheitsraum</strong>
+                <span>Zentriere dich voller Gelassenheit</span>
+              </div>
+            </div>
+
+            {/* CARD 3: JUNGBRUNNEN */}
+            <div className="fg-v-card">
+              <div className="fgh-img-16-9"><Image src="/images/feelgood_youth.png" fill alt="Regeneration" style={{ objectFit: 'cover' }} /></div>
+              <div className="fgh-content">
+                <strong>Jungbrunnen</strong>
+                <span>Jeden Tag eine Verjüngungsaktion</span>
+              </div>
+            </div>
+
+            {/* CARD 4: STRAHLKRAFT */}
+            <div className="fg-v-card">
+              <div className="fgh-img-16-9"><Image src="/images/feelgood_radiance.png" fill alt="Glow" style={{ objectFit: 'cover' }} /></div>
+              <div className="fgh-content">
+                <strong>Strahlkraft</strong>
+                <span>Strahle von innen und von außen</span>
+              </div>
             </div>
           </div>
         </div>
@@ -395,7 +600,7 @@ export default function VogelperspektivePage() {
                                               value={currentVal}
                                               onChange={(e) => setActivityValues({...activityValues, [act.name]: e.target.value})}
                                             >
-                                              {act.options.map((opt) => (
+                                              {act.options.map((opt: string) => (
                                                 <option key={opt}>{opt}</option>
                                               ))}
                                             </select>
@@ -716,6 +921,17 @@ export default function VogelperspektivePage() {
         .top-row { display: grid; grid-template-columns: 1fr 0.8fr 1fr; gap: 1.5rem; align-items: stretch; }
         .bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
 
+        @media (max-width: 1024px) {
+          .top-row { display: flex; flex-direction: column; gap: 1.5rem; }
+          .center-section { order: -1; }
+          .bottom-row { grid-template-columns: 1fr; gap: 1.5rem; }
+          .dashboard-container { padding: 1.5rem 1.5rem 85px 1.5rem; }
+        }
+
+        @media (max-width: 768px) {
+          .dashboard-container { padding: 1rem 1rem 85px 1rem; gap: 1.25rem; }
+        }
+
         .dash-card {
           background: #fff;
           border-radius: 28px;
@@ -752,8 +968,8 @@ export default function VogelperspektivePage() {
         .date-display { font-size: 1.15rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
         .greeting-h1 { font-size: 2.2rem; font-weight: 500; color: #1e293b; margin: 0.4rem 0 1.5rem; line-height: 1.1; }
         .name-blue { color: #4498ca; font-weight: 800; }
-        .avatar-outer-circle { display: inline-block; padding: 10px; border-radius: 50%; background: #fff; box-shadow: 0 15px 35px rgba(0,0,0,0.1); }
-        .avatar-inner { width: 288px; height: 288px; border-radius: 50%; overflow: hidden; }
+        .avatar-outer-circle { display: inline-block; padding: 10px; border-radius: 50%; background: #fff; box-shadow: 0 15px 35px rgba(0,0,0,0.1); max-width: 100%; box-sizing: border-box; }
+        .avatar-inner { width: 288px; height: 288px; max-width: 100%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; }
 
         /* BOX 2: TRACKER */
         .tracker-top-btns { display: grid; grid-template-columns: 55px 1fr 1fr; gap: 0.6rem; margin-bottom: 1.25rem; }
@@ -761,9 +977,9 @@ export default function VogelperspektivePage() {
         .add-btn:hover { background: #4498ca; transform: translateY(-2px); }
         .voice-btn, .photo-btn { 
           height: 55px; background: #fff; border: 1px solid #f1f5f9; border-radius: 16px; 
-          display: flex; align-items: center; justify-content: center; gap: 0.5rem; 
-          font-weight: 700; color: #334155; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-          font-size: 0.9rem; transition: all 0.2s;
+          display: flex; align-items: center; justify-content: center; gap: 0.55rem; 
+          font-weight: 750; color: #334155; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+          font-size: 1.05rem; transition: all 0.2s;
         }
         .voice-btn:hover, .photo-btn:hover { 
           background: #eef7fc; 
@@ -773,7 +989,7 @@ export default function VogelperspektivePage() {
           box-shadow: 0 8px 20px rgba(96, 153, 207, 0.15);
         }
         .voice-btn:hover i, .photo-btn:hover i { color: #4498ca; }
-        .voice-btn i, .photo-btn i { font-size: 1.1rem; color: #6099cf; transition: color 0.2s; }
+        .voice-btn i, .photo-btn i { font-size: 1.40rem; color: #6099cf; transition: color 0.2s; }
 
         .tracker-label { font-size: 0.6rem; font-weight: 800; color: #94a3b8; letter-spacing: 0.08em; margin-bottom: 0.75rem; text-transform: uppercase; }
         .activities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-bottom: 1.25rem; }
@@ -782,7 +998,7 @@ export default function VogelperspektivePage() {
           background: #fff; border: 1px solid #f1f5f9; border-radius: 18px;
           padding: 1rem 0.4rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
         }
-        .act-icon-wrap { font-size: 1.4rem; color: #6099cf; margin-bottom: 0.1rem; }
+        .act-icon-wrap { font-size: 2.1rem; color: #6099cf; margin-bottom: 0.15rem; display: flex; align-items: center; justify-content: center; }
         .activity-card strong { font-size: 0.85rem; color: #1e293b; }
         .act-duration { font-size: 0.8rem; color: #4498ca; font-weight: 500; }
 
@@ -815,13 +1031,48 @@ export default function VogelperspektivePage() {
         .entry-h-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
         .ehc-img { width: 45px; height: 45px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; }
 
-        .fg-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-        .fg-h-card { background: #f8fafc; border-radius: 20px; padding: 0.75rem; display: flex; align-items: center; gap: 1rem; border: 1px solid #f1f5f9; cursor: pointer; transition: all 0.2s; }
-        .fg-h-card:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .fgh-img { width: 50px; height: 50px; border-radius: 14px; overflow: hidden; position: relative; flex-shrink: 0; }
-        .fgh-txt { display: flex; flex-direction: column; }
-        .fgh-txt strong { font-size: 0.9rem; color: #1e293b; }
-        .fgh-txt span { font-size: 0.75rem; color: #64748b; }
+        .fg-items-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        .fg-v-card {
+          background: #f8fafc;
+          border-radius: 20px;
+          border: 1px solid #f1f5f9;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.01);
+        }
+        .fg-v-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 10px 20px rgba(0,0,0,0.04);
+          border-color: #cbd5e1;
+        }
+        .fgh-img-16-9 {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          overflow: hidden;
+        }
+        .fgh-content {
+          padding: 0.9rem 1rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.35rem;
+          flex: 1;
+        }
+        .fgh-content strong {
+          font-size: 1.05rem;
+          color: #1e293b;
+          font-weight: 800;
+        }
+        .fgh-content span {
+          font-size: 0.8rem;
+          color: #64748b;
+          line-height: 1.35;
+        }
+        .fg-bullets { list-style-type: disc; margin: 4px 0 0 0; padding-left: 1.15rem; display: flex; flex-direction: column; gap: 4px; }
+        .fg-bullets li { font-size: 0.875rem; color: #64748b; line-height: 1.35; text-align: left; }
 
         /* MODALS */
         .modal-overlay {
@@ -1055,6 +1306,282 @@ export default function VogelperspektivePage() {
         .cam-shutter:active::after { transform: scale(0.9); }
         .diamonds-table-row { transition: background-color 0.15s ease; }
         .diamonds-table-row:hover { background-color: #f1f7fc !important; }
+        
+        /* LIVE CALL PREVIEW STYLE */
+        .live-call-box { display: flex; flex-direction: column; }
+        .live-badge {
+          background: rgba(236, 72, 153, 0.1);
+          color: #ec4899;
+          font-size: 0.72rem;
+          font-weight: 800;
+          padding: 0.3rem 0.65rem;
+          border-radius: 50px;
+          margin-left: auto;
+          letter-spacing: 0.03em;
+        }
+        .live-call-body { display: flex; gap: 1.5rem; margin-top: 0.5rem; flex: 1; align-items: stretch; }
+        .lc-left-col {
+          display: flex;
+          flex-direction: column;
+          gap: 0.85rem;
+          flex: 1.1;
+          align-items: stretch;
+        }
+        .lc-right-col {
+          flex: 0.9;
+          border-left: 1.5px solid #e2e8f0;
+          padding-left: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 0.75rem;
+          margin-top: 0;
+        }
+        .outlook-title {
+          font-size: 0.85rem;
+          font-weight: 800;
+          color: #64748b;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          margin: 0 0 0.25rem 0;
+        }
+        .outlook-items-list {
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+        }
+        .outlook-item {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          background: #f8fafc;
+          border: 1px solid #e2e8f0;
+          border-radius: 16px;
+          padding: 0.6rem;
+          transition: all 0.2s ease;
+        }
+        .outlook-item:hover {
+          transform: translateY(-2px);
+          border-color: #cbd5e1;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+        }
+        .outlook-date-badge {
+          width: 48px;
+          height: 48px;
+          background: #ffffff;
+          border: 1.5px solid #e2e8f0;
+          border-radius: 12px;
+          display: flex;
+          flex-direction: column;
+          overflow: hidden;
+          box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+          flex-shrink: 0;
+          text-align: center;
+        }
+        .badge-month {
+          background: #4498ca;
+          color: #ffffff;
+          font-size: 0.55rem;
+          font-weight: 900;
+          padding: 1px 0;
+          text-transform: uppercase;
+          letter-spacing: 0.03em;
+        }
+        .badge-day {
+          font-size: 1.15rem;
+          font-weight: 900;
+          color: #1e293b;
+          line-height: 1.2;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex: 1;
+        }
+        .outlook-details {
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+          flex: 1;
+        }
+        .outlook-date-str {
+          font-size: 0.82rem;
+          font-weight: 800;
+          color: #0f172a;
+          white-space: nowrap;
+        }
+        .outlook-topics {
+          display: flex;
+          gap: 0.35rem;
+          flex-wrap: wrap;
+        }
+        .topic-pill {
+          background: rgba(68, 152, 202, 0.08);
+          color: #4498ca;
+          font-size: 0.65rem;
+          font-weight: 800;
+          padding: 0.2rem 0.5rem;
+          border-radius: 50px;
+          border: 1px solid rgba(68, 152, 202, 0.15);
+          letter-spacing: 0.01em;
+        }
+        .live-call-img-container {
+          position: relative;
+          width: 100%;
+          height: 135px;
+          border-radius: 14px;
+          overflow: hidden;
+          flex-shrink: 0;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+          margin-top: 0;
+        }
+        .live-call-topic-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(to top, rgba(15, 23, 42, 0.85) 0%, rgba(15, 23, 42, 0.2) 60%, rgba(15, 23, 42, 0.05) 100%);
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          padding: 0.6rem;
+        }
+        .live-call-tag {
+          font-size: 0.6rem;
+          font-weight: 800;
+          color: #ec4899;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          margin-bottom: 0.15rem;
+        }
+        .live-call-topic-title {
+          font-size: 0.8rem;
+          font-weight: 750;
+          color: white;
+          margin: 0;
+          line-height: 1.2;
+        }
+        .live-call-details {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-start;
+          gap: 0.5rem;
+          flex: 1;
+          margin-top: 0;
+        }
+        .live-call-date-text {
+          font-size: 0.9rem;
+          font-weight: 800;
+          color: #0f172a;
+        }
+        .live-countdown-grid {
+          display: flex;
+          gap: 0.5rem;
+          margin: 0;
+        }
+        .live-countdown-item {
+          background: #f8fafc;
+          border: 1.5px solid #e2e8f0;
+          border-radius: 10px;
+          padding: 0.3rem 0.45rem;
+          min-width: 44px;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+        }
+        .lc-num {
+          font-size: 1rem;
+          font-weight: 900;
+          color: #1e3a5f;
+          line-height: 1;
+        }
+        .lc-label {
+          font-size: 0.55rem;
+          font-weight: 750;
+          color: #94a3b8;
+          text-transform: uppercase;
+          margin-top: 2px;
+        }
+        .live-btn-group {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 0.6rem;
+          margin-top: 0.5rem;
+          width: 100%;
+        }
+        .live-call-join-btn {
+          background: #004D77;
+          color: white;
+          border: none;
+          border-radius: 12px;
+          padding: 0.5rem 1rem;
+          font-size: 0.82rem;
+          font-weight: 750;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+          box-shadow: 0 4px 10px rgba(0, 77, 119, 0.15);
+          width: 100%;
+        }
+        .live-call-join-btn:hover {
+          background: #006EA7;
+          box-shadow: 0 4px 12px rgba(0, 110, 167, 0.2);
+          transform: translateY(-1px);
+        }
+        .live-call-calendar-btn {
+          background: #ffffff;
+          color: #004D77;
+          border: 1.5px solid #004D77;
+          border-radius: 12px;
+          padding: 0.5rem 1rem;
+          font-size: 0.82rem;
+          font-weight: 750;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s;
+          width: 100%;
+        }
+        .live-call-calendar-btn:hover {
+          background: #f0f7fb;
+          transform: translateY(-1px);
+        }
+        
+        /* RESPONSIVE MOBILE LAYOUT FOR LIVE CALL */
+        @media (max-width: 768px) {
+          .live-call-body {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1.5rem;
+          }
+          .lc-left-col {
+            width: 100%;
+          }
+          .lc-right-col {
+            width: 100%;
+            border-left: none;
+            padding-left: 0;
+            margin-top: 0;
+          }
+        }
+        
+        @media (max-width: 580px) {
+          .live-call-img-container {
+            width: 100% !important;
+            height: 150px !important;
+            margin-top: 0 !important;
+          }
+          .live-call-details {
+            margin-top: 0 !important;
+            gap: 0.6rem;
+          }
+          .live-call-join-btn {
+            align-self: stretch !important;
+          }
+          .lc-left-col {
+            flex-direction: column;
+            align-items: stretch;
+          }
+        }
       `}</style>
     </div>
   );

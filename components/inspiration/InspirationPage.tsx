@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import ReelsFocusView from './ReelsFocusView';
 
-type Tab = 'experten' | 'science' | 'hacks' | 'gespeichert';
+type Tab = 'experten' | 'science' | 'womens-health' | 'hacks' | 'gespeichert';
 
 interface Reel {
   id: string;
@@ -185,12 +185,55 @@ const reels: Reel[] = [
     fullText: 'Kaltgepresstes Olivenöl (Extra Vergine) ist extrem reich an Polyphenolen wie Oleocanthal. Diese bioaktiven Stoffe aktivieren Sirtuine (Langlebigkeitsgene) und stimulieren die zelluläre Autophagie – die Müllabfuhr deiner Zellen, die beschädigte Proteine abbaut. Zudem schützt es deine Gefäße und senkt Entzündungswerte nachhaltig!',
     author: 'Lisa AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/hacks-olive.png', tag: 'ZELLEN', tagColor: '#10b981', saved: false, authorImage: '/images/lisa.png',
   },
+  {
+    id: 'w1', category: 'womens-health',
+    title: 'Hormonelle Balance & Langlebigkeit: Östrogen als Beschützer',
+    teaser: 'Wie die Aufrechterhaltung der hormonellen Gesundheit das Herz- und Gehirnalter bei Frauen aktiv schützt.',
+    fullText: 'Östrogen spielt eine Schlüsselrolle beim Schutz der weiblichen Gefäße und Gehirnzellen. Nach der Menopause sinkt dieser Schutz drastisch, was das Risiko für Herz-Kreislauf-Erkrankungen und Demenz erhöht. Neueste Studien zeigen: Phytoöstrogene (z.B. in Leinsamen), Krafttraining und eine gezielte Unterstützung des Mikrobioms (Estrobolom) helfen, den Östrogenspiegel natürlich zu regulieren und das biologische Altern zu verzögern.',
+    author: "Harvard Women's Health Watch", role: 'Forschung & Leitlinien, 2026', readTime: '3 Min', image: '/images/woman_blonde.png', tag: 'HORMONBALANCE', tagColor: '#ec4899', saved: false,
+  },
+  {
+    id: 'w2', category: 'womens-health',
+    title: 'Zyklusbasiertes Training für maximale Zellregeneration',
+    teaser: 'Passe deine sportliche Belastung und Ernährung an die Zyklusphasen an – für besseren Muskelaufbau und weniger Cortisol.',
+    fullText: 'In der Follikelphase (hohes Östrogen) ist der Körper optimal auf intensives Krafttraining und HIIT vorbereitet. In der Lutealphase (hohes Progesteron) steigen die Körpertemperatur und das Cortisol leichter an, weshalb moderates Ausdauertraining, Yoga und eine Erhöhung der gesunden Kohlenhydrate die Regeneration und Hormonbalance unterstützen.',
+    author: 'Dr. Stacy Sims', role: 'Sportphysiologin & Autorin', readTime: '4 Min', image: '/images/womens_cycle_training.png', tag: 'ZYKLUS-BIO', tagColor: '#8b5cf6', saved: false,
+  },
+  {
+    id: 'w3', category: 'womens-health',
+    title: 'Kollagen & Hautelastizität: Wissenschaftliche Hautverjüngung',
+    teaser: 'Wie die Kombination aus bioaktiven Kollagenpeptiden und Rotlichttherapie die zelluläre Hautalterung nachweislich bremst.',
+    fullText: 'Kollagen ist das primäre Strukturprotein der Haut. Ab dem 25. Lebensjahr sinkt die körpereigene Produktion um ca. 1% jährlich. Klinische Studien belegen: Die Zufuhr von 2,5g bis 5g spezifischen bioaktiven Kollagenpeptiden verbessert nachweislich Hautfeuchtigkeit und -elastizität. In Kombination mit Rotlichttherapie (660nm, regt Fibroblasten an) lässt sich die zelluläre Hautalterung verlangsamen und feine Linien reduzieren.',
+    author: 'Journal of Cosmetic Dermatology', role: 'Klinische Studie, 2025', readTime: '3 Min', image: '/images/collagen_redlight_beauty.png', tag: 'BEAUTY-BIO', tagColor: '#ec4899', saved: false,
+  },
+  {
+    id: 'w4', category: 'womens-health',
+    title: 'Epigenetik der Haut: Schutz vor Photoaging & Faltenbildung',
+    teaser: 'Wie Antioxidantien und pflanzliche Sirtuin-Aktivatoren deine Hautzellen vor UV-induzierter Seneszenz schützen.',
+    fullText: 'UV-Strahlung ist für bis zu 80% der sichtbaren Hautalterung (Photoaging) verantwortlich, indem sie DNA-Schäden und seneszente "Zombiezellen" erzeugt. Topisch und oral verabreichte Antioxidantien wie Vitamin C, E und Resveratrol neutralisieren freie Radikale und aktivieren die Sirtuin-Gene der Hautzellen. Das bewahrt die zelluläre Vitalität, stärkt die Hautbarriere und schützt das Kollagengerüst vor oxidativem Abbau.',
+    author: 'Dermatological Science', role: 'Peer-reviewed, 2026', readTime: '4 Min', image: '/images/skin_epigenetics.png', tag: 'LONGEVITY-BEAUTY', tagColor: '#f59e0b', saved: false,
+  },
+  {
+    id: 'w5', category: 'womens-health',
+    title: 'Mikrobiom & Estrobolom: Die Darm-Hormon-Achse',
+    teaser: 'Wie eine gesunde Darmflora die Östrogen-Metabolisierung steuert und zelluläre Entzündungen hemmt.',
+    fullText: 'Das Estrobolom ist eine Gruppe von Darmbakterien, die den Östrogenspiegel im Körper regulieren, indem sie das Enzym Beta-Glucuronidase ausschütten. Ein gestörtes Mikrobiom (Dysbiose) führt entweder zu Östrogenmangel oder Östrogendominanz. Die Langlebigkeits-Strategie: Ballaststoffreiche Ernährung (mind. 30g täglich), fermentierte Lebensmittel (Kimchi, Kefir) und der Verzicht auf Emulgatoren stabilisieren das Estrobolom und schützen vor hormonabhängigen Beschwerden.',
+    author: 'Microbiome Journal', role: 'Forschung & Reviews, 2026', readTime: '3 Min', image: '/images/estrobolome_gut_health.png', tag: 'MIKROBIOM', tagColor: '#10b981', saved: false,
+  },
+  {
+    id: 'w6', category: 'womens-health',
+    title: 'HRV & Weibliche Resilienz: Zyklischer Stressabbau',
+    teaser: 'Warum die Herzratenvariabilität (HRV) bei Frauen zyklusabhängig schwankt und wie du dein Nervensystem schützt.',
+    fullText: 'Durch den Einfluss von Progesteron sinkt die HRV in der lutealen Phase natürlicherweise ab, während der Ruhepuls leicht ansteigt. Das Nervensystem ist in dieser Zeit sensibler für Stressoren. Wer das ignoriert, riskiert chronisch erhöhte Cortisolwerte, die den Alterungsprozess beschleunigen. Durch die Anpassung des Trainings (mehr Erholung, Atemübungen) lässt sich die HRV stabilisieren und die zelluläre Resilienz stärken.',
+    author: 'Stanford Medicine', role: 'Klinische Studie, 2025', readTime: '3 Min', image: '/images/hrv_female_resilience.png', tag: 'NERVENSYSTEM', tagColor: '#3b82f6', saved: false,
+  },
 ];
 
 const tabLabels: { id: Tab; label: string; icon: string }[] = [
   { id: 'hacks', label: 'Longevity Snacks', icon: 'bi-lightning-charge' },
   { id: 'experten', label: 'Biohacking', icon: 'bi-star-fill' },
   { id: 'science', label: 'Wissenschaft', icon: 'bi-journal-medical' },
+  { id: 'womens-health', label: "Female Vitality", icon: 'bi-gender-female' },
   { id: 'gespeichert', label: 'Gespeichert', icon: 'bi-bookmark-fill' },
 ];
 

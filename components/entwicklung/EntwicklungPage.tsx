@@ -11,6 +11,7 @@ export default function EntwicklungPage() {
   const [selectedMetric, setSelectedMetric] = useState<'chronological' | 'difference' | 'dna'>('difference');
   const [trendPeriod, setTrendPeriod] = useState<TrendPeriod>('12m');
   const [showBioAgeDetails, setShowBioAgeDetails] = useState(false);
+  const [showUploadModal, setShowUploadModal] = useState(false);
 
 
 
@@ -68,9 +69,19 @@ export default function EntwicklungPage() {
       {activeTab === 'trends' && (
         <div className="trends-view">
           {/* Aktuelles True Years BioAge Headline */}
-          <div className="bioage-headline-row">
-            <span className="blue-bar"></span>
-            <h2>Aktuelles True Years BioAge</h2>
+          <div className="bioage-headline-row" style={{ justifyContent: 'space-between' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span className="blue-bar"></span>
+              <h2>Aktuelles True Years BioAge</h2>
+            </div>
+            <button 
+              className="opt-modal-btn" 
+              style={{ padding: '0.6rem 1.2rem', fontSize: '0.9rem', background: '#4498ca', color: 'white', border: 'none', borderRadius: '100px', display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', fontWeight: 700 }}
+              onClick={() => setShowUploadModal(true)}
+            >
+              <i className="bi bi-cloud-arrow-up-fill"></i>
+              BioAge Nachweise hochladen
+            </button>
           </div>
 
           {/* BioAge Card */}
@@ -156,8 +167,8 @@ export default function EntwicklungPage() {
               </div>
               
               <div className="bac-footer-info">
-                <i className="bi bi-info-circle" style={{ marginRight: '6px', color: '#3b82f6', fontSize: '1.05rem', flexShrink: 0 }}></i>
-                <span>Basierend auf deiner HRV, Schlafqualität und 12 weiteren Vitalwerten der letzten 30 Tage.</span>
+                <i className="bi bi-info-circle" style={{ marginRight: '8px', color: '#3b82f6', fontSize: '1.15rem', flexShrink: 0 }}></i>
+                <span><strong>Datengrundlage deiner Auswertung:</strong> Fragebogen bei Programmstart, Whoop Age, Epi-Proteomic-Age</span>
               </div>
             </div>
           </div>
@@ -398,7 +409,58 @@ export default function EntwicklungPage() {
         </div>
       )}
 
+      {/* ── UPLOAD MODAL ── */}
+      {showUploadModal && (
+        <div className="modal-overlay" onClick={() => setShowUploadModal(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()} style={{ width: '100%', maxWidth: '850px', borderRadius: '28px', padding: '1.5rem 2.5rem 2.5rem 2.5rem', overflow: 'hidden', background: '#e0f2fe' }}>
+            <button className="modal-close" onClick={() => setShowUploadModal(false)} style={{ background: 'white', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+              <i className="bi bi-x-lg" style={{ fontSize: '1rem' }}></i>
+            </button>
+            
+            <div className="modal-header-custom" style={{ marginBottom: '1rem', textAlign: 'center' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.75rem', marginBottom: '0.5rem' }}>
+                <div style={{ width: '48px', height: '48px', background: 'white', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '0 4px 15px rgba(68,152,202,0.12)' }}>
+                  <i className="bi bi-cloud-arrow-up-fill" style={{ fontSize: '1.4rem', color: '#4498ca' }}></i>
+                </div>
+                <h2 className="modal-title-custom" style={{ margin: 0 }}>BioAge Nachweise hochladen</h2>
+              </div>
+              <p className="modal-subtitle-custom">Wähle einen BioAge-Nachweis aus, den du deinem Profil hinzufügen möchtest, damit dein biologisches Alter präziser und aussagekräftiger eingeschätzt werden kann.</p>
+            </div>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gridTemplateRows: 'repeat(3, auto)', gridAutoFlow: 'column', gap: '1rem' }}>
+              {[
+                { title: <>Wearable Age<br/></>, providers: '(WHOOP / Oura / Garmin)', desc: 'Verlaufsindikator über Schlaf, Erholung, HRV & Fitnessdaten.', icon: 'bi-smartwatch', color: '#3b82f6' },
+                { title: 'Wellness Age', providers: '(Technogym)', desc: 'Funktionelles Alter über Kraft, Ausdauer, Balance & Körperbau.', icon: 'bi-heart-pulse', color: '#10b981' },
+                { title: 'PhenoAge', providers: '(AWARE / Blutwerte)', desc: 'Biologisches Alter auf Basis klassischer Blutmarker.', icon: 'bi-droplet', color: '#ef4444' },
+                { title: <>Epigenetic Age /<br/>Epi-Proteomic Age<br/></>, providers: '(MoleQlar / TruDiagnostic / Elysium)', desc: 'Biologisches Alter auf Basis von DNA-Methylierungsmustern.', icon: 'bi-diagram-3', color: '#8b5cf6' },
+                { title: 'Pace of Aging', providers: '(MoleQlar / DunedinPACE / TruDiagnostic)', desc: 'Messung der aktuellen biologischen Alterungsgeschwindigkeit.', icon: 'bi-speedometer2', color: '#f59e0b' },
+                { title: 'GlycanAge', providers: '', desc: 'Alterungs- und Entzündungsstatus mit Fokus auf Immunsystem.', icon: 'bi-shield-check', color: '#0ea5e9' },
+              ].map((item, idx) => (
+                <div key={idx} style={{ display: 'flex', gap: '1.1rem', padding: '1.05rem 1.2rem', border: '1.5px solid transparent', borderRadius: '20px', cursor: 'pointer', transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)', background: 'white', boxShadow: '0 4px 15px rgba(0,0,0,0.03)' }} className="upload-option-card">
+                  <div style={{ width: '52px', height: '52px', flexShrink: 0, background: `${item.color}15`, borderRadius: '16px', display: 'flex', alignItems: 'center', justifyContent: 'center', color: item.color, fontSize: '1.6rem' }}>
+                    <i className={`bi ${item.icon}`}></i>
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 800, color: '#1e3a5f', marginBottom: '0.4rem', fontSize: '1.1rem' }}>
+                      {idx + 1}. {item.title} <span style={{ fontWeight: 500, color: '#64748b', fontSize: '0.9rem', marginLeft: '2px' }}>{item.providers}</span>
+                    </div>
+                    <div style={{ fontSize: '0.95rem', color: '#64748b', lineHeight: '1.4' }}>{item.desc}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+
       <style jsx>{`
+        .upload-option-card:hover { 
+          border-color: #4498ca !important; 
+          box-shadow: 0 10px 25px rgba(68,152,202,0.15) !important; 
+          transform: translateY(-4px); 
+          background: #bae6fd !important;
+        }
         .entw-page { padding: 2rem 2.5rem; max-width: 1200px; margin: 0 auto; color: #1e293b; }
         .entw-header { margin-bottom: 2rem; }
         .entw-title { font-size: 2.4rem; font-weight: 850; letter-spacing: -0.04em; color: #0f172a; margin: 0; }
@@ -465,7 +527,7 @@ export default function EntwicklungPage() {
         .bac-stat-card.active-metric .bac-stat-val,
         .bac-stat-card.active-metric-green .bac-stat-val { color: white; }
 
-        .bac-footer-info { display: flex; align-items: center; font-size: 0.82rem; color: #64748b; font-weight: 600; line-height: 1.4; }
+        .bac-footer-info { display: flex; align-items: center; font-size: 0.95rem; color: #64748b; font-weight: 500; line-height: 1.4; }
 
         .trends-opt-header {
           display: flex;

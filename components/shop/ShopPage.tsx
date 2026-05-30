@@ -3,7 +3,12 @@
 import { useState } from 'react';
 import Image from 'next/image';
 
-export default function ShopPage() {
+interface ShopPageProps {
+  onNavigate?: (item: string) => void;
+  category?: string;
+}
+
+export default function ShopPage({ onNavigate, category }: ShopPageProps) {
   const [activeTab, setActiveTab] = useState('Alle');
 
   const products = [
