@@ -19,18 +19,18 @@ interface ChatMsg {
 }
 
 const coachVariants: Record<CoachVariant, { name: string; image: string; desc: string; voice: string; greeting: string }> = {
-  'lisa-jung': { name: 'Lisa', image: '/images/lisa.png', desc: 'Jung, modern & empathisch', voice: 'nova', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.' },
-  'lisa-alt': { name: 'Lisa', image: '/images/lisa_alt.png', desc: 'Erfahren, weise & warmherzig', voice: 'shimmer', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.' },
-  'tom-jung': { name: 'Tom', image: '/images/tom_jung.png', desc: 'Dynamisch, motivierend & direkt', voice: 'echo', greeting: 'Hallo, ich bin Tom – dein persönlicher Coach.' },
-  'tom-alt': { name: 'Tom', image: '/images/tom_alt.png', desc: 'Gelassen, strukturiert & erfahren', voice: 'onyx', greeting: 'Hallo, ich bin Tom – dein persönlicher Coach.' },
+  'lisa-jung': { name: 'Lisa AI, 25 Jahre', image: '/images/lisa.png', desc: 'Jung, modern & empathisch', voice: 'nova', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.' },
+  'lisa-alt': { name: 'Lisa AI, 50 Jahre', image: '/images/lisa_alt.png', desc: 'Erfahren, weise & warmherzig', voice: 'shimmer', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.' },
+  'tom-jung': { name: 'Tom AI, 25 Jahre', image: '/images/tom_jung.png', desc: 'Dynamisch, motivierend & direkt', voice: 'echo', greeting: 'Hallo, ich bin Tom – dein persönlicher Coach.' },
+  'tom-alt': { name: 'Tom AI, 50 Jahre', image: '/images/tom_alt.png', desc: 'Gelassen, strukturiert & erfahren', voice: 'onyx', greeting: 'Hallo, ich bin Tom – dein persönlicher Coach.' },
 };
 const getPersonalityDesc = (x: number, y: number) => {
   const r = (1-x)*(1-y), ye = x*(1-y), g = x*y, b = (1-x)*y;
   const types = [
-    { w: r, color: 'Rot', desc: 'direkt & entschlossen' },
-    { w: ye, color: 'Gelb', desc: 'optimistisch & kommunikativ' },
-    { w: g, color: 'Grün', desc: 'empathisch & geduldig' },
-    { w: b, color: 'Blau', desc: 'analytisch & strukturiert' },
+    { w: r, color: 'Rot', desc: 'kompakt' },
+    { w: ye, color: 'Gelb', desc: 'inspirativ' },
+    { w: g, color: 'Grün', desc: 'unterstützend' },
+    { w: b, color: 'Blau', desc: 'faktenorientiert' },
   ].filter(t => t.w > 0.12).sort((a, b) => b.w - a.w);
   if (!types.length) return { primary: 'Ausgewogen', desc: 'Vereint alle Qualitäten' };
   const p = types[0];
@@ -86,10 +86,19 @@ const getRelativeDate = (daysAgo: number, timeStr: string): string => {
 };
 
 const pastSessions = [
-  { id: 1, date: getRelativeDate(1, '14:30'), focus: 'Ad-Hoc: Jetlag & Bio-Sync', summary: 'Kurzfristiges Einzelgespräch nach deinem Flug. Protokoll für Melatonin-Timing und Licht-Exposure erarbeitet.', output: 'Reise-Protokoll', duration: '12 Min.', type: 'Lisa AI Daily' },
-  { id: 2, date: getRelativeDate(3, '18:00'), focus: 'Wöchentlicher Check-in', summary: 'Fokus auf Schlaf und HRV. Abendroutine optimiert – digitales Detox ab 21:30.', output: 'Schlaf-Routine erstellt', duration: '18 Min.', type: 'Lisa AI Weekly' },
-  { id: 3, date: getRelativeDate(7, '18:00'), focus: 'Wöchentlicher Check-in', summary: 'Entzündungshemmende Lebensmittel besprochen. Wochenplan mit Omega-3-Quellen optimiert.', output: 'Ernährungsplan', duration: '20 Min.', type: 'Lisa AI Weekly' },
-  { id: 4, date: getRelativeDate(8, '18:00'), focus: 'Wöchentlicher Check-in', summary: 'Baseline-Check und Monats-Zielsetzung besprochen. Mikro-Routinen in den Arbeitsalltag integriert.', output: 'Baseline definiert', duration: '25 Min.', type: 'Lisa AI Quarterly' },
+  { id: 1, date: getRelativeDate(1, '14:30'), focus: 'Tages-Check-in & Wohlbefinden', summary: 'Kurzer Austausch zu deiner heutigen Energie und Tagesverfassung. Du hast deine aktuelle Priorität auf weniger Stress im Alltag gesetzt.', output: 'Notiz: Stress-Fokus', duration: '4 Min.', type: 'Lisa AI Daily' },
+  { id: 2, date: getRelativeDate(2, '18:00'), focus: 'Optimierungsfeld: Immunbalance', summary: 'Wir haben einen machbaren "Babyschritt" für den Alltag erarbeitet: 10 Minuten Spaziergang nach dem Mittagessen. Plan B bei Regen steht ebenfalls.', output: 'Gewohnheit: Spaziergang', duration: '8 Min.', type: 'Lisa AI Weekly' },
+  { id: 3, date: getRelativeDate(3, '09:15'), focus: 'Kurzer Morgen-Check', summary: 'Du hast von leichtem Muskelkater nach dem Training berichtet. Wir haben kurz über ausreichende Proteinzufuhr am heutigen Tag gesprochen.', output: 'Notiz: Regeneration', duration: '3 Min.', type: 'Lisa AI Daily' },
+  { id: 4, date: getRelativeDate(5, '18:45'), focus: 'Abendlicher Check-in', summary: 'Kurze Reflexion über den heutigen Stresslevel. Du bist zufrieden mit deiner Arbeitsleistung, möchtest aber heute früher schlafen.', output: 'Notiz: Früher Schlafen', duration: '5 Min.', type: 'Lisa AI Daily' },
+  { id: 5, date: getRelativeDate(7, '08:00'), focus: 'Start in den Tag', summary: 'Du fühlst dich heute sehr energiegeladen. Keine besonderen Hürden für den Tag in Sicht.', output: 'Notiz: Hohe Energie', duration: '3 Min.', type: 'Lisa AI Daily' },
+  { id: 6, date: getRelativeDate(9, '19:30'), focus: 'Kurzer Abend-Check', summary: 'Ein anstrengender Tag. Du hast den Spaziergang heute ausgelassen, planst ihn aber für morgen wieder fest ein.', output: 'Notiz: Spaziergang', duration: '4 Min.', type: 'Lisa AI Daily' },
+  { id: 7, date: getRelativeDate(12, '08:15'), focus: 'Morgen-Motivation', summary: 'Gute Schlafqualität laut deinen Daten. Kurzer Fokus auf die wichtigsten Aufgaben des Tages.', output: 'Notiz: Fokus', duration: '5 Min.', type: 'Lisa AI Daily' },
+  { id: 8, date: getRelativeDate(14, '18:00'), focus: 'Optimierungsfeld: Schlaf & Erholung', summary: 'Hindernisse für rechtzeitiges Schlafen analysiert. Als Lösung haben wir eine strikte Offline-Zeit ab 21:30 Uhr vereinbart.', output: 'Abendroutine angepasst', duration: '9 Min.', type: 'Lisa AI Weekly' },
+  { id: 9, date: getRelativeDate(15, '17:45'), focus: 'Nachmittags-Check', summary: 'Kurze Meldung von dir, dass die Offline-Zeit gestern gut funktioniert hat.', output: 'Notiz: Routine klappt', duration: '2 Min.', type: 'Lisa AI Daily' },
+  { id: 10, date: getRelativeDate(18, '09:00'), focus: 'Wochenstart', summary: 'Check-in zum Wochenstart. Du bist motiviert, die Abendroutine diese Woche konsequent durchzuziehen.', output: 'Notiz: Motivation', duration: '4 Min.', type: 'Lisa AI Daily' },
+  { id: 11, date: getRelativeDate(21, '18:00'), focus: 'Optimierungsfeld: Kraft & Ausdauer', summary: 'Integration von 2 kurzen Krafteinheiten pro Woche besprochen. Wir haben feste Tage im Kalender geblockt.', output: 'Gewohnheit: Training', duration: '10 Min.', type: 'Lisa AI Weekly' },
+  { id: 12, date: getRelativeDate(28, '18:00'), focus: 'Optimierungsfeld: Zellversorgung', summary: 'Fokus auf Proteinziele am Morgen. Wir haben ein schnelles Frühstücksrezept als Standard definiert.', output: 'Gewohnheit: Protein-Frühstück', duration: '8 Min.', type: 'Lisa AI Weekly' },
+  { id: 13, date: getRelativeDate(90, '18:00'), focus: 'Standortbestimmung & Reflexion', summary: 'Blick aus der Helikopterperspektive auf die letzten Wochen. Zufriedenheit mit Fortschritten reflektiert und das nächste Hauptthema definiert.', output: 'Fokus-Shift: Ernährung', duration: '14 Min.', type: 'Lisa AI Quarterly' },
 ];
 
 interface Coaching2PageProps { onOpenAvatar?: () => void; }
@@ -100,7 +109,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
   const [setupStep, setSetupStep] = useState<SetupStep>('coach');
   const [dataVisualType, setDataVisualType] = useState('emotional');
   const [coachGender, setCoachGender] = useState<'female' | 'male' | null>(null);
-  const [personalityPos, setPersonalityPos] = useState({ x: 0.65, y: 0.7 });
+  const [personalityPos, setPersonalityPos] = useState({ x: 0.5, y: 0.5 });
   const [playingVoice, setPlayingVoice] = useState<CoachVariant | null>(null);
   const [formatTab, setFormatTab] = useState<FormatTab>('text');
   const [sessionTime, setSessionTime] = useState(0);
@@ -386,34 +395,40 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
                 </button>
                 <button className="wb-bottom-btn btn-config" onClick={() => setView('setup')}>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                  Konfiguration Assistant
+                  Konfiguration Trainer/in
                 </button>
               </div>
 
               {rightTab === 'history' && (
                 <div className="wb-history-overlay">
                   <div className="wbh-header">
-                    <button className="wij-back-btn" onClick={() => setRightTab('today')}>
+                    <h3 className="wbh-title">Deine Coaching-Historie</h3>
+                    <button className="wij-back-btn" onClick={() => setRightTab('today')} style={{ marginLeft: 'auto' }}>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Zurück
                     </button>
-                    <h3 className="wbh-title">Gesprächshistorie</h3>
                   </div>
                   <div className="wbh-search">
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
                     <input className="wbh-inp" placeholder="Session suchen..." value={historySearch} onChange={e => setHistorySearch(e.target.value)} />
                   </div>
                   <div className="wbh-list">
-                    {pastSessions.filter(s => !historySearch || s.focus.toLowerCase().includes(historySearch.toLowerCase())).map(s => (
-                      <div key={s.id} className="wbh-item" onClick={() => { setSelectedSessionId(s.id); }}>
-                        <div className="wbhi-meta">
-                          <span className="wbhi-type">{s.type || 'Daily'}</span>
-                          <span className="wbhi-date">{s.date}</span>
-                          <span className="wbhi-dur">{s.duration}</span>
+                    {pastSessions.filter(s => !historySearch || s.focus.toLowerCase().includes(historySearch.toLowerCase())).map(s => {
+                      const typeStr = s.type || 'Daily';
+                      const bdgClass = typeStr.includes('Daily') ? 'bdg-daily' : typeStr.includes('Weekly') ? 'bdg-weekly' : 'bdg-quarterly';
+                      const isExpanded = selectedSessionId === s.id;
+                      const extendedText = s.summary + ' ' + (typeStr.includes('Daily') ? 'Zusätzlich haben wir kurz die wichtigsten To-Dos des Tages abgestimmt und einen Moment der Achtsamkeit eingebaut. Du warst sehr fokussiert.' : typeStr.includes('Weekly') ? 'Dabei haben wir auch potenzielle Hindernisse analysiert und konkrete Wenn-Dann-Pläne geschmiedet, um im Alltag konsequent zu bleiben.' : 'Die Reflexion zeigte deutlich, dass du auf einem guten Weg bist. Wir haben gemeinsam beschlossen, den Fokus im nächsten Quartal noch stärker auf Konstanz zu legen.');
+                      return (
+                        <div key={s.id} className={`wbh-item ${isExpanded ? 'expanded' : ''}`} onClick={() => setSelectedSessionId(isExpanded ? null : s.id)}>
+                          <div className="wbhi-meta">
+                            <span className={`wbhi-type ${bdgClass}`}>{typeStr}</span>
+                            <span className="wbhi-date">{s.date}</span>
+                            <span className="wbhi-dur">{s.duration}</span>
+                          </div>
+                          <div className="wbhi-focus">{s.focus}</div>
+                          <div className="wbhi-sum">{isExpanded ? extendedText : s.summary}</div>
                         </div>
-                        <div className="wbhi-focus">{s.focus}</div>
-                        <div className="wbhi-sum">{s.summary}</div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -446,17 +461,31 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         {/* SETUP MODAL */}
         {view === 'setup' && (
           <div className="smod">
-            <div className="smod-in">
+            <div className="smod-in" style={{ position: 'relative' }}>
+              <button 
+                className="smod-close"
+                onClick={() => { setView('welcome'); setSetupStep('coach'); setCoachGender(null); }} 
+                style={{ position: 'absolute', top: '1.5rem', right: '1.5rem', border: 'none', background: 'white', width: '40px', height: '40px', borderRadius: '50%', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#1e293b', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', transition: 'all 0.2s', zIndex: 10 }}
+                onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.05)'; }}
+                onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; }}
+              >
+                <i className="bi bi-x-lg" style={{ fontSize: '1rem' }}></i>
+              </button>
               <div className="smod-h">
-                <button className="smod-back" onClick={() => { if (setupStep === 'data') setSetupStep('personality'); else if (setupStep === 'personality') setSetupStep('coach'); else { setView('welcome'); setSetupStep('coach'); setCoachGender(null); } }}>
-                  {setupStep !== 'coach' ? '← Zurück' : '← Abbrechen'}
-                </button>
+                <div style={{width:80}}></div>
                 <div className="smod-steps">
-                  <span className={`smod-s ${setupStep === 'coach' ? 'act' : 'done'}`}>1 Coach</span>
-                  <span className="smod-sep" />
-                  <span className={`smod-s ${setupStep === 'personality' ? 'act' : (setupStep === 'data' ? 'done' : '')}`}>2 Persönlichkeit</span>
-                  <span className="smod-sep" />
-                  <span className={`smod-s ${setupStep === 'data' ? 'act' : ''}`}>3 Daten-Ansicht</span>
+                  <span className={`smod-s ${setupStep === 'coach' && !coachGender ? 'act' : 'done'}`}>
+                    <span className="smod-num">1</span> Geschlecht
+                  </span>
+                  <span className={`smod-s ${setupStep === 'coach' && coachGender ? 'act' : (setupStep === 'personality' || setupStep === 'data' ? 'done' : '')}`}>
+                    <span className="smod-num">2</span> Aussehen & Stimme
+                  </span>
+                  <span className={`smod-s ${setupStep === 'personality' ? 'act' : (setupStep === 'data' ? 'done' : '')}`}>
+                    <span className="smod-num">3</span> Persönlichkeit
+                  </span>
+                  <span className={`smod-s ${setupStep === 'data' ? 'act' : ''}`}>
+                    <span className="smod-num">4</span> Zusammenfassung
+                  </span>
                 </div>
                 <div style={{width:80}} />
               </div>
@@ -464,39 +493,31 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
               {setupStep === 'coach' && (
                 <div className="smod-cnt">
                   {!coachGender ? (
-                    <div className="g-sel" style={{marginTop:'2rem'}}>
-                      <h2 className="smod-t" style={{marginBottom:'0.5rem'}}>Wähle deinen Coach</h2>
-                      <p className="smod-sub" style={{marginBottom:'2.5rem'}}>Möchtest du lieber von einer weiblichen oder männlichen Stimme gecoacht werden?</p>
+                    <div className="g-sel" style={{marginTop:'1.5rem'}}>
+                      <h2 className="smod-t" style={{marginBottom:'1rem'}}>Wähle dein Trainer-Geschlecht</h2>
                       <div className="ggrid">
-                        <button className="gcard" onClick={() => setCoachGender('female')}>
+                        <button className="gcard gcard-female" onClick={() => setCoachGender('female')}>
                           <div className="gcard-ico female">
-                            <div className="gcard-aura"></div>
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                               <circle cx="12" cy="9" r="6" />
                               <path d="M12 15V22M9 19H15" />
                             </svg>
                           </div>
-                          <span className="gcard-lbl">Weiblich</span>
+                          <span className="gcard-title">Weiblich</span>
                         </button>
-                        <button className="gcard" onClick={() => setCoachGender('male')}>
+                        <button className="gcard gcard-male" onClick={() => setCoachGender('male')}>
                           <div className="gcard-ico male">
-                            <div className="gcard-aura"></div>
-                            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
                               <circle cx="10" cy="14" r="6" />
                               <path d="M15 9l6-6M21 9V3h-6" />
                             </svg>
                           </div>
-                          <span className="gcard-lbl">Männlich</span>
+                          <span className="gcard-title">Männlich</span>
                         </button>
                       </div>
                     </div>
                   ) : (
                     <div className="v-sel">
-                      <div style={{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'2rem',maxWidth:'600px',margin:'0 auto 2rem'}}>
-                        <button className="ebtn" style={{fontSize:'0.85rem',padding:'0.4rem 0.8rem'}} onClick={() => setCoachGender(null)}>← Geschlecht ändern</button>
-                        <h2 className="smod-t" style={{margin:0,fontSize:'1.1rem'}}>Welche Nuance passt besser zu dir?</h2>
-                        <div style={{width:100}}></div>
-                      </div>
                       <div className="cgrid" style={{gridTemplateColumns: '1fr 1fr', maxWidth: '680px', margin: '0 auto'}}>
                         {(['lisa-jung','lisa-alt','tom-jung','tom-alt'] as CoachVariant[])
                           .filter(v => coachGender === 'female' ? v.startsWith('lisa') : v.startsWith('tom'))
@@ -504,9 +525,11 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
                             const cv = coachVariants[v];
                             return (
                               <button key={v} className={`ccard ${coachVariant===v?'sel':''}`} onClick={() => setCoachVariant(v)}>
-                                <div className="ccard-img"><Image src={cv.image} alt={cv.name} width={140} height={140} style={{objectFit:'cover',borderRadius:'50%'}} />{coachVariant===v&&<span className="ccard-chk">✓</span>}</div>
-                                <strong className="ccard-name">{cv.name}</strong>
-                                <span className="ccard-desc">{cv.desc}</span>
+                                <div className="ccard-img"><Image src={cv.image} alt={cv.name} width={210} height={210} style={{objectFit:'cover',borderRadius:'50%'}} />{coachVariant===v&&<span className="ccard-chk">✓</span>}</div>
+                                <div className="ccard-name">
+                                  {cv.name.split(', ')[0]}
+                                  {cv.name.includes(', ') && <span style={{ fontWeight: 500, color: '#64748b' }}>, {cv.name.split(', ')[1]}</span>}
+                                </div>
                                 <button className={`ccard-voice ${playingVoice===v?'playing':''}`} onClick={(e) => { e.stopPropagation(); playVoiceSample(v); }}>
                                   {playingVoice===v ? (
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></svg>
@@ -528,56 +551,129 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
               )}
 
               {setupStep === 'personality' && (
-                <div className="smod-cnt">
-                  <h2 className="smod-t">Deine Persönlichkeit</h2>
-                  <p className="smod-sub">Setze den Punkt dort, wo du dich am ehesten wiederfindest.</p>
-                  <div className="pf-wrap">
-                    <div className="pf-labels">
-                      <span className="pf-l pf-tl">Rot<br/><small>Dominant</small></span>
-                      <span className="pf-l pf-tr">Gelb<br/><small>Inspirierend</small></span>
-                      <span className="pf-l pf-bl">Blau<br/><small>Gewissenhaft</small></span>
-                      <span className="pf-l pf-br">Grün<br/><small>Stetig</small></span>
+                <div className="smod-cnt" style={{ display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5rem', flex: 1, margin: '0 auto', width: '100%', maxWidth: '850px' }}>
+                    <div style={{ flex: '0 0 320px', textAlign: 'left' }}>
+                      <h2 className="smod-t" style={{ textAlign: 'left', marginBottom: '1rem', fontSize: '1.4rem', lineHeight: 1.3 }}>Trainer/in Persönlichkeit<br/>nach DISC-Methodik</h2>
+                      <p className="smod-sub" style={{ textAlign: 'left', marginBottom: '2.5rem', fontSize: '1.1rem' }}>Setze den Punkt dort, wo du dich am ehesten wiederfindest.</p>
+                      <button className="smod-next" onClick={() => setSetupStep('data')} style={{ marginTop: 0 }}>Weiter</button>
                     </div>
-                    <div
-                      className="pf-field"
-                      onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); handlePfPointer(e); }}
-                      onPointerMove={(e) => { if (e.currentTarget.hasPointerCapture(e.pointerId)) handlePfPointer(e); }}
-                    >
-                      <div className="pf-dot" style={{left:`${personalityPos.x*100}%`,top:`${personalityPos.y*100}%`}} />
+                    <div>
+                      <div className="pf-wrap" style={{ margin: '2rem 0' }}>
+                        <div className="pf-labels">
+                          <span className="pf-l pf-tl">Rot<br/><small>Kompakt</small></span>
+                          <span className="pf-l pf-tr">Gelb<br/><small>Inspirativ</small></span>
+                          <span className="pf-l pf-bl">Blau<br/><small>Faktenorientiert</small></span>
+                          <span className="pf-l pf-br">Grün<br/><small>Unterstützend</small></span>
+                        </div>
+                        <div
+                          className="pf-field"
+                          onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); handlePfPointer(e); }}
+                          onPointerMove={(e) => { if (e.currentTarget.hasPointerCapture(e.pointerId)) handlePfPointer(e); }}
+                        >
+                          <div className="pf-dot" style={{left:`${personalityPos.x*100}%`,top:`${personalityPos.y*100}%`}} />
+                        </div>
+                      </div>
                     </div>
                   </div>
-                  <div className="pf-result">
-                    <span className={`pf-badge pf-${getPersonalityDesc(personalityPos.x, personalityPos.y).primary.toLowerCase()}`}>{getPersonalityDesc(personalityPos.x, personalityPos.y).primary}</span>
-                    <span className="pf-rdesc">{getPersonalityDesc(personalityPos.x, personalityPos.y).desc}</span>
-                  </div>
-                  <button className="smod-next" onClick={() => setSetupStep('data')}>Weiter</button>
                 </div>
               )}
 
               {setupStep === 'data' && (
-                <div className="smod-cnt">
-                  <h2 className="smod-t">Daten-Präsentation</h2>
-                  <p className="smod-sub">Wähle, wie Lisa deine Vitaldaten visualisieren soll.</p>
-                  <div className="dgrid">
-                    {[
-                      { id: 'numbers', title: 'Zahlen & Fakten', desc: 'Fokus auf exakte Metriken, Tabellen und direkte Auswertungen.', 
-                        preview: <div className="dp-numbers"><div className="dpn-card"><span className="dpnc-lbl">HRV Baseline</span><strong className="dpnc-val">42 <span>ms</span></strong></div><div className="dpn-card"><span className="dpnc-lbl">Deep Sleep</span><strong className="dpnc-val">1h 45m</strong></div></div> },
-                      { id: 'performance', title: 'Performance & Trends', desc: 'Kombiniert Daten mit dynamischen Trendlinien und Balken.', 
-                        preview: <div className="dp-perf"><div className="dpp-top"><span className="dpp-lbl">Recovery Score</span><span className="dpp-badge">+12%</span></div><div className="dpp-chart"><svg viewBox="0 0 100 30" preserveAspectRatio="none"><path d="M0,25 C20,25 30,10 50,15 C70,20 80,5 100,5" fill="none" stroke="url(#perfGrad)" strokeWidth="3" strokeLinecap="round"/><defs><linearGradient id="perfGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stopColor="#4CAF50" stopOpacity="0.4"/><stop offset="100%" stopColor="#4CAF50" stopOpacity="1"/></linearGradient></defs></svg><div className="dpp-dot"></div></div></div> },
-                      { id: 'balanced', title: 'Balance & Wohlbefinden', desc: 'Warme Farbcodes und ausgewogene, verständliche Diagramme.', 
-                        preview: <div className="dp-bal"><div className="dpb-rings"><svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" fill="none" stroke="rgba(68,152,202,0.15)" strokeWidth="8"/><circle cx="50" cy="50" r="40" fill="none" stroke="#4498ca" strokeWidth="8" strokeLinecap="round" strokeDasharray="180 251" transform="rotate(-90 50 50)"/><circle cx="50" cy="50" r="28" fill="none" stroke="rgba(76,175,80,0.15)" strokeWidth="8"/><circle cx="50" cy="50" r="28" fill="none" stroke="#4CAF50" strokeWidth="8" strokeLinecap="round" strokeDasharray="120 175" transform="rotate(-90 50 50)"/></svg><div className="dpb-center-icon">✨</div></div><div className="dpb-info"><span className="dpbi-tit">In Balance</span><span className="dpbi-sub">Beide Systeme aktiv</span></div></div> },
-                      { id: 'emotional', title: 'Emotional & Narrativ', desc: 'Fokussiert auf das Körpergefühl mit weichen Verlaufskurven.', 
-                        preview: <div className="dp-emo"><div className="dpe-orb dpe-orb-1"></div><div className="dpe-orb dpe-orb-2"></div><div className="dpe-glass"><span className="dpe-quote">"Dein Körper sucht nach Ruhe. Nimm dir heute Zeit zum Atmen."</span></div></div> }
-                    ].map(d => (
-                      <button key={d.id} className={`dcard ${dataVisualType === d.id ? 'sel' : ''}`} onClick={() => setDataVisualType(d.id)}>
-                        <h4 className="dc-title">{d.title}</h4>
-                        <p className="dc-desc">{d.desc}</p>
-                        <div className="dc-preview">{d.preview}</div>
-                        {dataVisualType === d.id && <span className="dc-chk">✓</span>}
-                      </button>
-                    ))}
+                <div className="smod-cnt" style={{ display: 'flex', flexDirection: 'column', position: 'relative' }}>
+                  {/* Dynamic background based on personality */}
+                  <div style={{
+                    position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)',
+                    width: '100%', height: '100%', zIndex: 0, opacity: 0.15, filter: 'blur(80px)', pointerEvents: 'none',
+                    background: `radial-gradient(circle at ${personalityPos.x * 100}% ${personalityPos.y * 100}%, #00b4d8, #7209b7, transparent 70%)`
+                  }} />
+
+                  <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', zIndex: 1, padding: 0 }}>
+                    <div style={{ 
+                      width: '100%', maxWidth: '800px', 
+                      display: 'grid',
+                      gridTemplateColumns: '1fr 1fr',
+                      gap: '1rem',
+                      background: 'linear-gradient(145deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85))', 
+                      backdropFilter: 'blur(20px)',
+                      border: '1px solid rgba(255,255,255,0.5)', 
+                      borderRadius: '20px', 
+                      padding: '1rem 1.5rem', 
+                      boxShadow: '0 10px 25px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,1)',
+                      position: 'relative', overflow: 'hidden'
+                    }}>
+                      <div style={{ position: 'absolute', top: 0, left: 0, width: '200px', height: '200px', background: 'radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)', transform: 'translate(-30%, -30%)', borderRadius: '50%' }} />
+
+                      {/* Left Column: Picture and Info */}
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
+                        <div style={{ position: 'relative', marginBottom: '0.75rem' }}>
+                          <div style={{ position: 'absolute', inset: '-4px', background: 'linear-gradient(135deg, #3b82f6, #8b5cf6)', borderRadius: '50%', opacity: 0.5, filter: 'blur(6px)', animation: 'pulse 3s infinite alternate' }} />
+                          <div style={{ width: '90px', height: '90px', borderRadius: '50%', overflow: 'hidden', position: 'relative', border: '3px solid #fff', boxShadow: '0 4px 16px rgba(0,0,0,0.1)' }}>
+                            <Image src={coachVariants[coachVariant].image} alt={coachVariants[coachVariant].name} width={90} height={90} style={{ objectFit: 'cover' }} />
+                          </div>
+                        </div>
+                        <div style={{ textAlign: 'center' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '0.2rem' }}>
+                            <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em' }}>
+                              {coachVariants[coachVariant].name.split(', ')[0]}
+                              {coachVariants[coachVariant].name.includes(', ') && <span style={{ fontWeight: 400, color: '#64748b' }}>, {coachVariants[coachVariant].name.split(', ')[1]}</span>}
+                            </div>
+                            <div style={{ padding: '0.1rem 0.4rem', background: 'rgba(59,130,246,0.1)', color: '#3b82f6', borderRadius: '999px', fontSize: '0.7rem', fontWeight: 600 }}>Active</div>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem', fontSize: '0.9rem', color: '#64748b', fontWeight: 500 }}>
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                            {coachGender === 'female' ? 'Weibliche Stimme' : 'Männliche Stimme'}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Right Column: Personality Box */}
+                      <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center', position: 'relative', zIndex: 1 }}>
+                        <div style={{ background: 'rgba(248,250,252,0.8)', borderRadius: '16px', padding: '1.25rem', border: '1px solid rgba(226,232,240,0.8)', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                            <div style={{ fontSize: '0.9rem', fontWeight: 700, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.1em' }}>Persönlichkeitsprofil</div>
+                            <div style={{ fontSize: '0.95rem', fontWeight: 700, color: '#0f172a', background: 'rgba(255,255,255,1)', padding: '0.25rem 0.75rem', borderRadius: '999px', boxShadow: '0 2px 4px rgba(0,0,0,0.05)' }}>
+                              {getPersonalityDesc(personalityPos.x, personalityPos.y).primary}
+                            </div>
+                          </div>
+                          
+                          <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '0.6rem' }}>
+                            <div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', fontWeight: 600, color: '#ef4444', marginBottom: '0.2rem' }}><span>Kompakt (Rot)</span><span>{Math.round((1-personalityPos.x)*(1-personalityPos.y)*100)}%</span></div>
+                              <div style={{ height: '5px', background: 'rgba(239,68,68,0.1)', borderRadius: '999px', overflow: 'hidden' }}><div style={{ width: `${(1-personalityPos.x)*(1-personalityPos.y)*100}%`, height: '100%', background: '#ef4444', borderRadius: '999px', transition: 'width 1s ease-out' }} /></div>
+                            </div>
+                            <div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', fontWeight: 600, color: '#eab308', marginBottom: '0.2rem' }}><span>Inspirativ (Gelb)</span><span>{Math.round(personalityPos.x*(1-personalityPos.y)*100)}%</span></div>
+                              <div style={{ height: '5px', background: 'rgba(234,179,8,0.1)', borderRadius: '999px', overflow: 'hidden' }}><div style={{ width: `${personalityPos.x*(1-personalityPos.y)*100}%`, height: '100%', background: '#eab308', borderRadius: '999px', transition: 'width 1s ease-out' }} /></div>
+                            </div>
+                            <div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', fontWeight: 600, color: '#3b82f6', marginBottom: '0.2rem' }}><span>Faktenorientiert (Blau)</span><span>{Math.round((1-personalityPos.x)*personalityPos.y*100)}%</span></div>
+                              <div style={{ height: '5px', background: 'rgba(59,130,246,0.1)', borderRadius: '999px', overflow: 'hidden' }}><div style={{ width: `${(1-personalityPos.x)*personalityPos.y*100}%`, height: '100%', background: '#3b82f6', borderRadius: '999px', transition: 'width 1s ease-out' }} /></div>
+                            </div>
+                            <div>
+                              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', fontWeight: 600, color: '#22c55e', marginBottom: '0.2rem' }}><span>Unterstützend (Grün)</span><span>{Math.round(personalityPos.x*personalityPos.y*100)}%</span></div>
+                              <div style={{ height: '5px', background: 'rgba(34,197,94,0.1)', borderRadius: '999px', overflow: 'hidden' }}><div style={{ width: `${personalityPos.x*personalityPos.y*100}%`, height: '100%', background: '#22c55e', borderRadius: '999px', transition: 'width 1s ease-out' }} /></div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <button className="smod-next" onClick={() => { setView('welcome'); setSetupStep('coach'); setCoachGender(null); }}>Coach speichern</button>
+
+                  <div style={{ textAlign: 'center', marginTop: '1rem', position: 'relative', zIndex: 1 }}>
+                    <button className="smod-next" style={{ 
+                      background: 'linear-gradient(135deg, #1e293b, #0f172a)', 
+                      boxShadow: '0 6px 12px rgba(0,0,0,0.15), 0 0 0 2px rgba(255,255,255,0.2) inset', 
+                      borderRadius: '999px', padding: '0.6rem 1.5rem', fontSize: '0.95rem', fontWeight: 600, 
+                      color: 'white', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease',
+                      marginTop: 0
+                    }} 
+                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2), 0 0 0 2px rgba(255,255,255,0.3) inset'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15), 0 0 0 2px rgba(255,255,255,0.2) inset'; }}
+                    onClick={() => { setView('welcome'); setSetupStep('coach'); setCoachGender(null); }}>
+                      Trainer/in speichern & starten
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -864,15 +960,15 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .wbsb-time{font-size:1.18rem;font-weight:600;color:rgba(68,152,202,0.8);background:rgba(68,152,202,0.1);padding:0.4rem 0.8rem;border-radius:12px;border:1px solid rgba(68,152,202,0.2);white-space:nowrap}
         /* bottom history/config buttons */
         .wb-bottom-btns{display:flex;gap:0.6rem;margin-top:0.8rem;margin-bottom:160px}
-        .wb-bottom-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:0.5rem;height:60px;padding:0 1.2rem;border-radius:14px;font-size:1.12rem;font-weight:500;cursor:pointer;transition:all 0.25s}
+        .wb-bottom-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:0.5rem;height:60px;padding:0 1.2rem;border-radius:14px;font-size:1.05rem;font-weight:500;cursor:pointer;transition:all 0.25s}
         .wb-bottom-btn.btn-history{background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.06);color:#cbd5e1}
         .wb-bottom-btn.btn-history:hover{background:rgba(15,23,42,0.85);border-color:#38bdf8;color:#38bdf8;box-shadow:0 0 18px rgba(56,189,248,0.3)}
         .wb-bottom-btn.btn-config{background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.06);color:#cbd5e1}
         .wb-bottom-btn.btn-config:hover{background:rgba(15,23,42,0.85);border-color:#c084fc;color:#c084fc;box-shadow:0 0 18px rgba(192,132,252,0.3)}
         /* history overlay */
         .wb-history-overlay{position:absolute;inset:0;border-radius:32px;background:rgba(11,23,48,0.96);backdrop-filter:blur(20px);padding:1.5rem;display:flex;flex-direction:column;gap:0.85rem;overflow:hidden;z-index:10}
-        .wbh-header{display:flex;align-items:center;gap:1rem;margin-bottom:0.25rem}
-        .wbh-title{font-size:1.1rem;font-weight:600;color:#e8f0fa;margin:0}
+        .wbh-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;margin-bottom:0.25rem}
+        .wbh-title{font-size:1.25rem;font-weight:600;color:#e8f0fa;margin:0}
         .wbh-search{display:flex;align-items:center;gap:0.6rem;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.1);border-radius:12px;padding:0.6rem 1rem}
         .wbh-search svg{color:rgba(180,210,240,0.4);flex-shrink:0}
         .wbh-inp{background:transparent;border:none;outline:none;color:#e2eaf4;font-size:0.85rem;width:100%}
@@ -881,12 +977,17 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .wbh-list::-webkit-scrollbar{display:none}
         .wbh-item{padding:0.85rem 1rem;border-radius:14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);cursor:pointer;transition:all 0.2s}
         .wbh-item:hover{background:rgba(68,152,202,0.1);border-color:rgba(68,152,202,0.3)}
+        .wbh-item.expanded{background:rgba(68,152,202,0.15);border-color:rgba(68,152,202,0.4)}
+        .wbh-item.expanded .wbhi-sum{display:block;-webkit-line-clamp:unset;overflow:visible;color:rgba(180,210,240,0.9)}
         .wbhi-meta{display:flex;align-items:center;gap:0.5rem;margin-bottom:0.3rem;flex-wrap:wrap}
-        .wbhi-type{font-size:0.65rem;font-weight:700;background:rgba(68,152,202,0.2);color:rgba(68,152,202,0.9);padding:0.15rem 0.5rem;border-radius:6px;text-transform:uppercase;letter-spacing:0.04em}
-        .wbhi-date{font-size:0.7rem;color:rgba(180,210,240,0.5);font-weight:500}
-        .wbhi-dur{font-size:0.68rem;color:rgba(180,210,240,0.35);margin-left:auto}
-        .wbhi-focus{font-size:0.82rem;font-weight:600;color:#e8f0fa;margin-bottom:0.2rem}
-        .wbhi-sum{font-size:0.75rem;color:rgba(180,210,240,0.5);line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+        .wbhi-type{font-size:0.75rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:6px;text-transform:uppercase;letter-spacing:0.04em}
+        .wbhi-type.bdg-daily { background: rgba(34,197,94,0.15); color: #4ade80; }
+        .wbhi-type.bdg-weekly { background: rgba(56,189,248,0.15); color: #38bdf8; }
+        .wbhi-type.bdg-quarterly { background: rgba(192,132,252,0.15); color: #d8b4fe; }
+        .wbhi-date{font-size:0.95rem;color:rgba(180,210,240,0.6);font-weight:500}
+        .wbhi-dur{font-size:0.95rem;color:rgba(180,210,240,0.6);margin-left:auto;font-weight:500}
+        .wbhi-focus{font-size:1.15rem;font-weight:600;color:#e8f0fa;margin-bottom:0.2rem;margin-top:0.4rem}
+        .wbhi-sum{font-size:1rem;color:rgba(180,210,240,0.7);line-height:1.45;margin-top:0.2rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 
         .ps-wrap{width:100%;max-width:560px;margin-top:1.5rem;animation:fu .35s ease both}
         .ps-list{display:flex;flex-direction:column;gap:.6rem}
@@ -904,23 +1005,26 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         @keyframes smodIn{from{opacity:0}to{opacity:1}}
         .smod-in{width:96%;max-width:860px;max-height:92vh;background:#fff;border-radius:24px;box-shadow:0 24px 80px rgba(0,40,80,.18);display:flex;flex-direction:column;overflow:hidden;animation:smodUp .35s ease both}
         @keyframes smodUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-        .smod-h{display:flex;align-items:center;justify-content:space-between;padding:1rem 1.5rem;border-bottom:1px solid rgba(68,152,202,.08)}
+        .smod-h{display:flex;align-items:center;justify-content:space-between;padding:2.5rem 1.5rem 1rem;border-bottom:1px solid rgba(68,152,202,.08)}
         .smod-back{background:none;border:none;color:#7a9ab0;font-size:.85rem;cursor:pointer;font-weight:500;padding:0;width:80px;text-align:left}
         .smod-back:hover{color:#4498ca}
-        .smod-steps{display:flex;align-items:center;gap:.6rem}
-        .smod-s{font-size:.8rem;color:#b0c4d0;font-weight:500;transition:color .2s}
-        .smod-s.act{color:#2c5a7c;font-weight:600}
+        .smod-steps{display:flex;align-items:center;gap:1.2rem;background:#f8fafc;padding:0.6rem 1.4rem;border-radius:100px;border:1px solid #e2e8f0;box-shadow:0 4px 15px rgba(0,0,0,0.03)}
+        .smod-s{font-size:0.95rem;font-weight:600;color:#94a3b8;display:flex;align-items:center;gap:0.5rem;transition:all 0.3s}
+        .smod-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;flex-shrink:0;border-radius:50%;background:#e2e8f0;color:#64748b;font-size:1.05rem;font-weight:800}
+        .smod-s.act{color:#0f172a;font-weight:700}
+        .smod-s.act .smod-num{background:#4498ca;color:#fff;box-shadow:0 0 12px rgba(68,152,202,0.3)}
         .smod-s.done{color:#4498ca}
-        .smod-sep{width:20px;height:2px;background:rgba(68,152,202,.15);border-radius:1px}
-        .smod-cnt{padding:1.5rem;overflow-y:auto;flex:1;text-align:center}
-        .smod-t{font-size:1.3rem;font-weight:700;color:#1a3a50;margin:0 0 1.25rem}
-        .smod-sub{font-size:.88rem;color:#7a9ab0;margin:-.75rem 0 1.5rem;line-height:1.5}
-        .smod-next{display:inline-flex;padding:.85rem 2.2rem;border:none;border-radius:14px;background:linear-gradient(135deg,#4498ca,#2c6a8c);color:#fff;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(68,152,202,.3);transition:all .3s;margin-top:1.25rem}
+        .smod-s.done .smod-num{background:rgba(68,152,202,0.15);color:#4498ca}
+        .smod-sep{width:20px;height:2px;border-radius:1px;background:#e2e8f0}
+        .smod-cnt{padding:1rem 1.5rem 1.5rem;overflow-y:auto;flex:1;text-align:center}
+        .smod-t{font-size:1.3rem;font-weight:700;color:#1a3a50;margin:0 0 0.75rem}
+        .smod-sub{font-size:.88rem;color:#7a9ab0;margin:-.25rem 0 1rem;line-height:1.5}
+        .smod-next{display:inline-flex;padding:.75rem 2rem;border:none;border-radius:14px;background:linear-gradient(135deg,#4498ca,#2c6a8c);color:#fff;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(68,152,202,.3);transition:all .3s;margin-top:0.5rem}
         .smod-next:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(68,152,202,.4)}
 
-        .cgrid{display:grid;grid-template-columns:repeat(4, 1fr);gap:1.5rem}
-        .ccard{display:flex;flex-direction:column;align-items:center;gap:0.75rem;padding:2rem 1.5rem;border-radius:24px;border:2px solid rgba(68,152,202,.08);background:rgba(248,252,255,.9);cursor:pointer;transition:all .25s;position:relative}
-        .ccard:hover{border-color:rgba(68,152,202,.35);background:#fff;box-shadow:0 12px 30px rgba(0,60,120,.08);transform:translateY(-4px)}
+        .cgrid{display:grid;grid-template-columns:repeat(4, 1fr);gap:1rem}
+        .ccard{display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:1.25rem 1rem;border-radius:24px;border:2px solid rgba(68,152,202,.08);background:rgba(248,252,255,.9);cursor:pointer;transition:all .25s;position:relative}
+        .ccard:hover{border-color:rgba(68,152,202,.35);background:#fff;box-shadow:0 8px 24px rgba(0,60,120,.06);transform:translateY(-2px)}
         .ccard.sel{border-color:#4498ca;background:rgba(68,152,202,.04);box-shadow:0 4px 20px rgba(68,152,202,.12)}
         .ccard-img{position:relative;margin-bottom:0.4rem}
         .ccard-img :global(img){border:4px solid rgba(68,152,202,.12);box-shadow:0 8px 24px rgba(0,60,120,.1)}
@@ -933,23 +1037,32 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
 
         .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem;text-align:left}
         .dcard{display:flex;flex-direction:column;gap:0.4rem;padding:1.2rem;border-radius:20px;border:2px solid rgba(68,152,202,.08);background:rgba(255,255,255,0.8);cursor:pointer;transition:all 0.25s;position:relative;height:100%}
-        .dcard:hover{border-color:rgba(68,152,202,.35);background:#fff;box-shadow:0 8px 24px rgba(0,60,120,.08);transform:translateY(-2px)}
+        .dcard:hover{border-color:rgba(68,152,202,.35);background:#fff;box-shadow:0 6px 16px rgba(0,60,120,.06);transform:translateY(-1px)}
         .dcard.sel{border-color:#4498ca;background:rgba(68,152,202,.04);box-shadow:0 4px 20px rgba(68,152,202,.12)}
         .dc-title{font-size:0.95rem;font-weight:700;color:#1a3a50;margin:0;line-height:1.2}
         .dc-desc{font-size:0.75rem;color:#5a8aa8;line-height:1.35;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
         .dc-chk{position:absolute;top:0.75rem;right:0.75rem;width:20px;height:20px;background:#4498ca;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700}
 
-        .ggrid{display:flex;gap:4rem;justify-content:center;margin:4rem 0}
-        .gcard{display:flex;flex-direction:column;align-items:center;gap:1.5rem;background:transparent;border:none;cursor:pointer;transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);padding:1rem}
-        .gcard:hover{transform:translateY(-10px)}
-        .gcard-ico{position:relative;width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.4);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.6);color:#1a3a50;box-shadow:0 10px 30px rgba(0,60,120,0.05);transition:all 0.4s}
-        .gcard:hover .gcard-ico{background:rgba(255,255,255,0.8);border-color:#4498ca;box-shadow:0 15px 45px rgba(68,152,202,0.15)}
-        .gcard-aura{position:absolute;inset:10px;border-radius:50%;filter:blur(20px);opacity:0;transition:all 0.4s;z-index:-1}
-        .gcard-ico.female .gcard-aura{background:radial-gradient(circle, #f472b6, transparent 70%)}
-        .gcard-ico.male .gcard-aura{background:radial-gradient(circle, #60a5fa, transparent 70%)}
-        .gcard:hover .gcard-aura{opacity:0.4;inset:-10px}
-        .gcard-lbl{font-size:1.1rem;font-weight:600;color:#1a3a50;letter-spacing:0.05em;text-transform:uppercase;opacity:0.8;transition:all 0.4s}
-        .gcard:hover .gcard-lbl{opacity:1;color:#4498ca;transform:scale(1.05)}
+        .ggrid{display:flex;gap:4rem;justify-content:center;margin:2.5rem 0}
+        .gcard{position:relative;display:flex;flex-direction:column;align-items:center;gap:1.5rem;background:transparent;border:2px solid transparent;border-radius:24px;cursor:pointer;transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);padding:2rem;overflow:hidden}
+        .gcard::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.4s;border-radius:22px;z-index:-1}
+        .gcard:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(0,60,120,0.08);background:#fff}
+        .gcard:hover::before{opacity:1}
+        
+        .gcard-female:hover{border-color:rgba(236,72,153,0.3)}
+        .gcard-female::before{background:linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(253,232,243,0.8) 100%)}
+        .gcard-male:hover{border-color:rgba(68,152,202,0.3)}
+        .gcard-male::before{background:linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(230,244,252,0.8) 100%)}
+        
+        .gcard-ico{position:relative;width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.6);border:2px solid transparent;color:#1a3a50;box-shadow:0 8px 24px rgba(0,60,120,0.05);transition:all 0.3s ease}
+        .gcard:hover .gcard-ico{background:#fff;transform:scale(1.05)}
+        .gcard-female:hover .gcard-ico{border-color:#ec4899;box-shadow:0 12px 32px rgba(236,72,153,0.15)}
+        .gcard-male:hover .gcard-ico{border-color:#4498ca;box-shadow:0 12px 32px rgba(68,152,202,0.15)}
+
+        .gcard-title{font-size:1.3rem;font-weight:700;color:#1a3a50;transition:all 0.3s ease;position:relative}
+        .gcard:hover .gcard-title{transform:scale(1.05)}
+        .gcard-female:hover .gcard-title{color:#ec4899}
+        .gcard-male:hover .gcard-title{color:#4498ca}
 
         .dc-preview{margin-top:0.75rem;padding:0.75rem;background:linear-gradient(135deg, rgba(255,255,255,0.95), rgba(248,252,255,0.85));border-radius:12px;border:1px solid #e0f0fa;box-shadow:inset 0 2px 6px rgba(255,255,255,0.8), 0 4px 12px rgba(68,152,202,0.06);height:85px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
         .dp-numbers{display:flex;gap:0.5rem;width:100%;height:100%;align-items:center;justify-content:center}
@@ -982,15 +1095,15 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
         .dpe-glass{position:relative;z-index:2;padding:0.8rem;background:rgba(255,255,255,0.7);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.6);border-radius:12px;box-shadow:0 4px 16px rgba(0,0,0,0.04);text-align:center}
         .dpe-quote{font-size:0.85rem;color:#334155;font-style:italic;font-weight:500;line-height:1.4;display:block}
 
-        .pf-wrap{position:relative;width:280px;margin:0 auto 1rem}
+        .pf-wrap{position:relative;width:240px;margin:1.5rem auto 1.5rem}
         .pf-labels{position:relative;width:100%;margin-bottom:.4rem}
-        .pf-l{position:absolute;font-size:.72rem;font-weight:600;line-height:1.25;white-space:nowrap}
-        .pf-l small{font-weight:400;color:#93a8b8;font-size:.68rem}
-        .pf-tl{top:-4px;left:-4px;color:#E53935;text-align:left}
-        .pf-tr{top:-4px;right:-4px;color:#F9A825;text-align:right}
-        .pf-bl{bottom:-4px;left:-4px;color:#1E88E5;text-align:left}
-        .pf-br{bottom:-4px;right:-4px;color:#43A047;text-align:right}
-        .pf-labels{height:280px}
+        .pf-l{position:absolute;font-size:1.02rem;font-weight:600;line-height:1.25;white-space:nowrap}
+        .pf-l small{font-weight:400;color:#93a8b8;font-size:0.96rem}
+        .pf-tl{top:-24px;left:-28px;color:#E53935;text-align:left}
+        .pf-tr{top:-24px;right:-28px;color:#F9A825;text-align:right}
+        .pf-bl{bottom:-24px;left:-28px;color:#1E88E5;text-align:left}
+        .pf-br{bottom:-24px;right:-28px;color:#43A047;text-align:right}
+        .pf-labels{height:240px}
         .pf-field{position:absolute;inset:28px;border-radius:20px;cursor:crosshair;touch-action:none;background:radial-gradient(ellipse at 0% 0%,rgba(229,57,53,.35) 0%,transparent 55%),radial-gradient(ellipse at 100% 0%,rgba(249,168,37,.35) 0%,transparent 55%),radial-gradient(ellipse at 0% 100%,rgba(30,136,229,.35) 0%,transparent 55%),radial-gradient(ellipse at 100% 100%,rgba(67,160,71,.35) 0%,transparent 55%),#f5f8fa;box-shadow:inset 0 0 0 1px rgba(68,152,202,.08)}
         .pf-dot{position:absolute;width:22px;height:22px;border-radius:50%;background:#fff;border:3px solid #2c5a7c;box-shadow:0 2px 10px rgba(0,40,80,.2);transform:translate(-50%,-50%);transition:left .08s,top .08s;pointer-events:none}
         .pf-result{display:flex;align-items:center;gap:.6rem;justify-content:center;margin-top:.5rem}
