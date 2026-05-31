@@ -28,7 +28,7 @@ export function middleware(request: NextRequest) {
   const hasCookie = request.cookies.has(AUTH_COOKIE);
   const cookieValue = request.cookies.get(AUTH_COOKIE)?.value;
 
-  if (!hasCookie || cookieValue !== 'Longevity100') {
+  if (!hasCookie || cookieValue !== 'Longevity3000') {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('from', pathname);
     return NextResponse.redirect(loginUrl);

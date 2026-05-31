@@ -1003,7 +1003,7 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
 
         .smod{position:fixed;inset:0;z-index:900;background:rgba(15,30,45,.45);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;animation:smodIn .3s ease both}
         @keyframes smodIn{from{opacity:0}to{opacity:1}}
-        .smod-in{width:96%;max-width:860px;max-height:92vh;background:#fff;border-radius:24px;box-shadow:0 24px 80px rgba(0,40,80,.18);display:flex;flex-direction:column;overflow:hidden;animation:smodUp .35s ease both}
+        .smod-in{width:98%;max-width:1000px;max-height:96vh;background:#fff;border-radius:24px;box-shadow:0 24px 80px rgba(0,40,80,.18);display:flex;flex-direction:column;overflow:hidden;animation:smodUp .35s ease both}
         @keyframes smodUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
         .smod-h{display:flex;align-items:center;justify-content:space-between;padding:2.5rem 1.5rem 1rem;border-bottom:1px solid rgba(68,152,202,.08)}
         .smod-back{background:none;border:none;color:#7a9ab0;font-size:.85rem;cursor:pointer;font-weight:500;padding:0;width:80px;text-align:left}

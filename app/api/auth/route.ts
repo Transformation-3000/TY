@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Passwortschutz aktivieren - Passwort prüfen
-  if (body.password !== 'Longevity100') {
+  if (body.password !== 'Longevity3000') {
     return NextResponse.json(
       { error: 'Ungültiges Passwort.' },
       { status: 401 }
