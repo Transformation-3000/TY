@@ -6,9 +6,8 @@ const AUTH_COOKIE = 'longevity_auth';
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Startseite, Login-Seite und API-Auth immer erlauben
+  // Login-Seite und API-Auth immer erlauben
   if (
-    pathname === '/' ||
     pathname === '/login' ||
     pathname.startsWith('/api/auth')
   ) {
