@@ -894,7 +894,7 @@ export default function EntwicklungPage() {
               ].map((item, idx) => (
                 <div key={idx} className="upload-option-card">
                   <div className="upload-option-img-container">
-                    <img src={item.img} alt={item.title} className="upload-option-img" style={{ objectFit: (item.fit || 'cover') as any, background: item.fit === 'contain' ? 'white' : 'transparent', padding: item.fit === 'contain' ? '10%' : '0' }} />
+                    <img src={item.img} alt={typeof item.title === 'string' ? item.title : 'BioAge Nachweis'} className="upload-option-img" style={{ objectFit: (item.fit || 'cover') as any, background: item.fit === 'contain' ? 'white' : 'transparent', padding: item.fit === 'contain' ? '10%' : '0' }} />
                   </div>
                   <div className="upload-option-text-container">
                     <div style={{ fontWeight: 800, color: '#1e3a5f', marginBottom: '0.2rem', fontSize: '1.3rem', lineHeight: '1.2' }}>
