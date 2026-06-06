@@ -84,10 +84,6 @@ const achievements: Achievement[] = [
   { id: 'first-week', title: 'Erste Woche', description: '7 Tage in Folge aktiv', icon: 'bi-calendar-check', color: '#7FD049', unlocked: true },
   { id: 'habit-master', title: 'Habit Master', description: '30 Habits abgeschlossen', icon: 'bi-check2-all', color: '#4C99C2', unlocked: true },
   { id: 'data-driven', title: 'Data Driven', description: 'Wearable 30 Tage verbunden', icon: 'bi-smartwatch', color: '#006EA7', unlocked: true },
-  { id: 'early-bird', title: 'Early Bird', description: '14x vor 6 Uhr aufgestanden', icon: 'bi-sunrise', color: '#FFF9C4', unlocked: false, progress: 9, maxProgress: 14 },
-  { id: 'sleep-champion', title: 'Sleep Champion', description: '7 Tage optimaler Schlaf', icon: 'bi-moon-stars', color: '#9B59B6', unlocked: false, progress: 4, maxProgress: 7 },
-  { id: 'marathon', title: 'Marathon', description: '100 Tage Streak', icon: 'bi-fire', color: '#FFB3BA', unlocked: false, progress: 42, maxProgress: 100 },
-  { id: 'community-star', title: 'Community Star', description: '10 Mitglieder inspiriert', icon: 'bi-people', color: '#FFD4A3', unlocked: false, progress: 3, maxProgress: 10 },
   { id: 'bio-hacker', title: 'Bio-Hacker', description: '5 Experimente erfolgreich', icon: 'bi-lightning', color: '#00CED1', unlocked: true },
 ];
 
@@ -100,16 +96,17 @@ const journeyLevels: JourneyLevel[] = [
     scoreRange: 'L1: 0–15',
     description: 'Du beginnst deine Longevity-Reise und lernst die Grundlagen kennen.',
     criteria: [
-      'Onboarding abgeschlossen (Fragebogen + Wearable optional)',
-      '7-Tage-Resets mind. 5/7 Tagen eingecheckt',
-      '1 Micro-Habit-Apps 10× gemacht',
+      'Onboarding abgeschlossen (Profil & Fragebogen)',
+      'Wearable erfolgreich verbunden (Apple Watch, Garmin, Oura etc.)',
+      'Erste Micro-Habit-Session absolviert (z. B. Breathwork)',
     ],
     unlocks: [
-      'Die erste Masterclass Foundation wird freigeschaltet',
+      'Erste Coaching-Module in Lisa AI freigeschaltet',
+      'Zugang zu den Micro-Habit-Apps',
     ],
     status: 'completed',
-    color: '#FFB3BA', // pastellrot
-    icon: 'bi-compass',
+    color: '#10B981', // green for completed L1
+    icon: 'bi-binoculars',
   },
   {
     id: 'builder',
@@ -119,15 +116,17 @@ const journeyLevels: JourneyLevel[] = [
     scoreRange: 'L2: 16–30',
     description: 'Du etablierst Routinen und baust Konsistenz auf – die Grundlage für langfristigen Erfolg.',
     criteria: [
-      'Habit-Adherence: Ø 4–5 Tage/Woche über 2 Wochen',
-      'Wöchentliche Sessions Lisa AI 4× durchgeführt',
+      'Lisa AI Daily Coaching: 5 Tage Check-in Streak',
+      'Lisa AI Weekly Coaching: Erste Session abgeschlossen',
+      'Mindestens 1 Habit-App aktiv genutzt (3+ Sessions)',
     ],
     unlocks: [
-      'Weitere Masterclasses werden freigeschaltet',
+      'Ausführliches wöchentliches Plan-Feedback',
+      'Zusätzliche Masterclasses freigeschaltet',
     ],
     status: 'completed',
-    color: '#FFD4A3', // pastellorange
-    icon: 'bi-bricks',
+    color: '#059669', // green for completed L2
+    icon: 'bi-layers-half',
   },
   {
     id: 'optimizer',
@@ -137,19 +136,19 @@ const journeyLevels: JourneyLevel[] = [
     scoreRange: 'L3: 31–45',
     description: 'Du nutzt Daten, um gezielt zu optimieren und erste Experimente durchzuführen.',
     criteria: [
-      'Wearable integriert = Datenquelle aktiv',
-      '(Self-Tracking: Schlaf/Energie/Stress täglich)',
-      '+2 Experimente erfolgreich abgeschlossen',
-      'Mind. 1 KPI zeigt Trend nach oben',
+      'Tägliche Wearable-Synchronisation aktiv',
+      'Lisa AI Weekly: Erste Schlaf-Optimierung gestartet',
+      '1 Community-Experiment aktiv (z. B. Koffein-Cutoff)',
+      'Mindestens 1 Vitalwert (z. B. HRV) zeigt stabilen Trend',
     ],
     unlocks: [
-      'Regelmäßige Wearable-Auswertung',
-      'Experiment-Library',
-      '„Experiment-Vorschlag der Woche"',
+      'Detaillierte Analyse-Dashboards',
+      'Community-Experiment-Library freigeschaltet',
+      'Monatliche Health-Score-Auswertungen',
     ],
     status: 'current',
-    color: '#FFF9C4', // pastellgelb
-    icon: 'bi-graph-up-arrow',
+    color: '#EAB308', // vibrant amber/gold
+    icon: 'bi-sliders',
   },
   {
     id: 'integrator',
@@ -159,15 +158,17 @@ const journeyLevels: JourneyLevel[] = [
     scoreRange: 'L4: 46–60',
     description: 'Du verstehst, wie alle Bereiche zusammenwirken und baust ein ganzheitliches System auf.',
     criteria: [
-      'Schlaf + Bewegung + Metabolik + Stress als System',
-      'Rückfall-Protokoll vorhanden und angewendet',
+      'Ersten Monatsreport analysiert & Next Best Actions umgesetzt',
+      'Mindestens 2 Habits mit 10+ Tagen Streak',
+      'An einer aktiven Community-Challenge teilgenommen',
     ],
     unlocks: [
-      '„Minimum Effective Dose" je Hebel für Alltag',
+      'Monatlicher Detailreport & Biomarker-Vorschau',
+      'Priorisierungs-Matrix für deinen Tagesplan',
     ],
     status: 'upcoming',
-    color: '#87CEEB', // hellblau
-    icon: 'bi-puzzle',
+    color: '#3B82F6', // vibrant blue
+    icon: 'bi-diagram-3',
   },
   {
     id: 'architect',
@@ -177,16 +178,17 @@ const journeyLevels: JourneyLevel[] = [
     scoreRange: 'L5: 61–75',
     description: 'Du nutzt Lab-Daten, um personalisierte Protokolle zu entwickeln.',
     criteria: [
-      'Labs genutzt',
+      'Lab-Analyse durchgeführt (Zellstatus Moleqlar / Balance Lifespin)',
+      'Persönliches Supplement-Protokoll im System hinterlegt',
+      'Lisa AI Quarterly Review erfolgreich abgeschlossen',
     ],
     unlocks: [
-      'Lab-Interpretation',
-      'Action Plans',
-      'Protokolle',
+      'Automatische Lab-Dateninterpretation',
+      'Personalisierte Action-Plans basierend auf Biomarkern',
     ],
     status: 'upcoming',
-    color: '#00008B', // dunkelblau
-    icon: 'bi-building',
+    color: '#6366F1', // indigo
+    icon: 'bi-clipboard-data',
   },
   {
     id: 'elite',
@@ -196,17 +198,16 @@ const journeyLevels: JourneyLevel[] = [
     scoreRange: 'L6: 76–90',
     description: 'Du hältst ein hohes Performance- und Longevity-Niveau stabil.',
     criteria: [
-      'Stabil hohe Konsistenz',
-      'Fortschrittliche Trainings-/Recovery-Steuerung',
-      'Geringe Varianz',
+      'Schlaf-Score Ø > 80% über 14 Tage gehalten',
+      'Konsistente Aktivitätsdaten (Ø 7.500+ Schritte pro Woche)',
+      'Mindestens 3 Experimente erfolgreich beendet',
     ],
     unlocks: [
-      'Advanced Trainingsblöcke',
-      'Gezielte Optimierung',
-      '„Deep Dives" mit True Years',
+      'Advanced Trainingsblöcke und HRV-Tiefenanalysen',
+      'Zutritt zum exklusiven Beta-Feature: Digital Twin Predictor',
     ],
     status: 'upcoming',
-    color: '#90EE90', // hellgrün
+    color: '#8B5CF6', // violet
     icon: 'bi-trophy',
   },
   {
@@ -217,19 +218,17 @@ const journeyLevels: JourneyLevel[] = [
     scoreRange: 'L7: 91–100',
     description: 'Du lebst nachhaltige Longevity und kannst andere anleiten.',
     criteria: [
-      'Langfristige Stabilität',
-      'Eigene Routinen sitzen',
-      'Kann andere anleiten (Mentor-Qualität)',
-      'Klare persönliche Strategie',
+      'Langfristige Stabilität des biologischen Alters nachgewiesen',
+      'Aktiver Mentor im Community-Leaderboard',
+      'Eigene Best-Practice-Protokolle mit der Community geteilt',
     ],
     unlocks: [
-      'Invite-Only Circle',
-      'Teilnahme an Expertenrunden',
-      'Ambassador-Mentor',
+      'Invite-Only Circle & Zutritt zu Expertengremien',
+      'Ambassador- & Mentor-Status in der Community',
     ],
     status: 'upcoming',
-    color: '#006400', // dunkelgrün
-    icon: 'bi-stars',
+    color: '#EC4899', // pink
+    icon: 'bi-infinity',
   },
 ];
 
@@ -278,10 +277,10 @@ export default function LongevityJourney7LevelsPage() {
       <header className={`journey-hero ${isVisible ? 'visible' : ''}`}>
         <div className="journey-hero-content">
           <h1 className="journey-title journey-title-single">
-            Deine Reise
+            Deine Longevity-Journey
           </h1>
           <p className="journey-subtitle">
-            Du hast Level 3 erreicht: 31–45 Punkte – was jetzt zählt
+            Du befindest dich aktuell in Level 3 (31–45 Punkte).<br />Wie du weiter aufsteigen kannst.
           </p>
         </div>
 
@@ -289,68 +288,43 @@ export default function LongevityJourney7LevelsPage() {
         <div className="true-years-hero-card">
           <div className="true-years-glow"></div>
           <div className="true-years-content">
-            <div className="true-years-main">
-              <div className="true-years-score-container">
-                <div className="true-years-ring">
-                  <svg viewBox="0 0 120 120">
-                    <defs>
-                      <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                        <stop offset="0%" stopColor="#7FD049" />
-                        <stop offset="50%" stopColor="#4C99C2" />
-                        <stop offset="100%" stopColor="#9B59B6" />
-                      </linearGradient>
-                    </defs>
-                    <circle cx="60" cy="60" r="54" fill="none" stroke="rgba(255,255,255,0.1)" strokeWidth="8" />
-                    <circle 
-                      cx="60" 
-                      cy="60" 
-                      r="54" 
-                      fill="none" 
-                      stroke="url(#scoreGradient)" 
-                      strokeWidth="8" 
-                      strokeLinecap="round"
-                      strokeDasharray={`${(userTrueYears / 100) * 339.3} 339.3`}
-                      transform="rotate(-90 60 60)"
-                      className="score-ring-progress"
-                    />
-                  </svg>
-                  <div className="true-years-value">
-                    <span className="score-number">{userTrueYears}</span>
-                    <span className="score-label">True Years</span>
+            <div className="true-years-main-horizontal">
+              <div className="true-years-details-horizontal">
+                <h3>Aktueller Fortschritt</h3>
+                <div className="true-years-meta-horizontal">
+                  <div className="meta-item">
+                    <i className="bi bi-graph-up-arrow" style={{ marginRight: '6px' }}></i>
+                    <span>+2.3 letzte 30 Tage</span>
+                  </div>
+                  <div className="meta-item highlight">
+                    <i className="bi bi-trophy" style={{ marginRight: '6px' }}></i>
+                    <span>Rang #{userRank} von 100</span>
                   </div>
                 </div>
               </div>
               
-              <div className="true-years-details">
-                <h3>Dein True Years Score</h3>
-                <div className="true-years-meta">
-                  <div className="meta-item">
-                    <i className="bi bi-graph-up-arrow"></i>
-                    <span>+2.3 letzte 30 Tage</span>
+              <div className="journey-progress-timeline-container">
+                <div className="timeline-track-wrapper">
+                  <div className="timeline-track">
+                    <div className="timeline-fill" style={{ width: `${userTrueYears}%` }}></div>
+                    <div className="timeline-marker" style={{ left: `${userTrueYears}%` }}>
+                      <div className="timeline-tooltip">
+                        <span className="tooltip-score">{userTrueYears}</span>
+                        <div className="tooltip-arrow"></div>
+                      </div>
+                      <div className="timeline-dot"></div>
+                    </div>
                   </div>
-                  <div className="meta-item highlight">
-                    <i className="bi bi-trophy"></i>
-                    <span>Rang #{userRank} von 100</span>
-                  </div>
+                </div>
+                <div className="timeline-labels">
+                  <span className="timeline-min">1</span>
+                  <span className="timeline-max">100</span>
                 </div>
               </div>
             </div>
             
             {/* Gamification Quick Stats */}
             <div className="gamification-stats">
-              <div className="gam-stat">
-                <div className="gam-stat-icon fire">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2C12 2 8 6 8 10C8 12 9 14 12 14C15 14 16 12 16 10C16 6 12 2 12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M12 14C12 14 10 16 10 18C10 20 11 22 12 22C13 22 14 20 14 18C14 16 12 14 12 14Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                    <path d="M8 10C6 11 5 13 5 15C5 18 7.5 21 12 21C16.5 21 19 18 19 15C19 13 18 11 16 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </div>
-                <div className="gam-stat-info">
-                  <span className="gam-stat-value">{userStreak}</span>
-                  <span className="gam-stat-label">Tage Streak</span>
-                </div>
-              </div>
               <div className="gam-stat">
                 <div className="gam-stat-icon level">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -362,19 +336,21 @@ export default function LongevityJourney7LevelsPage() {
                   </svg>
                 </div>
                 <div className="gam-stat-info">
-                  <span className="gam-stat-value">L{currentLevel.level}</span>
+                  <span className="gam-stat-value">Level {currentLevel.level}</span>
                   <span className="gam-stat-label">{currentLevel.title}</span>
                 </div>
               </div>
               <div className="gam-stat">
-                <div className="gam-stat-icon achievements">
+                <div className="gam-stat-icon fire">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M12 2L14.4 8.2L21 9L16 13.5L17.5 20L12 17L6.5 20L8 13.5L3 9L9.6 8.2L12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12 2C12 2 8 6 8 10C8 12 9 14 12 14C15 14 16 12 16 10C16 6 12 2 12 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12 14C12 14 10 16 10 18C10 20 11 22 12 22C13 22 14 20 14 18C14 16 12 14 12 14Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M8 10C6 11 5 13 5 15C5 18 7.5 21 12 21C16.5 21 19 18 19 15C19 13 18 11 16 10" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </div>
                 <div className="gam-stat-info">
-                  <span className="gam-stat-value">{unlockedAchievements}/{achievements.length}</span>
-                  <span className="gam-stat-label">Badges</span>
+                  <span className="gam-stat-value">{userStreak}</span>
+                  <span className="gam-stat-label">Tage Streak</span>
                 </div>
               </div>
               <div className="gam-stat">
@@ -447,13 +423,16 @@ export default function LongevityJourney7LevelsPage() {
                   <div
                     key={level.id}
                     className={`journey-node ${level.status} ${isActive ? 'active' : ''} ${isLeft ? 'left' : 'right'}`}
-                    style={{ animationDelay: `${index * 0.1}s` }}
+                    style={{ 
+                      animationDelay: `${index * 0.1}s`,
+                      // @ts-ignore
+                      '--level-color': level.color
+                    }}
                     onClick={() => setActiveLevel(isActive ? null : level.id)}
                   >
                     {/* Node Marker on Path */}
                     <div 
                       className="node-marker"
-                      style={{ backgroundColor: level.status !== 'upcoming' ? level.color : '#d1d5db' }}
                     >
                       <i className={`bi ${getStatusIcon(level.status)}`}></i>
                       {level.status === 'current' && <div className="node-pulse"></div>}
@@ -463,32 +442,22 @@ export default function LongevityJourney7LevelsPage() {
                     <div 
                       className={`node-card ${isVisible ? 'visible' : ''}`}
                       style={{ 
-                        borderColor: level.status !== 'upcoming' ? level.color : 'transparent',
-                        backgroundColor: level.status === 'current' ? '#FFFACD' : 'white',
                         animationDelay: `${index * 0.15 + 0.3}s`
                       }}
                     >
                       <div className="node-card-header">
-                        <div 
-                          className="node-icon"
-                          style={{ 
-                            background: level.status !== 'upcoming' 
-                              ? `linear-gradient(135deg, ${level.color}20, ${level.color}40)` 
-                              : 'rgba(0,0,0,0.05)',
-                            color: level.status !== 'upcoming' ? level.color : '#9ca3af'
-                          }}
-                        >
+                        <div className="node-icon">
                           <i className={`bi ${level.icon}`}></i>
                         </div>
                         <div className="node-title-group">
-                          <span className="node-level-badge" style={{ backgroundColor: `${level.color}20`, color: level.color }}>
+                          <span className="node-level-badge">
                             Level {level.level}
                           </span>
                           <h3 className="node-title">{level.title}</h3>
                           <p className="node-subtitle">{level.subtitle}</p>
                         </div>
                         {level.status === 'completed' && (
-                          <div className="node-check" style={{ backgroundColor: level.color }}>
+                          <div className="node-check">
                             <i className="bi bi-check-lg"></i>
                           </div>
                         )}
@@ -780,8 +749,8 @@ export default function LongevityJourney7LevelsPage() {
                   <div 
                     className="achievement-icon"
                     style={{ 
-                      backgroundColor: achievement.unlocked ? `${achievement.color}20` : 'rgba(0,0,0,0.05)',
-                      color: achievement.unlocked ? achievement.color : '#9ca3af'
+                      // @ts-ignore
+                      '--badge-color': achievement.color
                     }}
                   >
                     <i className={`bi ${achievement.icon}`}></i>

@@ -62,7 +62,15 @@ const wearables: Wearable[] = [
   }
 ];
 
-export default function WelcomeSection({ onNavigate }: { onNavigate?: (menuItem: string) => void }) {
+export default function WelcomeSection({ 
+  onNavigate, 
+  onToggleSidebar, 
+  sidebarOpen 
+}: { 
+  onNavigate?: (menuItem: string) => void; 
+  onToggleSidebar?: () => void; 
+  sidebarOpen?: boolean; 
+}) {
   const [activeWearableId, setActiveWearableId] = useState<string>('whoop');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [tempSelectedId, setTempSelectedId] = useState<string>('whoop');
@@ -123,7 +131,7 @@ export default function WelcomeSection({ onNavigate }: { onNavigate?: (menuItem:
   return (
     <div className="top-navigation-content">
       {/* Logo Left */}
-      <div className="top-nav-logo-section" onClick={() => onNavigate?.('dashboard')} style={{ cursor: 'pointer' }}>
+      <div className="top-nav-logo-section" onClick={() => onNavigate?.('website')} style={{ cursor: 'pointer' }}>
         <Image src="/images/logoneu.png" alt="True Years Logo" width={180} height={180} className="top-nav-logo" style={{ objectFit: 'contain' }} />
       </div>
 
@@ -172,15 +180,20 @@ export default function WelcomeSection({ onNavigate }: { onNavigate?: (menuItem:
             </div>
           </div>
 
-          {/* AREA 3: SETTINGS PILL */}
-          <div className="header-area settings-area" onClick={() => onNavigate?.('settings')}>
-            <div className="settings-pill">
-              <i className="bi bi-gear-fill settings-icon-top"></i>
-              <span className="settings-label-top">EINSTELLUNGEN</span>
-            </div>
-          </div>
+
 
         </div>
+
+        {/* MOBILE HAMBURGER BUTTON */}
+        <button 
+          className={`mobile-hamburger-btn ${sidebarOpen ? 'open' : ''}`}
+          onClick={onToggleSidebar} 
+          aria-label="Menü"
+        >
+          <span className="hamburger-line"></span>
+          <span className="hamburger-line"></span>
+          <span className="hamburger-line"></span>
+        </button>
 
       </div>
 
@@ -272,7 +285,7 @@ export default function WelcomeSection({ onNavigate }: { onNavigate?: (menuItem:
           padding: 0.6rem 2rem;
           background: #fff;
           border-bottom: 1px solid #f1f5f9;
-          height: 80px;
+          height: 100%;
           position: relative;
         }
 
@@ -280,6 +293,68 @@ export default function WelcomeSection({ onNavigate }: { onNavigate?: (menuItem:
           display: flex;
           align-items: center;
           gap: 0.85rem;
+        }
+
+        .mobile-hamburger-btn {
+          display: none;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 5px;
+          width: 44px;
+          height: 44px;
+          background: rgba(0, 110, 167, 0.05);
+          border: 1px solid rgba(0, 110, 167, 0.1);
+          cursor: pointer;
+          border-radius: 12px;
+          transition: all 0.2s ease;
+          margin-left: 0.5rem;
+          padding: 0;
+        }
+        .mobile-hamburger-btn:hover {
+          background: rgba(0, 110, 167, 0.1);
+          transform: scale(1.05);
+        }
+        .mobile-hamburger-btn:active {
+          transform: scale(0.95);
+        }
+
+        .hamburger-line {
+          width: 22px;
+          height: 3px;
+          background-color: #006EA7;
+          border-radius: 3px;
+          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          display: block;
+        }
+
+        /* Animation when open */
+        .mobile-hamburger-btn.open .hamburger-line:nth-child(1) {
+          transform: translateY(8px) rotate(45deg);
+        }
+        .mobile-hamburger-btn.open .hamburger-line:nth-child(2) {
+          opacity: 0;
+        }
+        .mobile-hamburger-btn.open .hamburger-line:nth-child(3) {
+          transform: translateY(-8px) rotate(-45deg);
+        }
+
+        @media (max-width: 992px) {
+          .mobile-hamburger-btn {
+            display: flex;
+          }
+          .settings-area {
+            display: none !important;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .wearable-area {
+            display: none !important;
+          }
+          .status-text-active {
+            display: none !important;
+          }
         }
         .nav-elements-container {
           display: flex;

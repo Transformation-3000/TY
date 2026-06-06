@@ -304,7 +304,7 @@ export default function LongevityJourneyPage() {
             <i className="bi bi-graph-up-arrow"></i>
           </div>
           <div className="insight-content">
-            <h3>Dein Fortschritt</h3>
+            <h3>Dein Longevity-Journey Fortschritt</h3>
             <p>
               Seit dem Start hast du deinen Gesamtzustand um <strong>{getOverallHealth() - bodyMetrics[0].past}%</strong> verbessert.
               {selectedTimePoint !== 'current' && selectedTimePoint !== 'start' && (

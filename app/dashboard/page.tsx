@@ -32,6 +32,7 @@ import Image from 'next/image';
 export default function Dashboard() {
   const [activeMenuItem, setActiveMenuItem] = useState<string>('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [autoStartSessionType, setAutoStartSessionType] = useState<string | null>(null);
 
   useEffect(() => {
     const onResize = () => { if (window.innerWidth > 992) setSidebarOpen(false); };
@@ -54,7 +55,11 @@ export default function Dashboard() {
         <button className="hamburger-btn" onClick={() => setSidebarOpen(o => !o)} aria-label="Menü">
           <i className={`bi ${sidebarOpen ? 'bi-x-lg' : 'bi-list'}`}></i>
         </button>
-        <WelcomeSection onNavigate={navigate} />
+        <WelcomeSection 
+          onNavigate={navigate} 
+          onToggleSidebar={() => setSidebarOpen(o => !o)} 
+          sidebarOpen={sidebarOpen} 
+        />
       </div>
 
       <div className="main-content">
@@ -66,15 +71,31 @@ export default function Dashboard() {
           )}
 
           {activeMenuItem === 'quick-wins' && (
-            <WachstumPage />
+            <WachstumPage 
+              onNavigate={navigate} 
+              onStartLisaDaily={() => {
+                setAutoStartSessionType('daily');
+                setActiveMenuItem('coaching');
+              }} 
+            />
           )}
 
           {activeMenuItem === 'longevity-journey' && (
-            <WachstumPage />
+            <WachstumPage 
+              onNavigate={navigate} 
+              onStartLisaDaily={() => {
+                setAutoStartSessionType('daily');
+                setActiveMenuItem('coaching');
+              }} 
+            />
           )}
 
           {activeMenuItem === 'coaching' && (
-            <Coaching2Page onOpenAvatar={() => setActiveMenuItem('lisa-test')} />
+            <Coaching2Page 
+              onOpenAvatar={() => setActiveMenuItem('lisa-test')} 
+              autoStartSession={autoStartSessionType}
+              clearAutoStart={() => setAutoStartSessionType(null)}
+            />
           )}
 
           {activeMenuItem === 'lisa-test' && (
@@ -218,33 +239,7 @@ export default function Dashboard() {
             </div>
           )}
 
-          {activeMenuItem === 'live-events' && (
-            <div style={{ padding: '2rem' }}>
-              <button onClick={() => setActiveMenuItem('mehr')} className="btn-back">← Zurück zu Mehr</button>
-              <MasterclassesPage />
-            </div>
-          )}
 
-          {activeMenuItem === 'activity-tracker' && (
-            <div style={{ padding: '2rem' }}>
-              <button onClick={() => setActiveMenuItem('mehr')} className="btn-back">← Zurück zu Mehr</button>
-              <VogelperspektivePage />
-            </div>
-          )}
-
-          {activeMenuItem === 'quick-win-library' && (
-            <div style={{ padding: '2rem' }}>
-              <button onClick={() => setActiveMenuItem('mehr')} className="btn-back">← Zurück zu Mehr</button>
-              <WachstumPage />
-            </div>
-          )}
-
-          {activeMenuItem === 'lab' && (
-            <div style={{ padding: '2rem' }}>
-              <button onClick={() => setActiveMenuItem('mehr')} className="btn-back">← Zurück zu Mehr</button>
-              <BiomarkerDashboard />
-            </div>
-          )}
 
           {activeMenuItem === 'mehr' && (
             <MehrPage onNavigate={navigate} />

@@ -5,6 +5,7 @@ import Image from 'next/image';
 
 export default function VogelperspektivePage() {
   const [currentDate, setCurrentDate] = useState('');
+  const [greeting, setGreeting] = useState('Guten Tag');
 
   useEffect(() => {
     const dateOptions: Intl.DateTimeFormatOptions = { 
@@ -15,6 +16,15 @@ export default function VogelperspektivePage() {
     };
     const formattedDate = new Intl.DateTimeFormat('de-DE', dateOptions).format(new Date());
     setCurrentDate(formattedDate.toUpperCase());
+
+    const hour = new Date().getHours();
+    let calculatedGreeting = 'Guten Tag';
+    if (hour < 11) {
+      calculatedGreeting = 'Guten Morgen';
+    } else if (hour >= 18) {
+      calculatedGreeting = 'Guten Abend';
+    }
+    setGreeting(calculatedGreeting);
   }, []);
  
   const [countdown, setCountdown] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -121,6 +131,31 @@ export default function VogelperspektivePage() {
   
   const [activitySearchTerm, setActivitySearchTerm] = useState('');
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('ty-checked-activities');
+    if (saved) {
+      setSelectedActivities(JSON.parse(saved));
+    } else {
+      const defaultChecked = ['8-8,5 Std. geschlafen', 'Schritte gegangen'];
+      setSelectedActivities(defaultChecked);
+      localStorage.setItem('ty-checked-activities', JSON.stringify(defaultChecked));
+    }
+
+    const handleSync = () => {
+      const updated = localStorage.getItem('ty-checked-activities');
+      if (updated) setSelectedActivities(JSON.parse(updated));
+    };
+    window.addEventListener('ty-activities-sync', handleSync);
+    return () => window.removeEventListener('ty-activities-sync', handleSync);
+  }, []);
+
+  const updateSelectedActivities = (newSelected: string[]) => {
+    setSelectedActivities(newSelected);
+    localStorage.setItem('ty-checked-activities', JSON.stringify(newSelected));
+    window.dispatchEvent(new Event('ty-activities-sync'));
+  };
+
   const [activityValues, setActivityValues] = useState<Record<string, string>>({});
   const [quickSelected, setQuickSelected] = useState<string>('Radfahren');
 
@@ -276,7 +311,7 @@ export default function VogelperspektivePage() {
         <div className="center-section">
           <div className="greeting-block">
             <span className="date-display">{currentDate}</span>
-            <h1 className="greeting-h1">Guten Tag,<br /><span className="name-blue">Monique</span></h1>
+            <h1 className="greeting-h1">{greeting}, <br /><span className="name-blue">Monique</span></h1>
           </div>
           <div className="avatar-outer-circle">
             <div className="avatar-inner">
@@ -613,9 +648,9 @@ export default function VogelperspektivePage() {
                                               className={`add-list-btn ${isSelected ? 'checked' : ''}`}
                                               onClick={() => {
                                                 if (isSelected) {
-                                                  setSelectedActivities(selectedActivities.filter(a => a !== act.name));
+                                                  updateSelectedActivities(selectedActivities.filter(a => a !== act.name));
                                                 } else {
-                                                  setSelectedActivities([...selectedActivities, act.name]);
+                                                  updateSelectedActivities([...selectedActivities, act.name]);
                                                 }
                                               }}
                                             >
@@ -637,7 +672,7 @@ export default function VogelperspektivePage() {
 
                   <div className="pane-right-footer">
                     <button className="btn-back-text" onClick={() => setActiveModal(null)}><i className="bi bi-arrow-left"></i> Zurück</button>
-                    <button className="btn-clear-text" onClick={() => { setSelectedActivities([]); setActivitySearchTerm(''); setActivityValues({}); }}>Eingaben löschen</button>
+                    <button className="btn-clear-text" onClick={() => { updateSelectedActivities([]); setActivitySearchTerm(''); setActivityValues({}); }}>Eingaben löschen</button>
                   </div>
                 </div>
               </div>
@@ -926,6 +961,7 @@ export default function VogelperspektivePage() {
           .center-section { order: -1; }
           .bottom-row { grid-template-columns: 1fr; gap: 1.5rem; }
           .dashboard-container { padding: 1.5rem 1.5rem 85px 1.5rem; }
+          .greeting-h1 br { display: none; }
         }
 
         @media (max-width: 768px) {

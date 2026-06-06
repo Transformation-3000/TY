@@ -15,7 +15,6 @@ const mainNavItems: MainNavItem[] = [
   { id: 'coaching', label: 'Personal Trainer', icon: <i className="bi bi-person-circle"></i> },
   { id: 'insights', label: 'Inspiration', icon: <i className="bi bi-stars"></i> },
   { id: 'entwicklung', label: 'Entwicklung', icon: <i className="bi bi-graph-up-arrow"></i> },
-  { id: 'mehr', label: 'Mehr', icon: <i className="bi bi-three-dots"></i> },
   { id: 'referral', label: 'Weiterempfehlen', icon: <i className="bi bi-gift-fill"></i>, special: true },
 ];
 

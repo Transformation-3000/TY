@@ -2,50 +2,7 @@
 
 import React from 'react';
 
-const MEHR_ITEMS = [
-  {
-    id: 'live-events',
-    label: 'Live-Events',
-    icon: 'bi-calendar-event',
-    color: '#4498ca',
-    desc: 'Sei live dabei bei unseren Experten-Vorträgen.'
-  },
-  {
-    id: 'activity-tracker',
-    label: 'Activity Tracker',
-    icon: 'bi-smartwatch',
-    color: '#7FD049',
-    desc: 'Verfolge deine täglichen Aktivitäten und Fortschritte.'
-  },
-  {
-    id: 'quick-win-library',
-    label: 'Quick Win Library',
-    icon: 'bi-book',
-    color: '#e6c85a',
-    desc: 'Alle Quick Wins auf einen Blick zum Nachlesen.'
-  },
-  {
-    id: 'shop',
-    label: 'Member Shop',
-    icon: 'bi-bag-heart',
-    color: '#ff6b6b',
-    desc: 'Exklusive Angebote für unsere Mitglieder.'
-  },
-  {
-    id: 'lab',
-    label: 'Lab (Premium)',
-    icon: 'bi-heart-pulse',
-    color: '#006EA7',
-    desc: 'Tiefe Einblicke in deine Vitaldaten und Laborwerte.'
-  },
-  {
-    id: 'website',
-    label: 'Webseite',
-    icon: 'bi-globe',
-    color: '#006EA7',
-    desc: 'Zurück zur TrueYears Startseite und dem öffentlichen Bereich.'
-  }
-];
+const MEHR_ITEMS: { id: string; label: string; icon: string; color: string; desc: string }[] = [];
 
 export default function MehrPage({ onNavigate }: { onNavigate?: (id: string) => void }) {
   return (
@@ -56,20 +13,27 @@ export default function MehrPage({ onNavigate }: { onNavigate?: (id: string) => 
       </div>
 
       <div className="mehr-grid">
-        {MEHR_ITEMS.map((item) => (
-          <div key={item.id} className="mehr-card" onClick={() => onNavigate?.(item.id)}>
-            <div className="mehr-card-icon" style={{ backgroundColor: `${item.color}15`, color: item.color }}>
-              <i className={`bi ${item.icon}`}></i>
+        {MEHR_ITEMS.length > 0 ? (
+          MEHR_ITEMS.map((item) => (
+            <div key={item.id} className="mehr-card" onClick={() => onNavigate?.(item.id)}>
+              <div className="mehr-card-icon" style={{ backgroundColor: `${item.color}15`, color: item.color }}>
+                <i className={`bi ${item.icon}`}></i>
+              </div>
+              <div className="mehr-card-content">
+                <h3>{item.label}</h3>
+                <p>{item.desc}</p>
+              </div>
+              <button className="mehr-card-btn">
+                Öffnen <i className="bi bi-chevron-right"></i>
+              </button>
             </div>
-            <div className="mehr-card-content">
-              <h3>{item.label}</h3>
-              <p>{item.desc}</p>
-            </div>
-            <button className="mehr-card-btn">
-              Öffnen <i className="bi bi-chevron-right"></i>
-            </button>
+          ))
+        ) : (
+          <div className="mehr-empty-state" style={{ gridColumn: '1 / -1', padding: '3rem', background: '#f8fafc', borderRadius: '20px', border: '1px dashed #cbd5e1', color: '#64748b', textAlign: 'center' }}>
+            <i className="bi bi-info-circle" style={{ fontSize: '2rem', display: 'block', marginBottom: '1rem', color: '#94a3b8' }}></i>
+            <p style={{ margin: 0, fontWeight: 500 }}>Aktuell sind keine weiteren Services in diesem Bereich verfügbar.</p>
           </div>
-        ))}
+        )}
       </div>
 
       <style jsx>{`

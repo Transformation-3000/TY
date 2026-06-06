@@ -32,20 +32,25 @@ const OPTIMIZATION_FIELDS = [
   { id: 'Mindset', label: 'Mentale Resilienz & Mindset', icon: 'bi-stars', color: '#06b6d4', maturity: 50, level: 0, active: false },
 ];
 
-export default function WachstumPage() {
+interface WachstumPageProps {
+  onNavigate?: (id: string) => void;
+  onStartLisaDaily?: () => void;
+}
+
+export default function WachstumPage({ onNavigate, onStartLisaDaily }: WachstumPageProps) {
   const [selectedField, setSelectedField] = useState(OPTIMIZATION_FIELDS[0]);
   const userMaturity = 2; // Beispiel-Reifegrad für die Logik rechts
 
   const filteredWins = QUICK_WINS.filter(win => win.category === selectedField.id && win.maturityRequired <= userMaturity);
 
   return (
-    <div className="wachstum-container" style={{ padding: '2rem', maxWidth: '1200px', margin: '0 auto' }}>
+    <div className="wachstum-container">
       <header style={{ marginBottom: '2.5rem' }}>
         <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Quick Wins</h1>
         <p style={{ color: '#64748b', fontSize: '1.1rem', marginTop: '0.5rem' }}>Do Longevity yourself: Deine sofort umsetzbaren Bausteine</p>
       </header>
 
-      <div className="wachstum-layout" style={{ display: 'grid', gridTemplateColumns: '380px 1fr', gap: '2.5rem' }}>
+      <div className="wachstum-layout">
         
         {/* Links: Auswahl Optimierungsfelder */}
         <section className="fields-section">
@@ -116,7 +121,7 @@ export default function WachstumPage() {
 
         {/* Rechts: Quick Wins Navigator */}
         <section className="navigator-section">
-          <div style={{ background: '#f8fafc', borderRadius: '32px', padding: '1.75rem 2.5rem 2.5rem' }}>
+          <div className="navigator-box">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
               <div>
                 <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 800, color: '#1e293b' }}>
@@ -127,21 +132,13 @@ export default function WachstumPage() {
 
             <div className="quick-wins-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
               {filteredWins.map((win) => (
-                <div key={win.id} style={{
-                  background: '#fff',
-                  border: '1px solid #e2e8f0',
-                  borderRadius: '24px',
-                  padding: '1.5rem',
-                  display: 'flex',
-                  gap: '1.5rem',
-                  alignItems: 'center',
-                  boxShadow: '0 4px 12px rgba(0,0,0,0.02)'
-                }}>
-                  <div style={{ 
+                <div key={win.id} className="quick-win-card">
+                  <div className="quick-win-card-icon" style={{ 
                     width: '60px', height: '60px', borderRadius: '50%', 
                     background: `${selectedField.color}15`,
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '1.5rem', color: selectedField.color
+                    fontSize: '1.5rem', color: selectedField.color,
+                    flexShrink: 0
                   }}>
                     <i className="bi bi-check2-circle"></i>
                   </div>
@@ -170,15 +167,8 @@ export default function WachstumPage() {
             </div>
 
             <div 
-              style={{ 
-                marginTop: '2rem', padding: '1.25rem 1.5rem', borderRadius: '24px', 
-                background: 'linear-gradient(135deg, #006EA7, #1e293b)', 
-                color: '#fff', display: 'flex', alignItems: 'center', gap: '1.25rem',
-                cursor: 'pointer', boxShadow: '0 10px 25px rgba(0, 110, 167, 0.2)',
-                transition: 'transform 0.2s ease',
-                position: 'relative',
-                overflow: 'hidden'
-              }}
+              className="lisa-daily-card"
+              onClick={() => onStartLisaDaily?.()}
               onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
               onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
             >
@@ -214,8 +204,83 @@ export default function WachstumPage() {
 
       <style jsx>{`
         .wachstum-container {
+          padding: 2rem;
+          max-width: 1200px;
+          margin: 0 auto;
           animation: fadeIn 0.5s ease-out;
         }
+        
+        .wachstum-layout {
+          display: grid;
+          grid-template-columns: 380px 1fr;
+          gap: 2.5rem;
+        }
+
+        .navigator-box {
+          background: #f8fafc;
+          border-radius: 32px;
+          padding: 1.75rem 2.5rem 2.5rem;
+        }
+
+        .quick-win-card {
+          background: #fff;
+          border: 1px solid #e2e8f0;
+          border-radius: 24px;
+          padding: 1.5rem;
+          display: flex;
+          gap: 1.5rem;
+          align-items: center;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+
+        .lisa-daily-card {
+          margin-top: 2rem;
+          padding: 1.25rem 1.5rem;
+          border-radius: 24px;
+          background: linear-gradient(135deg, #006EA7, #1e293b);
+          color: #fff;
+          display: flex;
+          align-items: center;
+          gap: 1.25rem;
+          cursor: pointer;
+          box-shadow: 0 10px 25px rgba(0, 110, 167, 0.2);
+          transition: transform 0.2s ease;
+          position: relative;
+          overflow: hidden;
+        }
+
+        @media (max-width: 991px) {
+          .wachstum-layout {
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+          }
+          .wachstum-container {
+            padding: 1rem;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .navigator-box {
+            padding: 1.25rem 1rem 1.5rem;
+            border-radius: 24px;
+          }
+          .quick-win-card {
+            padding: 1rem;
+            gap: 1rem;
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          .quick-win-card-icon {
+            align-self: center;
+          }
+          .lisa-daily-card {
+            flex-direction: column;
+            text-align: center;
+            padding: 1.25rem 1rem;
+            gap: 1rem;
+          }
+        }
+
         @keyframes fadeIn {
           from { opacity: 0; transform: translateY(10px); }
           to { opacity: 1; transform: translateY(0); }

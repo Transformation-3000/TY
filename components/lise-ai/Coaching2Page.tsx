@@ -101,9 +101,13 @@ const pastSessions = [
   { id: 13, date: getRelativeDate(90, '18:00'), focus: 'Standortbestimmung & Reflexion', summary: 'Blick aus der Helikopterperspektive auf die letzten Wochen. Zufriedenheit mit Fortschritten reflektiert und das nächste Hauptthema definiert.', output: 'Fokus-Shift: Ernährung', duration: '14 Min.', type: 'Lisa AI Quarterly' },
 ];
 
-interface Coaching2PageProps { onOpenAvatar?: () => void; }
+interface Coaching2PageProps {
+  onOpenAvatar?: () => void;
+  autoStartSession?: string | null;
+  clearAutoStart?: () => void;
+}
 
-export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
+export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAutoStart }: Coaching2PageProps) {
   const [view, setView] = useState<ViewMode>('welcome');
   const [coachVariant, setCoachVariant] = useState<CoachVariant>('lisa-jung');
   const [setupStep, setSetupStep] = useState<SetupStep>('coach');
@@ -278,6 +282,14 @@ export default function Coaching2Page({ onOpenAvatar }: Coaching2PageProps) {
       await addCoachMsg('Hallo Hendrik! Schön, dass du dir Zeit für dich nimmst. Was möchtest du heute machen?', 'entry-options', 1200);
     }, 4500);
   };
+
+  useEffect(() => {
+    if (autoStartSession) {
+      startSession(autoStartSession as SessionType);
+      clearAutoStart?.();
+    }
+  }, [autoStartSession, clearAutoStart]);
+
   const handleEntryChoice = async (ch: string) => { markAnswered(); addUserMsg(ch); setPhase('checkin-energy'); await addCoachMsg('Bevor wir starten – wie ist deine Energie heute?', 'energy', 900); };
   const handleEnergy = async (v: number) => { setEnergy(v); markAnswered(); addUserMsg(`Energie: ${v}/5`); setPhase('checkin-stress'); await addCoachMsg('Und wie hoch ist dein Stress gerade?', 'stress', 700); };
   const handleStress = async (v: number) => { setStress(v); markAnswered(); addUserMsg(`Stress: ${v}/5`); setPhase('checkin-focus'); await addCoachMsg('Worauf möchtest du heute schauen?', 'focus', 700); };
