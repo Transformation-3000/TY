@@ -107,7 +107,7 @@ export default function LandingPage() {
             <div className="new-feature-icon-wrapper">
               <i className="bi bi-graph-up-arrow"></i>
             </div>
-            <h3>Biomarker-Entwicklung</h3>
+            <h3>Entwicklung & Trends</h3>
             <p>Visualisiere deine biologische Entwicklung mit detaillierten Verlaufscharts und tracke präzise die Verjüngung deines zellulären Alters.</p>
           </div>
           <div className="new-feature-card">
