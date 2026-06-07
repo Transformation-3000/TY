@@ -78,7 +78,7 @@ export default function LandingPage() {
           <div className="new-feature-card">
             <div className="new-feature-image-wrapper">
               <Image 
-                src="/images/usp_vitality.png" 
+                src="/images/dashboard_mockup.png" 
                 alt="Tägliches Dashboard" 
                 fill 
                 style={{ objectFit: 'cover' }} 
