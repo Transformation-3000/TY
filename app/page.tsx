@@ -155,9 +155,6 @@ export default function LandingPage() {
           Übernimm die Kontrolle über dein biologisches Alter. Nutze Präzisions-Diagnostik 
           und KI-gestützte Strategien für ein längeres Leben in maximaler Vitalität.
         </p>
-        <Link href="/login?from=/dashboard" className="btn-primary-large" style={{ fontSize: '1.4rem', padding: '1.5rem 4rem' }}>
-          JETZT DIAGNOSTIK STARTEN
-        </Link>
       </section>
 
       {/* Footer */}
