@@ -76,46 +76,111 @@ export default function LandingPage() {
         </div>
         <div className="new-features-grid">
           <div className="new-feature-card">
-            <div className="new-feature-icon-wrapper">
-              <i className="bi bi-house-door-fill"></i>
+            <div className="new-feature-image-wrapper">
+              <Image 
+                src="/images/usp_vitality.png" 
+                alt="Tägliches Dashboard" 
+                fill 
+                style={{ objectFit: 'cover' }} 
+              />
             </div>
-            <h3>Tägliches Dashboard</h3>
-            <p>Dein zentraler Hub. Behalte dein biologisches Alter, deine wichtigsten Biomarker und Live-Wearable-Daten von Oura, Garmin oder Apple Watch in Echtzeit im Blick.</p>
+            <div className="new-feature-content-inner">
+              <div className="new-feature-icon-wrapper">
+                <i className="bi bi-house-door-fill"></i>
+              </div>
+              <h3>Tägliches Dashboard</h3>
+              <p>Dein zentraler Hub. Behalte dein biologisches Alter, deine wichtigsten Biomarker und Live-Wearable-Daten von Oura, Garmin oder Apple Watch in Echtzeit im Blick.</p>
+            </div>
           </div>
+          
           <div className="new-feature-card">
-            <div className="new-feature-icon-wrapper">
-              <i className="bi bi-rocket-takeoff-fill"></i>
+            <div className="new-feature-image-wrapper">
+              <Image 
+                src="/images/hacks-hiit.png" 
+                alt="Quick Wins" 
+                fill 
+                style={{ objectFit: 'cover' }} 
+              />
             </div>
-            <h3>Quick Wins</h3>
-            <p>Erreiche spürbare und nachhaltige Verbesserungen im Alltag durch wissenschaftlich validierte Micro-Habits und personalisierte tägliche Gesundheitsaufgaben.</p>
+            <div className="new-feature-content-inner">
+              <div className="new-feature-icon-wrapper">
+                <i className="bi bi-rocket-takeoff-fill"></i>
+              </div>
+              <h3>Quick Wins</h3>
+              <p>Erreiche spürbare und nachhaltige Verbesserungen im Alltag durch wissenschaftlich validierte Micro-Habits und personalisierte tägliche Gesundheitsaufgaben.</p>
+            </div>
           </div>
+          
           <div className="new-feature-card">
-            <div className="new-feature-icon-wrapper">
-              <i className="bi bi-person-circle"></i>
+            <div className="new-feature-image-wrapper">
+              <Image 
+                src="/images/usp_lisa.png" 
+                alt="Personal AI Trainer" 
+                fill 
+                style={{ objectFit: 'cover' }} 
+              />
             </div>
-            <h3>Personal AI Trainer</h3>
-            <p>Deine persönliche Longevity-Coachin Lisa AI begleitet dich rund um die Uhr, beantwortet komplexe Fragen und motiviert dich bei jedem Schritt.</p>
+            <div className="new-feature-content-inner">
+              <div className="new-feature-icon-wrapper">
+                <i className="bi bi-person-circle"></i>
+              </div>
+              <h3>Personal AI Trainer</h3>
+              <p>Deine persönliche Longevity-Coachin Lisa AI begleitet dich rund um die Uhr, beantwortet komplexe Fragen und motiviert dich bei jedem Schritt.</p>
+            </div>
           </div>
+          
           <div className="new-feature-card">
-            <div className="new-feature-icon-wrapper">
-              <i className="bi bi-stars"></i>
+            <div className="new-feature-image-wrapper">
+              <Image 
+                src="/images/usp_exclusive.png" 
+                alt="Inspiration & Insights" 
+                fill 
+                style={{ objectFit: 'cover' }} 
+              />
             </div>
-            <h3>Inspiration & Insights</h3>
-            <p>Erhalte maßgeschneiderte Lese-Empfehlungen, Lifestyle-Tipps und exklusives, aktuelles Wissen aus der internationalen Alters- und Langlebigkeitsforschung.</p>
+            <div className="new-feature-content-inner">
+              <div className="new-feature-icon-wrapper">
+                <i className="bi bi-stars"></i>
+              </div>
+              <h3>Inspiration & Insights</h3>
+              <p>Erhalte maßgeschneiderte Lese-Empfehlungen, Lifestyle-Tipps und exklusives, aktuelles Wissen aus der internationalen Alters- und Langlebigkeitsforschung.</p>
+            </div>
           </div>
+          
           <div className="new-feature-card">
-            <div className="new-feature-icon-wrapper">
-              <i className="bi bi-graph-up-arrow"></i>
+            <div className="new-feature-image-wrapper">
+              <Image 
+                src="/images/pace_of_aging.png" 
+                alt="Entwicklung & Trends" 
+                fill 
+                style={{ objectFit: 'cover' }} 
+              />
             </div>
-            <h3>Entwicklung & Trends</h3>
-            <p>Visualisiere deine biologische Entwicklung mit detaillierten Verlaufscharts und tracke präzise die Verjüngung deines zellulären Alters.</p>
+            <div className="new-feature-content-inner">
+              <div className="new-feature-icon-wrapper">
+                <i className="bi bi-graph-up-arrow"></i>
+              </div>
+              <h3>Entwicklung & Trends</h3>
+              <p>Visualisiere deine biologische Entwicklung mit detaillierten Verlaufscharts und tracke präzise die Verjüngung deines zellulären Alters.</p>
+            </div>
           </div>
+          
           <div className="new-feature-card">
-            <div className="new-feature-icon-wrapper">
-              <i className="bi bi-gift-fill"></i>
+            <div className="new-feature-image-wrapper">
+              <Image 
+                src="/images/longevity_clinic_meeting.png" 
+                alt="Member-Vorteile" 
+                fill 
+                style={{ objectFit: 'cover' }} 
+              />
             </div>
-            <h3>Member-Vorteile</h3>
-            <p>Teile deine Longevity-Journey mit Freunden. Empfiehl TrueYears weiter und sichere dir und deinen Kontakten wertvolle Gratismonate.</p>
+            <div className="new-feature-content-inner">
+              <div className="new-feature-icon-wrapper">
+                <i className="bi bi-gift-fill"></i>
+              </div>
+              <h3>Member-Vorteile</h3>
+              <p>Teile deine Longevity-Journey mit Freunden. Empfiehl TrueYears weiter und sichere dir und deinen Kontakten wertvolle Gratismonate.</p>
+            </div>
           </div>
         </div>
       </section>
