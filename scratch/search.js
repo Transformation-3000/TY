@@ -1,11 +1,25 @@
 const fs = require('fs');
 const path = require('path');
 
-const filePath = 'c:/Users/mieh/True Years GmbH/TY - Dokumente/RAG True Years/05 IT/Prototyp Antigravity/TY Prototyp/components/layout/WelcomeSection.tsx';
-const content = fs.readFileSync(filePath, 'utf-8');
-const lines = content.split('\n');
-lines.forEach((line, idx) => {
-  if (line.toLowerCase().includes('gear') || line.toLowerCase().includes('setting') || line.toLowerCase().includes('einstellung')) {
-    console.log(`${idx + 1}: ${line}`);
-  }
-});
+const logPath = 'C:/Users/mieh/.gemini/antigravity/brain/ae829d89-6835-459e-9fd7-c38fbcd6d053/.system_generated/logs/transcript.jsonl';
+if (fs.existsSync(logPath)) {
+  console.log('Log file found. Searching for domains...');
+  const fileContent = fs.readFileSync(logPath, 'utf-8');
+  const lines = fileContent.split('\n');
+  lines.forEach((line) => {
+    if (line.includes('.de') || line.includes('.com') || line.includes('.app')) {
+      if (!line.includes('github.com') && !line.includes('dicebear.com') && !line.includes('schema.org') && !line.includes('w3.org') && !line.includes('liveavatar.com')) {
+        try {
+          const parsed = JSON.parse(line);
+          if (parsed.content) {
+            console.log(`Content: ${parsed.content}`);
+          }
+        } catch (e) {
+          // ignore
+        }
+      }
+    }
+  });
+} else {
+  console.log('No log file found');
+}

@@ -13,7 +13,7 @@ import LongevityJourneyPage from '@/components/longevity/LongevityJourneyPage';
 import LongevityJourney7LevelsPage from '@/components/longevity/LongevityJourney7LevelsPage';
 import ShopPage from '@/components/shop/ShopPage';
 import VogelperspektivePage from '@/components/vogelperspektive/VogelperspektivePage';
-import Coaching2Page from '@/components/lise-ai/Coaching2Page';
+import Coaching2Page from '@/components/lisa-ai/Coaching2Page';
 import TrueYearsPrinzipienPage from '@/components/true-years/TrueYearsPrinzipienPage';
 import ZellalterCheckPage from '@/components/checks/ZellalterCheckPage';
 import LongevityBalanceCheckPage from '@/components/checks/LongevityBalanceCheckPage';
