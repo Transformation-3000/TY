@@ -65,89 +65,62 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* 1. Erfolgsprinzip Section (New Centered Science Design) */}
-      <section id="erfolgsprinzip" className="flower-section">
-        <div className="flower-content">
-          <h2>Die Wissenschaft der Langlebigkeit</h2>
+      {/* 1. App Features Section */}
+      <section id="features" className="new-features-section">
+        <div className="new-features-header">
+          <h2>Deine TrueYears Features</h2>
           <p>
-            Wir nutzen präzise Biomarker-Analysen und KI-gestützte Diagnostik, um die 
-            biologischen Alterungsprozesse deines Körpers zu entschlüsseln. Unser 
-            Framework basiert auf den 10 wissenschaftlich anerkannten Säulen der 
-            Longevity – für eine datenbasierte Optimierung deiner Gesundheit.
+            Alles, was du für ein langes Leben in maximaler Vitalität benötigst, 
+            vereint in einer intelligenten Plattform.
           </p>
         </div>
-        <div className="science-grid">
-          <div className="science-card">
-            <span className="science-card-icon">🧬</span>
-            <h4>Zelluläre Gesundheit</h4>
-            <p>Analyse von DNA-Methylierung und epigenetischen Markern zur Bestimmung des biologischen Alters.</p>
+        <div className="new-features-grid">
+          <div className="new-feature-card">
+            <div className="new-feature-icon-wrapper">
+              <i className="bi bi-house-door-fill"></i>
+            </div>
+            <h3>Tägliches Dashboard</h3>
+            <p>Dein zentraler Hub. Behalte dein biologisches Alter, deine wichtigsten Biomarker und Live-Wearable-Daten von Oura, Garmin oder Apple Watch in Echtzeit im Blick.</p>
           </div>
-          <div className="science-card">
-            <span className="science-card-icon">⚙️</span>
-            <h4>Metabolische Effizienz</h4>
-            <p>Optimierung des Stoffwechsels und der Insulinsensitivität für maximale energy level.</p>
+          <div className="new-feature-card">
+            <div className="new-feature-icon-wrapper">
+              <i className="bi bi-rocket-takeoff-fill"></i>
+            </div>
+            <h3>Quick Wins</h3>
+            <p>Erreiche spürbare und nachhaltige Verbesserungen im Alltag durch wissenschaftlich validierte Micro-Habits und personalisierte tägliche Gesundheitsaufgaben.</p>
           </div>
-          <div className="science-card">
-            <span className="science-card-icon">🌙</span>
-            <h4>Chronobiologie</h4>
-            <p>Wissenschaftlich fundierte Schlafphasen-Optimierung und zirkadiane Rhythmus-Anpassung.</p>
+          <div className="new-feature-card">
+            <div className="new-feature-icon-wrapper">
+              <i className="bi bi-person-circle"></i>
+            </div>
+            <h3>Personal AI Trainer</h3>
+            <p>Deine persönliche Longevity-Coachin Lisa AI begleitet dich rund um die Uhr, beantwortet komplexe Fragen und motiviert dich bei jedem Schritt.</p>
           </div>
-          <div className="science-card">
-            <span className="science-card-icon">🧠</span>
-            <h4>Kognitive Performance</h4>
-            <p>Neuroprotektive Strategien und Nootropika-Management für lebenslange geistige Schärfe.</p>
+          <div className="new-feature-card">
+            <div className="new-feature-icon-wrapper">
+              <i className="bi bi-stars"></i>
+            </div>
+            <h3>Inspiration & Insights</h3>
+            <p>Erhalte maßgeschneiderte Lese-Empfehlungen, Lifestyle-Tipps und exklusives, aktuelles Wissen aus der internationalen Alters- und Langlebigkeitsforschung.</p>
           </div>
-          <div className="science-card">
-            <span className="science-card-icon">🛡️</span>
-            <h4>Immun-Resilienz</h4>
-            <p>Stärkung der körpereigenen Abwehrkräfte und Kontrolle von Entzündungsprozessen (Inflammaging).</p>
+          <div className="new-feature-card">
+            <div className="new-feature-icon-wrapper">
+              <i className="bi bi-graph-up-arrow"></i>
+            </div>
+            <h3>Biomarker-Entwicklung</h3>
+            <p>Visualisiere deine biologische Entwicklung mit detaillierten Verlaufscharts und tracke präzise die Verjüngung deines zellulären Alters.</p>
           </div>
-          <div className="science-card">
-            <span className="science-card-icon">❤️</span>
-            <h4>Kardiovaskuläre Kapazität</h4>
-            <p>Präzise Überwachung von VO2max, HRV und Gefäßgesundheit für ein starkes Herz.</p>
+          <div className="new-feature-card">
+            <div className="new-feature-icon-wrapper">
+              <i className="bi bi-gift-fill"></i>
+            </div>
+            <h3>Member-Vorteile</h3>
+            <p>Teile deine Longevity-Journey mit Freunden. Empfiehl TrueYears weiter und sichere dir und deinen Kontakten wertvolle Gratismonate.</p>
           </div>
         </div>
       </section>
 
-      {/* 2. Expertise Section */}
-      <section id="expertise" className="features" style={{ backgroundColor: '#fff' }}>
-        <div className="section-header">
-          <h2>Wissenschaftliche Expertise</h2>
-          <p>Wir bringen die Labordaten in deinen Alltag.</p>
-        </div>
-        <div className="features-grid">
-          <div className="feature-card">
-            <div className="feature-card-img">
-              <Image src="/images/usp_vitality.png" alt="Vitality" fill style={{ objectFit: 'cover' }} />
-            </div>
-            <div className="feature-card-content">
-              <h3>Vitalitäts-Tracking</h3>
-              <p>Analysiere deine Blutwerte und Biomarker auf einer völlig neuen Ebene.</p>
-            </div>
-          </div>
-          <div className="feature-card">
-            <div className="feature-card-img">
-              <Image src="/images/usp_lisa.png" alt="Lisa AI" fill style={{ objectFit: 'cover' }} />
-            </div>
-            <div className="feature-card-content">
-              <h3>KI-Coaching</h3>
-              <p>Lisa, deine Longevity-Expertin, begleitet dich 24/7 bei jeder Entscheidung.</p>
-            </div>
-          </div>
-          <div className="feature-card">
-            <div className="feature-card-img">
-              <Image src="/images/usp_exclusive.png" alt="Exclusive" fill style={{ objectFit: 'cover' }} />
-            </div>
-            <div className="feature-card-content">
-              <h3>Exklusive Insights</h3>
-              <p>Erhalte Zugriff auf Strategien, die normalerweise nur in Longevity-Kliniken verfügbar sind.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Kundenstimmen Section (Testimonials) */}
+      {/* 2. Kundenstimmen Section (Testimonials) */}
       <section id="kundenstimmen" className="features" style={{ background: 'linear-gradient(to bottom, #fff, #f0f9ff)' }}>
         <div className="section-header">
           <h2>Was unsere Mitglieder sagen</h2>
@@ -175,7 +148,7 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* 4. Testphase Section (Final CTA) */}
+      {/* 3. Testphase Section (Final CTA) */}
       <section id="testphase" className="final-cta">
         <h2>Wissenschaftlich fundierte Langlebigkeit.</h2>
         <p>
@@ -188,28 +161,55 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="footer">
-        <div className="footer-content">
-          <div className="footer-brand">
-            <Image src="/images/logoneu.png" alt="TrueYears Logo" width={150} height={50} style={{ filter: 'brightness(0) invert(1)' }} />
-            <p className="footer-tagline">Dein Weg zu 100+ Jahren Vitalität.</p>
-          </div>
-          <div className="footer-grid">
-            <div className="footer-col">
-              <h4>Produkt</h4>
-              <Link href="#features">Features</Link>
-              <Link href="#erfolgsprinzip">Methode</Link>
-              <Link href="/dashboard">Dashboard</Link>
+      <footer className="footer-new">
+        <div className="footer-container-new">
+          <div className="footer-top-new">
+            <div className="footer-brand-new">
+              <Image 
+                src="/images/logoneu.png" 
+                alt="TrueYears Logo" 
+                width={160} 
+                height={53} 
+                className="footer-logo-new"
+              />
+              <p className="footer-description-new">
+                True Years ist die am schnellsten wachsende europäische Plattform für Langlebigkeit, um das biologische Alter mit KI und Wissenschaft zurückzudrehen.
+              </p>
+              <div className="footer-contact-info-new">
+                <p className="footer-company-name-new">True Years Beyond Age GmbH</p>
+                <p>Im Mediapark 5</p>
+                <p>50670 Köln</p>
+                <p style={{ marginTop: '0.75rem' }}>
+                  <a href="mailto:contact@true-years.com" className="footer-email-link-new">
+                    contact@true-years.com
+                  </a>
+                </p>
+              </div>
             </div>
-            <div className="footer-col">
-              <h4>Rechtliches</h4>
-              <Link href="/impressum">Impressum</Link>
-              <Link href="/datenschutz">Datenschutz</Link>
+            
+            <div className="footer-nav-grid-new">
+              <div className="footer-col-new">
+                <h4>Features</h4>
+                <Link href="#features">Dashboard</Link>
+                <Link href="#features">Quick Wins</Link>
+                <Link href="#features">AI Trainer</Link>
+                <Link href="#features">Insights</Link>
+              </div>
+              
+              <div className="footer-col-new">
+                <h4>Rechtliches</h4>
+                <Link href="/impressum">Impressum</Link>
+                <Link href="/datenschutz">Datenschutz</Link>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="footer-bottom">
-          <p>&copy; 2026 TrueYears. Alle Rechte vorbehalten.</p>
+          
+          <div className="footer-bottom-new">
+            <p>&copy; 2026 True Years Beyond Age GmbH. Alle Rechte vorbehalten.</p>
+            <div className="footer-bottom-links-new">
+              <span className="footer-badge-clean-new">Made with ♥ in Germany</span>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
