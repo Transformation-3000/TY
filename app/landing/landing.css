@@ -1072,8 +1072,8 @@
 
 @media (max-width: 768px) {
   .testimonial-card-premium {
-    flex: 0 0 85%;
-    padding-right: 1.5rem;
+    flex: 0 0 92%;
+    padding-right: 1rem;
   }
 }
 
@@ -1167,7 +1167,7 @@
 @media (max-width: 768px) {
   .testimonial-slide-active {
     flex-direction: column;
-    padding: 2.5rem 1.5rem;
+    padding: 2.5rem 1rem;
     gap: 1.25rem;
     text-align: center;
     align-items: center;
@@ -1273,7 +1273,7 @@
 
 @media (max-width: 768px) {
   .testimonials-track {
-    --translate-x: calc(-85% * var(--index));
+    --translate-x: calc(-92% * var(--index));
   }
 }
 
