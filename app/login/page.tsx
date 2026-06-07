@@ -46,11 +46,20 @@ function LoginForm() {
         <p className="login-subtitle">Bitte Passwort eingeben</p>
 
         <form onSubmit={handleSubmit} className="login-form">
+          <input 
+            type="text" 
+            name="username" 
+            autoComplete="username" 
+            value="TrueYears Member" 
+            readOnly 
+            style={{ display: 'none' }} 
+          />
           <label htmlFor="password" className="visually-hidden">
             Passwort
           </label>
           <input
             id="password"
+            name="password"
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
