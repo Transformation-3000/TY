@@ -1007,7 +1007,11 @@
   }
   
   .new-feature-card {
-    padding: 2.5rem 2rem;
+    padding: 0;
+  }
+  
+  .new-feature-content-inner {
+    padding: 1.5rem 1.25rem 1.75rem;
   }
   
   .footer-new {
