@@ -96,7 +96,7 @@ export default function LandingPage() {
           <div className="new-feature-card">
             <div className="new-feature-image-wrapper">
               <Image 
-                src="/images/hacks-hiit.png" 
+                src="/images/longevity_navigator_natural.png" 
                 alt="Quick Wins" 
                 fill 
                 style={{ objectFit: 'cover' }} 
