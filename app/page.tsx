@@ -1,15 +1,17 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import './landing/landing.css';
 
 export default function LandingPage() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <div className="landing-container">
       {/* Navigation */}
-      <nav className="nav">
+      <nav className={`nav ${menuOpen ? 'nav-open' : ''}`}>
         <Link href="/" className="logo">
           <Image 
             src="/images/logoneu.png" 
@@ -20,13 +22,19 @@ export default function LandingPage() {
             priority
           />
         </Link>
-        <div className="nav-links">
-          <Link href="#features" className="nav-link">Features</Link>
-          <Link href="#erfolgsprinzip" className="nav-link">Erfolgsprinzip</Link>
-          <Link href="#expertise" className="nav-link">Expertise</Link>
-          <Link href="#kundenstimmen" className="nav-link">Kundenstimmen</Link>
-          <Link href="#testphase" className="nav-link">Testphase</Link>
-          <Link href="/login?from=/dashboard" className="btn-cta-small">Login</Link>
+        <button 
+          className={`nav-toggle ${menuOpen ? 'toggle-active' : ''}`}
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle navigation"
+        >
+          <span className="hamburger"></span>
+        </button>
+        <div className={`nav-links ${menuOpen ? 'nav-links-open' : ''}`}>
+          <Link href="#features" className="nav-link" onClick={() => setMenuOpen(false)}>Features</Link>
+          <Link href="#erfolgsprinzip" className="nav-link" onClick={() => setMenuOpen(false)}>Erfolgsprinzip</Link>
+          <Link href="#expertise" className="nav-link" onClick={() => setMenuOpen(false)}>Expertise</Link>
+          <Link href="#kundenstimmen" className="nav-link" onClick={() => setMenuOpen(false)}>Kundenstimmen</Link>
+          <Link href="/login?from=/dashboard" className="btn-cta-small" onClick={() => setMenuOpen(false)}>Login</Link>
         </div>
       </nav>
 
@@ -44,7 +52,6 @@ export default function LandingPage() {
         <div className="hero-fullscreen-overlay" />
         
         <div className="hero-content-fullscreen">
-          <div className="hero-badge">TrueYears Longevity Companion</div>
           <h1>Dein Weg zu 100+ Jahre Vitalität.</h1>
           <p>
             TrueYears ist dein persönlicher Longevity-Assistent. Hier bringst du deine 
