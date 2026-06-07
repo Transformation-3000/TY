@@ -1,18 +1,27 @@
 'use client';
 
-import { Suspense, useState } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 function LoginForm() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const [isMember, setIsMember] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
   const from = searchParams.get('from') || '/dashboard';
 
-  async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const memberFlag = localStorage.getItem('ty_is_member');
+      if (memberFlag === 'true') {
+        setIsMember(true);
+      }
+    }
+  }, []);
+
+  async function performLogin(pass: string) {
     setError('');
     setLoading(true);
 
@@ -20,7 +29,7 @@ function LoginForm() {
       const res = await fetch('/api/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
+        body: JSON.stringify({ password: pass }),
       });
 
       const data = await res.json().catch(() => ({}));
@@ -31,12 +40,20 @@ function LoginForm() {
         return;
       }
 
+      // Flag speichern
+      localStorage.setItem('ty_is_member', 'true');
+
       router.push(from);
       router.refresh();
     } catch {
       setError('Netzwerkfehler. Bitte erneut versuchen.');
       setLoading(false);
     }
+  }
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    await performLogin(password);
   }
 
   return (
@@ -73,6 +90,29 @@ function LoginForm() {
           <button type="submit" className="login-button" disabled={loading}>
             {loading ? 'Wird geprüft…' : 'Anmelden'}
           </button>
+
+          {isMember && (
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%' }}>
+              <div style={{ width: '100%', height: '1px', backgroundColor: '#e2e8f0', margin: '0.75rem 0' }}></div>
+              <button
+                type="button"
+                onClick={() => performLogin('Longevity3000')}
+                disabled={loading}
+                className="login-button"
+                style={{
+                  width: '100%',
+                  backgroundColor: '#7FD049',
+                  borderColor: '#7FD049',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '0.5rem'
+                }}
+              >
+                <span>👤</span> Member-Login
+              </button>
+            </div>
+          )}
         </form>
       </div>
     </div>
