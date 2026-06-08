@@ -298,7 +298,7 @@ export default function LandingPage() {
             </div>
             <ul className="pricing-features">
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
-              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
+              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration (Pro)</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Erweiterte Bio-Age Analysen</li>
@@ -320,7 +320,7 @@ export default function LandingPage() {
             </div>
             <ul className="pricing-features">
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
-              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
+              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
@@ -348,10 +348,10 @@ export default function LandingPage() {
             </thead>
             <tbody>
               <tr>
-                <td>Wearable-Integration (Basic)</td>
-                <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
-                <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
-                <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
+                <td>Wearable-Integration</td>
+                <td className="col-plan">Basic</td>
+                <td className="col-plan">Pro</td>
+                <td className="col-plan">Pro</td>
               </tr>
               <tr>
                 <td>Lisa / Tom AI</td>
