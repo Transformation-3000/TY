@@ -348,7 +348,7 @@ export default function LandingPage() {
             </thead>
             <tbody>
               <tr>
-                <td>Wearable-Anbindung (Oura, Garmin, Apple Watch, etc.)</td>
+                <td>Wearable-Integration (basic)</td>
                 <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
                 <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
                 <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
