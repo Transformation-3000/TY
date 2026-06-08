@@ -280,9 +280,6 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Basic)</li>
               <li><i className="bi bi-check-circle-fill"></i> Lisa AI (Basis-Modus)</li>
-              <li className="disabled"><i className="bi bi-x-circle"></i> DNA Epigenetik-Test (p.a.)</li>
-              <li className="disabled"><i className="bi bi-x-circle"></i> Biomarker Labor-Messungen</li>
-              <li className="disabled"><i className="bi bi-x-circle"></i> 1-on-1 Experten-Beratung</li>
             </ul>
             <Link href="/login?from=/dashboard" className="btn-pricing btn-outline">
               Jetzt Starten
@@ -304,9 +301,6 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Lisa AI (Premium Coach)</li>
-              <li className="disabled"><i className="bi bi-x-circle"></i> DNA Epigenetik-Test (p.a.)</li>
-              <li className="disabled"><i className="bi bi-x-circle"></i> Biomarker Labor-Messungen</li>
-              <li className="disabled"><i className="bi bi-x-circle"></i> 1-on-1 Experten-Beratung</li>
             </ul>
             <Link href="/login?from=/dashboard" className="btn-pricing btn-filled">
               Premium wählen
