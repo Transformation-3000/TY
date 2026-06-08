@@ -278,7 +278,7 @@ export default function LandingPage() {
             <ul className="pricing-features">
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li><i className="bi bi-check-circle-fill"></i> Persönliche Dashboards</li>
-              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration (Basic)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Basic)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Basic)</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
@@ -301,7 +301,7 @@ export default function LandingPage() {
             <ul className="pricing-features">
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li><i className="bi bi-check-circle-fill"></i> Persönliche Dashboards</li>
-              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration (Pro)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
@@ -325,7 +325,7 @@ export default function LandingPage() {
             <ul className="pricing-features">
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li><i className="bi bi-check-circle-fill"></i> Persönliche Dashboards</li>
-              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration (Pro)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
@@ -353,12 +353,6 @@ export default function LandingPage() {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Wearable-Integration</td>
-                <td className="col-plan">Basic</td>
-                <td className="col-plan">Pro</td>
-                <td className="col-plan">Pro</td>
-              </tr>
               <tr>
                 <td>Persönliche Dashboards</td>
                 <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
