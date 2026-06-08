@@ -23,7 +23,7 @@ export default function LandingPage() {
       name: "Thomas",
       age: "42 Jahre",
       stars: 4,
-      headline: "Ein privater Biohacker, der meinen Schlaf und Ruhepuls stark verbessert hat",
+      headline: "Ruhepuls stark verbessert",
       text: "Endlich verstehe ich, was meine Oura-Daten wirklich bedeuten. Das AI-Coaching ist wie ein privater Biohacker, der mir jeden Tag maßgeschneiderte Tipps gibt. Mein Ruhepuls ist um 5 Schläge gesunken und meine Konzentration tagsüber is spürbar besser.",
       img: "/images/selfie_thomas.png",
       badge: "+50% tieferer Schlaf"
