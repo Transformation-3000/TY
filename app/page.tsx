@@ -315,7 +315,7 @@ export default function LandingPage() {
 
           {/* Platin Plan */}
           <div className="pricing-card platin-plan">
-            <div className="pricing-badge platin">Beliebt</div>
+            <div className="pricing-badge platin">Für Weiterspringer</div>
             <div className="pricing-header">
               <h3>Platin</h3>
             </div>
