@@ -14,7 +14,7 @@ export default function LandingPage() {
       name: "Monique",
       age: "34 Jahre",
       stars: 5,
-      headline: "Meine Energie am Nachmittag hat sich verdoppelt und die Insights sind absolut lebensverändernd!",
+      headline: "Energie am Nachmittag verdoppelt und lebensverändernde Insights.",
       text: "Seit ich TrueYears nutze, habe ich meine Energie am Nachmittag verdoppelt. Früher hatte ich nach dem Mittagessen immer ein extremes Tief, aber durch die gezielten Anpassungen meiner Morgenroutine schlafe ich tiefer und starte mit vollem Fokus in den Tag. Die Insights sind für mich absolut lebensverändernd!",
       img: "/images/selfie_monique.png"
     },
@@ -22,7 +22,7 @@ export default function LandingPage() {
       name: "Thomas",
       age: "42 Jahre",
       stars: 4,
-      headline: "Ein privater Biohacker für jeden Tag, der meinen Schlaf und Ruhepuls extrem verbessert hat.",
+      headline: "Ein privater Biohacker, der meinen Schlaf und Ruhepuls stark verbessert hat.",
       text: "Endlich verstehe ich, was meine Oura-Daten wirklich bedeuten. Das AI-Coaching ist wie ein privater Biohacker, der mir jeden Tag maßgeschneiderte Tipps gibt. Mein Ruhepuls ist um 5 Schläge gesunken und meine Konzentration tagsüber is spürbar besser.",
       img: "/images/selfie_thomas.png"
     },
@@ -30,7 +30,7 @@ export default function LandingPage() {
       name: "Sarah",
       age: "29 Jahre",
       stars: 5,
-      headline: "Die perfekte Kombination aus Labortests und täglichen Habits für spürbar schnellere Regeneration.",
+      headline: "Perfekte Kombination aus Labortests und täglichen Habits.",
       text: "Die Verbindung aus Labortests und täglichen Micro-Habits ist genau das, was mir gefehlt hat. Es ist extrem motivierend zu sehen, wie mein biologisches Alter sinkt. Ich trainiere effizienter und regeneriere viel schneller nach harten Einheiten.",
       img: "/images/selfie_sarah.png"
     },
@@ -38,7 +38,7 @@ export default function LandingPage() {
       name: "Albrecht",
       age: "56 Jahre",
       stars: 5,
-      headline: "Als Mediziner überzeugt mich vor allem die fundierte wissenschaftliche Basis von TrueYears.",
+      headline: "Als Mediziner überzeugt mich die wissenschaftliche Basis.",
       text: "Als Mediziner war ich anfangs skeptisch. Doch die wissenschaftliche Fundierung der Empfehlungen bei TrueYears hat mich überzeugt. Ich nutze die App selbst, um meine kardiovaskuläre Fitness zu optimieren und meine zelluläre Gesundheit langfristig zu schützen.",
       img: "/images/selfie_albrecht.png"
     },
@@ -46,7 +46,7 @@ export default function LandingPage() {
       name: "Elena",
       age: "48 Jahre",
       stars: 5,
-      headline: "Ich fühle mich heute fitter, vitaler und wohler in meiner Haut als in meinen 30ern!",
+      headline: "Ich fühle mich fitter und vitaler als in meinen 30ern.",
       text: "Ich fühle mich heute fitter und vitaler als in meinen 30ern. Die wöchentlichen Routinen lassen sich perfekt in einen stressigen Alltag integrieren. Besonders die Tipps zur Ernährung und Zellgesundheit haben meine Haut und mein allgemeines Wohlbefinden massiv verbessert!",
       img: "/images/selfie_elena.png"
     },
@@ -54,7 +54,7 @@ export default function LandingPage() {
       name: "Markus",
       age: "39 Jahre",
       stars: 5,
-      headline: "Die täglichen kleinen Schritte bringen messbare Erfolge ohne jeglichen Druck.",
+      headline: "Tägliche kleine Schritte bringen messbare Erfolge.",
       text: "TrueYears hat meine Sichtweise auf das Älterwerden komplett verändert. Es geht nicht um Perfektion, sondern um die kleinen, täglichen Schritte. Der Quick Win Navigator erinnert mich ohne Druck an meine Ziele, und die Fortschritte sprechen für sich.",
       img: "/images/selfie_markus.png"
     }

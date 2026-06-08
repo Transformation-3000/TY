@@ -1145,19 +1145,19 @@
 }
 
 .testimonial-text-large {
-  font-size: 1.15rem;
-  line-height: 1.7;
+  font-size: 1.05rem;
+  line-height: 1.6;
   color: var(--landing-text);
   margin-bottom: 0;
-  font-style: italic;
+  font-style: normal;
   font-weight: 400;
 }
 
 .testimonial-headline-large {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--landing-dark);
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   line-height: 1.4;
 }
 
