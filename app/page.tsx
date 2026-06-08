@@ -300,12 +300,12 @@ export default function LandingPage() {
             <ul className="pricing-features">
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li><i className="bi bi-check-circle-fill"></i> Persönliche Dashboards</li>
-              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
+              <li><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Bio-Age Analysen</li>
-              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
+              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
             </ul>
             <Link href="#" className="btn-pricing btn-filled">
               Jetzt starten
