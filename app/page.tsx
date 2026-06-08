@@ -279,7 +279,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Basic)</li>
-              <li><i className="bi bi-check-circle-fill"></i> Lisa AI (Basis-Modus)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Longevity Coach (Basic)</li>
             </ul>
             <Link href="/login?from=/dashboard" className="btn-pricing btn-outline">
               Jetzt Starten
