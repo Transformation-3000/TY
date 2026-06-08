@@ -16,7 +16,8 @@ export default function LandingPage() {
       stars: 5,
       headline: "Energie am Nachmittag verdoppelt und lebensverändernde Insights.",
       text: "Seit ich TrueYears nutze, habe ich meine Energie am Nachmittag verdoppelt. Früher hatte ich nach dem Mittagessen immer ein extremes Tief, aber durch die gezielten Anpassungen meiner Morgenroutine schlafe ich tiefer und starte mit vollem Fokus in den Tag. Die Insights sind für mich absolut lebensverändernd!",
-      img: "/images/selfie_monique.png"
+      img: "/images/selfie_monique.png",
+      badge: "-4,2 Jahre biologisches Alter"
     },
     {
       name: "Thomas",
@@ -24,7 +25,8 @@ export default function LandingPage() {
       stars: 4,
       headline: "Ein privater Biohacker, der meinen Schlaf und Ruhepuls stark verbessert hat.",
       text: "Endlich verstehe ich, was meine Oura-Daten wirklich bedeuten. Das AI-Coaching ist wie ein privater Biohacker, der mir jeden Tag maßgeschneiderte Tipps gibt. Mein Ruhepuls ist um 5 Schläge gesunken und meine Konzentration tagsüber is spürbar besser.",
-      img: "/images/selfie_thomas.png"
+      img: "/images/selfie_thomas.png",
+      badge: "+50% tieferer Schlaf"
     },
     {
       name: "Sarah",
@@ -32,7 +34,8 @@ export default function LandingPage() {
       stars: 5,
       headline: "Perfekte Kombination aus Labortests und täglichen Habits.",
       text: "Die Verbindung aus Labortests und täglichen Micro-Habits ist genau das, was mir gefehlt hat. Es ist extrem motivierend zu sehen, wie mein biologisches Alter sinkt. Ich trainiere effizienter und regeneriere viel schneller nach harten Einheiten.",
-      img: "/images/selfie_sarah.png"
+      img: "/images/selfie_sarah.png",
+      badge: "-3,5 Jahre Bio-Age"
     },
     {
       name: "Albrecht",
@@ -40,7 +43,8 @@ export default function LandingPage() {
       stars: 5,
       headline: "Als Mediziner überzeugt mich die wissenschaftliche Basis.",
       text: "Als Mediziner war ich anfangs skeptisch. Doch die wissenschaftliche Fundierung der Empfehlungen bei TrueYears hat mich überzeugt. Ich nutze die App selbst, um meine kardiovaskuläre Fitness zu optimieren und meine zelluläre Gesundheit langfristig zu schützen.",
-      img: "/images/selfie_albrecht.png"
+      img: "/images/selfie_albrecht.png",
+      badge: "-5,1 Jahre biologisches Alter"
     },
     {
       name: "Elena",
@@ -48,7 +52,8 @@ export default function LandingPage() {
       stars: 5,
       headline: "Ich fühle mich fitter und vitaler als in meinen 30ern.",
       text: "Ich fühle mich heute fitter und vitaler als in meinen 30ern. Die wöchentlichen Routinen lassen sich perfekt in einen stressigen Alltag integrieren. Besonders die Tipps zur Ernährung und Zellgesundheit haben meine Haut und mein allgemeines Wohlbefinden massiv verbessert!",
-      img: "/images/selfie_elena.png"
+      img: "/images/selfie_elena.png",
+      badge: "+40% Fokus im Alltag"
     },
     {
       name: "Markus",
@@ -56,7 +61,8 @@ export default function LandingPage() {
       stars: 5,
       headline: "Tägliche kleine Schritte bringen messbare Erfolge.",
       text: "TrueYears hat meine Sichtweise auf das Älterwerden komplett verändert. Es geht nicht um Perfektion, sondern um die kleinen, täglichen Schritte. Der Quick Win Navigator erinnert mich ohne Druck an meine Ziele, und die Fortschritte sprechen für sich.",
-      img: "/images/selfie_markus.png"
+      img: "/images/selfie_markus.png",
+      badge: "-2,8 Jahre zelluläres Alter"
     }
   ];
 
@@ -350,6 +356,10 @@ export default function LandingPage() {
         <div className="section-header">
           <h2>Was unsere Mitglieder sagen</h2>
           <p>Erfahrungsberichte von Mitgliedern auf ihrer Longevity-Reise.</p>
+          <div className="testimonials-trust-widget">
+            <span className="trust-stars">★★★★★</span>
+            <span className="trust-text"><strong>4.9 / 5</strong> von über 1.200 aktiven Mitgliedern</span>
+          </div>
         </div>
         
         <div className="testimonials-slider-outer">
@@ -384,10 +394,14 @@ export default function LandingPage() {
                         />
                       </div>
                       <h4 className="testimonial-name-large">{t.name}</h4>
+                      <div className="testimonial-verified-badge">
+                        <i className="bi bi-patch-check-fill"></i> Verifiziertes Mitglied
+                      </div>
                       <span className="testimonial-age-large">{t.age}</span>
                       <div className="testimonial-stars">{"★".repeat(t.stars) + "☆".repeat(5 - t.stars)}</div>
                     </div>
                     <div className="testimonial-content-large">
+                      {t.badge && <span className="testimonial-result-badge">{t.badge}</span>}
                       <h3 className="testimonial-headline-large">{t.headline}</h3>
                       <p className="testimonial-text-large">"{t.text}"</p>
                     </div>
