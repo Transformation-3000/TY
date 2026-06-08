@@ -301,6 +301,8 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Lisa AI (Premium Coach)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Erweiterte Bio-Age Analysen</li>
+              <li><i className="bi bi-check-circle-fill"></i> Priorisierter Support</li>
             </ul>
             <Link href="/login?from=/dashboard" className="btn-pricing btn-filled">
               Premium wählen
