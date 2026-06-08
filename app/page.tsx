@@ -394,7 +394,6 @@ export default function LandingPage() {
                         <i className="bi bi-patch-check-fill"></i> Verifiziertes Mitglied
                       </div>
                       <span className="testimonial-age-large">{t.age}</span>
-                      <div className="testimonial-stars">{"★".repeat(t.stars) + "☆".repeat(5 - t.stars)}</div>
                     </div>
                     <div className="testimonial-content-large">
                       {t.badge && <span className="testimonial-result-badge">{t.badge}</span>}
