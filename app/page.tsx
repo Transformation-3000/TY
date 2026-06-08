@@ -356,10 +356,6 @@ export default function LandingPage() {
         <div className="section-header">
           <h2>Was unsere Mitglieder sagen</h2>
           <p>Erfahrungsberichte von Mitgliedern auf ihrer Longevity-Reise.</p>
-          <div className="testimonials-trust-widget">
-            <span className="trust-stars">★★★★★</span>
-            <span className="trust-text"><strong>4.9 / 5</strong> von über 1.200 aktiven Mitgliedern</span>
-          </div>
         </div>
         
         <div className="testimonials-slider-outer">
