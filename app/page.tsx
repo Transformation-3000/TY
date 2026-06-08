@@ -330,6 +330,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
               <li><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
+              <li><i className="bi bi-check-circle-fill"></i> Bio-Age Analysen</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Biomarker-Tracking mit Lab-Analysen</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Jährliches 1:1-Expertengespräch</li>
             </ul>
