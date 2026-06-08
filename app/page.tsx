@@ -282,7 +282,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Basic)</li>
             </ul>
             <Link href="#" className="btn-pricing btn-outline">
-              Jetzt Starten
+              Jetzt starten
             </Link>
           </div>
 
@@ -305,7 +305,7 @@ export default function LandingPage() {
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
             </ul>
             <Link href="#" className="btn-pricing btn-filled">
-              Premium wählen
+              Jetzt starten
             </Link>
           </div>
 
@@ -329,7 +329,7 @@ export default function LandingPage() {
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 1-on-1 Experten-Gespräch (p.a.)</li>
             </ul>
             <Link href="#" className="btn-pricing btn-accent">
-              Platin wählen
+              Jetzt starten
             </Link>
           </div>
         </div>
