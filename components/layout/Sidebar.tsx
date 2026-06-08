@@ -74,11 +74,16 @@ export default function Sidebar({ activeItem, onItemClick }: { activeItem?: stri
         }
         .sb-nav { display: flex; flex-direction: column; flex: 1; }
         .sb-item {
-          display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1.5rem 0.75rem calc(1.5rem - 5px);
+          display: flex; align-items: center; gap: 0.375rem; padding: 0.75rem 1.5rem 0.75rem calc(1.5rem - 5px);
           border-radius: 0; border: none; background: transparent; cursor: pointer;
           color: #64748b; transition: all 0.2s; position: relative;
           border-bottom: 2px solid #e2eaf3;
           white-space: nowrap;
+        }
+        @media (max-width: 992px) {
+          .sb-item {
+            padding: 0.75rem calc(0.5rem - 2px);
+          }
         }
         .sb-item:last-child { border-bottom: none; }
         .sb-item:hover { 

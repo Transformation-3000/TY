@@ -204,7 +204,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily }: WachstumP
 
       <style jsx>{`
         .wachstum-container {
-          padding: 2rem;
+          padding: 2rem 3.5rem 2rem 2rem;
           max-width: 1200px;
           margin: 0 auto;
           animation: fadeIn 0.5s ease-out;
@@ -213,7 +213,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily }: WachstumP
         .wachstum-layout {
           display: grid;
           grid-template-columns: 380px 1fr;
-          gap: 2.5rem;
+          gap: 3rem;
         }
 
         .navigator-box {
@@ -255,7 +255,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily }: WachstumP
             gap: 1.5rem;
           }
           .wachstum-container {
-            padding: 1rem;
+            padding: 1rem 2rem 1rem 1rem;
           }
         }
 

@@ -885,12 +885,12 @@ export default function EntwicklungPage() {
 
             <div className="upload-grid">
               {[
-                { title: <>Wearable Age<br/></>, providers: '(WHOOP / Oura / Garmin)', desc: 'Verlaufsindikator über Schlaf, Erholung, HRV & Fitnessdaten', img: '/images/whoop.png', color: '#3b82f6', fit: 'contain' },
-                { title: <>Wellness Age<br/></>, providers: '(Technogym)', desc: 'Funktionelles Alter über Kraft, Ausdauer, Balance & Körperbau', img: '/images/technoage.jpg', color: '#10b981', fit: 'contain' },
-                { title: <>Pheno Age<br/></>, providers: '(AWARE / Years)', desc: 'Biologisches Alter auf Basis klassischer Blutmarker', img: '/images/phenoage.jpg', color: '#ef4444' },
-                { title: <>Epigenetic Age /<br/>Epi-Proteomic Age<br/></>, providers: '(MoleQlar / TruDiagnostic)', desc: 'Biologisches Alter auf Basis von DNA-Methylierungsmustern', img: '/images/epigenetic.jpg', color: '#8b5cf6' },
-                { title: 'Pace of Aging', providers: '(MoleQlar / DunedinPACE / TruDiagnostic)', desc: 'Messung der biologischen Alterungsgeschwindigkeit', img: '/images/pace_of_aging.png', color: '#f59e0b' },
-                { title: 'Glycan Age', providers: '', desc: 'Alterungs- und Entzündungsstatus mit Fokus auf Immunsystem', img: '/images/glycanage.jpg', color: '#0ea5e9' },
+                { title: <>Wearable Age<br/></>, providers: '(WHOOP / Oura / Garmin)', desc: 'Alterseinschätzung über Schlaf, HRV, Erholung und Aktivität', img: '/images/four_wearables.png', color: '#3b82f6', fit: 'contain' },
+                { title: <>Functional Fitness Age<br/></>, providers: '(Technogym / EGYM)', desc: 'Funktionelles Alter über Kraft, Ausdauer, Balance & Körperbau', img: '/images/technogym_kiosk_white_bg.png', color: '#10b981', fit: 'contain' },
+                { title: <>Pheno Age<br/></>, providers: '(AWARE / Years)', desc: 'Biologisches Alter auf Basis klassischer Blutmarker', img: '/images/blood_vibrant_white_bg.png', color: '#ef4444', fit: 'contain' },
+                { title: <>Molecular Age<br/></>, providers: '(MoleQlar / TruDiagnostic)', desc: 'Molekulare Alterungssignale über DNA-Methylierungsmuster oder Proteinmarker', img: '/images/dna_vibrant_white_bg.png', color: '#8b5cf6', fit: 'contain' },
+                { title: 'Pace of Aging', providers: '(MoleQlar / DunedinPACE / TruDiagnostic)', desc: 'Messung der biologischen Alterungsgeschwindigkeit', img: '/images/pace_of_aging_dial2.png', color: '#f59e0b', fit: 'contain' },
+                { title: 'Glycan Age', providers: '', desc: 'Immunalterung und Entzündungsniveau auf Basis von Zuckerketten', img: '/images/glycan_antibody_clean_large.png', color: '#0ea5e9', fit: 'contain' },
               ].map((item, idx) => (
                 <div key={idx} className="upload-option-card">
                   <div className="upload-option-img-container">

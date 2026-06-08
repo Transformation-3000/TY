@@ -548,8 +548,8 @@ body {
 
 /* Sidebar Navigation */
 .sidebar-navigation {
-  width: 225px;
-  min-width: 225px;
+  width: 235px;
+  min-width: 235px;
   background: #ffffff;
   border-right: 1px solid #edf0f5;
   border-radius: 0;
@@ -761,9 +761,9 @@ i[class*="bi-"] {
 .content-wrapper {
   flex: 1;
   min-width: 0;
-  margin-left: 225px;
+  margin-left: 235px;
   padding: 0;
-  max-width: calc(100% - 225px);
+  max-width: calc(100% - 235px);
   width: 100%;
   overflow: visible;
 }
@@ -8670,6 +8670,8 @@ i[class*="bi-"] {
   }
 
   .sidebar-navigation {
+    width: 275px;
+    min-width: 275px;
     transform: translateX(-100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     z-index: 300;

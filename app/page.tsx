@@ -124,7 +124,7 @@ export default function LandingPage() {
         <div className={`nav-links ${menuOpen ? 'nav-links-open' : ''}`}>
           <Link href="#features" className="nav-link" onClick={() => setMenuOpen(false)}>Bausteine</Link>
           <Link href="#erfolgsprinzip" className="nav-link" onClick={() => setMenuOpen(false)}>Mitgliedschaften</Link>
-          <Link href="#expertise" className="nav-link" onClick={() => setMenuOpen(false)}>Expertise</Link>
+          <Link href="#testphase" className="nav-link" onClick={() => setMenuOpen(false)}>Wissenschaft</Link>
           <Link href="#kundenstimmen" className="nav-link" onClick={() => setMenuOpen(false)}>Kundenstimmen</Link>
           <Link href="/login?from=/dashboard" className="btn-cta-small" onClick={() => setMenuOpen(false)}>Login</Link>
         </div>
@@ -351,75 +351,6 @@ export default function LandingPage() {
         
       </section>
 
-      {/* 2. Kundenstimmen Section (Testimonials Slider) */}
-      <section id="kundenstimmen" className="testimonials-section">
-        <div className="section-header">
-          <h2>Was unsere Mitglieder sagen</h2>
-          <p>Erfahrungsberichte von Mitgliedern auf ihrer Longevity-Reise.</p>
-        </div>
-        
-        <div className="testimonials-slider-outer">
-          <button className="slider-arrow prev" onClick={handlePrev} aria-label="Vorheriges Testimonial">
-            <i className="bi bi-chevron-left"></i>
-          </button>
-          
-          <div 
-            className="testimonials-window"
-            onTouchStart={onTouchStart}
-            onTouchMove={onTouchMove}
-            onTouchEnd={onTouchEnd}
-          >
-            <div 
-              className="testimonials-track" 
-              style={{ 
-                // @ts-ignore
-                '--index': activeIndex 
-              } as React.CSSProperties}
-            >
-              {testimonials.map((t, idx) => (
-                <div key={idx} className="testimonial-card-premium">
-                  <div className="testimonial-slide-active">
-                    <div className="testimonial-profile-col">
-                      <div className="testimonial-image-large-wrapper">
-                        <Image 
-                          src={t.img} 
-                          alt={t.name} 
-                          width={250} 
-                          height={250} 
-                          className="testimonial-image-large"
-                        />
-                      </div>
-                      <h4 className="testimonial-name-large">{t.name}</h4>
-                      <span className="testimonial-age-large">{t.age}</span>
-                    </div>
-                    <div className="testimonial-content-large">
-                      {t.badge && <span className="testimonial-result-badge">{t.badge}</span>}
-                      <h3 className="testimonial-headline-large">{t.headline}</h3>
-                      <p className="testimonial-text-large">"{t.text}"</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          
-          <button className="slider-arrow next" onClick={handleNext} aria-label="Nächstes Testimonial">
-            <i className="bi bi-chevron-right"></i>
-          </button>
-        </div>
-        
-        <div className="slider-dots">
-          {testimonials.map((_, idx) => (
-            <button 
-              key={idx} 
-              className={`slider-dot ${idx === activeIndex ? 'active' : ''}`}
-              onClick={() => setActiveIndex(idx)}
-              aria-label={`Gehe zu Testimonial ${idx + 1}`}
-            />
-          ))}
-        </div>
-      </section>
-
       {/* 3. Testphase Section (Final CTA) */}
       <section id="testphase" className="final-cta-new">
         <div className="section-header final-cta-header">
@@ -498,6 +429,75 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* 2. Kundenstimmen Section (Testimonials Slider) */}
+      <section id="kundenstimmen" className="testimonials-section">
+        <div className="section-header">
+          <h2>Was unsere Mitglieder sagen</h2>
+          <p>Erfahrungsberichte von Mitgliedern auf ihrer Longevity-Reise.</p>
+        </div>
+        
+        <div className="testimonials-slider-outer">
+          <button className="slider-arrow prev" onClick={handlePrev} aria-label="Vorheriges Testimonial">
+            <i className="bi bi-chevron-left"></i>
+          </button>
+          
+          <div 
+            className="testimonials-window"
+            onTouchStart={onTouchStart}
+            onTouchMove={onTouchMove}
+            onTouchEnd={onTouchEnd}
+          >
+            <div 
+              className="testimonials-track" 
+              style={{ 
+                // @ts-ignore
+                '--index': activeIndex 
+              } as React.CSSProperties}
+            >
+              {testimonials.map((t, idx) => (
+                <div key={idx} className="testimonial-card-premium">
+                  <div className="testimonial-slide-active">
+                    <div className="testimonial-profile-col">
+                      <div className="testimonial-image-large-wrapper">
+                        <Image 
+                          src={t.img} 
+                          alt={t.name} 
+                          width={250} 
+                          height={250} 
+                          className="testimonial-image-large"
+                        />
+                      </div>
+                      <h4 className="testimonial-name-large">{t.name}</h4>
+                      <span className="testimonial-age-large">{t.age}</span>
+                    </div>
+                    <div className="testimonial-content-large">
+                      {t.badge && <span className="testimonial-result-badge">{t.badge}</span>}
+                      <h3 className="testimonial-headline-large">{t.headline}</h3>
+                      <p className="testimonial-text-large">"{t.text}"</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <button className="slider-arrow next" onClick={handleNext} aria-label="Nächstes Testimonial">
+            <i className="bi bi-chevron-right"></i>
+          </button>
+        </div>
+        
+        <div className="slider-dots">
+          {testimonials.map((_, idx) => (
+            <button 
+              key={idx} 
+              className={`slider-dot ${idx === activeIndex ? 'active' : ''}`}
+              onClick={() => setActiveIndex(idx)}
+              aria-label={`Gehe zu Testimonial ${idx + 1}`}
+            />
+          ))}
+        </div>
+      </section>
+
       {/* Footer */}
       <footer className="footer-new">
         <div className="footer-container-new">
@@ -530,8 +530,10 @@ export default function LandingPage() {
                 <h4>Features</h4>
                 <Link href="#features">Tägliche Check-Ins</Link>
                 <Link href="#features">Quick Win Navigator</Link>
-                <Link href="#features">Lisa AI</Link>
-                <Link href="#features">Insights</Link>
+                <Link href="#features">Lisa AI Coach</Link>
+                <Link href="#features">Inspiration & Insights</Link>
+                <Link href="#features">Entwicklung & Trends</Link>
+                <Link href="#features">Member-Vorteile</Link>
               </div>
               
               <div className="footer-col-new">
