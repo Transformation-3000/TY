@@ -280,6 +280,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Persönliche Dashboards</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Basic)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Basic)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Longevity Insights</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
             </ul>
             <Link href="#" className="btn-pricing btn-outline">
@@ -302,6 +303,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Persönliche Dashboards</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Longevity Insights</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Bio-Age Analysen</li>
@@ -326,6 +328,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Persönliche Dashboards</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Longevity Insights</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
               <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li><i className="bi bi-check-circle-fill"></i> Bio-Age Analysen</li>
@@ -363,6 +366,12 @@ export default function LandingPage() {
                 <td className="col-plan">Longevity Trainer (Basic)</td>
                 <td className="col-plan">Longevity Trainer (Pro)</td>
                 <td className="col-plan">Longevity Trainer (Pro)</td>
+              </tr>
+              <tr>
+                <td>Longevity Insights</td>
+                <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
+                <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
+                <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
               </tr>
               <tr>
                 <td>Monatliche Live-Calls</td>
