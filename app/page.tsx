@@ -288,6 +288,7 @@ export default function LandingPage() {
 
           {/* Premium Plan */}
           <div className="pricing-card premium-plan">
+            <div className="pricing-badge">Beliebt</div>
             <div className="pricing-header">
               <h3>Premium</h3>
             </div>
