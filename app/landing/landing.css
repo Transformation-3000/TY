@@ -1338,14 +1338,14 @@
 }
 
 .pricing-card.premium-plan {
-  border-color: rgba(0, 110, 167, 0.2);
-  box-shadow: 0 15px 40px rgba(0, 110, 167, 0.05);
-}
-
-.pricing-card.platin-plan {
   border: 2px solid var(--landing-dark);
   box-shadow: 0 20px 50px rgba(0, 110, 167, 0.1);
   background: linear-gradient(180deg, #ffffff 0%, #f4f9ff 100%);
+}
+
+.pricing-card.platin-plan {
+  border-color: rgba(0, 110, 167, 0.2);
+  box-shadow: 0 15px 40px rgba(0, 110, 167, 0.05);
 }
 
 .pricing-badge {
