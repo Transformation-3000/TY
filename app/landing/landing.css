@@ -392,9 +392,9 @@
 }
 
 .final-cta-header h2 {
-  background: linear-gradient(135deg, #ffffff 0%, #a5f3fc 100%) !important;
-  -webkit-background-clip: text !important;
-  -webkit-text-fill-color: transparent !important;
+  color: #ffffff !important;
+  background: none !important;
+  -webkit-text-fill-color: #ffffff !important;
   font-size: 3.5rem;
   font-weight: 800;
   margin-bottom: 0.5rem;
