@@ -427,7 +427,7 @@ export default function LandingPage() {
             <div className="final-cta-text-col">
               <h2>Wissenschaftlich fundierte Langlebigkeit</h2>
               <p>
-                Dein biologisches Alter ist keine Einbahnstraße, sondern ein dynamischer Wert, den du aktiv steuern kannst. 
+                Dein biologisches Alter ist ein dynamischer Wert, den du aktiv steuern kannst. 
                 Durch die gezielte Kombination aus präziser Labor-Diagnostik, kontinuierlichem Wearable-Tracking und wissenschaftlich validierten Micro-Habits lässt sich der Alterungsprozess nachweisbar verlangsamen.
               </p>
               <p>
