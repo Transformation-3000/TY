@@ -353,7 +353,7 @@ export default function LandingPage() {
                 <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
               </tr>
               <tr>
-                <td>Lisa AI Coach (Langlebigkeits-Coaching)</td>
+                <td>Lisa / Tom AI</td>
                 <td className="col-plan">Basis</td>
                 <td className="col-plan">Premium</td>
                 <td className="col-plan">Premium</td>
