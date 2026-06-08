@@ -423,20 +423,81 @@ export default function LandingPage() {
       {/* 3. Testphase Section (Final CTA) */}
       <section id="testphase" className="final-cta-new">
         <div className="final-cta-card">
-          <h2>Wissenschaftlich fundierte Langlebigkeit</h2>
-          <p>
-            Übernimm die Kontrolle über dein biologisches Alter. Nutze Präzisions-Diagnostik 
-            und KI-gestützte Strategien für ein längeres Leben in maximaler Vitalität.
-          </p>
-          <div className="final-cta-features">
-            <span className="final-cta-feat"><i className="bi bi-shield-check"></i> Wissenschaftlich validiert</span>
-            <span className="final-cta-feat"><i className="bi bi-dna"></i> 100% personalisiert</span>
-            <span className="final-cta-feat"><i className="bi bi-calendar-check"></i> Monatlich kündbar</span>
-          </div>
-          <div className="final-cta-btns">
-            <Link href="#erfolgsprinzip" className="btn-primary-large final-cta-btn">
-              Jetzt Modell wählen
-            </Link>
+          <div className="final-cta-grid">
+            <div className="final-cta-text-col">
+              <h2>Wissenschaftlich fundierte Langlebigkeit</h2>
+              <p>
+                Dein biologisches Alter ist keine Einbahnstraße, sondern ein dynamischer Wert, den du aktiv steuern kannst. 
+                Durch die gezielte Kombination aus präziser Labor-Diagnostik, kontinuierlichem Wearable-Tracking und wissenschaftlich validierten Micro-Habits lässt sich der Alterungsprozess nachweisbar verlangsamen und sogar umkehren.
+              </p>
+              <p>
+                Während der normale Lebensweg meist zu einem stetigen, unkontrollierten Verlust an zellulärer Vitalität führt, ermöglicht dir der TrueYears-Ansatz eine signifikante Verjüngung. So sicherst du dir mehr gesunde, kraftvolle Lebensjahre (Healthspan).
+              </p>
+              <div className="final-cta-features">
+                <span className="final-cta-feat"><i className="bi bi-shield-check"></i> Wissenschaftlich validiert</span>
+                <span className="final-cta-feat"><i className="bi bi-dna"></i> 100% personalisiert</span>
+                <span className="final-cta-feat"><i className="bi bi-calendar-check"></i> Monatlich kündbar</span>
+              </div>
+              <div className="final-cta-btns">
+                <Link href="#erfolgsprinzip" className="btn-primary-large final-cta-btn">
+                  Jetzt Modell wählen
+                </Link>
+              </div>
+            </div>
+            
+            <div className="final-cta-visual-col">
+              <div className="longevity-chart-wrapper">
+                <svg className="longevity-chart-svg" viewBox="0 0 500 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  {/* Grid Lines */}
+                  <line x1="50" y1="50" x2="450" y2="50" stroke="rgba(255,255,255,0.05)" />
+                  <line x1="50" y1="125" x2="450" y2="125" stroke="rgba(255,255,255,0.05)" />
+                  <line x1="50" y1="200" x2="450" y2="200" stroke="rgba(255,255,255,0.05)" />
+                  <line x1="50" y1="275" x2="450" y2="275" stroke="rgba(255,255,255,0.05)" strokeWidth="1.5" />
+                  
+                  {/* Y Axis line */}
+                  <line x1="50" y1="30" x2="50" y2="275" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+                  
+                  {/* Diverging area fill gradient */}
+                  <path d="M 50 200 Q 220 180 450 100 L 450 220 Q 220 220 50 200 Z" fill="url(#diverge-gradient)" opacity="0.15" />
+                  
+                  {/* Normal Curve (Red/Orange) */}
+                  <path d="M 50 200 Q 220 180 450 100" stroke="#f43f5e" strokeWidth="3.5" strokeLinecap="round" />
+                  {/* TrueYears Curve (Green) */}
+                  <path d="M 50 200 Q 220 220 450 220" stroke="#10b981" strokeWidth="4" strokeLinecap="round" />
+                  
+                  {/* Anchor Point (Start of Intervention) */}
+                  <circle cx="50" cy="200" r="6" fill="#ffffff" stroke="#004b75" strokeWidth="2.5" />
+                  <text x="60" y="195" fill="#ffffff" fontSize="12" fontWeight="700">Start (z.B. 35 Jahre)</text>
+                  
+                  {/* Endpoints indicators */}
+                  <circle cx="450" cy="100" r="5" fill="#f43f5e" />
+                  <circle cx="450" cy="220" r="5" fill="#10b981" />
+                  
+                  {/* Labels on curves */}
+                  <text x="220" y="115" fill="#f43f5e" fontSize="12" fontWeight="600">Standard-Alterung</text>
+                  <text x="220" y="250" fill="#10b981" fontSize="12" fontWeight="700">TrueYears Longevity-Pfad</text>
+                  
+                  {/* Rejuvenation Gap Text */}
+                  <text x="350" y="150" fill="#a5f3fc" fontSize="11" fontWeight="800">VITALITÄTS-</text>
+                  <text x="365" y="165" fill="#a5f3fc" fontSize="11" fontWeight="800">GEWINN</text>
+                  <path d="M 430 115 L 430 205" stroke="#a5f3fc" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 426 118 L 430 114 L 434 118" stroke="#a5f3fc" strokeWidth="1.5" fill="none" />
+                  <path d="M 426 201 L 430 205 L 434 201" stroke="#a5f3fc" strokeWidth="1.5" fill="none" />
+                  
+                  {/* Axis Labels */}
+                  <text x="20" y="160" fill="rgba(255,255,255,0.4)" fontSize="10" transform="rotate(-90 20 160)" textAnchor="middle">Biologisches Alter</text>
+                  <text x="250" y="310" fill="rgba(255,255,255,0.4)" fontSize="10" textAnchor="middle">Chronologisches Alter (Zeitverlauf)</text>
+                  
+                  {/* Gradient Definitions */}
+                  <defs>
+                    <linearGradient id="diverge-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stopColor="#10b981" stopOpacity="0.1" />
+                      <stop offset="100%" stopColor="#10b981" stopOpacity="0.4" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </div>
+            </div>
           </div>
         </div>
       </section>
