@@ -50,7 +50,7 @@ export default function LandingPage() {
       name: "Elena",
       age: "48 Jahre",
       stars: 5,
-      headline: "Ich fühle mich fitter und vitaler als in meinen 30ern",
+      headline: "Ich fühle mich fitter und vitaler wie in meinen 30ern",
       text: "Ich fühle mich heute fitter und vitaler als in meinen 30ern. Die wöchentlichen Routinen lassen sich perfekt in einen stressigen Alltag integrieren. Besonders die Tipps zur Ernährung und Zellgesundheit haben meine Haut und mein allgemeines Wohlbefinden massiv verbessert!",
       img: "/images/selfie_elena.png",
       badge: "+40% Fokus im Alltag"
