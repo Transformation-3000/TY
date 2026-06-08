@@ -280,6 +280,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration (Basic)</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Basic)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Basic)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
             </ul>
             <Link href="#" className="btn-pricing btn-outline">
               Jetzt starten
@@ -298,6 +299,7 @@ export default function LandingPage() {
             </div>
             <ul className="pricing-features">
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
+              <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Wearable-Integration (Pro)</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
@@ -324,6 +326,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
+              <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 3x Lab-Messungen pro Jahr</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Jährliches 1:1-Expertengespräch</li>
             </ul>
@@ -357,6 +360,12 @@ export default function LandingPage() {
                 <td className="col-plan">Longevity Trainer (Basic)</td>
                 <td className="col-plan">Longevity Trainer (Pro)</td>
                 <td className="col-plan">Longevity Trainer (Pro)</td>
+              </tr>
+              <tr>
+                <td>Monatliche Live-Calls</td>
+                <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
+                <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
+                <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
               </tr>
               <tr>
                 <td>Quick Win Navigator (Tägliche Micro-Habits)</td>
