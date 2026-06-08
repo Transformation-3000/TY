@@ -1302,8 +1302,9 @@
 }
 
 /* --- PRICING SECTION (MITGLIEDSCHAFTEN) --- */
+/* --- PRICING SECTION (MITGLIEDSCHAFTEN) --- */
 .pricing-section {
-  padding: 100px 5%;
+  padding: 40px 5% 30px;
   background: radial-gradient(circle at top, #ffffff 0%, #f0f7ff 100%);
   text-align: center;
   position: relative;
@@ -1313,17 +1314,17 @@
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 2.5rem;
+  gap: 2rem;
   max-width: 1200px;
-  margin: 0 auto 5rem;
+  margin: 0 auto 2.5rem;
 }
 
 .pricing-card {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(0, 110, 167, 0.08);
-  border-radius: 30px;
-  padding: 3rem 2rem;
+  border-radius: 24px;
+  padding: 1.8rem 1.5rem;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
   display: flex;
@@ -1333,7 +1334,7 @@
 }
 
 .pricing-card:hover {
-  transform: translateY(-10px);
+  transform: translateY(-5px);
   box-shadow: 0 20px 45px rgba(0, 110, 167, 0.08);
   border-color: var(--landing-accent);
 }
@@ -1342,8 +1343,8 @@
   border: 2px solid var(--landing-dark);
   box-shadow: 0 20px 50px rgba(0, 110, 167, 0.1);
   background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
-  padding-top: calc(3rem - 1px);
-  padding-bottom: calc(3rem - 1px);
+  padding-top: calc(1.8rem - 1px);
+  padding-bottom: calc(1.8rem - 1px);
 }
 
 .pricing-card.platin-plan {
@@ -1353,14 +1354,14 @@
 
 .pricing-badge {
   position: absolute;
-  top: -20px;
+  top: -16px;
   left: 50%;
   transform: translateX(-50%);
   background: var(--landing-dark);
   color: white;
-  padding: 0.6rem 1.8rem;
+  padding: 0.4rem 1.4rem;
   border-radius: 100px;
-  font-size: 1rem;
+  font-size: 0.85rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -1371,48 +1372,48 @@
 }
 
 .pricing-header h3 {
-  font-size: 2.4rem;
+  font-size: 1.8rem;
   color: var(--landing-dark);
-  margin: 0 0 1rem;
+  margin: 0 0 0.5rem;
   font-weight: 800;
 }
 
 .price-box {
-  margin-bottom: 2rem;
+  margin-bottom: 1.2rem;
 }
 
 .price {
-  font-size: 3rem;
+  font-size: 2.2rem;
   font-weight: 800;
   color: #0f172a;
 }
 
 .price-period {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: var(--landing-text-muted);
 }
 
 .pricing-features {
   list-style: none;
   padding: 0;
-  margin: 0 0 2.5rem;
+  margin: 0 0 1.5rem;
   text-align: left;
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.5rem;
 }
 
 .pricing-features li {
-  font-size: 1.05rem;
+  font-size: 0.95rem;
   color: var(--landing-text);
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.6rem;
 }
 
 .pricing-features li i {
   color: var(--landing-accent);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 }
 
 .pricing-features li.disabled {
@@ -1436,12 +1437,12 @@
   margin-top: auto;
   display: block;
   width: 100%;
-  padding: 1rem;
+  padding: 0.75rem;
   border-radius: 100px;
   text-align: center;
   font-weight: 700;
   text-decoration: none;
-  font-size: 1.1rem;
+  font-size: 1rem;
   transition: all 0.3s ease;
   box-sizing: border-box;
 }
