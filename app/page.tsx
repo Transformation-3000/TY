@@ -462,7 +462,6 @@ export default function LandingPage() {
                   
                   {/* Anchor Point (Start of Intervention) */}
                   <circle cx="50" cy="200" r="6" fill="#ffffff" stroke="#004b75" strokeWidth="2.5" />
-                  <text x="60" y="195" fill="#ffffff" fontSize="12" fontWeight="700">Start (z.B. 35 Jahre)</text>
                   
                   {/* Endpoints indicators */}
                   <circle cx="450" cy="100" r="5" fill="#f43f5e" />
