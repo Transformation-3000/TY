@@ -390,9 +390,6 @@ export default function LandingPage() {
                         />
                       </div>
                       <h4 className="testimonial-name-large">{t.name}</h4>
-                      <div className="testimonial-verified-badge">
-                        <i className="bi bi-patch-check-fill"></i> Verifiziertes Mitglied
-                      </div>
                       <span className="testimonial-age-large">{t.age}</span>
                     </div>
                     <div className="testimonial-content-large">
