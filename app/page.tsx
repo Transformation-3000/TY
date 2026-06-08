@@ -272,7 +272,7 @@ export default function LandingPage() {
               <h3>Starter</h3>
             </div>
             <div className="price-box">
-              <span className="price">19 €</span>
+              <span className="price">29,90 €</span>
               <span className="price-period">/ Monat</span>
             </div>
             <ul className="pricing-features">
@@ -296,7 +296,7 @@ export default function LandingPage() {
               <h3>Premium</h3>
             </div>
             <div className="price-box">
-              <span className="price">49 €</span>
+              <span className="price">49,90 €</span>
               <span className="price-period">/ Monat</span>
             </div>
             <ul className="pricing-features">
@@ -320,7 +320,7 @@ export default function LandingPage() {
               <h3>Platin</h3>
             </div>
             <div className="price-box">
-              <span className="price">149 €</span>
+              <span className="price">89,90 €</span>
               <span className="price-period">/ Monat</span>
             </div>
             <ul className="pricing-features">

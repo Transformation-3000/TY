@@ -1414,7 +1414,6 @@
 
 .pricing-features li.disabled {
   color: var(--landing-text-muted);
-  text-decoration: line-through;
 }
 
 .pricing-features li.disabled i {
