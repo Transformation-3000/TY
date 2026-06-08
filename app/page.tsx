@@ -433,14 +433,9 @@ export default function LandingPage() {
               <p>
                 Während der normale Lebensweg meist zu einem stetigen, unkontrollierten Verlust an zellulärer Vitalität führt, ermöglicht dir der TrueYears-Ansatz eine signifikante Verjüngung. So sicherst du dir mehr gesunde, kraftvolle Lebensjahre (Healthspan).
               </p>
-              <div className="final-cta-features">
-                <span className="final-cta-feat"><i className="bi bi-shield-check"></i> Wissenschaftlich validiert</span>
-                <span className="final-cta-feat"><i className="bi bi-dna"></i> 100% personalisiert</span>
-                <span className="final-cta-feat"><i className="bi bi-calendar-check"></i> Monatlich kündbar</span>
-              </div>
               <div className="final-cta-btns">
                 <Link href="#erfolgsprinzip" className="btn-primary-large final-cta-btn">
-                  Jetzt Modell wählen
+                  Jetzt BioAge berechnen
                 </Link>
               </div>
             </div>
