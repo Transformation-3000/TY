@@ -258,6 +258,151 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+      {/* Mitgliedschaften Section */}
+      <section id="erfolgsprinzip" className="pricing-section">
+        <div className="section-header">
+          <h2>Wähle deine Langlebigkeits-Stufe</h2>
+          <p>Finde die passende Mitgliedschaft für deine persönliche Longevity-Journey.</p>
+        </div>
+
+        <div className="pricing-grid">
+          {/* Starter Plan */}
+          <div className="pricing-card">
+            <div className="pricing-header">
+              <h3>Starter</h3>
+            </div>
+            <div className="price-box">
+              <span className="price">19 €</span>
+              <span className="price-period">/ Monat</span>
+            </div>
+            <ul className="pricing-features">
+              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
+              <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
+              <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Basic)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Lisa AI (Basis-Modus)</li>
+              <li className="disabled"><i className="bi bi-x-circle"></i> DNA Epigenetik-Test (p.a.)</li>
+              <li className="disabled"><i className="bi bi-x-circle"></i> Biomarker Labor-Messungen</li>
+              <li className="disabled"><i className="bi bi-x-circle"></i> 1-on-1 Experten-Beratung</li>
+            </ul>
+            <Link href="/login?from=/dashboard" className="btn-pricing btn-outline">
+              Jetzt Starten
+            </Link>
+          </div>
+
+          {/* Premium Plan */}
+          <div className="pricing-card premium-plan">
+            <div className="pricing-badge">Beliebt</div>
+            <div className="pricing-header">
+              <h3>Premium</h3>
+            </div>
+            <div className="price-box">
+              <span className="price">49 €</span>
+              <span className="price-period">/ Monat</span>
+            </div>
+            <ul className="pricing-features">
+              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
+              <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
+              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
+              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Lisa AI (Premium Coach)</li>
+              <li className="disabled"><i className="bi bi-x-circle"></i> DNA Epigenetik-Test (p.a.)</li>
+              <li className="disabled"><i className="bi bi-x-circle"></i> Biomarker Labor-Messungen</li>
+              <li className="disabled"><i className="bi bi-x-circle"></i> 1-on-1 Experten-Beratung</li>
+            </ul>
+            <Link href="/login?from=/dashboard" className="btn-pricing btn-filled">
+              Premium wählen
+            </Link>
+          </div>
+
+          {/* Platin Plan */}
+          <div className="pricing-card platin-plan">
+            <div className="pricing-badge platin">Beste Wahl</div>
+            <div className="pricing-header">
+              <h3>Platin</h3>
+            </div>
+            <div className="price-box">
+              <span className="price">149 €</span>
+              <span className="price-period">/ Monat</span>
+            </div>
+            <ul className="pricing-features">
+              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
+              <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
+              <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Lisa AI (Premium Coach)</li>
+              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 1x DNA-Messung p.a. (Epigenetik)</li>
+              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 2x 90 Biomarker Messungen p.a.</li>
+              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 1-on-1 Experten-Gespräch (p.a.)</li>
+            </ul>
+            <Link href="/login?from=/dashboard" className="btn-pricing btn-accent">
+              Platin wählen
+            </Link>
+          </div>
+        </div>
+
+        {/* Detailed Comparison Table */}
+        <div className="comparison-container">
+          <h3>Leistungsvergleich</h3>
+          <table className="comparison-table">
+            <thead>
+              <tr>
+                <th>Funktionen & Services</th>
+                <th className="col-plan">Starter</th>
+                <th className="col-plan">Premium</th>
+                <th className="col-plan">Platin</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Wearable-Anbindung (Oura, Garmin, Apple Watch, etc.)</td>
+                <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
+                <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
+                <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
+              </tr>
+              <tr>
+                <td>Lisa AI Coach (Langlebigkeits-Coaching)</td>
+                <td className="col-plan">Basis</td>
+                <td className="col-plan">Premium</td>
+                <td className="col-plan">Premium</td>
+              </tr>
+              <tr>
+                <td>Quick Win Navigator (Tägliche Micro-Habits)</td>
+                <td className="col-plan">Max 3 / Tag</td>
+                <td className="col-plan">Unbegrenzt</td>
+                <td className="col-plan">Unbegrenzt</td>
+              </tr>
+              <tr>
+                <td>Bio-Alter & Biomarker Tracking</td>
+                <td className="col-plan">Basis</td>
+                <td className="col-plan">Erweitert</td>
+                <td className="col-plan">Erweitert</td>
+              </tr>
+              <tr className="highlight-row">
+                <td><strong>DNA-Messungen (Epigenetik)</strong></td>
+                <td className="col-plan"><i className="bi bi-x-circle"></i></td>
+                <td className="col-plan">Optional (Zuzahlung)</td>
+                <td className="col-plan"><strong>1x pro Jahr</strong></td>
+              </tr>
+              <tr className="highlight-row">
+                <td><strong>90-Biomarker Labor-Messungen</strong> <br /> <small style={{ color: 'var(--landing-text-muted)' }}>(Blutzucker, Leber, Nieren, Herz, Inflammation)</small></td>
+                <td className="col-plan"><i className="bi bi-x-circle"></i></td>
+                <td className="col-plan">Optional (Zuzahlung)</td>
+                <td className="col-plan"><strong>2x pro Jahr</strong></td>
+              </tr>
+              <tr className="highlight-row">
+                <td><strong>1-on-1 Experten-Gespräch zu Laborergebnissen</strong></td>
+                <td className="col-plan"><i className="bi bi-x-circle"></i></td>
+                <td className="col-plan"><i className="bi bi-x-circle"></i></td>
+                <td className="col-plan"><strong>1x pro Jahr</strong></td>
+              </tr>
+              <tr>
+                <td>Support-Level</td>
+                <td className="col-plan">Standard</td>
+                <td className="col-plan">Priorisiert</td>
+                <td className="col-plan">VIP Line (24/7)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
 
       {/* 2. Kundenstimmen Section (Testimonials Slider) */}
       <section id="kundenstimmen" className="testimonials-section">
