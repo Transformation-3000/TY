@@ -39,7 +39,7 @@ export default function LandingPage() {
     },
     {
       name: "Albrecht",
-      age: "56 Jahre",
+      age: "63 Jahre",
       stars: 5,
       headline: "Als Mediziner überzeugt mich die wissenschaftliche Basis",
       text: "Als Mediziner war ich anfangs skeptisch. Doch die wissenschaftliche Fundierung der Empfehlungen bei TrueYears hat mich überzeugt. Ich nutze die App selbst, um meine kardiovaskuläre Fitness zu optimieren und meine zelluläre Gesundheit langfristig zu schützen.",
