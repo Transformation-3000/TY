@@ -303,7 +303,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
-              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Erweiterte Bio-Age Analysen</li>
+              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Bio-Age Analysen</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
             </ul>
             <Link href="#" className="btn-pricing btn-filled">
