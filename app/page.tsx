@@ -422,10 +422,13 @@ export default function LandingPage() {
 
       {/* 3. Testphase Section (Final CTA) */}
       <section id="testphase" className="final-cta-new">
+        <div className="section-header final-cta-header">
+          <h2>Wissenschaftlich fundierte Langlebigkeit</h2>
+        </div>
+
         <div className="final-cta-card">
           <div className="final-cta-grid">
             <div className="final-cta-text-col">
-              <h2>Wissenschaftlich fundierte Langlebigkeit</h2>
               <p>
                 Dein biologisches Alter ist ein dynamischer Wert, den du aktiv steuern kannst. Durch Kombination aus Labor-Diagnostik, Wearable-Tracking und wissenschaftlich validierten Gewohnheiten und personalisierten Maßnahmen lässt sich dein Alterungsprozess nachweisbar verlangsamen.
               </p>
