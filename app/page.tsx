@@ -291,7 +291,7 @@ export default function LandingPage() {
 
           {/* Premium Plan */}
           <div className="pricing-card premium-plan">
-            <div className="pricing-badge">Beliebt</div>
+            <div className="pricing-badge">Beste Wahl</div>
             <div className="pricing-header">
               <h3>Premium</h3>
             </div>
@@ -315,7 +315,7 @@ export default function LandingPage() {
 
           {/* Platin Plan */}
           <div className="pricing-card platin-plan">
-            <div className="pricing-badge platin">Beste Wahl</div>
+            <div className="pricing-badge platin">Beliebt</div>
             <div className="pricing-header">
               <h3>Platin</h3>
             </div>
