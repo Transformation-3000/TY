@@ -263,7 +263,7 @@ export default function LandingPage() {
       <section id="kundenstimmen" className="testimonials-section">
         <div className="section-header">
           <h2>Was unsere Mitglieder sagen</h2>
-          <p>Echte Ergebnisse von Menschen auf ihrer Longevity-Journey.</p>
+          <p>Erfahrungsberichte von Mitgliedern auf ihrer Longevity-Reise.</p>
         </div>
         
         <div className="testimonials-slider-outer">
