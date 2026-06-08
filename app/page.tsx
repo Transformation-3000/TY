@@ -301,7 +301,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li><i className="bi bi-check-circle-fill"></i> Erweiterte Bio-Age Analysen</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
-              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Lisa AI (Premium Coach)</li>
+              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Lisa / Tom AI (Premium-Modus)</li>
             </ul>
             <Link href="/login?from=/dashboard" className="btn-pricing btn-filled">
               Premium wählen
@@ -322,7 +322,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
-              <li><i className="bi bi-check-circle-fill"></i> Lisa AI (Premium Coach)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Lisa / Tom AI (Premium-Modus)</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 1x DNA-Messung p.a. (Epigenetik)</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 2x 90 Biomarker Messungen p.a.</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 1-on-1 Experten-Gespräch (p.a.)</li>
