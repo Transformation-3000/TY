@@ -325,7 +325,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 3x Lab-Messungen pro Jahr</li>
-              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Jährliches Expertengespräch</li>
+              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Jährliches 1:1-Expertengespräch</li>
             </ul>
             <Link href="#" className="btn-pricing btn-accent">
               Jetzt starten
@@ -383,7 +383,7 @@ export default function LandingPage() {
                 <td className="col-plan"><strong>3x pro Jahr</strong></td>
               </tr>
               <tr className="highlight-row">
-                <td><strong>Jährliches Expertengespräch zu Laborergebnissen</strong></td>
+                <td><strong>Jährliches 1:1-Expertengespräch zu Laborergebnissen</strong></td>
                 <td className="col-plan"><i className="bi bi-x-circle"></i></td>
                 <td className="col-plan"><i className="bi bi-x-circle"></i></td>
                 <td className="col-plan"><strong>1x pro Jahr</strong></td>
