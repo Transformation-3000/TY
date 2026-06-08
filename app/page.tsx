@@ -428,7 +428,7 @@ export default function LandingPage() {
               <h2>Wissenschaftlich fundierte Langlebigkeit</h2>
               <p>
                 Dein biologisches Alter ist keine Einbahnstraße, sondern ein dynamischer Wert, den du aktiv steuern kannst. 
-                Durch die gezielte Kombination aus präziser Labor-Diagnostik, kontinuierlichem Wearable-Tracking und wissenschaftlich validierten Micro-Habits lässt sich der Alterungsprozess nachweisbar verlangsamen und sogar umkehren.
+                Durch die gezielte Kombination aus präziser Labor-Diagnostik, kontinuierlichem Wearable-Tracking und wissenschaftlich validierten Micro-Habits lässt sich der Alterungsprozess nachweisbar verlangsamen.
               </p>
               <p>
                 Während der normale Lebensweg meist zu einem stetigen, unkontrollierten Verlust an zellulärer Vitalität führt, ermöglicht dir der TrueYears-Ansatz eine signifikante Verjüngung. So sicherst du dir mehr vitale und kraftvolle Lebensjahre.
