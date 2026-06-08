@@ -276,8 +276,8 @@ export default function LandingPage() {
               <span className="price-period">/ Monat</span>
             </div>
             <ul className="pricing-features">
-              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
+              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Basic)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Basic)</li>
             </ul>
@@ -297,8 +297,8 @@ export default function LandingPage() {
               <span className="price-period">/ Monat</span>
             </div>
             <ul className="pricing-features">
-              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
+              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Erweiterte Bio-Age Analysen</li>
@@ -319,8 +319,8 @@ export default function LandingPage() {
               <span className="price-period">/ Monat</span>
             </div>
             <ul className="pricing-features">
-              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
+              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
