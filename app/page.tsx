@@ -302,6 +302,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Erweiterte Bio-Age Analysen</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Lisa / Tom AI (Premium-Modus)</li>
+              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
             </ul>
             <Link href="/login?from=/dashboard" className="btn-pricing btn-filled">
               Premium wählen
@@ -323,6 +324,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Lisa / Tom AI (Premium-Modus)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 1x DNA-Messung p.a. (Epigenetik)</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 2x 90 Biomarker Messungen p.a.</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 1-on-1 Experten-Gespräch (p.a.)</li>
@@ -369,6 +371,12 @@ export default function LandingPage() {
                 <td className="col-plan">Basis</td>
                 <td className="col-plan">Erweitert</td>
                 <td className="col-plan">Erweitert</td>
+              </tr>
+              <tr>
+                <td>Feel-Good-Area</td>
+                <td className="col-plan"><i className="bi bi-x-circle"></i></td>
+                <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
+                <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
               </tr>
               <tr className="highlight-row">
                 <td><strong>DNA-Messungen (Epigenetik)</strong></td>
