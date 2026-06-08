@@ -300,7 +300,6 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li><i className="bi bi-check-circle-fill"></i> Erweiterte Bio-Age Analysen</li>
-              <li><i className="bi bi-check-circle-fill"></i> Priorisierter Support</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Lisa AI (Premium Coach)</li>
             </ul>
