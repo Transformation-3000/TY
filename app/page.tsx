@@ -35,7 +35,7 @@ export default function LandingPage() {
       headline: "Perfekte Kombination aus Labortests und täglichen Habits",
       text: "Die Verbindung aus Labortests und täglichen Micro-Habits ist genau das, was mir gefehlt hat. Es ist extrem motivierend zu sehen, wie mein biologisches Alter sinkt. Ich trainiere effizienter und regeneriere viel schneller nach harten Einheiten.",
       img: "/images/selfie_sarah.png",
-      badge: "-3,5 Jahre Bio-Age"
+      badge: "-3,5 Jahre biologisches Alter"
     },
     {
       name: "Albrecht",
@@ -62,7 +62,7 @@ export default function LandingPage() {
       headline: "Tägliche kleine Schritte bringen messbare Erfolge",
       text: "TrueYears hat meine Sichtweise auf das Älterwerden komplett verändert. Es geht nicht um Perfektion, sondern um die kleinen, täglichen Schritte. Der Quick Win Navigator erinnert mich ohne Druck an meine Ziele, und die Fortschritte sprechen für sich.",
       img: "/images/selfie_markus.png",
-      badge: "-2,8 Jahre zelluläres Alter"
+      badge: "-2,8 Jahre biologisches Alter"
     }
   ];
 
@@ -243,7 +243,7 @@ export default function LandingPage() {
             <div className="new-feature-content-inner">
               <div className="new-feature-number">05</div>
               <h3>Entwicklung & Trends</h3>
-              <p>Visualisiere deine biologische Entwicklung mit detaillierten Verlaufscharts und tracke präzise die Verjüngung deines zellulären Alters.</p>
+              <p>Visualisiere deine biologische Entwicklung mit detaillierten Verlaufscharts und tracke präzise die Verjüngung deines biologischen Alters.</p>
             </div>
           </div>
           
@@ -312,7 +312,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Longevity Insights</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
-              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Bio-Age Analysen</li>
+              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Analysen zum biologischen Alter</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
             </ul>
             <Link href="#" className="btn-pricing btn-filled">
@@ -337,7 +337,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Longevity Insights</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
               <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
-              <li><i className="bi bi-check-circle-fill"></i> Bio-Age Analysen</li>
+              <li><i className="bi bi-check-circle-fill"></i> Analysen zum biologischen Alter</li>
               <li><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Biomarker-Tracking mit Lab-Analysen</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Jährliches 1:1-Expertengespräch</li>
