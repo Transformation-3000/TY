@@ -281,7 +281,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Basic)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Basic)</li>
             </ul>
-            <Link href="/login?from=/dashboard" className="btn-pricing btn-outline">
+            <Link href="#" className="btn-pricing btn-outline">
               Jetzt Starten
             </Link>
           </div>
@@ -304,7 +304,7 @@ export default function LandingPage() {
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Erweiterte Bio-Age Analysen</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
             </ul>
-            <Link href="/login?from=/dashboard" className="btn-pricing btn-filled">
+            <Link href="#" className="btn-pricing btn-filled">
               Premium wählen
             </Link>
           </div>
@@ -328,7 +328,7 @@ export default function LandingPage() {
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 2x 90 Biomarker Messungen p.a.</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 1-on-1 Experten-Gespräch (p.a.)</li>
             </ul>
-            <Link href="/login?from=/dashboard" className="btn-pricing btn-accent">
+            <Link href="#" className="btn-pricing btn-accent">
               Platin wählen
             </Link>
           </div>
