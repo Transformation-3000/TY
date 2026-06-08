@@ -325,8 +325,8 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
-              <li><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
+              <li><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 3x Lab-Messungen pro Jahr</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Jährliches 1:1-Expertengespräch</li>
             </ul>
