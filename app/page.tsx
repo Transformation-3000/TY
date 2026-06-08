@@ -324,8 +324,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
-              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 1x DNA-Messung p.a. (Epigenetik)</li>
-              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 2x 90 Biomarker Messungen p.a.</li>
+              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 3x Lab-Messungen pro Jahr</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> 1-on-1 Experten-Gespräch (p.a.)</li>
             </ul>
             <Link href="#" className="btn-pricing btn-accent">
@@ -378,16 +377,10 @@ export default function LandingPage() {
                 <td className="col-plan"><i className="bi bi-check-circle-fill"></i></td>
               </tr>
               <tr className="highlight-row">
-                <td><strong>DNA-Messungen (Epigenetik)</strong></td>
+                <td><strong>Lab-Messungen (DNA & Biomarker)</strong> <br /> <small style={{ color: 'var(--landing-text-muted)' }}>(1x DNA Epigenetik, 2x 90 Biomarker Messungen)</small></td>
                 <td className="col-plan"><i className="bi bi-x-circle"></i></td>
                 <td className="col-plan">Optional (Zuzahlung)</td>
-                <td className="col-plan"><strong>1x pro Jahr</strong></td>
-              </tr>
-              <tr className="highlight-row">
-                <td><strong>90-Biomarker Labor-Messungen</strong> <br /> <small style={{ color: 'var(--landing-text-muted)' }}>(Blutzucker, Leber, Nieren, Herz, Inflammation)</small></td>
-                <td className="col-plan"><i className="bi bi-x-circle"></i></td>
-                <td className="col-plan">Optional (Zuzahlung)</td>
-                <td className="col-plan"><strong>2x pro Jahr</strong></td>
+                <td className="col-plan"><strong>3x pro Jahr</strong></td>
               </tr>
               <tr className="highlight-row">
                 <td><strong>1-on-1 Experten-Gespräch zu Laborergebnissen</strong></td>
