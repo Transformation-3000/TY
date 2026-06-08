@@ -1153,6 +1153,14 @@
   font-weight: 400;
 }
 
+.testimonial-headline-large {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--landing-dark);
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
 .testimonial-name-large {
   font-size: 1.8rem;
   color: var(--landing-dark);
@@ -1207,6 +1215,11 @@
   .testimonial-content-large {
     align-items: center;
     text-align: center;
+  }
+
+  .testimonial-headline-large {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
   }
 }
 
