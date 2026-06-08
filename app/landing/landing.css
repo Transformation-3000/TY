@@ -1353,14 +1353,14 @@
 
 .pricing-badge {
   position: absolute;
-  top: -15px;
+  top: -20px;
   left: 50%;
   transform: translateX(-50%);
   background: var(--landing-dark);
   color: white;
-  padding: 0.4rem 1.2rem;
+  padding: 0.6rem 1.8rem;
   border-radius: 100px;
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   text-transform: uppercase;
