@@ -25,6 +25,13 @@ interface Reel {
 
 const reels: Reel[] = [
   {
+    id: 'r_bryan', category: 'experten',
+    title: 'Blueprint: Bryan Johnsons Sauna-Protokoll zur Zellreparatur',
+    teaser: '4-mal wöchentlich 20 Minuten bei 90°C: Wie Bryan Johnson die Sauna gezielt zur Verlängerung seiner gesunden Lebensspanne nutzt.',
+    fullText: 'In seinem berühmten "Project Blueprint" setzt Bryan Johnson die Sauna gezielt zur Aktivierung von Hitzeschockproteinen (HSPs) ein. Diese Proteine reparieren fehlerhafte zelluläre Strukturen und schützen vor altersbedingtem Verfall. Johnsons optimiertes Protokoll sieht 4 Sitzungen pro Woche bei ca. 90°C vor. Seine klinischen Messdaten belegen eine signifikante Senkung der Entzündungsmarker (hs-CRP) und eine Steigerung seiner Herzfrequenzvariabilität (HRV) um über 25%!',
+    author: 'Bryan Johnson', role: 'Blueprint-Gründer & Biohacker', readTime: '3 Min', image: '/images/bryan-johnson_new.png', tag: 'SAUNA', tagColor: '#ef4444', saved: false, authorImage: '/images/bryan-johnson_new.png',
+  },
+  {
     id: 'r1', category: 'experten',
     title: 'Warum Schlaf das mächtigste Longevity-Tool ist',
     teaser: 'Prof. Dr. Walker erklärt, wie 7–9 Stunden Schlaf Telomere schützt und die biologische Uhr verlangsamt.',
@@ -86,13 +93,6 @@ const reels: Reel[] = [
     teaser: 'Klinische Phase-I-Studie 2026 belegt erstmals die Sicherheit der partiellen Yamanaka-Reprogrammierung an alterndem Gewebe.',
     fullText: 'In einer bahnbrechenden klinischen Studie aus dem Jahr 2026 gelang Wissenschaftlern ein historischer Meilenstein: Durch eine kontrollierte, zeitlich präzise begrenzte Aktivierung der Yamanaka-Faktoren (OSKM) konnten gealterte Haut- und Gefäßzellen biologisch verjüngt werden, ohne ihre zelluläre Identität zu verlieren. Die Studie demonstriert erstmals die absolute Sicherheit dieser Gen-Therapie beim Menschen.',
     author: 'Nature Medicine', role: 'Clinical Trial, 2026', readTime: '4 Min', image: '/images/lab_preview_3.png', tag: 'ZELLEN', tagColor: '#10b981', saved: false, authorImage: '/images/lab_preview_3.png',
-  },
-  {
-    id: 'r_bryan', category: 'experten',
-    title: 'Blueprint: Bryan Johnsons Sauna-Protokoll zur Zellreparatur',
-    teaser: '4-mal wöchentlich 20 Minuten bei 90°C: Wie Bryan Johnson die Sauna gezielt zur Verlängerung seiner gesunden Lebensspanne nutzt.',
-    fullText: 'In seinem berühmten "Project Blueprint" setzt Bryan Johnson die Sauna gezielt zur Aktivierung von Hitzeschockproteinen (HSPs) ein. Diese Proteine reparieren fehlerhafte zelluläre Strukturen und schützen vor altersbedingtem Verfall. Johnsons optimiertes Protokoll sieht 4 Sitzungen pro Woche bei ca. 90°C vor. Seine klinischen Messdaten belegen eine signifikante Senkung der Entzündungsmarker (hs-CRP) und eine Steigerung seiner Herzfrequenzvariabilität (HRV) um über 25%!',
-    author: 'Bryan Johnson', role: 'Blueprint-Gründer & Biohacker', readTime: '3 Min', image: '/images/bryan-johnson_new.png', tag: 'SAUNA', tagColor: '#ef4444', saved: false, authorImage: '/images/bryan-johnson_new.png',
   },
   {
     id: 'r_sinclair', category: 'experten',
@@ -237,15 +237,15 @@ const reels: Reel[] = [
 ];
 
 const tabLabels: { id: Tab; label: string; icon: string }[] = [
-  { id: 'hacks', label: 'Longevity Snacks', icon: 'bi-lightning-charge' },
   { id: 'experten', label: 'Biohacking', icon: 'bi-star-fill' },
+  { id: 'hacks', label: 'Longevity Snacks', icon: 'bi-lightning-charge' },
   { id: 'science', label: 'Wissenschaft', icon: 'bi-journal-medical' },
   { id: 'womens-health', label: "Female Vitality", icon: 'bi-gender-female' },
   { id: 'gespeichert', label: 'Gespeichert', icon: 'bi-bookmark-fill' },
 ];
 
 export default function InspirationPage() {
-  const [activeTab, setActiveTab] = useState<Tab>('hacks');
+  const [activeTab, setActiveTab] = useState<Tab>('experten');
   const [savedIds, setSavedIds] = useState<string[]>(['r1', 'r6']);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [focusOpen, setFocusOpen] = useState(false);
