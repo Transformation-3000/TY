@@ -261,7 +261,7 @@ export default function LandingPage() {
       {/* Mitgliedschaften Section */}
       <section id="erfolgsprinzip" className="pricing-section">
         <div className="section-header">
-          <h2>Wähle deine Langlebigkeits-Stufe</h2>
+          <h2>Wähle dein Modell</h2>
           <p>Finde die passende Mitgliedschaft für deine persönliche Longevity-Journey.</p>
         </div>
 
