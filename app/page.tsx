@@ -421,12 +421,24 @@ export default function LandingPage() {
       </section>
 
       {/* 3. Testphase Section (Final CTA) */}
-      <section id="testphase" className="final-cta">
-        <h2>Wissenschaftlich fundierte Langlebigkeit.</h2>
-        <p>
-          Übernimm die Kontrolle über dein biologisches Alter. Nutze Präzisions-Diagnostik 
-          und KI-gestützte Strategien für ein längeres Leben in maximaler Vitalität.
-        </p>
+      <section id="testphase" className="final-cta-new">
+        <div className="final-cta-card">
+          <h2>Wissenschaftlich fundierte Langlebigkeit</h2>
+          <p>
+            Übernimm die Kontrolle über dein biologisches Alter. Nutze Präzisions-Diagnostik 
+            und KI-gestützte Strategien für ein längeres Leben in maximaler Vitalität.
+          </p>
+          <div className="final-cta-features">
+            <span className="final-cta-feat"><i className="bi bi-shield-check"></i> Wissenschaftlich validiert</span>
+            <span className="final-cta-feat"><i className="bi bi-dna"></i> 100% personalisiert</span>
+            <span className="final-cta-feat"><i className="bi bi-calendar-check"></i> Monatlich kündbar</span>
+          </div>
+          <div className="final-cta-btns">
+            <Link href="#erfolgsprinzip" className="btn-primary-large final-cta-btn">
+              Jetzt Modell wählen
+            </Link>
+          </div>
+        </div>
       </section>
 
       {/* Footer */}

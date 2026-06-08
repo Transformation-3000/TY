@@ -379,25 +379,107 @@
 }
 
 /* --- CTA SECTION --- */
-.final-cta {
-  padding: 10rem 5%;
+.final-cta-new {
+  padding: 120px 5%;
   text-align: center;
-  background: var(--landing-accent-light);
+  background: radial-gradient(circle at center, #004b75 0%, #002b47 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.final-cta h2 {
-  font-size: 4rem;
-  color: var(--landing-dark);
-  margin-bottom: 2rem;
+.final-cta-new::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(127, 208, 73, 0.15) 0%, transparent 70%);
+  z-index: 1;
+}
+
+.final-cta-card {
+  position: relative;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 40px;
+  padding: 5rem 3rem;
+  max-width: 900px;
+  width: 100%;
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3);
+}
+
+.final-cta-card h2 {
+  font-size: 3.5rem;
   font-weight: 800;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #a5f3fc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-.final-cta p {
-  font-size: 1.45rem;
-  color: var(--landing-text);
-  max-width: 800px;
-  margin: 0 auto 3rem;
+.final-cta-card p {
+  font-size: 1.35rem;
+  color: rgba(255, 255, 255, 0.85);
+  max-width: 700px;
+  margin: 0 auto 2.5rem;
   line-height: 1.6;
+}
+
+.final-cta-features {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  margin-bottom: 3rem;
+  flex-wrap: wrap;
+}
+
+.final-cta-feat {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.final-cta-feat i {
+  color: var(--landing-accent);
+  font-size: 1.25rem;
+}
+
+.final-cta-btns {
+  display: flex;
+  justify-content: center;
+}
+
+.final-cta-btn {
+  background: var(--landing-accent);
+  box-shadow: 0 10px 30px rgba(127, 208, 73, 0.3);
+  border: none;
+  font-weight: 800;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  color: white;
+  padding: 1.1rem 2.5rem;
+  border-radius: 100px;
+  font-size: 1.1rem;
+  text-decoration: none;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.final-cta-btn:hover {
+  background: #6db63c;
+  transform: scale(1.04);
+  box-shadow: 0 15px 35px rgba(127, 208, 73, 0.45);
+  color: white;
 }
 
 /* --- FOOTER --- */
