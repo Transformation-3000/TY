@@ -8,6 +8,7 @@ import './landing/landing.css';
 export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [showVideoModal, setShowVideoModal] = useState(false);
 
   const testimonials = [
     {
@@ -156,6 +157,61 @@ export default function LandingPage() {
           </div>
         </div>
       </header>
+
+      {/* Video Concept Section */}
+      <section id="konzept" className="video-section">
+        <div className="video-section-container">
+          <div className="video-section-header">
+            <span className="video-section-badge">Das Konzept</span>
+            <h2>True Years in 60 Sekunden erklärt</h2>
+            <p>
+              Entdecke im Video, wie wir wissenschaftliche Diagnostik, Live-Wearable-Tracking 
+              und KI-gestütztes Coaching vereinen, um deine biologische Verjüngung zu aktivieren.
+            </p>
+          </div>
+          
+          <div className="video-player-wrapper" onClick={() => setShowVideoModal(true)}>
+            <div className="video-placeholder-container">
+              <Image 
+                src="/images/video_placeholder_bg.png" 
+                alt="True Years Video Erklärung" 
+                fill 
+                className="video-placeholder-image"
+                priority
+              />
+              
+              <button className="video-play-btn" aria-label="Video abspielen">
+                <div className="play-icon-pulse"></div>
+                <div className="play-btn-glass">
+                  <i className="bi bi-play-fill"></i>
+                </div>
+              </button>
+              
+              <div className="video-controls-overlay">
+                <div className="video-progress-bar">
+                  <div className="video-progress-played" style={{ width: '0%' }}></div>
+                  <div className="video-progress-scrubber" style={{ left: '0%' }}></div>
+                </div>
+                <div className="video-controls-row">
+                  <div className="video-controls-left">
+                    <button className="control-btn" aria-label="Play"><i className="bi bi-play-fill"></i></button>
+                    <button className="control-btn" aria-label="Volume"><i className="bi bi-volume-up-fill"></i></button>
+                    <span className="video-time">0:00 / 1:15</span>
+                  </div>
+                  <div className="video-controls-right">
+                    <span className="video-quality">1080p HD</span>
+                    <button className="control-btn" aria-label="Fullscreen"><i className="bi bi-fullscreen"></i></button>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="video-duration-badge">
+                <i className="bi bi-clock-history"></i> 1:15 Min
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
       {/* 1. App Features Section */}
       <section id="features" className="new-features-section">
@@ -552,6 +608,43 @@ export default function LandingPage() {
           </div>
         </div>
       </footer>
+
+      {/* Video Modal Placeholder */}
+      {showVideoModal && (
+        <div className="video-modal-overlay" onClick={() => setShowVideoModal(false)}>
+          <div className="video-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="video-modal-close" onClick={() => setShowVideoModal(false)}>
+              <i className="bi bi-x"></i>
+            </button>
+            <div className="video-modal-body">
+              <div className="video-modal-icon">
+                <i className="bi bi-camera-video"></i>
+              </div>
+              <h3>Video kommt bald!</h3>
+              <p>
+                Wir drehen aktuell ein professionelles Intro-Video, in dem wir dir True Years und unsere Vision einer zellulären Verjüngung bis ins kleinste Detail erklären.
+              </p>
+              <div className="video-modal-bullets">
+                <div className="video-bullet">
+                  <i className="bi bi-check-circle-fill"></i>
+                  <span><strong>Wissenschaft:</strong> Erfahre mehr über zelluläre & biologische Uhren.</span>
+                </div>
+                <div className="video-bullet">
+                  <i className="bi bi-check-circle-fill"></i>
+                  <span><strong>AI-Coaching:</strong> Lerne Lisa AI als deine Begleiterin kennen.</span>
+                </div>
+                <div className="video-bullet">
+                  <i className="bi bi-check-circle-fill"></i>
+                  <span><strong>Habits:</strong> Wie wirkungsvoll tägliche Routinen für dich sind.</span>
+                </div>
+              </div>
+              <button className="btn-modal-primary" onClick={() => setShowVideoModal(false)}>
+                Verstanden
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
