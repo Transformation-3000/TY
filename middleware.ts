@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
 const AUTH_COOKIE = 'longevity_auth';
+const MEMBER_COOKIE = 'member_auth';
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -23,14 +24,28 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Passwortschutz aktivieren
-  const hasCookie = request.cookies.has(AUTH_COOKIE);
-  const cookieValue = request.cookies.get(AUTH_COOKIE)?.value;
+  // 1. Gatekeeper-Passwortschutz prüfen (gilt für ALLE Seiten, inkl. Landingpage /)
+  const hasAuthCookie = request.cookies.has(AUTH_COOKIE);
+  const authCookieValue = request.cookies.get(AUTH_COOKIE)?.value;
+  const isGatekeeperPassed = hasAuthCookie && authCookieValue === 'Longevity3000';
 
-  if (!hasCookie || cookieValue !== 'Longevity3000') {
+  if (!isGatekeeperPassed) {
     const loginUrl = new URL('/login', request.url);
     loginUrl.searchParams.set('from', pathname);
     return NextResponse.redirect(loginUrl);
+  }
+
+  // 2. Mitglieder-Login prüfen (gilt nur für das Dashboard /dashboard)
+  if (pathname.startsWith('/dashboard')) {
+    const hasMemberCookie = request.cookies.has(MEMBER_COOKIE);
+    const memberCookieValue = request.cookies.get(MEMBER_COOKIE)?.value;
+    const isMemberPassed = hasMemberCookie && memberCookieValue === 'true';
+
+    if (!isMemberPassed) {
+      const loginUrl = new URL('/login', request.url);
+      loginUrl.searchParams.set('from', pathname);
+      return NextResponse.redirect(loginUrl);
+    }
   }
 
   return NextResponse.next();
