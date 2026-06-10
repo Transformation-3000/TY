@@ -14,7 +14,8 @@ function LoginForm() {
   // Read gatekeeper status from localStorage on mount
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setGatekeeperPassed(localStorage.getItem('ty_gatekeeper_passed') === 'true');
+      const savedPass = localStorage.getItem('ty_saved_password');
+      setGatekeeperPassed(!!savedPass);
     }
   }, []);
 
@@ -39,7 +40,7 @@ function LoginForm() {
 
       // Save credentials flags in storage
       localStorage.setItem('ty_is_member', 'true');
-      localStorage.setItem('ty_gatekeeper_passed', 'true');
+      localStorage.setItem('ty_saved_password', enteredPassword);
       localStorage.setItem('ty_last_active', Date.now().toString());
       sessionStorage.setItem('ty_session_active', 'true');
 
@@ -57,8 +58,8 @@ function LoginForm() {
   }
 
   async function handleQuickLogin() {
-    // Automatically submit with the expected default password
-    await handleLogin('Longevity3000');
+    const savedPassword = localStorage.getItem('ty_saved_password') || 'Longevity3000';
+    await handleLogin(savedPassword);
   }
 
   return (
@@ -98,7 +99,7 @@ function LoginForm() {
             <p className="login-subtitle" style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '0.75rem' }}>
               Projekt bereits freigeschaltet
             </p>
-            <div className="login-form">
+            <div className="login-form" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem' }}>
               <button
                 type="button"
                 onClick={handleQuickLogin}
@@ -111,10 +112,30 @@ function LoginForm() {
                   padding: '0.85rem 1.5rem',
                   fontSize: '1.05rem',
                   fontWeight: 700,
-                  borderRadius: '12px'
+                  borderRadius: '12px',
+                  width: '100%'
                 }}
               >
                 {loading ? 'Wird angemeldet…' : 'Mitglieder-Login'}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  localStorage.removeItem('ty_saved_password');
+                  setGatekeeperPassed(false);
+                }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: '#64748b',
+                  fontSize: '0.8rem',
+                  textDecoration: 'underline',
+                  cursor: 'pointer',
+                  marginTop: '0.25rem'
+                }}
+              >
+                Anderes Passwort eingeben
               </button>
             </div>
           </div>
