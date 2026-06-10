@@ -485,7 +485,11 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
             </div>
             <div className="prep-content">
               <div className="pc-lens">
-                <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="pc-avatar" onCanPlay={(e) => { e.currentTarget.playbackRate = 0.75; }} />
+                {coachVariant === 'lisa-jung' ? (
+                  <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="pc-avatar" onCanPlay={(e) => { e.currentTarget.playbackRate = 0.75; }} />
+                ) : (
+                  <img src={c.image} alt={c.name} className="pc-avatar" style={{ objectFit: 'cover' }} />
+                )}
               </div>
               <h2 className="pc-title">Mindspace wird vorbereitet</h2>
               <div className="pc-steps-container">
