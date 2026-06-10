@@ -362,22 +362,23 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                 <h1 className="wb-title">Wähle dein Session-Format</h1>
               </div>
 
-              {/* Format choice: Text or Voice without heading */}
+              {/* Format choice: Text-Chat or Voice-Chat without heading */}
               <div className="wb-tabs-format" style={{ marginTop: '0.4rem', marginBottom: '0.8rem' }}>
                 <button className={`wb-tab ${formatTab === 'text' ? 'act' : ''}`} onClick={() => setFormatTab('text')}>
-                  💬 Text-Modus
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px', flexShrink: 0 }}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                  Text-Chat
                 </button>
                 <button className={`wb-tab ${formatTab === 'voice' ? 'act' : ''}`} onClick={() => setFormatTab('voice')}>
-                  🎙️ Voice-Modus
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px', flexShrink: 0 }}><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>
+                  Voice-Chat
                 </button>
               </div>
 
               <div className="wb-session-btns">
                 <button className="wb-stype-btn" onClick={() => startSession('daily')}>
                   <div className="wbsb-left">
-                    <div className="wbsb-num">1.</div>
                     <div className="wbsb-body">
-                      <div className="wbsb-title">Daily</div>
+                      <div className="wbsb-title">1. Daily</div>
                       <div className="wbsb-desc">Kurzer täglicher Check-In zur Tagesverfassung</div>
                     </div>
                   </div>
@@ -388,9 +389,8 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
                 <button className="wb-stype-btn" onClick={() => startSession('weekly')}>
                   <div className="wbsb-left">
-                    <div className="wbsb-num">2.</div>
                     <div className="wbsb-body">
-                      <div className="wbsb-title">Weekly</div>
+                      <div className="wbsb-title">2. Weekly</div>
                       <div className="wbsb-desc">Wöchentliche Session zum Aufbau neuer Routinen</div>
                     </div>
                   </div>
@@ -401,9 +401,8 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
                 <button className="wb-stype-btn" onClick={() => startSession('quarterly')}>
                   <div className="wbsb-left">
-                    <div className="wbsb-num">3.</div>
                     <div className="wbsb-body">
-                      <div className="wbsb-title">Quarterly</div>
+                      <div className="wbsb-title">3. Quarterly</div>
                       <div className="wbsb-desc">Quartalsweise Reflexion der Longevity-Reise</div>
                     </div>
                   </div>
@@ -1474,6 +1473,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
         .wb-tabs-format { display: flex; gap: 0.4rem; justify-content: space-between; align-items: center; margin-top: 0.8rem;}
          .wb-tab {
+           display: inline-flex; align-items: center; justify-content: center;
            padding: 0.75rem 0.9rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08);
            background: rgba(255,255,255,0.04); color: #94a3b8; font-size: 1.15rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; flex: 1; text-align: center;
          }
