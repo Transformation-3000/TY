@@ -830,7 +830,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                     )}
                     {msg.widget==='energy'&&!msg.answered&&(<div className="wrate">{[1,2,3,4,5].map(n=>(<button key={n} className="rbtn en" onClick={()=>handleEnergy(n)}>{n}</button>))}<div className="rlabs"><span>niedrig</span><span>hoch</span></div></div>)}
                     {msg.widget==='stress'&&!msg.answered&&(<div className="wrate">{[1,2,3,4,5].map(n=>(<button key={n} className="rbtn st" onClick={()=>handleStress(n)}>{n}</button>))}<div className="rlabs"><span>niedrig</span><span>hoch</span></div></div>)}
-                    {msg.widget==='focus'&&!msg.answered&&(<div className="wpills">{focusTopics.map(t=>(<button key={t.id} className="plbtn" onClick={()=>handleFocus(t.id)}><span className="plbtn-icon">{t.icon}</span><span className="plbtn-body"><span className="plbtn-lbl">{t.label}</span><span className="plbtn-desc">{t.desc}</span></span></button>))}</div>)}
+                    {msg.widget==='focus'&&!msg.answered&&(<div className="wpills">{focusTopics.map((t, idx)=>(<button key={t.id} className="plbtn" onClick={()=>handleFocus(t.id)}><span className="plbtn-icon">{t.icon}</span><span className="plbtn-body"><span className="plbtn-lbl">{idx + 1}. {t.label}</span></span></button>))}</div>)}
 
                     {msg.widget==='data-pull'&&dataLoadStage<2&&(
                       <div className="wdp">
@@ -1272,7 +1272,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .plbtn:hover{border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.06);box-shadow:0 12px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);transform:translateY(-2px)}
         .plbtn-icon{font-size:1.15rem;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);flex-shrink:0}
         .plbtn-body{flex:1;min-width:0;display:flex;flex-direction:column}
-        .plbtn-lbl{font-size:.98rem;font-weight:600;color:#f8fafc;line-height:1.25;letter-spacing:.01em}
+        .plbtn-lbl{font-size:.98rem;font-weight:400;color:#f8fafc;line-height:1.25;letter-spacing:.01em}
         .plbtn-desc{font-size:.82rem;color:#94a3b8;margin-top:.1rem}
  
         .wdp{padding:1.25rem;border-radius:20px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(24px);box-shadow:0 12px 40px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.05)}
