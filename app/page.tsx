@@ -165,7 +165,7 @@ export default function LandingPage() {
             <span className="video-section-badge">Das Konzept</span>
             <h2>True Years in 60 Sekunden erklärt</h2>
             <p>
-              Entdecke im Video, wie wir wissenschaftliche Diagnostik, Live-Wearable-Tracking 
+              Entdecke im Video, wie wir wissenschaftliche Diagnostik, Live-Wearable-Tracking<br className="desktop-only" />
               und KI-gestütztes Training vereinen, um deine biologische Verjüngung zu aktivieren.
             </p>
           </div>
