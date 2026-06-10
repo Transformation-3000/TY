@@ -1166,9 +1166,9 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .tst{display:none}
         .we-countdown-sm{font-size:1.1rem;color:#94a3b8;font-weight:500;letter-spacing:.01em}
         .sftabs{flex:0 1 280px}
-        .str{display:flex;align-items:center;gap:1.2rem;flex-shrink:0}
-        .stimer{display:flex;align-items:center;gap:.4rem;padding:.6rem 1.2rem;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:1.5rem;font-weight:500;color:#e2e8f0;font-variant-numeric:tabular-nums;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
-        .ebtn{padding:.6rem 1.4rem;border-radius:14px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:#cbd5e1;font-size:1.4rem;font-weight:500;cursor:pointer;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+        .str{display:flex;align-items:center;gap:.8rem;flex-shrink:0}
+        .stimer{display:flex;align-items:center;gap:.3rem;padding:.45rem .9rem;border-radius:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:1.15rem;font-weight:500;color:#e2e8f0;font-variant-numeric:tabular-nums;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+        .ebtn{padding:.45rem 1rem;border-radius:12px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:#cbd5e1;font-size:1.1rem;font-weight:500;cursor:pointer;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.3)}
         .ebtn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);color:#f8fafc}
         .pbar{position:relative;z-index:2;height:3px;background:rgba(255,255,255,.05);overflow:hidden}
         .pfill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(100,180,255,.7),rgba(60,200,200,.6));transition:width .6s ease}
