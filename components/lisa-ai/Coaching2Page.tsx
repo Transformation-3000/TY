@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 
 type CoachVariant = 'lisa-jung' | 'lisa-alt' | 'tom-jung' | 'tom-alt';
-type FormatTab = 'text' | 'voice' | 'video';
+type FormatTab = 'text' | 'voice';
 type SessionType = 'daily' | 'weekly' | 'quarterly';
 type SessionPhase = 'entry' | 'checkin-energy' | 'checkin-stress' | 'checkin-focus' | 'data-pull' | 'verstehen' | 'fokus' | 'empfehlung' | 'commitment' | 'syncing' | 'closing';
 type ViewMode = 'welcome' | 'setup' | 'preparing' | 'session';
@@ -716,14 +716,12 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
                 {/* Format tab bar – small, at top */}
                 <div className="s-fmt-tabs">
-                  {(['text','voice','video'] as FormatTab[]).map(f => (
+                  {(['text','voice'] as FormatTab[]).map(f => (
                     <button key={f} className={`s-ftab ${formatTab===f?'act':''}`} onClick={() => setFormatTab(f)}>
                       {f==='text' ? <>
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:4,flexShrink:0}}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text
-                      </> : f==='voice' ? <>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:4,flexShrink:0}}><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>Voice
                       </> : <>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:4,flexShrink:0}}><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/></svg>Video
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:4,flexShrink:0}}><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>Voice
                       </>}
                     </button>
                   ))}
@@ -905,7 +903,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                     <div className="tirow"><input type="text" placeholder="Nachricht eingeben..." className="tinp" readOnly/><button className="sbtn">↑</button></div>
                   </div>
                 )}
-                {formatTab==='video' && (
+                {formatTab==='voice' && (
                   <div className="iarea">
                     <div className="vihin"><p>Sprich direkt mit {c.name} – Antworten werden live verarbeitet.</p></div>
                   </div>
