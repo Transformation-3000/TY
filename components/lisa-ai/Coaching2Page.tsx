@@ -1311,11 +1311,11 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
  
         .wcards{display:flex;flex-direction:column;gap:.55rem}
         .wcd{display:flex;align-items:center;gap:.75rem;text-align:left;padding:1rem 1.2rem;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(24px);cursor:pointer;transition:all .3s cubic-bezier(.16,1,.3,1);box-shadow:0 8px 32px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.05)}
-        .wcd:hover{background:rgba(255,255,255,.08);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.15);border-color:rgba(255,255,255,.3)}
-        .wcd.wcd-blue:hover{border-color:rgba(96,165,250,.45);background:rgba(96,165,250,.08)}
-        .wcd.wcd-purple:hover{border-color:rgba(192,132,252,.45);background:rgba(192,132,252,.08)}
-        .wcd.wcd-green:hover{border-color:rgba(52,211,153,.45);background:rgba(52,211,153,.08)}
-        .wcd.wcd-amber:hover{border-color:rgba(251,191,36,.45);background:rgba(251,191,36,.08)}
+        .wcd:hover{background:rgba(255,255,255,.08);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(255,255,255,.2), inset 0 1px 0 rgba(255,255,255,.15);border-color:rgba(255,255,255,.4)}
+        .wcd.wcd-blue:hover{border-color:rgba(96,165,250,.7);box-shadow:0 12px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(96,165,250,.5), inset 0 1px 0 rgba(255,255,255,.15);background:rgba(96,165,250,.08)}
+        .wcd.wcd-purple:hover{border-color:rgba(192,132,252,.7);box-shadow:0 12px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(192,132,252,.5), inset 0 1px 0 rgba(255,255,255,.15);background:rgba(192,132,252,.08)}
+        .wcd.wcd-green:hover{border-color:rgba(52,211,153,.7);box-shadow:0 12px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(52,211,153,.5), inset 0 1px 0 rgba(255,255,255,.15);background:rgba(52,211,153,.08)}
+        .wcd.wcd-amber:hover{border-color:rgba(251,191,36,.7);box-shadow:0 12px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(251,191,36,.5), inset 0 1px 0 rgba(255,255,255,.15);background:rgba(251,191,36,.08)}
         .wcd-icon{font-size:1.45rem;flex-shrink:0;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
         .wcd-body{flex:1;min-width:0}
         .wcd-body strong{display:block;font-size:1.18rem;color:#f8fafc;font-weight:600;margin-bottom:.2rem;letter-spacing:.01em}
