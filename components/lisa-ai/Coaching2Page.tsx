@@ -301,7 +301,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
   const handleEntryChoice = async (ch: string) => { markAnswered(); addUserMsg(ch); setPhase('checkin-energy'); await addCoachMsg('Bevor wir starten – wie ist deine Energie heute?', 'energy', 900); };
   const handleEnergy = async (v: number) => { setEnergy(v); markAnswered(); addUserMsg(`Energie: ${v}/5`); setPhase('checkin-stress'); await addCoachMsg('Und wie hoch ist dein Stress gerade?', 'stress', 700); };
-  const handleStress = async (v: number) => { setStress(v); markAnswered(); addUserMsg(`Stress: ${v}/5`); setPhase('checkin-focus'); await addCoachMsg('Worauf möchtest du heute schauen?', 'focus', 700); };
+  const handleStress = async (v: number) => { setStress(v); markAnswered(); addUserMsg(`Stress: ${v}/5`); setPhase('checkin-focus'); setMessages([]); await addCoachMsg('Worauf möchtest du heute schauen?', 'focus', 700); };
   const handleFocus = async (id: string) => {
     setFocusTopic(id); markAnswered();
     const t = focusTopics.find(x => x.id === id);
