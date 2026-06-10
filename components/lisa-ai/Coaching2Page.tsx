@@ -42,8 +42,8 @@ const focusTopics = [
   { id: 'erholung', label: 'Schlaf & Erholung', icon: '🌙', desc: 'Schlaf & Regeneration' },
   { id: 'kraft', label: 'Kraft & Ausdauer', icon: '⚡', desc: 'Bewegung & Sport' },
   { id: 'vitalitaet', label: 'Zellerneuerung & Wachstum', icon: '🌿', desc: 'Zellgesundheit & Ernährung' },
-  { id: 'selbstfuersorge', label: 'Selbstfürsorge & Soziale Bindungen', icon: '🎯', desc: 'Routinen & Mentales' },
   { id: 'balance', label: 'Immunbalance & Entlastung', icon: '🧠', desc: 'Stress & Soziales' },
+  { id: 'selbstfuersorge', label: 'Selbstfürsorge & Soziale Bindungen', icon: '🎯', desc: 'Routinen & Mentales' },
   { id: 'resilienz', label: 'Mentale Resilienz & Mindset', icon: '♾️', desc: 'Adaptionsfähigkeit' },
 ];
 const phaseLabels: Record<SessionPhase, string> = {
