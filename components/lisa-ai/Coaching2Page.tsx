@@ -1050,7 +1050,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
         .smod{position:fixed;inset:0;z-index:900;background:rgba(15,30,45,.45);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;animation:smodIn .3s ease both}
         @keyframes smodIn{from{opacity:0}to{opacity:1}}
-        .smod-in{width:98%;max-width:1000px;max-height:96vh;background:#fff;border-radius:24px;box-shadow:0 24px 80px rgba(0,40,80,.18);display:flex;flex-direction:column;overflow:hidden;animation:smodUp .35s ease both}
+        .smod-in{width:98%;max-width:900px;max-height:96vh;background:#fff;border-radius:24px;box-shadow:0 24px 80px rgba(0,40,80,.18);display:flex;flex-direction:column;overflow:hidden;animation:smodUp .35s ease both}
         @keyframes smodUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
         .smod-h{display:flex;align-items:center;justify-content:space-between;padding:2.5rem 1.5rem 1rem;border-bottom:1px solid rgba(68,152,202,.08)}
         .smod-back{background:none;border:none;color:#7a9ab0;font-size:.85rem;cursor:pointer;font-weight:500;padding:0;width:80px;text-align:left}
@@ -1068,10 +1068,10 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .smod-sub{font-size:.88rem;color:#7a9ab0;margin:-.25rem 0 1rem;line-height:1.5}
         .smod-next{display:inline-flex;padding:.75rem 2rem;border:none;border-radius:14px;background:linear-gradient(135deg,#4498ca,#2c6a8c);color:#fff;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(68,152,202,.3);transition:all .3s;margin-top:0.5rem}
         .smod-next:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(68,152,202,.4)}
-
+ 
         .cgrid{display:grid;grid-template-columns:repeat(4, 1fr);gap:1rem}
-        .ccard{display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:1.25rem 1rem;border-radius:24px;border:2px solid rgba(68,152,202,.08);background:rgba(248,252,255,.9);cursor:pointer;transition:all .25s;position:relative}
-        .ccard:hover{border-color:rgba(68,152,202,.35);background:#fff;box-shadow:0 8px 24px rgba(0,60,120,.06);transform:translateY(-2px)}
+        .ccard{display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:1.25rem 1rem;border-radius:24px;border:2px solid rgba(68,152,202,.45);background:rgba(248,252,255,.9);cursor:pointer;transition:all .25s;position:relative}
+        .ccard:hover{border-color:#4498ca;background:#fff;box-shadow:0 8px 24px rgba(0,60,120,.06);transform:translateY(-2px)}
         .ccard.sel{border-color:#4498ca;background:rgba(68,152,202,.04);box-shadow:0 4px 20px rgba(68,152,202,.12)}
         .ccard-img{position:relative;margin-bottom:0.4rem}
         .ccard-img :global(img){border:4px solid rgba(68,152,202,.12);box-shadow:0 8px 24px rgba(0,60,120,.1)}
@@ -1081,24 +1081,24 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .ccard-voice{display:inline-flex;align-items:center;gap:0.5rem;padding:0.6rem 1rem;border-radius:12px;border:1.5px solid rgba(68,152,202,.15);background:rgba(255,255,255,.9);color:#4498ca;font-size:0.85rem;font-weight:600;cursor:pointer;transition:all .2s;margin-top:0.4rem}
         .ccard-voice:hover{border-color:#4498ca;background:rgba(68,152,202,.08);transform:translateY(-1px)}
         .ccard-voice.playing{border-color:#4498ca;background:rgba(68,152,202,.1);color:#2c5a7c}
-
+ 
         .dgrid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;margin-bottom:1.5rem;text-align:left}
-        .dcard{display:flex;flex-direction:column;gap:0.4rem;padding:1.2rem;border-radius:20px;border:2px solid rgba(68,152,202,.08);background:rgba(255,255,255,0.8);cursor:pointer;transition:all 0.25s;position:relative;height:100%}
-        .dcard:hover{border-color:rgba(68,152,202,.35);background:#fff;box-shadow:0 6px 16px rgba(0,60,120,.06);transform:translateY(-1px)}
+        .dcard{display:flex;flex-direction:column;gap:0.4rem;padding:1.2rem;border-radius:20px;border:2px solid rgba(68,152,202,.45);background:rgba(255,255,255,0.8);cursor:pointer;transition:all 0.25s;position:relative;height:100%}
+        .dcard:hover{border-color:#4498ca;background:#fff;box-shadow:0 6px 16px rgba(0,60,120,.06);transform:translateY(-1px)}
         .dcard.sel{border-color:#4498ca;background:rgba(68,152,202,.04);box-shadow:0 4px 20px rgba(68,152,202,.12)}
         .dc-title{font-size:0.95rem;font-weight:700;color:#1a3a50;margin:0;line-height:1.2}
         .dc-desc{font-size:0.75rem;color:#5a8aa8;line-height:1.35;margin:0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
         .dc-chk{position:absolute;top:0.75rem;right:0.75rem;width:20px;height:20px;background:#4498ca;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700}
-
+ 
         .ggrid{display:flex;gap:4rem;justify-content:center;margin:2.5rem 0}
-        .gcard{position:relative;display:flex;flex-direction:column;align-items:center;gap:1.5rem;background:transparent;border:2px solid transparent;border-radius:24px;cursor:pointer;transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);padding:2rem;overflow:hidden}
+        .gcard{position:relative;display:flex;flex-direction:column;align-items:center;gap:1.5rem;background:rgba(248,252,255,.9);border:2px solid rgba(68,152,202,.45);border-radius:24px;cursor:pointer;transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);padding:2rem;overflow:hidden}
         .gcard::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.4s;border-radius:22px;z-index:-1}
         .gcard:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(0,60,120,0.08);background:#fff}
         .gcard:hover::before{opacity:1}
         
-        .gcard-female:hover{border-color:rgba(236,72,153,0.3)}
+        .gcard-female:hover{border-color:#ec4899}
         .gcard-female::before{background:linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(253,232,243,0.8) 100%)}
-        .gcard-male:hover{border-color:rgba(68,152,202,0.3)}
+        .gcard-male:hover{border-color:#4498ca}
         .gcard-male::before{background:linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(230,244,252,0.8) 100%)}
         
         .gcard-ico{position:relative;width:120px;height:120px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.6);border:2px solid transparent;color:#1a3a50;box-shadow:0 8px 24px rgba(0,60,120,0.05);transition:all 0.3s ease}
