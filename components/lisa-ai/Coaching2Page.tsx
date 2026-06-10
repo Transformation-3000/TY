@@ -359,7 +359,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
             
             <div className="wb-sidebar">
               <div className="wbs-header">
-                <h1 className="wb-title">Wähle deine Session</h1>
+                <h1 className="wb-title">Wähle dein Session-Format</h1>
               </div>
 
               <div className="wb-session-btns">
