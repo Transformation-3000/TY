@@ -362,6 +362,19 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                 <h1 className="wb-title">Wähle deine Session</h1>
               </div>
 
+              {/* Format choice: Text or Voice */}
+              <div style={{ marginBottom: '1rem', marginTop: '-0.25rem' }}>
+                <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Interaktions-Modus</div>
+                <div className="wb-tabs-format">
+                  <button className={`wb-tab ${formatTab === 'text' ? 'act' : ''}`} onClick={() => setFormatTab('text')}>
+                    💬 Text-Modus
+                  </button>
+                  <button className={`wb-tab ${formatTab === 'voice' ? 'act' : ''}`} onClick={() => setFormatTab('voice')}>
+                    🎙️ Voice-Modus
+                  </button>
+                </div>
+              </div>
+
               <div className="wb-session-btns">
                 <button className="wb-stype-btn" onClick={() => startSession('daily')}>
                   <div className="wbsb-left">
@@ -713,19 +726,6 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
             <div className="s-body">
               {/* LEFT – Lisa presence (audio central) */}
               <div className="s-left">
-
-                {/* Format tab bar – small, at top */}
-                <div className="s-fmt-tabs">
-                  {(['text','voice'] as FormatTab[]).map(f => (
-                    <button key={f} className={`s-ftab ${formatTab===f?'act':''}`} onClick={() => setFormatTab(f)}>
-                      {f==='text' ? <>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:4,flexShrink:0}}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text
-                      </> : <>
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:4,flexShrink:0}}><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>Voice
-                      </>}
-                    </button>
-                  ))}
-                </div>
 
                 {/* Lisa with wave rings */}
                 <div className="s-lisa-scene">
@@ -1473,12 +1473,12 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .wb-tab-today { display: flex; flex-direction: column; gap: 1.5rem; }
 
         .wb-tabs-format { display: flex; gap: 0.4rem; justify-content: space-between; align-items: center; margin-top: 0.8rem;}
-        .wb-tab {
-          padding: 0.6rem 0.8rem; border-radius: 12px; border: 1px solid rgba(148, 163, 184, 0.15);
-          background: rgba(255,255,255,0.4); color: #64748b; font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; flex: 1; text-align: center;
-        }
-        .wb-tab:hover { background: #fff; color: #334155; }
-        .wb-tab.act { background: #fff; border-color: rgba(201, 169, 110, 0.35); color: #8B7355; box-shadow: 0 4px 12px rgba(201, 169, 110, 0.08); }
+         .wb-tab {
+           padding: 0.65rem 0.8rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08);
+           background: rgba(255,255,255,0.04); color: #94a3b8; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; flex: 1; text-align: center;
+         }
+         .wb-tab:hover { background: rgba(255,255,255,0.08); color: #f8fafc; }
+         .wb-tab.act { background: #fff; border-color: rgba(201, 169, 110, 0.35); color: #1e293b; box-shadow: 0 4px 12px rgba(201, 169, 110, 0.15); }
         
         .wi-card {
           background: rgba(255,255,255,0.07); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
