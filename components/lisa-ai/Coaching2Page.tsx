@@ -39,12 +39,12 @@ const getPersonalityDesc = (x: number, y: number) => {
   return { primary: p.color, desc: sec ? `${p.desc}, mit Tendenz ${sec.desc}` : p.desc };
 };
 const focusTopics = [
-  { id: 'erholung', label: 'Erholung', icon: '🌙', desc: 'Schlaf & Regeneration' },
+  { id: 'erholung', label: 'Schlaf & Erholung', icon: '🌙', desc: 'Schlaf & Regeneration' },
   { id: 'kraft', label: 'Kraft & Ausdauer', icon: '⚡', desc: 'Bewegung & Sport' },
-  { id: 'vitalitaet', label: 'Vitalität & Schutz', icon: '🌿', desc: 'Zellgesundheit & Ernährung' },
-  { id: 'selbstfuersorge', label: 'Selbstfürsorge', icon: '🎯', desc: 'Routinen & Mentales' },
-  { id: 'balance', label: 'Balance & Entlastung', icon: '🧠', desc: 'Stress & Soziales' },
-  { id: 'resilienz', label: 'Resilienz', icon: '♾️', desc: 'Adaptionsfähigkeit' },
+  { id: 'vitalitaet', label: 'Zellerneuerung & Wachstum', icon: '🌿', desc: 'Zellgesundheit & Ernährung' },
+  { id: 'selbstfuersorge', label: 'Selbstfürsorge & Soziale Bindungen', icon: '🎯', desc: 'Routinen & Mentales' },
+  { id: 'balance', label: 'Immunbalance & Entlastung', icon: '🧠', desc: 'Stress & Soziales' },
+  { id: 'resilienz', label: 'Mentale Resilienz & Mindset', icon: '♾️', desc: 'Adaptionsfähigkeit' },
 ];
 const phaseLabels: Record<SessionPhase, string> = {
   'entry': 'Einstieg', 'checkin-energy': 'Check-in', 'checkin-stress': 'Check-in',
