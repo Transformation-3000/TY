@@ -60,6 +60,11 @@ function LoginForm() {
       setIsGatekeeperPassed(true);
       setError('');
       setLoading(false);
+
+      if (from === '/') {
+        router.push('/');
+        router.refresh();
+      }
     } catch {
       setError('Netzwerkfehler. Bitte erneut versuchen.');
       setLoading(false);
