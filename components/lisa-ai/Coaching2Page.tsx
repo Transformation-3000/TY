@@ -137,6 +137,15 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
   const [historySearch, setHistorySearch] = useState('');
   const [selectedSessionId, setSelectedSessionId] = useState<number | null>(null);
 
+  const getFormattedCurrentDate = () => {
+    const days = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
+    const now = new Date();
+    const dayName = days[now.getDay()];
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
+    return `${dayName}, ${hours}:${minutes} Uhr`;
+  };
+
   useEffect(() => {
     setSelectedSessionId(null);
   }, [rightTab]);
@@ -715,9 +724,24 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
               </div>
             </div>
             <div className="stop">
-              <div className="stl"><div className="tav"><Image src={c.image} alt={c.name} width={40} height={40} style={{objectFit:'cover',borderRadius:'50%'}} />{isSpeaking&&<span className="sring"/>}</div><div className="tinf"><strong>{c.name}</strong><span className="tst">{isSpeaking?'spricht...':isListening?'hört zu...':phase==='data-pull'?'analysiert Daten...':phase==='syncing'?'überträgt...':'online'}</span></div><span className="s-type-badge">{sessionType==='daily'?'Lisa AI Daily':sessionType==='weekly'?'Lisa AI Weekly':'Lisa AI Quarterly'}</span></div>
-              <div className="s-center-cal"><span className="we-countdown-sm">Live heute, 18:00 Uhr</span></div>
-              <div className="str"><div className="stimer"><span className="tval">{formatTime(sessionTime)}</span></div><button className="ebtn" onClick={handleEndSession}>Beenden</button></div>
+              <div className="stl">
+                <div className="tav">
+                  <Image src={c.image} alt={c.name} width={40} height={40} style={{objectFit:'cover',borderRadius:'50%'}} />
+                  {isSpeaking && <span className="sring"/>}
+                </div>
+                <div className="tinf">
+                  <strong>{c.name.split(',')[0].trim()} {sessionType==='daily'?'Daily':sessionType==='weekly'?'Weekly':'Quarterly'}</strong>
+                </div>
+              </div>
+              <div className="s-center-cal">
+                <span className="we-countdown-sm">{getFormattedCurrentDate()}</span>
+              </div>
+              <div className="str">
+                <div className="stimer">
+                  <span className="tval">{formatTime(sessionTime)}</span>
+                </div>
+                <button className="ebtn" onClick={handleEndSession}>Beenden</button>
+              </div>
             </div>
             <div className="pbar"><div className="pfill" style={{width:`${phaseProgress[phase]}%`}}/><span className="plab">{phaseLabels[phase]}</span></div>
 
@@ -1132,18 +1156,20 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .s-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:radial-gradient(ellipse at 20% 50%,rgba(30,70,120,.15) 0%,transparent 60%),radial-gradient(ellipse at 80% 20%,rgba(20,50,90,.1) 0%,transparent 55%),#060d18}
         .sess-anim{opacity:0;transform:scale(.97)}
         .stop{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.05);background:rgba(6,13,24,.75);backdrop-filter:blur(24px);gap:1rem}
-        .stl{display:flex;align-items:center;gap:.6rem;flex-shrink:0}
-        .s-type-badge{font-size:.65rem;font-weight:600;background:rgba(255,255,255,.06);color:#cbd5e1;border:1px solid rgba(255,255,255,.1);padding:.18rem .55rem;border-radius:8px;text-transform:uppercase;letter-spacing:.06em;margin-left:.3rem}
+        .stl{display:flex;align-items:center;gap:.8rem;flex-shrink:0}
+        .s-type-badge{display:none}
         .tav{position:relative;width:44px;height:44px;flex-shrink:0}
         .tav :global(img){border:1px solid rgba(255,255,255,0.1);box-shadow:0 4px 12px rgba(0,0,0,.4)}
         .sring{position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(255,255,255,.15);animation:sp 1.5s ease-in-out infinite}
         @keyframes sp{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.6;transform:scale(1.12)}}
-        .tinf strong{display:block;font-size:.9rem;color:#f8fafc;letter-spacing:.01em}.tst{font-size:.75rem;color:#94a3b8}
+        .tinf strong{display:block;font-size:1.2rem;color:#f8fafc;letter-spacing:.01em}
+        .tst{display:none}
+        .we-countdown-sm{font-size:1.1rem;color:#94a3b8;font-weight:500;letter-spacing:.01em}
         .sftabs{flex:0 1 280px}
-        .str{display:flex;align-items:center;gap:.65rem;flex-shrink:0}
-        .stimer{display:flex;align-items:center;gap:.3rem;padding:.35rem .75rem;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:.82rem;font-weight:500;color:#e2e8f0;font-variant-numeric:tabular-nums;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
-        .ebtn{padding:.35rem .8rem;border-radius:10px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);color:#cbd5e1;font-size:.8rem;font-weight:500;cursor:pointer;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.2)}
-        .ebtn:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:#f8fafc}
+        .str{display:flex;align-items:center;gap:1.2rem;flex-shrink:0}
+        .stimer{display:flex;align-items:center;gap:.4rem;padding:.6rem 1.2rem;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);font-size:1.5rem;font-weight:500;color:#e2e8f0;font-variant-numeric:tabular-nums;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+        .ebtn{padding:.6rem 1.4rem;border-radius:14px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.04);color:#cbd5e1;font-size:1.4rem;font-weight:500;cursor:pointer;transition:all .2s;box-shadow:0 4px 12px rgba(0,0,0,.3)}
+        .ebtn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);color:#f8fafc}
         .pbar{position:relative;z-index:2;height:3px;background:rgba(255,255,255,.05);overflow:hidden}
         .pfill{position:absolute;left:0;top:0;bottom:0;background:linear-gradient(90deg,rgba(100,180,255,.7),rgba(60,200,200,.6));transition:width .6s ease}
         .plab{display:none}
@@ -1372,7 +1398,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
           .pf-labels{height:200px}
           .stop{padding:.5rem .75rem}
           .tav{width:32px;height:32px}
-          .ebtn{font-size:.75rem;padding:.35rem .7rem}
+          .ebtn{font-size:1rem;padding:.4rem .9rem}
         }
         
         /* =============== ULTIMATE PREMIUM AESTHETIC (CALMING & ELEGANT) =============== */
