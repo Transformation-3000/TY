@@ -740,10 +740,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                   {isSpeaking && <span className="sring"/>}
                 </div>
                 <div className="tinf">
-                  <strong>{c.name.split(',')[0].trim()}</strong>
-                  <span className="tst">
-                    {sessionType === 'daily' ? 'Daily Training' : sessionType === 'weekly' ? 'Weekly Training' : 'Quarterly Training'}
-                  </span>
+                  <strong>{c.name.split(',')[0].trim()} {sessionType==='daily'?'Daily':sessionType==='weekly'?'Weekly':'Quarterly'}</strong>
                 </div>
               </div>
               <div className="s-center-cal">
@@ -1179,8 +1176,8 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .tav :global(img){border:1px solid rgba(255,255,255,0.1);box-shadow:0 4px 12px rgba(0,0,0,.4)}
         .sring{position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(255,255,255,.15);animation:sp 1.5s ease-in-out infinite}
         @keyframes sp{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.6;transform:scale(1.12)}}
-        .tinf strong{display:block;font-size:1.15rem;color:#f8fafc;letter-spacing:.01em;font-weight:600;line-height:1.2}
-        .tst{display:block;font-size:0.8rem;color:#94a3b8;font-weight:500;margin-top:0.15rem;letter-spacing:0.02em}
+        .tinf strong{display:block;font-size:1.2rem;color:#f8fafc;letter-spacing:.01em}
+        .tst{display:none}
         .we-countdown-sm{font-size:1.1rem;color:#94a3b8;font-weight:500;letter-spacing:.01em}
         .sftabs{flex:0 1 280px}
         .str{display:flex;align-items:center;gap:.8rem;flex-shrink:0}
