@@ -359,11 +359,17 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
             <div className="wb-main">
               <div className="wb-hero-lg">
                 <div className="wbl-glow"></div>
-                <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="wbl-video" onCanPlay={(e) => { e.currentTarget.playbackRate = 0.75; }} />
+                {coachVariant === 'lisa-jung' ? (
+                  <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="wbl-video" onCanPlay={(e) => { e.currentTarget.playbackRate = 0.75; }} />
+                ) : (
+                  <img src={c.image} alt={c.name} className="wbl-video" style={{ objectFit: 'cover' }} />
+                )}
               </div>
-              <div className="wbl-name">Lisa AI</div>
+              <div className="wbl-name">{c.name.split(',')[0].trim()}</div>
               <div className="wbl-status"><span className="wbl-dot" />Online · bereit für dich</div>
-              <p className="wb-tagline">Deine persönliche Longevity Trainerin</p>
+              <p className="wb-tagline">
+                {coachVariant.startsWith('lisa') ? 'Deine persönliche Longevity Trainerin' : 'Dein persönlicher Longevity Trainer'}
+              </p>
             </div>
             
             <div className="wb-sidebar">
@@ -759,14 +765,18 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                     <div className={`s-wave s-wave-3 ${isListening||isSpeaking?'act':''}`} />
                   </>)}
                   <div className="s-lisa-wrap">
-                    <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="s-lisa-vid" onCanPlay={(e) => { e.currentTarget.playbackRate = 0.75; }} />
+                    {coachVariant === 'lisa-jung' ? (
+                      <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="s-lisa-vid" onCanPlay={(e) => { e.currentTarget.playbackRate = 0.75; }} />
+                    ) : (
+                      <img src={c.image} alt={c.name} className="s-lisa-vid" style={{ objectFit: 'cover' }} />
+                    )}
                     <div className="s-lisa-glow" />
                   </div>
                 </div>
 
                 {/* Name + status */}
                 <div className="s-lisa-info">
-                  <span className="s-lisa-name">{c.name}</span>
+                  <span className="s-lisa-name">{c.name.split(',')[0].trim()}</span>
                   <span className="s-lisa-status">{isSpeaking ? '● spricht' : isListening ? '● hört zu' : '○ bereit'}</span>
                 </div>
 
