@@ -951,7 +951,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         /* NEW WELCOME: right session buttons */
         .wbs-header{margin-bottom:0.5rem;padding-top:0px}
         .wbs-header .wb-title{font-size:1.7rem;font-weight:400;letter-spacing:-0.02em}
-        .wb-session-btns{display:flex;flex-direction:column;gap:0.7rem;flex:1;padding:8px;margin:-8px}
+        .wb-session-btns{display:flex;flex-direction:column;gap:0.7rem;padding:8px;margin:-8px}
         .wb-stype-btn{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.75rem 1.15rem;border-radius:16px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer;transition:all 0.25s cubic-bezier(0.16,1,0.3,1);text-align:left;width:100%;color:#e2eaf4}
         .wb-stype-btn:hover{border-color:#fff;background:#7dd3fc;color:#091221;transform:translateY(-3px) scale(1.01);box-shadow:0 0 0 1px #fff, 0 0 0 3px #0284c7, 0 0 15px 4px rgba(125,211,252,0.45), 0 12px 32px rgba(0,20,60,0.35)}
         .wb-stype-btn:hover .wbsb-title{color:#091221}
@@ -966,7 +966,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .wbsb-right{display:flex;flex-direction:row;align-items:center;gap:0.75rem;flex-shrink:0;color:rgba(68,152,202,0.6)}
         .wbsb-time{font-size:1.18rem;font-weight:600;color:rgba(68,152,202,0.8);background:rgba(68,152,202,0.1);padding:0.4rem 0.8rem;border-radius:12px;border:1px solid rgba(68,152,202,0.2);white-space:nowrap}
         /* bottom history/config buttons */
-        .wb-bottom-btns{display:flex;gap:0.6rem;margin-top:0.8rem;margin-bottom:0px}
+        .wb-bottom-btns{display:flex;gap:0.6rem;margin-top:2rem;margin-bottom:0px}
         .wb-bottom-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:0.5rem;height:45px;padding:0 1.2rem;border-radius:12px;font-size:0.95rem;font-weight:500;cursor:pointer;transition:all 0.25s}
         .wb-bottom-btn.btn-history{background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.06);color:#cbd5e1}
         .wb-bottom-btn.btn-history:hover{background:rgba(15,23,42,0.85);border-color:#38bdf8;color:#38bdf8;box-shadow:0 0 18px rgba(56,189,248,0.3)}
@@ -1457,7 +1457,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .wb-start:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 32px rgba(201, 169, 110, 0.4); }
         .wb-start-glow { position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); transform: skewX(-20deg); animation: buttonShine 5s infinite; }
         
-        .wb-sidebar { display: flex; flex-direction: column; gap: 0.6rem; position: relative; overflow: visible; min-width: 0; padding-top: 0px; }
+        .wb-sidebar { display: flex; flex-direction: column; gap: 0.8rem; position: relative; overflow: visible; min-width: 0; padding-top: 2.2rem; }
         .wb-sidebar-tabs { display: none; }
         .wb-st-btn {
           flex: 1; padding: 0.75rem 0; border-radius: 14px; border: none; background: transparent;
