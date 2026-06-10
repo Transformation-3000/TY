@@ -1268,7 +1268,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .rbtn:hover{transform:scale(1.1);background:rgba(255,255,255,.08);box-shadow:0 8px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);color:#f8fafc;border-color:rgba(255,255,255,.15)}
         .rlabs{width:100%;display:flex;justify-content:space-between;font-size:.8rem;color:#64748b;font-weight:500}
         .wpills{display:flex;flex-direction:column;gap:.45rem}
-        .plbtn{display:flex;align-items:center;gap:.75rem;padding:.8rem 1.1rem;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(12px);font-size:.95rem;color:#e2e8f0;font-weight:500;cursor:pointer;transition:all .25s;text-align:left;width:100%;box-shadow:0 8px 24px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.05)}
+        .plbtn{display:flex;align-items:center;gap:.75rem;padding:.5rem 1.1rem;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(12px);font-size:.95rem;color:#e2e8f0;font-weight:500;cursor:pointer;transition:all .25s;text-align:left;width:100%;box-shadow:0 8px 24px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.05)}
         .plbtn:hover{border-color:rgba(255,255,255,.15);background:rgba(255,255,255,.06);box-shadow:0 12px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);transform:translateY(-2px)}
         .plbtn-icon{font-size:1.15rem;width:32px;height:32px;display:flex;align-items:center;justify-content:center;border-radius:9px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);flex-shrink:0}
         .plbtn-body{flex:1;min-width:0;display:flex;flex-direction:column}
