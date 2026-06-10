@@ -1223,9 +1223,9 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .s-wave-2.act{animation-delay:.65s}
         .s-wave-3.act{animation-delay:1.3s}
         @keyframes sw{0%{opacity:.4;transform:translate(-50%,-50%) scale(.92)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.18)}}
-        .s-lisa-info{text-align:center}
+        .s-lisa-info{text-align:center;margin-top:-0.7rem}
         .s-lisa-name{display:block;font-size:1.8rem;font-weight:600;color:#f8fafc;letter-spacing:.02em;margin-bottom:.3rem}
-        .s-lisa-status{display:block;font-size:.8rem;color:#94a3b8;letter-spacing:.05em}
+        .s-lisa-status{display:block;font-size:1.05rem;color:#94a3b8;letter-spacing:.05em}
         .s-mic-wrap{display:flex;flex-direction:column;align-items:center;gap:.6rem}
         .s-mbtn{width:56px;height:56px;border-radius:50%;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);cursor:pointer;transition:all .3s;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.05)}
         .s-mbtn:hover{border-color:rgba(255,255,255,.2);background:rgba(255,255,255,.08);transform:translateY(-2px)}
