@@ -1315,7 +1315,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .wcd-icon{font-size:1.45rem;flex-shrink:0;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
         .wcd-body{flex:1;min-width:0}
         .wcd-body strong{display:block;font-size:1.18rem;color:#f8fafc;font-weight:600;margin-bottom:.2rem;letter-spacing:.01em}
-        .wcd-body span{font-size:0.95rem;color:#94a3b8;line-height:1.4}
+        .wcd-body span{font-size:1.02rem;color:#94a3b8;line-height:1.4}
         .wcd-arrow{color:rgba(255,255,255,.3);flex-shrink:0;transition:transform .25s}.wcd:hover .wcd-arrow{transform:translateX(3px);color:rgba(255,255,255,.8)}
         .wrate{display:flex;flex-wrap:wrap;gap:.5rem}
         .rbtn{width:48px;height:48px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(12px);font-size:1rem;font-weight:600;color:#cbd5e1;cursor:pointer;transition:all .25s;box-shadow:0 4px 12px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.05)}
