@@ -6,7 +6,7 @@ import Image from 'next/image';
 type CoachVariant = 'lisa-jung' | 'lisa-alt' | 'tom-jung' | 'tom-alt';
 type FormatTab = 'text' | 'voice';
 type SessionType = 'daily' | 'weekly' | 'quarterly';
-type SessionPhase = 'entry' | 'checkin-energy' | 'checkin-stress' | 'checkin-focus' | 'data-pull' | 'verstehen' | 'fokus' | 'empfehlung' | 'commitment' | 'syncing' | 'closing';
+type SessionPhase = 'entry' | 'checkin-energy' | 'checkin-stress' | 'checkin-focus' | 'data-pull' | 'verstehen' | 'fokus' | 'empfehlung' | 'commitment' | 'syncing' | 'closing' | 'daily-topic-detail' | 'daily-lifestyle-insight';
 type ViewMode = 'welcome' | 'setup' | 'preparing' | 'session';
 type SetupStep = 'coach' | 'personality' | 'data';
 
@@ -51,11 +51,13 @@ const phaseLabels: Record<SessionPhase, string> = {
   'checkin-focus': 'Check-in', 'data-pull': 'Datenanalyse', 'verstehen': 'Verstehen',
   'fokus': 'Fokus setzen', 'empfehlung': 'Empfehlung', 'commitment': 'Commitment',
   'syncing': 'Wird übertragen', 'closing': 'Abschluss',
+  'daily-topic-detail': 'Detail-Check', 'daily-lifestyle-insight': 'Lifestyle-Check',
 };
 const phaseProgress: Record<SessionPhase, number> = {
   'entry': 5, 'checkin-energy': 10, 'checkin-stress': 18, 'checkin-focus': 25,
   'data-pull': 35, 'verstehen': 48, 'fokus': 60, 'empfehlung': 75,
   'commitment': 85, 'syncing': 95, 'closing': 100,
+  'daily-topic-detail': 50, 'daily-lifestyle-insight': 80,
 };
 const dataLabels = [
   { icon: '🏃', label: 'Bewegung', loading: 'Sportdaten werden geladen...', val: '8.420', unit: 'Schritte/Tag', sub: '↑ 14% vs. Vorwoche', trend: 'good', pct: 78,
@@ -133,6 +135,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
   const [showHistory, setShowHistory] = useState(false);
   const [rightTab, setRightTab] = useState<'today'|'history'|'customize'>('today');
   const [sessionType, setSessionType] = useState<SessionType>('daily');
+  const [entryChoice, setEntryChoice] = useState<string>('');
   const [showMoreRecs, setShowMoreRecs] = useState(false);
   const [historySearch, setHistorySearch] = useState('');
   const [selectedSessionId, setSelectedSessionId] = useState<number | null>(null);
@@ -286,6 +289,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
       setSessionTime(0); setMessages([]); setPhase('entry');
       setEnergy(0); setStress(0); setFocusTopic('');
       setDataLoadStage(0); setDataItems(0); setSyncStage(0); setSyncDone(false);
+      setEntryChoice('');
       setIsAnimating(true);
       setTimeout(() => { setView('session'); setIsAnimating(false); }, 50);
       await addCoachMsg('Hallo Monique! Schön, dass du dir Zeit für dich nimmst. Was möchtest du heute machen?', 'entry-options', 1200);
@@ -299,9 +303,31 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
     }
   }, [autoStartSession, clearAutoStart]);
 
-  const handleEntryChoice = async (ch: string) => { markAnswered(); addUserMsg(ch); setPhase('checkin-energy'); await addCoachMsg('Bevor wir starten – wie ist deine Energie heute?', 'energy', 900); };
+  const handleEntryChoice = async (ch: string) => { setEntryChoice(ch); markAnswered(); addUserMsg(ch); setPhase('checkin-energy'); await addCoachMsg('Bevor wir starten – wie ist deine Energie heute?', 'energy', 900); };
   const handleEnergy = async (v: number) => { setEnergy(v); markAnswered(); addUserMsg(`Energie: ${v}/5`); setPhase('checkin-stress'); await addCoachMsg('Und wie hoch ist dein Stress gerade?', 'stress', 700); };
-  const handleStress = async (v: number) => { setStress(v); markAnswered(); addUserMsg(`Stress: ${v}/5`); setPhase('checkin-focus'); setMessages([]); await addCoachMsg('Worauf möchtest du heute schauen?', 'focus', 700); };
+  const handleStress = async (v: number) => {
+    setStress(v);
+    markAnswered();
+    addUserMsg(`Stress: ${v}/5`);
+    if (sessionType === 'daily') {
+      setPhase('daily-topic-detail');
+      if (entryChoice === 'Was bewegt dich gerade?') {
+        await addCoachMsg('Lass uns direkt einsteigen: Gibt es ein bestimmtes Thema, das dich heute besonders beschäftigt, oder möchtest du einfach deine Gedanken sortieren?', undefined, 900);
+      } else if (entryChoice === 'Tages-Highlight') {
+        await addCoachMsg('Schön! Lass uns diesen Moment festhalten: Was genau war heute dein schönster Moment, und warum hat er sich so gut angefühlt?', undefined, 900);
+      } else if (entryChoice === 'Tages-Fokus') {
+        await addCoachMsg('Ein klarer Fokus hilft ungemein. Was ist heute deine wichtigste Priorität, und wie kann ich dich am besten dabei unterstützen?', undefined, 900);
+      } else if (entryChoice === 'Dankbarkeit') {
+        await addCoachMsg('Dankbarkeit ist ein wunderbarer Anker. Wofür genau bist du heute besonders dankbar, und wer oder was hat dazu beigetragen?', undefined, 900);
+      } else {
+        await addCoachMsg('Lass uns direkt einsteigen: Was beschäftigt dich heute am meisten?', undefined, 900);
+      }
+    } else {
+      setPhase('checkin-focus');
+      setMessages([]);
+      await addCoachMsg('Worauf möchtest du heute schauen?', 'focus', 700);
+    }
+  };
   const handleFocus = async (id: string) => {
     setFocusTopic(id); markAnswered();
     const t = focusTopics.find(x => x.id === id);
@@ -319,6 +345,16 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
     } else if (phase === 'fokus') {
       setPhase('empfehlung');
       await addCoachMsg('Das passt genau zu deinem HRV-Verlauf – die Erholungsphasen starten bei dir erst spät in der Nacht. Bildschirmzeit hält dein Nervensystem im Sympathikus-Modus. Ich habe auf Basis deiner Daten einen konkreten Plan erarbeitet:', 'action-plan', 1600);
+    } else if (phase === 'daily-topic-detail') {
+      setPhase('daily-lifestyle-insight');
+      if (entryChoice === 'Was bewegt dich gerade?' || entryChoice === 'Tages-Fokus') {
+        await addCoachMsg('Das klingt nach einem intensiven Fokus. Wie schaffst du dir heute Abend einen bewussten Moment zum Abschalten, um wieder Kraft zu tanken?', undefined, 1200);
+      } else {
+        await addCoachMsg('Das ist ein wunderbarer Gedanke! Achtest du im Alltag öfter auf solche kleinen Glücksmomente, oder ging das heute ganz spontan?', undefined, 1200);
+      }
+    } else if (phase === 'daily-lifestyle-insight') {
+      setPhase('closing');
+      await addCoachMsg('Sehr schön. Nimm dieses positive Gefühl und deinen Vorsatz mit in den Feierabend. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
     }
   };
   const handleShowCommitment = async () => { markAnswered(); setPhase('commitment'); await addCoachMsg('Wie klingt das für dich?', 'commitment', 500); };
@@ -344,9 +380,30 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
   const getQuickReplies = (): string[] => {
     if (phase === 'verstehen') return ['Ich schlafe genug, aber wache unausgeruht auf.', 'Abends komme ich schwer zur Ruhe.', 'Mein Schlafrhythmus ist durcheinander.'];
     if (phase === 'fokus') return ['Ja, ich bin abends oft noch am Handy.', 'Ich schaue meistens noch Serien.', 'Ich grüble über den nächsten Tag.'];
+    if (phase === 'daily-topic-detail') {
+      if (entryChoice === 'Was bewegt dich gerade?') {
+        return ['Ich habe gerade ziemlich viel Stress.', 'Eigentlich läuft alles gut, wollte nur kurz reflektieren.', 'Ich möchte meine Gedanken zu einem bestimmten Thema sortieren.'];
+      }
+      if (entryChoice === 'Tages-Highlight') {
+        return ['Ein tolles Gespräch mit einem lieben Menschen.', 'Ich habe eine sportliche Einheit erfolgreich absolviert.', 'Ein leckeres Essen oder ein schöner Moment in der Natur.'];
+      }
+      if (entryChoice === 'Tages-Fokus') {
+        return ['Ein wichtiges Projekt abschließen.', 'Mir heute Abend bewusst Zeit für mich nehmen.', 'Gesunde Gewohnheiten konsequent durchziehen.'];
+      }
+      if (entryChoice === 'Dankbarkeit') {
+        return ['Dass ich nette Menschen um mich habe.', 'Dass ich heute gesund und schmerzfrei bin.', 'Für die kleinen Erholungsmomente im Alltag.'];
+      }
+    }
+    if (phase === 'daily-lifestyle-insight') {
+      if (entryChoice === 'Was bewegt dich gerade?' || entryChoice === 'Tages-Fokus') {
+        return ['Ich werde heute Abend bewusst das Handy weglegen.', 'Ein Spaziergang an der frischen Luft ist geplant.', 'Ich versuche einfach, früh ins Bett zu gehen.'];
+      } else {
+        return ['Ich versuche, das ganz bewusst jeden Tag zu tun.', 'Das passiert eher spontan, tut aber extrem gut.', 'Ich möchte mir ab jetzt öfter solche Momente nehmen.'];
+      }
+    }
     return [];
   };
-  const showQR = !isTyping && (phase === 'verstehen' || phase === 'fokus') && messages.length > 0 && messages[messages.length - 1].from === 'coach' && !messages[messages.length - 1].widget;
+  const showQR = !isTyping && (phase === 'verstehen' || phase === 'fokus' || phase === 'daily-topic-detail' || phase === 'daily-lifestyle-insight') && messages.length > 0 && messages[messages.length - 1].from === 'coach' && !messages[messages.length - 1].widget;
 
   return (
     <div className="cr">
