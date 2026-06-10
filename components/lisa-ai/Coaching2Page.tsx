@@ -1475,7 +1475,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .clob{padding:.7rem 1.5rem;border-radius:14px;border:1px solid rgba(255,255,255,.15);background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.03));color:#fff;font-size:1.0rem;font-weight:600;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1);transition:all .25s}
         .clob:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.15);background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.06))}
  
-        .qrs{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:.5rem;padding:0.75rem 1.5rem;background:transparent;border:none}
+        .qrs{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:.5rem;padding:0.75rem 1.5rem 0.75rem calc(2.25rem + 50px);background:transparent;border:none}
         .qrb{padding:.5rem 1.1rem;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);backdrop-filter:blur(12px);font-size:.92rem;color:#cbd5e1;font-weight:500;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 12px rgba(0,0,0,.1),inset 0 1px 0 rgba(255,255,255,.05)}
         .qrb:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#f8fafc;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1)}
  
@@ -1540,7 +1540,8 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
           .sftabs{display:none}
           .stop{padding:.6rem 1rem}
           .chat{padding:1rem}
-          .iarea,.qrs{padding-left:1rem;padding-right:1rem}
+          .iarea{padding-left:1rem;padding-right:1rem}
+          .qrs{padding-left:calc(1.75rem + 50px);padding-right:1rem}
         }
         @media(max-width:480px){
           .cr{min-height:calc(100vh - 54px)}
