@@ -1303,7 +1303,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .cav{width:50px;height:50px;flex-shrink:0;border-radius:50%;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1.5px solid rgba(255,255,255,.12)}
         .ccont{display:flex;flex-direction:column;gap:.4rem;min-width:0}.ccont.system{width:100%}
         .bub{padding:.85rem 1.15rem;border-radius:18px;backdrop-filter:blur(16px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
-        .bub.coach{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-bottom-left-radius:5px}
+        .bub.coach{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.22);border-bottom-left-radius:5px}
         .bub.user{background:linear-gradient(135deg,rgba(255,255,255,.08),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.15);border-bottom-right-radius:5px;box-shadow:inset 0 1px 0 rgba(255,255,255,.1), 0 8px 24px rgba(0,0,0,.2)}
         .bub p{font-size:1.05rem;line-height:1.6;margin:0;letter-spacing:0.01em;font-weight:400}.bub.coach p{color:#e2e8f0}.bub.user p{color:#f8fafc}
         .tbub{padding:.75rem 1.15rem}.tdots{display:flex;gap:5px;align-items:center}.tdots span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.4);animation:db 1.4s ease-in-out infinite}.tdots span:nth-child(2){animation-delay:.2s;background:rgba(255,255,255,0.6)}.tdots span:nth-child(3){animation-delay:.4s;background:rgba(255,255,255,0.8)}
