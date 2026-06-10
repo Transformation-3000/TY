@@ -941,7 +941,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .wv-btn{padding:.55rem 1.1rem;border-radius:12px;border:1.5px solid rgba(68,152,202,.15);background:rgba(255,255,255,.7);color:#5a8aa8;font-size:.82rem;font-weight:500;cursor:pointer;transition:all .25s;backdrop-filter:blur(8px)}
         .wv-btn:hover{border-color:rgba(68,152,202,.35);color:#2c5a7c;background:rgba(255,255,255,.95)}
         /* NEW WELCOME: Lisa left panel */
-        .wb-hero-lg{position:relative;width:min(400px,84vw);height:min(400px,84vw);border-radius:50%;overflow:hidden;margin-bottom:1.25rem;flex-shrink:0}
+        .wb-hero-lg{position:relative;width:min(340px,78vw);height:min(340px,78vw);border-radius:50%;overflow:hidden;margin-bottom:0.75rem;flex-shrink:0}
         .wbl-glow{position:absolute;inset:-20%;border-radius:50%;background:conic-gradient(from 0deg,rgba(68,152,202,0.4),rgba(30,80,160,0.3),rgba(68,152,202,0.4));filter:blur(28px);opacity:0.5;animation:spin 18s linear infinite}
         .wbl-video{position:relative;z-index:2;width:100%;height:100%;border-radius:50%;object-fit:cover;border:2px solid rgba(68,152,202,0.25);box-shadow:0 16px 60px rgba(0,20,80,0.45)}
         .wbl-name{font-size:2.2rem;font-weight:300;letter-spacing:-0.02em;color:#e8f0fa;margin-bottom:0.2rem}
@@ -949,10 +949,10 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .wbl-dot{width:8px;height:8px;border-radius:50%;background:#4CAF50;flex-shrink:0;box-shadow:0 0 6px rgba(76,175,80,0.8);animation:dotpulse 2s infinite}
         .wb-tagline{font-size:1.05rem;color:rgba(180,210,240,0.45);margin:0;letter-spacing:0.04em;text-transform:uppercase}
         /* NEW WELCOME: right session buttons */
-        .wbs-header{margin-bottom:0.8rem;padding-top:20px}
+        .wbs-header{margin-bottom:0.5rem;padding-top:0px}
         .wbs-header .wb-title{font-size:1.7rem;font-weight:400;letter-spacing:-0.02em}
         .wb-session-btns{display:flex;flex-direction:column;gap:0.7rem;flex:1;padding:8px;margin:-8px}
-        .wb-stype-btn{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1.05rem 1.25rem;border-radius:18px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer;transition:all 0.25s cubic-bezier(0.16,1,0.3,1);text-align:left;width:100%;color:#e2eaf4}
+        .wb-stype-btn{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:0.75rem 1.15rem;border-radius:16px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);cursor:pointer;transition:all 0.25s cubic-bezier(0.16,1,0.3,1);text-align:left;width:100%;color:#e2eaf4}
         .wb-stype-btn:hover{border-color:#fff;background:#7dd3fc;color:#091221;transform:translateY(-3px) scale(1.01);box-shadow:0 0 0 1px #fff, 0 0 0 3px #0284c7, 0 0 15px 4px rgba(125,211,252,0.45), 0 12px 32px rgba(0,20,60,0.35)}
         .wb-stype-btn:hover .wbsb-title{color:#091221}
         .wb-stype-btn:hover .wbsb-desc{color:#1e293b}
@@ -966,8 +966,8 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .wbsb-right{display:flex;flex-direction:row;align-items:center;gap:0.75rem;flex-shrink:0;color:rgba(68,152,202,0.6)}
         .wbsb-time{font-size:1.18rem;font-weight:600;color:rgba(68,152,202,0.8);background:rgba(68,152,202,0.1);padding:0.4rem 0.8rem;border-radius:12px;border:1px solid rgba(68,152,202,0.2);white-space:nowrap}
         /* bottom history/config buttons */
-        .wb-bottom-btns{display:flex;gap:0.6rem;margin-top:0.8rem;margin-bottom:160px}
-        .wb-bottom-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:0.5rem;height:60px;padding:0 1.2rem;border-radius:14px;font-size:1.05rem;font-weight:500;cursor:pointer;transition:all 0.25s}
+        .wb-bottom-btns{display:flex;gap:0.6rem;margin-top:0.8rem;margin-bottom:0px}
+        .wb-bottom-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:0.5rem;height:45px;padding:0 1.2rem;border-radius:12px;font-size:0.95rem;font-weight:500;cursor:pointer;transition:all 0.25s}
         .wb-bottom-btn.btn-history{background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.06);color:#cbd5e1}
         .wb-bottom-btn.btn-history:hover{background:rgba(15,23,42,0.85);border-color:#38bdf8;color:#38bdf8;box-shadow:0 0 18px rgba(56,189,248,0.3)}
         .wb-bottom-btn.btn-config{background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.06);color:#cbd5e1}
@@ -1429,7 +1429,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .w-bento {
           display: grid; grid-template-columns: 1fr 1.1fr; gap: 2rem;
           max-width: 1200px; margin: 0 auto; height: auto; min-height: calc(100vh - 120px);
-          padding: 2rem; color: #e2eaf4; animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+          padding: 0.5rem 2rem 1.5rem; color: #e2eaf4; animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
         .wb-main {
           background: rgba(255,255,255,0.06); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
@@ -1457,7 +1457,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .wb-start:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 32px rgba(201, 169, 110, 0.4); }
         .wb-start-glow { position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); transform: skewX(-20deg); animation: buttonShine 5s infinite; }
         
-        .wb-sidebar { display: flex; flex-direction: column; gap: 0.85rem; position: relative; overflow: visible; min-width: 0; padding-top: 20px; }
+        .wb-sidebar { display: flex; flex-direction: column; gap: 0.6rem; position: relative; overflow: visible; min-width: 0; padding-top: 0px; }
         .wb-sidebar-tabs { display: none; }
         .wb-st-btn {
           flex: 1; padding: 0.75rem 0; border-radius: 14px; border: none; background: transparent;
