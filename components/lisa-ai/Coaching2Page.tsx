@@ -362,19 +362,6 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                 <h1 className="wb-title">Wähle deine Session</h1>
               </div>
 
-              {/* Format choice: Text or Voice */}
-              <div style={{ marginBottom: '1rem', marginTop: '-0.25rem' }}>
-                <div style={{ fontSize: '0.8rem', fontWeight: 600, color: 'rgba(255,255,255,0.4)', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem' }}>Interaktions-Modus</div>
-                <div className="wb-tabs-format">
-                  <button className={`wb-tab ${formatTab === 'text' ? 'act' : ''}`} onClick={() => setFormatTab('text')}>
-                    💬 Text-Modus
-                  </button>
-                  <button className={`wb-tab ${formatTab === 'voice' ? 'act' : ''}`} onClick={() => setFormatTab('voice')}>
-                    🎙️ Voice-Modus
-                  </button>
-                </div>
-              </div>
-
               <div className="wb-session-btns">
                 <button className="wb-stype-btn" onClick={() => startSession('daily')}>
                   <div className="wbsb-left">
@@ -726,9 +713,22 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
             <div className="s-body">
               {/* LEFT – Lisa presence (audio central) */}
               <div className="s-left">
-
-                {/* Lisa with wave rings */}
-                <div className="s-lisa-scene">
+ 
+                 {/* Format tab bar – small, at top */}
+                 <div className="s-fmt-tabs">
+                   {(['text','voice'] as FormatTab[]).map(f => (
+                     <button key={f} className={`s-ftab ${formatTab===f?'act':''}`} onClick={() => setFormatTab(f)}>
+                       {f==='text' ? <>
+                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:4,flexShrink:0}}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>Text
+                       </> : <>
+                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{marginRight:4,flexShrink:0}}><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/></svg>Voice
+                       </>}
+                     </button>
+                   ))}
+                 </div>
+ 
+                 {/* Lisa with wave rings */}
+                 <div className="s-lisa-scene">
                   {/* Outward wave rings – visible in audio mode */}
                   {formatTab==='voice' && (<>
                     <div className={`s-wave s-wave-1 ${isListening||isSpeaking?'act':''}`} />
