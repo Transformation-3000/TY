@@ -739,9 +739,9 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                   <Image src={c.image} alt={c.name} width={40} height={40} style={{objectFit:'cover',borderRadius:'50%'}} />
                   {isSpeaking && <span className="sring"/>}
                 </div>
-                <div className="tinf">
-                  <strong>{c.name.split(',')[0].trim()} {sessionType==='daily'?'Daily':sessionType==='weekly'?'Weekly':'Quarterly'}</strong>
-                </div>
+                <span className={`s-type-badge bdg-${sessionType}`}>
+                  {c.name.split(',')[0].trim()} {sessionType==='daily'?'Daily':sessionType==='weekly'?'Weekly':'Quarterly'}
+                </span>
               </div>
               <div className="s-center-cal">
                 <span className="we-countdown-sm">{getFormattedCurrentDate()}</span>
@@ -1171,12 +1171,27 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .sess-anim{opacity:0;transform:scale(.97)}
         .stop{position:relative;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.05);background:rgba(6,13,24,.75);backdrop-filter:blur(24px);gap:1rem}
         .stl{display:flex;align-items:center;gap:.8rem;flex-shrink:0}
-        .s-type-badge{display:none}
+        .s-type-badge{
+          display: inline-flex; align-items: center;
+          font-size: 1.05rem; font-weight: 600;
+          padding: 0.5rem 1.1rem; border-radius: 100px;
+          letter-spacing: .02em; margin-left: .2rem;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+        .s-type-badge.bdg-daily {
+          background: rgba(34,197,94,0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3);
+        }
+        .s-type-badge.bdg-weekly {
+          background: rgba(56,189,248,0.15); color: #38bdf8; border: 1px solid rgba(56,189,248,0.3);
+        }
+        .s-type-badge.bdg-quarterly {
+          background: rgba(192,132,252,0.15); color: #d8b4fe; border: 1px solid rgba(192,132,252,0.3);
+        }
         .tav{position:relative;width:44px;height:44px;flex-shrink:0}
         .tav :global(img){border:1px solid rgba(255,255,255,0.1);box-shadow:0 4px 12px rgba(0,0,0,.4)}
         .sring{position:absolute;inset:-4px;border-radius:50%;border:1px solid rgba(255,255,255,.15);animation:sp 1.5s ease-in-out infinite}
         @keyframes sp{0%,100%{opacity:.2;transform:scale(1)}50%{opacity:.6;transform:scale(1.12)}}
-        .tinf strong{display:block;font-size:1.2rem;color:#f8fafc;letter-spacing:.01em}
+        .tinf strong{display:none}
         .tst{display:none}
         .we-countdown-sm{font-size:1.1rem;color:#94a3b8;font-weight:500;letter-spacing:.01em}
         .sftabs{flex:0 1 280px}
