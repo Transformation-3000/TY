@@ -820,11 +820,18 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                               <div className="wcd-body"><strong>Was bewegt dich gerade?</strong><span>Was dich gerade beschäftigt</span></div>
                               <svg className="wcd-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                             </button>
-                            <button className="wcd wcd-amber" onClick={() => handleEntryChoice('Mein Lifestyle')}>
+                            <button className="wcd wcd-amber" onClick={() => handleEntryChoice('Tages-Highlight')}>
                               <div className="wcd-icon" style={{ background: 'rgba(251,191,36,0.1)', borderColor: 'rgba(251,191,36,0.2)' }}>
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" /></svg>
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
                               </div>
-                              <div className="wcd-body"><strong>Mein Lifestyle</strong><span>Teile mir etwas über deinen aktuellen Lifestyle mit</span></div>
+                              <div className="wcd-body"><strong>Tages-Highlight</strong><span>Was wäre dein schönster Moment heute</span></div>
+                              <svg className="wcd-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                            </button>
+                            <button className="wcd wcd-blue" onClick={() => handleEntryChoice('Tages-Fokus')}>
+                              <div className="wcd-icon" style={{ background: 'rgba(96,165,250,0.1)', borderColor: 'rgba(96,165,250,0.2)' }}>
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" /></svg>
+                              </div>
+                              <div className="wcd-body"><strong>Tages-Fokus</strong><span>Was ist deine wichtigste Priorität heute</span></div>
                               <svg className="wcd-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                             </button>
                             <button className="wcd wcd-rose" onClick={() => handleEntryChoice('Dankbarkeit')}>
