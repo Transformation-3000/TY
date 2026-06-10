@@ -288,7 +288,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
       setDataLoadStage(0); setDataItems(0); setSyncStage(0); setSyncDone(false);
       setIsAnimating(true);
       setTimeout(() => { setView('session'); setIsAnimating(false); }, 50);
-      await addCoachMsg('Hallo Hendrik! Schön, dass du dir Zeit für dich nimmst. Was möchtest du heute machen?', 'entry-options', 1200);
+      await addCoachMsg('Hallo Monique! Schön, dass du dir Zeit für dich nimmst. Was möchtest du heute machen?', 'entry-options', 1200);
     }, 4500);
   };
 
@@ -821,9 +821,9 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                           <div className="wcd-body"><strong>Akutes Thema besprechen</strong><span>Was dich gerade bewegt.</span></div>
                           <svg className="wcd-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
-                        <button className="wcd" onClick={() => handleEntryChoice('Neuer Check-in')}>
+                        <button className="wcd" onClick={() => handleEntryChoice('Neues Thema beginnen')}>
                           <div className="wcd-icon">📊</div>
-                          <div className="wcd-body"><strong>Neuer Check-in</strong><span>Strukturierter Trainings-Flow.</span></div>
+                          <div className="wcd-body"><strong>Neues Thema beginnen</strong><span>Wähle aus 6 Optimierungsfeldern aus.</span></div>
                           <svg className="wcd-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
                       </div>
