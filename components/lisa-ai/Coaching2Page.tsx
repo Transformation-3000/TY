@@ -491,7 +491,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                   <img src={c.image} alt={c.name} className="pc-avatar" style={{ objectFit: 'cover' }} />
                 )}
               </div>
-              <h2 className="pc-title">Mindspace wird vorbereitet</h2>
+              <h2 className="pc-title">Dein Mindspace wird vorbereitet</h2>
               <div className="pc-steps-container">
                 <div className="pc-step" style={{animationDelay: '0.5s'}}>Synchronisiere Biosignale...</div>
                 <div className="pc-step" style={{animationDelay: '1.5s'}}>Lade letzte Trainings-Erkenntnisse...</div>
@@ -1462,7 +1462,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .pc-title { font-size: 2.2rem; font-weight: 200; letter-spacing: -0.02em; margin-bottom: 3.5rem; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
         .pc-steps-container { display: flex; flex-direction: column; gap: 0.5rem; }
         .pc-step { 
-          font-size: 1.05rem; color: #cbd5e1; font-weight: 300;
+          font-size: 1.2rem; color: #cbd5e1; font-weight: 300;
           opacity: 0; animation: stepFadeInUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
         @keyframes stepFadeInUp { from { opacity: 0; transform: translateY(20px); filter: blur(4px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
