@@ -58,12 +58,12 @@ const phaseProgress: Record<SessionPhase, number> = {
   'commitment': 85, 'syncing': 95, 'closing': 100,
 };
 const dataLabels = [
-  { icon: '🏃', label: 'Bewegung', loading: 'Sportdaten werden geladen...', val: '6.420', unit: 'Schritte/Tag', sub: '↓ 18% vs. Vorwoche', trend: 'down', pct: 55,
-    spark: '0,2 10,5 20,20 30,22 40,13 50,27 60,17', sparkColor: 'rgba(220,100,80,.9)' },
+  { icon: '🏃', label: 'Bewegung', loading: 'Sportdaten werden geladen...', val: '8.420', unit: 'Schritte/Tag', sub: '↑ 14% vs. Vorwoche', trend: 'good', pct: 78,
+    spark: '0,24 10,22 20,18 30,15 40,12 50,8 60,4', sparkColor: 'rgba(80,200,120,.9)' },
   { icon: '😴', label: 'Schlaf', loading: 'Schlafdaten werden geladen...', val: '6h 12min', unit: 'Durchschnitt', sub: '↓ Qualität gesunken', trend: 'down', pct: 48,
     spark: '0,8 10,2 20,14 30,20 40,27 50,25 60,21', sparkColor: 'rgba(220,100,80,.9)' },
-  { icon: '❤️', label: 'HRV', loading: 'HRV-Daten werden geladen...', val: '38 ms', unit: 'Durchschnitt', sub: '↓ unter deinem Baseline', trend: 'down', pct: 40,
-    spark: '0,2 10,9 20,14 30,19 40,27 50,22 60,19', sparkColor: 'rgba(220,100,80,.9)' },
+  { icon: '❤️', label: 'HRV', loading: 'HRV-Daten werden geladen...', val: '46 ms', unit: 'Durchschnitt', sub: '↑ über deiner Baseline', trend: 'good', pct: 72,
+    spark: '0,22 10,20 20,16 30,14 40,10 50,7 60,3', sparkColor: 'rgba(80,200,120,.9)' },
   { icon: '💓', label: 'Ruhepuls', loading: 'Vitaldaten werden geladen...', val: '72 bpm', unit: 'Durchschnitt', sub: '↑ leicht erhöht', trend: 'up', pct: 62,
     spark: '0,26 10,18 20,14 30,10 40,2 50,6 60,10', sparkColor: 'rgba(220,140,60,.9)' },
 ];
@@ -181,7 +181,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         await addCoachMsg('', 'data-result', 400);
         const eDesc = energy <= 2 ? 'niedrig' : energy <= 3 ? 'mittel' : 'gut';
         await addCoachMsg(
-          `Deine Daten zeigen ein klares Bild: Deine Schlafqualität ist in den letzten Tagen gesunken, die HRV deutet auf erhöhte Belastung hin, und deine Bewegung war unterdurchschnittlich. Zusammen mit deinem Energielevel (${eDesc}) und Stresslevel (${stress}/5) ergibt sich ein konkreter Ansatzpunkt. Was beschäftigt dich beim Thema ${focusData?.label} am meisten?`,
+          `Deine Daten zeigen ein gemischtes Bild: Bewegung und HRV zeigen eine sehr positive Entwicklung, allerdings ist deine Schlafqualität in den letzten Tagen gesunken und dein Ruhepuls leicht erhöht. Zusammen mit deinem Energielevel (${eDesc}) und Stresslevel (${stress}/5) ergibt sich ein konkreter Ansatzpunkt. Was beschäftigt dich beim Thema ${focusData?.label} am meisten?`,
           undefined, 1800
         );
         setPhase('verstehen');
@@ -1302,7 +1302,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .drcu{font-size:.76rem;color:#64748b;margin-bottom:.35rem}
         .dr-spark{display:block;margin:.35rem 0;border-radius:4px;overflow:visible}
         .drsub{font-size:.78rem;font-weight:500;margin-top:.3rem}
-        .drsub.down{color:rgba(240,120,100,.9)}.drsub.up{color:rgba(240,160,80,.9)}.drsub.stable{color:rgba(100,220,140,.9)}
+        .drsub.down{color:rgba(240,120,100,.9)}.drsub.up{color:rgba(240,160,80,.9)}.drsub.stable{color:rgba(100,220,140,.9)}.drsub.good{color:rgba(80,200,120,.9)}
  
         .wap{padding:1.4rem;border-radius:20px;background:rgba(255,255,255,.03);backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 40px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.05);display:flex;flex-direction:column;gap:.85rem}
         .apb{display:inline-block;padding:.25rem .65rem;border-radius:16px;background:rgba(255,255,255,.06);color:#cbd5e1;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;border:1px solid rgba(255,255,255,.1)}
