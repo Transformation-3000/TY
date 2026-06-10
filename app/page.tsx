@@ -127,7 +127,7 @@ export default function LandingPage() {
           <Link href="#erfolgsprinzip" className="nav-link" onClick={() => setMenuOpen(false)}>Mitgliedschaften</Link>
           <Link href="#testphase" className="nav-link" onClick={() => setMenuOpen(false)}>Wissenschaft</Link>
           <Link href="#kundenstimmen" className="nav-link" onClick={() => setMenuOpen(false)}>Kundenstimmen</Link>
-          <Link href="/login?from=/dashboard" className="btn-cta-small" onClick={() => setMenuOpen(false)}>Login</Link>
+          <Link href="/dashboard" className="btn-cta-small" onClick={() => setMenuOpen(false)}>Login</Link>
         </div>
       </nav>
 
@@ -152,7 +152,7 @@ export default function LandingPage() {
             fundierte Routinen in einer App zusammen.
           </p>
           <div className="hero-btns">
-            <Link href="/login?from=/dashboard" className="btn-primary-large">LOGIN</Link>
+            <Link href="/dashboard" className="btn-primary-large">LOGIN</Link>
             <Link href="#konzept" className="btn-secondary-large">KONZEPT ENTDECKEN</Link>
           </div>
         </div>

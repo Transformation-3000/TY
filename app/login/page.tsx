@@ -4,41 +4,21 @@ import { Suspense, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 function LoginForm() {
-  const [checkingAuth, setCheckingAuth] = useState(true);
-  const [isGatekeeperPassed, setIsGatekeeperPassed] = useState(false);
-  const [gatekeeperPassword, setGatekeeperPassword] = useState('');
-
+  const [gatekeeperPassed, setGatekeeperPassed] = useState(false);
+  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const searchParams = useSearchParams();
   const from = searchParams.get('from') || '/dashboard';
 
-  // Check current auth status on mount
+  // Read gatekeeper status from localStorage on mount
   useEffect(() => {
-    async function checkAuth() {
-      try {
-        const res = await fetch('/api/auth');
-        if (res.ok) {
-          const data = await res.json();
-          setIsGatekeeperPassed(data.isGatekeeperValid);
-          // If already logged in as member, redirect to target page
-          if (data.isMemberValid) {
-            router.push(from === '/' ? '/dashboard' : from);
-            return;
-          }
-        }
-      } catch (err) {
-        console.error('Auth check failed:', err);
-      } finally {
-        setCheckingAuth(false);
-      }
+    if (typeof window !== 'undefined') {
+      setGatekeeperPassed(localStorage.getItem('ty_gatekeeper_passed') === 'true');
     }
-    checkAuth();
-  }, [from, router]);
+  }, []);
 
-  async function handleGatekeeperSubmit(e: React.FormEvent) {
-    e.preventDefault();
+  async function handleLogin(enteredPassword: string) {
     setError('');
     setLoading(true);
 
@@ -46,63 +26,39 @@ function LoginForm() {
       const res = await fetch('/api/auth', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password: gatekeeperPassword, type: 'gatekeeper' }),
+        body: JSON.stringify({ password: enteredPassword, type: 'gatekeeper' }),
       });
 
       const data = await res.json().catch(() => ({}));
 
       if (!res.ok) {
-        setError(data.error || 'Projekt-Passwort ungültig.');
+        setError(data.error || 'Ungültiges Passwort.');
         setLoading(false);
         return;
       }
 
-      setIsGatekeeperPassed(true);
-      setError('');
-      setLoading(false);
-
-      if (from === '/') {
-        router.push('/');
-        router.refresh();
-      }
-    } catch {
-      setError('Netzwerkfehler. Bitte erneut versuchen.');
-      setLoading(false);
-    }
-  }
-
-  async function handleQuickMemberLogin() {
-    setError('');
-    setLoading(true);
-
-    try {
-      const res = await fetch('/api/auth', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: 'demo@trueyears.com', password: '123456', type: 'member' }),
-      });
-
-      const data = await res.json().catch(() => ({}));
-
-      if (!res.ok) {
-        setError(data.error || 'Anmeldung fehlgeschlagen.');
-        setLoading(false);
-        return;
-      }
-
-      // Flag for UI state
+      // Save credentials flags in storage
       localStorage.setItem('ty_is_member', 'true');
+      localStorage.setItem('ty_gatekeeper_passed', 'true');
+      localStorage.setItem('ty_last_active', Date.now().toString());
+      sessionStorage.setItem('ty_session_active', 'true');
 
-      router.push(from === '/' ? '/dashboard' : from);
-      router.refresh();
+      // Successful login redirects directly to landing page
+      window.location.href = '/';
     } catch {
       setError('Netzwerkfehler. Bitte erneut versuchen.');
       setLoading(false);
     }
   }
 
-  if (checkingAuth) {
-    return <LoginFallback />;
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    await handleLogin(password);
+  }
+
+  async function handleQuickLogin() {
+    // Automatically submit with the expected default password
+    await handleLogin('Longevity3000');
   }
 
   return (
@@ -110,39 +66,42 @@ function LoginForm() {
       <div className="login-card">
         <h1>TrueYears Longevity</h1>
         
-        {!isGatekeeperPassed ? (
-          <>
-            <p className="login-subtitle">Projekt-Zugang freischalten</p>
-            <form onSubmit={handleGatekeeperSubmit} className="login-form">
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                <label htmlFor="gatekeeper-password" style={{ fontSize: '0.85rem', fontWeight: 600, color: '#475569' }}>Projekt-Passwort</label>
-                <input
-                  id="gatekeeper-password"
-                  name="gatekeeper-password"
-                  type="password"
-                  value={gatekeeperPassword}
-                  onChange={(e) => setGatekeeperPassword(e.target.value)}
-                  placeholder="Projekt-Passwort"
-                  autoFocus
-                  autoComplete="current-password"
-                  disabled={loading}
-                  className="login-input"
-                />
-              </div>
+        <p className="login-subtitle">Projekt-Zugang freischalten</p>
+        
+        {/* Manual Password Input (Always Visible) */}
+        <form onSubmit={handleSubmit} className="login-form">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+            <input
+              id="project-password"
+              name="project-password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Passwort"
+              autoFocus
+              autoComplete="current-password"
+              disabled={loading}
+              className="login-input"
+            />
+          </div>
 
-              {error && <p className="login-error">{error}</p>}
-              <button type="submit" className="login-button" disabled={loading}>
-                {loading ? 'Wird geprüft…' : 'Zugang freischalten'}
-              </button>
-            </form>
-          </>
-        ) : (
-          <>
-            <p className="login-subtitle">Projekt freigeschaltet</p>
+          {error && <p className="login-error">{error}</p>}
+          
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? 'Wird geprüft…' : 'Zugang freischalten'}
+          </button>
+        </form>
+
+        {/* Green Quick-Login Button (Visible below if unlocked before) */}
+        {gatekeeperPassed && (
+          <div style={{ marginTop: '1.5rem', paddingTop: '1.5rem', borderTop: '1px solid #e2e8f0', width: '100%' }}>
+            <p className="login-subtitle" style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '0.75rem' }}>
+              Projekt bereits freigeschaltet
+            </p>
             <div className="login-form">
               <button
                 type="button"
-                onClick={handleQuickMemberLogin}
+                onClick={handleQuickLogin}
                 className="login-button"
                 disabled={loading}
                 style={{
@@ -157,9 +116,8 @@ function LoginForm() {
               >
                 {loading ? 'Wird angemeldet…' : 'Mitglieder-Login'}
               </button>
-              {error && <p className="login-error">{error}</p>}
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>

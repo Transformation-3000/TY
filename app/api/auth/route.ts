@@ -26,9 +26,10 @@ export async function POST(request: NextRequest) {
   const type = body.type || 'gatekeeper';
 
   if (type === 'gatekeeper') {
-    if (body.password !== 'Longevity3000') {
+    const expectedPassword = process.env.LONGIVITY_DASHBOARD_PASSWORD || 'Longevity3000';
+    if (body.password !== expectedPassword) {
       return NextResponse.json(
-        { error: 'Ungültiges Projekt-Passwort.' },
+        { error: 'Ungültiges Passwort.' },
         { status: 401 }
       );
     }
@@ -36,7 +37,12 @@ export async function POST(request: NextRequest) {
     const res = NextResponse.json({ success: true });
     res.cookies.set(AUTH_COOKIE, 'Longevity3000', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'lax',
+      maxAge: 60 * 60 * 24 * 7, // 7 Tage
+      path: '/',
+    });
+    res.cookies.set(MEMBER_COOKIE, 'true', {
+      httpOnly: true,
       sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7, // 7 Tage
       path: '/',
@@ -57,7 +63,6 @@ export async function POST(request: NextRequest) {
     const res = NextResponse.json({ success: true });
     res.cookies.set(MEMBER_COOKIE, 'true', {
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       maxAge: 60 * 60 * 24 * 7, // 7 Tage
       path: '/',

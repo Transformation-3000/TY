@@ -35,6 +35,27 @@ export default function RootLayout({
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <script dangerouslySetInnerHTML={{ __html: `
+          (function() {
+            var pathname = window.location.pathname;
+            if (pathname !== '/login' && !pathname.startsWith('/api/auth')) {
+              var lastActive = localStorage.getItem('ty_last_active');
+              var now = Date.now();
+              var isSessionExpired = !lastActive || (now - Number(lastActive) > 10 * 60 * 1000); // 10 Minuten
+              var isSessionActive = sessionStorage.getItem('ty_session_active') === 'true';
+
+              if (isSessionExpired || !isSessionActive) {
+                document.cookie = "longevity_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                document.cookie = "member_auth=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                localStorage.removeItem('ty_last_active');
+                sessionStorage.removeItem('ty_session_active');
+                window.location.href = '/login?from=' + encodeURIComponent(pathname);
+              } else {
+                localStorage.setItem('ty_last_active', now.toString());
+              }
+            }
+          })();
+        `}} />
       </head>
       <body>{children}</body>
     </html>
