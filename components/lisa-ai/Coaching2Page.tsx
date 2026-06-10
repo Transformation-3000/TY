@@ -827,6 +827,13 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                               <div className="wcd-body"><strong>Mein Lifestyle</strong><span>Teile mir etwas über deinen aktuellen Lifestyle mit</span></div>
                               <svg className="wcd-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                             </button>
+                            <button className="wcd wcd-rose" onClick={() => handleEntryChoice('Dankbarkeit')}>
+                              <div className="wcd-icon" style={{ background: 'rgba(244,63,94,0.1)', borderColor: 'rgba(244,63,94,0.2)' }}>
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#f43f5e" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" /></svg>
+                              </div>
+                              <div className="wcd-body"><strong>Dankbarkeit</strong><span>Wofür bist du aktuell besonders dankbar</span></div>
+                              <svg className="wcd-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                            </button>
                           </>
                         ) : sessionType === 'weekly' ? (
                           <>
@@ -1316,6 +1323,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .wcd.wcd-purple:hover{border-color:rgba(192,132,252,.7);box-shadow:0 12px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(192,132,252,.5), inset 0 1px 0 rgba(255,255,255,.15);background:rgba(192,132,252,.08)}
         .wcd.wcd-green:hover{border-color:rgba(52,211,153,.7);box-shadow:0 12px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(52,211,153,.5), inset 0 1px 0 rgba(255,255,255,.15);background:rgba(52,211,153,.08)}
         .wcd.wcd-amber:hover{border-color:rgba(251,191,36,.7);box-shadow:0 12px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(251,191,36,.5), inset 0 1px 0 rgba(255,255,255,.15);background:rgba(251,191,36,.08)}
+        .wcd.wcd-rose:hover{border-color:rgba(244,63,94,.7);box-shadow:0 12px 40px rgba(0,0,0,.35), 0 0 0 1px rgba(244,63,94,.5), inset 0 1px 0 rgba(255,255,255,.15);background:rgba(244,63,94,.08)}
         .wcd-icon{font-size:1.45rem;flex-shrink:0;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
         .wcd-body{flex:1;min-width:0}
         .wcd-body strong{display:block;font-size:1.18rem;color:#f8fafc;font-weight:600;margin-bottom:.2rem;letter-spacing:.01em}
