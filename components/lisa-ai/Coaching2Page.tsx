@@ -375,6 +375,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
               <div className="wb-session-btns">
                 <button className="wb-stype-btn" onClick={() => startSession('daily')}>
                   <div className="wbsb-left">
+                    <div className="wbsb-num">1.</div>
                     <div className="wbsb-body">
                       <div className="wbsb-title">Daily</div>
                       <div className="wbsb-desc">Kurzer täglicher Check-In zur Tagesverfassung</div>
@@ -387,6 +388,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
                 <button className="wb-stype-btn" onClick={() => startSession('weekly')}>
                   <div className="wbsb-left">
+                    <div className="wbsb-num">2.</div>
                     <div className="wbsb-body">
                       <div className="wbsb-title">Weekly</div>
                       <div className="wbsb-desc">Wöchentliche Session zum Aufbau neuer Routinen</div>
@@ -399,6 +401,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
                 <button className="wb-stype-btn" onClick={() => startSession('quarterly')}>
                   <div className="wbsb-left">
+                    <div className="wbsb-num">3.</div>
                     <div className="wbsb-body">
                       <div className="wbsb-title">Quarterly</div>
                       <div className="wbsb-desc">Quartalsweise Reflexion der Longevity-Reise</div>
