@@ -813,7 +813,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                       <div className="wcards">
                         <button className="wcd" onClick={() => handleEntryChoice('Letzte Session fortsetzen')}>
                           <div className="wcd-icon">🔄</div>
-                          <div className="wcd-body"><strong>Letzte Session fortsetzen</strong><span>Beim letzten Commitment weitermachen.</span></div>
+                          <div className="wcd-body"><strong>Letzte Session fortsetzen</strong><span>Schlafrhythmus stabilisieren.</span></div>
                           <svg className="wcd-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
                         <button className="wcd" onClick={() => handleEntryChoice('Akutes Thema besprechen')}>
