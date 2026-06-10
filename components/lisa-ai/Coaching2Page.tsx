@@ -842,7 +842,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
                     {msg.widget==='data-result'&&(
                       <div className="wdr">
-                        <div className="drh"><span className="drt">Deine Daten der letzten 7 Tage</span><span className="drs">Oura Ring · Apple Watch · TrueYears</span></div>
+                        <div className="drh"><span className="drt">Deine Daten der letzten 7 Tage</span><span className="drs">Wearable: Oura Ring</span></div>
                         <div className="drg">{dataLabels.map((d,i)=>(
                           <div key={i} className="drc" style={{animationDelay:`${i*0.12}s`}}>
                             <div className="drct">
