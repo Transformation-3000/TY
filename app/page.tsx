@@ -25,7 +25,7 @@ export default function LandingPage() {
       age: "42 Jahre",
       stars: 4,
       headline: "Ruhepuls stark verbessert",
-      text: "Endlich verstehe ich, was meine Oura-Daten wirklich bedeuten. Das AI-Coaching ist wie ein privater Biohacker, der mir jeden Tag maßgeschneiderte Tipps gibt. Mein Ruhepuls ist um 5 Schläge gesunken und meine Konzentration tagsüber is spürbar besser.",
+      text: "Endlich verstehe ich, was meine Oura-Daten wirklich bedeuten. Das AI-Training ist wie ein privater Biohacker, der mir jeden Tag maßgeschneiderte Tipps gibt. Mein Ruhepuls ist um 5 Schläge gesunken und meine Konzentration tagsüber is spürbar besser.",
       img: "/images/selfie_thomas.png",
       badge: "+50% tieferer Schlaf"
     },
@@ -148,7 +148,7 @@ export default function LandingPage() {
           <h1>Dein Weg zu 100+ Jahre Vitalität.</h1>
           <p>
             TrueYears ist dein persönlicher Longevity-Assistent. Hier bringst du deine 
-            biologische Daten, Aktivitäten, KI-gestütztes Coaching und wissenschaftlich 
+            biologische Daten, Aktivitäten, KI-gestütztes Training und wissenschaftlich 
             fundierte Routinen in einer App zusammen.
           </p>
           <div className="hero-btns">
@@ -166,7 +166,7 @@ export default function LandingPage() {
             <h2>True Years in 60 Sekunden erklärt</h2>
             <p>
               Entdecke im Video, wie wir wissenschaftliche Diagnostik, Live-Wearable-Tracking 
-              und KI-gestütztes Coaching vereinen, um deine biologische Verjüngung zu aktivieren.
+              und KI-gestütztes Training vereinen, um deine biologische Verjüngung zu aktivieren.
             </p>
           </div>
           
@@ -631,7 +631,7 @@ export default function LandingPage() {
                 </div>
                 <div className="video-bullet">
                   <i className="bi bi-check-circle-fill"></i>
-                  <span><strong>AI-Coaching:</strong> Lerne Lisa AI als deine Begleiterin kennen.</span>
+                  <span><strong>AI-Training:</strong> Lerne Lisa AI als deine Begleiterin kennen.</span>
                 </div>
                 <div className="video-bullet">
                   <i className="bi bi-check-circle-fill"></i>

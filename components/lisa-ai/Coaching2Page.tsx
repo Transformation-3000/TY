@@ -414,7 +414,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
               {rightTab === 'history' && (
                 <div className="wb-history-overlay">
                   <div className="wbh-header">
-                    <h3 className="wbh-title">Deine Coaching-Historie</h3>
+                    <h3 className="wbh-title">Deine Trainings-Historie</h3>
                     <button className="wij-back-btn" onClick={() => setRightTab('today')} style={{ marginLeft: 'auto' }}>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg> Zurück
                     </button>
@@ -463,7 +463,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
               <h2 className="pc-title">Mindspace wird vorbereitet</h2>
               <div className="pc-steps-container">
                 <div className="pc-step" style={{animationDelay: '0.5s'}}>Synchronisiere Biosignale...</div>
-                <div className="pc-step" style={{animationDelay: '1.5s'}}>Lade letzte Coaching-Erkenntnisse...</div>
+                <div className="pc-step" style={{animationDelay: '1.5s'}}>Lade letzte Trainings-Erkenntnisse...</div>
                 <div className="pc-step" style={{animationDelay: '2.5s'}}>Personalisiere den heutigen Fokus...</div>
               </div>
             </div>
@@ -788,7 +788,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                         </button>
                         <button className="wcd" onClick={() => handleEntryChoice('Neuer Check-in')}>
                           <div className="wcd-icon">📊</div>
-                          <div className="wcd-body"><strong>Neuer Check-in</strong><span>Strukturierter Coaching-Flow.</span></div>
+                          <div className="wcd-body"><strong>Neuer Check-in</strong><span>Strukturierter Trainings-Flow.</span></div>
                           <svg className="wcd-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
                       </div>

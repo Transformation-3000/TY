@@ -101,7 +101,7 @@ const journeyLevels: JourneyLevel[] = [
       'Erste Micro-Habit-Session absolviert (z. B. Breathwork)',
     ],
     unlocks: [
-      'Erste Coaching-Module in Lisa AI freigeschaltet',
+      'Erste Trainings-Module in Lisa AI freigeschaltet',
       'Zugang zu den Micro-Habit-Apps',
     ],
     status: 'completed',
@@ -116,8 +116,8 @@ const journeyLevels: JourneyLevel[] = [
     scoreRange: 'L2: 16–30',
     description: 'Du etablierst Routinen und baust Konsistenz auf – die Grundlage für langfristigen Erfolg.',
     criteria: [
-      'Lisa AI Daily Coaching: 5 Tage Check-in Streak',
-      'Lisa AI Weekly Coaching: Erste Session abgeschlossen',
+      'Lisa AI Daily Training: 5 Tage Check-in Streak',
+      'Lisa AI Weekly Training: Erste Session abgeschlossen',
       'Mindestens 1 Habit-App aktiv genutzt (3+ Sessions)',
     ],
     unlocks: [
@@ -811,7 +811,7 @@ export default function LongevityJourney7LevelsPage() {
           </div>
           <div className="info-banner-content">
             <h4>Aufstieg durch Konsistenz</h4>
-            <p>Regelmäßige Check-Ins, Coachings und erfolgreiche Tests bringen dich zum nächsten Level.</p>
+            <p>Regelmäßige Check-Ins, Trainings und erfolgreiche Tests bringen dich zum nächsten Level.</p>
           </div>
         </div>
       </footer>

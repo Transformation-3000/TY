@@ -134,7 +134,7 @@ export default function SettingsPage() {
             <div className="settings-option">
               <div className="settings-option-info">
                 <h3>KI-Analysen optimieren</h3>
-                <p>Erlaube anonymisierte Daten für unsere KI, damit deine persönlichen Coachings und Empfehlungen kontinuierlich präziser werden.</p>
+                <p>Erlaube anonymisierte Daten für unsere KI, damit deine persönlichen Trainings und Empfehlungen kontinuierlich präziser werden.</p>
               </div>
               <label className="toggle-switch">
                 <input
