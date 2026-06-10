@@ -1431,14 +1431,14 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .w-bento {
           display: grid; grid-template-columns: 1fr 1.1fr; gap: 2rem;
           max-width: 1200px; margin: 0 auto; height: auto; min-height: calc(100vh - 120px);
-          padding: 0.5rem 2rem 1.5rem; color: #e2eaf4; animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) both;
+          padding: 2rem; color: #e2eaf4; animation: fadeIn 1s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
         .wb-main {
           background: rgba(255,255,255,0.06); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
           border-radius: 32px; border: 1px solid rgba(255,255,255,0.1);
           box-shadow: 0 24px 80px rgba(0,20,60,0.4);
           display: flex; flex-direction: column; align-items: center; justify-content: center;
-          position: relative; overflow: hidden; padding: 1.5rem 3rem 3rem; text-align: center;
+          position: relative; overflow: hidden; padding: 3rem; text-align: center;
         }
         .wb-hero { position: relative; width: 220px; height: 220px; margin-bottom: 2rem; border-radius: 50%; overflow: hidden; }
         .wb-video { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; position: relative; z-index: 10; box-shadow: 0 16px 40px rgba(201, 169, 110, 0.18); }
@@ -1459,7 +1459,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .wb-start:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 14px 32px rgba(201, 169, 110, 0.4); }
         .wb-start-glow { position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent); transform: skewX(-20deg); animation: buttonShine 5s infinite; }
         
-        .wb-sidebar { display: flex; flex-direction: column; gap: 0.8rem; position: relative; overflow: visible; min-width: 0; padding-top: 2.2rem; }
+        .wb-sidebar { display: flex; flex-direction: column; gap: 0.8rem; position: relative; overflow: visible; min-width: 0; padding-top: 0.7rem; }
         .wb-sidebar-tabs { display: none; }
         .wb-st-btn {
           flex: 1; padding: 0.75rem 0; border-radius: 14px; border: none; background: transparent;
