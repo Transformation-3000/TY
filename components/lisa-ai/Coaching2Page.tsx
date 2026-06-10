@@ -1249,8 +1249,18 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
         .chat{position:relative;z-index:2;flex:1;overflow-y:auto;padding:1.75rem 1.5rem;display:flex;flex-direction:column;gap:1.1rem;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.08) transparent}
         .chat::-webkit-scrollbar{width:5px}.chat::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px}
-        .crow{display:flex;align-items:center;gap:.75rem;max-width:80%;animation:mi .4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both}
-        .crow.coach{align-self:flex-start}.crow.user{align-self:flex-end;flex-direction:row-reverse}.crow.system{align-self:flex-start;max-width:95%;margin:.5rem auto}
+        .crow{display:flex;gap:.75rem;max-width:80%;animation:mi .4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both}
+        .crow.coach{align-self:flex-start;display:grid;grid-template-columns:50px 1fr;align-items:start;gap:0 .75rem}
+        .crow.coach .ccont{display:contents}
+        .crow.coach .cav{grid-column:1;grid-row:1;align-self:center}
+        .crow.coach .ccont > :first-child{grid-column:2;grid-row:1}
+        .crow.coach .wcards,
+        .crow.coach .wrate,
+        .crow.coach .wpills,
+        .crow.coach .wdp,
+        .crow.coach .wdr,
+        .crow.coach .wap{grid-column:2;grid-row:2;margin-top:.6rem}
+        .crow.user{align-self:flex-end;flex-direction:row-reverse}.crow.system{align-self:flex-start;max-width:95%;margin:.5rem auto}
         @keyframes mi{from{opacity:0;transform:translateY(12px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
         .cav{width:50px;height:50px;flex-shrink:0;border-radius:50%;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1.5px solid rgba(255,255,255,.12)}
         .ccont{display:flex;flex-direction:column;gap:.4rem;min-width:0}.ccont.system{width:100%}
