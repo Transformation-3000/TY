@@ -813,24 +813,24 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                       <div className="wcards">
                         <button className="wcd" onClick={() => handleEntryChoice('Letzte Session fortsetzen')}>
                           <div className="wcd-icon" style={{ background: 'rgba(96,165,250,0.1)', borderColor: 'rgba(96,165,250,0.2)' }}>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" /><polyline points="21 3 21 8 16 8" /></svg>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" /><polyline points="21 3 21 8 16 8" /></svg>
                           </div>
                           <div className="wcd-body"><strong>Letzte Session fortsetzen</strong><span>Schlafrhythmus stabilisieren.</span></div>
-                          <svg className="wcd-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                          <svg className="wcd-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
                         <button className="wcd" onClick={() => handleEntryChoice('Akutes Thema besprechen')}>
                           <div className="wcd-icon" style={{ background: 'rgba(192,132,252,0.1)', borderColor: 'rgba(192,132,252,0.2)' }}>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c084fc" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c084fc" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
                           </div>
                           <div className="wcd-body"><strong>Akutes Thema besprechen</strong><span>Was dich gerade bewegt.</span></div>
-                          <svg className="wcd-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                          <svg className="wcd-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
                         <button className="wcd" onClick={() => handleEntryChoice('Neues Thema beginnen')}>
                           <div className="wcd-icon" style={{ background: 'rgba(52,211,153,0.1)', borderColor: 'rgba(52,211,153,0.2)' }}>
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#34d399" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></svg>
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34d399" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></svg>
                           </div>
                           <div className="wcd-body"><strong>Neues Thema beginnen</strong><span>Wähle aus 6 Optimierungsfeldern aus.</span></div>
-                          <svg className="wcd-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                          <svg className="wcd-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                         </button>
                       </div>
                     )}
@@ -1274,10 +1274,10 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .wcards{display:flex;flex-direction:column;gap:.55rem}
         .wcd{display:flex;align-items:center;gap:.75rem;text-align:left;padding:1rem 1.2rem;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(24px);cursor:pointer;transition:all .3s cubic-bezier(.16,1,.3,1);box-shadow:0 8px 32px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.05)}
         .wcd:hover{background:rgba(255,255,255,.06);transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);border-color:rgba(255,255,255,.15)}
-        .wcd-icon{font-size:1.35rem;flex-shrink:0;width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
+        .wcd-icon{font-size:1.45rem;flex-shrink:0;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08)}
         .wcd-body{flex:1;min-width:0}
-        .wcd-body strong{display:block;font-size:1.02rem;color:#f8fafc;font-weight:600;margin-bottom:.2rem;letter-spacing:.01em}
-        .wcd-body span{font-size:1.0rem;color:#94a3b8;line-height:1.4}
+        .wcd-body strong{display:block;font-size:1.18rem;color:#f8fafc;font-weight:600;margin-bottom:.2rem;letter-spacing:.01em}
+        .wcd-body span{font-size:1.15rem;color:#94a3b8;line-height:1.4}
         .wcd-arrow{color:rgba(255,255,255,.3);flex-shrink:0;transition:transform .25s}.wcd:hover .wcd-arrow{transform:translateX(3px);color:rgba(255,255,255,.8)}
         .wrate{display:flex;flex-wrap:wrap;gap:.5rem}
         .rbtn{width:48px;height:48px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(12px);font-size:1rem;font-weight:600;color:#cbd5e1;cursor:pointer;transition:all .25s;box-shadow:0 4px 12px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.05)}
