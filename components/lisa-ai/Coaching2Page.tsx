@@ -781,7 +781,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                 {/* Name + status */}
                 <div className="s-lisa-info">
                   <span className="s-lisa-name">{c.name.split(',')[0].trim()}</span>
-                  <span className="s-lisa-status">{isSpeaking ? '● spricht' : isListening ? '● hört zu' : '○ bereit'}</span>
+                  <span className="s-lisa-status">Wearable: Oura Ring</span>
                 </div>
 
                 {/* Mic button – only in audio mode */}
