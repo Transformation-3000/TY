@@ -1471,8 +1471,8 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
         .wb-tabs-format { display: flex; gap: 0.4rem; justify-content: space-between; align-items: center; margin-top: 0.8rem;}
          .wb-tab {
-           padding: 0.65rem 0.8rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08);
-           background: rgba(255,255,255,0.04); color: #94a3b8; font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; flex: 1; text-align: center;
+           padding: 0.75rem 0.9rem; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.08);
+           background: rgba(255,255,255,0.04); color: #94a3b8; font-size: 1.15rem; font-weight: 500; cursor: pointer; transition: all 0.3s ease; flex: 1; text-align: center;
          }
          .wb-tab:hover { background: rgba(255,255,255,0.08); color: #f8fafc; }
          .wb-tab.act { background: #fff; border-color: rgba(201, 169, 110, 0.35); color: #1e293b; box-shadow: 0 4px 12px rgba(201, 169, 110, 0.15); }
