@@ -1216,7 +1216,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                       </div>
                     )}
 
-                    {msg.widget==='closing'&&(<div className="wclo"><div className="cloi"><span>Nächster Check-in: <strong>Morgen, 20:00 Uhr</strong></span></div><button className="clob" onClick={handleEndSession}>Session beenden</button></div>)}
+                    {msg.widget==='closing'&&(<div className="wclo">{sessionType !== 'daily' && (<div className="cloi"><span>Nächster Check-in: <strong>Morgen, 20:00 Uhr</strong></span></div>)}<button className="clob" onClick={handleEndSession}>Session beenden</button></div>)}
                   </div>
                 </div>
               ))}
