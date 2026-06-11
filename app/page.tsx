@@ -123,6 +123,7 @@ export default function LandingPage() {
           <span className="hamburger"></span>
         </button>
         <div className={`nav-links ${menuOpen ? 'nav-links-open' : ''}`}>
+          <Link href="/jungbrunnen" className="nav-link" onClick={() => setMenuOpen(false)}>Jungbrunnen 🧬</Link>
           <Link href="#features" className="nav-link" onClick={() => setMenuOpen(false)}>Bausteine</Link>
           <Link href="#erfolgsprinzip" className="nav-link" onClick={() => setMenuOpen(false)}>Mitgliedschaften</Link>
           <Link href="#testphase" className="nav-link" onClick={() => setMenuOpen(false)}>Wissenschaft</Link>
@@ -584,6 +585,7 @@ export default function LandingPage() {
             <div className="footer-nav-grid-new">
               <div className="footer-col-new">
                 <h4>Features</h4>
+                <Link href="/jungbrunnen">Jungbrunnen Rechner 🧬</Link>
                 <Link href="#features">Tägliche Check-Ins</Link>
                 <Link href="#features">Quick Win Navigator</Link>
                 <Link href="#features">Lisa AI Coach</Link>
