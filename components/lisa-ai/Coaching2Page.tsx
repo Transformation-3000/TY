@@ -401,11 +401,11 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
               await addCoachMsg('Was bewegt dich heute noch? Magst du mir etwas mehr darüber mitteilen?', undefined, 1200);
             } else {
               setPhase('closing');
-              await addCoachMsg('Alles klar. Ich wünsche dir noch einen schönen Tag. Wir hören uns wenn du möchtest gerne morgen wieder :-)', 'closing', 1200);
+              await addCoachMsg('Alles klar. Ich wünsche dir noch einen schönen Tag. Wir hören uns wenn du möchtest gerne morgen wieder 😊', 'closing', 1200);
             }
           } else if (dailyStep === 5) {
             setPhase('closing');
-            await addCoachMsg('Danke, dass du das mit mir geteilt hast. Achte heute Abend gut auf deine Grenzen und gönn dir die Ruhe. Du machst das großartig! Wir hören uns wenn du möchtest gerne morgen wieder :-)', 'closing', 1200);
+            await addCoachMsg('Danke, dass du das mit mir geteilt hast. Achte heute Abend gut auf deine Grenzen und gönn dir die Ruhe. Du machst das großartig! Wir hören uns wenn du möchtest gerne morgen wieder 😊', 'closing', 1200);
           }
         } else if (hasReflexion) {
           if (dailyStep === 1) {
@@ -1675,7 +1675,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .syck{font-size:.92rem;flex-shrink:0;color:#50c878}.syil{font-size:.92rem;color:#cbd5e1;font-weight:500}
         .syft{margin-top:.75rem;padding:.65rem .85rem;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-size:.92rem;color:#e2e8f0;font-weight:500}
  
-        .wclo{margin-top:.25rem}
+        .wclo{margin-top:1.25rem}
         .cloi{padding:.75rem 1rem;border-radius:14px;background:rgba(255,255,255,.04);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);font-size:.95rem;color:#cbd5e1;margin-bottom:.65rem}
         .cloi strong{color:#f8fafc;font-weight:600}
         .clob{padding:.7rem 1.5rem;border-radius:14px;border:1px solid rgba(255,255,255,.15);background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.03));color:#fff;font-size:1.0rem;font-weight:600;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1);transition:all .25s}
