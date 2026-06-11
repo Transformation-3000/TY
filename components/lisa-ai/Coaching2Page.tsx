@@ -303,8 +303,8 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
     }
   }, [autoStartSession, clearAutoStart]);
 
-  const handleEntryChoice = async (ch: string) => { setEntryChoice(ch); markAnswered(); addUserMsg(ch); setPhase('checkin-energy'); await addCoachMsg('Bevor wir starten – wie ist deine Energie heute?', 'energy', 900); };
-  const handleEnergy = async (v: number) => { setEnergy(v); markAnswered(); addUserMsg(`Energie: ${v}/5`); setPhase('checkin-stress'); await addCoachMsg('Und wie hoch ist dein Stress gerade?', 'stress', 700); };
+  const handleEntryChoice = async (ch: string) => { setEntryChoice(ch); markAnswered(); addUserMsg(ch); setPhase('checkin-energy'); await addCoachMsg('Bevor wir starten – wie ist deine <strong>Energie</strong> heute?', 'energy', 900); };
+  const handleEnergy = async (v: number) => { setEnergy(v); markAnswered(); addUserMsg(`Energie: ${v}/5`); setPhase('checkin-stress'); await addCoachMsg('Und wie hoch ist dein <strong>Stress</strong> gerade?', 'stress', 700); };
   const handleStress = async (v: number) => {
     setStress(v);
     markAnswered();
@@ -864,7 +864,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                 <div key={msg.id} className={`crow ${msg.from}`}>
                   {msg.from==='coach'&&<div className="cav"><Image src={c.image} alt={c.name} width={48} height={48} style={{objectFit:'cover',borderRadius:'50%'}} /></div>}
                   <div className={`ccont ${msg.from}`}>
-                    {msg.text&&<div className={`bub ${msg.from}`}><p>{msg.text}</p></div>}
+                    {msg.text&&<div className={`bub ${msg.from}`}><p dangerouslySetInnerHTML={{ __html: msg.text }}></p></div>}
 
                     {msg.widget==='entry-options'&&!msg.answered&&(
                       <div className="wcards">
