@@ -461,7 +461,18 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
       await addCoachMsg('Völlig okay. Ich merke mir das und passe den nächsten Vorschlag an. Bis bald!', 'closing', 1200);
     }
   };
-  const handleEndSession = () => { setIsAnimating(true); setTimeout(() => { setView('welcome'); setSessionTime(0); setMessages([]); setIsAnimating(false); }, 300); };
+  const handleEndSession = () => {
+    if (audioRef.current) {
+      try {
+        audioRef.current.pause();
+      } catch (e) {}
+      audioRef.current = null;
+    }
+    setView('welcome');
+    setSessionTime(0);
+    setMessages([]);
+    setIsAnimating(false);
+  };
 
   const getQuickReplies = (): string[] => {
     if (phase === 'verstehen') return ['Ich schlafe genug, aber wache unausgeruht auf.', 'Abends komme ich schwer zur Ruhe.', 'Mein Schlafrhythmus ist durcheinander.'];
@@ -1217,7 +1228,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                       </div>
                     )}
 
-                    {msg.widget==='closing'&&(<div className="wclo">{sessionType !== 'daily' && (<div className="cloi"><span>Nächster Check-in: <strong>Morgen, 20:00 Uhr</strong></span></div>)}<button className="clob" onClick={handleEndSession}>Session beenden</button></div>)}
+                    {msg.widget==='closing'&&(<div className="wclo">{sessionType !== 'daily' && (<div className="cloi"><span>Nächster Check-in: <strong>Morgen, 20:00 Uhr</strong></span></div>)}<button type="button" className="clob" onClick={handleEndSession}>Session beenden</button></div>)}
                   </div>
                 </div>
               ))}
