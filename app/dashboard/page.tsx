@@ -68,7 +68,7 @@ export default function Dashboard() {
         <Sidebar activeItem={activeMenuItem} onItemClick={navigate} />
         <div className="content-wrapper">
           {activeMenuItem === 'dashboard' && (
-            <VogelperspektivePage />
+            <VogelperspektivePage onNavigate={navigate} />
           )}
 
           {activeMenuItem === 'quick-wins' && (

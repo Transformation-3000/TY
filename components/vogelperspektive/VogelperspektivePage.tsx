@@ -2,9 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
-export default function VogelperspektivePage() {
+interface VogelperspektivePageProps {
+  onNavigate?: (id: string) => void;
+}
+
+export default function VogelperspektivePage({ onNavigate }: VogelperspektivePageProps) {
   const [currentDate, setCurrentDate] = useState('');
   const [greeting, setGreeting] = useState('Guten Tag');
 
@@ -498,13 +501,17 @@ export default function VogelperspektivePage() {
             </div>
 
             {/* CARD 3: JUNGBRUNNEN */}
-            <Link href="/jungbrunnen" className="fg-v-card">
+            <div 
+              className="fg-v-card"
+              onClick={() => onNavigate?.('zellalter-simulation')}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="fgh-img-16-9"><Image src="/images/feelgood_youth.png" fill alt="Regeneration" style={{ objectFit: 'cover' }} /></div>
               <div className="fgh-content">
                 <strong>Jungbrunnen</strong>
                 <span>Jeden Tag eine Verjüngungsaktion</span>
               </div>
-            </Link>
+            </div>
 
             {/* CARD 4: STRAHLKRAFT */}
             <div className="fg-v-card">

@@ -8,16 +8,16 @@ interface ZellalterSimulationPageProps {
 
 export default function ZellalterSimulationPage({ onBack }: ZellalterSimulationPageProps) {
   // Inputs
-  const [chronologicalAge, setChronologicalAge] = useState(40);
+  const [chronologicalAge] = useState(46.7);
   const [sleepScore, setSleepScore] = useState(7.5);
   const [exerciseScore, setExerciseScore] = useState(2);
   const [nutritionScore, setNutritionScore] = useState(3);
   const [stressScore, setStressScore] = useState(3);
 
   // Outputs
-  const [biologicalAge, setBiologicalAge] = useState(40);
-  const [ageDifference, setAgeDifference] = useState(0);
-  const [agingRate, setAgingRate] = useState(1.0);
+  const [biologicalAge, setBiologicalAge] = useState(42.5);
+  const [ageDifference, setAgeDifference] = useState(-4.2);
+  const [agingRate, setAgingRate] = useState(0.84);
 
   useEffect(() => {
     // 1. Sleep delta
@@ -61,15 +61,25 @@ export default function ZellalterSimulationPage({ onBack }: ZellalterSimulationP
     else if (stressScore === 5) stressDelta = -2.5;
 
     const totalDelta = sleepDelta + exerciseDelta + nutritionDelta + stressDelta;
-    const computedBioAge = Math.max(18, chronologicalAge + totalDelta);
+    // Offset totalDelta so it is exactly 0 at default slider scores:
+    // sleepScore = 7.5 (delta = -1.8)
+    // exerciseScore = 2 (delta = 0.1)
+    // nutritionScore = 3 (delta = -0.5)
+    // stressScore = 3 (delta = -0.4)
+    // Sum of defaults = -1.8 + 0.1 - 0.5 - 0.4 = -2.6
+    const baseOffset = -2.6;
+    const currentDeltaFromBaseline = totalDelta - baseOffset;
+    
+    const computedBioAge = Math.max(18, 42.5 + currentDeltaFromBaseline);
+    const computedDifference = computedBioAge - 46.7;
     
     setBiologicalAge(parseFloat(computedBioAge.toFixed(1)));
-    setAgeDifference(parseFloat(totalDelta.toFixed(1)));
+    setAgeDifference(parseFloat(computedDifference.toFixed(1)));
     
-    // Aging rate: normally 0.75x to 1.3x
-    const rate = 1.0 + (totalDelta / chronologicalAge) * 0.8;
+    // Aging rate: normally 0.75x to 1.3x, multiplier of 1.72 matches 15.5% slow down at -4.2 difference
+    const rate = 1.0 + (computedDifference / 46.7) * 1.72;
     setAgingRate(parseFloat(Math.max(0.65, Math.min(1.45, rate)).toFixed(2)));
-  }, [chronologicalAge, sleepScore, exerciseScore, nutritionScore, stressScore]);
+  }, [sleepScore, exerciseScore, nutritionScore, stressScore]);
 
   // Color mapping based on results
   const isGood = ageDifference < 0;
@@ -97,21 +107,7 @@ export default function ZellalterSimulationPage({ onBack }: ZellalterSimulationP
           <h2>Dein Lebensstil</h2>
           <p className="card-subtitle">Stelle die Regler auf deine Gewohnheiten ein.</p>
 
-          <div className="slider-group">
-            <div className="slider-header">
-              <span className="slider-label">🎂 Chronologisches Alter</span>
-              <span className="slider-value">{chronologicalAge} Jahre</span>
-            </div>
-            <input 
-              type="range" 
-              min="20" 
-              max="80" 
-              value={chronologicalAge} 
-              onChange={(e) => setChronologicalAge(parseInt(e.target.value))}
-              className="sim-slider-input"
-            />
-            <span className="slider-desc">Dein tatsächliches Alter laut Geburtsurkunde.</span>
-          </div>
+
 
           <div className="slider-group">
             <div className="slider-header">
@@ -220,8 +216,12 @@ export default function ZellalterSimulationPage({ onBack }: ZellalterSimulationP
           <div className="result-stats">
             <div className="rstat-item">
               <span className="rstat-label">Biologischer Status</span>
-              <span className={`rstat-val ${isGood ? 'good' : 'bad'}`}>
-                {isGood ? `😊 -${Math.abs(ageDifference)} Jahre verjüngt` : `⚠️ +${Math.abs(ageDifference)} Jahre gealtert`}
+              <span className={`rstat-val ${ageDifference === 0 ? 'good' : isGood ? 'good' : 'bad'}`} style={ageDifference === 0 ? { color: '#4498ca' } : {}}>
+                {ageDifference === 0 
+                  ? '⚖️ Optimaler Basis-Status' 
+                  : isGood 
+                    ? `😊 -${Math.abs(ageDifference)} Jahre verjüngt` 
+                    : `⚠️ +${Math.abs(ageDifference)} Jahre gealtert`}
               </span>
             </div>
             <div className="rstat-item">
@@ -287,7 +287,8 @@ export default function ZellalterSimulationPage({ onBack }: ZellalterSimulationP
           font-size: 1.15rem;
           color: #64748b;
           line-height: 1.55;
-          max-width: 800px;
+          max-width: 100%;
+          white-space: nowrap;
         }
 
         .sim-grid {
@@ -299,6 +300,9 @@ export default function ZellalterSimulationPage({ onBack }: ZellalterSimulationP
         @media (max-width: 992px) {
           .sim-grid {
             grid-template-columns: 1fr;
+          }
+          .sim-subtitle {
+            white-space: normal;
           }
         }
 
