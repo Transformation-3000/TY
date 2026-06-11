@@ -1573,6 +1573,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .crow.coach .wpills,
         .crow.coach .wdp,
         .crow.coach .wdr,
+        .crow.coach .wclo,
         .crow.coach .wap{grid-column:2;grid-row:2;margin-top:.6rem}
         .crow.user{align-self:flex-end;flex-direction:row-reverse}.crow.system{align-self:flex-start;max-width:95%;margin:.5rem auto}
         @keyframes mi{from{opacity:0;transform:translateY(12px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
@@ -1675,11 +1676,11 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .syck{font-size:.92rem;flex-shrink:0;color:#50c878}.syil{font-size:.92rem;color:#cbd5e1;font-weight:500}
         .syft{margin-top:.75rem;padding:.65rem .85rem;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);font-size:.92rem;color:#e2e8f0;font-weight:500}
  
-        .wclo{margin-top:1.25rem}
-        .cloi{padding:.75rem 1rem;border-radius:14px;background:rgba(255,255,255,.04);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);font-size:.95rem;color:#cbd5e1;margin-bottom:.65rem}
+        .wclo{margin-top:1.25rem;display:flex;flex-direction:column;align-items:flex-end;width:100%}
+        .cloi{width:100%;padding:.75rem 1rem;border-radius:14px;background:rgba(255,255,255,.04);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.08);font-size:.95rem;color:#cbd5e1;margin-bottom:.65rem}
         .cloi strong{color:#f8fafc;font-weight:600}
-        .clob{padding:.7rem 1.5rem;border-radius:14px;border:1px solid rgba(255,255,255,.15);background:linear-gradient(135deg,rgba(255,255,255,.1),rgba(255,255,255,.03));color:#fff;font-size:1.0rem;font-weight:600;cursor:pointer;box-shadow:0 8px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1);transition:all .25s}
-        .clob:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.15);background:linear-gradient(135deg,rgba(255,255,255,.15),rgba(255,255,255,.06))}
+        .clob{padding:.7rem 1.5rem;border-radius:14px;border:1px solid #7dd3fc;background:#7dd3fc;color:#091221;font-size:1.0rem;font-weight:600;cursor:pointer;box-shadow:0 8px 24px rgba(125,211,252,.3);transition:all .25s}
+        .clob:hover{transform:translateY(-2px);box-shadow:0 12px 32px rgba(56,189,248,.45);background:#38bdf8;border-color:#38bdf8}
  
         .qrs{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:.5rem;padding:0.75rem 1.5rem 0.75rem calc(2.25rem + 50px);background:transparent;border:none}
         .qrb{padding:.5rem 1.1rem;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);backdrop-filter:blur(12px);font-size:calc(.92rem + 1pt);color:#cbd5e1;font-weight:500;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 12px rgba(0,0,0,.1),inset 0 1px 0 rgba(255,255,255,.05)}
