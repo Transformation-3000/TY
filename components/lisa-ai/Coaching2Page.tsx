@@ -167,6 +167,22 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
   }, [messages, isTyping, dataLoadStage, dataItems, syncStage]);
 
   useEffect(() => {
+    if (view === 'welcome') {
+      try {
+        window.scrollTo(0, 0);
+        document.documentElement.scrollTop = 0;
+        document.body.scrollTop = 0;
+        const mainContent = document.querySelector('.main-content');
+        if (mainContent) mainContent.scrollTop = 0;
+        const contentWrapper = document.querySelector('.content-wrapper');
+        if (contentWrapper) contentWrapper.scrollTop = 0;
+      } catch (e) {
+        console.error('Scroll error:', e);
+      }
+    }
+  }, [view]);
+
+  useEffect(() => {
     let iv: NodeJS.Timeout;
     if (view === 'session') iv = setInterval(() => setSessionTime(t => t + 1), 1000);
     return () => clearInterval(iv);
@@ -472,6 +488,15 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
     setSessionTime(0);
     setMessages([]);
     setIsAnimating(false);
+    try {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+      const mainContent = document.querySelector('.main-content');
+      if (mainContent) mainContent.scrollTop = 0;
+      const contentWrapper = document.querySelector('.content-wrapper');
+      if (contentWrapper) contentWrapper.scrollTop = 0;
+    } catch (e) {}
   };
 
   const getQuickReplies = (): string[] => {
