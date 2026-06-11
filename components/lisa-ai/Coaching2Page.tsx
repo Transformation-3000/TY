@@ -943,8 +943,28 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                         )}
                       </div>
                     )}
-                    {msg.widget==='energy'&&!msg.answered&&(<div className="wrate">{[1,2,3,4,5].map(n=>(<button key={n} className="rbtn en" onClick={()=>handleEnergy(n)}>{n}</button>))}<div className="rlabs"><span>niedrig</span><span>hoch</span></div></div>)}
-                    {msg.widget==='stress'&&!msg.answered&&(<div className="wrate">{[1,2,3,4,5].map(n=>(<button key={n} className="rbtn st" onClick={()=>handleStress(n)}>{n}</button>))}<div className="rlabs"><span>niedrig</span><span>hoch</span></div></div>)}
+                    {msg.widget==='energy'&&!msg.answered&&(
+                      <div className="wrate-wrap">
+                        <div className="wrate">
+                          {[1,2,3,4,5].map(n=>(<button key={n} className="rbtn en" onClick={()=>handleEnergy(n)}>{n}</button>))}
+                        </div>
+                        <div className="rlabs">
+                          <span>niedrig</span>
+                          <span>hoch</span>
+                        </div>
+                      </div>
+                    )}
+                    {msg.widget==='stress'&&!msg.answered&&(
+                      <div className="wrate-wrap">
+                        <div className="wrate">
+                          {[1,2,3,4,5].map(n=>(<button key={n} className="rbtn st" onClick={()=>handleStress(n)}>{n}</button>))}
+                        </div>
+                        <div className="rlabs">
+                          <span>niedrig</span>
+                          <span>hoch</span>
+                        </div>
+                      </div>
+                    )}
                     {msg.widget==='focus'&&!msg.answered&&(<div className="wpills">{focusTopics.map((t, idx)=>(<button key={t.id} className="plbtn" onClick={()=>handleFocus(t.id)}><span className="plbtn-icon">{t.icon}</span><span className="plbtn-body"><span className="plbtn-lbl">{idx + 1}. {t.label}</span></span></button>))}</div>)}
 
                     {msg.widget==='data-pull'&&dataLoadStage<2&&(
@@ -1365,6 +1385,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .crow.coach .ccont > :first-child{grid-column:2;grid-row:1}
         .crow.coach .wcards,
         .crow.coach .wrate,
+        .crow.coach .wrate-wrap,
         .crow.coach .wpills,
         .crow.coach .wdp,
         .crow.coach .wdr,
@@ -1393,6 +1414,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .wcd-body strong{display:block;font-size:1.18rem;color:#f8fafc;font-weight:600;margin-bottom:.2rem;letter-spacing:.01em}
         .wcd-body span{font-size:1.02rem;color:#94a3b8;line-height:1.4}
         .wcd-arrow{color:rgba(255,255,255,.3);flex-shrink:0;transition:transform .25s}.wcd:hover .wcd-arrow{transform:translateX(3px);color:rgba(255,255,255,.8)}
+        .wrate-wrap{display:flex;flex-direction:column;gap:.35rem;width:fit-content}
         .wrate{display:flex;flex-wrap:wrap;gap:.5rem}
         .rbtn{width:48px;height:48px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(12px);font-size:1rem;font-weight:600;color:#cbd5e1;cursor:pointer;transition:all .25s;box-shadow:0 4px 12px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.05)}
         .rbtn:hover{transform:scale(1.1);background:rgba(255,255,255,.08);box-shadow:0 8px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);color:#f8fafc;border-color:rgba(255,255,255,.15)}
