@@ -25,6 +25,12 @@ npm run dev
 
 Öffne [http://localhost:3000](http://localhost:3000) im Browser.
 
+## Online Prototyp
+
+Der Prototyp ist live unter folgender URL erreichbar:
+👉 [https://trueyears-dashboard-app.vercel.app](https://trueyears-dashboard-app.vercel.app)
+
+
 ### Passwortschutz (optional)
 
 Das Dashboard kann mit einem gemeinsamen Passwort geschützt werden:
