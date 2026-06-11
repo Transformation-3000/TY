@@ -242,6 +242,23 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
   const circleValue = selectedMetric === 'chronological' ? '46,7' : selectedMetric === 'difference' ? '42,5' : '0,82';
   const circleLabel = selectedMetric === 'dna' ? 'DNA' : 'Jahre';
 
+  // activeDashoffset determines the active stroke outline of the circle based on selected metric.
+  // 100% of the circle corresponds to 111 years.
+  const activeDashoffset = useMemo(() => {
+    if (selectedMetric === 'difference') {
+      // biological age = 42.5 years
+      const P = 42.5 / 111;
+      return 257.6 * (1 - P);
+    } else if (selectedMetric === 'chronological') {
+      // chronological age = 46.7 years
+      const P = 46.7 / 111;
+      return 257.6 * (1 - P);
+    } else {
+      // DNA aging rate 0.82x -> 82% fill
+      return 257.6 * 0.18;
+    }
+  }, [selectedMetric]);
+
   return (
     <div className="entw-page">
       {/* Header */}
@@ -322,10 +339,11 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
                     stroke="url(#ageScoreGrad)" 
                     strokeWidth="6.5" 
                     strokeDasharray="257.6" 
-                    strokeDashoffset="65" 
+                    strokeDashoffset={activeDashoffset} 
                     strokeLinecap="round" 
                     filter="url(#softGlow)"
                     transform="rotate(-90 50 50)"
+                    style={{ transition: 'stroke-dashoffset 0.4s ease-out' }}
                   />
                 </svg>
                 <div className="bac-circle-text-box">
