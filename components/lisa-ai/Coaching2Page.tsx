@@ -392,8 +392,19 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
             setDailyStep(3);
             await addCoachMsg('Ein sehr wertvoller Schritt. Und wie stellst du heute Abend sicher, dass dieser Stress nicht mit ins Bett wandert? Welches Abendritual hilft dir am besten zum Entspannen?', undefined, 1200);
           } else if (dailyStep === 3) {
+            setDailyStep(4);
+            await addCoachMsg('Ein starker Anker. Achte heute Abend gut auf deine Grenzen und gönn dir die Ruhe. Du machst das großartig! Gibt es noch etwas über das du gerne sprechen möchtest?', undefined, 1200);
+          } else if (dailyStep === 4) {
+            if (text.includes('Ja')) {
+              setDailyStep(5);
+              await addCoachMsg('Was bewegt dich heute noch? Magst du mir etwas mehr darüber mitteilen?', undefined, 1200);
+            } else {
+              setPhase('closing');
+              await addCoachMsg('Alles klar. Ich wünsche dir noch einen schönen Tag. Wir hören uns wenn du möchtest gerne morgen wieder :-)', 'closing', 1200);
+            }
+          } else if (dailyStep === 5) {
             setPhase('closing');
-            await addCoachMsg('Ein starker Anker. Achte heute Abend gut auf deine Grenzen und gönn dir die Ruhe. Du machst das großartig! Wir hören uns wenn du möchtest gerne morgen wieder :-)', 'closing', 1200);
+            await addCoachMsg('Danke, dass du das mit mir geteilt hast. Achte heute Abend gut auf deine Grenzen und gönn dir die Ruhe. Du machst das großartig! Wir hören uns wenn du möchtest gerne morgen wieder :-)', 'closing', 1200);
           }
         } else if (hasReflexion) {
           if (dailyStep === 1) {
@@ -504,6 +515,9 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
             }
             if (dailyStep === 3) {
               return ['Eine offline Zeit ab 21:30 Uhr', 'Ein kurzer Abendspaziergang', '5-Minuten Atemübung vor dem Schlafen'];
+            }
+            if (dailyStep === 4) {
+              return ['Ja.', 'Nein.'];
             }
           } else if (hasReflexion) {
             if (dailyStep === 1) {
