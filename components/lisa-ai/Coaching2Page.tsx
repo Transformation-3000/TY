@@ -1018,7 +1018,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
               <div className="s-right">
                 <div className="chat" ref={chatRef}>
               {messages.map(msg => (
-                <div key={msg.id} className={`crow ${msg.from}`}>
+                <div key={msg.id} className={`crow ${msg.from} ${msg.widget ? 'has-widget-' + msg.widget : ''}`}>
                   {msg.from==='coach'&&<div className="cav"><Image src={c.image} alt={c.name} width={48} height={48} style={{objectFit:'cover',borderRadius:'50%'}} /></div>}
                   <div className={`ccont ${msg.from}`}>
                     {msg.text&&<div className={`bub ${msg.from}`}><p dangerouslySetInnerHTML={{ __html: msg.text }}></p></div>}
@@ -1564,6 +1564,8 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .chat::-webkit-scrollbar{width:5px}.chat::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:4px}
         .crow{display:flex;gap:.75rem;max-width:80%;animation:mi .4s cubic-bezier(0.175, 0.885, 0.32, 1.275) both}
         .crow.coach{align-self:flex-start;display:grid;grid-template-columns:50px 1fr;align-items:start;gap:0 .75rem}
+        .crow.coach.has-widget-closing{max-width:100%;width:100%}
+        .crow.coach.has-widget-closing .bub.coach{max-width:80%}
         .crow.coach .ccont{display:contents}
         .crow.coach .cav{grid-column:1;grid-row:1;align-self:center}
         .crow.coach .ccont > :first-child{grid-column:2;grid-row:1}
