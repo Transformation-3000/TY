@@ -1417,7 +1417,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .wrate-wrap{display:flex;flex-direction:column;gap:.35rem;width:fit-content}
         .wrate{display:flex;flex-wrap:wrap;gap:.5rem}
         .rbtn{width:48px;height:48px;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(12px);font-size:1rem;font-weight:600;color:#cbd5e1;cursor:pointer;transition:all .25s;box-shadow:0 4px 12px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.05)}
-        .rbtn:hover{transform:scale(1.1);background:rgba(255,255,255,.08);box-shadow:0 8px 24px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.1);color:#f8fafc;border-color:rgba(255,255,255,.15)}
+        .rbtn:hover{transform:scale(1.1);background:#ffffff;box-shadow:0 8px 24px rgba(0,0,0,.3);color:#0284c7;border-color:#ffffff}
         .rlabs{width:100%;display:flex;justify-content:space-between;font-size:calc(.8rem + 2pt);color:#64748b;font-weight:500}
         .wpills{display:flex;flex-direction:column;gap:.45rem}
         .plbtn{display:flex;align-items:center;gap:.75rem;padding:.4rem 1.1rem;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.03);backdrop-filter:blur(12px);font-size:.95rem;color:#e2e8f0;font-weight:500;cursor:pointer;transition:all .25s;text-align:left;width:100%;box-shadow:0 8px 24px rgba(0,0,0,.15),inset 0 1px 0 rgba(255,255,255,.05)}
