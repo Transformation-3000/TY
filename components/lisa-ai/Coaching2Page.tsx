@@ -1209,7 +1209,11 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
               {isTyping&&(<div className="crow coach"><div className="cav"><Image src={c.image} alt={c.name} width={48} height={48} style={{objectFit:'cover',borderRadius:'50%'}}/></div><div className="ccont coach"><div className="bub coach tbub"><div className="tdots"><span/><span/><span/></div></div></div></div>)}
                 </div> {/* end chat */}
 
-                {showQR&&(<div className="qrs">{getQuickReplies().map((r,i)=>(<button key={i} className="qrb" onClick={()=>handleUserReply(r)}>{r}</button>))}</div>)}
+                {showQR&&(<div className="qrs">{getQuickReplies().map((r,i)=>{
+                  const colorClasses = ['qrb-blue', 'qrb-amber', 'qrb-purple', 'qrb-green', 'qrb-rose'];
+                  const colorClass = colorClasses[i % colorClasses.length];
+                  return <button key={i} className={`qrb ${colorClass}`} onClick={()=>handleUserReply(r)}>{r}</button>;
+                })}</div>)}
 
                 {/* Input area – only text mode here; audio mic is in left column */}
                 {formatTab==='text' && (
@@ -1642,6 +1646,61 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .qrs{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:.5rem;padding:0.75rem 1.5rem 0.75rem calc(2.25rem + 50px);background:transparent;border:none}
         .qrb{padding:.5rem 1.1rem;border-radius:24px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);backdrop-filter:blur(12px);font-size:.92rem;color:#cbd5e1;font-weight:500;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 12px rgba(0,0,0,.1),inset 0 1px 0 rgba(255,255,255,.05)}
         .qrb:hover{border-color:rgba(255,255,255,.25);background:rgba(255,255,255,.08);color:#f8fafc;transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.1)}
+        
+        .qrb.qrb-blue {
+          border-color: rgba(96,165,250,.3);
+          background: rgba(96,165,250,.03);
+          color: #93c5fd;
+        }
+        .qrb.qrb-blue:hover {
+          border-color: rgba(96,165,250,.6);
+          background: rgba(96,165,250,.08);
+          color: #bfdbfe;
+        }
+
+        .qrb.qrb-purple {
+          border-color: rgba(192,132,252,.3);
+          background: rgba(192,132,252,.03);
+          color: #d8b4fe;
+        }
+        .qrb.qrb-purple:hover {
+          border-color: rgba(192,132,252,.6);
+          background: rgba(192,132,252,.08);
+          color: #f3e8ff;
+        }
+
+        .qrb.qrb-amber {
+          border-color: rgba(251,191,36,.3);
+          background: rgba(251,191,36,.03);
+          color: #fde047;
+        }
+        .qrb.qrb-amber:hover {
+          border-color: rgba(251,191,36,.6);
+          background: rgba(251,191,36,.08);
+          color: #fef08a;
+        }
+
+        .qrb.qrb-green {
+          border-color: rgba(52,211,153,.3);
+          background: rgba(52,211,153,.03);
+          color: #6ee7b7;
+        }
+        .qrb.qrb-green:hover {
+          border-color: rgba(52,211,153,.6);
+          background: rgba(52,211,153,.08);
+          color: #a7f3d0;
+        }
+
+        .qrb.qrb-rose {
+          border-color: rgba(244,63,94,.3);
+          background: rgba(244,63,94,.03);
+          color: #fda4af;
+        }
+        .qrb.qrb-rose:hover {
+          border-color: rgba(244,63,94,.6);
+          background: rgba(244,63,94,.08);
+          color: #fecdd3;
+        }
  
         .iarea{position:relative;z-index:2;padding:.85rem 1.5rem 1.2rem;border-top:1px solid rgba(255,255,255,.05);background:rgba(6,13,24,.75);backdrop-filter:blur(24px)}
         .tirow{display:flex;gap:.5rem}
