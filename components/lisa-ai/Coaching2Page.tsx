@@ -1209,11 +1209,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
               {isTyping&&(<div className="crow coach"><div className="cav"><Image src={c.image} alt={c.name} width={48} height={48} style={{objectFit:'cover',borderRadius:'50%'}}/></div><div className="ccont coach"><div className="bub coach tbub"><div className="tdots"><span/><span/><span/></div></div></div></div>)}
                 </div> {/* end chat */}
 
-                {showQR&&(<div className="qrs">{getQuickReplies().map((r,i)=>{
-                  const colorClasses = ['qrb-blue', 'qrb-amber', 'qrb-purple', 'qrb-green', 'qrb-rose'];
-                  const colorClass = colorClasses[i % colorClasses.length];
-                  return <button key={i} className={`qrb ${colorClass}`} onClick={()=>handleUserReply(r)}>{r}</button>;
-                })}</div>)}
+                {showQR&&(<div className="qrs">{getQuickReplies().map((r,i)=>(<button key={i} className="qrb qrb-blue" onClick={()=>handleUserReply(r)}>{r}</button>))}</div>)}
 
                 {/* Input area – only text mode here; audio mic is in left column */}
                 {formatTab==='text' && (
