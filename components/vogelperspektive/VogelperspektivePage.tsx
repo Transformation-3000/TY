@@ -501,11 +501,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             </div>
 
             {/* CARD 3: JUNGBRUNNEN */}
-            <div 
-              className="fg-v-card"
-              onClick={() => onNavigate?.('zellalter-simulation')}
-              style={{ cursor: 'pointer' }}
-            >
+            <div className="fg-v-card">
               <div className="fgh-img-16-9"><Image src="/images/feelgood_youth.png" fill alt="Regeneration" style={{ objectFit: 'cover' }} /></div>
               <div className="fgh-content">
                 <strong>Jungbrunnen</strong>
