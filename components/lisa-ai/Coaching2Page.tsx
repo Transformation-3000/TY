@@ -136,6 +136,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
   const [rightTab, setRightTab] = useState<'today'|'history'|'customize'>('today');
   const [sessionType, setSessionType] = useState<SessionType>('daily');
   const [entryChoice, setEntryChoice] = useState<string>('');
+  const [dailyStep, setDailyStep] = useState(0);
   const [showMoreRecs, setShowMoreRecs] = useState(false);
   const [historySearch, setHistorySearch] = useState('');
   const [selectedSessionId, setSelectedSessionId] = useState<number | null>(null);
@@ -290,6 +291,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
       setEnergy(0); setStress(0); setFocusTopic('');
       setDataLoadStage(0); setDataItems(0); setSyncStage(0); setSyncDone(false);
       setEntryChoice('');
+      setDailyStep(0);
       setIsAnimating(true);
       setTimeout(() => { setView('session'); setIsAnimating(false); }, 50);
       await addCoachMsg('Hallo Monique! Schön, dass du dir Zeit für dich nimmst. Was möchtest du heute machen?', 'entry-options', 1200);
@@ -347,14 +349,86 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
       await addCoachMsg('Das passt genau zu deinem HRV-Verlauf – die Erholungsphasen starten bei dir erst spät in der Nacht. Bildschirmzeit hält dein Nervensystem im Sympathikus-Modus. Ich habe auf Basis deiner Daten einen konkreten Plan erarbeitet:', 'action-plan', 1600);
     } else if (phase === 'daily-topic-detail') {
       setPhase('daily-lifestyle-insight');
-      if (entryChoice === 'Was bewegt dich gerade?' || entryChoice === 'Tages-Fokus') {
-        await addCoachMsg('Das klingt nach einem intensiven Fokus. Wie schaffst du dir heute Abend einen bewussten Moment zum Abschalten, um wieder Kraft zu tanken?', undefined, 1200);
-      } else {
-        await addCoachMsg('Das ist ein wunderbarer Gedanke! Achtest du im Alltag öfter auf solche kleinen Glücksmomente, oder ging das heute ganz spontan?', undefined, 1200);
+      setDailyStep(1);
+      if (entryChoice === 'Was bewegt dich gerade?') {
+        if (text.includes('Stress')) {
+          await addCoachMsg('Es tut mir leid zu hören, dass es gerade intensiv ist. Stress gehört dazu, aber wir können ihn steuern. Was ist gerade der Haupttreiber für deinen Stress – Zeitdruck, ein bestimmtes Projekt oder das Gefühl, nicht abschalten zu können?', undefined, 1200);
+        } else if (text.includes('reflektieren')) {
+          await addCoachMsg('Das ist wunderbar! Auch an guten Tagen lohnt sich eine Reflexion, um Positives zu festigen. Wenn du auf die letzten 24 Stunden blickst: Was hat besonders gut funktioniert, oder was hat dir Energie gegeben?', undefined, 1200);
+        } else if (text.includes('sortieren')) {
+          await addCoachMsg('Gerne. Nimm dir kurz einen Moment, um es einzugrenzen: In welchem Lebensbereich liegt dieses Thema heute? Ist es ein berufliches Projekt, eine tägliche Gewohnheit/Routine oder etwas ganz Persönliches?', undefined, 1200);
+        } else {
+          await addCoachMsg('Nimm dir kurz einen Moment, um es einzugrenzen: In welchem Lebensbereich liegt dieses Thema heute? Ist es ein berufliches Projekt, eine tägliche Gewohnheit/Routine oder etwas ganz Persönliches?', undefined, 1200);
+        }
+      } else if (entryChoice === 'Tages-Highlight') {
+        await addCoachMsg('Das klingt nach einer echten Bereicherung! Soziale Verbindung gibt uns unglaublich viel Energie. Nimmst du dir im Alltag öfter Zeit für solche bewussten Kontakte, oder war das heute eher spontan?', undefined, 1200);
+      } else if (entryChoice === 'Tages-Fokus') {
+        await addCoachMsg('Das erfordert volle Konzentration. Wie kannst du heute dafür sorgen, dass du während der Arbeit fokussiert bleibst und Ablenkungen minimierst?', undefined, 1200);
+      } else if (entryChoice === 'Dankbarkeit') {
+        await addCoachMsg('Gesundheit ist das wertvollste Gut, das wir oft als selbstverständlich ansehen. Welcher kleine Habit hilft dir heute, deinem Körper etwas Gutes zu tun und diese Gesundheit aktiv zu unterstützen?', undefined, 1200);
       }
     } else if (phase === 'daily-lifestyle-insight') {
-      setPhase('closing');
-      await addCoachMsg('Sehr schön. Nimm dieses positive Gefühl und deinen Vorsatz mit in den Feierabend. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
+      const hasStress = messages.some(m => m.from === 'user' && m.text.includes('Stress'));
+      const hasReflexion = messages.some(m => m.from === 'user' && m.text.includes('reflektieren'));
+      const hasSortieren = messages.some(m => m.from === 'user' && m.text.includes('sortieren'));
+      
+      if (entryChoice === 'Was bewegt dich gerade?') {
+        if (hasSortieren) {
+          if (dailyStep === 1) {
+            setDailyStep(2);
+            await addCoachMsg('Verstehe. Berufliche Themen und Lebensgewohnheiten können mental viel Raum einnehmen. Oft hilft es schon, sie einmal auszusprechen. Was ist für dich gerade die größte Herausforderung oder der wichtigste nächste Schritt dabei?', undefined, 1200);
+          } else if (dailyStep === 2) {
+            setDailyStep(3);
+            await addCoachMsg('Ein sehr klarer Fokus. Um heute Abend einen gesunden Abstand dazu zu gewinnen: Wie schaffst du dir nachher einen bewussten Kontrastpunkt, um richtig abzuschalten?', undefined, 1200);
+          } else if (dailyStep === 3) {
+            setPhase('closing');
+            await addCoachMsg('Ein wunderbarer Plan. Lass die Gedanken nachher bewusst ruhen und nimm dir diesen Moment ganz für dich. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
+          }
+        } else if (hasStress) {
+          if (dailyStep === 1) {
+            setDailyStep(2);
+            await addCoachMsg('Das fühlt sich oft sehr erdrückend an. Lass uns für heute Druck rausnehmen: Was wäre eine Sache, die du heute bewusst weglassen oder vereinfachen kannst, um dein Nervensystem etwas zu entlasten?', undefined, 1200);
+          } else if (dailyStep === 2) {
+            setDailyStep(3);
+            await addCoachMsg('Ein sehr wertvoller Schritt. Und wie stellst du heute Abend sicher, dass dieser Stress nicht mit ins Bett wandert? Welches Abendritual hilft dir am besten zum Entspannen?', undefined, 1200);
+          } else if (dailyStep === 3) {
+            setPhase('closing');
+            await addCoachMsg('Ein starker Anker. Achte heute Abend gut auf deine Grenzen und gönn dir die Ruhe. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
+          }
+        } else if (hasReflexion) {
+          if (dailyStep === 1) {
+            setDailyStep(2);
+            await addCoachMsg('Schön, das bewusst wahrzunehmen! Diese positiven Momente laden unsere mentalen Batterien auf. Wie kannst du diese gute Energie nutzen, um dir heute Abend etwas Gutes zu tun und deine Schlafroutine besonders entspannt zu gestalten?', undefined, 1200);
+          } else if (dailyStep === 2) {
+            setPhase('closing');
+            await addCoachMsg('Hervorragend. Nimm diese positive Energie und den guten Rhythmus mit in die Nacht. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
+          }
+        }
+      } else if (entryChoice === 'Tages-Highlight') {
+        if (dailyStep === 1) {
+          setDailyStep(2);
+          await addCoachMsg('Sehr schön. Um diesen guten Tag positiv ausklingen zu lassen: Wie möchtest du den Abend heute gestalten? Gibt es eine Gewohnheit, auf die du dich heute besonders freust?', undefined, 1200);
+        } else if (dailyStep === 2) {
+          setPhase('closing');
+          await addCoachMsg('Genieße diesen wohlverdienten Abend und nimm dieses positive Gefühl mit in den Schlaf. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
+        }
+      } else if (entryChoice === 'Tages-Fokus') {
+        if (dailyStep === 1) {
+          setDailyStep(2);
+          await addCoachMsg('Hervorragende Strategie. Um nach diesem fokussierten Tag den Übergang in den Feierabend zu schaffen: Welches Ritual hilft dir heute Abend, die Arbeit gedanklich komplett abzuschließen?', undefined, 1200);
+        } else if (dailyStep === 2) {
+          setPhase('closing');
+          await addCoachMsg('Ein sehr gesundes Ritual. Zieh deinen Fokus heute durch und gönn dir danach das bewusste Abschalten. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
+        }
+      } else if (entryChoice === 'Dankbarkeit') {
+        if (dailyStep === 1) {
+          setDailyStep(2);
+          await addCoachMsg('Klingt nach einer perfekten Fürsorge für deinen Körper. Wie möchtest du heute Abend für die nötige Regeneration sorgen, um deine Energie für morgen aufzuladen?', undefined, 1200);
+        } else if (dailyStep === 2) {
+          setPhase('closing');
+          await addCoachMsg('Wunderbar. Schenke deinem Körper die Erholung, die er verdient. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
+        }
+      }
     }
   };
   const handleShowCommitment = async () => { markAnswered(); setPhase('commitment'); await addCoachMsg('Wie klingt das für dich?', 'commitment', 500); };
@@ -380,25 +454,93 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
   const getQuickReplies = (): string[] => {
     if (phase === 'verstehen') return ['Ich schlafe genug, aber wache unausgeruht auf.', 'Abends komme ich schwer zur Ruhe.', 'Mein Schlafrhythmus ist durcheinander.'];
     if (phase === 'fokus') return ['Ja, ich bin abends oft noch am Handy.', 'Ich schaue meistens noch Serien.', 'Ich grüble über den nächsten Tag.'];
-    if (phase === 'daily-topic-detail') {
-      if (entryChoice === 'Was bewegt dich gerade?') {
-        return ['Ich habe gerade ziemlich viel Stress.', 'Eigentlich läuft alles gut, wollte nur kurz reflektieren.', 'Ich möchte meine Gedanken zu einem bestimmten Thema sortieren.'];
+    
+    if (sessionType === 'daily') {
+      if (phase === 'daily-topic-detail') {
+        if (entryChoice === 'Was bewegt dich gerade?') {
+          return ['Ich habe gerade ziemlich viel Stress.', 'Eigentlich läuft alles gut, wollte nur kurz reflektieren.', 'Ich möchte meine Gedanken zu einem bestimmten Thema sortieren.'];
+        }
+        if (entryChoice === 'Tages-Highlight') {
+          return ['Ein tolles Gespräch mit einem lieben Menschen.', 'Ich habe eine sportliche Einheit erfolgreich absolviert.', 'Ein leckeres Essen oder ein schöner Moment in der Natur.'];
+        }
+        if (entryChoice === 'Tages-Fokus') {
+          return ['Ein wichtiges Projekt abschließen.', 'Mir heute Abend bewusst Zeit für mich nehmen.', 'Gesunde Gewohnheiten konsequent durchziehen.'];
+        }
+        if (entryChoice === 'Dankbarkeit') {
+          return ['Dass ich nette Menschen um mich habe.', 'Dass ich heute gesund und schmerzfrei bin.', 'Für die kleinen Erholungsmomente im Alltag.'];
+        }
       }
-      if (entryChoice === 'Tages-Highlight') {
-        return ['Ein tolles Gespräch mit einem lieben Menschen.', 'Ich habe eine sportliche Einheit erfolgreich absolviert.', 'Ein leckeres Essen oder ein schöner Moment in der Natur.'];
-      }
-      if (entryChoice === 'Tages-Fokus') {
-        return ['Ein wichtiges Projekt abschließen.', 'Mir heute Abend bewusst Zeit für mich nehmen.', 'Gesunde Gewohnheiten konsequent durchziehen.'];
-      }
-      if (entryChoice === 'Dankbarkeit') {
-        return ['Dass ich nette Menschen um mich habe.', 'Dass ich heute gesund und schmerzfrei bin.', 'Für die kleinen Erholungsmomente im Alltag.'];
-      }
-    }
-    if (phase === 'daily-lifestyle-insight') {
-      if (entryChoice === 'Was bewegt dich gerade?' || entryChoice === 'Tages-Fokus') {
-        return ['Ich werde heute Abend bewusst das Handy weglegen.', 'Ein Spaziergang an der frischen Luft ist geplant.', 'Ich versuche einfach, früh ins Bett zu gehen.'];
-      } else {
-        return ['Ich versuche, das ganz bewusst jeden Tag zu tun.', 'Das passiert eher spontan, tut aber extrem gut.', 'Ich möchte mir ab jetzt öfter solche Momente nehmen.'];
+      
+      if (phase === 'daily-lifestyle-insight') {
+        if (entryChoice === 'Was bewegt dich gerade?') {
+          const hasStress = messages.some(m => m.from === 'user' && m.text.includes('Stress'));
+          const hasReflexion = messages.some(m => m.from === 'user' && m.text.includes('reflektieren'));
+          const hasSortieren = messages.some(m => m.from === 'user' && m.text.includes('sortieren'));
+          
+          if (hasSortieren) {
+            if (dailyStep === 1) {
+              return ['Ein berufliches Thema', 'Eine Gewohnheit / Routine anpassen', 'Etwas Persönliches'];
+            }
+            if (dailyStep === 2) {
+              if (messages.some(m => m.from === 'user' && m.text.includes('beruflich'))) {
+                return ['Klarheit über die Prioritäten finden', 'Eine schwierige Entscheidung treffen', 'Einfach nur den Druck abbauen'];
+              }
+              if (messages.some(m => m.from === 'user' && m.text.includes('Gewohnheit'))) {
+                return ['Meine Abendroutine verbessern', 'Mehr Bewegung in den Alltag einbauen', 'Eine gesündere Mahlzeit etablieren'];
+              }
+              if (messages.some(m => m.from === 'user' && m.text.includes('Persönlich'))) {
+                return ['Mehr Zeit für mich selbst finden', 'Mentale Balance & Ruhe stärken', 'Einen kleinen Konflikt klären'];
+              }
+            }
+            if (dailyStep === 3) {
+              return ['Ich werde heute Abend bewusst das Handy weglegen.', 'Ein Spaziergang an der frischen Luft ist geplant.', 'Sport oder eine kurze Yoga-Einheit.'];
+            }
+          } else if (hasStress) {
+            if (dailyStep === 1) {
+              return ['Hoher Arbeits- und Zeitdruck', 'Ein bestimmtes, schwieriges Projekt', 'Das Gefühl, gedanklich nicht abschalten zu können'];
+            }
+            if (dailyStep === 2) {
+              return ['Eine unwichtige Aufgabe verschieben', 'Bewusst öfter mal tief durchatmen', 'Etwas früher Feierabend machen'];
+            }
+            if (dailyStep === 3) {
+              return ['Eine offline Zeit ab 21:30 Uhr', 'Ein kurzer Abendspaziergang', '5-Minuten Atemübung vor dem Schlafen'];
+            }
+          } else if (hasReflexion) {
+            if (dailyStep === 1) {
+              return ['Ein produktiver und fokussierter Tag', 'Ein schönes Gespräch oder Erlebnis', 'Ich habe meine Routinen gut durchgezogen'];
+            }
+            if (dailyStep === 2) {
+              return ['Ein gutes Buch lesen statt Fernsehen', 'Eine Runde dehnen vor dem Schlafen', 'Einfach die Ruhe und den Erfolg genießen'];
+            }
+          }
+        }
+        
+        if (entryChoice === 'Tages-Highlight') {
+          if (dailyStep === 1) {
+            return ['Ich versuche, das ganz bewusst jeden Tag zu tun.', 'Das passiert eher spontan, tut aber extrem gut.', 'Ich möchte mir ab jetzt öfter Zeit dafür nehmen.'];
+          }
+          if (dailyStep === 2) {
+            return ['Ein gutes Buch lesen', 'Ein entspanntes Bad oder Dehnen', 'Einfach früh schlafen gehen'];
+          }
+        }
+        
+        if (entryChoice === 'Tages-Fokus') {
+          if (dailyStep === 1) {
+            return ['Fokus-Modus am Handy aktivieren', 'Regelmäßige kurze Bildschirmpausen machen', 'Ein klares Zeitfenster blocken'];
+          }
+          if (dailyStep === 2) {
+            return ['Arbeitssachen wegräumen & Laptop aus', 'Ein Spaziergang nach Feierabend', 'Sport oder Musik zum Abschalten'];
+          }
+        }
+        
+        if (entryChoice === 'Dankbarkeit') {
+          if (dailyStep === 1) {
+            return ['Ausreichend Wasser trinken', 'Eine gesündere Mahlzeit zubereiten', 'Mich an der frischen Luft bewegen'];
+          }
+          if (dailyStep === 2) {
+            return ['Handy frühzeitig ausschalten', 'Ein warmes Bad oder entspannende Musik', 'Rechtzeitig schlafen gehen'];
+          }
+        }
       }
     }
     return [];
