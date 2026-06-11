@@ -128,7 +128,11 @@ const clusterNames = [
   'Mentale Resilienz & Mindset'
 ];
 
-export default function EntwicklungPage() {
+interface EntwicklungPageProps {
+  onStartSimulation?: () => void;
+}
+
+export default function EntwicklungPage({ onStartSimulation }: EntwicklungPageProps) {
   const [activeTab, setActiveTab] = useState<SubTab>('trends');
   const [selectedMetric, setSelectedMetric] = useState<'chronological' | 'difference' | 'dna'>('difference');
   const [trendPeriod, setTrendPeriod] = useState<TrendPeriod>('12m');
@@ -273,13 +277,24 @@ export default function EntwicklungPage() {
               <span className="blue-bar"></span>
               <h2>Dein True Years BioAge</h2>
             </div>
-            <button 
-              className="upload-trigger-btn" 
-              onClick={() => setShowUploadModal(true)}
-            >
-              <i className="bi bi-cloud-arrow-up-fill" style={{ color: 'white' }}></i>
-              BioAge Nachweise hochladen
-            </button>
+            <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }} className="bioage-btn-row">
+              <button 
+                type="button"
+                className="simulation-trigger-btn" 
+                onClick={onStartSimulation}
+              >
+                <i className="bi bi-activity" style={{ color: 'white' }}></i>
+                Zellalter-Simulation
+              </button>
+              <button 
+                type="button"
+                className="upload-trigger-btn" 
+                onClick={() => setShowUploadModal(true)}
+              >
+                <i className="bi bi-cloud-arrow-up-fill" style={{ color: 'white' }}></i>
+                BioAge Nachweise hochladen
+              </button>
+            </div>
           </div>
 
           {/* BioAge Card */}
@@ -957,6 +972,24 @@ export default function EntwicklungPage() {
         .trends-title-group { display: flex; align-items: center; }
         .trends-title-group h2 { font-size: 1.45rem; font-weight: 800; color: #1e3a5f; margin: 0; }
 
+        .simulation-trigger-btn {
+          padding: 0.6rem 1.2rem;
+          font-size: 0.9rem;
+          background: #22c55e;
+          color: white;
+          border: none;
+          border-radius: 100px;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          cursor: pointer;
+          font-weight: 700;
+          transition: all 0.2s;
+        }
+        .simulation-trigger-btn:hover {
+          background: #16a34a;
+        }
+
         .upload-trigger-btn {
           padding: 0.6rem 1.2rem;
           font-size: 0.9rem;
@@ -1583,6 +1616,12 @@ export default function EntwicklungPage() {
             align-items: flex-start;
             gap: 1rem;
           }
+          .bioage-btn-row {
+            width: 100%;
+            flex-direction: column;
+            gap: 0.5rem;
+          }
+          .simulation-trigger-btn,
           .upload-trigger-btn,
           .adjust-goals-btn {
             width: 100%;

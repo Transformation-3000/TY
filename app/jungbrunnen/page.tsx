@@ -330,32 +330,6 @@ export default function JungbrunnenPage() {
             </div>
           </div>
         </div>
-
-        {/* Tailored Blueprint Section */}
-        <div className="jb-blueprint">
-          <h2>Dein persönlicher Jungbrunnen-Blueprint</h2>
-          <p className="section-subtitle">Die effektivsten Sofortmaßnahmen basierend auf deiner heutigen Auswertung:</p>
-          
-          <div className="blueprint-grid">
-            {activeHabits.map((habit, i) => (
-              <div key={i} className="blueprint-card">
-                <div className="bp-icon-wrap">{habit.icon}</div>
-                <div className="bp-body">
-                  <h3>{habit.title}</h3>
-                  <p>{habit.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="blueprint-cta">
-            <div className="bp-cta-content">
-              <h3>Möchtest du dein wahres biologisches Alter im Blut messen?</h3>
-              <p>True Years verbindet präzise epigenetische DNA-Analysen mit einem interaktiven Begleiter, damit du deine Verjüngung Tag für Tag messen und steuern kannst.</p>
-            </div>
-            <Link href="/dashboard" className="btn-bp-cta">Jetzt zellulär durchstarten</Link>
-          </div>
-        </div>
       </div>
 
       {/* Footer */}

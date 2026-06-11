@@ -16,6 +16,7 @@ import VogelperspektivePage from '@/components/vogelperspektive/Vogelperspektive
 import Coaching2Page from '@/components/lisa-ai/Coaching2Page';
 import TrueYearsPrinzipienPage from '@/components/true-years/TrueYearsPrinzipienPage';
 import ZellalterCheckPage from '@/components/checks/ZellalterCheckPage';
+import ZellalterSimulationPage from '@/components/checks/ZellalterSimulationPage';
 import LongevityBalanceCheckPage from '@/components/checks/LongevityBalanceCheckPage';
 import DatenintegrationPage from '@/components/service/DatenintegrationPage';
 import ExpertengespraechPage from '@/components/service/ExpertengespraechPage';
@@ -129,7 +130,11 @@ export default function Dashboard() {
           )}
 
           {activeMenuItem === 'entwicklung' && (
-            <EntwicklungPage />
+            <EntwicklungPage onStartSimulation={() => setActiveMenuItem('zellalter-simulation')} />
+          )}
+
+          {activeMenuItem === 'zellalter-simulation' && (
+            <ZellalterSimulationPage onBack={() => setActiveMenuItem('entwicklung')} />
           )}
 
           {activeMenuItem === 'micro-habit-apps' && (
