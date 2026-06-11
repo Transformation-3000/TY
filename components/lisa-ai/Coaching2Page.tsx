@@ -393,7 +393,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
             await addCoachMsg('Ein sehr wertvoller Schritt. Und wie stellst du heute Abend sicher, dass dieser Stress nicht mit ins Bett wandert? Welches Abendritual hilft dir am besten zum Entspannen?', undefined, 1200);
           } else if (dailyStep === 3) {
             setPhase('closing');
-            await addCoachMsg('Ein starker Anker. Achte heute Abend gut auf deine Grenzen und gönn dir die Ruhe. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
+            await addCoachMsg('Ein starker Anker. Achte heute Abend gut auf deine Grenzen und gönn dir die Ruhe. Du machst das großartig! Wir hören uns wenn du möchtest gerne morgen wieder :-)', 'closing', 1200);
           }
         } else if (hasReflexion) {
           if (dailyStep === 1) {
