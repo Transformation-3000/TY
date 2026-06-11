@@ -1214,7 +1214,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                 {/* Input area – only text mode here; audio mic is in left column */}
                 {formatTab==='text' && (
                   <div className="iarea">
-                    <div className="tirow"><input type="text" placeholder="Nachricht oder Antwort eingeben" className="tinp" readOnly/><button className="sbtn">↑</button></div>
+                    <div className="tirow"><input type="text" placeholder="Nachricht / Antwort eingeben ..." className="tinp" readOnly/><button className="sbtn">↑</button></div>
                   </div>
                 )}
                 {formatTab==='voice' && (
