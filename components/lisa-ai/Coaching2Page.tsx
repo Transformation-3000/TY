@@ -517,7 +517,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
               return ['Eine offline Zeit ab 21:30 Uhr', 'Ein kurzer Abendspaziergang', '5-Minuten Atemübung vor dem Schlafen'];
             }
             if (dailyStep === 4) {
-              return ['Ja.', 'Nein.'];
+              return ['Ja', 'Nein'];
             }
           } else if (hasReflexion) {
             if (dailyStep === 1) {
