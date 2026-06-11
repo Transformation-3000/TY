@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function VogelperspektivePage() {
   const [currentDate, setCurrentDate] = useState('');
@@ -497,13 +498,13 @@ export default function VogelperspektivePage() {
             </div>
 
             {/* CARD 3: JUNGBRUNNEN */}
-            <div className="fg-v-card">
+            <Link href="/jungbrunnen" className="fg-v-card">
               <div className="fgh-img-16-9"><Image src="/images/feelgood_youth.png" fill alt="Regeneration" style={{ objectFit: 'cover' }} /></div>
               <div className="fgh-content">
                 <strong>Jungbrunnen</strong>
                 <span>Jeden Tag eine Verjüngungsaktion</span>
               </div>
-            </div>
+            </Link>
 
             {/* CARD 4: STRAHLKRAFT */}
             <div className="fg-v-card">

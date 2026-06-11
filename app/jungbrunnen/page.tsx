@@ -146,7 +146,7 @@ export default function JungbrunnenPage() {
       <div className="jb-glow-orb orb-2"></div>
       
       {/* Navigation */}
-      <nav className={`nav ${menuOpen ? 'nav-open' : ''}`}>
+      <nav className={`landing-nav ${menuOpen ? 'landing-nav-open' : ''}`}>
         <Link href="/" className="logo">
           <Image 
             src="/images/logoneu.png" 
@@ -158,16 +158,16 @@ export default function JungbrunnenPage() {
           />
         </Link>
         <button 
-          className={`nav-toggle ${menuOpen ? 'toggle-active' : ''}`}
+          className={`landing-nav-toggle ${menuOpen ? 'toggle-active' : ''}`}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation"
         >
           <span className="hamburger"></span>
         </button>
-        <div className={`nav-links ${menuOpen ? 'nav-links-open' : ''}`}>
-          <Link href="/" className="nav-link">Startseite</Link>
-          <Link href="/#features" className="nav-link">Bausteine</Link>
-          <Link href="/#erfolgsprinzip" className="nav-link">Mitgliedschaften</Link>
+        <div className={`landing-nav-links ${menuOpen ? 'landing-nav-links-open' : ''}`}>
+          <Link href="/" className="landing-nav-link">Startseite</Link>
+          <Link href="/#features" className="landing-nav-link">Bausteine</Link>
+          <Link href="/#erfolgsprinzip" className="landing-nav-link">Mitgliedschaften</Link>
           <Link href="/dashboard" className="btn-cta-small">Dashboard</Link>
         </div>
       </nav>

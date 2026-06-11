@@ -32,7 +32,7 @@ section[id] {
 }
 
 /* --- NAVIGATION --- */
-.nav {
+.landing-nav {
   position: fixed;
   top: 0;
   left: 0;
@@ -61,13 +61,13 @@ section[id] {
   margin-left: -10px;
 }
 
-.nav-links {
+.landing-nav-links {
   display: flex;
   gap: 2.5rem;
   align-items: center;
 }
 
-.nav-link {
+.landing-nav-link {
   text-decoration: none;
   color: #004b8d;
   font-weight: 400;
@@ -75,7 +75,7 @@ section[id] {
   transition: color 0.3s ease;
 }
 
-.nav-link:hover {
+.landing-nav-link:hover {
   color: #00a3ff;
 }
 
@@ -635,7 +635,7 @@ section[id] {
 }
 
 /* --- RESPONSIVE NAVIGATION & BUTTONS --- */
-.nav-toggle {
+.landing-nav-toggle {
   display: none;
   background: none;
   border: none;
@@ -697,7 +697,7 @@ section[id] {
 
 @media (max-width: 768px) {
   /* Navigation */
-  .nav {
+  .landing-nav {
     height: 80px;
     padding: 0 1.5rem;
     background: #ffffff;
@@ -707,11 +707,11 @@ section[id] {
     height: 80px;
   }
 
-  .nav-toggle {
+  .landing-nav-toggle {
     display: block;
   }
 
-  .nav-links {
+  .landing-nav-links {
     position: fixed;
     top: 0;
     right: -100%;
@@ -729,11 +729,11 @@ section[id] {
     z-index: 1050;
   }
 
-  .nav-links-open {
+  .landing-nav-links-open {
     right: 0;
   }
 
-  .nav-link {
+  .landing-nav-link {
     font-size: 1.4rem;
   }
 

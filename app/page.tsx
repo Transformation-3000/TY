@@ -104,7 +104,7 @@ export default function LandingPage() {
   return (
     <div className="landing-container">
       {/* Navigation */}
-      <nav className={`nav ${menuOpen ? 'nav-open' : ''}`}>
+      <nav className={`landing-nav ${menuOpen ? 'landing-nav-open' : ''}`}>
         <Link href="/" className="logo">
           <Image 
             src="/images/logoneu.png" 
@@ -116,18 +116,18 @@ export default function LandingPage() {
           />
         </Link>
         <button 
-          className={`nav-toggle ${menuOpen ? 'toggle-active' : ''}`}
+          className={`landing-nav-toggle ${menuOpen ? 'toggle-active' : ''}`}
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle navigation"
         >
           <span className="hamburger"></span>
         </button>
-        <div className={`nav-links ${menuOpen ? 'nav-links-open' : ''}`}>
-          <Link href="/jungbrunnen" className="nav-link" onClick={() => setMenuOpen(false)}>Jungbrunnen 🧬</Link>
-          <Link href="#features" className="nav-link" onClick={() => setMenuOpen(false)}>Bausteine</Link>
-          <Link href="#erfolgsprinzip" className="nav-link" onClick={() => setMenuOpen(false)}>Mitgliedschaften</Link>
-          <Link href="#testphase" className="nav-link" onClick={() => setMenuOpen(false)}>Wissenschaft</Link>
-          <Link href="#kundenstimmen" className="nav-link" onClick={() => setMenuOpen(false)}>Kundenstimmen</Link>
+        <div className={`landing-nav-links ${menuOpen ? 'landing-nav-links-open' : ''}`}>
+          <Link href="/jungbrunnen" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Jungbrunnen 🧬</Link>
+          <Link href="#features" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Bausteine</Link>
+          <Link href="#erfolgsprinzip" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Mitgliedschaften</Link>
+          <Link href="#testphase" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Wissenschaft</Link>
+          <Link href="#kundenstimmen" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Kundenstimmen</Link>
           <Link href="/dashboard" className="btn-cta-small" onClick={() => setMenuOpen(false)}>Login</Link>
         </div>
       </nav>
