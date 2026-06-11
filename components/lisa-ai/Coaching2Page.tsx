@@ -137,6 +137,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
   const [sessionType, setSessionType] = useState<SessionType>('daily');
   const [entryChoice, setEntryChoice] = useState<string>('');
   const [dailyStep, setDailyStep] = useState(0);
+  const [typedText, setTypedText] = useState('');
   const [showMoreRecs, setShowMoreRecs] = useState(false);
   const [historySearch, setHistorySearch] = useState('');
   const [selectedSessionId, setSelectedSessionId] = useState<number | null>(null);
@@ -1228,7 +1229,34 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                 {/* Input area – only text mode here; audio mic is in left column */}
                 {formatTab==='text' && (
                   <div className="iarea">
-                    <div className="tirow"><input type="text" placeholder="Nachricht / Antwort eingeben ..." className="tinp" readOnly/><button className="sbtn">↑</button></div>
+                    <div className="tirow">
+                      <input 
+                        type="text" 
+                        placeholder="Nachricht / Antwort eingeben ..." 
+                        className="tinp" 
+                        value={typedText}
+                        onChange={(e) => setTypedText(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter' && typedText.trim() && !isTyping) {
+                            handleUserReply(typedText);
+                            setTypedText('');
+                          }
+                        }}
+                        disabled={isTyping}
+                      />
+                      <button 
+                        className="sbtn" 
+                        onClick={() => {
+                          if (typedText.trim() && !isTyping) {
+                            handleUserReply(typedText);
+                            setTypedText('');
+                          }
+                        }}
+                        disabled={isTyping}
+                      >
+                        ↑
+                      </button>
+                    </div>
                   </div>
                 )}
                 {formatTab==='voice' && (
