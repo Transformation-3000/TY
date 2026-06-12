@@ -115,7 +115,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                   transition: 'all 0.2s ease',
                   boxShadow: selectedField.id === field.id ? '0 10px 20px rgba(0,0,0,0.05)' : 'none',
                   opacity: field.active ? 1 : 0.6,
-                  filter: field.active ? 'none' : 'grayscale(0.8)'
+                  filter: field.active ? 'none' : 'grayscale(0.8)',
+                  width: '100%'
                 }}
               >
                 <div style={{ 
@@ -127,7 +128,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                 }}>
                   <i className={`bi ${field.active ? field.icon : 'bi-lock'}`}></i>
                 </div>
-                <div style={{ flex: 1 }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: '1rem', fontWeight: 700, color: field.active ? '#1e293b' : '#64748b' }}>{field.label}</div>
                   {field.active && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.4rem' }}>
@@ -506,6 +507,22 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           .style-desc {
             font-size: 0.95rem;
             text-align: left;
+          }
+          .sim-card-grid-layout {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1.5rem;
+          }
+          .sim-card-wide-content {
+            text-align: center;
+          }
+          .sim-card-wide h3, .sim-card-wide p {
+            text-align: center;
+          }
+          .bac-circle-container-mini {
+            margin-right: 0;
+            margin-top: 0;
           }
         }
 
