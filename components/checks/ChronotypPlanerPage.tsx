@@ -398,7 +398,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
           {/* Visual 2: Zirkadianer Energieverlauf (Waveform Curve) */}
           <div className="sim-card timeline-card">
             <h2>Zirkadianer Energieverlauf</h2>
-            <p className="card-subtitle">Toleranzkurve und biologische Aktivitätswelle:</p>
+            <p className="card-subtitle">Toleranzkurve & biologische Aktivitätswelle</p>
 
             <div className="waveform-container">
               <svg viewBox="0 0 100 50" className="waveform-svg">
@@ -857,7 +857,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
         /* Waveform Curve Styles */
         .waveform-container {
           position: relative;
-          margin: 1.25rem 0 0.5rem 0;
+          margin: 1.75rem 0 0.5rem 0;
         }
 
         .waveform-svg {
