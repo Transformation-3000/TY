@@ -350,7 +350,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
             </ul>
             <Link href="#" className="btn-pricing btn-outline">
-              Jetzt starten
+              Mitgliedschaft starten
             </Link>
           </div>
 
@@ -376,7 +376,7 @@ export default function LandingPage() {
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
             </ul>
             <Link href="#" className="btn-pricing btn-filled">
-              Jetzt starten
+              Mitgliedschaft starten
             </Link>
           </div>
 
@@ -403,7 +403,7 @@ export default function LandingPage() {
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Jährliches 1:1-Expertengespräch</li>
             </ul>
             <Link href="#" className="btn-pricing btn-accent">
-              Jetzt starten
+              Mitgliedschaft starten
             </Link>
           </div>
         </div>
