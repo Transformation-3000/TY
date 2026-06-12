@@ -291,26 +291,26 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           color: #ffffff;
           border: none;
           border-radius: 100px;
-          padding: 1.25rem 2.25rem;
+          padding: 0.95rem 2.25rem;
           font-size: 0.95rem;
           font-weight: 800;
           cursor: pointer;
-          transition: all 0.2s ease;
-          box-shadow: 0 4px 12px rgba(0, 110, 167, 0.2);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 4px 12px rgba(0, 110, 167, 0.25);
           display: inline-flex;
           flex-direction: column;
           align-items: center;
           justify-content: center;
           text-align: center;
           line-height: 1.2;
-          margin-top: -30px;
+          margin-top: 10px;
           position: relative;
           z-index: 5;
         }
         .sim-card-blue-button:hover {
-          background: #005682;
-          transform: translateY(-1px);
-          box-shadow: 0 6px 16px rgba(0, 110, 167, 0.35);
+          background: #007bc0;
+          transform: scale(1.05) translateY(-2px);
+          box-shadow: 0 8px 20px rgba(0, 110, 167, 0.4);
         }
         .blue-bar {
           display: inline-block;
