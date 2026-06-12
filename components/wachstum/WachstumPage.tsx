@@ -184,15 +184,13 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                           <span className="bac-circle-lab-mini">Jahre</span>
                         </div>
                       </div>
+                      <button className="sim-card-blue-button" onClick={(e) => {
+                        e.stopPropagation();
+                        onStartSimulation();
+                      }}>
+                        Simulation<br />starten
+                      </button>
                     </div>
-                  </div>
-                  <div className="sim-card-footer-row">
-                    <button className="sim-card-blue-button" onClick={(e) => {
-                      e.stopPropagation();
-                      onStartSimulation();
-                    }}>
-                      Simulation<br />starten
-                    </button>
                   </div>
                 </div>
               </div>
@@ -245,8 +243,9 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         .sim-card-right-col {
           flex-shrink: 0;
           display: flex;
-          justify-content: flex-end;
-          align-items: flex-start;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
         }
         .bac-circle-container-mini {
           position: relative;
@@ -287,13 +286,6 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           color: #8fa0b5;
           margin-top: 3px;
         }
-        .sim-card-footer-row {
-          display: flex;
-          justify-content: flex-end;
-          margin-top: -50px;
-          position: relative;
-          z-index: 5;
-        }
         .sim-card-blue-button {
           background: #006ea7;
           color: #ffffff;
@@ -311,6 +303,9 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           justify-content: center;
           text-align: center;
           line-height: 1.2;
+          margin-top: -30px;
+          position: relative;
+          z-index: 5;
         }
         .sim-card-blue-button:hover {
           background: #005682;
