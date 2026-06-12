@@ -48,8 +48,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
   return (
     <div className="wachstum-container">
       <header style={{ marginBottom: '2.5rem' }}>
-        <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Quick Win Navigator</h1>
-        <p style={{ color: '#64748b', fontSize: '1.1rem', marginTop: '0.5rem', margin: 0 }}>Do Longevity yourself: Deine sofort umsetzbaren Bausteine</p>
+        <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Do it yourself</h1>
         
         <div className="style-selector-wrapper" style={{ marginTop: '1.75rem' }}>
           <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1.25rem' }}>
@@ -60,9 +59,9 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           </div>
           <div className="segmented-control">
             {[
-              { level: 1, name: 'Einfach', desc: 'Es soll sich leicht und unbeschwert anfühlen.' },
-              { level: 2, name: 'Mittel', desc: 'Ein Kompromiss zwischen leicht und tiefgründig.' },
-              { level: 3, name: 'Tiefgründig', desc: 'Ich möchte es genau nachvollziehen.' }
+              { level: 1, name: 'Einfach', desc: 'Minimaler Aufwand: Fokus auf die wirkungsvollsten Gewohnheiten mit simplen Schritt-für-Schritt-Anleitungen.', image: '/images/icon_einfach_clean_3d.png?v=3' },
+              { level: 2, name: 'Mittel', desc: 'Gezielte Optimierung: Smarte Gewohnheiten kombiniert mit leicht verständlichen Hintergrundinformationen.', image: '/images/icon_mittel_clean_3d.png?v=3' },
+              { level: 3, name: 'Tiefgründig', desc: 'Hohe Tiefe: Voller Einblick in die dahinterliegenden biochemischen Prozesse und wissenschaftliche Evidenz.', image: '/images/icon_tief_clean_3d.png?v=3' }
             ].map((item) => (
               <button 
                 key={item.level} 
@@ -70,7 +69,19 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                 onClick={() => setSelectedStyle(item.level)}
                 type="button"
               >
-                <span className="style-name">{item.name}</span>
+                <div className="style-header-row">
+                  <img 
+                    src={item.image} 
+                    alt={item.name}
+                    style={{
+                      width: '38px',
+                      height: '38px',
+                      objectFit: 'contain',
+                      flexShrink: 0
+                    }}
+                  />
+                  <span className="style-name">{item.name}</span>
+                </div>
                 <span className="style-desc">{item.desc}</span>
               </button>
             ))}
@@ -350,15 +361,15 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         }
         .segmented-control {
           display: flex;
-          background: rgba(241, 245, 249, 0.4);
+          background: rgba(0, 90, 140, 0.32);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
           border-radius: 24px;
-          padding: 0.5rem;
-          gap: 0.75rem;
+          padding: 0.85rem;
+          gap: 0.85rem;
           width: 100%;
           max-width: 100%;
-          border: 1px solid rgba(255, 255, 255, 0.6);
+          border: none;
           box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.03), inset 0 2px 4px rgba(15, 23, 42, 0.01);
         }
         .segmented-button {
@@ -368,36 +379,42 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           align-items: center;
           justify-content: center;
           padding: 1.25rem 1.75rem;
-          border: 1px solid rgba(255, 255, 255, 0.4);
-          background: rgba(255, 255, 255, 0.25);
+          border: 2px solid transparent;
+          background: #d2e9f3;
           border-radius: 18px;
           cursor: pointer;
           transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
           text-align: center;
-          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.01);
+          box-shadow: none;
         }
         .segmented-button:hover {
-          background: rgba(255, 255, 255, 0.65);
-          border-color: rgba(255, 255, 255, 0.9);
+          background: #c5e2f0;
+          border-color: rgba(0, 110, 167, 0.15);
           transform: translateY(-4px) scale(1.025);
-          box-shadow: 0 12px 30px rgba(0, 110, 167, 0.08), 0 2px 10px rgba(255, 255, 255, 0.8);
+          box-shadow: 0 12px 30px rgba(0, 110, 167, 0.08);
         }
         .segmented-button.active {
           background: rgba(255, 255, 255, 0.95);
-          border: 1px solid rgba(0, 110, 167, 0.6);
+          border: 2px solid #4498ca;
           box-shadow: 0 10px 25px rgba(0, 110, 167, 0.12), 0 2px 8px rgba(0, 110, 167, 0.04);
           transform: translateY(-2px) scale(1.015);
+        }
+        .style-header-row {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.375rem;
+          margin-bottom: 8px;
         }
         .style-name {
           font-size: 1.25rem;
           font-weight: 850;
           color: #1e293b;
-          margin-bottom: 4px;
           transition: color 0.3s;
           letter-spacing: -0.015em;
         }
         .segmented-button.active .style-name {
-          color: #006ea7;
+          color: #4498ca;
         }
         .style-desc {
           font-size: 1.03rem;

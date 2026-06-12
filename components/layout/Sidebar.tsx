@@ -11,7 +11,7 @@ interface MainNavItem {
 
 const mainNavItems: MainNavItem[] = [
   { id: 'dashboard', label: 'Heute', icon: <i className="bi bi-house-door-fill"></i> },
-  { id: 'quick-wins', label: 'Quick Win Navigator', icon: <i className="bi bi-rocket-takeoff-fill"></i> },
+  { id: 'quick-wins', label: 'Do it yourself', icon: <i className="bi bi-rocket-takeoff-fill"></i> },
   { id: 'coaching', label: 'Personal Trainer', icon: <i className="bi bi-person-circle"></i> },
   { id: 'insights', label: 'Inspiration', icon: <i className="bi bi-stars"></i> },
   { id: 'entwicklung', label: 'Entwicklung', icon: <i className="bi bi-graph-up-arrow"></i> },
