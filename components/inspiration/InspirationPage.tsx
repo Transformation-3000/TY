@@ -533,7 +533,7 @@ export default function InspirationPage() {
                     </div>
                     {activeTab === 'gespeichert' && (
                       <span className="reel-saved-date">
-                        Gespeichert: {savedItems.find(item => item.id === reel.id)?.savedAt}
+                        Speicherung: {savedItems.find(item => item.id === reel.id)?.savedAt}
                       </span>
                     )}
                   </div>
