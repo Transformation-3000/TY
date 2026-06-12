@@ -290,7 +290,9 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         .sim-card-footer-row {
           display: flex;
           justify-content: flex-end;
-          margin-top: 0.5rem;
+          margin-top: -50px;
+          position: relative;
+          z-index: 5;
         }
         .sim-card-blue-button {
           background: #006ea7;
@@ -326,14 +328,14 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         }
         .sim-card-wide h3 {
           margin: 0 0 0.5rem 0;
-          font-size: 1.25rem;
+          font-size: 1.32rem;
           font-weight: 800;
           color: #1e293b;
           line-height: 1.3;
         }
         .sim-card-wide p {
           margin: 0 0 1rem 0;
-          font-size: 0.9rem;
+          font-size: 0.97rem;
           color: #64748b;
           line-height: 1.5;
         }
