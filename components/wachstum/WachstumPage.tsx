@@ -376,15 +376,15 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           flex: 1;
           display: flex;
           flex-direction: column;
-          align-items: center;
-          justify-content: center;
+          align-items: flex-start;
+          justify-content: flex-start;
           padding: 1.25rem 1.75rem;
           border: 2px solid transparent;
           background: #d2e9f3;
           border-radius: 18px;
           cursor: pointer;
           transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-          text-align: center;
+          text-align: left;
           box-shadow: none;
         }
         .segmented-button:hover {
@@ -402,9 +402,10 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         .style-header-row {
           display: flex;
           align-items: center;
-          justify-content: center;
+          justify-content: flex-start;
           gap: 0.375rem;
           margin-bottom: 8px;
+          width: 100%;
         }
         .style-name {
           font-size: 1.25rem;
@@ -422,6 +423,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           font-weight: 500;
           line-height: 1.35;
           transition: color 0.3s;
+          text-align: left;
         }
         .segmented-button.active .style-desc {
           color: #1e293b;
