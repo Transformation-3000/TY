@@ -116,18 +116,10 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                   boxShadow: selectedField.id === field.id ? '0 10px 20px rgba(0,0,0,0.05)' : 'none',
                   opacity: field.active ? 1 : 0.6,
                   filter: field.active ? 'none' : 'grayscale(0.8)',
-                  width: '100%'
+                  width: '100%',
+                  justifyContent: 'space-between'
                 }}
               >
-                <div style={{ 
-                  width: '44px', height: '44px', borderRadius: '12px', 
-                  background: selectedField.id === field.id ? field.color : '#fff',
-                  color: selectedField.id === field.id ? '#fff' : (field.active ? field.color : '#94a3b8'),
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontSize: '1.3rem', transition: 'all 0.2s'
-                }}>
-                  <i className={`bi ${field.active ? field.icon : 'bi-lock'}`}></i>
-                </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: '1rem', fontWeight: 700, color: field.active ? '#1e293b' : '#64748b' }}>
                     {index + 1}. {field.label}
@@ -150,16 +142,28 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                     <div style={{ width: `${field.maturity}%`, height: '100%', background: field.active ? field.color : '#cbd5e1' }} />
                   </div>
                 </div>
-                {field.active ? (
-                  <div style={{ textAlign: 'right', marginLeft: '0.5rem' }}>
-                    <div style={{ fontSize: '1.4rem', fontWeight: 900, color: '#1e293b', lineHeight: 1 }}>
-                      {field.maturity}<span style={{ fontSize: '0.9rem', opacity: 0.6 }}>%</span>
-                    </div>
-                    <div style={{ fontSize: '0.6rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', marginTop: '2px' }}>Reifegrad</div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.35rem', flexShrink: 0, marginLeft: '0.5rem' }}>
+                  <div style={{ 
+                    width: '38px', height: '38px', borderRadius: '50%', 
+                    border: '2px solid #4498ca',
+                    background: '#f0f9ff',
+                    color: '#4498ca',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: '1.1rem', transition: 'all 0.2s'
+                  }}>
+                    <i className={`bi ${field.active ? field.icon : 'bi-lock'}`}></i>
                   </div>
-                ) : (
-                  <div style={{ fontSize: '0.65rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Inaktiv</div>
-                )}
+                  {field.active ? (
+                    <div style={{ textAlign: 'right' }}>
+                      <div style={{ fontSize: '1.2rem', fontWeight: 900, color: '#1e293b', lineHeight: 1 }}>
+                        {field.maturity}<span style={{ fontSize: '0.8rem', opacity: 0.6 }}>%</span>
+                      </div>
+                    </div>
+                  ) : (
+                    <div style={{ fontSize: '0.65rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Inaktiv</div>
+                  )}
+                </div>
               </button>
             ))}
           </div>
