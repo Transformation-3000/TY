@@ -181,6 +181,15 @@ export default function LandingPage() {
                 style={{ objectFit: 'contain' }}
               />
             </div>
+            <div className="partner-logo">
+              <Image 
+                src="/images/tuv_logo.png" 
+                alt="TÜV Rheinland" 
+                width={100} 
+                height={70} 
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
           </div>
         </div>
       </section>
