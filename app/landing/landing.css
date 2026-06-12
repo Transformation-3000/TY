@@ -71,7 +71,7 @@ section[id] {
 
 .landing-nav-links {
   display: flex;
-  gap: 2.5rem;
+  gap: 1.2rem;
   align-items: center;
 }
 
@@ -79,12 +79,21 @@ section[id] {
   text-decoration: none;
   color: #004b8d;
   font-weight: 400;
-  font-size: 1.25rem;
-  transition: color 0.3s ease;
+  font-size: 1.2rem;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 2px solid transparent;
+  padding: 0.4rem 0.8rem;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .landing-nav-link:hover {
-  color: #00a3ff;
+  color: var(--landing-dark);
+  border-color: var(--landing-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 110, 167, 0.06);
+  background: #ffffff;
 }
 
 .btn-cta-small {
