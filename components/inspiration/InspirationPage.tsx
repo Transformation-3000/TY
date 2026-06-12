@@ -39,6 +39,20 @@ const reels: Reel[] = [
     author: 'Kayla Barnes-Lentz', role: 'Gründerin & Biohacking-Pionierin', readTime: '4 Min', image: '/images/kayla_barnes_lentz.png', tag: 'BIOHACKING', tagColor: '#8b5cf6', saved: false, authorImage: '/images/kayla_barnes_lentz.png',
   },
   {
+    id: 'r_rhonda', category: 'experten',
+    title: 'Mitochondriale Resilienz: Dr. Rhonda Patricks Sauna- & Sulforaphan-Protokoll',
+    teaser: 'Nrf2-Aktivierung und Hitzeschockproteine: Wie Dr. Rhonda Patrick Saunagänge und Mikronährstoffe zur zellulären Verjüngung nutzt.',
+    fullText: 'Die renommierte Biochemikerin Dr. Rhonda Patrick ist bekannt für ihre Forschung zu Hitzeschockproteinen und oxidativem Stress. Ihr Langlebigkeits-Regime umfasst: 1. Regelmäßige hypertherme Konditionierung (Sauna bei 80°C für 20-30 Minuten), um die Ausschüttung von Wachstumshormonen und BDNF zu maximieren, 2. Täglicher Verzehr von Brokkolisprossen zur Freisetzung von Sulforaphan, dem stärksten natürlichen Aktivator des Nrf2-Signalwegs (schützt Zellen vor oxidativem Stress und Entzündungen), 3. Hochdosiertes Omega-3 (EPA/DHA) zur Erhaltung der Membranelastizität.',
+    author: 'Dr. Rhonda Patrick', role: 'Biochemikerin & FoundMyFitness-Host', readTime: '4 Min', image: '/images/biohack_rhonda_patrick.png', tag: 'MITOCHONDRIEN', tagColor: '#ef4444', saved: false, authorImage: '/images/biohack_rhonda_patrick.png',
+  },
+  {
+    id: 'r_longo', category: 'experten',
+    title: 'Fasting Mimicking Diet (FMD): Dr. Valter Longos Protokoll zur Stammzell-Aktivierung',
+    teaser: '5 Tage Scheinfasten für zelluläre Autophagie: Das klinisch erprobte Ernährungsprotokoll des weltführenden Altersforschers.',
+    fullText: 'Dr. Valter Longo, Direktor des Longevity Institute der USC, erforscht seit Jahrzehnten den Einfluss von Fasten auf die Lebensspanne. Seine patentierte Scheinfasten-Diät (FMD) simuliert den Zustand des reinen Wasserfastens, während der Körper mit minimalen, ausgewählten Mikro- und Makronährstoffen versorgt wird. Das 5-tägige Protokoll (zweimal jährlich durchgeführt) senkt den IGF-1-Spiegel, baut seneszente Zellen ab und aktiviert körpereigene Stammzellen zur Regeneration von Organen und Immunsystem.',
+    author: 'Dr. Valter Longo', role: 'Direktor des Longevity Institute, USC', readTime: '5 Min', image: '/images/biohack_valter_longo.png', tag: 'AUTOPHAGIE', tagColor: '#f59e0b', saved: false, authorImage: '/images/biohack_valter_longo.png',
+  },
+  {
     id: 'r1', category: 'experten',
     title: 'Warum Schlaf das mächtigste Longevity-Tool ist',
     teaser: 'Prof. Dr. Walker erklärt, wie 7–9 Stunden Schlaf Telomere schützt und die biologische Uhr verlangsamt.',
