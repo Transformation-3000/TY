@@ -121,7 +121,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                 }}
               >
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: '1rem', fontWeight: 700, color: field.active ? '#1e293b' : '#64748b' }}>
+                  <div style={{ fontSize: 'calc(1rem + 2pt)', fontWeight: 700, color: field.active ? '#1e293b' : '#64748b' }}>
                     {index + 1}. {field.label}
                   </div>
                   {field.active && (
