@@ -827,6 +827,11 @@ section[id] {
 
   .final-cta-new {
     padding: 60px 1.5rem 80px;
+    gap: 1rem;
+  }
+
+  .final-cta-header {
+    margin-bottom: 1.25rem;
   }
 
   .final-cta-card {
