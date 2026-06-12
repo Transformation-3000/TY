@@ -595,21 +595,42 @@ export default function LandingPage() {
             </div>
             
             <div className="footer-col-new">
+              <h4>Mitgliedschaft</h4>
+              <Link href="#konzept"><i className="bi bi-arrow-right-short" /> Wie es funktioniert</Link>
+              <Link href="#features"><i className="bi bi-arrow-right-short" /> Diagnostik & Labortests</Link>
+              <Link href="#erfolgsprinzip"><i className="bi bi-arrow-right-short" /> Preise & Pakete</Link>
+              <Link href="#kundenstimmen"><i className="bi bi-arrow-right-short" /> Erfolgsgeschichten</Link>
+              <Link href="#features"><i className="bi bi-arrow-right-short" /> Wearables & Integration</Link>
+            </div>
+            
+            <div className="footer-col-new">
               <h4>Unternehmen</h4>
-              <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
-                <i className="bi bi-geo-alt-fill" style={{ marginRight: '8px', marginTop: '3px', color: 'var(--landing-accent)', fontSize: '1.05rem' }} />
-                <div>
-                  <p className="footer-company-name-new" style={{ margin: '0 0 0.4rem' }}>True Years Beyond Age GmbH</p>
-                  <p style={{ margin: '0 0 0.4rem' }}>Im Mediapark 5</p>
-                  <p style={{ margin: '0 0 0.4rem' }}>D-50670 Köln</p>
-                  <p style={{ margin: '0 0 0.75rem' }}>Germany</p>
-                  
-                  <p className="footer-email-row-new" style={{ margin: 0, display: 'flex', alignItems: 'center' }}>
-                    <i className="bi bi-envelope-fill" style={{ marginRight: '6px', color: 'white' }} />
-                    <a href="mailto:contact@true-years.com" className="footer-email-link-new">
-                      contact@true-years.com
-                    </a>
-                  </p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
+                {/* Unternehmen Address Row */}
+                <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                  <div style={{ width: '24px', display: 'flex', justifyContent: 'center', marginTop: '3px' }}>
+                    <i className="bi bi-geo-alt-fill" style={{ color: 'var(--landing-accent)', fontSize: '1.05rem' }} />
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <p className="footer-company-name-new" style={{ margin: '0 0 0.4rem' }}>True Years Beyond Age GmbH</p>
+                    <p style={{ margin: '0 0 0.4rem' }}>Im Mediapark 5</p>
+                    <p style={{ margin: '0 0 0.4rem' }}>D-50670 Köln</p>
+                    <p style={{ margin: 0 }}>Germany</p>
+                  </div>
+                </div>
+                
+                {/* Contact Email Row */}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ width: '24px', display: 'flex', justifyContent: 'center' }}>
+                    <i className="bi bi-envelope-fill" style={{ color: 'white', fontSize: '0.98rem' }} />
+                  </div>
+                  <div style={{ flex: 1 }}>
+                    <p className="footer-email-row-new" style={{ margin: 0 }}>
+                      <a href="mailto:contact@true-years.com" className="footer-email-link-new">
+                        contact (at) true-years.com
+                      </a>
+                    </p>
+                  </div>
                 </div>
               </div>
               
