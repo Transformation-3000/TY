@@ -479,8 +479,7 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
                         </span>
                       ))}
                     </span>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
-                      <span className="taci-trend" style={{ color, marginRight: '0.15rem' }}>{formattedPct}</span>
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.2rem', flexShrink: 0 }}>
                       <img 
                         src={OPTIMIZATION_ICONS[i]} 
                         alt={t.title} 
@@ -491,6 +490,7 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
                           flexShrink: 0
                         }}
                       />
+                      <span className="taci-trend" style={{ color }}>{formattedPct}</span>
                     </div>
                   </div>
                   <div className="taci-score-row">
