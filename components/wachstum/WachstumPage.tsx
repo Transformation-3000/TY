@@ -350,14 +350,16 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         }
         .segmented-control {
           display: flex;
-          background: #f1f5f9;
+          background: rgba(241, 245, 249, 0.4);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
           border-radius: 24px;
-          padding: 0.45rem;
-          gap: 0.45rem;
+          padding: 0.5rem;
+          gap: 0.75rem;
           width: 100%;
           max-width: 100%;
-          border: 1px solid rgba(226, 232, 240, 0.8);
-          box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.02);
+          border: 1px solid rgba(255, 255, 255, 0.6);
+          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.03), inset 0 2px 4px rgba(15, 23, 42, 0.01);
         }
         .segmented-button {
           flex: 1;
@@ -365,22 +367,26 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          padding: 1.1rem 1.5rem;
-          border: none;
-          background: transparent;
+          padding: 1.25rem 1.75rem;
+          border: 1px solid rgba(255, 255, 255, 0.4);
+          background: rgba(255, 255, 255, 0.25);
           border-radius: 18px;
           cursor: pointer;
-          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
           text-align: center;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.01);
         }
         .segmented-button:hover {
-          background: rgba(255, 255, 255, 0.5);
-          transform: translateY(-1px);
+          background: rgba(255, 255, 255, 0.65);
+          border-color: rgba(255, 255, 255, 0.9);
+          transform: translateY(-4px) scale(1.025);
+          box-shadow: 0 12px 30px rgba(0, 110, 167, 0.08), 0 2px 10px rgba(255, 255, 255, 0.8);
         }
         .segmented-button.active {
-          background: #ffffff;
-          box-shadow: 0 8px 20px rgba(0, 110, 167, 0.06), 0 2px 6px rgba(0, 110, 167, 0.03);
-          transform: scale(1.01);
+          background: rgba(255, 255, 255, 0.95);
+          border: 1px solid rgba(0, 110, 167, 0.6);
+          box-shadow: 0 10px 25px rgba(0, 110, 167, 0.12), 0 2px 8px rgba(0, 110, 167, 0.04);
+          transform: translateY(-2px) scale(1.015);
         }
         .style-name {
           font-size: 1.25rem;
@@ -401,7 +407,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           transition: color 0.3s;
         }
         .segmented-button.active .style-desc {
-          color: #334155;
+          color: #1e293b;
         }
         .sim-card-wide h3 {
           margin: 0 0 0.5rem 0;
