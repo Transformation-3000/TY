@@ -136,12 +136,49 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                 />
               </div>
               <div className="sim-card-wide-content">
-                <span className="sim-card-wide-badge">Zellalter-Simulation</span>
-                <h3>Wie beeinflusst dein Lebensstil dein biologisches Alter?</h3>
-                <p>
-                  Finde heraus, wie sich gezielte Lifestyle-Changes in den Bereichen Schlaf, Sport und Ernährung direkt auf deine Zellen auswirken. Simuliere deine Routinen und starte dein Verjüngungsexperiment!
-                </p>
-                <span className="sim-card-wide-link">Simulation starten →</span>
+                <div className="sim-card-body-row">
+                  <div className="sim-card-text-side">
+                    <span className="sim-card-wide-badge">Zellalter-Simulation</span>
+                    <h3>Wie beeinflusst dein Lebensstil dein biologisches Alter?</h3>
+                    <p>
+                      Finde heraus, wie sich gezielte Lifestyle-Changes in den Bereichen Schlaf, Sport und Ernährung direkt auf deine Zellen auswirken. Simuliere deine Routinen und starte dein Verjüngungsexperiment!
+                    </p>
+                    <span className="sim-card-wide-link">Simulation starten →</span>
+                  </div>
+                  <div className="sim-card-circle-side">
+                    <div className="bac-circle-container-mini">
+                      <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                        <defs>
+                          <linearGradient id="simAgeScoreGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                            <stop offset="0%" stopColor="#4498ca" />
+                            <stop offset="100%" stopColor="#22c55e" />
+                          </linearGradient>
+                          <filter id="simSoftGlow" x="-10%" y="-10%" width="120%" height="120%">
+                            <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#3b82f6" floodOpacity="0.15" />
+                          </filter>
+                        </defs>
+                        <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                        <circle 
+                          cx="50" 
+                          cy="50" 
+                          r="41" 
+                          fill="none" 
+                          stroke="url(#simAgeScoreGrad)" 
+                          strokeWidth="7.5" 
+                          strokeDasharray="257.6" 
+                          strokeDashoffset={257.6 * (1 - 42.5 / 111)} 
+                          strokeLinecap="round" 
+                          filter="url(#simSoftGlow)"
+                          transform="rotate(-90 50 50)"
+                        />
+                      </svg>
+                      <div className="bac-circle-text-box-mini">
+                        <span className="bac-circle-val-mini">42,5</span>
+                        <span className="bac-circle-lab-mini">Jahre</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           )}
@@ -224,10 +261,59 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         }
         .sim-card-wide-content {
           padding: 1.5rem;
+          text-align: left;
+        }
+        .sim-card-body-row {
+          display: flex;
+          align-items: flex-end;
+          gap: 1.5rem;
+        }
+        .sim-card-text-side {
+          flex: 1;
+        }
+        .sim-card-circle-side {
+          flex-shrink: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: 0.25rem;
+        }
+        .bac-circle-container-mini {
+          position: relative;
+          width: 105px;
+          height: 105px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .bac-circle-svg-mini {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+        .bac-circle-text-box-mini {
+          position: relative;
+          z-index: 2;
           display: flex;
           flex-direction: column;
+          align-items: center;
           justify-content: center;
-          text-align: left;
+          text-align: center;
+        }
+        .bac-circle-val-mini {
+          font-size: 1.7rem;
+          font-weight: 900;
+          color: #1c2b3e;
+          line-height: 1;
+          letter-spacing: -0.02em;
+        }
+        .bac-circle-lab-mini {
+          font-size: 0.65rem;
+          font-weight: 700;
+          color: #8fa0b5;
+          margin-top: 1px;
         }
         .sim-card-wide-badge {
           font-size: 0.75rem;
@@ -236,6 +322,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           letter-spacing: 0.06em;
           color: #22c55e;
           margin-bottom: 0.35rem;
+          display: inline-block;
         }
         .sim-card-wide h3 {
           margin: 0 0 0.5rem 0;
