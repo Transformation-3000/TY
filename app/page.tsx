@@ -596,22 +596,23 @@ export default function LandingPage() {
             
             <div className="footer-col-new">
               <h4>Unternehmen</h4>
-              <div className="footer-contact-card-new">
-                <p className="footer-company-name-new">True Years Beyond Age GmbH</p>
-                <p>Im Mediapark 5</p>
-                <p>D-50670 Köln</p>
-                <p>Germany</p>
-                
-                <div style={{ height: '1px', background: 'rgba(255, 255, 255, 0.06)', margin: '1rem 0' }} />
-                
-                <h5 style={{ fontSize: '0.85rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#94a3b8', margin: '0 0 0.5rem 0' }}>Kontakt</h5>
-                <p className="footer-email-row-new" style={{ marginTop: '0' }}>
-                  <i className="bi bi-envelope-fill" style={{ marginRight: '6px', color: 'var(--landing-accent)' }} />
-                  <a href="mailto:contact@true-years.com" className="footer-email-link-new">
-                    contact@true-years.com
-                  </a>
-                </p>
+              <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: '1.5rem' }}>
+                <i className="bi bi-geo-alt-fill" style={{ marginRight: '8px', marginTop: '3px', color: 'var(--landing-accent)', fontSize: '1.05rem' }} />
+                <div>
+                  <p className="footer-company-name-new" style={{ margin: '0 0 0.4rem' }}>True Years Beyond Age GmbH</p>
+                  <p style={{ margin: '0 0 0.4rem' }}>Im Mediapark 5</p>
+                  <p style={{ margin: '0 0 0.4rem' }}>D-50670 Köln</p>
+                  <p style={{ margin: 0 }}>Germany</p>
+                </div>
               </div>
+              
+              <h4>Kontakt</h4>
+              <p className="footer-email-row-new" style={{ marginTop: '0', marginBottom: '1.5rem' }}>
+                <i className="bi bi-envelope-fill" style={{ marginRight: '6px', color: 'white' }} />
+                <a href="mailto:contact@true-years.com" className="footer-email-link-new">
+                  contact@true-years.com
+                </a>
+              </p>
               <div className="footer-legal-links-new">
                 <Link href="/impressum">Impressum</Link>
                 <span className="footer-legal-sep-new">|</span>
@@ -624,8 +625,8 @@ export default function LandingPage() {
                   <Image 
                     src="/images/dlg_logo.png" 
                     alt="Deutsche Longevity Gesellschaft" 
-                    width={100} 
-                    height={30} 
+                    width={150} 
+                    height={45} 
                     style={{ objectFit: 'contain' }}
                   />
                 </div>
@@ -633,8 +634,8 @@ export default function LandingPage() {
                   <Image 
                     src="/images/lifespin_logo.png" 
                     alt="Lifespin" 
-                    width={80} 
-                    height={25} 
+                    width={120} 
+                    height={38} 
                     style={{ objectFit: 'contain' }}
                   />
                 </div>
@@ -642,8 +643,8 @@ export default function LandingPage() {
                   <Image 
                     src="/images/tuv_logo.png" 
                     alt="TÜV Rheinland" 
-                    width={50} 
-                    height={35} 
+                    width={75} 
+                    height={53} 
                     style={{ objectFit: 'contain' }}
                   />
                 </div>

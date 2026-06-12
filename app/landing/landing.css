@@ -1182,7 +1182,7 @@ section[id] {
 }
 
 .footer-email-link-new {
-  color: var(--landing-accent) !important;
+  color: white !important;
   font-weight: 600;
   text-decoration: none;
   font-size: 0.98rem !important;
@@ -1191,6 +1191,7 @@ section[id] {
 
 .footer-email-link-new:hover {
   opacity: 0.85;
+  color: white !important;
 }
 
 .footer-legal-links-new {
@@ -2532,14 +2533,14 @@ section[id] {
   display: block;
 }
 
-/* Deutsche Longevity Gesellschaft (DLG) - make white */
+/* Deutsche Longevity Gesellschaft (DLG) - colored */
 .footer-partner-logo-new.dlg-logo img {
-  filter: brightness(0) invert(1) opacity(0.75);
-  transition: filter 0.3s ease;
+  opacity: 0.75;
+  transition: opacity 0.3s ease;
 }
 
 .footer-partner-logo-new.dlg-logo:hover img {
-  filter: brightness(0) invert(1) opacity(1);
+  opacity: 1;
 }
 
 /* Lifespin - already white, set opacity */
@@ -2552,16 +2553,13 @@ section[id] {
   opacity: 1;
 }
 
-/* TÜV Rheinland - standard badge looks best inside a small white card */
-.footer-partner-logo-new.tuv-logo {
-  background: white;
-  padding: 4px 8px;
-  border-radius: 6px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-  opacity: 0.85;
+/* TÜV Rheinland - transparent background */
+.footer-partner-logo-new.tuv-logo img {
+  opacity: 0.75;
+  transition: opacity 0.3s ease;
 }
 
-.footer-partner-logo-new.tuv-logo:hover {
+.footer-partner-logo-new.tuv-logo:hover img {
   opacity: 1;
 }
 
