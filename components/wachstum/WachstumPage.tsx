@@ -123,64 +123,69 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         {/* Rechts: Quick Wins Navigator */}
         <section className="navigator-section">
           {onStartSimulation && (
-            <div 
-              className="sim-card-wide"
-              onClick={onStartSimulation}
-            >
-              <div className="sim-card-wide-img-wrap">
-                <Image 
-                  src="/images/dna_helix_soft.png" 
-                  alt="Zellalter Simulation" 
-                  fill
-                  style={{ objectFit: 'cover' }}
-                />
+            <>
+              <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1.25rem' }}>
+                <span className="blue-bar"></span>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Zellalter-Simulation</h2>
               </div>
-              <div className="sim-card-wide-content">
-                <div className="sim-card-body-row">
-                  <div className="sim-card-text-side">
-                    <span className="sim-card-wide-badge">Zellalter-Simulation</span>
-                    <h3>Wie beeinflusst dein Lebensstil dein biologisches Alter?</h3>
-                    <p>
-                      Finde heraus, wie sich gezielte Lifestyle-Changes in den Bereichen Schlaf, Sport und Ernährung direkt auf deine Zellen auswirken. Simuliere deine Routinen und starte dein Verjüngungsexperiment!
-                    </p>
-                    <span className="sim-card-wide-link">Simulation starten →</span>
-                  </div>
-                  <div className="sim-card-circle-side">
-                    <div className="bac-circle-container-mini">
-                      <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
-                        <defs>
-                          <linearGradient id="simAgeScoreGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-                            <stop offset="0%" stopColor="#4498ca" />
-                            <stop offset="100%" stopColor="#22c55e" />
-                          </linearGradient>
-                          <filter id="simSoftGlow" x="-10%" y="-10%" width="120%" height="120%">
-                            <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#3b82f6" floodOpacity="0.15" />
-                          </filter>
-                        </defs>
-                        <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
-                        <circle 
-                          cx="50" 
-                          cy="50" 
-                          r="41" 
-                          fill="none" 
-                          stroke="url(#simAgeScoreGrad)" 
-                          strokeWidth="7.5" 
-                          strokeDasharray="257.6" 
-                          strokeDashoffset={257.6 * (1 - 42.5 / 111)} 
-                          strokeLinecap="round" 
-                          filter="url(#simSoftGlow)"
-                          transform="rotate(-90 50 50)"
-                        />
-                      </svg>
-                      <div className="bac-circle-text-box-mini">
-                        <span className="bac-circle-val-mini">42,5</span>
-                        <span className="bac-circle-lab-mini">Jahre</span>
+              <div 
+                className="sim-card-wide"
+                onClick={onStartSimulation}
+              >
+                <div className="sim-card-wide-img-wrap">
+                  <Image 
+                    src="/images/dna_helix_soft.png" 
+                    alt="Zellalter Simulation" 
+                    fill
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
+                <div className="sim-card-wide-content">
+                  <div className="sim-card-body-row">
+                    <div className="sim-card-text-side">
+                      <h3>Wie beeinflusst dein Lebensstil dein biologisches Alter?</h3>
+                      <p>
+                        Finde heraus, wie sich gezielte Lifestyle-Changes in den Bereichen Schlaf, Sport und Ernährung direkt auf deine Zellen auswirken. Simuliere deine Routinen und starte dein Verjüngungsexperiment!
+                      </p>
+                      <span className="sim-card-wide-link">Simulation starten →</span>
+                    </div>
+                    <div className="sim-card-circle-side">
+                      <div className="bac-circle-container-mini">
+                        <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                          <defs>
+                            <linearGradient id="simAgeScoreGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                              <stop offset="0%" stopColor="#4498ca" />
+                              <stop offset="100%" stopColor="#22c55e" />
+                            </linearGradient>
+                            <filter id="simSoftGlow" x="-10%" y="-10%" width="120%" height="120%">
+                              <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#3b82f6" floodOpacity="0.15" />
+                            </filter>
+                          </defs>
+                          <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                          <circle 
+                            cx="50" 
+                            cy="50" 
+                            r="41" 
+                            fill="none" 
+                            stroke="url(#simAgeScoreGrad)" 
+                            strokeWidth="7.5" 
+                            strokeDasharray="257.6" 
+                            strokeDashoffset={257.6 * (1 - 42.5 / 111)} 
+                            strokeLinecap="round" 
+                            filter="url(#simSoftGlow)"
+                            transform="rotate(-90 50 50)"
+                          />
+                        </svg>
+                        <div className="bac-circle-text-box-mini">
+                          <span className="bac-circle-val-mini">42,5</span>
+                          <span className="bac-circle-lab-mini">Jahre</span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </>
           )}
 
           <div className="navigator-box">
@@ -315,14 +320,14 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           color: #8fa0b5;
           margin-top: 2px;
         }
-        .sim-card-wide-badge {
-          font-size: 0.75rem;
-          font-weight: 800;
-          text-transform: uppercase;
-          letter-spacing: 0.06em;
-          color: #22c55e;
-          margin-bottom: 0.35rem;
+        .blue-bar {
           display: inline-block;
+          width: 4px;
+          height: 22px;
+          background: #4498ca;
+          margin-right: 12px;
+          border-radius: 4px;
+          flex-shrink: 0;
         }
         .sim-card-wide h3 {
           margin: 0 0 0.5rem 0;
