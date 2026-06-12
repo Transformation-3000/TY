@@ -98,8 +98,8 @@ const reels: Reel[] = [
     id: 'r_reprogramming', category: 'science',
     title: 'Zelluläre Reprogrammierung: Durchbruch bei Gewebeverjüngung',
     teaser: 'Klinische Phase-I-Studie 2026 belegt erstmals die Sicherheit der partiellen Yamanaka-Reprogrammierung an alterndem Gewebe.',
-    fullText: 'In einer bahnbrechenden klinischen Studie aus dem Jahr 2026 gelang Wissenschaftlern ein historischer Meilenstein: Durch eine kontrollierte, zeitlich präzise begrenzte Aktivierung der Yamanaka-Faktoren (OSKM) konnten gealterte Haut- und Gefäßzellen biologisch verjüngt werden, ohne ihre zelluläre Identität zu verlieren. Die Studie demonstriert erstmals die absolute Sicherheit dieser Gen-Therapie beim Menschen.',
-    author: 'Nature Medicine', role: 'Clinical Trial, 2026', readTime: '4 Min', image: '/images/lab_preview_3.png', tag: 'ZELLEN', tagColor: '#10b981', saved: false, authorImage: '/images/lab_preview_3.png',
+    fullText: 'In einer bahnbrechenden klinischen Studie aus dem Jahr 2026, basierend auf der jahrelangen Grundlagenforschung von Harvard-Professor Dr. David Sinclair und seinem Team, gelang ein historischer Meilenstein: Durch eine kontrollierte, zeitlich präzise begrenzte Aktivierung der Yamanaka-Faktoren (OSKM) konnten gealterte Haut- und Gefäßzellen biologisch verjüngt werden, ohne ihre zelluläre Identität zu verlieren. Die Arbeit demonstriert erstmals die klinische Sicherheit dieser revolutionären epigenetischen Gen-Therapie beim Menschen.',
+    author: 'Prof. Dr. David Sinclair', role: 'Harvard Medical School / Nature Medicine, 2026', readTime: '4 Min', image: '/images/lab_preview_3.png', tag: 'ZELLEN', tagColor: '#10b981', saved: false, authorImage: '/images/sinclair_new.jpg',
   },
   {
     id: 'r_science_neural', category: 'science',
