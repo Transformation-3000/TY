@@ -481,7 +481,7 @@ section[id] {
 }
 
 .final-cta-card p {
-  font-size: 1.2rem;
+  font-size: 1.125rem;
   color: rgba(255, 255, 255, 0.85);
   max-width: 100%;
   margin: 0 0 1.5rem;
@@ -837,6 +837,10 @@ section[id] {
   .final-cta-card {
     padding: 2.5rem 1.25rem;
     border-radius: 24px;
+  }
+
+  .final-cta-card p {
+    font-size: 1.05rem;
   }
 
   .final-cta-grid {
