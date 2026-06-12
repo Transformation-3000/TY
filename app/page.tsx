@@ -128,6 +128,9 @@ export default function LandingPage() {
             <Link href="#erfolgsprinzip" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Mitgliedschaften</Link>
             <Link href="#testphase" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Wissenschaft</Link>
             <Link href="#kundenstimmen" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Kundenstimmen</Link>
+            <Link href="/checkout" className="landing-nav-link" onClick={() => setMenuOpen(false)} aria-label="Warenkorb" style={{ display: 'flex', alignItems: 'center' }}>
+              <i className="bi bi-cart3" style={{ fontSize: '1.5rem' }}></i>
+            </Link>
             <Link href="/dashboard" className="btn-cta-small" onClick={() => setMenuOpen(false)}>Login</Link>
           </div>
         </div>
@@ -349,7 +352,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Longevity Insights</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
             </ul>
-            <Link href="#" className="btn-pricing btn-outline">
+            <Link href="/checkout?plan=basic" className="btn-pricing btn-outline">
               Mitgliedschaft starten
             </Link>
           </div>
@@ -375,7 +378,7 @@ export default function LandingPage() {
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Analysen zum biologischen Alter</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
             </ul>
-            <Link href="#" className="btn-pricing btn-filled">
+            <Link href="/checkout?plan=premium" className="btn-pricing btn-filled">
               Mitgliedschaft starten
             </Link>
           </div>
@@ -402,7 +405,7 @@ export default function LandingPage() {
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Biomarker-Tracking mit Lab-Analysen</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Jährliches 1:1-Expertengespräch</li>
             </ul>
-            <Link href="#" className="btn-pricing btn-accent">
+            <Link href="/checkout?plan=platin" className="btn-pricing btn-accent">
               Mitgliedschaft starten
             </Link>
           </div>
