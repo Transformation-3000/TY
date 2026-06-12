@@ -651,11 +651,15 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
         .agenda-card {
           grid-column: 1;
           grid-row: 3;
+          padding-top: 1.125rem;
+          padding-bottom: 1.125rem;
         }
 
         .info-card {
           grid-column: 2;
           grid-row: 3;
+          padding-top: 1.125rem;
+          padding-bottom: 1.125rem;
         }
 
         @media (max-width: 992px) {
