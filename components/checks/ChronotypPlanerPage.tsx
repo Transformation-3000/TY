@@ -655,6 +655,11 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
           color: #1e3a5f;
         }
 
+        .agenda-card h2,
+        .info-card h2 {
+          margin-bottom: 1.5rem;
+        }
+
         .card-subtitle {
           font-size: 0.95rem;
           color: #64748b;
