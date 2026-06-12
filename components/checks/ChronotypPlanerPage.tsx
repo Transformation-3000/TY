@@ -193,6 +193,103 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
     };
   };
 
+  const getSportStatus = () => {
+    const h = simulatedTime;
+    const wake = selectedChrono.wakeTime;
+    const bed = selectedChrono.bedTime;
+    const sportStart = selectedChrono.sportStart;
+    const sportEnd = selectedChrono.sportEnd;
+    const melatonin = selectedChrono.melatoninOnset;
+
+    const isSportPeak = h >= sportStart && h < sportEnd;
+
+    if (isSportPeak) {
+      return {
+        label: 'Sport-Peak (Ideal)',
+        desc: 'Deine Körpertemperatur, Koordination und Muskelkraft sind auf dem Tagesmaximum. Bester Zeitpunkt für intensives Training.',
+        color: '#16a34a',
+        bgColor: 'rgba(22, 163, 74, 0.08)'
+      };
+    }
+
+    const isTooLate = melatonin > wake
+      ? (h >= melatonin || h < wake)
+      : (h >= melatonin && h < wake);
+
+    const isSleeping = bed > wake
+      ? (h >= bed || h < wake)
+      : (h >= bed && h < wake);
+
+    if (isTooLate || isSleeping) {
+      return {
+        label: 'Sport-Stopp',
+        desc: 'Vermeide intensiven Sport. Spätes Training erhöht die Körperkerntemperatur und blockiert die Einschlaf-Hormone.',
+        color: '#ef4444',
+        bgColor: 'rgba(239, 68, 68, 0.08)'
+      };
+    }
+
+    return {
+      label: 'Moderates Training',
+      desc: 'Gut geeignet für leichtes Ausdauertraining, Dehnen oder Regeneration. Für maximale Kraftleistung ist es nicht optimal.',
+      color: '#2563eb',
+      bgColor: 'rgba(37, 99, 235, 0.08)'
+    };
+  };
+
+  const getWorkStatus = () => {
+    const h = simulatedTime;
+    const wake = selectedChrono.wakeTime;
+    const bed = selectedChrono.bedTime;
+    const focusStart = selectedChrono.focusStart;
+    const focusEnd = selectedChrono.focusEnd;
+    const melatonin = selectedChrono.melatoninOnset;
+
+    const isFocusPeak = h >= focusStart && h < focusEnd;
+    if (isFocusPeak) {
+      return {
+        label: 'Deep Work (Fokus-Peak)',
+        desc: 'Maximale mentale Klarheit und Konzentration. Ideal für komplexe Analysen, Schreiben oder strategische Entscheidungen.',
+        color: '#16a34a',
+        bgColor: 'rgba(22, 163, 74, 0.08)'
+      };
+    }
+
+    const isDip = h >= focusEnd && h < (focusEnd + 3.0);
+    if (isDip) {
+      return {
+        label: 'Admin & Routine (Mittagstief)',
+        desc: 'Zirkadianer Energieabfall. Nutze diese Phase für E-Mails, Meetings, administrative Routineaufgaben oder eine kurze Pause.',
+        color: '#ca8a04',
+        bgColor: 'rgba(202, 138, 4, 0.08)'
+      };
+    }
+
+    const isOffWork = melatonin > wake
+      ? (h >= melatonin || h < wake)
+      : (h >= melatonin && h < wake);
+
+    const isSleeping = bed > wake
+      ? (h >= bed || h < wake)
+      : (h >= bed && h < wake);
+
+    if (isOffWork || isSleeping) {
+      return {
+        label: 'Mentale Erholung',
+        desc: 'Schließe Arbeitsprozesse ab. Das Gehirn fährt herunter und bereitet sich auf die Regeneration und Schlafkonsolidierung vor.',
+        color: '#ef4444',
+        bgColor: 'rgba(239, 68, 68, 0.08)'
+      };
+    }
+
+    return {
+      label: 'Kollaboration & Kreativität',
+      desc: 'Stabiles Energielevel. Perfekt für Teamarbeit, Brainstormings, Konzeptentwicklung oder organisatorische Planungen.',
+      color: '#2563eb',
+      bgColor: 'rgba(37, 99, 235, 0.08)'
+    };
+  };
+
   const getPhaseDescription = () => {
     const phase = getHourPhase(simulatedTime, selectedChrono);
     switch (phase) {
@@ -200,29 +297,29 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
         return {
           title: 'Regeneration & Schlaf',
           desc: 'Der Körper befindet sich in der nächtlichen Reparaturphase. Wichtig für Gehirnentgiftung und Hormonausgleich.',
-          color: '#4f6174',
-          flatColor: '#5b8ec5'
+          color: '#93c5fd',
+          flatColor: '#93c5fd'
         };
       case 'focus':
         return {
           title: 'Geistiger Fokus-Peak',
           desc: 'Höchste kognitive Leistungsfähigkeit und Problemlösungskompetenz. Ideal für anspruchsvolle mentale Aufgaben.',
-          color: '#a16207',
-          flatColor: '#ca8a04'
+          color: '#ffe082',
+          flatColor: '#ffe082'
         };
       case 'sport':
         return {
           title: 'Physisches Leistungsoptimum (Sport-Peak)',
           desc: 'Muskeltemperatur, Lungenkapazität und Koordination sind am höchsten. Bester Zeitpunkt für Training.',
-          color: '#15803d',
-          flatColor: '#16a34a'
+          color: '#86efac',
+          flatColor: '#86efac'
         };
       case 'melatonin':
         return {
           title: 'Wind-Down Phase (Melatonin)',
           desc: 'Die Kerntemperatur sinkt und die Schlafbereitschaft steigt. Ideal für ruhige Abendroutinen und Entspannungsübungen.',
-          color: '#6d28d9',
-          flatColor: '#a855f7'
+          color: '#c084fc',
+          flatColor: '#c084fc'
         };
       default:
         return {
@@ -237,6 +334,8 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
   const currentPhase = getPhaseDescription();
   const caffeine = getCaffeineStatus();
   const light = getLightStatus();
+  const sport = getSportStatus();
+  const work = getWorkStatus();
 
 // Unused circular helper methods removed
 
@@ -497,7 +596,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
 
               <div className="wave-stats-box">
                 <span className="wave-status-label">Biologischer Status um {Math.floor(simulatedTime).toString().padStart(2, '0')}:00 Uhr:</span>
-                <span className="wave-status-value" style={{ color: currentPhase.flatColor }}>{currentPhase.title}</span>
+                <span className="wave-status-value" style={{ color: '#000000' }}>{currentPhase.title}</span>
               </div>
             </div>
 
@@ -536,7 +635,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
           <div className="sim-card info-card">
             <h2>Empfehlungen</h2>
             <div className="recommendation-box" style={{ borderLeft: `4px solid ${currentPhase.color}` }}>
-              <div className="rec-phase-header" style={{ color: currentPhase.color }}>
+              <div className="rec-phase-header" style={{ color: '#000000' }}>
                 {currentPhase.title}
               </div>
               <p className="rec-phase-desc">{currentPhase.desc}</p>
@@ -562,6 +661,28 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
                     {light.label}
                   </span>
                   <p className="status-desc-text">{light.desc}</p>
+                </div>
+              </div>
+
+              {/* Work / Cognitive */}
+              <div className="status-row" style={{ backgroundColor: work.bgColor }}>
+                <span className="status-title">🧠 Arbeits-Fokus</span>
+                <div className="status-badge-wrapper">
+                  <span className="status-badge" style={{ color: work.color, border: `1.5px solid ${work.color}` }}>
+                    {work.label}
+                  </span>
+                  <p className="status-desc-text">{work.desc}</p>
+                </div>
+              </div>
+
+              {/* Sport */}
+              <div className="status-row" style={{ backgroundColor: sport.bgColor }}>
+                <span className="status-title">💪 Sport & Aktivität</span>
+                <div className="status-badge-wrapper">
+                  <span className="status-badge" style={{ color: sport.color, border: `1.5px solid ${sport.color}` }}>
+                    {sport.label}
+                  </span>
+                  <p className="status-desc-text">{sport.desc}</p>
                 </div>
               </div>
             </div>
