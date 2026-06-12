@@ -46,21 +46,9 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
 
   return (
     <div className="wachstum-container">
-      <header style={{ marginBottom: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-        <div>
-          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Quick Wins</h1>
-          <p style={{ color: '#64748b', fontSize: '1.1rem', marginTop: '0.5rem', margin: 0 }}>Do Longevity yourself: Deine sofort umsetzbaren Bausteine</p>
-        </div>
-        {onStartSimulation && (
-          <button 
-            type="button"
-            className="simulation-trigger-btn" 
-            onClick={onStartSimulation}
-          >
-            <i className="bi bi-activity" style={{ color: 'white' }}></i>
-            Zellalter-Simulation
-          </button>
-        )}
+      <header style={{ marginBottom: '2.5rem' }}>
+        <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Quick Wins</h1>
+        <p style={{ color: '#64748b', fontSize: '1.1rem', marginTop: '0.5rem', margin: 0 }}>Do Longevity yourself: Deine sofort umsetzbaren Bausteine</p>
       </header>
 
       <div className="wachstum-layout">
@@ -179,6 +167,32 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
               )}
             </div>
 
+            {onStartSimulation && (
+              <div 
+                className="simulation-card-new"
+                onClick={onStartSimulation}
+                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
+                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+              >
+                <div className="sim-card-icon-box">
+                  <i className="bi bi-activity"></i>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div className="sim-card-tag">Zellalter-Simulation</div>
+                  <div className="sim-card-title">
+                    Wie beeinflusst dein Lebensstil dein biologisches Alter?
+                  </div>
+                  <div className="sim-card-desc">
+                    Finde heraus, wie sich gezielte Lifestyle-Changes in den Bereichen Schlaf, Sport und Ernährung direkt auf deine Zellen auswirken. Simuliere deine Routinen und starte dein Verjüngungsexperiment!
+                  </div>
+                </div>
+                <div className="sim-card-arrow">
+                  <span>Starten</span>
+                  <i className="bi bi-arrow-right"></i>
+                </div>
+              </div>
+            )}
+
             <div 
               className="lisa-daily-card"
               onClick={() => onStartLisaDaily?.()}
@@ -216,25 +230,77 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
       </div>
 
       <style jsx>{`
-        .simulation-trigger-btn {
-          padding: 0.75rem 1.5rem;
-          font-size: 0.95rem;
-          background: #22c55e;
-          color: white;
-          border: none;
-          border-radius: 100px;
+        .simulation-card-new {
+          margin-top: 2rem;
+          padding: 1.5rem 1.75rem;
+          border-radius: 24px;
+          background: linear-gradient(135deg, #10b981, #047857);
+          color: #fff;
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 1.5rem;
           cursor: pointer;
-          font-weight: 700;
-          transition: all 0.2s;
-          box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+          box-shadow: 0 10px 25px rgba(16, 185, 129, 0.25);
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
         }
-        .simulation-trigger-btn:hover {
-          background: #16a34a;
-          transform: translateY(-2px);
-          box-shadow: 0 6px 16px rgba(34, 197, 94, 0.3);
+        .simulation-card-new:hover {
+          box-shadow: 0 15px 30px rgba(16, 185, 129, 0.35);
+        }
+        .sim-card-icon-box {
+          width: 56px;
+          height: 56px;
+          border-radius: 16px;
+          background: rgba(255, 255, 255, 0.15);
+          backdrop-filter: blur(10px);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.75rem;
+          color: #fff;
+          flex-shrink: 0;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        .sim-card-tag {
+          font-size: 0.75rem;
+          font-weight: 800;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          color: #a7f3d0;
+          margin-bottom: 0.25rem;
+        }
+        .sim-card-title {
+          font-weight: 800;
+          font-size: 1.15rem;
+          line-height: 1.3;
+          margin-bottom: 0.35rem;
+        }
+        .sim-card-desc {
+          font-size: 0.85rem;
+          color: #ecfdf5;
+          line-height: 1.4;
+          opacity: 0.95;
+        }
+        .sim-card-arrow {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 0.25rem;
+          font-size: 0.8rem;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: 0.02em;
+          color: #a7f3d0;
+          flex-shrink: 0;
+        }
+        .sim-card-arrow i {
+          font-size: 1.5rem;
+          transition: transform 0.3s ease;
+        }
+        .simulation-card-new:hover .sim-card-arrow i {
+          transform: translateX(4px);
         }
 
         .wachstum-container {
