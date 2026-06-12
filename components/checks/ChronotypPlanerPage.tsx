@@ -214,8 +214,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
           title: 'Aktivität & Routine',
           desc: 'Solides Energielevel. Geeignet für Kommunikation, Planungen und moderaten Energieeinsatz.',
           color: '#1d4ed8',
-          flatColor: '#3b82f6',
-          hideBox: true
+          flatColor: '#3b82f6'
         };
     }
   };
@@ -521,14 +520,12 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
           {/* Current Hour Recommendations */}
           <div className="sim-card info-card">
             <h2>Empfehlungen</h2>
-            {!currentPhase.hideBox && (
-              <div className="recommendation-box" style={{ borderColor: currentPhase.color }}>
-                <div className="rec-phase-header" style={{ color: currentPhase.color }}>
-                  {currentPhase.title}
-                </div>
-                <p className="rec-phase-desc">{currentPhase.desc}</p>
+            <div className="recommendation-box" style={{ borderColor: currentPhase.color }}>
+              <div className="rec-phase-header" style={{ color: currentPhase.color }}>
+                {currentPhase.title}
               </div>
-            )}
+              <p className="rec-phase-desc">{currentPhase.desc}</p>
+            </div>
 
             <div className="status-grid">
               {/* Caffeine */}
