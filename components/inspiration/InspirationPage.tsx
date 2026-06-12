@@ -237,15 +237,15 @@ const reels: Reel[] = [
 ];
 
 const tabLabels: { id: Tab; label: string; icon: string }[] = [
-  { id: 'experten', label: 'Biohacking', icon: 'bi-star-fill' },
   { id: 'hacks', label: 'Longevity Snacks', icon: 'bi-lightning-charge' },
+  { id: 'experten', label: 'Biohacking', icon: 'bi-star-fill' },
   { id: 'science', label: 'Wissenschaft', icon: 'bi-journal-medical' },
   { id: 'womens-health', label: "Female Vitality", icon: 'bi-gender-female' },
   { id: 'gespeichert', label: 'Gespeichert', icon: 'bi-bookmark-fill' },
 ];
 
 export default function InspirationPage() {
-  const [activeTab, setActiveTab] = useState<Tab>('experten');
+  const [activeTab, setActiveTab] = useState<Tab>('hacks');
   const [savedIds, setSavedIds] = useState<string[]>(['r1', 'r6']);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [focusOpen, setFocusOpen] = useState(false);
