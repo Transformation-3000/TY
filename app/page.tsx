@@ -595,11 +595,17 @@ export default function LandingPage() {
             </div>
             
             <div className="footer-col-new">
-              <h4>Kontakt & Rechtliches</h4>
+              <h4>Unternehmen</h4>
               <div className="footer-contact-card-new">
                 <p className="footer-company-name-new">True Years Beyond Age GmbH</p>
-                <p>Im Mediapark 5, 50670 Köln</p>
-                <p className="footer-email-row-new">
+                <p>Im Mediapark 5</p>
+                <p>D-50670 Köln</p>
+                <p>Germany</p>
+                
+                <div style={{ height: '1px', background: 'rgba(255, 255, 255, 0.06)', margin: '1rem 0' }} />
+                
+                <h5 style={{ fontSize: '0.85rem', fontWeight: '800', textTransform: 'uppercase', letterSpacing: '0.05em', color: '#94a3b8', margin: '0 0 0.5rem 0' }}>Kontakt</h5>
+                <p className="footer-email-row-new" style={{ marginTop: '0' }}>
                   <i className="bi bi-envelope-fill" style={{ marginRight: '6px', color: 'var(--landing-accent)' }} />
                   <a href="mailto:contact@true-years.com" className="footer-email-link-new">
                     contact@true-years.com
