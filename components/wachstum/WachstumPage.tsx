@@ -166,11 +166,11 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           </div>
         </div>
 
-        {/* Card 2: Chronotyp & Schlaf-Planer */}
+        {/* Card 2: Chronotyp-Planer */}
         <div>
           <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1.25rem' }}>
             <span className="blue-bar"></span>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>2. Chronotyp & Schlaf-Planer</h2>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>2. Chronotyp-Planer</h2>
           </div>
           <div 
             className="sim-card-wide"
@@ -179,7 +179,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
             <div className="sim-card-wide-img-wrap">
               <Image 
                 src="/images/sleep_option_16.jpg" 
-                alt="Chronotyp & Schlaf-Planer" 
+                alt="Chronotyp-Planer" 
                 fill
                 style={{ objectFit: 'cover', objectPosition: 'center 35%' }}
               />
