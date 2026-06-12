@@ -55,6 +55,10 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         
         {/* Links: Auswahl Optimierungsfelder */}
         <section className="fields-section">
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <span className="blue-bar"></span>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Longevity-Experience starten</h2>
+          </div>
           <div className="fields-grid" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             {OPTIMIZATION_FIELDS.map((field) => (
               <button
@@ -141,15 +145,14 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                   />
                 </div>
                 <div className="sim-card-wide-content">
-                  <div className="sim-card-body-row">
-                    <div className="sim-card-text-side">
+                  <div className="sim-card-grid-layout">
+                    <div className="sim-card-left-col">
                       <h3>Wie beeinflusst dein Lebensstil dein biologisches Alter?</h3>
                       <p>
                         Finde heraus, wie sich gezielte Lifestyle-Changes in den Bereichen Schlaf, Sport und Ernährung direkt auf deine Zellen auswirken. Simuliere deine Routinen und starte dein Verjüngungsexperiment!
                       </p>
-                      <span className="sim-card-wide-link">Simulation starten →</span>
                     </div>
-                    <div className="sim-card-circle-side">
+                    <div className="sim-card-right-col">
                       <div className="bac-circle-container-mini">
                         <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
                           <defs>
@@ -183,58 +186,20 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                       </div>
                     </div>
                   </div>
+                  <div className="sim-card-footer-row">
+                    <button className="sim-card-blue-button" onClick={(e) => {
+                      e.stopPropagation();
+                      onStartSimulation();
+                    }}>
+                      Simulation starten →
+                    </button>
+                  </div>
                 </div>
               </div>
             </>
           )}
 
-          <div className="navigator-box">
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <div>
-                <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 800, color: '#1e293b' }}>
-                  Fokus: {selectedField.label}
-                </h2>
-              </div>
-            </div>
 
-            <div className="quick-wins-grid" style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '1rem' }}>
-              {filteredWins.map((win) => (
-                <div key={win.id} className="quick-win-card">
-                  <div className="quick-win-card-icon" style={{ 
-                    width: '60px', height: '60px', borderRadius: '50%', 
-                    background: `${selectedField.color}15`,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '1.5rem', color: selectedField.color,
-                    flexShrink: 0
-                  }}>
-                    <i className="bi bi-check2-circle"></i>
-                  </div>
-                  
-                  <div style={{ flex: 1 }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.2rem' }}>
-                      <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 800, color: '#1e293b' }}>
-                        {win.title}
-                      </h4>
-                    </div>
-                    <p style={{ margin: 0, fontSize: '0.9rem', color: '#64748b', lineHeight: 1.5 }}>
-                      {win.desc}
-                    </p>
-                  </div>
-                  <div style={{ color: selectedField.color, fontSize: '1.2rem', opacity: 0.5 }}>
-                    <i className="bi bi-chevron-right"></i>
-                  </div>
-                </div>
-              ))}
-              {filteredWins.length === 0 && (
-                <div style={{ padding: '3rem', textAlign: 'center', color: '#94a3b8' }}>
-                  <i className="bi bi-info-circle" style={{ fontSize: '2rem', display: 'block', marginBottom: '1rem' }}></i>
-                  Aktuell keine weiteren Quick Wins für diesen Bereich verfügbar.
-                </div>
-              )}
-            </div>
-
-
-          </div>
         </section>
       </div>
 
@@ -268,28 +233,30 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           padding: 1.5rem;
           text-align: left;
         }
-        .sim-card-body-row {
+        .sim-card-grid-layout {
           display: flex;
-          align-items: flex-end;
-          gap: 1.5rem;
+          justify-content: space-between;
+          align-items: flex-start;
+          gap: 2rem;
         }
-        .sim-card-text-side {
+        .sim-card-left-col {
           flex: 1;
         }
-        .sim-card-circle-side {
+        .sim-card-right-col {
           flex-shrink: 0;
           display: flex;
-          justify-content: center;
-          align-items: center;
-          margin-bottom: 0.25rem;
+          justify-content: flex-end;
+          align-items: flex-start;
         }
         .bac-circle-container-mini {
           position: relative;
-          width: 140px;
-          height: 140px;
+          width: 170px;
+          height: 170px;
           display: flex;
           align-items: center;
           justify-content: center;
+          margin-top: -0.25rem;
+          margin-right: -0.25rem;
         }
         .bac-circle-svg-mini {
           position: absolute;
@@ -308,17 +275,39 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           text-align: center;
         }
         .bac-circle-val-mini {
-          font-size: 2.3rem;
+          font-size: 2.8rem;
           font-weight: 900;
           color: #1c2b3e;
           line-height: 1;
           letter-spacing: -0.02em;
         }
         .bac-circle-lab-mini {
-          font-size: 0.85rem;
+          font-size: 0.95rem;
           font-weight: 700;
           color: #8fa0b5;
-          margin-top: 2px;
+          margin-top: 3px;
+        }
+        .sim-card-footer-row {
+          display: flex;
+          justify-content: flex-end;
+          margin-top: 1rem;
+        }
+        .sim-card-blue-button {
+          background: #006ea7;
+          color: #ffffff;
+          border: none;
+          border-radius: 100px;
+          padding: 0.75rem 2rem;
+          font-size: 0.95rem;
+          font-weight: 800;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          box-shadow: 0 4px 12px rgba(0, 110, 167, 0.2);
+        }
+        .sim-card-blue-button:hover {
+          background: #005682;
+          transform: translateY(-1px);
+          box-shadow: 0 6px 16px rgba(0, 110, 167, 0.35);
         }
         .blue-bar {
           display: inline-block;
@@ -342,15 +331,6 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           color: #64748b;
           line-height: 1.5;
         }
-        .sim-card-wide-link {
-          font-size: 0.9rem;
-          font-weight: 700;
-          color: #006ea7;
-          transition: color 0.2s ease;
-        }
-        .sim-card-wide:hover .sim-card-wide-link {
-          color: #22c55e;
-        }
 
         .wachstum-container {
           padding: 2rem 3.5rem 2rem 2rem;
@@ -372,14 +352,18 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         }
 
         .quick-win-card {
-          background: #fff;
-          border: 1px solid #e2e8f0;
-          border-radius: 24px;
-          padding: 1.5rem;
+          background: transparent;
+          border: none;
+          border-radius: 0;
+          padding: 1.25rem 0.5rem;
+          border-bottom: 1px solid #e2e8f0;
           display: flex;
           gap: 1.5rem;
           align-items: center;
-          box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+          box-shadow: none;
+        }
+        .quick-win-card:last-child {
+          border-bottom: none;
         }
 
         @media (max-width: 991px) {
