@@ -35,9 +35,10 @@ const OPTIMIZATION_FIELDS = [
 interface WachstumPageProps {
   onNavigate?: (id: string) => void;
   onStartLisaDaily?: () => void;
+  onStartSimulation?: () => void;
 }
 
-export default function WachstumPage({ onNavigate, onStartLisaDaily }: WachstumPageProps) {
+export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimulation }: WachstumPageProps) {
   const [selectedField, setSelectedField] = useState(OPTIMIZATION_FIELDS[0]);
   const userMaturity = 2; // Beispiel-Reifegrad für die Logik rechts
 
@@ -45,9 +46,21 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily }: WachstumP
 
   return (
     <div className="wachstum-container">
-      <header style={{ marginBottom: '2.5rem' }}>
-        <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Quick Wins</h1>
-        <p style={{ color: '#64748b', fontSize: '1.1rem', marginTop: '0.5rem' }}>Do Longevity yourself: Deine sofort umsetzbaren Bausteine</p>
+      <header style={{ marginBottom: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+        <div>
+          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Quick Wins</h1>
+          <p style={{ color: '#64748b', fontSize: '1.1rem', marginTop: '0.5rem', margin: 0 }}>Do Longevity yourself: Deine sofort umsetzbaren Bausteine</p>
+        </div>
+        {onStartSimulation && (
+          <button 
+            type="button"
+            className="simulation-trigger-btn" 
+            onClick={onStartSimulation}
+          >
+            <i className="bi bi-activity" style={{ color: 'white' }}></i>
+            Zellalter-Simulation
+          </button>
+        )}
       </header>
 
       <div className="wachstum-layout">
@@ -203,6 +216,27 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily }: WachstumP
       </div>
 
       <style jsx>{`
+        .simulation-trigger-btn {
+          padding: 0.75rem 1.5rem;
+          font-size: 0.95rem;
+          background: #22c55e;
+          color: white;
+          border: none;
+          border-radius: 100px;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          cursor: pointer;
+          font-weight: 700;
+          transition: all 0.2s;
+          box-shadow: 0 4px 12px rgba(34, 197, 94, 0.2);
+        }
+        .simulation-trigger-btn:hover {
+          background: #16a34a;
+          transform: translateY(-2px);
+          box-shadow: 0 6px 16px rgba(34, 197, 94, 0.3);
+        }
+
         .wachstum-container {
           padding: 2rem 3.5rem 2rem 2rem;
           max-width: 1200px;

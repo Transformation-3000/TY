@@ -297,14 +297,6 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
             <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }} className="bioage-btn-row">
               <button 
                 type="button"
-                className="simulation-trigger-btn" 
-                onClick={onStartSimulation}
-              >
-                <i className="bi bi-activity" style={{ color: 'white' }}></i>
-                Zellalter-Simulation
-              </button>
-              <button 
-                type="button"
                 className="upload-trigger-btn" 
                 onClick={() => setShowUploadModal(true)}
               >

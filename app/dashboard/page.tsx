@@ -78,6 +78,7 @@ export default function Dashboard() {
                 setAutoStartSessionType('daily');
                 setActiveMenuItem('coaching');
               }} 
+              onStartSimulation={() => setActiveMenuItem('zellalter-simulation')}
             />
           )}
 
@@ -88,6 +89,7 @@ export default function Dashboard() {
                 setAutoStartSessionType('daily');
                 setActiveMenuItem('coaching');
               }} 
+              onStartSimulation={() => setActiveMenuItem('zellalter-simulation')}
             />
           )}
 
