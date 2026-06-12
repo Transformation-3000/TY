@@ -569,7 +569,7 @@ export default function LandingPage() {
                 className="footer-logo-new"
               />
               <p className="footer-description-new">
-                True Years ist die am schnellsten wachsende europäische Plattform für Langlebigkeit. Wir verbinden künstliche Intelligenz und führende Alterungsforschung, um Ihre Lebensqualität messbar zu steigern.
+                True Years ist die am schnellsten wachsende europäische Plattform für Langlebigkeit. Wir verbinden künstliche Intelligenz und führende Alterungsforschung, um die Lebensqualität von Millionen von Longevity-Befürwortern mess- und spürbar zu steigern.
               </p>
               <div className="footer-socials-new">
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="footer-social-icon-new" aria-label="LinkedIn">
