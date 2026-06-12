@@ -596,6 +596,7 @@ export default function LandingPage() {
                 <h4>Rechtliches</h4>
                 <Link href="/impressum">Impressum</Link>
                 <Link href="/datenschutz">Datenschutz</Link>
+                <Link href="/image-preview.html">Bildauswahl</Link>
               </div>
             </div>
           </div>
