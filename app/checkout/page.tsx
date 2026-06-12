@@ -94,12 +94,12 @@ function CheckoutContent() {
     zip: '50670',
     city: 'Köln',
     country: 'Deutschland',
-    cardName: '',
+    cardName: 'Max Mustermann',
     cardNumber: '4500 1234 5678 9012',
     cardExpiry: '12 / 28',
     cardCvc: '123',
     sepaIban: 'DE89 5001 0517 1234 5678 90',
-    sepaHolder: '',
+    sepaHolder: 'Max Mustermann',
     agreeTerms: true
   });
 
