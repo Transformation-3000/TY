@@ -129,7 +129,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
             >
               <div className="sim-card-wide-img-wrap">
                 <Image 
-                  src="/images/dna_helix_soft.png" 
+                  src="/images/dna_vibrant_white_bg.png" 
                   alt="Zellalter Simulation" 
                   fill
                   style={{ objectFit: 'cover' }}
@@ -252,11 +252,6 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           height: 180px;
           flex-shrink: 0;
           background: #f1f5f9;
-          overflow: hidden;
-        }
-        .sim-card-wide-img-wrap :global(img) {
-          filter: brightness(0.85) contrast(1.25);
-          transition: filter 0.3s ease;
         }
         .sim-card-wide-content {
           padding: 1.5rem;
