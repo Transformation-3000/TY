@@ -600,7 +600,9 @@ export default function LandingPage() {
               <Link href="#features"><i className="bi bi-arrow-right-short" /> Diagnostik & Labortests</Link>
               <Link href="#erfolgsprinzip"><i className="bi bi-arrow-right-short" /> Preise & Pakete</Link>
               <Link href="#kundenstimmen"><i className="bi bi-arrow-right-short" /> Erfolgsgeschichten</Link>
-              <Link href="#features"><i className="bi bi-arrow-right-short" /> Wearables & Integration</Link>
+              <span style={{ color: '#94a3b8', fontSize: '1.03rem', fontWeight: 500, display: 'inline-flex', alignItems: 'center', gap: '0.5rem', cursor: 'default' }}>
+                <i className="bi bi-arrow-right-short" style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.85rem' }} /> Wearables & Integration
+              </span>
             </div>
             
             <div className="footer-col-new">
@@ -624,13 +626,9 @@ export default function LandingPage() {
                   <div style={{ width: '24px', display: 'flex', justifyContent: 'center' }}>
                     <i className="bi bi-envelope-fill" style={{ color: 'white', fontSize: '0.98rem' }} />
                   </div>
-                  <div style={{ flex: 1 }}>
-                    <p className="footer-email-row-new" style={{ margin: 0 }}>
-                      <a href="mailto:contact@true-years.com" className="footer-email-link-new">
-                        contact (at) true-years.com
-                      </a>
-                    </p>
-                  </div>
+                  <a href="mailto:contact@true-years.com" className="footer-email-link-new">
+                    contact (at) true-years.com
+                  </a>
                 </div>
               </div>
               
