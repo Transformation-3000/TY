@@ -277,6 +277,27 @@ const reels: Reel[] = [
     fullText: 'Durch den Einfluss von Progesteron sinkt die HRV in der lutealen Phase natürlicherweise ab, während der Ruhepuls leicht ansteigt. Das Nervensystem ist in dieser Zeit sensibler für Stressoren. Wer das ignoriert, riskiert chronisch erhöhte Cortisolwerte, die den Alterungsprozess beschleunigen. Durch die Anpassung des Trainings (mehr Erholung, Atemübungen) lässt sich die HRV stabilisieren und die zelluläre Resilienz stärken.',
     author: 'Stanford Medicine', role: 'Klinische Studie, 2025', readTime: '3 Min', image: '/images/hrv_female_resilience.png', tag: 'NERVENSYSTEM', tagColor: '#3b82f6', saved: false,
   },
+  {
+    id: 'r_female_sleep', category: 'womens-health',
+    title: 'Schlafarchitektur bei Frauen: Die hormonelle Tiefschlaf-Formel',
+    teaser: 'Wie Progesteron und Östrogen deine Tiefschlafphasen steuern und wie du deinen Schlaf zirkadian optimierst.',
+    fullText: 'Die weibliche Schlafarchitektur unterscheidet sich signifikant von der männlichen. In der Lutealphase (nach dem Eisprung) sorgt das Hormon Progesteron für einen leichten Anstieg der Körperkerntemperatur, was das Erreichen des Tiefschlafs erschweren kann. Zirkadiane Optimierungs-Tipps: 1. Senke die Schlafzimmertemperatur auf 17°C ab, 2. Nutze Magnesiumbisglycinat am Abend zur Vagusnerv-Stimulation, 3. Meide zuckerhaltige Snacks nach 19:00 Uhr zur Vermeidung von nächtlichen Blutzuckerspitzen und Schweißausbrüchen.',
+    author: 'Prof. Dr. Matthew Walker', role: 'Schlafforscher & Bestseller-Autor', readTime: '3 Min', image: '/images/female_sleep_architecture.png', tag: 'SCHLAF', tagColor: '#3b82f6', saved: false, authorImage: '/images/insights-schlaf.jpeg',
+  },
+  {
+    id: 'r_female_thyroid', category: 'womens-health',
+    title: 'Die Darm-Schilddrüsen-Achse: Energie & Vitalität von innen heraus',
+    teaser: 'Wie chronische Entzündungen im Darm die Schilddrüsenhormone blockieren und wie du deinen Stoffwechsel reaktivierst.',
+    fullText: 'Müdigkeit, kalte Hände und träger Stoffwechsel sind oft Zeichen einer blockierten Schilddrüse. Über 20% des inaktiven Schilddrüsenhormons T4 werden im Darm durch gesunde Bakterien in das aktive T3 umgewandelt. Besteht eine Darm-Dysbiose, stockt dieser Prozess. Langlebigkeits-Protokoll: 1. Täglich 15g lösliche Ballaststoffe (wie Akazienfaser), 2. Reduzierung von Gluten zur Schonung der Darmwand, 3. Ausreichende Selen- und Jodversorgung zur Unterstützung der Hormonsynthese.',
+    author: 'Dr. Elena Becker', role: 'Fachärztin für Endokrinologie', readTime: '4 Min', image: '/images/female_gut_thyroid.png', tag: 'STOFFWECHSEL', tagColor: '#10b981', saved: false, authorImage: '/images/selfie_elena.png',
+  },
+  {
+    id: 'r_female_skin_circadian', category: 'womens-health',
+    title: 'Zirkadiane Hauterneuerung: Die nächtliche Reparatur-Kaskade',
+    teaser: 'Warum deine Hautbarriere ab 23:00 Uhr auf Regeneration schaltet und wie du den zellulären Turnover maximierst.',
+    fullText: 'Die Haut besitzt ihre eigene zirkadiane Uhr. Während des Tages schützt sie sich vor UV-Schäden. Ab ca. 23:00 Uhr verdoppelt sich der zelluläre Erneuerungsprozess (Mitose) und die Durchblutung steigt an. Gleichzeitig ist die Hautbarriere durchlässiger für Wirkstoffe. Langlebigkeits-Schönheitstipp: Trage Retinoide oder Peptide erst nach Sonnenuntergang auf. Kombiniere dies mit einer Rotlichttherapie (660nm) am Abend zur Aktivierung der Kollagen-Synthese und Linderung von Entzündungen.',
+    author: 'Dr. Monique Weber', role: 'Dermatologin & Altersforscherin', readTime: '3 Min', image: '/images/female_circadian_skin.png', tag: 'HAUTERNEUERUNG', tagColor: '#ec4899', saved: false, authorImage: '/images/selfie_monique.png',
+  },
 ];
 
 const tabLabels: { id: Tab; label: string; icon: string }[] = [
@@ -287,18 +308,74 @@ const tabLabels: { id: Tab; label: string; icon: string }[] = [
   { id: 'gespeichert', label: 'Gespeichert', icon: 'bi-bookmark-fill' },
 ];
 
+const GIT_COMMIT_DATES: Record<string, string> = {
+  r_bryan: '29.05.26',
+  r_huberman: '29.05.26',
+  r_kayla: '12.06.26',
+  r_rhonda: '12.06.26',
+  r_longo: '12.06.26',
+  r1: '11.05.26',
+  r2: '11.05.26',
+  r3: '11.05.26',
+  r5: '11.05.26',
+  r8: '29.05.26',
+  r6: '11.05.26',
+  r7: '11.05.26',
+  r_taurine: '29.05.26',
+  r_reprogramming: '29.05.26',
+  r_science_neural: '12.06.26',
+  r_science_senolytics: '12.06.26',
+  r_science_microbiome: '12.06.26',
+  r_sinclair: '29.05.26',
+  r_hamilton: '29.05.26',
+  r_diamandis: '08.06.26',
+  r_asprey: '29.05.26',
+  h1: '11.05.26',
+  h2: '29.05.26',
+  h3_steps: '29.05.26',
+  h4_coffee: '29.05.26',
+  h5_breath: '29.05.26',
+  h6_light: '29.05.26',
+  h7_cold: '29.05.26',
+  h8_hiit: '29.05.26',
+  h9_olive: '29.05.26',
+  w1: '30.05.26',
+  w2: '30.05.26',
+  w3: '30.05.26',
+  w4: '30.05.26',
+  w5: '30.05.26',
+  w6: '30.05.26',
+  r_female_sleep: '12.06.26',
+  r_female_thyroid: '12.06.26',
+  r_female_skin_circadian: '12.06.26',
+};
+
 export default function InspirationPage() {
   const [activeTab, setActiveTab] = useState<Tab>('hacks');
-  const [savedIds, setSavedIds] = useState<string[]>(['r1', 'r6']);
+  const [savedItems, setSavedItems] = useState<{ id: string; savedAt: string }[]>([
+    { id: 'r1', savedAt: GIT_COMMIT_DATES['r1'] },
+    { id: 'r6', savedAt: GIT_COMMIT_DATES['r6'] }
+  ]);
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [focusOpen, setFocusOpen] = useState(false);
   const [focusStartIdx, setFocusStartIdx] = useState(0);
+
+  const savedIds = savedItems.map(item => item.id);
 
   useEffect(() => {
     const saved = localStorage.getItem('ty_saved_reels');
     if (saved) {
       try {
-        setSavedIds(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          const migrated = parsed.map(item => {
+            if (typeof item === 'string') {
+              return { id: item, savedAt: GIT_COMMIT_DATES[item] || '12.06.26' };
+            }
+            return item;
+          });
+          setSavedItems(migrated);
+        }
       } catch (e) {
         console.error('Failed to parse saved reels', e);
       }
@@ -306,8 +383,16 @@ export default function InspirationPage() {
   }, []);
 
   const toggleSave = (id: string) => {
-    setSavedIds(prev => {
-      const next = prev.includes(id) ? prev.filter(x => x !== id) : [...prev, id];
+    setSavedItems(prev => {
+      const exists = prev.find(x => x.id === id);
+      let next;
+      if (exists) {
+        next = prev.filter(x => x.id !== id);
+      } else {
+        const today = new Date();
+        const formattedDate = `${today.getDate().toString().padStart(2, '0')}.${(today.getMonth() + 1).toString().padStart(2, '0')}.${today.getFullYear().toString().slice(-2)}`;
+        next = [...prev, { id, savedAt: formattedDate }];
+      }
       localStorage.setItem('ty_saved_reels', JSON.stringify(next));
       return next;
     });
@@ -430,20 +515,27 @@ export default function InspirationPage() {
                     </div>
                   )}
 
-                  <div className="reel-footer">
-                    <button
-                      className="reel-deepdive-btn"
-                      onClick={() => setExpandedId(expandedId === reel.id ? null : reel.id)}
-                    >
-                      {expandedId === reel.id ? (
-                        <>Weniger anzeigen</>
-                      ) : (
-                        <>Mehr erfahren</>
-                      )}
-                    </button>
-                    <button className="reel-share-btn">
-                      <i className="bi bi-share" />
-                    </button>
+                  <div className="reel-footer" style={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center' }}>
+                    <div style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}>
+                      <button
+                        className="reel-deepdive-btn"
+                        onClick={() => setExpandedId(expandedId === reel.id ? null : reel.id)}
+                      >
+                        {expandedId === reel.id ? (
+                          <>Weniger anzeigen</>
+                        ) : (
+                          <>Mehr erfahren</>
+                        )}
+                      </button>
+                      <button className="reel-share-btn">
+                        <i className="bi bi-share" />
+                      </button>
+                    </div>
+                    {activeTab === 'gespeichert' && (
+                      <span className="reel-saved-date">
+                        Gespeichert: {savedItems.find(item => item.id === reel.id)?.savedAt}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -601,7 +693,12 @@ export default function InspirationPage() {
         @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
         .reel-full-text p { font-size: 0.95rem; color: #334155; line-height: 1.65; margin: 0; }
 
-        .reel-footer { display: flex; align-items: center; gap: 0.5rem; }
+         .reel-footer { display: flex; align-items: center; gap: 0.5rem; }
+         .reel-saved-date {
+           font-size: 0.82rem;
+           color: #94a3b8;
+           font-weight: 600;
+         }
         .reel-deepdive-btn {
           display: inline-flex; align-items: center; gap: 0.35rem;
           padding: 0.45rem 1rem; border-radius: 8px; border: none;
