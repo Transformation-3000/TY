@@ -215,11 +215,12 @@ function CheckoutContent() {
             alt="TrueYears Logo" 
             width={180} 
             height={60} 
+            className="checkout-header-logo"
             priority
           />
         </Link>
-        <Link href="/" className="checkout-back-link">
-          <i className="bi bi-arrow-left"></i> Zurück zur Startseite
+        <Link href="/" className="checkout-back-btn">
+          <i className="bi bi-arrow-left"></i> Zurück
         </Link>
       </header>
 

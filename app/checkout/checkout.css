@@ -14,21 +14,32 @@
   padding-bottom: 20px;
   border-bottom: 1px solid rgba(0, 110, 167, 0.1);
 }
+.checkout-header-logo {
+  height: 80px;
+  width: auto;
+  object-fit: contain;
+  margin-left: -10px;
+}
 
-.checkout-back-link {
-  display: flex;
+.checkout-back-btn {
+  display: inline-flex;
   align-items: center;
   gap: 8px;
+  background: transparent;
   color: var(--blue-main, #006EA7);
-  text-decoration: none;
-  font-weight: 600;
+  border: 2px solid var(--blue-main, #006EA7);
+  padding: 8px 20px;
+  border-radius: 12px;
+  font-weight: 700;
   font-size: 0.95rem;
+  text-decoration: none;
   transition: all 0.2s ease;
 }
 
-.checkout-back-link:hover {
-  opacity: 0.8;
-  transform: translateX(-3px);
+.checkout-back-btn:hover {
+  background: var(--blue-main, #006EA7);
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 .checkout-grid {
