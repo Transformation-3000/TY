@@ -341,7 +341,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                       <span className="bac-circle-lab-mini">Timer</span>
                     </div>
                   </div>
-                  <button className="sim-card-blue-button" onClick={(e) => {
+                  <button className="sim-card-blue-button" style={{ background: '#22c55e', boxShadow: '0 4px 12px rgba(34, 197, 94, 0.25)' }} onClick={(e) => {
                     e.stopPropagation();
                     onStartAutophagy?.();
                   }}>
