@@ -105,29 +105,31 @@ export default function LandingPage() {
     <div className="landing-container">
       {/* Navigation */}
       <nav className={`landing-nav ${menuOpen ? 'landing-nav-open' : ''}`}>
-        <Link href="/" className="logo">
-          <Image 
-            src="/images/logoneu.png" 
-            alt="TrueYears Logo" 
-            width={180} 
-            height={60} 
-            className="landing-header-logo"
-            priority
-          />
-        </Link>
-        <button 
-          className={`landing-nav-toggle ${menuOpen ? 'toggle-active' : ''}`}
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle navigation"
-        >
-          <span className="hamburger"></span>
-        </button>
-        <div className={`landing-nav-links ${menuOpen ? 'landing-nav-links-open' : ''}`}>
-          <Link href="#features" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Bausteine</Link>
-          <Link href="#erfolgsprinzip" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Mitgliedschaften</Link>
-          <Link href="#testphase" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Wissenschaft</Link>
-          <Link href="#kundenstimmen" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Kundenstimmen</Link>
-          <Link href="/dashboard" className="btn-cta-small" onClick={() => setMenuOpen(false)}>Login</Link>
+        <div className="landing-nav-container">
+          <Link href="/" className="logo">
+            <Image 
+              src="/images/logoneu.png" 
+              alt="TrueYears Logo" 
+              width={180} 
+              height={60} 
+              className="landing-header-logo"
+              priority
+            />
+          </Link>
+          <button 
+            className={`landing-nav-toggle ${menuOpen ? 'toggle-active' : ''}`}
+            onClick={() => setMenuOpen(!menuOpen)}
+            aria-label="Toggle navigation"
+          >
+            <span className="hamburger"></span>
+          </button>
+          <div className={`landing-nav-links ${menuOpen ? 'landing-nav-links-open' : ''}`}>
+            <Link href="#features" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Bausteine</Link>
+            <Link href="#erfolgsprinzip" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Mitgliedschaften</Link>
+            <Link href="#testphase" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Wissenschaft</Link>
+            <Link href="#kundenstimmen" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Kundenstimmen</Link>
+            <Link href="/dashboard" className="btn-cta-small" onClick={() => setMenuOpen(false)}>Login</Link>
+          </div>
         </div>
       </nav>
 
@@ -613,7 +615,7 @@ export default function LandingPage() {
                   <div style={{ width: '24px', display: 'flex', justifyContent: 'center', marginTop: '3px' }}>
                     <i className="bi bi-geo-alt-fill" style={{ color: 'var(--landing-accent)', fontSize: '1.05rem' }} />
                   </div>
-                  <div style={{ flex: 1 }}>
+                  <div style={{ flex: 1, paddingLeft: '10px' }}>
                     <p className="footer-company-name-new" style={{ margin: '0 0 0.4rem' }}>True Years Beyond Age GmbH</p>
                     <p className="footer-company-name-new" style={{ margin: '0 0 0.4rem' }}>Im Mediapark 5</p>
                     <p className="footer-company-name-new" style={{ margin: '0 0 0.4rem' }}>D-50670 Köln</p>
@@ -626,7 +628,7 @@ export default function LandingPage() {
                   <div style={{ width: '24px', display: 'flex', justifyContent: 'center' }}>
                     <i className="bi bi-envelope-fill" style={{ color: 'white', fontSize: '0.98rem' }} />
                   </div>
-                  <a href="mailto:contact@true-years.com" className="footer-email-link-new">
+                  <a href="mailto:contact@true-years.com" className="footer-email-link-new" style={{ paddingLeft: '10px' }}>
                     contact (at) true-years.com
                   </a>
                 </div>
