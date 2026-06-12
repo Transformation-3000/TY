@@ -825,13 +825,36 @@ section[id] {
     gap: 2rem;
   }
 
-  .final-cta {
-    padding: 6rem 1.5rem;
+  .final-cta-new {
+    padding: 60px 1.5rem 80px;
   }
 
-  .final-cta .btn-primary-large {
-    font-size: 1.1rem !important;
-    padding: 1.1rem 2rem !important;
+  .final-cta-card {
+    padding: 2.5rem 1.25rem;
+    border-radius: 24px;
+  }
+
+  .final-cta-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .final-cta-text-col {
+    text-align: center;
+  }
+
+  .final-cta-btns {
+    justify-content: center;
+  }
+
+  .final-cta-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .longevity-chart-wrapper {
+    padding: 0.75rem;
+    border-radius: 16px;
   }
 
   .footer {
