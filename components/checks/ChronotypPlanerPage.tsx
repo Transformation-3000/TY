@@ -535,7 +535,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
           {/* Current Hour Recommendations */}
           <div className="sim-card info-card">
             <h2>Empfehlungen</h2>
-            <div className="recommendation-box" style={{ borderLeftColor: currentPhase.color }}>
+            <div className="recommendation-box" style={{ borderLeft: `4px solid ${currentPhase.color}` }}>
               <div className="rec-phase-header" style={{ color: currentPhase.color }}>
                 {currentPhase.title}
               </div>
@@ -1080,7 +1080,6 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
 
         /* Recommendation card styles */
         .recommendation-box {
-          border-left: 4px solid #e2e8f0;
           padding: 0.5rem 0 0.5rem 1.25rem;
           margin-bottom: 1.75rem;
         }
