@@ -204,15 +204,6 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
 
 
 
-  const OPTIMIZATION_ICONS = [
-    '/images/icon_schlaf_3d.png',
-    '/images/icon_kraft_3d.png',
-    '/images/icon_zell_3d.png',
-    '/images/icon_immun_3d.png',
-    '/images/icon_sozial_3d.png',
-    '/images/icon_mindset_3d.png'
-  ];
-
   const trendData = [
     { title: 'Schlaf & Erholung', data: [62, 60, 68, 64, 70, 67, 72, 70, 75, 72, 78, 75] },
     { title: 'Kraft & Ausdauer', data: [55, 58, 60, 63, 67, 70, 72, 75, 78, 80, 83, 84] },
@@ -479,17 +470,21 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
                         </span>
                       ))}
                     </span>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.2rem', flexShrink: 0 }}>
-                      <img 
-                        src={OPTIMIZATION_ICONS[i]} 
-                        alt={t.title} 
-                        style={{
-                          width: '38px',
-                          height: '38px',
-                          objectFit: 'contain',
-                          flexShrink: 0
-                        }}
-                      />
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.35rem', flexShrink: 0 }}>
+                      <div style={{
+                        width: '38px',
+                        height: '38px',
+                        borderRadius: '50%',
+                        border: `2px solid ${CLUSTER_CONFIGS[t.title]?.color || '#4498ca'}`,
+                        background: CLUSTER_CONFIGS[t.title]?.lightBg || '#f0f9ff',
+                        color: CLUSTER_CONFIGS[t.title]?.color || '#4498ca',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '1.1rem'
+                      }}>
+                        <i className={`bi ${CLUSTER_CONFIGS[t.title]?.icon || 'bi-question-circle'}`}></i>
+                      </div>
                       <span className="taci-trend" style={{ color }}>{formattedPct}</span>
                     </div>
                   </div>
