@@ -280,8 +280,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         }
         .bac-circle-container-mini {
           position: relative;
-          width: 105px;
-          height: 105px;
+          width: 140px;
+          height: 140px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -303,17 +303,17 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           text-align: center;
         }
         .bac-circle-val-mini {
-          font-size: 1.7rem;
+          font-size: 2.3rem;
           font-weight: 900;
           color: #1c2b3e;
           line-height: 1;
           letter-spacing: -0.02em;
         }
         .bac-circle-lab-mini {
-          font-size: 0.65rem;
+          font-size: 0.85rem;
           font-weight: 700;
           color: #8fa0b5;
-          margin-top: 1px;
+          margin-top: 2px;
         }
         .sim-card-wide-badge {
           font-size: 0.75rem;
