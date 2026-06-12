@@ -110,6 +110,16 @@ interface Coaching2PageProps {
 }
 
 export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAutoStart }: Coaching2PageProps) {
+  const [userName, setUserName] = useState('Monique');
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedName = localStorage.getItem('ty_first_name');
+      if (savedName) {
+        setUserName(savedName);
+      }
+    }
+  }, []);
+
   const [view, setView] = useState<ViewMode>('welcome');
   const [coachVariant, setCoachVariant] = useState<CoachVariant>('lisa-jung');
   const [setupStep, setSetupStep] = useState<SetupStep>('coach');
@@ -311,7 +321,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
       setDailyStep(0);
       setIsAnimating(true);
       setTimeout(() => { setView('session'); setIsAnimating(false); }, 50);
-      await addCoachMsg('Hallo Monique! Schön, dass du dir Zeit für dich nimmst. Was möchtest du heute machen?', 'entry-options', 1200);
+      await addCoachMsg(`Hallo ${userName}! Schön, dass du dir Zeit für dich nimmst. Was möchtest du heute machen?`, 'entry-options', 1200);
     }, 4500);
   };
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function SettingsPage() {
   const [notifications, setNotifications] = useState({
@@ -42,6 +42,20 @@ export default function SettingsPage() {
     birthDate: '1985-05-15',
     gender: 'weiblich',
   });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedName = localStorage.getItem('ty_first_name');
+      const savedEmail = localStorage.getItem('ty_email');
+      if (savedName || savedEmail) {
+        setProfileData(prev => ({
+          ...prev,
+          firstName: savedName || prev.firstName,
+          email: savedEmail || prev.email,
+        }));
+      }
+    }
+  }, []);
 
   const [payment, setPayment] = useState(() => {
     const now = new Date();

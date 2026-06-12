@@ -10,6 +10,16 @@ interface VogelperspektivePageProps {
 export default function VogelperspektivePage({ onNavigate }: VogelperspektivePageProps) {
   const [currentDate, setCurrentDate] = useState('');
   const [greeting, setGreeting] = useState('Guten Tag');
+  const [userName, setUserName] = useState('Monique');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedName = localStorage.getItem('ty_first_name');
+      if (savedName) {
+        setUserName(savedName);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     const dateOptions: Intl.DateTimeFormatOptions = { 
@@ -315,11 +325,11 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         <div className="center-section">
           <div className="greeting-block">
             <span className="date-display">{currentDate}</span>
-            <h1 className="greeting-h1">{greeting}, <br /><span className="name-blue">Monique</span></h1>
+            <h1 className="greeting-h1">{greeting}, <br /><span className="name-blue">{userName}</span></h1>
           </div>
           <div className="avatar-outer-circle">
             <div className="avatar-inner">
-              <Image src="/images/woman_53_blonde.png" width={288} height={288} alt="Monique" priority />
+              <Image src="/images/woman_53_blonde.png" width={288} height={288} alt={userName} priority />
             </div>
           </div>
         </div>
