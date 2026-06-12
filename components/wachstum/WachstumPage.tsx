@@ -165,7 +165,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
               >
                 <div className="sim-card-wide-img-wrap">
                   <Image 
-                    src="/images/dna_helix_soft.png" 
+                    src="/images/dna_helix_vibrant.png" 
                     alt="Zellalter Simulation" 
                     fill
                     style={{ objectFit: 'cover' }}
