@@ -606,13 +606,6 @@ export default function LandingPage() {
                 </div>
               </div>
               
-              <h4>Kontakt</h4>
-              <p className="footer-email-row-new" style={{ marginTop: '0', marginBottom: '1.5rem' }}>
-                <i className="bi bi-envelope-fill" style={{ marginRight: '6px', color: 'white' }} />
-                <a href="mailto:contact@true-years.com" className="footer-email-link-new">
-                  contact@true-years.com
-                </a>
-              </p>
               <div className="footer-legal-links-new">
                 <Link href="/impressum">Impressum</Link>
                 <span className="footer-legal-sep-new">|</span>
