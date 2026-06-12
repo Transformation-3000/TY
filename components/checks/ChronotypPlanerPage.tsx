@@ -458,7 +458,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
                 <line x1={(simulatedTime / 24) * 100} y1={markerY} x2={(simulatedTime / 24) * 100} y2="45" stroke="#ef4444" strokeWidth="0.6" strokeDasharray="1,1" />
 
                 {/* Indicator Dot on the wave curve */}
-                <circle cx={(simulatedTime / 24) * 100} cy={markerY} r="1.5" fill="#ef4444" stroke="#ffffff" strokeWidth="0.5" />
+                <circle cx={(simulatedTime / 24) * 100} cy={markerY} r="2.4" fill="#ef4444" stroke="#ffffff" strokeWidth="0.6" />
               </svg>
 
               <div className="waveform-labels">
