@@ -484,6 +484,29 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           }
         }
 
+        @media (max-width: 768px) {
+          .segmented-control {
+            flex-direction: column;
+            border-radius: 20px;
+            padding: 0.75rem;
+            gap: 0.75rem;
+          }
+          .segmented-button {
+            padding: 1.1rem 1.25rem;
+            align-items: flex-start;
+            text-align: left;
+          }
+          .style-header-row {
+            justify-content: flex-start;
+            margin-bottom: 4px;
+            width: 100%;
+          }
+          .style-desc {
+            font-size: 0.95rem;
+            text-align: left;
+          }
+        }
+
         @media (max-width: 576px) {
           .navigator-box {
             padding: 1.25rem 1rem 1.5rem;

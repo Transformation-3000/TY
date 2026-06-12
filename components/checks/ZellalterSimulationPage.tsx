@@ -248,8 +248,8 @@ export default function ZellalterSimulationPage({ onBack }: ZellalterSimulationP
               {sleepScore === 1 && <>❌ <strong>Stufe 1:</strong> Chronischer Schlafmangel (&lt; 6 Std.)</>}
               {sleepScore === 2 && <>⚠️ <strong>Stufe 2:</strong> Suboptimaler Schlaf (6-7 Std.)</>}
               {sleepScore === 3 && <>🍃 <strong>Stufe 3:</strong> Erholsamer Schlaf (7-8 Std.)</>}
-              {sleepScore === 4 && <>✨ <strong>Stufe 4:</strong> Optimaler Schlaf (8-9 Std.)</>}
-              {sleepScore === 5 && <>🌟 <strong>Stufe 5:</strong> Sehr langer Schlaf (&gt; 9 Std.)</>}
+              {sleepScore === 4 && <>🌟 <strong>Stufe 4:</strong> Optimaler Schlaf (8-9 Std.)</>}
+              {sleepScore === 5 && <>⚠️ <strong>Stufe 5:</strong> Sehr langer Schlaf (&gt; 9 Std.)</>}
             </span>
           </div>
 
@@ -676,7 +676,7 @@ export default function ZellalterSimulationPage({ onBack }: ZellalterSimulationP
           margin: 1rem 0 0.5rem 0;
         }
         .sim-slider-input.sleep-slider {
-          background: linear-gradient(to right, #ef4444 0%, #ef4444 10%, #eab308 25%, #22c55e 45%, #22c55e 65%, #eab308 80%, #ef4444 95%, #ef4444 100%);
+          background: linear-gradient(to right, #ef4444 0%, #ef4444 10%, #eab308 25%, #22c55e 45%, #22c55e 70%, #f97316 85%, #f97316 100%);
         }
         .sim-slider-input.exercise-slider {
           background: linear-gradient(to right, #ef4444 0%, #ef4444 15%, #eab308 35%, #eab308 65%, #22c55e 80%, #22c55e 100%);
