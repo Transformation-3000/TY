@@ -802,6 +802,25 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
             grid-template-columns: 1fr;
             row-gap: 1.5rem;
           }
+          .left-column,
+          .right-column {
+            display: contents;
+          }
+          .inputs-card {
+            order: 1;
+          }
+          .timeline-card {
+            order: 2;
+          }
+          .time-control-card {
+            order: 3;
+          }
+          .info-card {
+            order: 4;
+          }
+          .agenda-card {
+            order: 5;
+          }
         }
 
         .sim-card {
