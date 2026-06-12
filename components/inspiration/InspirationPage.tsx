@@ -32,6 +32,13 @@ const reels: Reel[] = [
     author: 'Bryan Johnson', role: 'Blueprint-Gründer & Biohacker', readTime: '3 Min', image: '/images/bryan-johnson_new.png', tag: 'SAUNA', tagColor: '#ef4444', saved: false, authorImage: '/images/bryan-johnson_new.png',
   },
   {
+    id: 'r_kayla', category: 'experten',
+    title: 'Weibliches Biohacking: Kayla Barnes-Lentz’ zelluläres Verjüngungs-Protokoll',
+    teaser: 'Neben Bryan Johnson gilt Kayla Barnes-Lentz als einflussreichste Biohackerin der Welt. Erfahre mehr über ihr personalisiertes Zell- und Gehirnoptimierungsprogramm.',
+    fullText: 'Kayla Barnes-Lentz ist die führende Stimme im weiblichen Biohacking. Ihr wissenschaftliches Protokoll konzentriert sich auf zelluläre Gesundheit, mitochondriale Optimierung und zirkadiane Langlebigkeit. Zu ihren täglichen Säulen gehören: 1. Eine nährstoffdichte, entzündungshemmende Bio-Ernährung (reich an Polyphenolen), 2. Täglich 20 Minuten Rotlicht- und Nahinfrarot-Therapie zur Anregung der mitochondrialen ATP-Produktion, 3. Hyperbare Sauerstofftherapie (HBOT) zur Reduktion von seneszenten Zellen und Verlängerung der Telomere, 4. Konsequentes Schlaf-Tracking (HRV > 100 ms). Durch ihr optimiertes Regime konnte sie ihr biologisches Alter laut epigenetischen Uhren signifikant senken.',
+    author: 'Kayla Barnes-Lentz', role: 'Gründerin & Biohacking-Pionierin', readTime: '4 Min', image: '/images/kayla_barnes_lentz.png', tag: 'BIOHACKING', tagColor: '#8b5cf6', saved: false, authorImage: '/images/kayla_barnes_lentz.png',
+  },
+  {
     id: 'r1', category: 'experten',
     title: 'Warum Schlaf das mächtigste Longevity-Tool ist',
     teaser: 'Prof. Dr. Walker erklärt, wie 7–9 Stunden Schlaf Telomere schützt und die biologische Uhr verlangsamt.',
