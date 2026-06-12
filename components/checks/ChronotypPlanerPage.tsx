@@ -455,7 +455,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
                 <path d={getEnergyCurveStrokePath()} fill="none" stroke="url(#waveLineGrad)" strokeWidth="1.2" style={{ transition: 'd 0.3s' }} />
 
                 {/* Vertical time marker swept by simulated hour */}
-                <line x1={(simulatedTime / 24) * 100} y1="0" x2={(simulatedTime / 24) * 100} y2="45" stroke="#ef4444" strokeWidth="0.6" strokeDasharray="1,1" />
+                <line x1={(simulatedTime / 24) * 100} y1={markerY} x2={(simulatedTime / 24) * 100} y2="45" stroke="#ef4444" strokeWidth="0.6" strokeDasharray="1,1" />
 
                 {/* Indicator Dot on the wave curve */}
                 <circle cx={(simulatedTime / 24) * 100} cy={markerY} r="1.5" fill="#ef4444" stroke="#ffffff" strokeWidth="0.5" />
@@ -795,6 +795,10 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
           margin: 0 0 1.5rem 0;
         }
 
+        .timeline-card .card-subtitle {
+          margin-bottom: 0.75rem;
+        }
+
         .chrono-selector-column {
           display: flex;
           flex-direction: column;
@@ -986,7 +990,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
         /* Waveform Curve Styles */
         .waveform-container {
           position: relative;
-          margin: 1.75rem 0 0.5rem 0;
+          margin: 0.75rem 0 0.5rem 0;
         }
 
         .waveform-svg {
