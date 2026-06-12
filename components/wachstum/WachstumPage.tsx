@@ -233,6 +233,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           border: 1px solid #e2e8f0;
           border-radius: 24px;
           display: flex;
+          flex-direction: column;
           width: 100%;
           margin-bottom: 2rem;
           cursor: pointer;
@@ -247,9 +248,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         }
         .sim-card-wide-img-wrap {
           position: relative;
-          width: 220px;
-          height: 100%;
-          min-height: 180px;
+          width: 100%;
+          height: 180px;
           flex-shrink: 0;
           background: #f1f5f9;
         }
