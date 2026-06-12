@@ -158,41 +158,7 @@ export default function LandingPage() {
         </div>
       </header>
 
-      {/* Partner logos banner */}
-      <section className="partners-section">
-        <div className="partners-container">
-          <p className="partners-label">Wissenschaft & Technologie Partner</p>
-          <div className="partners-logos">
-            <div className="partner-logo">
-              <Image 
-                src="/images/dlg_logo.png" 
-                alt="Deutsche Longevity Gesellschaft" 
-                width={200} 
-                height={60} 
-                style={{ objectFit: 'contain' }}
-              />
-            </div>
-            <div className="partner-logo lifespin-logo">
-              <Image 
-                src="/images/lifespin_logo.png" 
-                alt="Lifespin" 
-                width={160} 
-                height={50} 
-                style={{ objectFit: 'contain' }}
-              />
-            </div>
-            <div className="partner-logo">
-              <Image 
-                src="/images/tuv_logo.png" 
-                alt="TÜV Rheinland" 
-                width={100} 
-                height={70} 
-                style={{ objectFit: 'contain' }}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* Video Concept Section */}
       <section id="konzept" className="video-section">
@@ -598,8 +564,8 @@ export default function LandingPage() {
               <Image 
                 src="/images/logoneu.png" 
                 alt="TrueYears Logo" 
-                width={240} 
-                height={80} 
+                width={300} 
+                height={100} 
                 className="footer-logo-new"
               />
               <p className="footer-description-new">
@@ -646,6 +612,35 @@ export default function LandingPage() {
                 <Link href="/datenschutz">Datenschutz</Link>
                 <span className="footer-legal-sep-new">|</span>
                 <Link href="/image-preview.html">Bildauswahl</Link>
+              </div>
+              <div className="footer-partners-logos-new">
+                <div className="footer-partner-logo-new dlg-logo">
+                  <Image 
+                    src="/images/dlg_logo.png" 
+                    alt="Deutsche Longevity Gesellschaft" 
+                    width={100} 
+                    height={30} 
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
+                <div className="footer-partner-logo-new lifespin-logo">
+                  <Image 
+                    src="/images/lifespin_logo.png" 
+                    alt="Lifespin" 
+                    width={80} 
+                    height={25} 
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
+                <div className="footer-partner-logo-new tuv-logo">
+                  <Image 
+                    src="/images/tuv_logo.png" 
+                    alt="TÜV Rheinland" 
+                    width={50} 
+                    height={35} 
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
               </div>
             </div>
           </div>

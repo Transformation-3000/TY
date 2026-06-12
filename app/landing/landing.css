@@ -1068,7 +1068,7 @@ section[id] {
 }
 
 .footer-logo-new {
-  height: 80px;
+  height: 100px;
   width: auto;
   object-fit: contain;
   margin-bottom: 1.5rem;
@@ -2506,5 +2506,64 @@ section[id] {
 .partner-logo.lifespin-logo:hover img {
   filter: invert(1) opacity(1);
 }
+
+/* --- FOOTER PARTNERS LOGOS --- */
+.footer-partners-logos-new {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+  flex-wrap: wrap;
+}
+
+.footer-partner-logo-new {
+  opacity: 0.75;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.footer-partner-logo-new:hover {
+  opacity: 1;
+  transform: translateY(-2px);
+}
+
+.footer-partner-logo-new img {
+  display: block;
+}
+
+/* Deutsche Longevity Gesellschaft (DLG) - make white */
+.footer-partner-logo-new.dlg-logo img {
+  filter: brightness(0) invert(1) opacity(0.75);
+  transition: filter 0.3s ease;
+}
+
+.footer-partner-logo-new.dlg-logo:hover img {
+  filter: brightness(0) invert(1) opacity(1);
+}
+
+/* Lifespin - already white, set opacity */
+.footer-partner-logo-new.lifespin-logo img {
+  opacity: 0.75;
+  transition: opacity 0.3s ease;
+}
+
+.footer-partner-logo-new.lifespin-logo:hover img {
+  opacity: 1;
+}
+
+/* TÜV Rheinland - standard badge looks best inside a small white card */
+.footer-partner-logo-new.tuv-logo {
+  background: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  opacity: 0.85;
+}
+
+.footer-partner-logo-new.tuv-logo:hover {
+  opacity: 1;
+}
+
 
 
