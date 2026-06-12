@@ -290,7 +290,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         .sim-card-footer-row {
           display: flex;
           justify-content: flex-end;
-          margin-top: 1rem;
+          margin-top: 0.5rem;
         }
         .sim-card-blue-button {
           background: #006ea7;

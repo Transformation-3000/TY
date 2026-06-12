@@ -893,8 +893,8 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
       {/* ── UPLOAD MODAL ── */}
       {showUploadModal && (
         <div className="modal-overlay" onClick={() => setShowUploadModal(false)}>
-          <div className="modal-content upload-modal-content" onClick={e => e.stopPropagation()} style={{ width: '100%', maxWidth: '1000px', borderRadius: '28px', padding: '0.8rem 2rem 1rem 2rem', background: '#e0f2fe' }}>
-            <button className="modal-close" onClick={() => setShowUploadModal(false)} style={{ background: 'white', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', top: '0.8rem', right: '0.8rem' }}>
+          <div className="modal-content upload-modal-content" onClick={e => e.stopPropagation()} style={{ width: '100%', maxWidth: '1000px', borderRadius: '28px', padding: '2.05rem 2rem 2.25rem 2rem', background: '#e0f2fe' }}>
+            <button className="modal-close" onClick={() => setShowUploadModal(false)} style={{ background: 'white', boxShadow: '0 2px 8px rgba(0,0,0,0.05)', top: '1.5rem', right: '1.5rem' }}>
               <i className="bi bi-x-lg" style={{ fontSize: '1rem' }}></i>
             </button>
             
