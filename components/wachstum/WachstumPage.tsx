@@ -25,7 +25,7 @@ const QUICK_WINS: QuickWin[] = [
 
 const OPTIMIZATION_FIELDS = [
   { id: 'Schlaf', label: 'Schlaf & Erholung', icon: 'bi-moon-stars-fill', color: '#4498ca', maturity: 65, level: 2, active: true },
-  { id: 'Kraft', label: 'Kraft & Ausdauer', icon: 'bi-lightning-charge-fill', color: '#22c55e', maturity: 42, level: 1, active: true },
+  { id: 'Kraft', label: 'Kraft & Ausdauer', icon: 'bi-lightning-charge-fill', color: '#22c55e', maturity: 81, level: 1, active: true },
   { id: 'Zellversorgung', label: 'Zellerneuerung & Wachstum', icon: 'bi-apple', color: '#f59e0b', maturity: 15, level: 0, active: false },
   { id: 'Immunbalance', label: 'Immunbalance & Entlastung', icon: 'bi-yin-yang', color: '#8b5cf6', maturity: 30, level: 0, active: false },
   { id: 'Soziale Bindungen', label: 'Selbstfürsorge & Soziale Bindungen', icon: 'bi-heart-fill', color: '#ec4899', maturity: 80, level: 0, active: false },
@@ -269,14 +269,14 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                         stroke="url(#simAgeScoreGrad)" 
                         strokeWidth="7.5" 
                         strokeDasharray="257.6" 
-                        strokeDashoffset={257.6 * (1 - 42 / 100)} 
+                        strokeDashoffset={257.6 * (1 - 81 / 100)} 
                         strokeLinecap="round" 
                         filter="url(#simSoftGlow)"
                         transform="rotate(-90 50 50)"
                       />
                     </svg>
                     <div className="bac-circle-text-box-mini">
-                      <span className="bac-circle-val-mini">42%</span>
+                      <span className="bac-circle-val-mini">81%</span>
                       <span className="bac-circle-lab-mini">Fitness</span>
                     </div>
                   </div>
