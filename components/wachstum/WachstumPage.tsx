@@ -26,7 +26,7 @@ const QUICK_WINS: QuickWin[] = [
 const OPTIMIZATION_FIELDS = [
   { id: 'Schlaf', label: 'Schlaf & Erholung', icon: 'bi-moon-stars', color: '#4498ca', maturity: 65, level: 2, active: true },
   { id: 'Kraft', label: 'Kraft & Ausdauer', icon: 'bi-fire', color: '#22c55e', maturity: 42, level: 1, active: true },
-  { id: 'Zellversorgung', label: 'Zellerneuerung & Wachstum', icon: 'bi-cup-hot', color: '#f59e0b', maturity: 15, level: 0, active: false },
+  { id: 'Zellversorgung', label: 'Zellerneuerung & Wachstum', icon: 'bi-apple', color: '#f59e0b', maturity: 15, level: 0, active: false },
   { id: 'Immunbalance', label: 'Immunbalance & Entlastung', icon: 'bi-wind', color: '#8b5cf6', maturity: 30, level: 0, active: false },
   { id: 'Soziale Bindungen', label: 'Selbstfürsorge & Soziale Bindungen', icon: 'bi-people', color: '#ec4899', maturity: 80, level: 0, active: false },
   { id: 'Mindset', label: 'Mentale Resilienz', icon: 'bi-stars', color: '#06b6d4', maturity: 50, level: 0, active: false },

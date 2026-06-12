@@ -90,7 +90,7 @@ const CLUSTER_CONFIGS: Record<string, { icon: string; color: string; bgColor: st
     lightBg: '#f0fdf4'
   },
   'Zellerneuerung & Wachstum': {
-    icon: 'bi-cup-hot',
+    icon: 'bi-apple',
     color: '#f59e0b',
     bgColor: 'rgba(245, 158, 11, 0.1)',
     borderColor: 'rgba(245, 158, 11, 0.2)',
@@ -475,9 +475,9 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
                         width: '38px',
                         height: '38px',
                         borderRadius: '50%',
-                        border: `2px solid ${CLUSTER_CONFIGS[t.title]?.color || '#4498ca'}`,
-                        background: CLUSTER_CONFIGS[t.title]?.lightBg || '#f0f9ff',
-                        color: CLUSTER_CONFIGS[t.title]?.color || '#4498ca',
+                        border: '2px solid #4498ca',
+                        background: '#f0f9ff',
+                        color: '#4498ca',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
