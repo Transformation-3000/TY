@@ -318,8 +318,9 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
       </div>
 
       <div className="sim-grid">
-        {/* Left Column: Typen & Schieberegler */}
-        <div className="sim-card inputs-card">
+        <div className="left-column">
+          {/* Left Column: Typen & Schieberegler */}
+          <div className="sim-card inputs-card">
             <div className="card-header-row">
               <h2>Wissenschaftliche Typisierung</h2>
               <button 
@@ -422,11 +423,11 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
               </div>
             </div>
           </div>
+        </div>
 
-          {/* Right Column Upper Wrapper */}
-          <div className="right-upper-wrapper">
-            {/* Visual 2: Zirkadianer Energieverlauf (Waveform Curve) */}
-            <div className="sim-card timeline-card">
+        <div className="right-column">
+          {/* Visual 2: Zirkadianer Energieverlauf (Waveform Curve) */}
+          <div className="sim-card timeline-card">
               <h2>Zirkadianer Energieverlauf</h2>
               <p className="card-subtitle">Toleranzkurve & biologische Aktivitätswelle</p>
 
@@ -516,7 +517,6 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
                 </div>
               </div>
             </div>
-          </div>
 
           {/* Current Hour Recommendations */}
           <div className="sim-card info-card">
@@ -554,6 +554,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
               </div>
             </div>
           </div>
+        </div>
       </div>
 
       <style jsx>{`
@@ -617,26 +618,24 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
           display: grid;
           grid-template-columns: 1.1fr 1fr;
           column-gap: 2rem;
-          row-gap: 1.5rem;
           margin-bottom: 3rem;
-          align-items: stretch;
+        }
+
+        .left-column {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+
+        .right-column {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
         }
 
         .inputs-card {
-          grid-column: 1;
-          grid-row: 1;
           display: flex;
           flex-direction: column;
-          align-self: stretch;
-        }
-
-        .right-upper-wrapper {
-          grid-column: 2;
-          grid-row: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          height: 100%;
         }
 
         .timeline-card {
@@ -656,15 +655,11 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
         }
 
         .agenda-card {
-          grid-column: 1;
-          grid-row: 2;
           padding-top: 1.125rem;
           padding-bottom: 1.125rem;
         }
 
         .info-card {
-          grid-column: 2;
-          grid-row: 2;
           padding-top: 1.125rem;
           padding-bottom: 1.125rem;
         }
@@ -673,14 +668,6 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
           .sim-grid {
             grid-template-columns: 1fr;
             row-gap: 1.5rem;
-          }
-          .inputs-card, .right-upper-wrapper, .timeline-card, .time-control-card, .agenda-card, .info-card {
-            grid-column: auto !important;
-            grid-row: auto !important;
-          }
-          .right-upper-wrapper {
-            height: auto;
-            gap: 1rem;
           }
         }
 
