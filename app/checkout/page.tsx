@@ -88,19 +88,19 @@ function CheckoutContent() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    email: '',
-    street: '',
-    number: '',
-    zip: '',
-    city: '',
+    email: 'max.mustermann@mail.de',
+    street: 'Im Mediapark',
+    number: '5',
+    zip: '50670',
+    city: 'Köln',
     country: 'Deutschland',
     cardName: '',
-    cardNumber: '',
-    cardExpiry: '',
-    cardCvc: '',
-    sepaIban: '',
+    cardNumber: '4500 1234 5678 9012',
+    cardExpiry: '12 / 28',
+    cardCvc: '123',
+    sepaIban: 'DE89 5001 0517 1234 5678 90',
     sepaHolder: '',
-    agreeTerms: false
+    agreeTerms: true
   });
 
   // Load plan details from query parameters on mount or param change
@@ -176,8 +176,7 @@ function CheckoutContent() {
           </div>
           <h2 className="success-title">Vielen Dank für deine Bestellung!</h2>
           <p className="success-text">
-            Deine Mitgliedschaft für <strong>TrueYears {selectedPlan.name}</strong> wurde erfolgreich aktiviert.<br />
-            Wir haben dir eine Bestätigungs-E-Mail mit den Details deiner Bestellung gesendet.
+            Deine Mitgliedschaft für <strong>TrueYears {selectedPlan.name}</strong> wurde erfolgreich aktiviert. Wir haben dir eine Bestätigungs-E-Mail mit den Details deiner Bestellung gesendet.
           </p>
           <div className="success-details">
             <div className="success-detail-row">
