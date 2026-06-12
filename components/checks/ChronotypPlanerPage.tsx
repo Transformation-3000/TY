@@ -104,6 +104,8 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
   const getHourPhase = (h: number, profile: ChronoProfile) => {
     const wake = profile.wakeTime;
     const bed = profile.bedTime;
+    const sport = profile.sportStart;
+    const melatonin = profile.melatoninOnset;
 
     // Sleep check
     const isSleeping = bed > wake
@@ -111,10 +113,23 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
       : (h >= bed && h < wake);
 
     if (isSleeping) return 'sleep';
-    if (h >= profile.focusStart && h < profile.focusEnd) return 'focus';
-    if (h >= profile.sportStart && h < profile.sportEnd) return 'sport';
-    if (h >= profile.melatoninOnset && (bed > profile.melatoninOnset ? h < bed : true)) return 'melatonin';
-    return 'active';
+    
+    // Melatonin check (between melatonin onset and bed time)
+    const isMelatonin = bed > melatonin
+      ? (h >= melatonin && h < bed)
+      : (h >= melatonin || h < bed);
+      
+    if (isMelatonin) return 'melatonin';
+
+    // Sport check (between sport start and melatonin onset)
+    const isSport = melatonin > sport
+      ? (h >= sport && h < melatonin)
+      : (h >= sport || h < melatonin);
+
+    if (isSport) return 'sport';
+
+    // Default wake hours before sport start is Focus
+    return 'focus';
   };
 
   // Real-time recommendations logic
@@ -520,7 +535,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
           {/* Current Hour Recommendations */}
           <div className="sim-card info-card">
             <h2>Empfehlungen</h2>
-            <div className="recommendation-box" style={{ borderColor: currentPhase.color }}>
+            <div className="recommendation-box" style={{ borderLeftColor: currentPhase.color }}>
               <div className="rec-phase-header" style={{ color: currentPhase.color }}>
                 {currentPhase.title}
               </div>
