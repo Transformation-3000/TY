@@ -65,13 +65,13 @@ const wochenAktivitaeten: ActivityItem[] = [
   { id: 'Unterstützung gegeben/angenommen', label: 'Unterstützung gegeben/angenommen', cluster: 'Selbstfürsorge & Soziale Bindungen' },
   { id: 'Im soz. Kontext alkoholfrei geblieben', label: 'Im soz. Kontext alkoholfrei geblieben', cluster: 'Selbstfürsorge & Soziale Bindungen' },
 
-  // Mentale Resilienz & Mindset (6 items)
-  { id: 'Tageslicht am Morgen getankt', label: 'Tageslicht am Morgen getankt', cluster: 'Mentale Resilienz & Mindset' },
-  { id: 'Mikropause 5 Min. eingebaut', label: 'Mikropause 5 Min. eingebaut', cluster: 'Mentale Resilienz & Mindset' },
-  { id: 'Meditiert', label: 'Meditiert', cluster: 'Mentale Resilienz & Mindset' },
-  { id: 'Dankbarkeits-Journaling', label: 'Dankbarkeits-Journaling', cluster: 'Mentale Resilienz & Mindset' },
-  { id: 'Negativen Gedankenkreislauf durchbrochen', label: 'Negativen Gedankenkreislauf durchbrochen', cluster: 'Mentale Resilienz & Mindset' },
-  { id: 'Social-Media-Zeit um 50% reduziert', label: 'Social-Media-Zeit um 50% reduziert', cluster: 'Mentale Resilienz & Mindset' }
+  // Mentale Resilienz (6 items)
+  { id: 'Tageslicht am Morgen getankt', label: 'Tageslicht am Morgen getankt', cluster: 'Mentale Resilienz' },
+  { id: 'Mikropause 5 Min. eingebaut', label: 'Mikropause 5 Min. eingebaut', cluster: 'Mentale Resilienz' },
+  { id: 'Meditiert', label: 'Meditiert', cluster: 'Mentale Resilienz' },
+  { id: 'Dankbarkeits-Journaling', label: 'Dankbarkeits-Journaling', cluster: 'Mentale Resilienz' },
+  { id: 'Negativen Gedankenkreislauf durchbrochen', label: 'Negativen Gedankenkreislauf durchbrochen', cluster: 'Mentale Resilienz' },
+  { id: 'Social-Media-Zeit um 50% reduziert', label: 'Social-Media-Zeit um 50% reduziert', cluster: 'Mentale Resilienz' }
 ];
 
 const CLUSTER_CONFIGS: Record<string, { icon: string; color: string; bgColor: string; borderColor: string; lightBg: string }> = {
@@ -110,7 +110,7 @@ const CLUSTER_CONFIGS: Record<string, { icon: string; color: string; bgColor: st
     borderColor: 'rgba(236, 72, 153, 0.2)',
     lightBg: '#fdf2f8'
   },
-  'Mentale Resilienz & Mindset': {
+  'Mentale Resilienz': {
     icon: 'bi-brain',
     color: '#8b5cf6',
     bgColor: 'rgba(139, 92, 246, 0.1)',
@@ -125,7 +125,7 @@ const clusterNames = [
   'Zellerneuerung & Wachstum',
   'Immunbalance & Entlastung',
   'Selbstfürsorge & Soziale Bindungen',
-  'Mentale Resilienz & Mindset'
+  'Mentale Resilienz'
 ];
 
 interface EntwicklungPageProps {
@@ -173,7 +173,7 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
       'Zellerneuerung & Wachstum': [],
       'Immunbalance & Entlastung': [],
       'Selbstfürsorge & Soziale Bindungen': [],
-      'Mentale Resilienz & Mindset': [],
+      'Mentale Resilienz': [],
     };
     filteredActivities.forEach(act => {
       if (groups[act.cluster]) {
@@ -219,7 +219,7 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
     { title: 'Zellerneuerung & Wachstum', data: [64, 66, 63, 68, 70, 72, 71, 75, 77, 76, 82, 81] },
     { title: 'Immunbalance & Entlastung', data: [82, 78, 80, 74, 76, 70, 72, 65, 68, 60, 64, 62] },
     { title: 'Selbstfürsorge & Soziale Bindungen', data: [72, 71, 73, 72, 72, 74, 73, 71, 72, 73, 72, 73] },
-    { title: 'Mentale Resilienz & Mindset', data: [56, 55, 57, 56, 55, 56, 57, 55, 56, 57, 56, 57] },
+    { title: 'Mentale Resilienz', data: [56, 55, 57, 56, 55, 56, 57, 55, 56, 57, 56, 57] },
   ];
 
   const activities = [
@@ -472,7 +472,15 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
               return (
                 <div key={i} className={`tac-item ${isPositive ? 'pos' : 'neg'}`}>
                   <div className="taci-header" style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                    <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
+                    <span className="taci-label">
+                      {t.title.split(' & ').map((part, idx, arr) => (
+                        <span key={idx} style={{ display: 'block', lineHeight: '1.25' }}>
+                          {idx === 0 ? `${i + 1}. ` : ''}{part}{idx < arr.length - 1 ? ' &' : ''}
+                        </span>
+                      ))}
+                    </span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', flexShrink: 0 }}>
+                      <span className="taci-trend" style={{ color, marginRight: '0.15rem' }}>{formattedPct}</span>
                       <img 
                         src={OPTIMIZATION_ICONS[i]} 
                         alt={t.title} 
@@ -483,15 +491,7 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
                           flexShrink: 0
                         }}
                       />
-                      <span className="taci-label">
-                        {t.title.split(' & ').map((part, idx, arr) => (
-                          <span key={idx} style={{ display: 'block', lineHeight: '1.25' }}>
-                            {idx === 0 ? `${i + 1}. ` : ''}{part}{idx < arr.length - 1 ? ' &' : ''}
-                          </span>
-                        ))}
-                      </span>
                     </div>
-                    <span className="taci-trend" style={{ color }}>{formattedPct}</span>
                   </div>
                   <div className="taci-score-row">
                     <span className="taci-score">{Math.round(currentVal)}</span>
@@ -880,7 +880,7 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
                 { title: 'Zellerneuerung & Wachstum', val: '-0.9 J.', icon: 'bi-cup-hot', type: 'green' },
                 { title: 'Immunbalance & Entlastung', val: '+0.5 J.', icon: 'bi-wind', type: 'red' },
                 { title: 'Selbstfürsorge & Soziale Bindungen', val: '-0.6 J.', icon: 'bi-people', type: 'green' },
-                { title: 'Mentale Resilienz & Mindset', val: '-0.5 J.', icon: 'bi-stars', type: 'green' },
+                { title: 'Mentale Resilienz', val: '-0.5 J.', icon: 'bi-stars', type: 'green' },
               ].map((item, idx) => (
                 <div key={idx} className={`opt-pill-card ${item.type === 'green' ? 'green-tint' : 'red-tint'}`}>
                   <div className="opt-pill-left">
@@ -1098,7 +1098,7 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
 
         /* PERIOD SELECTOR */
         .period-selector { display: flex; gap: 0.5rem; background: #f1f5f9; padding: 0.35rem; border-radius: 12px; width: fit-content; }
-        .period-btn { padding: 0.45rem 1.2rem; border-radius: 9px; border: none; background: transparent; color: #64748b; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+        .period-btn { padding: 0.45rem 1.2rem; border-radius: 9px; border: none; background: transparent; color: #64748b; font-size: calc(0.85rem + 2pt); font-weight: 700; cursor: pointer; transition: all 0.2s; }
         .period-btn.active { background: white; color: #1e293b; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
 
         /* TAC GRID */
