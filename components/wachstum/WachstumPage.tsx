@@ -40,6 +40,7 @@ interface WachstumPageProps {
 
 export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimulation }: WachstumPageProps) {
   const [selectedField, setSelectedField] = useState(OPTIMIZATION_FIELDS[0]);
+  const [selectedStyle, setSelectedStyle] = useState<number>(2); // 1 = Einfach, 2 = Mittel, 3 = Tiefgründig
   const userMaturity = 2; // Beispiel-Reifegrad für die Logik rechts
 
   const filteredWins = QUICK_WINS.filter(win => win.category === selectedField.id && win.maturityRequired <= userMaturity);
@@ -49,6 +50,27 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
       <header style={{ marginBottom: '2.5rem' }}>
         <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Quick Wins</h1>
         <p style={{ color: '#64748b', fontSize: '1.1rem', marginTop: '0.5rem', margin: 0 }}>Do Longevity yourself: Deine sofort umsetzbaren Bausteine</p>
+        
+        <div className="style-selector-wrapper" style={{ marginTop: '1.75rem' }}>
+          <p style={{ color: '#475569', fontSize: '0.95rem', fontWeight: 700, margin: '0 0 0.75rem 0' }}>Wähle den Stil aus, der am besten zu dir passt:</p>
+          <div className="segmented-control">
+            {[
+              { level: 1, name: 'Einfach', desc: 'Es soll sich leicht und unbeschwert anfühlen.' },
+              { level: 2, name: 'Mittel', desc: 'Ein Kompromiss zwischen leicht und tiefgründig.' },
+              { level: 3, name: 'Tiefgründig', desc: 'Ich möchte es genau nachvollziehen.' }
+            ].map((item) => (
+              <button 
+                key={item.level} 
+                className={`segmented-button ${selectedStyle === item.level ? 'active' : ''}`}
+                onClick={() => setSelectedStyle(item.level)}
+                type="button"
+              >
+                <span className="style-name">{item.name}</span>
+                <span className="style-desc">{item.desc}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       </header>
 
       <div className="wachstum-layout">
@@ -320,6 +342,54 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           margin-right: 12px;
           border-radius: 4px;
           flex-shrink: 0;
+        }
+        .segmented-control {
+          display: flex;
+          background: #f1f5f9;
+          border-radius: 16px;
+          padding: 0.35rem;
+          gap: 0.35rem;
+          width: 100%;
+          max-width: 900px;
+        }
+        .segmented-button {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 0.85rem 1.25rem;
+          border: none;
+          background: transparent;
+          border-radius: 12px;
+          cursor: pointer;
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          text-align: center;
+        }
+        .segmented-button:hover {
+          background: rgba(255, 255, 255, 0.5);
+        }
+        .segmented-button.active {
+          background: #ffffff;
+          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+        }
+        .style-name {
+          font-size: 1rem;
+          font-weight: 800;
+          color: #1e293b;
+          margin-bottom: 2px;
+        }
+        .segmented-button.active .style-name {
+          color: #006ea7;
+        }
+        .style-desc {
+          font-size: 0.78rem;
+          color: #64748b;
+          font-weight: 500;
+          line-height: 1.25;
+        }
+        .segmented-button.active .style-desc {
+          color: #475569;
         }
         .sim-card-wide h3 {
           margin: 0 0 0.5rem 0;
