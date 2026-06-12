@@ -32,10 +32,17 @@ const reels: Reel[] = [
     author: 'Bryan Johnson', role: 'Blueprint-Gründer & Biohacker', readTime: '3 Min', image: '/images/bryan-johnson_new.png', tag: 'SAUNA', tagColor: '#ef4444', saved: false, authorImage: '/images/bryan-johnson_new.png',
   },
   {
+    id: 'r_huberman', category: 'experten',
+    title: 'Huberman Lab: Das Morgen-Protokoll für maximalen Fokus & Energie',
+    teaser: '10 Minuten Sonnenlicht direkt nach dem Aufwachen und gezieltes Kältebaden: Dr. Andrew Hubermans Biohacking-Routine.',
+    fullText: 'Stanford-Professor Dr. Andrew Huberman hat mit seinem Podcast das Biohacking revolutioniert. Sein Morgen-Protokoll ist weltberühmt: 1. Direkt nach dem Aufwachen 10-15 Minuten in die Sonne blicken, um den circadianen Rhythmus und Cortisol-Peak zu synchronisieren, 2. Eine 3-minütige Eisbad-Session (Cold Plunge) zur Erhöhung des Dopaminspiegels um 250%. Dies steigert seinen Fokus und seine mentale Energie nachhaltig!',
+    author: 'Prof. Dr. Andrew Huberman', role: 'Stanford-Professor & Podcast-Host', readTime: '4 Min', image: '/images/insights-morgen.jpeg', tag: 'FOKUS', tagColor: '#f59e0b', saved: false, authorImage: '/images/insights-morgen.jpeg',
+  },
+  {
     id: 'r_kayla', category: 'experten',
     title: 'Weibliches Biohacking: Kayla Barnes-Lentz’ zelluläres Verjüngungs-Protokoll',
     teaser: 'Neben Bryan Johnson gilt Kayla Barnes-Lentz als einflussreichste Biohackerin der Welt. Erfahre mehr über ihr personalisiertes Zell- und Gehirnoptimierungsprogramm.',
-    fullText: 'Kayla Barnes-Lentz ist die führende Stimme im weiblichen Biohacking. Ihr wissenschaftliches Protokoll konzentriert sich auf zelluläre Gesundheit, mitochondriale Optimierung und zirkadiane Langlebigkeit. Zu ihren täglichen Säulen gehören: 1. Eine nährstoffdichte, entzündungshemmende Bio-Ernährung (reich an Polyphenolen), 2. Täglich 20 Minuten Rotlicht- und Nahinfrarot-Therapie zur Anregung der mitochondrialen ATP-Produktion, 3. Hyperbare Sauerstofftherapie (HBOT) zur Reduktion von seneszenten Zellen und Verlängerung der Telomere, 4. Konsequentes Schlaf-Tracking (HRV > 100 ms). Durch ihr optimiertes Regime konnte sie ihr biologisches Alter laut epigenetischen Uhren signifikant senken.',
+    fullText: 'Kayla Barnes-Lentz is die führende Stimme im weiblichen Biohacking. Ihr wissenschaftliches Protokoll konzentriert sich auf zelluläre Gesundheit, mitochondriale Optimierung und zirkadiane Langlebigkeit. Zu ihren täglichen Säulen gehören: 1. Eine nährstoffdichte, entzündungshemmende Bio-Ernährung (reich an Polyphenolen), 2. Täglich 20 Minuten Rotlicht- und Nahinfrarot-Therapie zur Anregung der mitochondrialen ATP-Produktion, 3. Hyperbare Sauerstofftherapie (HBOT) zur Reduktion von seneszenten Zellen und Verlängerung der Telomere, 4. Konsequentes Schlaf-Tracking (HRV > 100 ms). Durch ihr optimiertes Regime konnte sie ihr biologisches Alter laut epigenetischen Uhren signifikant senken.',
     author: 'Kayla Barnes-Lentz', role: 'Gründerin & Biohacking-Pionierin', readTime: '4 Min', image: '/images/kayla_barnes_lentz.png', tag: 'BIOHACKING', tagColor: '#8b5cf6', saved: false, authorImage: '/images/kayla_barnes_lentz.png',
   },
   {
@@ -143,13 +150,7 @@ const reels: Reel[] = [
     fullText: 'Dr. David Sinclair, weltberühmter Harvard-Professor, erforscht die epigenetischen Ursachen des Alterns. Sein persönliches, tägliches Langlebigkeits-Protokoll umfasst: 1. 1g NMN am Morgen zur Anhebung der NAD+-Spiegel, 2. 1g Resveratrol mit etwas Joghurt zur Aktivierung der Langlebigkeitsgene (Sirtuine), 3. Ein striktes 18:6 Fastenfenster. Seine biologischen Messungen zeigen, dass sein epigenetisches Alter um über 20 Jahre unter seinem chronologischen Alter liegt!',
     author: 'Prof. Dr. David Sinclair', role: 'Harvard-Professor & Bestseller-Autor', readTime: '4 Min', image: '/images/sinclair_new.jpg', tag: 'EPIGENETIK', tagColor: '#ef4444', saved: false, authorImage: '/images/sinclair_new.jpg',
   },
-  {
-    id: 'r_huberman', category: 'experten',
-    title: 'Huberman Lab: Das Morgen-Protokoll für maximalen Fokus & Energie',
-    teaser: '10 Minuten Sonnenlicht direkt nach dem Aufwachen und gezieltes Kältebaden: Dr. Andrew Hubermans Biohacking-Routine.',
-    fullText: 'Stanford-Professor Dr. Andrew Huberman hat mit seinem Podcast das Biohacking revolutioniert. Sein Morgen-Protokoll ist weltberühmt: 1. Direkt nach dem Aufwachen 10-15 Minuten in die Sonne blicken, um den circadianen Rhythmus und Cortisol-Peak zu synchronisieren, 2. Eine 3-minütige Eisbad-Session (Cold Plunge) zur Erhöhung des Dopaminspiegels um 250%. Dies steigert seinen Fokus und seine mentale Energie nachhaltig!',
-    author: 'Prof. Dr. Andrew Huberman', role: 'Stanford-Professor & Podcast-Host', readTime: '4 Min', image: '/images/insights-morgen.jpeg', tag: 'FOKUS', tagColor: '#f59e0b', saved: false, authorImage: '/images/insights-morgen.jpeg',
-  },
+
   {
     id: 'r_hamilton', category: 'experten',
     title: 'Extreme Vitalität: Laird Hamiltons Pool-Training & Kontrast-Therapie',
