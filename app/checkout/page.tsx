@@ -88,7 +88,7 @@ function CheckoutContent() {
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    email: 'max.mustermann@mail.de',
+    email: '',
     street: 'Im Mediapark',
     number: '5',
     zip: '50670',
@@ -110,6 +110,18 @@ function CheckoutContent() {
       setSelectedPlan(PLANS[planParam]);
     }
   }, [searchParams]);
+
+  // Automatically generate email from firstName and lastName
+  useEffect(() => {
+    const fn = formData.firstName.trim().toLowerCase().replace(/\s+/g, '');
+    const ln = formData.lastName.trim().toLowerCase().replace(/\s+/g, '');
+    if (fn || ln) {
+      setFormData(prev => ({
+        ...prev,
+        email: `${fn}.${ln}@gmx.de`
+      }));
+    }
+  }, [formData.firstName, formData.lastName]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
