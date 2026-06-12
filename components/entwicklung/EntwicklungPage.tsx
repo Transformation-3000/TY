@@ -97,7 +97,7 @@ const CLUSTER_CONFIGS: Record<string, { icon: string; color: string; bgColor: st
     lightBg: '#fffbeb'
   },
   'Immunbalance & Entlastung': {
-    icon: 'bi-shield-fill-check',
+    icon: 'bi-shield-plus',
     color: '#06b6d4',
     bgColor: 'rgba(6, 182, 212, 0.1)',
     borderColor: 'rgba(6, 182, 212, 0.2)',
@@ -111,7 +111,7 @@ const CLUSTER_CONFIGS: Record<string, { icon: string; color: string; bgColor: st
     lightBg: '#fdf2f8'
   },
   'Mentale Resilienz': {
-    icon: 'bi-stars',
+    icon: 'bi-emoji-smile-fill',
     color: '#8b5cf6',
     bgColor: 'rgba(139, 92, 246, 0.1)',
     borderColor: 'rgba(139, 92, 246, 0.2)',
