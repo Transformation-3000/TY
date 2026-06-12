@@ -37,6 +37,18 @@ export default function Dashboard() {
   const [autoStartSessionType, setAutoStartSessionType] = useState<string | null>(null);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const justPurchased = sessionStorage.getItem('ty_just_purchased');
+      if (justPurchased === 'true') {
+        sessionStorage.setItem('ty_just_purchased', 'false');
+      } else {
+        sessionStorage.removeItem('ty_first_name');
+        sessionStorage.removeItem('ty_email');
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     const onResize = () => { if (window.innerWidth > 992) setSidebarOpen(false); };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);

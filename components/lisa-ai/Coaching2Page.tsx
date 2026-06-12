@@ -113,7 +113,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
   const [userName, setUserName] = useState('Monique');
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedName = localStorage.getItem('ty_first_name');
+      const savedName = sessionStorage.getItem('ty_first_name');
       if (savedName) {
         setUserName(savedName);
       }

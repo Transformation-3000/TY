@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -11,6 +11,17 @@ export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showVideoModal, setShowVideoModal] = useState(false);
+
+  // Clear checkout dynamic data when visiting/reloading landing page
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      sessionStorage.removeItem('ty_first_name');
+      sessionStorage.removeItem('ty_email');
+      sessionStorage.removeItem('ty_just_purchased');
+      localStorage.removeItem('ty_first_name');
+      localStorage.removeItem('ty_email');
+    }
+  }, []);
 
   const testimonials = [
     {

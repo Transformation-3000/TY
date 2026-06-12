@@ -180,9 +180,10 @@ function CheckoutContent() {
         // Set local storage flags just like the login page
         localStorage.setItem('ty_is_member', 'true');
         localStorage.setItem('ty_saved_password', 'Longevity3000');
-        localStorage.setItem('ty_first_name', formData.firstName || 'Monique');
-        localStorage.setItem('ty_email', formData.email || 'monique.mueller@gmx.de');
         localStorage.setItem('ty_last_active', Date.now().toString());
+        sessionStorage.setItem('ty_first_name', formData.firstName || 'Monique');
+        sessionStorage.setItem('ty_email', formData.email || 'monique.mueller@gmx.de');
+        sessionStorage.setItem('ty_just_purchased', 'true');
         sessionStorage.setItem('ty_session_active', 'true');
 
         setSuccess(true);

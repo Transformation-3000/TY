@@ -45,8 +45,8 @@ export default function SettingsPage() {
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedName = localStorage.getItem('ty_first_name');
-      const savedEmail = localStorage.getItem('ty_email');
+      const savedName = sessionStorage.getItem('ty_first_name');
+      const savedEmail = sessionStorage.getItem('ty_email');
       if (savedName || savedEmail) {
         setProfileData(prev => ({
           ...prev,
