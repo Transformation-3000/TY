@@ -1720,7 +1720,7 @@ section[id] {
 .pricing-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 20px 45px rgba(0, 110, 167, 0.08);
-  border-color: var(--landing-dark);
+  border-color: var(--landing-accent);
 }
 
 .pricing-card.premium-plan {
