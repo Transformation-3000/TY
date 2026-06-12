@@ -136,7 +136,7 @@ export default function Dashboard() {
           )}
 
           {activeMenuItem === 'zellalter-simulation' && (
-            <ZellalterSimulationPage onBack={() => setActiveMenuItem('entwicklung')} />
+            <ZellalterSimulationPage onBack={() => setActiveMenuItem('quick-wins')} />
           )}
 
           {activeMenuItem === 'micro-habit-apps' && (
