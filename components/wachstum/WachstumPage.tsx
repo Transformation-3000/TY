@@ -122,31 +122,31 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
 
         {/* Rechts: Quick Wins Navigator */}
         <section className="navigator-section">
-          <div className="navigator-box">
-            {onStartSimulation && (
-              <div 
-                className="sim-card-wide"
-                onClick={onStartSimulation}
-              >
-                <div className="sim-card-wide-img-wrap">
-                  <Image 
-                    src="/images/dna_helix_soft.png" 
-                    alt="Zellalter Simulation" 
-                    fill
-                    style={{ objectFit: 'cover' }}
-                  />
-                </div>
-                <div className="sim-card-wide-content">
-                  <span className="sim-card-wide-badge">Zellalter-Simulation</span>
-                  <h3>Wie beeinflusst dein Lebensstil dein biologisches Alter?</h3>
-                  <p>
-                    Finde heraus, wie sich gezielte Lifestyle-Changes in den Bereichen Schlaf, Sport und Ernährung direkt auf deine Zellen auswirken. Simuliere deine Routinen und starte dein Verjüngungsexperiment!
-                  </p>
-                  <span className="sim-card-wide-link">Simulation starten →</span>
-                </div>
+          {onStartSimulation && (
+            <div 
+              className="sim-card-wide"
+              onClick={onStartSimulation}
+            >
+              <div className="sim-card-wide-img-wrap">
+                <Image 
+                  src="/images/dna_helix_soft.png" 
+                  alt="Zellalter Simulation" 
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
               </div>
-            )}
+              <div className="sim-card-wide-content">
+                <span className="sim-card-wide-badge">Zellalter-Simulation</span>
+                <h3>Wie beeinflusst dein Lebensstil dein biologisches Alter?</h3>
+                <p>
+                  Finde heraus, wie sich gezielte Lifestyle-Changes in den Bereichen Schlaf, Sport und Ernährung direkt auf deine Zellen auswirken. Simuliere deine Routinen und starte dein Verjüngungsexperiment!
+                </p>
+                <span className="sim-card-wide-link">Simulation starten →</span>
+              </div>
+            </div>
+          )}
 
+          <div className="navigator-box">
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
               <div>
                 <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 800, color: '#1e293b' }}>
