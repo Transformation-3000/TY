@@ -34,7 +34,6 @@ export default function Sidebar({ activeItem, onItemClick }: { activeItem?: stri
                 <span className="sb-item-label">{item.label}</span>
                 {item.special && <span className="sb-item-sub">1 Gratismonat</span>}
               </div>
-              {isActive && <span className="sb-item-dot" />}
             </button>
           );
         })}

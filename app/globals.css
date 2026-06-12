@@ -548,8 +548,8 @@ body {
 
 /* Sidebar Navigation */
 .sidebar-navigation {
-  width: 235px;
-  min-width: 235px;
+  width: 250px;
+  min-width: 250px;
   background: #ffffff;
   border-right: 1px solid #edf0f5;
   border-radius: 0;
@@ -761,9 +761,9 @@ i[class*="bi-"] {
 .content-wrapper {
   flex: 1;
   min-width: 0;
-  margin-left: 235px;
+  margin-left: 250px;
   padding: 0;
-  max-width: calc(100% - 235px);
+  max-width: calc(100% - 250px);
   width: 100%;
   overflow: visible;
 }
