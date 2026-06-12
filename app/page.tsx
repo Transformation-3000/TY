@@ -562,8 +562,8 @@ export default function LandingPage() {
               <Image 
                 src="/images/logoneu.png" 
                 alt="TrueYears Logo" 
-                width={160} 
-                height={53} 
+                width={200} 
+                height={66} 
                 className="footer-logo-new"
               />
               <p className="footer-description-new">
@@ -583,14 +583,10 @@ export default function LandingPage() {
             </div>
             
             <div className="footer-col-new">
-              <h4>Plattform</h4>
+              <h4>Features</h4>
               <Link href="#features"><i className="bi bi-check2-circle" /> Tägliche Check-Ins</Link>
               <Link href="#features"><i className="bi bi-compass" /> Quick Win Navigator</Link>
               <Link href="#features"><i className="bi bi-chat-left-dots" /> Lisa AI Coach</Link>
-            </div>
-
-            <div className="footer-col-new">
-              <h4>Wissen</h4>
               <Link href="#features"><i className="bi bi-journal-text" /> Inspiration & Insights</Link>
               <Link href="#features"><i className="bi bi-graph-up-arrow" /> Entwicklung & Trends</Link>
               <Link href="#features"><i className="bi bi-patch-check" /> Member-Vorteile</Link>
