@@ -61,7 +61,7 @@ export default function LandingPage() {
       age: "39 Jahre",
       stars: 5,
       headline: "Tägliche kleine Schritte bringen messbare Erfolge",
-      text: "TrueYears hat meine Sichtweise auf das Älterwerden komplett verändert. Es geht nicht um Perfektion, sondern um die kleinen, täglichen Schritte. Der Quick Win Navigator erinnert mich ohne Druck an meine Ziele, und die Fortschritte sprechen für sich.",
+      text: "TrueYears hat meine Sichtweise auf das Älterwerden komplett verändert. Es geht nicht um Perfektion, sondern um die kleinen, täglichen Schritte. Do it yourself erinnert mich ohne Druck an meine Ziele, und die Fortschritte sprechen für sich.",
       img: "/images/selfie_markus.png",
       badge: "-2,8 Jahre biologisches Alter"
     }
@@ -243,14 +243,14 @@ export default function LandingPage() {
             <div className="new-feature-image-wrapper">
               <Image 
                 src="/images/quick_win_navigator_path.png" 
-                alt="Quick Win Navigator" 
+                alt="Do it yourself" 
                 fill 
                 style={{ objectFit: 'cover' }} 
               />
             </div>
             <div className="new-feature-content-inner">
               <div className="new-feature-number">02</div>
-              <h3>Quick Win Navigator</h3>
+              <h3>Do it yourself</h3>
               <p>Erreiche spürbare und nachhaltige Verbesserungen im Alltag durch wissenschaftlich validierte Micro-Habits und personalisierte tägliche Gesundheitsaufgaben.</p>
             </div>
           </div>
@@ -340,7 +340,7 @@ export default function LandingPage() {
             <ul className="pricing-features">
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li><i className="bi bi-check-circle-fill"></i> Persönliche Dashboards</li>
-              <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Basic)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Do it yourself (Basic)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Basic)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Insights</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
@@ -363,7 +363,7 @@ export default function LandingPage() {
             <ul className="pricing-features">
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li><i className="bi bi-check-circle-fill"></i> Persönliche Dashboards</li>
-              <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Do it yourself (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Insights</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
@@ -388,7 +388,7 @@ export default function LandingPage() {
             <ul className="pricing-features">
               <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
               <li><i className="bi bi-check-circle-fill"></i> Persönliche Dashboards</li>
-              <li><i className="bi bi-check-circle-fill"></i> Quick Win Navigator (Pro)</li>
+              <li><i className="bi bi-check-circle-fill"></i> Do it yourself (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
               <li><i className="bi bi-check-circle-fill"></i> Longevity Insights</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
@@ -562,8 +562,8 @@ export default function LandingPage() {
               <Image 
                 src="/images/logoneu.png" 
                 alt="TrueYears Logo" 
-                width={200} 
-                height={66} 
+                width={240} 
+                height={80} 
                 className="footer-logo-new"
               />
               <p className="footer-description-new">
@@ -585,8 +585,8 @@ export default function LandingPage() {
             <div className="footer-col-new">
               <h4>Features</h4>
               <Link href="#features"><i className="bi bi-check2-circle" /> Tägliche Check-Ins</Link>
-              <Link href="#features"><i className="bi bi-compass" /> Quick Win Navigator</Link>
-              <Link href="#features"><i className="bi bi-chat-left-dots" /> Lisa AI Coach</Link>
+              <Link href="#features"><i className="bi bi-compass" /> Do it yourself</Link>
+              <Link href="#features"><i className="bi bi-chat-left-dots" /> Personal Trainer</Link>
               <Link href="#features"><i className="bi bi-journal-text" /> Inspiration & Insights</Link>
               <Link href="#features"><i className="bi bi-graph-up-arrow" /> Entwicklung & Trends</Link>
               <Link href="#features"><i className="bi bi-patch-check" /> Member-Vorteile</Link>
