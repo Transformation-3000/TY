@@ -6,11 +6,389 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import './landing/landing.css';
 
+const iconList = [
+  'bi-smartwatch', 'bi-record-circle', 'bi-activity', 'bi-lightning-charge', 
+  'bi-heart-pulse', 'bi-droplet-half', 'bi-fingerprint', 'bi-capsule', 
+  'bi-graph-up-arrow', 'bi-git-branch', 'bi-waveform', 'bi-moon-stars', 
+  'bi-person-walking', 'bi-egg-fried', 'bi-water', 'bi-flower1', 
+  'bi-capsule-pill', 'bi-speedometer', 'bi-shield-check', 'bi-brain', 
+  'bi-battery-charging', 'bi-clipboard-pulse', 'bi-thermometer-half', 
+  'bi-lungs', 'bi-eye', 'bi-sun', 'bi-hourglass-split'
+];
+
+const labels = [
+  'Apple Watch', 'Oura Ring', 'Garmin', 'Whoop', 'Fitbit', 'Blutbild', 'DNA & Genetik', 'Mikrobiom',
+  'CGM Glucose', 'Epigenetik', 'HRV', 'Schlaftracker', 'Schritte', 'Ernährung', 'Hydration', 'Achtsamkeit',
+  'Supplemente', 'Blutdruck', 'Hormone', 'Stress-Level', 'Regeneration', 'Labortests', 'Körpertemperatur',
+  'Lungenfunktion', 'Sehkraft', 'UV-Index', 'Zellalter'
+];
+
+// Generate 50 points deterministically to avoid SSR hydration mismatches
+const dataSources = Array.from({ length: 50 }, (_, i) => {
+  const seedX = Math.sin(i * 12.9898) * 43758.5453;
+  let x = 3 + Math.abs(seedX - Math.floor(seedX)) * 94;
+  
+  const seedY = Math.sin(i * 78.233) * 43758.5453;
+  let y = 3 + Math.abs(seedY - Math.floor(seedY)) * 94;
+  
+  // Push away from center (50, 50) if too close
+  const dx = x - 50;
+  const dy = y - 50;
+  const dist = Math.hypot(dx, dy);
+  if (dist < 18) {
+    const scale = 18 / dist;
+    x = 50 + dx * scale;
+    y = 50 + dy * scale;
+    x = Math.max(3, Math.min(97, x));
+    y = Math.max(3, Math.min(97, y));
+  }
+  
+  const iconIdx = i % iconList.length;
+  return {
+    icon: iconList[iconIdx],
+    label: labels[iconIdx] || 'Gesundheitswert',
+    x: parseFloat(x.toFixed(1)),
+    y: parseFloat(y.toFixed(1))
+  };
+});
+
+// Generate lines connecting nearby nodes (distance < 16)
+const connections: [number, number][] = (() => {
+  const list: [number, number][] = [];
+  for (let i = 0; i < dataSources.length; i++) {
+    for (let j = i + 1; j < dataSources.length; j++) {
+      const p1 = dataSources[i];
+      const p2 = dataSources[j];
+      const dist = Math.hypot(p1.x - p2.x, p1.y - p2.y);
+      if (dist < 16) {
+        list.push([i, j]);
+      }
+    }
+  }
+  return list;
+})();
+
 export default function LandingPage() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showVideoModal, setShowVideoModal] = useState(false);
+
+  // Interactive Video Player State
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
+  const [videoTime, setVideoTime] = useState(0); 
+  const [isVideoMuted, setIsVideoMuted] = useState(false);
+  const [lastTickPlayed, setLastTickPlayed] = useState(-1);
+  const [hasPlayedOutro, setHasPlayedOutro] = useState(false);
+  const [hasPlayedRejuv, setHasPlayedRejuv] = useState(false);
+  const [hasPlayedMerge, setHasPlayedMerge] = useState(false);
+  const [hasPlayedLisa, setHasPlayedLisa] = useState(false);
+
+  // Web Audio synth triggers
+  const playIntroChime = (muted: boolean) => {
+    if (muted) return;
+    try {
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const playTone = (freq: number, startTime: number, duration: number, vol: number) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, startTime);
+        gain.gain.setValueAtTime(0, startTime);
+        gain.gain.linearRampToValueAtTime(vol, startTime + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + duration);
+      };
+      const now = ctx.currentTime;
+      playTone(196.00, now, 2.5, 0.15); // G3
+      playTone(293.66, now + 0.1, 2.5, 0.12); // D4
+      playTone(392.00, now + 0.2, 2.5, 0.1); // G4
+      playTone(493.88, now + 0.3, 2.5, 0.08); // B4
+      playTone(587.33, now + 0.4, 2.5, 0.06); // D5
+      playTone(783.99, now + 0.5, 1.5, 0.04); // G5
+      playTone(987.77, now + 0.6, 1.5, 0.04); // B5
+      playTone(1174.66, now + 0.7, 2.0, 0.04); // D6
+    } catch (e) {}
+  };
+
+  const playPillarTick = (index: number, muted: boolean) => {
+    if (muted) return;
+    try {
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const now = ctx.currentTime;
+
+      const playChimeNode = (freq: number, vol: number, decay: number) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now);
+        
+        gain.gain.setValueAtTime(0, now);
+        gain.gain.linearRampToValueAtTime(vol, now + 0.02); // very soft attack
+        gain.gain.exponentialRampToValueAtTime(0.0001, now + decay); // smooth ring out
+        
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(now);
+        osc.stop(now + decay + 0.05);
+      };
+
+      // Play a beautiful, sparkling, warm C major chord chime (C5 + E5 + G5)
+      playChimeNode(523.25, 0.03, 0.6); // C5
+      playChimeNode(659.25, 0.02, 0.8); // E5
+      playChimeNode(783.99, 0.02, 1.0); // G5
+    } catch (e) {}
+  };
+
+  const playHoverSound = (muted: boolean) => {
+    if (muted) return;
+    try {
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(392.00, ctx.currentTime); // G4 - warm, atmospheric
+      
+      gain.gain.setValueAtTime(0, ctx.currentTime);
+      gain.gain.linearRampToValueAtTime(0.02, ctx.currentTime + 0.05);
+      gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.3);
+      
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start();
+      osc.stop(ctx.currentTime + 0.35);
+    } catch (e) {}
+  };
+
+  const playRejuvChime = (muted: boolean) => {
+    if (muted) return;
+    try {
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const playTone = (freq: number, startTime: number, duration: number, vol: number) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, startTime);
+        gain.gain.setValueAtTime(0, startTime);
+        gain.gain.linearRampToValueAtTime(vol, startTime + 0.05);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + duration);
+      };
+      const now = ctx.currentTime;
+      playTone(523.25, now, 1.2, 0.08); // C5
+      playTone(659.25, now + 0.1, 1.2, 0.06); // E5
+      playTone(783.99, now + 0.2, 1.2, 0.06); // G5
+      playTone(1046.50, now + 0.3, 1.5, 0.05); // C6
+    } catch (e) {}
+  };
+
+  const playMergeChime = (muted: boolean) => {
+    if (muted) return;
+    try {
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const now = ctx.currentTime;
+      
+      const playTone = (freq: number, startTime: number, duration: number, vol: number) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, startTime);
+        gain.gain.setValueAtTime(0, startTime);
+        gain.gain.linearRampToValueAtTime(vol, startTime + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + duration);
+      };
+      
+      // Futuristic merge chord sweep
+      playTone(392.00, now, 1.2, 0.05); // G4
+      playTone(523.25, now + 0.1, 1.2, 0.05); // C5
+      playTone(659.25, now + 0.2, 1.2, 0.04); // E5
+      playTone(783.99, now + 0.3, 1.5, 0.04); // G5
+    } catch (e) {}
+  };
+
+  const playLisaNotification = (muted: boolean) => {
+    if (muted) return;
+    try {
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const now = ctx.currentTime;
+      
+      const playTone = (freq: number, startTime: number, duration: number, vol: number) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, startTime);
+        gain.gain.setValueAtTime(0, startTime);
+        gain.gain.linearRampToValueAtTime(vol, startTime + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + duration);
+      };
+      playTone(880.00, now, 0.4, 0.05); // A5
+      playTone(1109.73, now + 0.08, 0.6, 0.04); // C#6
+    } catch (e) {}
+  };
+
+  const playOutroChime = (muted: boolean) => {
+    if (muted) return;
+    try {
+      const AudioContext = window.AudioContext || (window as any).webkitAudioContext;
+      if (!AudioContext) return;
+      const ctx = new AudioContext();
+      const playTone = (freq: number, startTime: number, duration: number, vol: number) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, startTime);
+        gain.gain.setValueAtTime(0, startTime);
+        gain.gain.linearRampToValueAtTime(vol, startTime + 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.0001, startTime + duration);
+        osc.connect(gain);
+        gain.connect(ctx.destination);
+        osc.start(startTime);
+        osc.stop(startTime + duration);
+      };
+      const now = ctx.currentTime;
+      playTone(261.63, now, 3.0, 0.1); // C4
+      playTone(329.63, now + 0.1, 3.0, 0.08); // E4
+      playTone(392.00, now + 0.2, 3.0, 0.08); // G4
+      playTone(523.25, now + 0.3, 3.0, 0.06); // C5
+    } catch (e) {}
+  };
+
+  useEffect(() => {
+    let interval: any = null;
+    if (isVideoPlaying) {
+      if (videoTime === 0) {
+        playIntroChime(isVideoMuted);
+        setLastTickPlayed(-1);
+        setHasPlayedOutro(false);
+        setHasPlayedRejuv(false);
+        setHasPlayedMerge(false);
+        setHasPlayedLisa(false);
+      }
+      
+      interval = setInterval(() => {
+        setVideoTime(prev => {
+          const nextTime = Math.min(prev + 0.1, 33.0);
+          
+          if (nextTime >= 5.0 && nextTime < 10.0) {
+            const pillarIndex = Math.floor((nextTime - 5.0) / 0.83);
+            if (pillarIndex !== lastTickPlayed && pillarIndex >= 0 && pillarIndex < 6) {
+              setLastTickPlayed(pillarIndex);
+              playPillarTick(pillarIndex, isVideoMuted);
+            }
+          }
+          
+          if (nextTime >= 13.5 && !hasPlayedRejuv) {
+            setHasPlayedRejuv(true);
+            playRejuvChime(isVideoMuted);
+          }
+          
+          if (nextTime >= 17.5 && !hasPlayedMerge) {
+            setHasPlayedMerge(true);
+            playMergeChime(isVideoMuted);
+          }
+          
+          if (nextTime >= 21.2 && !hasPlayedLisa) {
+            setHasPlayedLisa(true);
+            playLisaNotification(isVideoMuted);
+          }
+          
+          if (nextTime >= 28.0 && !hasPlayedOutro) {
+            setHasPlayedOutro(true);
+            playOutroChime(isVideoMuted);
+          }
+          
+          if (nextTime >= 33.0) {
+            clearInterval(interval);
+            setIsVideoPlaying(false);
+          }
+          return nextTime;
+        });
+      }, 100);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isVideoPlaying, isVideoMuted, lastTickPlayed, hasPlayedOutro, hasPlayedRejuv, hasPlayedMerge, hasPlayedLisa]);
+
+  const startVideo = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    if (videoTime >= 33.0) {
+      setVideoTime(0);
+    }
+    setIsVideoPlaying(true);
+  };
+
+  const pauseVideo = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setIsVideoPlaying(false);
+  };
+
+  const replayVideo = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setVideoTime(0);
+    setLastTickPlayed(-1);
+    setHasPlayedOutro(false);
+    setHasPlayedRejuv(false);
+    setHasPlayedMerge(false);
+    setHasPlayedLisa(false);
+    setIsVideoPlaying(true);
+  };
+
+  const toggleMute = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    setIsVideoMuted(!isVideoMuted);
+  };
+
+  const handleProgressBarClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const percentage = clickX / rect.width;
+    const nextTime = Math.max(0, Math.min(percentage * 33.0, 33.0));
+    setVideoTime(nextTime);
+    if (nextTime < 5.0) {
+      setLastTickPlayed(-1);
+    }
+    if (nextTime < 13.5) {
+      setHasPlayedRejuv(false);
+    }
+    if (nextTime < 17.5) {
+      setHasPlayedMerge(false);
+    }
+    if (nextTime < 21.2) {
+      setHasPlayedLisa(false);
+    }
+    if (nextTime < 28.0) {
+      setHasPlayedOutro(false);
+    }
+  };
 
   // Clear checkout dynamic data when visiting/reloading landing page
   useEffect(() => {
@@ -119,7 +497,15 @@ export default function LandingPage() {
       {/* Navigation */}
       <nav className={`landing-nav ${menuOpen ? 'landing-nav-open' : ''}`}>
         <div className="landing-nav-container">
-          <Link href="/" className="logo">
+          <Link 
+            href="/" 
+            className="logo"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+              setMenuOpen(false);
+            }}
+          >
             <Image 
               src="/images/logoneu.png" 
               alt="TrueYears Logo" 
@@ -183,52 +569,356 @@ export default function LandingPage() {
         <div className="video-section-container">
           <div className="video-section-header">
             <span className="video-section-badge">Das Konzept</span>
-            <h2>True Years in 60 Sekunden erklärt</h2>
+            <h2>True Years in 30 Sekunden</h2>
             <p>
-              Entdecke im Video, wie wir wissenschaftliche Diagnostik, Live-Wearable-Tracking<br className="desktop-only" />
+              Entdecke im interaktiven Video, wie wir wissenschaftliche Diagnostik, Live-Wearable-Tracking<br className="desktop-only" />
               und KI-gestütztes Training vereinen, um deine biologische Verjüngung zu aktivieren.
             </p>
           </div>
           
-          <div className="video-player-wrapper" onClick={() => setShowVideoModal(true)}>
-            <div className="video-placeholder-container">
-              <Image 
-                src="/images/video_placeholder_bg.png" 
-                alt="True Years Video Erklärung" 
-                fill 
-                className="video-placeholder-image"
-                priority
-              />
-              
-              <button className="video-play-btn" aria-label="Video abspielen">
-                <div className="play-icon-pulse"></div>
-                <div className="play-btn-glass">
-                  <i className="bi bi-play-fill"></i>
-                </div>
-              </button>
-              
-              <div className="video-controls-overlay">
-                <div className="video-progress-bar">
-                  <div className="video-progress-played" style={{ width: '0%' }}></div>
-                  <div className="video-progress-scrubber" style={{ left: '0%' }}></div>
-                </div>
-                <div className="video-controls-row">
-                  <div className="video-controls-left">
-                    <button className="control-btn" aria-label="Play"><i className="bi bi-play-fill"></i></button>
-                    <button className="control-btn" aria-label="Volume"><i className="bi bi-volume-up-fill"></i></button>
-                    <span className="video-time">0:00 / 1:15</span>
+          <div className="video-player-wrapper" style={{ padding: isVideoPlaying || videoTime > 0 ? '0px' : '8px' }}>
+            {(!isVideoPlaying && videoTime === 0) ? (
+              // Standard static placeholder
+              <div className="video-placeholder-container" onClick={startVideo}>
+                <Image 
+                  src="/images/video_preview_option_5.png" 
+                  alt="True Years Video Erklärung" 
+                  fill 
+                  className="video-placeholder-image"
+                  priority
+                />
+                
+                <button className="video-play-btn" aria-label="Video abspielen">
+                  <div className="play-icon-pulse"></div>
+                  <div className="play-btn-glass">
+                    <i className="bi bi-play-fill"></i>
                   </div>
-                  <div className="video-controls-right">
-                    <span className="video-quality">1080p HD</span>
-                    <button className="control-btn" aria-label="Fullscreen"><i className="bi bi-fullscreen"></i></button>
+                </button>
+                
+                <div className="video-duration-badge">
+                  <i className="bi bi-clock-history"></i> 33 Sek
+                </div>
+              </div>
+            ) : (
+              // Interactive Video Experience
+              <div className="interactive-video-container">
+                {/* Scene 1: Intro (0s - 5.0s) */}
+                <div className={`video-scene scene-intro ${videoTime >= 0 && videoTime < 5.0 ? 'active' : ''}`}>
+                  <div className="scene-intro-left">
+                    <div className="scene-intro-image-container">
+                      <Image 
+                        src="/images/video_preview_option_5.png" 
+                        alt="Longevity Sanctuary" 
+                        fill 
+                        style={{ objectFit: 'cover' }}
+                        priority
+                      />
+                    </div>
+                  </div>
+                  <div className="scene-intro-right">
+                    <div className="intro-logo-wrapper">
+                      <Image 
+                        src="/images/logoneu.png" 
+                        alt="TrueYears Logo" 
+                        width={440} 
+                        height={146} 
+                        style={{ objectFit: 'contain' }}
+                        priority
+                      />
+                    </div>
+                    <p className="intro-subtitle">
+                      Dein Einstieg in ein Leben<br />
+                      mit höherer Vitalität und mehr Lebensfreude
+                    </p>
+                  </div>
+                </div>
+
+                {/* Scene 2: 6 Bausteine (5.0s - 10.0s) */}
+                <div className={`video-scene scene-pillars ${videoTime >= 5.0 && videoTime < 10.0 ? 'active' : ''}`}>
+                  <div className="pillars-grid-container">
+                    <h3 className="pillars-video-title">6 Bausteine für deine Vitalität</h3>
+                    <div className="pillars-video-circle">
+                      <div className={`pillar-video-node ${videoTime >= 5.0 + 0 * 0.83 && videoTime < 5.0 + 1 * 0.83 ? 'highlighted' : ''}`} onMouseEnter={() => playHoverSound(isVideoMuted)}>
+                        <i className="bi bi-check2-circle pillar-video-icon"></i>
+                        <span className="pillar-video-name">01 Check-Ins</span>
+                      </div>
+                      <div className={`pillar-video-node ${videoTime >= 5.0 + 1 * 0.83 && videoTime < 5.0 + 2 * 0.83 ? 'highlighted green-node' : ''}`} onMouseEnter={() => playHoverSound(isVideoMuted)}>
+                        <i className="bi bi-compass pillar-video-icon"></i>
+                        <span className="pillar-video-name">02 Neue Gewohnheiten</span>
+                      </div>
+                      <div className={`pillar-video-node ${videoTime >= 5.0 + 2 * 0.83 && videoTime < 5.0 + 3 * 0.83 ? 'highlighted' : ''}`} onMouseEnter={() => playHoverSound(isVideoMuted)}>
+                        <i className="bi bi-chat-left-dots pillar-video-icon"></i>
+                        <span className="pillar-video-name">03 Personal Trainer</span>
+                      </div>
+                      <div className={`pillar-video-node ${videoTime >= 5.0 + 3 * 0.83 && videoTime < 5.0 + 4 * 0.83 ? 'highlighted green-node' : ''}`} onMouseEnter={() => playHoverSound(isVideoMuted)}>
+                        <i className="bi bi-journal-text pillar-video-icon"></i>
+                        <span className="pillar-video-name">04 Insights</span>
+                      </div>
+                      <div className={`pillar-video-node ${videoTime >= 5.0 + 4 * 0.83 && videoTime < 5.0 + 5 * 0.83 ? 'highlighted' : ''}`} onMouseEnter={() => playHoverSound(isVideoMuted)}>
+                        <i className="bi bi-graph-up-arrow pillar-video-icon"></i>
+                        <span className="pillar-video-name">05 Trends</span>
+                      </div>
+                      <div className={`pillar-video-node ${videoTime >= 5.0 + 5 * 0.83 && videoTime <= 10.0 ? 'highlighted green-node' : ''}`} onMouseEnter={() => playHoverSound(isVideoMuted)}>
+                        <i className="bi bi-patch-check pillar-video-icon"></i>
+                        <span className="pillar-video-name">06 Benefits</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Scene 3: Biologisches Alter (10.0s - 15.0s) */}
+                <div className={`video-scene scene-age-rejuvenation ${videoTime >= 10.0 && videoTime < 15.0 ? 'active' : ''}`}>
+                  <div className="age-tracker-container">
+                    <h3 className="age-tracker-title">Der biologische Verjüngungs-Rechner</h3>
+                    <div className="age-tracker-display">
+                      <div className="age-number-card chronological">
+                        <span className="age-label">Kalendarisch</span>
+                        <span className="age-value">45</span>
+                        <span className="age-unit">Jahre</span>
+                      </div>
+                      <div className="age-divider-arrow">
+                        <i className="bi bi-chevron-right"></i>
+                      </div>
+                      <div className={`age-number-card biological ${videoTime >= 13.5 ? 'rejuvenated' : ''}`}>
+                        <span className="age-label">Biologisch</span>
+                        <span className="age-value">
+                          {videoTime < 11.5 
+                            ? "45.0" 
+                            : videoTime >= 13.5 
+                              ? "39.8" 
+                              : (45.0 - ((videoTime - 11.5) / 2) * 5.2).toFixed(1)}
+                        </span>
+                        <span className="age-unit">Jahre</span>
+                      </div>
+                    </div>
+                    <p className="age-tracker-subtitle">
+                      {videoTime < 13.5 ? "Kalkuliere biologisches Alter..." : "Reduziere dein biologisches Alter nachweisbar."}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Scene 4: Wearable Fusion (15.0s - 20.0s) */}
+                <div className={`video-scene scene-wearable-fusion ${videoTime >= 15.0 && videoTime < 20.0 ? 'active' : ''}`}>
+                  <div className="fusion-container">
+                    <h3 className="fusion-title">Die Datenquellen-Fusion</h3>
+                    <div className="fusion-display">
+                      {/* Neural network background lines */}
+                      <svg 
+                        className="neural-network-svg" 
+                        viewBox="0 0 100 100" 
+                        preserveAspectRatio="none"
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          width: '100%',
+                          height: '100%',
+                          pointerEvents: 'none',
+                          opacity: videoTime >= 17.5 ? 0 : 0.18,
+                          transform: videoTime >= 17.5 ? 'scale(0)' : 'scale(1)',
+                          transition: 'all 1.2s cubic-bezier(0.25, 1, 0.5, 1)',
+                          transformOrigin: '50% 50%',
+                        }}
+                      >
+                        {connections.map((conn, cidx) => {
+                          const n1 = dataSources[conn[0]];
+                          const n2 = dataSources[conn[1]];
+                          return (
+                            <line 
+                              key={cidx}
+                              x1={n1.x}
+                              y1={n1.y}
+                              x2={n2.x}
+                              y2={n2.y}
+                              stroke="url(#synapse-gradient)"
+                              strokeWidth="0.4"
+                            />
+                          );
+                        })}
+                        <defs>
+                          <linearGradient id="synapse-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stopColor="#38bdf8" />
+                            <stop offset="100%" stopColor="#7fd049" />
+                          </linearGradient>
+                        </defs>
+                      </svg>
+
+                      {dataSources.map((ds, idx) => {
+                        return (
+                          <div 
+                            key={idx}
+                            className={`fusion-icon-source ${videoTime >= 17.5 ? 'merged' : ''}`}
+                            style={{
+                              left: `${ds.x}%`,
+                              top: `${ds.y}%`,
+                              transform: videoTime >= 17.5 
+                                ? 'translate(-50%, -50%) scale(0)' 
+                                : 'translate(-50%, -50%) scale(1)',
+                              transitionDelay: videoTime >= 17.5 
+                                ? `${(idx % 6) * 40}ms` 
+                                : '0ms',
+                              background: idx % 3 === 0 
+                                ? 'rgba(56, 189, 248, 0.15)' 
+                                : idx % 3 === 1 
+                                  ? 'rgba(127, 208, 73, 0.15)' 
+                                  : 'rgba(168, 85, 247, 0.15)',
+                              borderColor: idx % 3 === 0 
+                                ? 'rgba(56, 189, 248, 0.4)' 
+                                : idx % 3 === 1 
+                                  ? 'rgba(127, 208, 73, 0.4)' 
+                                  : 'rgba(168, 85, 247, 0.4)',
+                              color: idx % 3 === 0 
+                                ? '#38bdf8' 
+                                : idx % 3 === 1 
+                                  ? '#7fd049' 
+                                  : '#c084fc',
+                            }}
+                            title={ds.label}
+                          >
+                            <i className={`bi ${ds.icon}`}></i>
+                          </div>
+                        );
+                      })}
+                      
+                      <div className={`fusion-center-target ${videoTime >= 17.5 ? 'active' : ''}`}>
+                        <i className="bi bi-shield-fill-check"></i>
+                      </div>
+                    </div>
+                    <p className="fusion-subtitle">
+                      {videoTime < 17.5 ? "Verbinde über 20 Datenquellen..." : "Deine Daten vereint in einer intelligenten Plattform."}
+                    </p>
+                  </div>
+                </div>
+
+                {/* Scene 5: Lisa AI Live-Coaching (20.0s - 28.0s) */}
+                <div className={`video-scene scene-lisa-chat ${videoTime >= 20.0 && videoTime < 28.0 ? 'active' : ''}`}>
+                  <h3 className="lisa-video-title">Deine Longevity Trainer</h3>
+                  
+                  <div className="coaches-side-by-side">
+                    {/* Left: Lisa AI */}
+                    <div className="coach-presentation-column lisa">
+                      <div className="coach-avatar-large-wrapper">
+                        <Image 
+                          src="/images/lisa.png" 
+                          alt="Lisa AI" 
+                          width={260} 
+                          height={260} 
+                          className="coach-avatar-large"
+                          priority
+                        />
+                        <div className="coach-status-dot-active"></div>
+                      </div>
+                      <h4 className="coach-name-video">Lisa AI</h4>
+                      {videoTime >= 21.0 ? (
+                        <div className="coach-tip-bubble lisa-tip">
+                          <p>Dein Schlaf war etwas unruhig. Probiere heute Abend 10 Min. Atemübung vor dem Schlaf.</p>
+                        </div>
+                      ) : (
+                        <div className="coach-tip-placeholder">
+                          <span className="typing-dot"></span>
+                          <span className="typing-dot"></span>
+                          <span className="typing-dot"></span>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Right: Tom AI */}
+                    <div className="coach-presentation-column tom">
+                      <div className="coach-avatar-large-wrapper">
+                        <Image 
+                          src="/images/tom_jung.png" 
+                          alt="Tom AI" 
+                          width={260} 
+                          height={260} 
+                          className="coach-avatar-large"
+                          priority
+                        />
+                        <div className="coach-status-dot-active"></div>
+                      </div>
+                      <h4 className="coach-name-video">Tom AI</h4>
+                      {videoTime >= 24.5 ? (
+                        <div className="coach-tip-bubble tom-tip">
+                          <p>Du warst heute viel im Sitzen. Geh heute Abend noch 10 Min. spazieren für deine Zellregeneration.</p>
+                        </div>
+                      ) : (
+                        <div className="coach-tip-placeholder">
+                          <span className="typing-dot"></span>
+                          <span className="typing-dot"></span>
+                          <span className="typing-dot"></span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <p className="lisa-chat-caption">Rund um die Uhr.</p>
+                </div>
+
+                {/* Scene 6: Outro / Botschaft (28.0s - 33.0s) */}
+                <div className={`video-scene scene-outro ${videoTime >= 28.0 && videoTime < 33.0 ? 'active' : ''}`}>
+                  <span className="outro-badge">Deine Entscheidung</span>
+                  <h3 className="outro-message">VERJÜNGE DEINE ZELLEN JETZT.</h3>
+                  <p className="outro-sub">Wissenschaftlich fundierte Langlebigkeit in einer Plattform.</p>
+                  <button className="outro-cta-btn" onClick={() => router.push('/checkout?plan=premium')}>
+                    Jetzt starten <i className="bi bi-arrow-right-short" style={{ fontSize: '1.4rem' }}></i>
+                  </button>
+                </div>
+
+                {/* Replay Overlay */}
+                <div className={`video-replay-overlay ${videoTime >= 33.0 ? 'active' : ''}`}>
+                  <h3 className="replay-title">True Years erleben</h3>
+                  <p className="replay-text">Starte deine persönliche Longevity-Reise noch heute mit unserem Premium-Plan.</p>
+                  <div className="replay-buttons-row">
+                    <button className="btn-replay-action" onClick={replayVideo}>
+                      <i className="bi bi-arrow-counterclockwise"></i> Erneut abspielen
+                    </button>
+                    <button className="btn-replay-cta" onClick={() => router.push('/checkout?plan=premium')}>
+                      Jetzt Mitgliedschaft wählen <i className="bi bi-arrow-right-short"></i>
+                    </button>
+                  </div>
+                </div>
+
+                {/* Controls Bar */}
+                <div className="video-controls-overlay">
+                  <div className="video-progress-bar" onClick={handleProgressBarClick}>
+                    <div className="video-progress-played" style={{ width: `${(videoTime / 33.0) * 100}%` }}></div>
+                    <div className="video-progress-scrubber" style={{ left: `${(videoTime / 33.0) * 100}%` }}></div>
+                  </div>
+                  <div className="video-controls-row">
+                    <div className="video-controls-left">
+                      {isVideoPlaying ? (
+                        <button className="control-btn" type="button" aria-label="Pause" onClick={pauseVideo}><i className="bi bi-pause-fill"></i></button>
+                      ) : (
+                        <button className="control-btn" type="button" aria-label="Play" onClick={startVideo}><i className="bi bi-play-fill"></i></button>
+                      )}
+                      
+                      <button className="control-btn" type="button" aria-label="Mute" onClick={toggleMute}>
+                        {isVideoMuted ? <i className="bi bi-volume-mute-fill"></i> : <i className="bi bi-volume-up-fill"></i>}
+                      </button>
+                      
+                      <span className="video-time">
+                        0:{Math.floor(videoTime).toString().padStart(2, '0')} / 0:33
+                      </span>
+                    </div>
+                    
+                    <div className="video-controls-right">
+                      <span className="video-quality">1080p HD</span>
+                      <button className="control-btn" type="button" aria-label="Fullscreen" onClick={(e) => {
+                        e.stopPropagation();
+                        const container = e.currentTarget.closest('.interactive-video-container');
+                        if (container) {
+                          if (!document.fullscreenElement) {
+                            container.requestFullscreen().catch(() => {});
+                          } else {
+                            document.exitFullscreen().catch(() => {});
+                          }
+                        }
+                      }}>
+                        <i className="bi bi-fullscreen"></i>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-              
-              <div className="video-duration-badge">
-                <i className="bi bi-clock-history"></i> 1:15 Min
-              </div>
-            </div>
+            )}
           </div>
         </div>
       </section>
@@ -276,18 +966,30 @@ export default function LandingPage() {
           </div>
           
           <div className="new-feature-card">
-            <div className="new-feature-image-wrapper">
-              <Image 
-                src="/images/lisa.png" 
-                alt="Personal Trainer" 
-                fill 
-                style={{ objectFit: 'cover' }} 
-              />
+            <div className="new-feature-image-wrapper split-image-wrapper">
+              <div className="split-image-left">
+                <Image 
+                  src="/images/lisa.png" 
+                  alt="Lisa AI Coach" 
+                  fill 
+                  style={{ objectFit: 'cover' }} 
+                  priority
+                />
+              </div>
+              <div className="split-image-right">
+                <Image 
+                  src="/images/tom_jung.png" 
+                  alt="Tom AI Coach" 
+                  fill 
+                  style={{ objectFit: 'cover' }} 
+                  priority
+                />
+              </div>
             </div>
             <div className="new-feature-content-inner">
               <div className="new-feature-number">03</div>
               <h3>Personal Trainer</h3>
-              <p>Deine persönliche Longevity-Coachin Lisa AI begleitet dich rund um die Uhr, beantwortet komplexe Fragen und motiviert dich bei jedem Schritt.</p>
+              <p>Deine persönlichen Longevity-Coaches Lisa AI und Tom AI begleiten dich rund um die Uhr, beantworten komplexe Fragen und motivieren dich bei jedem Schritt.</p>
             </div>
           </div>
           
@@ -637,17 +1339,17 @@ export default function LandingPage() {
             
             <div className="footer-col-new">
               <h4>Unternehmen</h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.5rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '1.5rem' }}>
                 {/* Unternehmen Address Row */}
                 <div style={{ display: 'flex', alignItems: 'flex-start' }}>
                   <div style={{ width: '24px', display: 'flex', justifyContent: 'center', marginTop: '3px' }}>
                     <i className="bi bi-geo-alt-fill" style={{ color: 'var(--landing-accent)', fontSize: '1.05rem' }} />
                   </div>
                   <div style={{ flex: 1, paddingLeft: '10px' }}>
-                    <p className="footer-company-name-new" style={{ margin: '0 0 0.4rem' }}>True Years Beyond Age GmbH</p>
-                    <p className="footer-company-name-new" style={{ margin: '0 0 0.4rem' }}>Im Mediapark 5</p>
-                    <p className="footer-company-name-new" style={{ margin: '0 0 0.4rem' }}>D-50670 Köln</p>
-                    <p className="footer-company-name-new" style={{ margin: 0 }}>Germany</p>
+                    <p className="footer-company-name-new" style={{ margin: '0 0 2px', lineHeight: '1.2' }}>True Years Beyond Age GmbH</p>
+                    <p className="footer-company-name-new" style={{ margin: '0 0 2px', lineHeight: '1.2' }}>Im Mediapark 5</p>
+                    <p className="footer-company-name-new" style={{ margin: '0 0 2px', lineHeight: '1.2' }}>D-50670 Köln</p>
+                    <p className="footer-company-name-new" style={{ margin: 0, lineHeight: '1.2' }}>Germany</p>
                   </div>
                 </div>
                 

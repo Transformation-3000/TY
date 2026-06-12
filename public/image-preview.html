@@ -74,12 +74,56 @@
       color: #64748b;
       line-height: 1.4;
     }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 3rem;
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 1.5rem;
+    }
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #006ea7;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 12px rgba(0, 110, 167, 0.15);
+    }
+    .btn-home:hover {
+      background: #004b75;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(0, 110, 167, 0.25);
+    }
+    @media (max-width: 576px) {
+      .header-container {
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: flex-start;
+      }
+    }
   </style>
 </head>
 <body>
 
-  <h1>Bildauswahl für deinen Prototyp</h1>
-  <p class="subtitle">Wähle deine Wunschbilder aus und nenne mir einfach die Option im Chat.</p>
+  <div class="header-container">
+    <div>
+      <h1 style="margin: 0;">Bildauswahl für deinen Prototyp</h1>
+      <p class="subtitle" style="margin-top: 0.5rem; margin-bottom: 0;">Wähle deine Wunschbilder aus und nenne mir einfach die Option im Chat.</p>
+    </div>
+    <a href="/" class="btn-home">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-top: -1px;">
+        <path fill-rule="evenodd" d="M2 13.5V7h1v6.5a.5.5 0 0 0 .5.5h9a.5.5 0 0 0 .5-.5V7h1v6.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5zm11-11V6l-2-2V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5z"/>
+        <path fill-rule="evenodd" d="M7.293 1.5a1 1 0 0 1 1.414 0l6.647 6.646a.5.5 0 0 1-.708.708L8 2.207 1.354 8.854a.5.5 0 1 1-.708-.708L7.293 1.5z"/>
+      </svg>
+      Zur Startseite
+    </a>
+  </div>
 
   <h2>🦉 Motive 1: Chronotyp & Schlaf-Planer (Oben Links)</h2>
   <div class="grid">
@@ -123,41 +167,6 @@
       </div>
     </div>
     <div class="card">
-      <div class="img-wrap"><img src="/images/cardio_option_12.jpg" alt="Option 2"></div>
-      <div class="content">
-        <div class="option-title">Option 2</div>
-        <div class="option-desc">Eine Frau joggt entlang eines grünen Waldweges.</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="img-wrap"><img src="/images/cardio_option_13.jpg" alt="Option 3"></div>
-      <div class="content">
-        <div class="option-title">Option 3</div>
-        <div class="option-desc">Waldlauf auf einem von Bäumen überdachten Naturpfad.</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="img-wrap"><img src="/images/cardio_option_14.jpg" alt="Option 4"></div>
-      <div class="content">
-        <div class="option-title">Option 4</div>
-        <div class="option-desc">Eine Frau joggt im sonnigen Wald (Nahaufnahme).</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="img-wrap"><img src="/images/cardio_option_15.jpg" alt="Option 5"></div>
-      <div class="content">
-        <div class="option-title">Option 5</div>
-        <div class="option-desc">Ein Läufer auf einem breiten Waldpfad bei strahlendem Licht.</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="img-wrap"><img src="/images/cardio_option_16.jpg" alt="Option 6"></div>
-      <div class="content">
-        <div class="option-title">Option 6</div>
-        <div class="option-desc">Aktiver Läufer beim Training unter hellem Sonnenhimmel im Wald.</div>
-      </div>
-    </div>
-    <div class="card">
       <div class="img-wrap"><img src="/images/cardio_option_18.jpg" alt="Option 8"></div>
       <div class="content">
         <div class="option-title">Option 8</div>
@@ -169,20 +178,6 @@
       <div class="content">
         <div class="option-title">Option 9</div>
         <div class="option-desc">Laufen im dichten Wald, starker Gegenlicht-Sonnenschein.</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="img-wrap"><img src="/images/cardio_option_21.jpg" alt="Option 11"></div>
-      <div class="content">
-        <div class="option-title">Option 11</div>
-        <div class="option-desc">Sportlerin läuft auf weichem Waldboden.</div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="img-wrap"><img src="/images/cardio_option_23.jpg" alt="Option 23"></div>
-      <div class="content">
-        <div class="option-title">Option 23</div>
-        <div class="option-desc">Läufer auf einem Pfad im Wald bei warmem Sonnenlicht.</div>
       </div>
     </div>
     <div class="card">
@@ -200,24 +195,136 @@
       </div>
     </div>
     <div class="card">
-      <div class="img-wrap"><img src="/images/cardio_option_26.jpg" alt="Option 26"></div>
-      <div class="content">
-        <div class="option-title">Option 26</div>
-        <div class="option-desc">Cardio-Dauerlauf im sonnigen Wald.</div>
-      </div>
-    </div>
-    <div class="card">
       <div class="img-wrap"><img src="/images/cardio_option_27.jpg" alt="Option 27"></div>
       <div class="content">
         <div class="option-title">Option 27</div>
         <div class="option-desc">Sportlerin joggt auf einem Waldweg.</div>
       </div>
     </div>
+  </div>
+
+  <h2>🎥 Motive 3: Video-Vorschau (Konzept-Sektion Startseite)</h2>
+  <div class="grid">
     <div class="card">
-      <div class="img-wrap"><img src="/images/cardio_option_28.jpg" alt="Option 28"></div>
+      <div class="img-wrap"><img src="/images/video_preview_option_1.png" alt="Video Option 1"></div>
       <div class="content">
-        <div class="option-title">Option 28</div>
-        <div class="option-desc">Cardio-Training in grüner Natur bei starkem Tageslicht.</div>
+        <div class="option-title">Option 1: Longevity Dashboard</div>
+        <div class="option-desc">Modernes High-Tech Dashboard mit biologischen Altersdaten und leuchtender Zellstruktur.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/video_preview_option_2.png" alt="Video Option 2"></div>
+      <div class="content">
+        <div class="option-title">Option 2: Active Vitality</div>
+        <div class="option-desc">Aktives reiferes Paar beim Laufen auf einem Bergpfad im Sonnenaufgang (Lebensenergie).</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/video_preview_option_3.png" alt="Video Option 3"></div>
+      <div class="content">
+        <div class="option-title">Option 3: DNA Hologram</div>
+        <div class="option-desc">Zelluläre Alterungs-Forschung mit einer leuchtenden DNA-Helix im modernen Labor.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/video_preview_option_4.png" alt="Video Option 4"></div>
+      <div class="content">
+        <div class="option-title">Option 4: Smart Wearables</div>
+        <div class="option-desc">Smart Ring und Bio-Sensoren zur automatischen Erfassung von Vitaldaten.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/video_preview_option_5.png" alt="Video Option 5"></div>
+      <div class="content">
+        <div class="option-title">Option 5: Longevity Sanctuary</div>
+        <div class="option-desc">Minimalistische Wellness-Klinik aus Glas mitten im sonnigen Wald.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/video_preview_option_6.png" alt="Video Option 6"></div>
+      <div class="content">
+        <div class="option-title">Option 6: Cellular Regeneration</div>
+        <div class="option-desc">Abstrakte künstlerische Visualisierung der zellulären Verjüngung.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/video_preview_option_7.png" alt="Video Option 7"></div>
+      <div class="content">
+        <div class="option-title">Option 7: Biological Clock</div>
+        <div class="option-desc">Organisch leuchtende biologische Uhr, die das Zurückdrehen des zellulären Alters symbolisiert.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/video_preview_option_8.png" alt="Video Option 8"></div>
+      <div class="content">
+        <div class="option-title">Option 8: Longevity Nutrition</div>
+        <div class="option-desc">Split-Ansicht mit vitaler Langlebigkeits-Ernährung und digitalem Nährstoff-Dashboard.</div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="img-wrap" style="background: linear-gradient(135deg, #006ea7 0%, #004b75 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; padding: 20px; text-align: center;">
+        <i class="bi bi-people-fill" style="font-size: 2.5rem; margin-bottom: 8px; color: #7fd049;"></i>
+        <span style="font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">Konzepterstellung</span>
+      </div>
+      <div class="content">
+        <div class="option-title">Option 9: Generationen-Glück</div>
+        <div class="option-desc"><strong>Visualisierung:</strong> Ein vitaler Großvater in seinen 70ern hebt sein Enkelkind im sonnendurchfluteten Garten hoch.<br><strong>Emotion:</strong> Tiefe familiäre Verbundenheit, Erlebnisse im Alter und das Weitergeben von Lebenskraft.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="img-wrap" style="background: linear-gradient(135deg, #004b75 0%, #003050 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; padding: 20px; text-align: center;">
+        <i class="bi bi-emoji-smile-fill" style="font-size: 2.5rem; margin-bottom: 8px; color: #7fd049;"></i>
+        <span style="font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">Konzepterstellung</span>
+      </div>
+      <div class="content">
+        <div class="option-title">Option 10: Lebensfreude pur</div>
+        <div class="option-desc"><strong>Visualisierung:</strong> Eine vitale Frau in ihren 80ern steht mit weit geöffneten Armen und Lachfalten an einem Bergsee bei Sonnenuntergang.<br><strong>Emotion:</strong> Absolute Freiheit, unbändige Vitalität und die Botschaft: Alter ist nur eine Zahl.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="img-wrap" style="background: linear-gradient(135deg, #0f2b48 0%, #050d18 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; padding: 20px; text-align: center;">
+        <i class="bi bi-heart-pulse-fill" style="font-size: 2.5rem; margin-bottom: 8px; color: #7fd049;"></i>
+        <span style="font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">Konzepterstellung</span>
+      </div>
+      <div class="content">
+        <div class="option-title">Option 11: Der erste Schritt</div>
+        <div class="option-desc"><strong>Visualisierung:</strong> Ein junger Läufer zieht mit einem stolzen Lächeln und Schweißperlen auf der Stirn im warmen Morgenlicht die Schuhe aus.<br><strong>Emotion:</strong> Stolz auf die eigene Disziplin, das Erreichen von Zwischenzielen und tägliche Lebensentscheidungen.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="img-wrap" style="background: linear-gradient(135deg, #003654 0%, #02111d 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; padding: 20px; text-align: center;">
+        <i class="bi bi-hand-thumbs-up-fill" style="font-size: 2.5rem; margin-bottom: 8px; color: #7fd049;"></i>
+        <span style="font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">Konzepterstellung</span>
+      </div>
+      <div class="content">
+        <div class="option-title">Option 12: Verbundenheit</div>
+        <div class="option-desc"><strong>Visualisierung:</strong> Ein älteres Paar sitzt Hand in Hand auf einem Steg am Meer und blickt gemeinsam in den ruhigen Sonnenaufgang.<br><strong>Emotion:</strong> Tiefe Liebe, Vertrauen und das wertvolle Ziel, gesund und glücklich miteinander alt zu werden.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="img-wrap" style="background: linear-gradient(135deg, #0a1f33 0%, #050a12 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; padding: 20px; text-align: center;">
+        <i class="bi bi-wind" style="font-size: 2.5rem; margin-bottom: 8px; color: #7fd049;"></i>
+        <span style="font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">Konzepterstellung</span>
+      </div>
+      <div class="content">
+        <div class="option-title">Option 13: Lebendigkeit spüren</div>
+        <div class="option-desc"><strong>Visualisierung:</strong> Nahaufnahme eines Mannes, der mit geschlossenen Augen und einem friedlichen Lächeln die frische Waldluft tief einatmet.<br><strong>Emotion:</strong> Achtsamkeit, Dankbarkeit und das intensive Gefühl von biologischer Lebendigkeit.</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="img-wrap" style="background: linear-gradient(135deg, #09131e 0%, #1e293b 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; padding: 20px; text-align: center;">
+        <i class="bi bi-activity" style="font-size: 2.5rem; margin-bottom: 8px; color: #7fd049;"></i>
+        <span style="font-weight: 700; font-size: 1rem; text-transform: uppercase; letter-spacing: 1px;">Konzepterstellung</span>
+      </div>
+      <div class="content">
+        <div class="option-title">Option 14: Kraft & Balance</div>
+        <div class="option-desc"><strong>Visualisierung:</strong> Eine sportliche reife Frau in ihren 60ern hält eine kraftvolle Yoga-Pose auf einem Holzdeck über einem See im Morgengrauen.<br><strong>Emotion:</strong> Innere Stärke, Eleganz und körperliche Widerstandskraft bis ins hohe Alter.</div>
       </div>
     </div>
   </div>

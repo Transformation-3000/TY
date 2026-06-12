@@ -560,6 +560,33 @@ function CheckoutContent() {
               </div>
             </div>
 
+            <div className="plan-selector-container">
+              <label className="form-label" style={{ marginBottom: '10px', display: 'block' }}>Mitgliedschaft ändern:</label>
+              <div className="plan-selector-tabs">
+                <div 
+                  className={`plan-selector-tab ${selectedPlan.id === 'basic' ? 'active basic' : ''}`}
+                  onClick={() => setSelectedPlan(PLANS.basic)}
+                >
+                  <span className="plan-tab-name">Basic</span>
+                  <span className="plan-tab-price">29,90 €</span>
+                </div>
+                <div 
+                  className={`plan-selector-tab ${selectedPlan.id === 'premium' ? 'active premium' : ''}`}
+                  onClick={() => setSelectedPlan(PLANS.premium)}
+                >
+                  <span className="plan-tab-name">Premium</span>
+                  <span className="plan-tab-price">49,90 €</span>
+                </div>
+                <div 
+                  className={`plan-selector-tab ${selectedPlan.id === 'platin' ? 'active platin' : ''}`}
+                  onClick={() => setSelectedPlan(PLANS.platin)}
+                >
+                  <span className="plan-tab-name">Platin</span>
+                  <span className="plan-tab-price">89,90 €</span>
+                </div>
+              </div>
+            </div>
+
             <ul className="summary-features-list">
               {selectedPlan.features.map((feature, idx) => (
                 <li key={idx}>
@@ -595,7 +622,7 @@ function CheckoutContent() {
                 onChange={handleInputChange}
               />
               <span>
-                Ich stimme den Allgemeinen Geschäftsbedingungen (AGB) und der Datenschutzerklärung von TrueYears zu.
+                Ich stimme den <Link href="/agb" className="terms-link">Allgemeinen Geschäftsbedingungen</Link> und der <Link href="/datenschutz" className="terms-link">Datenschutzerklärung</Link> von TrueYears zu.
               </span>
             </label>
 

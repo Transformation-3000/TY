@@ -619,11 +619,24 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
             <div className="wb-main">
               <div className="wb-hero-lg">
                 <div className="wbl-glow"></div>
-                {coachVariant === 'lisa-jung' ? (
-                  <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="wbl-video" onCanPlay={(e) => { e.currentTarget.playbackRate = 0.75; }} />
-                ) : (
-                  <img src={c.image} alt={c.name} className="wbl-video" style={{ objectFit: 'cover' }} />
-                )}
+                  {coachVariant === 'lisa-jung' ? (
+                    <video 
+                      src="/videos/lisa-avatar.mp4" 
+                      autoPlay 
+                      loop 
+                      muted 
+                      playsInline 
+                      className="wbl-video" 
+                      ref={(el) => {
+                        if (el) {
+                          el.playbackRate = 0.75;
+                          el.play().catch(() => {});
+                        }
+                      }}
+                    />
+                  ) : (
+                    <img src={c.image} alt={c.name} className="wbl-video" style={{ objectFit: 'cover' }} />
+                  )}
               </div>
               <div className="wbl-name">{c.name.split(',')[0].trim()}</div>
               <div className="wbl-status"><span className="wbl-dot" />Online · bereit für dich</div>
@@ -746,7 +759,20 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
             <div className="prep-content">
               <div className="pc-lens">
                 {coachVariant === 'lisa-jung' ? (
-                  <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="pc-avatar" onCanPlay={(e) => { e.currentTarget.playbackRate = 0.75; }} />
+                  <video 
+                    src="/videos/lisa-avatar.mp4" 
+                    autoPlay 
+                    loop 
+                    muted 
+                    playsInline 
+                    className="pc-avatar" 
+                    ref={(el) => {
+                      if (el) {
+                        el.playbackRate = 0.75;
+                        el.play().catch(() => {});
+                      }
+                    }}
+                  />
                 ) : (
                   <img src={c.image} alt={c.name} className="pc-avatar" style={{ objectFit: 'cover' }} />
                 )}
@@ -1029,11 +1055,24 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                     <div className={`s-wave s-wave-3 ${isListening||isSpeaking?'act':''}`} />
                   </>)}
                   <div className="s-lisa-wrap">
-                    {coachVariant === 'lisa-jung' ? (
-                      <video src="/videos/lisa-avatar.mp4" autoPlay loop muted playsInline className="s-lisa-vid" onCanPlay={(e) => { e.currentTarget.playbackRate = 0.75; }} />
-                    ) : (
-                      <img src={c.image} alt={c.name} className="s-lisa-vid" style={{ objectFit: 'cover' }} />
-                    )}
+                      {coachVariant === 'lisa-jung' ? (
+                        <video 
+                          src="/videos/lisa-avatar.mp4" 
+                          autoPlay 
+                          loop 
+                          muted 
+                          playsInline 
+                          className="s-lisa-vid" 
+                          ref={(el) => {
+                            if (el) {
+                              el.playbackRate = 0.75;
+                              el.play().catch(() => {});
+                            }
+                          }}
+                        />
+                      ) : (
+                        <img src={c.image} alt={c.name} className="s-lisa-vid" style={{ objectFit: 'cover' }} />
+                      )}
                     <div className="s-lisa-glow" />
                   </div>
                 </div>

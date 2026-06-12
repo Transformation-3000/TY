@@ -246,18 +246,6 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  max-height: 200px;
-  overflow-y: auto;
-  padding-right: 5px;
-}
-
-.summary-features-list::-webkit-scrollbar {
-  width: 4px;
-}
-
-.summary-features-list::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
 }
 
 .summary-features-list li {
@@ -296,8 +284,9 @@
 
 .terms-checkbox-label {
   display: flex;
-  gap: 10px;
-  font-size: 0.8rem;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.85rem;
   color: #64748b;
   line-height: 1.4;
   cursor: pointer;
@@ -305,8 +294,23 @@
 }
 
 .terms-checkbox {
-  margin-top: 3px;
+  width: 22px;
+  height: 22px;
   accent-color: var(--blue-main, #006EA7);
+  flex-shrink: 0;
+  cursor: pointer;
+  margin-top: 1px;
+}
+
+.terms-link {
+  color: var(--blue-main, #006EA7);
+  text-decoration: underline;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.terms-link:hover {
+  color: #004b75;
 }
 
 .btn-checkout-submit {
@@ -601,4 +605,78 @@
 @keyframes pulse {
   0%, 100% { transform: scale(1); opacity: 1; }
   50% { transform: scale(0.9); opacity: 0.8; }
+}
+
+/* Plan Selector in Checkout Summary */
+.plan-selector-container {
+  margin-bottom: 24px;
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 110, 167, 0.05);
+}
+
+.plan-selector-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.plan-selector-tab {
+  border: 2px solid #cbd5e1;
+  border-radius: 12px;
+  padding: 10px 4px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+}
+
+.plan-selector-tab:hover {
+  border-color: var(--blue-light, #A0C9DE);
+  transform: translateY(-1px);
+}
+
+.plan-selector-tab.active {
+  font-weight: 700;
+}
+
+.plan-selector-tab.active.basic {
+  border-color: var(--blue-light, #A0C9DE);
+  background: rgba(160, 201, 222, 0.08);
+}
+
+.plan-selector-tab.active.premium {
+  border-color: var(--blue-main, #006EA7);
+  background: rgba(0, 110, 167, 0.08);
+}
+
+.plan-selector-tab.active.platin {
+  border-color: var(--green-main, #7FD049);
+  background: rgba(127, 208, 73, 0.08);
+}
+
+.plan-tab-name {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #475569;
+}
+
+.plan-selector-tab.active .plan-tab-name {
+  color: var(--blue-main, #006EA7);
+}
+
+.plan-selector-tab.active.platin .plan-tab-name {
+  color: var(--green-main, #7FD049);
+}
+
+.plan-tab-price {
+  font-size: 0.85rem;
+  font-weight: 800;
+  color: #0f172a;
+  margin-top: 2px;
 }
