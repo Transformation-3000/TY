@@ -250,8 +250,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         }
         .bac-circle-container-mini {
           position: relative;
-          width: 170px;
-          height: 170px;
+          width: 187px;
+          height: 187px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -275,14 +275,14 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           text-align: center;
         }
         .bac-circle-val-mini {
-          font-size: 2.8rem;
+          font-size: 3.1rem;
           font-weight: 900;
           color: #1c2b3e;
           line-height: 1;
           letter-spacing: -0.02em;
         }
         .bac-circle-lab-mini {
-          font-size: 0.95rem;
+          font-size: 1.05rem;
           font-weight: 700;
           color: #8fa0b5;
           margin-top: 3px;
@@ -335,7 +335,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         }
         .sim-card-wide p {
           margin: 0 0 1rem 0;
-          font-size: 0.97rem;
+          font-size: 1.03rem;
           color: #64748b;
           line-height: 1.5;
         }
