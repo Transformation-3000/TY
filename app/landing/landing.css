@@ -1782,7 +1782,7 @@ section[id] {
   text-align: left;
   display: flex;
   flex-direction: column;
-  gap: 0.315rem;
+  gap: 0.22rem;
 }
 
 .pricing-features li {
