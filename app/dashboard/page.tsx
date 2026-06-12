@@ -79,6 +79,7 @@ export default function Dashboard() {
                 setActiveMenuItem('coaching');
               }} 
               onStartSimulation={() => setActiveMenuItem('zellalter-simulation')}
+              onStartAutophagy={() => setActiveMenuItem('autophagy-timer')}
             />
           )}
 
@@ -90,6 +91,7 @@ export default function Dashboard() {
                 setActiveMenuItem('coaching');
               }} 
               onStartSimulation={() => setActiveMenuItem('zellalter-simulation')}
+              onStartAutophagy={() => setActiveMenuItem('autophagy-timer')}
             />
           )}
 
@@ -137,6 +139,30 @@ export default function Dashboard() {
 
           {activeMenuItem === 'zellalter-simulation' && (
             <ZellalterSimulationPage onBack={() => setActiveMenuItem('quick-wins')} />
+          )}
+
+          {activeMenuItem === 'autophagy-timer' && (
+            <div style={{ padding: '2.5rem 2rem', textAlign: 'center', background: '#fff', borderRadius: '24px', border: '1px solid #e2e8f0', boxShadow: '0 10px 25px rgba(0,0,0,0.03)', maxWidth: '900px', margin: '0 auto' }}>
+              <button 
+                onClick={() => setActiveMenuItem('quick-wins')} 
+                style={{ background: 'none', border: 'none', color: '#006ea7', cursor: 'pointer', fontWeight: 700, fontSize: '1.05rem', float: 'left', marginBottom: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.25rem' }}
+              >
+                ← Zurück zu Do it yourself
+              </button>
+              <div style={{ clear: 'both' }} />
+              <h2 style={{ fontSize: '2rem', fontWeight: 850, color: '#1c2b3e', marginBottom: '1rem' }}>Autophagie & Fasten-Timer</h2>
+              <p style={{ color: '#64748b', fontSize: '1.15rem', lineHeight: '1.5', maxWidth: '600px', margin: '0 auto 2.5rem auto' }}>
+                Konfiguriere dein Fastenfenster (z.B. 16:8 oder 18:6) und verfolge live, ab wann dein Körper die zelluläre Müllentsorgung (Autophagie) aktiviert, Wachstumshormone ausschüttet und die Zellerneuerung anspringt.
+              </p>
+              <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: '220px', height: '220px', borderRadius: '50%', border: '4px solid #4498ca', background: '#f0f9ff', color: '#4498ca', fontSize: '3rem', fontWeight: 900, marginBottom: '2.5rem' }}>
+                16:8
+              </div>
+              <div>
+                <button style={{ background: '#006ea7', color: 'white', border: 'none', borderRadius: '100px', padding: '1rem 2.5rem', fontSize: '1.1rem', fontWeight: 800, cursor: 'pointer', boxShadow: '0 4px 12px rgba(0, 110, 167, 0.25)' }}>
+                  Fasten-Timer starten
+                </button>
+              </div>
+            </div>
           )}
 
           {activeMenuItem === 'micro-habit-apps' && (

@@ -36,9 +36,10 @@ interface WachstumPageProps {
   onNavigate?: (id: string) => void;
   onStartLisaDaily?: () => void;
   onStartSimulation?: () => void;
+  onStartAutophagy?: () => void;
 }
 
-export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimulation }: WachstumPageProps) {
+export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimulation, onStartAutophagy }: WachstumPageProps) {
   const [selectedField, setSelectedField] = useState(OPTIMIZATION_FIELDS[0]);
   const [selectedStyle, setSelectedStyle] = useState<number>(2); // 1 = Einfach, 2 = Mittel, 3 = Tiefgründig
   const userMaturity = 2; // Beispiel-Reifegrad für die Logik rechts
@@ -234,6 +235,64 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                         onStartSimulation();
                       }}>
                         Simulation<br />starten
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginTop: '2.5rem', marginBottom: '1.25rem' }}>
+                <span className="blue-bar"></span>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Autophagie & Fasten-Timer</h2>
+              </div>
+              <div 
+                className="sim-card-wide"
+                onClick={() => onStartAutophagy?.()}
+              >
+                <div className="sim-card-wide-img-wrap">
+                  <Image 
+                    src="/images/autophagy_cell.png" 
+                    alt="Autophagie & Fasten Timer" 
+                    fill
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
+                <div className="sim-card-wide-content">
+                  <div className="sim-card-grid-layout">
+                    <div className="sim-card-left-col">
+                      <h3>Visualisiere deine zelluläre Selbstreinigung</h3>
+                      <p>
+                        Erlebe, ab wann dein Körper überschüssige Proteine abbaut, Fett verbrennt und die zelluläre Regeneration (Autophagie) startet. Konfiguriere dein Fastenfenster!
+                      </p>
+                    </div>
+                    <div className="sim-card-right-col">
+                      <div className="bac-circle-container-mini">
+                        <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                          <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                          <circle 
+                            cx="50" 
+                            cy="50" 
+                            r="41" 
+                            fill="none" 
+                            stroke="url(#simAgeScoreGrad)" 
+                            strokeWidth="7.5" 
+                            strokeDasharray="257.6" 
+                            strokeDashoffset={257.6 * (1 - 16 / 24)} 
+                            strokeLinecap="round" 
+                            filter="url(#simSoftGlow)"
+                            transform="rotate(-90 50 50)"
+                          />
+                        </svg>
+                        <div className="bac-circle-text-box-mini">
+                          <span className="bac-circle-val-mini">16:8</span>
+                          <span className="bac-circle-lab-mini">Timer</span>
+                        </div>
+                      </div>
+                      <button className="sim-card-blue-button" onClick={(e) => {
+                        e.stopPropagation();
+                        onStartAutophagy?.();
+                      }}>
+                        Timer<br />starten
                       </button>
                     </div>
                   </div>
