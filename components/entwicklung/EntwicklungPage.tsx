@@ -462,14 +462,20 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
 
               return (
                 <div key={i} className={`tac-item ${isPositive ? 'pos' : 'neg'}`}>
-                  <div className="taci-header" style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                    <span className="taci-label">
-                      {t.title.split(' & ').map((part, idx, arr) => (
-                        <span key={idx} style={{ display: 'block', lineHeight: '1.25' }}>
-                          {idx === 0 ? `${i + 1}. ` : ''}{part}{idx < arr.length - 1 ? ' &' : ''}
-                        </span>
-                      ))}
-                    </span>
+                  <div className="taci-header" style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '1.2rem' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                      <span className="taci-label">
+                        {t.title.split(' & ').map((part, idx, arr) => (
+                          <span key={idx} style={{ display: 'block', lineHeight: '1.25' }}>
+                            {idx === 0 ? `${i + 1}. ` : ''}{part}{idx < arr.length - 1 ? ' &' : ''}
+                          </span>
+                        ))}
+                      </span>
+                      <div className="taci-score-row" style={{ margin: 0, display: 'flex', alignItems: 'baseline', gap: '0.3rem' }}>
+                        <span className="taci-score">{Math.round(currentVal)}</span>
+                        <span className="taci-unit">Pkt</span>
+                      </div>
+                    </div>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.35rem', flexShrink: 0 }}>
                       <div style={{
                         width: '38px',
@@ -487,10 +493,6 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
                       </div>
                       <span className="taci-trend" style={{ color }}>{formattedPct}</span>
                     </div>
-                  </div>
-                  <div className="taci-score-row">
-                    <span className="taci-score">{Math.round(currentVal)}</span>
-                    <span className="taci-unit">Pkt</span>
                   </div>
                   <div className="taci-sparkline">
                     <svg viewBox="0 0 100 80" preserveAspectRatio="none" style={{ width: '100%', height: '100%' }}>
