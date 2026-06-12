@@ -80,11 +80,15 @@ section[id] {
   color: #004b8d;
   font-weight: 400;
   font-size: 1.25rem;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+  padding: 0.4rem 1rem;
+  border-radius: 12px;
 }
 
 .landing-nav-link:hover {
-  color: #00a3ff;
+  color: var(--landing-dark);
+  border-color: var(--landing-dark);
 }
 
 .btn-cta-small {
