@@ -781,6 +781,22 @@ section[id] {
   /* Sections general styling */
   .flower-section {
     padding: 80px 1.5rem 50px;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .section-header,
+  .new-features-header,
+  .video-section-header,
+  .flower-content {
+    text-align: left !important;
+    align-items: flex-start !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+  }
+
+  .pricing-section {
+    text-align: left;
   }
 
   .flower-content h2,
@@ -1438,8 +1454,13 @@ section[id] {
     flex-direction: column;
     padding: 2.5rem 1.5rem;
     gap: 1.25rem;
-    text-align: center;
-    align-items: center;
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .testimonial-profile-col {
+    align-items: flex-start;
+    text-align: left;
   }
 
   .testimonial-image-large-wrapper {
@@ -1463,8 +1484,8 @@ section[id] {
   }
 
   .testimonial-content-large {
-    align-items: center;
-    text-align: center;
+    align-items: flex-start;
+    text-align: left;
   }
 
   .testimonial-headline-large {
