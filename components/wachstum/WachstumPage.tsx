@@ -252,6 +252,15 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           height: 180px;
           flex-shrink: 0;
           background: #f1f5f9;
+          overflow: hidden;
+        }
+        .sim-card-wide-img-wrap :global(img) {
+          filter: saturate(1.6) contrast(1.1) brightness(1.02);
+          transition: filter 0.3s ease, transform 0.5s ease;
+        }
+        .sim-card-wide:hover .sim-card-wide-img-wrap :global(img) {
+          filter: saturate(1.95) contrast(1.18) brightness(1.05);
+          transform: scale(1.03);
         }
         .sim-card-wide-content {
           padding: 1.5rem;
