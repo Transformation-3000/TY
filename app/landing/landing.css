@@ -1170,9 +1170,10 @@ section[id] {
 }
 
 .footer-company-name-new {
-  color: white !important;
-  font-weight: 700;
+  color: #94a3b8 !important;
+  font-weight: 500;
   font-size: 1.03rem !important;
+  line-height: 1.4;
 }
 
 .footer-email-row-new {
@@ -1182,15 +1183,15 @@ section[id] {
 }
 
 .footer-email-link-new {
-  color: white !important;
-  font-weight: 600;
+  color: #94a3b8 !important;
+  font-weight: 500 !important;
   text-decoration: none;
-  font-size: 0.98rem !important;
-  transition: opacity 0.2s ease;
+  font-size: 1.03rem !important;
+  transition: opacity 0.2s ease, color 0.2s ease;
 }
 
 .footer-email-link-new:hover {
-  opacity: 0.85;
+  opacity: 1;
   color: white !important;
 }
 

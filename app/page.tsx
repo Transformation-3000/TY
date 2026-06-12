@@ -613,9 +613,9 @@ export default function LandingPage() {
                   </div>
                   <div style={{ flex: 1 }}>
                     <p className="footer-company-name-new" style={{ margin: '0 0 0.4rem' }}>True Years Beyond Age GmbH</p>
-                    <p style={{ margin: '0 0 0.4rem' }}>Im Mediapark 5</p>
-                    <p style={{ margin: '0 0 0.4rem' }}>D-50670 Köln</p>
-                    <p style={{ margin: 0 }}>Germany</p>
+                    <p className="footer-company-name-new" style={{ margin: '0 0 0.4rem' }}>Im Mediapark 5</p>
+                    <p className="footer-company-name-new" style={{ margin: '0 0 0.4rem' }}>D-50670 Köln</p>
+                    <p className="footer-company-name-new" style={{ margin: 0 }}>Germany</p>
                   </div>
                 </div>
                 
