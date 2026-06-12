@@ -645,7 +645,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
         .inputs-card,
         .timeline-card,
         .time-control-card {
-          padding-bottom: 1.25rem;
+          padding-bottom: 0.625rem;
         }
 
         .agenda-card {
