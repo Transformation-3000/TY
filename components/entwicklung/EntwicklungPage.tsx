@@ -97,7 +97,7 @@ const CLUSTER_CONFIGS: Record<string, { icon: string; color: string; bgColor: st
     lightBg: '#fffbeb'
   },
   'Immunbalance & Entlastung': {
-    icon: 'bi-shield-fill',
+    icon: 'bi-yin-yang',
     color: '#06b6d4',
     bgColor: 'rgba(6, 182, 212, 0.1)',
     borderColor: 'rgba(6, 182, 212, 0.2)',
