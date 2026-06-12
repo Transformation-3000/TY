@@ -69,7 +69,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                 onClick={() => setSelectedStyle(item.level)}
                 type="button"
               >
-                <div className="style-header-row">
+                <div className="style-header-row" style={{ gap: item.level === 2 ? '0.375rem' : '0.18rem' }}>
                   <img 
                     src={item.image} 
                     alt={item.name}
