@@ -83,6 +83,8 @@ function CheckoutContent() {
   const [paymentMethod, setPaymentMethod] = useState<'cc' | 'sepa' | 'paypal'>('cc');
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [verifying, setVerifying] = useState(false);
+  const [verificationStep, setVerificationStep] = useState(0);
   
   // Form fields state
   const [formData, setFormData] = useState({
@@ -152,8 +154,20 @@ function CheckoutContent() {
     if (!formData.agreeTerms) return;
 
     setLoading(true);
+    setVerifying(true);
+    setVerificationStep(1);
 
-    // Simulated network delay
+    // Step 2: Connect to payment provider at 1.5 seconds
+    setTimeout(() => {
+      setVerificationStep(2);
+    }, 1500);
+
+    // Step 3: Check transaction & coverage at 3.2 seconds
+    setTimeout(() => {
+      setVerificationStep(3);
+    }, 3200);
+
+    // Step 4: Finalize payment and transition to success at 5.0 seconds
     setTimeout(async () => {
       try {
         // Authenticate client in background to set cookies so they can access the dashboard immediately
@@ -175,9 +189,40 @@ function CheckoutContent() {
         setSuccess(true); // Proceed to success screen anyway for demo robustness
       } finally {
         setLoading(false);
+        setVerifying(false);
       }
-    }, 1500);
+    }, 5000);
   };
+
+  if (verifying) {
+    return (
+      <div className="verifying-overlay">
+        <div className="verifying-card">
+          <div className="verifying-loader">
+            <div className="spinner-glow"></div>
+            <i className="bi bi-shield-fill-check verifying-loader-icon"></i>
+          </div>
+          <h3 className="verifying-title">Sichere Zahlungsprüfung</h3>
+          <p className="verifying-subtitle">Deine Zahlungsdaten werden verifiziert. Bitte schließe dieses Fenster nicht...</p>
+          
+          <ul className="verifying-steps">
+            <li className={verificationStep >= 1 ? (verificationStep > 1 ? 'completed' : 'active') : ''}>
+              {verificationStep > 1 ? <i className="bi bi-check-circle-fill step-check"></i> : <span className="step-spinner"></span>}
+              <span>Zahlungsdaten werden verschlüsselt...</span>
+            </li>
+            <li className={verificationStep >= 2 ? (verificationStep > 2 ? 'completed' : 'active') : ''}>
+              {verificationStep > 2 ? <i className="bi bi-check-circle-fill step-check"></i> : (verificationStep === 2 ? <span className="step-spinner"></span> : <i className="bi bi-circle step-pending"></i>)}
+              <span>Verbindung zum Zahlungsanbieter wird aufgebaut...</span>
+            </li>
+            <li className={verificationStep >= 3 ? (verificationStep > 3 ? 'completed' : 'active') : ''}>
+              {verificationStep > 3 ? <i className="bi bi-check-circle-fill step-check"></i> : (verificationStep === 3 ? <span className="step-spinner"></span> : <i className="bi bi-circle step-pending"></i>)}
+              <span>Bonität und Kontodeckung werden geprüft...</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    );
+  }
 
   if (success) {
     return (
