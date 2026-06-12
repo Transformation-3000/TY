@@ -567,35 +567,52 @@ export default function LandingPage() {
                 className="footer-logo-new"
               />
               <p className="footer-description-new">
-                True Years ist die am schnellsten wachsende europäische Plattform für Langlebigkeit, um das biologische Alter mit KI und Wissenschaft zurückzudrehen.
+                True Years ist die am schnellsten wachsende europäische Plattform für Langlebigkeit. Wir verbinden künstliche Intelligenz und führende Alterungsforschung, um Ihre Lebensqualität messbar zu steigern.
               </p>
-              <div className="footer-contact-info-new">
+              <div className="footer-socials-new">
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="footer-social-icon-new" aria-label="LinkedIn">
+                  <i className="bi bi-linkedin" />
+                </a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="footer-social-icon-new" aria-label="Instagram">
+                  <i className="bi bi-instagram" />
+                </a>
+                <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" className="footer-social-icon-new" aria-label="Youtube">
+                  <i className="bi bi-youtube" />
+                </a>
+              </div>
+            </div>
+            
+            <div className="footer-col-new">
+              <h4>Plattform</h4>
+              <Link href="#features"><i className="bi bi-check2-circle" /> Tägliche Check-Ins</Link>
+              <Link href="#features"><i className="bi bi-compass" /> Quick Win Navigator</Link>
+              <Link href="#features"><i className="bi bi-chat-left-dots" /> Lisa AI Coach</Link>
+            </div>
+
+            <div className="footer-col-new">
+              <h4>Wissen</h4>
+              <Link href="#features"><i className="bi bi-journal-text" /> Inspiration & Insights</Link>
+              <Link href="#features"><i className="bi bi-graph-up-arrow" /> Entwicklung & Trends</Link>
+              <Link href="#features"><i className="bi bi-patch-check" /> Member-Vorteile</Link>
+            </div>
+            
+            <div className="footer-col-new">
+              <h4>Kontakt & Rechtliches</h4>
+              <div className="footer-contact-card-new">
                 <p className="footer-company-name-new">True Years Beyond Age GmbH</p>
-                <p>Im Mediapark 5</p>
-                <p>50670 Köln</p>
-                <p style={{ marginTop: '0.75rem' }}>
+                <p>Im Mediapark 5, 50670 Köln</p>
+                <p className="footer-email-row-new">
+                  <i className="bi bi-envelope-fill" style={{ marginRight: '6px', color: 'var(--landing-accent)' }} />
                   <a href="mailto:contact@true-years.com" className="footer-email-link-new">
                     contact@true-years.com
                   </a>
                 </p>
               </div>
-            </div>
-            
-            <div className="footer-nav-grid-new">
-              <div className="footer-col-new">
-                <h4>Features</h4>
-                <Link href="#features">Tägliche Check-Ins</Link>
-                <Link href="#features">Quick Win Navigator</Link>
-                <Link href="#features">Lisa AI Coach</Link>
-                <Link href="#features">Inspiration & Insights</Link>
-                <Link href="#features">Entwicklung & Trends</Link>
-                <Link href="#features">Member-Vorteile</Link>
-              </div>
-              
-              <div className="footer-col-new">
-                <h4>Rechtliches</h4>
+              <div className="footer-legal-links-new">
                 <Link href="/impressum">Impressum</Link>
+                <span className="footer-legal-sep-new">|</span>
                 <Link href="/datenschutz">Datenschutz</Link>
+                <span className="footer-legal-sep-new">|</span>
                 <Link href="/image-preview.html">Bildauswahl</Link>
               </div>
             </div>
@@ -604,6 +621,9 @@ export default function LandingPage() {
           <div className="footer-bottom-new">
             <p>&copy; 2026 True Years Beyond Age GmbH. Alle Rechte vorbehalten.</p>
             <div className="footer-bottom-links-new">
+              <span className="footer-security-badge-new">
+                <i className="bi bi-shield-lock-fill" style={{ marginRight: '5px' }} /> DSGVO Konform
+              </span>
               <span className="footer-badge-clean-new">Made with ♥ in Germany</span>
             </div>
           </div>
