@@ -191,7 +191,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                       e.stopPropagation();
                       onStartSimulation();
                     }}>
-                      Simulation starten
+                      Simulation<br />starten
                     </button>
                   </div>
                 </div>
@@ -297,16 +297,18 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           color: #ffffff;
           border: none;
           border-radius: 100px;
-          padding: 0.75rem 2rem;
+          padding: 1.25rem 2.25rem;
           font-size: 0.95rem;
           font-weight: 800;
           cursor: pointer;
           transition: all 0.2s ease;
           box-shadow: 0 4px 12px rgba(0, 110, 167, 0.2);
           display: inline-flex;
+          flex-direction: column;
           align-items: center;
           justify-content: center;
           text-align: center;
+          line-height: 1.2;
         }
         .sim-card-blue-button:hover {
           background: #005682;
