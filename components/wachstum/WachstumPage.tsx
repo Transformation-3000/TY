@@ -52,7 +52,11 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         <p style={{ color: '#64748b', fontSize: '1.1rem', marginTop: '0.5rem', margin: 0 }}>Do Longevity yourself: Deine sofort umsetzbaren Bausteine</p>
         
         <div className="style-selector-wrapper" style={{ marginTop: '1.75rem' }}>
-          <p style={{ color: '#475569', fontSize: '0.95rem', fontWeight: 700, margin: '0 0 0.75rem 0' }}>Wähle den Stil aus, der am besten zu dir passt:</p>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+            <span className="blue-bar"></span>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Konfiguration</h2>
+          </div>
+          <p style={{ color: '#475569', fontSize: '0.95rem', fontWeight: 700, margin: '0 0 0.75rem 0' }}>Wähle einen Stil aus, der am besten zu dir passt:</p>
           <div className="segmented-control">
             {[
               { level: 1, name: 'Einfach', desc: 'Es soll sich leicht und unbeschwert anfühlen.' },
