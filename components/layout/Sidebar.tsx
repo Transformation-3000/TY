@@ -67,7 +67,7 @@ export default function Sidebar({ activeItem, onItemClick }: { activeItem?: stri
         }
 
         .nav-item span {
-          font-size: 0.95rem;
+          font-size: calc(0.95rem + 1pt);
           font-weight: 700;
           letter-spacing: -0.01em;
         }
@@ -94,7 +94,7 @@ export default function Sidebar({ activeItem, onItemClick }: { activeItem?: stri
         .sb-item--active .sb-item-icon { color: #006EA7; }
         .sb-item-icon { font-size: 1.5rem; display: flex; align-items: center; justify-content: center; width: 32px; flex-shrink: 0; }
         .sb-item-content { display: flex; flex-direction: column; align-items: flex-start; }
-        .sb-item-label { font-size: 0.95rem; font-weight: 700; }
+        .sb-item-label { font-size: calc(0.95rem + 1pt); font-weight: 700; }
         .sb-item-sub { font-size: 0.8rem; font-weight: 800; color: #006EA7; text-transform: uppercase; margin-top: 2px; }
         .sb-item-dot { width: 4px; height: 4px; border-radius: 50%; background: #006EA7; position: absolute; right: 12px; }
         

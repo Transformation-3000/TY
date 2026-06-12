@@ -98,7 +98,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
             <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Longevity-Experience starten</h2>
           </div>
           <div className="fields-grid" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {OPTIMIZATION_FIELDS.map((field) => (
+            {OPTIMIZATION_FIELDS.map((field, index) => (
               <button
                 key={field.id}
                 onClick={() => field.active && setSelectedField(field)}
@@ -129,7 +129,9 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                   <i className={`bi ${field.active ? field.icon : 'bi-lock'}`}></i>
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: '1rem', fontWeight: 700, color: field.active ? '#1e293b' : '#64748b' }}>{field.label}</div>
+                  <div style={{ fontSize: '1rem', fontWeight: 700, color: field.active ? '#1e293b' : '#64748b' }}>
+                    {index + 1}. {field.label}
+                  </div>
                   {field.active && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.4rem' }}>
                       <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b' }}>

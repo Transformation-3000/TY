@@ -466,7 +466,7 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
                     <span className="taci-label">
                       {t.title.split(' & ').map((part, idx, arr) => (
                         <span key={idx} style={{ display: 'block', lineHeight: '1.25' }}>
-                          {part}{idx < arr.length - 1 ? ' &' : ''}
+                          {idx === 0 ? `${i + 1}. ` : ''}{part}{idx < arr.length - 1 ? ' &' : ''}
                         </span>
                       ))}
                     </span>
