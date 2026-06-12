@@ -613,7 +613,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
         .sim-grid {
           display: grid;
           grid-template-columns: 1.1fr 1fr;
-          gap: 2rem;
+          column-gap: 2rem;
           row-gap: 1rem;
           margin-bottom: 3rem;
           align-items: stretch;
