@@ -2512,9 +2512,16 @@ section[id] {
 .footer-partners-logos-new {
   display: flex;
   align-items: center;
-  gap: 1.25rem;
+  justify-content: flex-end;
+  gap: 1.5rem;
   margin-top: 1.75rem;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 768px) {
+  .footer-partners-logos-new {
+    justify-content: flex-start;
+  }
 }
 
 .footer-partner-logo-new {
