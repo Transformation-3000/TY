@@ -98,6 +98,7 @@ const CHRONO_PROFILES: ChronoProfile[] = [
 export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps) {
   const [selectedChrono, setSelectedChrono] = useState<ChronoProfile>(CHRONO_PROFILES[1]); // Normaltyp default
   const [simulatedTime, setSimulatedTime] = useState<number>(10.0); // 10:00 Uhr standard
+  const [showHelp, setShowHelp] = useState(false);
 
   // Helper to check what phase an hour belongs to
   const getHourPhase = (h: number, profile: ChronoProfile) => {
@@ -319,7 +320,33 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
       <div className="sim-grid">
         {/* Left Column: Typen & Schieberegler */}
         <div className="sim-card inputs-card">
-            <h2>Wissenschaftliche Typisierung</h2>
+            <div className="card-header-row">
+              <h2>Wissenschaftliche Typisierung</h2>
+              <button 
+                className="chrono-help-btn" 
+                onClick={() => setShowHelp(!showHelp)}
+                type="button"
+              >
+                <i className="bi bi-question-circle"></i>
+                Wie ich meinen Chronotyp ermittele?
+              </button>
+            </div>
+            
+            {showHelp && (
+              <div className="chrono-help-box">
+                <div className="chrono-help-header">
+                  <h3>Wie bestimme ich meinen Chronotyp?</h3>
+                  <button className="close-help-btn" onClick={() => setShowHelp(false)} type="button">&times;</button>
+                </div>
+                <p>Dein Chronotyp wird primär genetisch durch deine innere Uhr (Nucleus suprachiasmaticus) bestimmt. So findest du ihn heraus:</p>
+                <ul>
+                  <li><strong>Urlaubs-Methode (Schlaftagebuch):</strong> Schlafe mehrere Tage ohne Wecker und notiere, wann du natürlich einschläfst und aufwachst. Die Mitte deines Schlafes an freien Tagen (MSF) ist der beste Indikator.</li>
+                  <li><strong>Standardisierte Tests:</strong> Nutze wissenschaftliche Fragebögen wie den <em>Horne-Östberg-Test (MEQ)</em> oder den <em>Munich ChronoType Questionnaire (MCTQ)</em>.</li>
+                  <li><strong>Körpertemperatur & Aktivität:</strong> Morgen-Typen erreichen ihr Temperaturtief ca. um 3-4 Uhr nachts und ihren Leistungshöhepunkt am Vormittag. Abend-Typen verschieben dies um mehrere Stunden nach hinten.</li>
+                </ul>
+              </div>
+            )}
+
             <p className="card-subtitle">Wähle den Chronotyp, der deinen Schlafgewohnheiten entspricht:</p>
 
             <div className="chrono-selector-column">
@@ -658,6 +685,107 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
         .agenda-card h2,
         .info-card h2 {
           margin-bottom: 1.5rem;
+        }
+
+        .card-header-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1rem;
+          flex-wrap: wrap;
+          gap: 1rem;
+        }
+
+        .card-header-row h2 {
+          margin: 0 !important;
+        }
+
+        .chrono-help-btn {
+          background: #f0f7ff;
+          border: 1.5px solid #4498ca;
+          border-radius: 12px;
+          color: #4498ca;
+          font-size: 0.85rem;
+          font-weight: 700;
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          padding: 0.45rem 1rem;
+          transition: all 0.2s ease;
+        }
+
+        .chrono-help-btn:hover {
+          background: #ffffff;
+          border-color: #006ea7;
+          color: #006ea7;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(68, 152, 202, 0.15);
+        }
+
+        .chrono-help-box {
+          background: #fafcff;
+          border: 1.5px solid #e0f2fe;
+          border-radius: 20px;
+          padding: 1.25rem 1.5rem;
+          margin-bottom: 1.5rem;
+          animation: slideDown 0.3s ease-out;
+          width: 100%;
+        }
+
+        .chrono-help-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 0.75rem;
+        }
+
+        .chrono-help-header h3 {
+          font-size: 1.1rem;
+          font-weight: 800;
+          color: #1e3a5f;
+          margin: 0;
+        }
+
+        .close-help-btn {
+          background: transparent;
+          border: none;
+          color: #64748b;
+          font-size: 1.5rem;
+          font-weight: 400;
+          cursor: pointer;
+          line-height: 1;
+          padding: 0;
+        }
+
+        .close-help-btn:hover {
+          color: #1e293b;
+        }
+
+        .chrono-help-box p {
+          font-size: 0.92rem;
+          color: #475569;
+          line-height: 1.5;
+          margin: 0 0 0.75rem 0;
+        }
+
+        .chrono-help-box ul {
+          margin: 0;
+          padding-left: 1.25rem;
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
+
+        .chrono-help-box li {
+          font-size: 0.9rem;
+          color: #475569;
+          line-height: 1.45;
+        }
+
+        @keyframes slideDown {
+          from { opacity: 0; transform: translateY(-10px); }
+          to { opacity: 1; transform: translateY(0); }
         }
 
         .card-subtitle {
