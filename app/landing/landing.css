@@ -1858,8 +1858,9 @@ section[id] {
 }
 
 .btn-pricing.btn-accent:hover {
-  background: #6db63c;
-  border-color: #6db63c;
+  background: var(--landing-dark);
+  border-color: var(--landing-dark);
+  color: white;
 }
 
 /* Detailed Comparison Table */
