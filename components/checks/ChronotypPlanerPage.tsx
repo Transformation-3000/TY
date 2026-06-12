@@ -423,94 +423,97 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
             </div>
           </div>
 
-          {/* Visual 2: Zirkadianer Energieverlauf (Waveform Curve) */}
-          <div className="sim-card timeline-card">
-            <h2>Zirkadianer Energieverlauf</h2>
-            <p className="card-subtitle">Toleranzkurve & biologische Aktivitätswelle</p>
+          {/* Right Column Upper Wrapper */}
+          <div className="right-upper-wrapper">
+            {/* Visual 2: Zirkadianer Energieverlauf (Waveform Curve) */}
+            <div className="sim-card timeline-card">
+              <h2>Zirkadianer Energieverlauf</h2>
+              <p className="card-subtitle">Toleranzkurve & biologische Aktivitätswelle</p>
 
-            <div className="waveform-container">
-              <svg viewBox="0 0 100 50" className="waveform-svg">
-                <defs>
-                  <linearGradient id="waveAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                    <stop offset="0%" stopColor="#93c5fd" stopOpacity="0.25" />
-                    <stop offset="100%" stopColor="#f8fafc" stopOpacity="0.01" />
-                  </linearGradient>
-                  <linearGradient id="waveLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stopColor="#93c5fd" />
-                    <stop offset="30%" stopColor="#ffe082" />
-                    <stop offset="70%" stopColor="#86efac" />
-                    <stop offset="100%" stopColor="#c084fc" />
-                  </linearGradient>
-                </defs>
+              <div className="waveform-container">
+                <svg viewBox="0 0 100 50" className="waveform-svg">
+                  <defs>
+                    <linearGradient id="waveAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#93c5fd" stopOpacity="0.25" />
+                      <stop offset="100%" stopColor="#f8fafc" stopOpacity="0.01" />
+                    </linearGradient>
+                    <linearGradient id="waveLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#93c5fd" />
+                      <stop offset="30%" stopColor="#ffe082" />
+                      <stop offset="70%" stopColor="#86efac" />
+                      <stop offset="100%" stopColor="#c084fc" />
+                    </linearGradient>
+                  </defs>
 
-                {/* Grid guidelines */}
-                <line x1="0" y1="45" x2="100" y2="45" stroke="#f1f5f9" strokeWidth="0.5" />
-                <line x1="0" y1="27.5" x2="100" y2="27.5" stroke="#f1f5f9" strokeWidth="0.5" />
-                <line x1="0" y1="10" x2="100" y2="10" stroke="#f1f5f9" strokeWidth="0.5" />
+                  {/* Grid guidelines */}
+                  <line x1="0" y1="45" x2="100" y2="45" stroke="#f1f5f9" strokeWidth="0.5" />
+                  <line x1="0" y1="27.5" x2="100" y2="27.5" stroke="#f1f5f9" strokeWidth="0.5" />
+                  <line x1="0" y1="10" x2="100" y2="10" stroke="#f1f5f9" strokeWidth="0.5" />
 
-                {/* Filled Area beneath curve */}
-                <path d={getEnergyCurveAreaPath()} fill="url(#waveAreaGrad)" style={{ transition: 'd 0.3s' }} />
+                  {/* Filled Area beneath curve */}
+                  <path d={getEnergyCurveAreaPath()} fill="url(#waveAreaGrad)" style={{ transition: 'd 0.3s' }} />
 
-                {/* Main Curve Line */}
-                <path d={getEnergyCurveStrokePath()} fill="none" stroke="url(#waveLineGrad)" strokeWidth="1.2" style={{ transition: 'd 0.3s' }} />
+                  {/* Main Curve Line */}
+                  <path d={getEnergyCurveStrokePath()} fill="none" stroke="url(#waveLineGrad)" strokeWidth="1.2" style={{ transition: 'd 0.3s' }} />
 
-                {/* Vertical time marker swept by simulated hour */}
-                <line x1={(simulatedTime / 24) * 100} y1={markerY} x2={(simulatedTime / 24) * 100} y2="45" stroke="#ef4444" strokeWidth="0.6" strokeDasharray="1,1" />
+                  {/* Vertical time marker swept by simulated hour */}
+                  <line x1={(simulatedTime / 24) * 100} y1={markerY} x2={(simulatedTime / 24) * 100} y2="45" stroke="#ef4444" strokeWidth="0.6" strokeDasharray="1,1" />
 
-                {/* Indicator Dot on the wave curve */}
-                <circle cx={(simulatedTime / 24) * 100} cy={markerY} r="2.4" fill="#ef4444" stroke="#ffffff" strokeWidth="0.6" />
-              </svg>
+                  {/* Indicator Dot on the wave curve */}
+                  <circle cx={(simulatedTime / 24) * 100} cy={markerY} r="2.4" fill="#ef4444" stroke="#ffffff" strokeWidth="0.6" />
+                </svg>
 
-              <div className="waveform-labels">
-                <span>00:00</span>
-                <span>06:00</span>
-                <span>12:00</span>
-                <span>18:00</span>
-                <span>24:00</span>
+                <div className="waveform-labels">
+                  <span>00:00</span>
+                  <span>06:00</span>
+                  <span>12:00</span>
+                  <span>18:00</span>
+                  <span>24:00</span>
+                </div>
+              </div>
+
+              {/* Simple Legend */}
+              <div className="timeline-legend" style={{ justifyContent: 'center', margin: '0.75rem 0' }}>
+                <span className="legend-item"><span className="legend-box sleep"></span> Schlaf</span>
+                <span className="legend-item"><span className="legend-box focus"></span> Fokus</span>
+                <span className="legend-item"><span className="legend-box sport"></span> Sport</span>
+                <span className="legend-item"><span className="legend-box melatonin"></span> Melatonin</span>
+              </div>
+
+              <div className="wave-stats-box">
+                <span className="wave-status-label">Biologischer Status um {Math.floor(simulatedTime).toString().padStart(2, '0')}:00 Uhr:</span>
+                <span className="wave-status-value" style={{ color: currentPhase.flatColor }}>{currentPhase.title}</span>
               </div>
             </div>
 
-            {/* Simple Legend */}
-            <div className="timeline-legend" style={{ justifyContent: 'center', margin: '0.75rem 0' }}>
-              <span className="legend-item"><span className="legend-box sleep"></span> Schlaf</span>
-              <span className="legend-item"><span className="legend-box focus"></span> Fokus</span>
-              <span className="legend-item"><span className="legend-box sport"></span> Sport</span>
-              <span className="legend-item"><span className="legend-box melatonin"></span> Melatonin</span>
-            </div>
+            {/* Visual 3: Simulierte Tageszeit Control Card */}
+            <div className="sim-card time-control-card">
+              <div className="time-control-header">
+                <h2>Simuliere die Tageszeit</h2>
+                <span className="time-control-digital">
+                  {Math.floor(simulatedTime).toString().padStart(2, '0')}
+                  :
+                  {Math.round((simulatedTime % 1) * 60).toString().padStart(2, '0')}
+                  <span className="time-control-unit"> Uhr</span>
+                </span>
+              </div>
 
-            <div className="wave-stats-box">
-              <span className="wave-status-label">Biologischer Status um {Math.floor(simulatedTime).toString().padStart(2, '0')}:00 Uhr:</span>
-              <span className="wave-status-value" style={{ color: currentPhase.flatColor }}>{currentPhase.title}</span>
-            </div>
-          </div>
-
-          {/* Visual 3: Simulierte Tageszeit Control Card */}
-          <div className="sim-card time-control-card">
-            <div className="time-control-header">
-              <h2>Simuliere die Tageszeit</h2>
-              <span className="time-control-digital">
-                {Math.floor(simulatedTime).toString().padStart(2, '0')}
-                :
-                {Math.round((simulatedTime % 1) * 60).toString().padStart(2, '0')}
-                <span className="time-control-unit"> Uhr</span>
-              </span>
-            </div>
-
-            <div className="premium-slider-container">
-              <input
-                type="range"
-                min="0"
-                max="23.75"
-                step="0.25"
-                value={simulatedTime}
-                onChange={(e) => setSimulatedTime(parseFloat(e.target.value))}
-                className="premium-range-input"
-              />
-              <div className="slider-phase-ticks">
-                <span className="tick-label"><i className="bi bi-moon-stars-fill"></i> Nacht</span>
-                <span className="tick-label"><i className="bi bi-sunrise-fill"></i> Morgen</span>
-                <span className="tick-label"><i className="bi bi-sun-fill"></i> Mittag</span>
-                <span className="tick-label"><i className="bi bi-sunset-fill"></i> Abend</span>
+              <div className="premium-slider-container">
+                <input
+                  type="range"
+                  min="0"
+                  max="23.75"
+                  step="0.25"
+                  value={simulatedTime}
+                  onChange={(e) => setSimulatedTime(parseFloat(e.target.value))}
+                  className="premium-range-input"
+                />
+                <div className="slider-phase-ticks">
+                  <span className="tick-label"><i className="bi bi-moon-stars-fill"></i> Nacht</span>
+                  <span className="tick-label"><i className="bi bi-sunrise-fill"></i> Morgen</span>
+                  <span className="tick-label"><i className="bi bi-sun-fill"></i> Mittag</span>
+                  <span className="tick-label"><i className="bi bi-sunset-fill"></i> Abend</span>
+                </div>
               </div>
             </div>
           </div>
@@ -614,33 +617,36 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
           display: grid;
           grid-template-columns: 1.1fr 1fr;
           column-gap: 2rem;
-          row-gap: 1rem;
+          row-gap: 1.5rem;
           margin-bottom: 3rem;
           align-items: stretch;
         }
 
         .inputs-card {
           grid-column: 1;
-          grid-row: span 2;
-          display: flex;
-          flex-direction: column;
-          align-self: stretch;
-        }
-
-        .timeline-card {
-          grid-column: 2;
           grid-row: 1;
           display: flex;
           flex-direction: column;
           align-self: stretch;
         }
 
-        .time-control-card {
+        .right-upper-wrapper {
           grid-column: 2;
-          grid-row: 2;
+          grid-row: 1;
           display: flex;
           flex-direction: column;
-          align-self: stretch;
+          justify-content: space-between;
+          height: 100%;
+        }
+
+        .timeline-card {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .time-control-card {
+          display: flex;
+          flex-direction: column;
         }
 
         .inputs-card,
@@ -651,14 +657,14 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
 
         .agenda-card {
           grid-column: 1;
-          grid-row: 3;
+          grid-row: 2;
           padding-top: 1.125rem;
           padding-bottom: 1.125rem;
         }
 
         .info-card {
           grid-column: 2;
-          grid-row: 3;
+          grid-row: 2;
           padding-top: 1.125rem;
           padding-bottom: 1.125rem;
         }
@@ -666,10 +672,15 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
         @media (max-width: 992px) {
           .sim-grid {
             grid-template-columns: 1fr;
+            row-gap: 1.5rem;
           }
-          .inputs-card, .timeline-card, .time-control-card, .agenda-card, .info-card {
+          .inputs-card, .right-upper-wrapper, .timeline-card, .time-control-card, .agenda-card, .info-card {
             grid-column: auto !important;
             grid-row: auto !important;
+          }
+          .right-upper-wrapper {
+            height: auto;
+            gap: 1rem;
           }
         }
 
