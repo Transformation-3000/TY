@@ -342,6 +342,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
                 <ul>
                   <li><strong>Urlaubs-Methode (Schlaftagebuch):</strong> Schlafe mehrere Tage ohne Wecker und notiere, wann du natürlich einschläfst und aufwachst. Die Mitte deines Schlafes an freien Tagen (MSF) ist der beste Indikator.</li>
                   <li><strong>Standardisierte Tests:</strong> Nutze wissenschaftliche Fragebögen wie den <em>Horne-Östberg-Test (MEQ)</em> oder den <em>Munich ChronoType Questionnaire (MCTQ)</em>.</li>
+                  <li><strong>Fitnesstracker & Wearables (z. B. Oura-Ring, WHOOP):</strong> Moderne Tracker analysieren deine nächtliche Herzfrequenzvariabilität (HRV), Atemfrequenz und Hauttemperatur. Tracker wie der Oura-Ring berechnen daraus nach einigen Wochen deinen exakten Chronotyp und schlagen optimale Schlaffenster vor.</li>
                   <li><strong>Körpertemperatur & Aktivität:</strong> Morgen-Typen erreichen ihr Temperaturtief ca. um 3-4 Uhr nachts und ihren Leistungshöhepunkt am Vormittag. Abend-Typen verschieben dies um mehrere Stunden nach hinten.</li>
                 </ul>
               </div>
