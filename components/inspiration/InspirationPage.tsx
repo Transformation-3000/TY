@@ -102,6 +102,27 @@ const reels: Reel[] = [
     author: 'Nature Medicine', role: 'Clinical Trial, 2026', readTime: '4 Min', image: '/images/lab_preview_3.png', tag: 'ZELLEN', tagColor: '#10b981', saved: false, authorImage: '/images/lab_preview_3.png',
   },
   {
+    id: 'r_science_neural', category: 'science',
+    title: 'Epigenetische Regeneration: Wiederherstellung von geschädigtem Sehnervengewebe',
+    teaser: 'Eine Landmark-Studie 2026 zeigt: Die partielle epigenetische Reprogrammierung reaktiviert das jugendliche Wachstumspotenzial von Nervenzellen.',
+    fullText: 'In einer vielbeachteten Publikation in Nature (März 2026) gelang es Forschern, durch die vorübergehende Aktivierung von drei Yamanaka-Faktoren (OSK) geschädigte Sehnerven bei Säugetieren vollständig zu regenerieren. Die Behandlung verjüngt das DNA-Methylierungsmuster der Nervenzellen, wodurch diese in einen entwicklungsbiologisch aktiven Zustand zurückversetzt werden. Dieser Durchbruch ebnet den Weg für Therapien gegen Altersblindheit und degenerative Nervenerkrankungen.',
+    author: 'Nature Journal', role: 'Harvard & MIT Research, 2026', readTime: '4 Min', image: '/images/science_neural_reversal.png', tag: 'REGENERATION', tagColor: '#3b82f6', saved: false, authorImage: '/images/science_neural_reversal.png',
+  },
+  {
+    id: 'r_science_senolytics', category: 'science',
+    title: 'Senolytika-Durchbruch: Gezieltes Absterben von Zombiezellen verlängert Lebensspanne',
+    teaser: 'Klinische Phase-II-Studie 2026 bestätigt: Ein neuartiger Wirkstoff eliminiert seneszente Zellen hochpräzise und verjüngt das Gefäßsystem.',
+    fullText: 'Seneszente Zellen, auch "Zombiezellen" genannt, sondern Entzündungsstoffe ab und schädigen umliegendes Gewebe. In einer im Mai 2026 in Cell veröffentlichten Studie konnte ein neues synthetisches Peptid (FOXO4-DRI-Derivat) diese Zellen selektiv in den programmierten Zelltod (Apoptose) treiben. Die behandelten Probanden zeigten eine signifikante Reduktion der Arteriensteifigkeit und eine regenerierte Hautstruktur.',
+    author: 'Cell Journal', role: 'Klinische Studie Phase-II, 2026', readTime: '5 Min', image: '/images/science_senolytics_zombie.png', tag: 'ZELLEN', tagColor: '#10b981', saved: false, authorImage: '/images/science_senolytics_zombie.png',
+  },
+  {
+    id: 'r_science_microbiome', category: 'science',
+    title: 'Zirkadianes Mikrobiom: Wie Darmbakterien unsere Langlebigkeitsgene steuern',
+    teaser: 'Neue Forschungsergebnisse 2026 belegen: Der tageszeitliche Rhythmus der Darmflora reguliert die Genexpression von Sirtuinen direkt.',
+    fullText: 'Unsere Darmbakterien folgen einer strengen inneren Uhr. Eine im Januar 2026 in Science erschienene Studie zeigt, dass Metaboliten des Mikrobioms (wie kurzkettige Fettsäuren) in Abhängigkeit von Fütterungszeiten zirkadiane Schwankungen aufweisen. Diese Stoffwechselprodukte aktivieren gezielt Sirtuin-Gene (SIRT1 und SIRT3) in der Leber, was den Fettabbau optimiert und Entzündungsmarker senkt. Das Mikrobiom-Timing ist somit ein zentraler Langlebigkeitsfaktor.',
+    author: 'Science Journal', role: 'Weizmann-Institut, 2026', readTime: '4 Min', image: '/images/science_gut_microbiome.png', tag: 'MIKROBIOM', tagColor: '#f59e0b', saved: false, authorImage: '/images/science_gut_microbiome.png',
+  },
+  {
     id: 'r_sinclair', category: 'experten',
     title: 'Harvard-Protokoll: Wie Dr. David Sinclair sein biologisches Alter senkt',
     teaser: 'Mit NMN, Resveratrol und intermittierendem Fasten: Das wissenschaftliche Langlebigkeits-Regime des berühmtesten Altersforschers.',
