@@ -1471,6 +1471,89 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
           color: #0369a1;
           box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15);
         }
+
+        @media (max-width: 576px) {
+          .sim-container {
+            padding: 1rem 0.5rem;
+          }
+          
+          .sim-header-title-row {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 1rem;
+          }
+          
+          .sim-title {
+            font-size: 1.75rem;
+          }
+          
+          .sim-subtitle {
+            font-size: 0.95rem;
+          }
+          
+          .sim-card {
+            padding: 1.5rem 1rem;
+            border-radius: 20px;
+          }
+          
+          .chrono-row-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+          }
+          
+          .chrono-profile-scientific {
+            align-self: flex-start;
+            margin-left: 28px;
+          }
+          
+          .time-control-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+          }
+          
+          .time-control-digital {
+            width: 100%;
+            text-align: center;
+          }
+          
+          .tick-label {
+            font-size: 0.7rem;
+            gap: 2px;
+          }
+          
+          .tick-label i {
+            font-size: 0.75rem;
+          }
+          
+          .status-badge-wrapper {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+          }
+          
+          .status-badge {
+            align-self: flex-start;
+          }
+
+          .agenda-item {
+            gap: 0.75rem;
+          }
+
+          .agenda-time {
+            width: 70px;
+            font-size: 0.88rem;
+          }
+
+          .agenda-text {
+            font-size: 0.88rem;
+          }
+
+          .chrono-help-box {
+            padding: 1rem;
+          }
+        }
       `}</style>
     </div>
   );
