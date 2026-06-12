@@ -48,15 +48,16 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
   return (
     <div className="wachstum-container">
       <header style={{ marginBottom: '2.5rem' }}>
-        <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Quick Wins</h1>
+        <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Quick Win Navigator</h1>
         <p style={{ color: '#64748b', fontSize: '1.1rem', marginTop: '0.5rem', margin: 0 }}>Do Longevity yourself: Deine sofort umsetzbaren Bausteine</p>
         
         <div className="style-selector-wrapper" style={{ marginTop: '1.75rem' }}>
-          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1.25rem' }}>
             <span className="blue-bar"></span>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Konfiguration</h2>
+            <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>
+              Konfiguration: <span style={{ fontWeight: 500, color: '#475569', marginLeft: '0.25rem' }}>Wähle einen Stil aus, der am besten zu dir passt:</span>
+            </h2>
           </div>
-          <p style={{ color: '#475569', fontSize: '0.95rem', fontWeight: 700, margin: '0 0 0.75rem 0' }}>Wähle einen Stil aus, der am besten zu dir passt:</p>
           <div className="segmented-control">
             {[
               { level: 1, name: 'Einfach', desc: 'Es soll sich leicht und unbeschwert anfühlen.' },
@@ -350,11 +351,13 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         .segmented-control {
           display: flex;
           background: #f1f5f9;
-          border-radius: 16px;
-          padding: 0.35rem;
-          gap: 0.35rem;
+          border-radius: 24px;
+          padding: 0.45rem;
+          gap: 0.45rem;
           width: 100%;
-          max-width: 900px;
+          max-width: 100%;
+          border: 1px solid rgba(226, 232, 240, 0.8);
+          box-shadow: inset 0 2px 4px rgba(15, 23, 42, 0.02);
         }
         .segmented-button {
           flex: 1;
@@ -362,38 +365,43 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          padding: 0.85rem 1.25rem;
+          padding: 1.1rem 1.5rem;
           border: none;
           background: transparent;
-          border-radius: 12px;
+          border-radius: 18px;
           cursor: pointer;
-          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           text-align: center;
         }
         .segmented-button:hover {
           background: rgba(255, 255, 255, 0.5);
+          transform: translateY(-1px);
         }
         .segmented-button.active {
           background: #ffffff;
-          box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+          box-shadow: 0 8px 20px rgba(0, 110, 167, 0.06), 0 2px 6px rgba(0, 110, 167, 0.03);
+          transform: scale(1.01);
         }
         .style-name {
-          font-size: 1rem;
-          font-weight: 800;
+          font-size: 1.25rem;
+          font-weight: 850;
           color: #1e293b;
-          margin-bottom: 2px;
+          margin-bottom: 4px;
+          transition: color 0.3s;
+          letter-spacing: -0.015em;
         }
         .segmented-button.active .style-name {
           color: #006ea7;
         }
         .style-desc {
-          font-size: 0.78rem;
+          font-size: 1.03rem;
           color: #64748b;
           font-weight: 500;
-          line-height: 1.25;
+          line-height: 1.35;
+          transition: color 0.3s;
         }
         .segmented-button.active .style-desc {
-          color: #475569;
+          color: #334155;
         }
         .sim-card-wide h3 {
           margin: 0 0 0.5rem 0;
