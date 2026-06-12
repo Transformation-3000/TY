@@ -3,9 +3,11 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import './landing/landing.css';
 
 export default function LandingPage() {
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showVideoModal, setShowVideoModal] = useState(false);
@@ -336,7 +338,11 @@ export default function LandingPage() {
 
         <div className="pricing-grid">
           {/* Starter Plan */}
-          <div className="pricing-card">
+          <div 
+            className="pricing-card" 
+            onClick={() => router.push('/checkout?plan=basic')}
+            style={{ cursor: 'pointer' }}
+          >
             <div className="pricing-header">
               <h3>Starter</h3>
             </div>
@@ -358,7 +364,11 @@ export default function LandingPage() {
           </div>
 
           {/* Premium Plan */}
-          <div className="pricing-card premium-plan">
+          <div 
+            className="pricing-card premium-plan" 
+            onClick={() => router.push('/checkout?plan=premium')}
+            style={{ cursor: 'pointer' }}
+          >
             <div className="pricing-badge">Beliebt</div>
             <div className="pricing-header">
               <h3>Premium</h3>
@@ -384,7 +394,11 @@ export default function LandingPage() {
           </div>
 
           {/* Platin Plan */}
-          <div className="pricing-card platin-plan">
+          <div 
+            className="pricing-card platin-plan" 
+            onClick={() => router.push('/checkout?plan=platin')}
+            style={{ cursor: 'pointer' }}
+          >
             <div className="pricing-header">
               <h3>Platin</h3>
             </div>
