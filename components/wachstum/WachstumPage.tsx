@@ -129,7 +129,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
             >
               <div className="sim-card-wide-img-wrap">
                 <Image 
-                  src="/images/dna_vibrant_white_bg.png" 
+                  src="/images/dna_helix_soft.png" 
                   alt="Zellalter Simulation" 
                   fill
                   style={{ objectFit: 'cover' }}
@@ -191,38 +191,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
               )}
             </div>
 
-            <div 
-              className="lisa-daily-card"
-              onClick={() => onStartLisaDaily?.()}
-              onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
-              onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-            >
-              <div style={{ 
-                width: '64px', height: '64px', borderRadius: '50%', 
-                border: '2px solid rgba(255,255,255,0.3)',
-                overflow: 'hidden', flexShrink: 0,
-                boxShadow: '0 0 15px rgba(255,255,255,0.2)'
-              }}>
-                <Image 
-                  src="/images/lisa.png" 
-                  alt="Lisa AI" 
-                  width={64} 
-                  height={64} 
-                  style={{ objectFit: 'cover' }}
-                />
-              </div>
-              <div style={{ flex: 1 }}>
-                <div style={{ fontWeight: 800, fontSize: '1.1rem', letterSpacing: '0.01em', lineHeight: 1.3 }}>
-                  Starte jetzt Lisa AI Daily <span style={{ fontWeight: 400, opacity: 0.9 }}>(max. 5 Min.)</span>
-                </div>
-                <div style={{ fontSize: '0.85rem', opacity: 0.9, marginTop: '0.2rem' }}>
-                  Vertiefe deine Fortschritte im Bereich {selectedField.label} in einem kurzen Check-in.
-                </div>
-              </div>
-              <div style={{ fontSize: '1.2rem' }}>
-                <i className="bi bi-chevron-right"></i>
-              </div>
-            </div>
+
           </div>
         </section>
       </div>
@@ -321,22 +290,6 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
 
-        .lisa-daily-card {
-          margin-top: 2rem;
-          padding: 1.25rem 1.5rem;
-          border-radius: 24px;
-          background: linear-gradient(135deg, #006EA7, #1e293b);
-          color: #fff;
-          display: flex;
-          align-items: center;
-          gap: 1.25rem;
-          cursor: pointer;
-          box-shadow: 0 10px 25px rgba(0, 110, 167, 0.2);
-          transition: transform 0.2s ease;
-          position: relative;
-          overflow: hidden;
-        }
-
         @media (max-width: 991px) {
           .wachstum-layout {
             grid-template-columns: 1fr;
@@ -360,12 +313,6 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           }
           .quick-win-card-icon {
             align-self: center;
-          }
-          .lisa-daily-card {
-            flex-direction: column;
-            text-align: center;
-            padding: 1.25rem 1rem;
-            gap: 1rem;
           }
         }
 
