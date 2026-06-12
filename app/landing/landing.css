@@ -1068,10 +1068,11 @@ section[id] {
 }
 
 .footer-logo-new {
-  height: 100px;
+  height: 80px;
   width: auto;
   object-fit: contain;
-  margin-bottom: 1.5rem;
+  margin-left: -10px;
+  margin-bottom: 0.75rem;
   filter: brightness(0) invert(1);
 }
 
@@ -2513,16 +2514,10 @@ section[id] {
 .footer-partners-logos-new {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 1.5rem;
   margin-top: 1.75rem;
   flex-wrap: nowrap;
-}
-
-@media (max-width: 768px) {
-  .footer-partners-logos-new {
-    justify-content: flex-start;
-  }
 }
 
 .footer-partner-logo-new {

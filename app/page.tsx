@@ -564,8 +564,8 @@ export default function LandingPage() {
               <Image 
                 src="/images/logoneu.png" 
                 alt="TrueYears Logo" 
-                width={300} 
-                height={100} 
+                width={180} 
+                height={60} 
                 className="footer-logo-new"
               />
               <p className="footer-description-new">
