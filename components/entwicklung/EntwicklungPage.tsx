@@ -204,6 +204,15 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
 
 
 
+  const OPTIMIZATION_ICONS = [
+    '/images/icon_schlaf_3d.png',
+    '/images/icon_kraft_3d.png',
+    '/images/icon_zell_3d.png',
+    '/images/icon_immun_3d.png',
+    '/images/icon_sozial_3d.png',
+    '/images/icon_mindset_3d.png'
+  ];
+
   const trendData = [
     { title: 'Schlaf & Erholung', data: [62, 60, 68, 64, 70, 67, 72, 70, 75, 72, 78, 75] },
     { title: 'Kraft & Ausdauer', data: [55, 58, 60, 63, 67, 70, 72, 75, 78, 80, 83, 84] },
@@ -462,14 +471,26 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
 
               return (
                 <div key={i} className={`tac-item ${isPositive ? 'pos' : 'neg'}`}>
-                  <div className="taci-header">
-                    <span className="taci-label">
-                      {t.title.split(' & ').map((part, idx, arr) => (
-                        <span key={idx} style={{ display: 'block', lineHeight: '1.25' }}>
-                          {idx === 0 ? `${i + 1}. ` : ''}{part}{idx < arr.length - 1 ? ' &' : ''}
-                        </span>
-                      ))}
-                    </span>
+                  <div className="taci-header" style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                    <div style={{ display: 'flex', gap: '0.6rem', alignItems: 'center' }}>
+                      <img 
+                        src={OPTIMIZATION_ICONS[i]} 
+                        alt={t.title} 
+                        style={{
+                          width: '38px',
+                          height: '38px',
+                          objectFit: 'contain',
+                          flexShrink: 0
+                        }}
+                      />
+                      <span className="taci-label">
+                        {t.title.split(' & ').map((part, idx, arr) => (
+                          <span key={idx} style={{ display: 'block', lineHeight: '1.25' }}>
+                            {idx === 0 ? `${i + 1}. ` : ''}{part}{idx < arr.length - 1 ? ' &' : ''}
+                          </span>
+                        ))}
+                      </span>
+                    </div>
                     <span className="taci-trend" style={{ color }}>{formattedPct}</span>
                   </div>
                   <div className="taci-score-row">
