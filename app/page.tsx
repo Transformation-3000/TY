@@ -602,7 +602,14 @@ export default function LandingPage() {
                   <p className="footer-company-name-new" style={{ margin: '0 0 0.4rem' }}>True Years Beyond Age GmbH</p>
                   <p style={{ margin: '0 0 0.4rem' }}>Im Mediapark 5</p>
                   <p style={{ margin: '0 0 0.4rem' }}>D-50670 Köln</p>
-                  <p style={{ margin: 0 }}>Germany</p>
+                  <p style={{ margin: '0 0 0.75rem' }}>Germany</p>
+                  
+                  <p className="footer-email-row-new" style={{ margin: 0, display: 'flex', alignItems: 'center' }}>
+                    <i className="bi bi-envelope-fill" style={{ marginRight: '6px', color: 'white' }} />
+                    <a href="mailto:contact@true-years.com" className="footer-email-link-new">
+                      contact@true-years.com
+                    </a>
+                  </p>
                 </div>
               </div>
               
