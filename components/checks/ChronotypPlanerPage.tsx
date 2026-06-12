@@ -124,23 +124,23 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
     
     if (isJustWokeUp) {
       return {
-        label: 'Verzögern',
-        desc: 'Der Cortisolspiegel sinkt noch ab. Warte noch etwas, um ein Nachmittagstief zu vermeiden.',
+        label: 'Koffein-Fenster (Verzögern)',
+        desc: 'Der Cortisolspiegel sinkt noch ab. Warte 90 Min. nach dem Aufstehen ab, um ein Nachmittagstief zu vermeiden.',
         color: '#ca8a04',
         bgColor: 'rgba(202, 138, 4, 0.08)'
       };
     }
     if (isPastDeadline) {
       return {
-        label: 'Vermeiden',
-        desc: 'Koffein stört jetzt den Einschlafprozess und vermindert die Tiefschlaf-Qualität.',
+        label: 'Koffein-Stopp',
+        desc: 'Die biologische Deadline ist überschritten. Koffein stört jetzt den Einschlafprozess und mindert die Tiefschlaf-Qualität.',
         color: '#ef4444',
         bgColor: 'rgba(239, 68, 68, 0.08)'
       };
     }
     return {
-      label: 'Unbedenklich',
-      desc: 'Idealer Zeitpunkt für Koffein-Zufuhr, da der Cortisol-Peak vorüber ist.',
+      label: 'Koffein-Fenster (Ideal)',
+      desc: 'Dein Cortisol-Peak ist vorüber. Dies ist der ideale Zeitpunkt für Koffein-Zufuhr, da deine Rezeptoren bereit sind.',
       color: '#16a34a',
       bgColor: 'rgba(22, 163, 74, 0.08)'
     };
@@ -154,8 +154,8 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
     // Morning light window
     if (h >= wake && h < wake + 2) {
       return {
-        label: 'Helles Tageslicht',
-        desc: 'Nimm jetzt 10-15 Min. direktes Tageslicht auf, um Melatonin abzubauen und den Rhythmus zu takten.',
+        label: 'Licht-Fenster (Aktiv)',
+        desc: 'Tanke jetzt 10-15 Min. direktes Tageslicht auf, um Melatonin abzubauen und den Rhythmus für heute zu takten.',
         color: '#16a34a',
         bgColor: 'rgba(22, 163, 74, 0.08)'
       };
@@ -164,8 +164,8 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
     const hoursToBed = bed > h ? bed - h : (24 - h) + bed;
     if (hoursToBed <= 2.5) {
       return {
-        label: 'Blaulicht reduzieren',
-        desc: 'Schalte Displays stumm oder nutze Nachtmodi, um die körpereigene Melatonin-Produktion zu schützen.',
+        label: 'Wind-Down Phase',
+        desc: 'Schalte Displays stumm oder nutze Nachtmodi und dimme das Licht, um die körpereigene Melatonin-Produktion zu schützen.',
         color: '#ef4444',
         bgColor: 'rgba(239, 68, 68, 0.08)'
       };
@@ -197,15 +197,15 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
         };
       case 'sport':
         return {
-          title: 'Physisches Leistungsoptimum',
+          title: 'Physisches Leistungsoptimum (Sport-Peak)',
           desc: 'Muskeltemperatur, Lungenkapazität und Koordination sind am höchsten. Bester Zeitpunkt für Training.',
           color: '#15803d',
           flatColor: '#16a34a'
         };
       case 'melatonin':
         return {
-          title: 'Melatonin-Anstieg',
-          desc: 'Die Kerntemperatur sinkt und die Schlafbereitschaft steigt. Ideal für ruhige Abendroutinen.',
+          title: 'Wind-Down Phase (Melatonin)',
+          desc: 'Die Kerntemperatur sinkt und die Schlafbereitschaft steigt. Ideal für ruhige Abendroutinen und Entspannungsübungen.',
           color: '#6d28d9',
           flatColor: '#a855f7'
         };
