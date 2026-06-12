@@ -46,33 +46,9 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
 
   return (
     <div className="wachstum-container">
-      <header style={{ marginBottom: '2.5rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '2rem' }}>
-        <div style={{ flex: '1', minWidth: '300px' }}>
-          <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Quick Wins</h1>
-          <p style={{ color: '#64748b', fontSize: '1.1rem', marginTop: '0.5rem', margin: 0 }}>Do Longevity yourself: Deine sofort umsetzbaren Bausteine</p>
-        </div>
-        
-        {onStartSimulation && (
-          <div 
-            className="sim-header-card"
-            onClick={onStartSimulation}
-          >
-            <div className="sim-header-card-img-wrap">
-              <Image 
-                src="/images/dna_helix_soft.png" 
-                alt="Zellalter Simulation Vorschau" 
-                fill 
-                style={{ objectFit: 'cover' }}
-              />
-            </div>
-            <div className="sim-header-card-content">
-              <span className="sim-header-card-badge">Zellalter-Simulation</span>
-              <h3>Wie wirkt dein Lifestyle auf deine Zellen?</h3>
-              <p>Simuliere den direkten Einfluss von Sport, Schlaf & Ernährung auf dein Zellalter.</p>
-              <span className="sim-header-card-link">Jetzt testen →</span>
-            </div>
-          </div>
-        )}
+      <header style={{ marginBottom: '2.5rem' }}>
+        <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Quick Wins</h1>
+        <p style={{ color: '#64748b', fontSize: '1.1rem', marginTop: '0.5rem', margin: 0 }}>Do Longevity yourself: Deine sofort umsetzbaren Bausteine</p>
       </header>
 
       <div className="wachstum-layout">
@@ -147,6 +123,30 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         {/* Rechts: Quick Wins Navigator */}
         <section className="navigator-section">
           <div className="navigator-box">
+            {onStartSimulation && (
+              <div 
+                className="sim-card-wide"
+                onClick={onStartSimulation}
+              >
+                <div className="sim-card-wide-img-wrap">
+                  <Image 
+                    src="/images/dna_helix_soft.png" 
+                    alt="Zellalter Simulation" 
+                    fill
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
+                <div className="sim-card-wide-content">
+                  <span className="sim-card-wide-badge">Zellalter-Simulation</span>
+                  <h3>Wie beeinflusst dein Lebensstil dein biologisches Alter?</h3>
+                  <p>
+                    Finde heraus, wie sich gezielte Lifestyle-Changes in den Bereichen Schlaf, Sport und Ernährung direkt auf deine Zellen auswirken. Simuliere deine Routinen und starte dein Verjüngungsexperiment!
+                  </p>
+                  <span className="sim-card-wide-link">Simulation starten →</span>
+                </div>
+              </div>
+            )}
+
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
               <div>
                 <h2 style={{ margin: 0, fontSize: '1.5rem', fontWeight: 800, color: '#1e293b' }}>
@@ -228,66 +228,66 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
       </div>
 
       <style jsx>{`
-        .sim-header-card {
+        .sim-card-wide {
           background: #ffffff;
           border: 1px solid #e2e8f0;
-          border-radius: 20px;
+          border-radius: 24px;
           display: flex;
-          width: 480px;
-          max-width: 100%;
+          width: 100%;
+          margin-bottom: 2rem;
           cursor: pointer;
           overflow: hidden;
-          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+          box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .sim-header-card:hover {
+        .sim-card-wide:hover {
           transform: translateY(-4px);
           box-shadow: 0 15px 35px rgba(0, 110, 167, 0.08);
           border-color: #006ea7;
         }
-        .sim-header-card-img-wrap {
+        .sim-card-wide-img-wrap {
           position: relative;
-          width: 130px;
+          width: 220px;
           height: 100%;
-          min-height: 130px;
+          min-height: 180px;
           flex-shrink: 0;
           background: #f1f5f9;
         }
-        .sim-header-card-content {
-          padding: 1rem 1.25rem;
+        .sim-card-wide-content {
+          padding: 1.5rem;
           display: flex;
           flex-direction: column;
           justify-content: center;
           text-align: left;
         }
-        .sim-header-card-badge {
-          font-size: 0.65rem;
+        .sim-card-wide-badge {
+          font-size: 0.75rem;
           font-weight: 800;
           text-transform: uppercase;
-          letter-spacing: 0.05em;
+          letter-spacing: 0.06em;
           color: #22c55e;
-          margin-bottom: 0.25rem;
+          margin-bottom: 0.35rem;
         }
-        .sim-header-card h3 {
-          margin: 0 0 0.25rem 0;
-          font-size: 0.95rem;
+        .sim-card-wide h3 {
+          margin: 0 0 0.5rem 0;
+          font-size: 1.25rem;
           font-weight: 800;
           color: #1e293b;
           line-height: 1.3;
         }
-        .sim-header-card p {
-          margin: 0 0 0.5rem 0;
-          font-size: 0.8rem;
+        .sim-card-wide p {
+          margin: 0 0 1rem 0;
+          font-size: 0.9rem;
           color: #64748b;
-          line-height: 1.4;
+          line-height: 1.5;
         }
-        .sim-header-card-link {
-          font-size: 0.8rem;
+        .sim-card-wide-link {
+          font-size: 0.9rem;
           font-weight: 700;
           color: #006ea7;
           transition: color 0.2s ease;
         }
-        .sim-header-card:hover .sim-header-card-link {
+        .sim-card-wide:hover .sim-card-wide-link {
           color: #22c55e;
         }
 
@@ -300,7 +300,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         
         .wachstum-layout {
           display: grid;
-          grid-template-columns: 380px 1fr;
+          grid-template-columns: 1fr 1fr;
           gap: 3rem;
         }
 
