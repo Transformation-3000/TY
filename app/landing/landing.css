@@ -1072,6 +1072,7 @@ section[id] {
   width: auto;
   object-fit: contain;
   margin-left: -10px;
+  margin-top: -15px;
   margin-bottom: 0.75rem;
   filter: brightness(0) invert(1);
 }
