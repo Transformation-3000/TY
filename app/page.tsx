@@ -158,6 +158,33 @@ export default function LandingPage() {
         </div>
       </header>
 
+      {/* Partner logos banner */}
+      <section className="partners-section">
+        <div className="partners-container">
+          <p className="partners-label">Wissenschaft & Technologie Partner</p>
+          <div className="partners-logos">
+            <div className="partner-logo">
+              <Image 
+                src="/images/dlg_logo.png" 
+                alt="Deutsche Longevity Gesellschaft" 
+                width={200} 
+                height={60} 
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
+            <div className="partner-logo lifespin-logo">
+              <Image 
+                src="/images/lifespin_logo.png" 
+                alt="Lifespin" 
+                width={160} 
+                height={50} 
+                style={{ objectFit: 'contain' }}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Video Concept Section */}
       <section id="konzept" className="video-section">
         <div className="video-section-container">

@@ -1076,7 +1076,7 @@ section[id] {
 }
 
 .footer-description-new {
-  font-size: 0.95rem;
+  font-size: 1.03rem;
   line-height: 1.6;
   color: #94a3b8;
   margin-bottom: 1.5rem;
@@ -1131,7 +1131,7 @@ section[id] {
 .footer-col-new a {
   color: #94a3b8;
   text-decoration: none;
-  font-size: 0.95rem;
+  font-size: 1.03rem;
   font-weight: 500;
   transition: color 0.2s ease, transform 0.2s ease;
   display: inline-flex;
@@ -1165,14 +1165,14 @@ section[id] {
 .footer-contact-card-new p {
   margin: 0 0 0.4rem;
   color: #94a3b8;
-  font-size: 0.9rem;
+  font-size: 0.98rem;
   line-height: 1.4;
 }
 
 .footer-company-name-new {
   color: white !important;
   font-weight: 700;
-  font-size: 0.95rem !important;
+  font-size: 1.03rem !important;
 }
 
 .footer-email-row-new {
@@ -1185,7 +1185,7 @@ section[id] {
   color: var(--landing-accent) !important;
   font-weight: 600;
   text-decoration: none;
-  font-size: 0.9rem !important;
+  font-size: 0.98rem !important;
   transition: opacity 0.2s ease;
 }
 
@@ -1203,7 +1203,7 @@ section[id] {
 
 .footer-legal-links-new a {
   color: #64748b !important;
-  font-size: 0.85rem !important;
+  font-size: 0.93rem !important;
   font-weight: 500;
   transition: color 0.2s ease;
 }
@@ -1231,7 +1231,7 @@ section[id] {
 
 .footer-bottom-new p {
   color: #64748b;
-  font-size: 0.85rem;
+  font-size: 0.93rem;
   margin: 0;
 }
 
@@ -1242,7 +1242,7 @@ section[id] {
 }
 
 .footer-security-badge-new {
-  font-size: 0.8rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: #64748b;
   background: rgba(255, 255, 255, 0.02);
@@ -1258,7 +1258,7 @@ section[id] {
 }
 
 .footer-badge-clean-new {
-  font-size: 0.8rem;
+  font-size: 0.88rem;
   font-weight: 600;
   color: #94a3b8;
   background: rgba(255, 255, 255, 0.04);
@@ -2453,6 +2453,58 @@ section[id] {
   .desktop-only {
     display: none;
   }
+}
+
+/* --- PARTNER SECTION --- */
+.partners-section {
+  background: #ffffff;
+  padding: 40px 5% 30px;
+  border-bottom: 1.5px solid rgba(0, 110, 167, 0.04);
+  text-align: center;
+}
+
+.partners-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.partners-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--landing-text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.partners-logos {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 4.5rem;
+  flex-wrap: wrap;
+}
+
+.partner-logo {
+  opacity: 0.55;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.partner-logo:hover {
+  opacity: 1;
+  transform: scale(1.04);
+}
+
+.partner-logo.lifespin-logo img {
+  filter: invert(1) opacity(0.65);
+  transition: all 0.3s ease;
+}
+
+.partner-logo.lifespin-logo:hover img {
+  filter: invert(1) opacity(1);
 }
 
 
