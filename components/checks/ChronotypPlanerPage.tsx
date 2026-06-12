@@ -796,7 +796,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
         }
 
         .timeline-card .card-subtitle {
-          margin-bottom: 0.75rem;
+          margin-bottom: 0;
         }
 
         .chrono-selector-column {
@@ -990,7 +990,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
         /* Waveform Curve Styles */
         .waveform-container {
           position: relative;
-          margin: 0.75rem 0 0.5rem 0;
+          margin: -1rem 0 0.5rem 0;
         }
 
         .waveform-svg {
