@@ -840,16 +840,11 @@ section[id] {
   }
 
   .final-cta-text-col {
-    text-align: center;
+    text-align: left;
   }
 
   .final-cta-btns {
-    justify-content: center;
-  }
-
-  .final-cta-btn {
-    width: 100%;
-    text-align: center;
+    justify-content: flex-start;
   }
 
   .longevity-chart-wrapper {
