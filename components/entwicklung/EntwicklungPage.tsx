@@ -76,14 +76,14 @@ const wochenAktivitaeten: ActivityItem[] = [
 
 const CLUSTER_CONFIGS: Record<string, { icon: string; color: string; bgColor: string; borderColor: string; lightBg: string }> = {
   'Schlaf & Erholung': {
-    icon: 'bi-moon-stars',
+    icon: 'bi-moon-stars-fill',
     color: '#4498ca',
     bgColor: 'rgba(68, 152, 202, 0.1)',
     borderColor: 'rgba(68, 152, 202, 0.2)',
     lightBg: '#f0f9ff'
   },
   'Kraft & Ausdauer': {
-    icon: 'bi-lightning-charge',
+    icon: 'bi-lightning-charge-fill',
     color: '#22c55e',
     bgColor: 'rgba(34, 197, 94, 0.1)',
     borderColor: 'rgba(34, 197, 94, 0.2)',
