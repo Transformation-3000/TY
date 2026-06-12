@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Bilderauswahl - True Years Prototype</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem;
+    }
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin-bottom: 0.5rem;
+      color: #1e293b;
+    }
+    .subtitle {
+      font-size: 1.1rem;
+      color: #64748b;
+      margin-bottom: 3rem;
+    }
+    h2 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 0.5rem;
+      margin-top: 2rem;
+      margin-bottom: 1.5rem;
+      color: #006ea7;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-bottom: 4rem;
+    }
+    .card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    .img-wrap {
+      width: 100%;
+      height: 220px;
+      background: #f1f5f9;
+      position: relative;
+    }
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .content {
+      padding: 1.25rem;
+    }
+    .option-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+    }
+    .option-desc {
+      font-size: 0.95rem;
+      color: #64748b;
+      line-height: 1.4;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Bildauswahl für deinen Prototyp</h1>
+  <p class="subtitle">Wähle deine Wunschbilder aus und nenne mir einfach die Option im Chat.</p>
+
+  <h2>🦉 Motive 1: Chronotyp & Schlaf-Planer (Oben Links)</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="img-wrap"><img src="/images/sleep_option_13.jpg" alt="Option 13"></div>
+      <div class="content">
+        <div class="option-title">Option 13</div>
+        <div class="option-desc">Klassisches, gemütliches Bett mit Kissen und Decken (sehr aufgeräumt).</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/sleep_option_14.jpg" alt="Option 14"></div>
+      <div class="content">
+        <div class="option-title">Option 14</div>
+        <div class="option-desc">Meditation in tiefgrüner Natur bei weichem Tageslicht.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/sleep_option_15.jpg" alt="Option 15"></div>
+      <div class="content">
+        <div class="option-title">Option 15</div>
+        <div class="option-desc">Ruhe und Atmung am Abend mit Kerzenschein.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/sleep_option_16.jpg" alt="Option 16"></div>
+      <div class="content">
+        <div class="option-title">Option 16 (Aktuell)</div>
+        <div class="option-desc">Wunderschöne Hügellandschaft bei Sonnenaufgang (circadianes Licht).</div>
+      </div>
+    </div>
+  </div>
+
+  <h2>🫁 Motive 2: VO2-Max & Cardio-Simulator (Unten Links)</h2>
+  <div class="grid">
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_11.jpg" alt="Option 1"></div>
+      <div class="content">
+        <div class="option-title">Option 1</div>
+        <div class="option-desc">Morgendlicher Jogger im sonnendurchfluteten Wald.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_12.jpg" alt="Option 2"></div>
+      <div class="content">
+        <div class="option-title">Option 2</div>
+        <div class="option-desc">Eine Frau joggt entlang eines grünen Waldweges.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_13.jpg" alt="Option 3"></div>
+      <div class="content">
+        <div class="option-title">Option 3</div>
+        <div class="option-desc">Waldlauf auf einem von Bäumen überdachten Naturpfad.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_14.jpg" alt="Option 4"></div>
+      <div class="content">
+        <div class="option-title">Option 4</div>
+        <div class="option-desc">Eine Frau joggt im sonnigen Wald (Nahaufnahme).</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_15.jpg" alt="Option 5"></div>
+      <div class="content">
+        <div class="option-title">Option 5</div>
+        <div class="option-desc">Ein Läufer auf einem breiten Waldpfad bei strahlendem Licht.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_16.jpg" alt="Option 6"></div>
+      <div class="content">
+        <div class="option-title">Option 6</div>
+        <div class="option-desc">Aktiver Läufer beim Training unter hellem Sonnenhimmel im Wald.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_18.jpg" alt="Option 8"></div>
+      <div class="content">
+        <div class="option-title">Option 8</div>
+        <div class="option-desc">Läufer von hinten auf einem kurvigen Pfad im Nadelwald.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_19.jpg" alt="Option 9"></div>
+      <div class="content">
+        <div class="option-title">Option 9</div>
+        <div class="option-desc">Laufen im dichten Wald, starker Gegenlicht-Sonnenschein.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_21.jpg" alt="Option 11"></div>
+      <div class="content">
+        <div class="option-title">Option 11</div>
+        <div class="option-desc">Sportlerin läuft auf weichem Waldboden.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_23.jpg" alt="Option 23"></div>
+      <div class="content">
+        <div class="option-title">Option 23</div>
+        <div class="option-desc">Läufer auf einem Pfad im Wald bei warmem Sonnenlicht.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_24.jpg" alt="Option 24"></div>
+      <div class="content">
+        <div class="option-title">Option 24</div>
+        <div class="option-desc">Dynamische Nahaufnahme eines Trail-Runners im Wald.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_25.jpg" alt="Option 25"></div>
+      <div class="content">
+        <div class="option-title">Option 25</div>
+        <div class="option-desc">Eine Frau joggt auf einem bewaldeten Naturpfad.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_26.jpg" alt="Option 26"></div>
+      <div class="content">
+        <div class="option-title">Option 26</div>
+        <div class="option-desc">Cardio-Dauerlauf im sonnigen Wald.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_27.jpg" alt="Option 27"></div>
+      <div class="content">
+        <div class="option-title">Option 27</div>
+        <div class="option-desc">Sportlerin joggt auf einem Waldweg.</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="img-wrap"><img src="/images/cardio_option_28.jpg" alt="Option 28"></div>
+      <div class="content">
+        <div class="option-title">Option 28</div>
+        <div class="option-desc">Cardio-Training in grüner Natur bei starkem Tageslicht.</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

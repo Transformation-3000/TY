@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" width="100%" height="100%">
+  <defs>
+    <!-- Sky Sunrise/Sunshine Gradient -->
+    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#bae6fd" /> <!-- Light blue -->
+      <stop offset="60%" stop-color="#fef08a" /> <!-- Sunshine yellow -->
+      <stop offset="100%" stop-color="#fed7aa" /> <!-- Soft orange -->
+    </linearGradient>
+
+    <!-- Sun rays glow -->
+    <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+      <stop offset="30%" stop-color="#fef08a" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="#fef08a" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Forest Hill Gradients (Depth layers) -->
+    <linearGradient id="hillBack" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#14532d" />
+      <stop offset="100%" stop-color="#052e16" />
+    </linearGradient>
+
+    <linearGradient id="hillMid" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#16a34a" />
+      <stop offset="100%" stop-color="#14532d" />
+    </linearGradient>
+
+    <linearGradient id="hillFront" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#4ade80" />
+      <stop offset="100%" stop-color="#16a34a" />
+    </linearGradient>
+
+    <!-- Path Gradient -->
+    <linearGradient id="pathGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fed7aa" />
+      <stop offset="100%" stop-color="#d97706" />
+    </linearGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="600" height="400" fill="url(#skyGrad)" />
+
+  <!-- Sun in the sky -->
+  <circle cx="450" cy="90" r="120" fill="url(#sunGlow)" opacity="0.8" />
+  <circle cx="450" cy="90" r="25" fill="#ffffff" />
+
+  <!-- Background Forest & Mountain Ridge -->
+  <path d="M 0,220 Q 150,180 300,210 T 600,190 L 600,400 L 0,400 Z" fill="url(#hillBack)" opacity="0.9" />
+
+  <!-- Middle Forest Layer with Tree shapes -->
+  <path d="M 0,270 Q 120,230 250,260 T 600,230 L 600,400 L 0,400 Z" fill="url(#hillMid)" />
+  
+  <!-- Stylized Pine Tree Silhouettes in background -->
+  <polygon points="80,180 70,210 90,210" fill="#052e16" />
+  <polygon points="80,195 65,230 95,230" fill="#052e16" />
+  
+  <polygon points="180,190 172,215 188,215" fill="#14532d" />
+  <polygon points="180,205 168,235 192,235" fill="#14532d" />
+
+  <!-- Foreground Hill -->
+  <path d="M 0,330 Q 180,280 380,310 T 600,280 L 600,400 L 0,400 Z" fill="url(#hillFront)" />
+
+  <!-- Winding Path -->
+  <path d="M -20,400 Q 150,330 250,340 T 600,310 L 600,350 T 260,375 Q 120,370 -20,430 Z" fill="url(#pathGrad)" />
+
+  <!-- Trees in foreground -->
+  <!-- Deciduous Tree Left -->
+  <rect x="50" y="220" width="12" height="120" rx="3" fill="#1e293b" />
+  <circle cx="56" cy="200" r="45" fill="#166534" />
+  <circle cx="35" cy="180" r="35" fill="#15803d" />
+  <circle cx="75" cy="185" r="30" fill="#22c55e" opacity="0.9" />
+
+  <!-- Jogging Woman Figure (Vector Silhouette) -->
+  <!-- Rendered in modern activewear style -->
+  <g transform="translate(180, 240)">
+    <!-- Forward Leg (Right Leg) -->
+    <path d="M 30,70 L 48,82 L 40,98" stroke="#f97316" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    <!-- Back Leg (Left Leg) -->
+    <path d="M 30,70 L 12,85 L 20,105" stroke="#f97316" stroke-width="6.5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+    
+    <!-- Torso & Active Top (Orange/Teal athletic outfit) -->
+    <path d="M 28,38 L 32,70 L 26,72 L 22,40 Z" fill="#0f766e" />
+    <path d="M 28,38 L 30,58 L 24,58 L 22,40 Z" fill="#f97316" /> <!-- Orange Vest -->
+
+    <!-- Head & Pony Tail (Representing the woman jogger) -->
+    <circle cx="27" cy="22" r="8" fill="#1e293b" />
+    <path d="M 20,22 Q 10,24 8,32 Q 12,28 20,24" fill="#1e293b" /> <!-- Ponytail -->
+
+    <!-- Back Arm (Left Arm) -->
+    <path d="M 26,38 L 10,48 L 15,60" stroke="#f97316" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+
+    <!-- Forward Arm (Right Arm) -->
+    <path d="M 26,38 L 38,44 L 32,58" stroke="#1e293b" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  </g>
+
+  <!-- Sunshine Specks / Lens flare effect -->
+  <circle cx="220" cy="160" r="8" fill="#ffffff" opacity="0.3" />
+  <circle cx="160" cy="200" r="14" fill="#fde047" opacity="0.15" />
+  <circle cx="120" cy="230" r="22" fill="#fed7aa" opacity="0.1" />
+
+</svg>

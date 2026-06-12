@@ -37,9 +37,11 @@ interface WachstumPageProps {
   onStartLisaDaily?: () => void;
   onStartSimulation?: () => void;
   onStartAutophagy?: () => void;
+  onStartChronotyp?: () => void;
+  onStartCardio?: () => void;
 }
 
-export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimulation, onStartAutophagy }: WachstumPageProps) {
+export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimulation, onStartAutophagy, onStartChronotyp, onStartCardio }: WachstumPageProps) {
   const [selectedField, setSelectedField] = useState(OPTIMIZATION_FIELDS[0]);
   const [selectedStyle, setSelectedStyle] = useState<number>(2); // 1 = Einfach, 2 = Mittel, 3 = Tiefgründig
   const userMaturity = 2; // Beispiel-Reifegrad für die Logik rechts
@@ -52,12 +54,13 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Do it yourself</h1>
         
         <div className="style-selector-wrapper" style={{ marginTop: '1.75rem' }}>
-          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1.25rem' }}>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
             <span className="blue-bar"></span>
             <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>
               Konfiguration: <span style={{ fontWeight: 500, color: '#475569', marginLeft: '0.25rem' }}>Wähle einen Stil aus, der am besten zu dir passt:</span>
             </h2>
           </div>
+          <div style={{ height: '1px', background: '#e2e8f0', width: '100%', marginBottom: '1.5rem' }}></div>
           <div className="segmented-control">
             {[
               { level: 1, name: 'Einfach', desc: 'Minimaler Aufwand: Fokus auf die wirkungsvollsten Gewohnheiten mit simplen Schritt-für-Schritt-Anleitungen.', image: '/images/icon_einfach_clean_3d.png?v=3' },
@@ -66,7 +69,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
             ].map((item) => (
               <button 
                 key={item.level} 
-                className={`segmented-button ${selectedStyle === item.level ? 'active' : ''}`}
+                className={`segmented-button level-${item.level} ${selectedStyle === item.level ? 'active' : ''}`}
                 onClick={() => setSelectedStyle(item.level)}
                 type="button"
               >
@@ -78,7 +81,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                       width: '38px',
                       height: '38px',
                       objectFit: 'contain',
-                      flexShrink: 0
+                      flexShrink: 0,
+                      marginLeft: '-6px'
                     }}
                   />
                   <span className="style-name">{item.name}</span>
@@ -92,217 +96,262 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
 
       <div className="wachstum-layout">
         
-        {/* Links: Auswahl Optimierungsfelder */}
-        <section className="fields-section">
+        {/* Card 1: Zellalter-Simulation */}
+        <div>
           <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1.25rem' }}>
             <span className="blue-bar"></span>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Longevity-Experience starten</h2>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>1. Zellalter-Simulation</h2>
           </div>
-          <div className="fields-grid" style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-            {OPTIMIZATION_FIELDS.map((field, index) => (
-              <button
-                key={field.id}
-                onClick={() => field.active && setSelectedField(field)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '1rem',
-                  padding: '1.25rem',
-                  borderRadius: '20px',
-                  border: selectedField.id === field.id ? `2px solid ${field.color}` : '2px solid #f1f5f9',
-                  background: selectedField.id === field.id ? '#fff' : '#f8fafc',
-                  cursor: field.active ? 'pointer' : 'not-allowed',
-                  textAlign: 'left',
-                  transition: 'all 0.2s ease',
-                  boxShadow: selectedField.id === field.id ? '0 10px 20px rgba(0,0,0,0.05)' : 'none',
-                  opacity: field.active ? 1 : 0.6,
-                  filter: field.active ? 'none' : 'grayscale(0.8)',
-                  width: '100%',
-                  justifyContent: 'space-between'
-                }}
-              >
-                <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: 'calc(1rem + 2pt)', fontWeight: 700, color: field.active ? '#1e293b' : '#64748b' }}>
-                    {index + 1}. {field.label}
-                  </div>
-                  {field.active && (
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '0.4rem' }}>
-                      <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b' }}>
-                        Level {field.level}
-                      </div>
-                      <div style={{ 
-                        padding: '2px 8px', borderRadius: '6px', background: selectedField.id === field.id ? field.color : '#e2e8f0',
-                        color: selectedField.id === field.id ? '#fff' : '#64748b', fontSize: '0.65rem', fontWeight: 800,
-                        textTransform: 'uppercase', letterSpacing: '0.02em'
-                      }}>
-                        Auswählen
-                      </div>
-                    </div>
-                  )}
-                  <div style={{ marginTop: '0.5rem', height: '6px', background: '#e2e8f0', borderRadius: '3px', overflow: 'hidden' }}>
-                    <div style={{ width: `${field.maturity}%`, height: '100%', background: field.active ? field.color : '#cbd5e1' }} />
-                  </div>
+          <div 
+            className="sim-card-wide"
+            onClick={onStartSimulation}
+          >
+            <div className="sim-card-wide-img-wrap">
+              <Image 
+                src="/images/dna_helix_vibrant.png" 
+                alt="Zellalter Simulation" 
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+            <div className="sim-card-wide-content">
+              <div className="sim-card-grid-layout">
+                <div className="sim-card-left-col">
+                  <h3>Wie beeinflusst dein Lebensstil dein biologisches Alter?</h3>
+                  <p>
+                    Finde heraus, wie sich gezielte Lifestyle-Changes in den Bereichen Schlaf, Sport und Ernährung direkt auf deine Zellen auswirken. Simuliere deine Routinen und starte dein Verjüngungsexperiment!
+                  </p>
                 </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '0.35rem', flexShrink: 0, marginLeft: '0.5rem' }}>
-                  <div style={{ 
-                    width: '38px', height: '38px', borderRadius: '50%', 
-                    border: '2px solid #4498ca',
-                    background: '#f0f9ff',
-                    color: '#4498ca',
-                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                    fontSize: '1.1rem', transition: 'all 0.2s'
+                <div className="sim-card-right-col">
+                  <div className="bac-circle-container-mini">
+                    <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                      <defs>
+                        <linearGradient id="simAgeScoreGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="#4498ca" />
+                          <stop offset="100%" stopColor="#22c55e" />
+                        </linearGradient>
+                        <filter id="simSoftGlow" x="-10%" y="-10%" width="120%" height="120%">
+                          <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#3b82f6" floodOpacity="0.15" />
+                        </filter>
+                      </defs>
+                      <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                      <circle 
+                        cx="50" 
+                        cy="50" 
+                        r="41" 
+                        fill="none" 
+                        stroke="url(#simAgeScoreGrad)" 
+                        strokeWidth="7.5" 
+                        strokeDasharray="257.6" 
+                        strokeDashoffset={257.6 * (1 - 42.5 / 111)} 
+                        strokeLinecap="round" 
+                        filter="url(#simSoftGlow)"
+                        transform="rotate(-90 50 50)"
+                      />
+                    </svg>
+                    <div className="bac-circle-text-box-mini">
+                      <span className="bac-circle-val-mini">42,5</span>
+                      <span className="bac-circle-lab-mini">Jahre</span>
+                    </div>
+                  </div>
+                  <button className="sim-card-blue-button" onClick={(e) => {
+                    e.stopPropagation();
+                    onStartSimulation?.();
                   }}>
-                    <i className={`bi ${field.active ? field.icon : 'bi-lock'}`}></i>
-                  </div>
-                  {field.active ? (
-                    <div style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '1.2rem', fontWeight: 900, color: '#1e293b', lineHeight: 1 }}>
-                        {field.maturity}<span style={{ fontSize: '0.8rem', opacity: 0.6 }}>%</span>
-                      </div>
-                    </div>
-                  ) : (
-                    <div style={{ fontSize: '0.65rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase' }}>Inaktiv</div>
-                  )}
+                    Simulation<br />starten
+                  </button>
                 </div>
-              </button>
-            ))}
+              </div>
+            </div>
           </div>
-        </section>
+        </div>
 
-        {/* Rechts: Quick Wins Navigator */}
-        <section className="navigator-section">
-          {onStartSimulation && (
-            <>
-              <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1.25rem' }}>
-                <span className="blue-bar"></span>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Zellalter-Simulation</h2>
-              </div>
-              <div 
-                className="sim-card-wide"
-                onClick={onStartSimulation}
-              >
-                <div className="sim-card-wide-img-wrap">
-                  <Image 
-                    src="/images/dna_helix_vibrant.png" 
-                    alt="Zellalter Simulation" 
-                    fill
-                    style={{ objectFit: 'cover' }}
-                  />
+        {/* Card 2: Chronotyp & Schlaf-Planer */}
+        <div>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <span className="blue-bar"></span>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>2. Chronotyp & Schlaf-Planer</h2>
+          </div>
+          <div 
+            className="sim-card-wide"
+            onClick={() => onStartChronotyp?.()}
+          >
+            <div className="sim-card-wide-img-wrap">
+              <Image 
+                src="/images/sleep_option_16.jpg" 
+                alt="Chronotyp & Schlaf-Planer" 
+                fill
+                style={{ objectFit: 'cover', objectPosition: 'center 35%' }}
+              />
+            </div>
+            <div className="sim-card-wide-content">
+              <div className="sim-card-grid-layout">
+                <div className="sim-card-left-col">
+                  <h3>Finde deinen Chronotyp und optimiere deinen Tag</h3>
+                  <p>
+                    Dieser Planer bestimmt deinen circadianen Rhythmus (Löwe, Bär, Wolf, Delphin) und erstellt den idealen Tagesablauf für Licht, Koffein, Sport und Schlaf.
+                  </p>
                 </div>
-                <div className="sim-card-wide-content">
-                  <div className="sim-card-grid-layout">
-                    <div className="sim-card-left-col">
-                      <h3>Wie beeinflusst dein Lebensstil dein biologisches Alter?</h3>
-                      <p>
-                        Finde heraus, wie sich gezielte Lifestyle-Changes in den Bereichen Schlaf, Sport und Ernährung direkt auf deine Zellen auswirken. Simuliere deine Routinen und starte dein Verjüngungsexperiment!
-                      </p>
-                    </div>
-                    <div className="sim-card-right-col">
-                      <div className="bac-circle-container-mini">
-                        <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
-                          <defs>
-                            <linearGradient id="simAgeScoreGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-                              <stop offset="0%" stopColor="#4498ca" />
-                              <stop offset="100%" stopColor="#22c55e" />
-                            </linearGradient>
-                            <filter id="simSoftGlow" x="-10%" y="-10%" width="120%" height="120%">
-                              <feDropShadow dx="0" dy="2" stdDeviation="2" floodColor="#3b82f6" floodOpacity="0.15" />
-                            </filter>
-                          </defs>
-                          <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
-                          <circle 
-                            cx="50" 
-                            cy="50" 
-                            r="41" 
-                            fill="none" 
-                            stroke="url(#simAgeScoreGrad)" 
-                            strokeWidth="7.5" 
-                            strokeDasharray="257.6" 
-                            strokeDashoffset={257.6 * (1 - 42.5 / 111)} 
-                            strokeLinecap="round" 
-                            filter="url(#simSoftGlow)"
-                            transform="rotate(-90 50 50)"
-                          />
-                        </svg>
-                        <div className="bac-circle-text-box-mini">
-                          <span className="bac-circle-val-mini">42,5</span>
-                          <span className="bac-circle-lab-mini">Jahre</span>
-                        </div>
-                      </div>
-                      <button className="sim-card-blue-button" onClick={(e) => {
-                        e.stopPropagation();
-                        onStartSimulation();
-                      }}>
-                        Simulation<br />starten
-                      </button>
+                <div className="sim-card-right-col">
+                  <div className="bac-circle-container-mini">
+                    <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                      <circle 
+                        cx="50" 
+                        cy="50" 
+                        r="41" 
+                        fill="none" 
+                        stroke="url(#simAgeScoreGrad)" 
+                        strokeWidth="7.5" 
+                        strokeDasharray="257.6" 
+                        strokeDashoffset={257.6 * (1 - 65 / 100)} 
+                        strokeLinecap="round" 
+                        filter="url(#simSoftGlow)"
+                        transform="rotate(-90 50 50)"
+                      />
+                    </svg>
+                    <div className="bac-circle-text-box-mini">
+                      <span className="bac-circle-val-mini">65%</span>
+                      <span className="bac-circle-lab-mini">Balance</span>
                     </div>
                   </div>
+                  <button className="sim-card-blue-button" onClick={(e) => {
+                    e.stopPropagation();
+                    onStartChronotyp?.();
+                  }}>
+                    Planer<br />starten
+                  </button>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
 
-              <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginTop: '2.5rem', marginBottom: '1.25rem' }}>
-                <span className="blue-bar"></span>
-                <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Autophagie & Fasten-Timer</h2>
+        {/* Card 3: VO2-Max & Cardio-Simulator */}
+        <div>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <span className="blue-bar"></span>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>3. VO2-Max & Cardio-Simulator</h2>
+          </div>
+          <div 
+            className="sim-card-wide"
+            onClick={() => onStartCardio?.()}
+          >
+            <div className="sim-card-wide-img-wrap">
+              <Image 
+                src="/images/cardio_option_25.jpg" 
+                alt="VO2-Max & Cardio-Simulator" 
+                fill
+                style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
+              />
+              <div className="zone2-card-overlay">
+                <span className="zone2-pulse-dot"></span>
+                <span className="zone2-label">ZONE 2</span>
               </div>
-              <div 
-                className="sim-card-wide"
-                onClick={() => onStartAutophagy?.()}
-              >
-                <div className="sim-card-wide-img-wrap">
-                  <Image 
-                    src="/images/autophagy_cell.png" 
-                    alt="Autophagie & Fasten Timer" 
-                    fill
-                    style={{ objectFit: 'cover' }}
-                  />
+            </div>
+            <div className="sim-card-wide-content">
+              <div className="sim-card-grid-layout">
+                <div className="sim-card-left-col">
+                  <h3>Optimiere deine Ausdauer und Mitochondrien</h3>
+                  <p>
+                    Berechne deine individuellen Trainingszonen (Zone-2 für Zellgesundheit, Zone-5 für VO2-Max) und erstelle einen wissenschaftlich präzisen Cardio-Plan.
+                  </p>
                 </div>
-                <div className="sim-card-wide-content">
-                  <div className="sim-card-grid-layout">
-                    <div className="sim-card-left-col">
-                      <h3>Visualisiere deine zelluläre Selbstreinigung</h3>
-                      <p>
-                        Erlebe, ab wann dein Körper überschüssige Proteine abbaut, Fett verbrennt und die zelluläre Regeneration (Autophagie) startet. Konfiguriere dein Fastenfenster!
-                      </p>
-                    </div>
-                    <div className="sim-card-right-col">
-                      <div className="bac-circle-container-mini">
-                        <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
-                          <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
-                          <circle 
-                            cx="50" 
-                            cy="50" 
-                            r="41" 
-                            fill="none" 
-                            stroke="url(#simAgeScoreGrad)" 
-                            strokeWidth="7.5" 
-                            strokeDasharray="257.6" 
-                            strokeDashoffset={257.6 * (1 - 16 / 24)} 
-                            strokeLinecap="round" 
-                            filter="url(#simSoftGlow)"
-                            transform="rotate(-90 50 50)"
-                          />
-                        </svg>
-                        <div className="bac-circle-text-box-mini">
-                          <span className="bac-circle-val-mini">16:8</span>
-                          <span className="bac-circle-lab-mini">Timer</span>
-                        </div>
-                      </div>
-                      <button className="sim-card-blue-button" onClick={(e) => {
-                        e.stopPropagation();
-                        onStartAutophagy?.();
-                      }}>
-                        Timer<br />starten
-                      </button>
+                <div className="sim-card-right-col">
+                  <div className="bac-circle-container-mini">
+                    <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                      <circle 
+                        cx="50" 
+                        cy="50" 
+                        r="41" 
+                        fill="none" 
+                        stroke="url(#simAgeScoreGrad)" 
+                        strokeWidth="7.5" 
+                        strokeDasharray="257.6" 
+                        strokeDashoffset={257.6 * (1 - 42 / 100)} 
+                        strokeLinecap="round" 
+                        filter="url(#simSoftGlow)"
+                        transform="rotate(-90 50 50)"
+                      />
+                    </svg>
+                    <div className="bac-circle-text-box-mini">
+                      <span className="bac-circle-val-mini">42%</span>
+                      <span className="bac-circle-lab-mini">Fitness</span>
                     </div>
                   </div>
+                  <button className="sim-card-blue-button" style={{ background: '#22c55e', boxShadow: '0 4px 12px rgba(34, 197, 94, 0.25)' }} onClick={(e) => {
+                    e.stopPropagation();
+                    onStartCardio?.();
+                  }}>
+                    Simulator<br />starten
+                  </button>
                 </div>
               </div>
-            </>
-          )}
+            </div>
+          </div>
+        </div>
 
-
-        </section>
+        {/* Card 4: Autophagie & Fasten-Timer */}
+        <div>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <span className="blue-bar"></span>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>4. Autophagie & Fasten-Timer</h2>
+          </div>
+          <div 
+            className="sim-card-wide"
+            onClick={() => onStartAutophagy?.()}
+          >
+            <div className="sim-card-wide-img-wrap">
+              <Image 
+                src="/images/autophagy_cell.png" 
+                alt="Autophagie & Fasten Timer" 
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+            <div className="sim-card-wide-content">
+              <div className="sim-card-grid-layout">
+                <div className="sim-card-left-col">
+                  <h3>Visualisiere deine zelluläre Selbstreinigung</h3>
+                  <p>
+                    Erlebe, ab wann dein Körper überschüssige Proteine abbaut, Fett verbrennt und die zelluläre Regeneration (Autophagie) startet. Konfiguriere dein Fastenfenster!
+                  </p>
+                </div>
+                <div className="sim-card-right-col">
+                  <div className="bac-circle-container-mini">
+                    <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                      <circle 
+                        cx="50" 
+                        cy="50" 
+                        r="41" 
+                        fill="none" 
+                        stroke="url(#simAgeScoreGrad)" 
+                        strokeWidth="7.5" 
+                        strokeDasharray="257.6" 
+                        strokeDashoffset={257.6 * (1 - 16 / 24)} 
+                        strokeLinecap="round" 
+                        filter="url(#simSoftGlow)"
+                        transform="rotate(-90 50 50)"
+                      />
+                    </svg>
+                    <div className="bac-circle-text-box-mini">
+                      <span className="bac-circle-val-mini">16:8</span>
+                      <span className="bac-circle-lab-mini">Timer</span>
+                    </div>
+                  </div>
+                  <button className="sim-card-blue-button" onClick={(e) => {
+                    e.stopPropagation();
+                    onStartAutophagy?.();
+                  }}>
+                    Timer<br />starten
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <style jsx>{`
@@ -330,6 +379,52 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           height: 180px;
           flex-shrink: 0;
           background: #f1f5f9;
+        }
+        .zone2-card-overlay {
+          position: absolute;
+          top: 16px;
+          left: 16px;
+          background: rgba(15, 23, 42, 0.45);
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+          border: 1.5px solid rgba(34, 197, 94, 0.4);
+          border-radius: 100px;
+          padding: 0.5rem 1rem;
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+          z-index: 10;
+        }
+        .zone2-pulse-dot {
+          width: 8px;
+          height: 8px;
+          background-color: #22c55e;
+          border-radius: 50%;
+          display: inline-block;
+          box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+          animation: pulse 1.8s infinite;
+        }
+        .zone2-label {
+          color: #ffffff;
+          font-size: 0.8rem;
+          font-weight: 900;
+          letter-spacing: 0.08em;
+          line-height: 1;
+        }
+        @keyframes pulse {
+          0% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+          }
+          70% {
+            transform: scale(1);
+            box-shadow: 0 0 0 6px rgba(34, 197, 94, 0);
+          }
+          100% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+          }
         }
         .sim-card-wide-content {
           padding: 1.5rem;
@@ -427,16 +522,14 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         }
         .segmented-control {
           display: flex;
-          background: rgba(0, 90, 140, 0.32);
-          backdrop-filter: blur(12px);
-          -webkit-backdrop-filter: blur(12px);
-          border-radius: 24px;
-          padding: 0.85rem;
-          gap: 0.85rem;
+          background: transparent;
+          border-radius: 0;
+          padding: 0;
+          gap: 1.25rem;
           width: 100%;
           max-width: 100%;
           border: none;
-          box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.03), inset 0 2px 4px rgba(15, 23, 42, 0.01);
+          box-shadow: none;
         }
         .segmented-button {
           flex: 1;
@@ -444,26 +537,38 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           flex-direction: column;
           align-items: flex-start;
           justify-content: flex-start;
-          padding: 1.25rem 1.75rem;
-          border: 2px solid transparent;
-          background: #d2e9f3;
-          border-radius: 18px;
+          padding: 1.25rem 1.5rem;
+          border: 1px solid #e2e8f0;
+          background: #ffffff;
+          border-radius: 16px;
           cursor: pointer;
-          transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
           text-align: left;
-          box-shadow: none;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
         }
         .segmented-button:hover {
-          background: #c5e2f0;
-          border-color: rgba(0, 110, 167, 0.15);
-          transform: translateY(-4px) scale(1.025);
-          box-shadow: 0 12px 30px rgba(0, 110, 167, 0.08);
+          background: #f8fafc;
+          border-color: #cbd5e1;
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
         }
         .segmented-button.active {
-          background: rgba(255, 255, 255, 0.95);
+          background: #ffffff;
           border: 2px solid #4498ca;
-          box-shadow: 0 10px 25px rgba(0, 110, 167, 0.12), 0 2px 8px rgba(0, 110, 167, 0.04);
-          transform: translateY(-2px) scale(1.015);
+          box-shadow: 0 8px 24px rgba(0, 110, 167, 0.08);
+          transform: translateY(-2px);
+        }
+        .segmented-button img {
+          transition: all 0.3s ease;
+        }
+        .segmented-button:not(.active):not(:hover) {
+          background: #f8fafc;
+          border-color: #e2e8f0;
+          opacity: 0.55;
+          box-shadow: none;
+        }
+        .segmented-button:not(.active):not(:hover) img {
+          filter: grayscale(100%) opacity(50%);
         }
         .style-header-row {
           display: flex;
