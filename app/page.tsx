@@ -1176,7 +1176,7 @@ export default function LandingPage() {
                   <line x1="50" y1="30" x2="50" y2="275" stroke="rgba(0,0,0,0.12)" strokeWidth="1.5" />
                   
                   {/* Diverging area fill gradient */}
-                  <path d="M 50 200 Q 220 180 450 100 L 450 220 Q 220 220 50 200 Z" fill="url(#diverge-gradient)" opacity="0.15" />
+                  <path d="M 50 200 Q 220 180 450 100 L 450 220 Q 220 220 50 200 Z" fill="url(#diverge-gradient)" />
                   
                   {/* Normal Curve (Red/Orange) */}
                   <path d="M 50 200 Q 220 180 450 100" stroke="#f43f5e" strokeWidth="3.5" strokeLinecap="round" />
@@ -1209,8 +1209,8 @@ export default function LandingPage() {
                   {/* Gradient Definitions */}
                   <defs>
                     <linearGradient id="diverge-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#10b981" stopOpacity="0.05" />
-                      <stop offset="100%" stopColor="#10b981" stopOpacity="0.2" />
+                      <stop offset="0%" stopColor="#d1fae5" stopOpacity="0.4" />
+                      <stop offset="100%" stopColor="#10b981" stopOpacity="0.25" />
                     </linearGradient>
                   </defs>
                 </svg>
