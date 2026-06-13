@@ -1158,7 +1158,7 @@ export default function LandingPage() {
               </p>
               <div className="final-cta-btns">
                 <Link href="#erfolgsprinzip" className="btn-primary-large final-cta-btn">
-                  Jetzt BioAge berechnen
+                  Jetzt Mitglied werden und BioAge berechnen
                 </Link>
               </div>
             </div>
@@ -1191,19 +1191,20 @@ export default function LandingPage() {
                   <circle cx="450" cy="220" r="5" fill="#10b981" />
                   
                   {/* Labels on curves */}
-                  <text x="220" y="115" fill="#f43f5e" fontSize="12" fontWeight="600">Standard-Alterung</text>
-                  <text x="220" y="250" fill="#10b981" fontSize="12" fontWeight="700">TrueYears Longevity-Pfad</text>
+                  <text x="220" y="115" fill="#f43f5e" fontSize="16" fontWeight="600">Standard-Alterung</text>
+                  <text x="220" y="250" fill="#10b981" fontSize="16" fontWeight="700">TrueYears Longevity-Pfad</text>
                   
                   {/* Rejuvenation Gap Text */}
-                  <text x="350" y="150" fill="#a5f3fc" fontSize="11" fontWeight="800">VITALITÄTS-</text>
-                  <text x="365" y="165" fill="#a5f3fc" fontSize="11" fontWeight="800">GEWINN</text>
-                  <path d="M 430 115 L 430 205" stroke="#a5f3fc" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <text x="430" y="152" fill="#a5f3fc" fontSize="15" fontWeight="800" textAnchor="middle">VITALITÄTS-</text>
+                  <text x="430" y="172" fill="#a5f3fc" fontSize="15" fontWeight="800" textAnchor="middle">GEWINN</text>
+                  <path d="M 430 115 L 430 135" stroke="#a5f3fc" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 430 185 L 430 205" stroke="#a5f3fc" strokeWidth="1.5" strokeDasharray="3 3" />
                   <path d="M 426 118 L 430 114 L 434 118" stroke="#a5f3fc" strokeWidth="1.5" fill="none" />
                   <path d="M 426 201 L 430 205 L 434 201" stroke="#a5f3fc" strokeWidth="1.5" fill="none" />
                   
                   {/* Axis Labels */}
-                  <text x="20" y="160" fill="rgba(255,255,255,0.4)" fontSize="10" transform="rotate(-90 20 160)" textAnchor="middle">Biologisches Alter</text>
-                  <text x="250" y="310" fill="rgba(255,255,255,0.4)" fontSize="10" textAnchor="middle">Chronologisches Alter (Zeitverlauf)</text>
+                  <text x="20" y="160" fill="rgba(255,255,255,0.4)" fontSize="14" transform="rotate(-90 20 160)" textAnchor="middle">Biologisches Alter</text>
+                  <text x="250" y="310" fill="rgba(255,255,255,0.4)" fontSize="14" textAnchor="middle">Chronologisches Alter (Zeitverlauf)</text>
                   
                   {/* Gradient Definitions */}
                   <defs>

@@ -470,7 +470,7 @@ section[id] {
 
 .final-cta-grid {
   display: grid;
-  grid-template-columns: 1.55fr 1fr;
+  grid-template-columns: 1fr 1fr;
   gap: 4rem;
   align-items: start;
   text-align: left;
