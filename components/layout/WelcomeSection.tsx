@@ -293,7 +293,7 @@ export default function WelcomeSection({
                     <strong>Tägliches Bio-Alignment:</strong> Deine Werte (wie HRV, Herzfrequenz, Bewegungs-, Stress- und Schlafphasen) fließen direkt in Lisa & Tom AI ein, um deine Empfehlungen anzupassen.
                   </li>
                   <li>
-                    <strong>Echtzeit-Erfolgsmessung:</strong> Du siehst sofort, wie sich dein Schlaf und Sport auf dein biologisches Alter und deine Vitalitäts-Scores auswirken.
+                    <strong>Echtzeit-Erfolgsmessung:</strong> Du siehst sofort, wie sich dein Schlaf, deine nächtliche Regeneration und Sport auf dein biologisches Alter und deine Vitalitäts-Scores auswirken
                   </li>
                   <li>
                     <strong>100% Datensouveränität:</strong> Deine Gesundheitsdaten werden ausschließlich verschlüsselt übertragen, niemals weiterverkauft und dienen rein deiner persönlichen Optimierung.
