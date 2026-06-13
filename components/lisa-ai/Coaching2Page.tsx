@@ -667,7 +667,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                   <div className="wbsb-left">
                     <div className="wbsb-body">
                       <div className="wbsb-title">1. Daily</div>
-                      <div className="wbsb-desc">Dein Wohlfühl-Check-in für mehr Quality-Time am Tag</div>
+                      <div className="wbsb-desc">Wohlfühl-Check-in für mehr Quality-Time am Tag</div>
                     </div>
                   </div>
                   <div className="wbsb-right">
