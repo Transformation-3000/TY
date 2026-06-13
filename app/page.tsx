@@ -1167,13 +1167,13 @@ export default function LandingPage() {
               <div className="longevity-chart-wrapper">
                 <svg className="longevity-chart-svg" viewBox="0 0 500 350" fill="none" xmlns="http://www.w3.org/2000/svg">
                   {/* Grid Lines */}
-                  <line x1="50" y1="50" x2="450" y2="50" stroke="rgba(0,0,0,0.06)" />
-                  <line x1="50" y1="125" x2="450" y2="125" stroke="rgba(0,0,0,0.06)" />
-                  <line x1="50" y1="200" x2="450" y2="200" stroke="rgba(0,0,0,0.06)" />
-                  <line x1="50" y1="275" x2="450" y2="275" stroke="rgba(0,0,0,0.06)" strokeWidth="1.5" />
+                  <line x1="50" y1="50" x2="450" y2="50" stroke="rgba(0,0,0,0.15)" />
+                  <line x1="50" y1="125" x2="450" y2="125" stroke="rgba(0,0,0,0.15)" />
+                  <line x1="50" y1="200" x2="450" y2="200" stroke="rgba(0,0,0,0.15)" />
+                  <line x1="50" y1="275" x2="450" y2="275" stroke="rgba(0,0,0,0.15)" strokeWidth="1.5" />
                   
                   {/* Y Axis line */}
-                  <line x1="50" y1="30" x2="50" y2="275" stroke="rgba(0,0,0,0.12)" strokeWidth="1.5" />
+                  <line x1="50" y1="30" x2="50" y2="275" stroke="rgba(0,0,0,0.3)" strokeWidth="1.5" />
                   
                   {/* Diverging area fill gradient */}
                   <path d="M 50 200 Q 220 180 450 100 L 450 220 Q 220 220 50 200 Z" fill="url(#diverge-gradient)" />
@@ -1200,8 +1200,8 @@ export default function LandingPage() {
                   <text x="350" y="185" fill="#006EA7" fontSize="12" fontWeight="800" textAnchor="middle" letterSpacing="0.05em">Gewinn</text>
                   
                   {/* Axis Labels */}
-                  <text x="20" y="160" fill="rgba(15,23,42,0.4)" fontSize="14" transform="rotate(-90 20 160)" textAnchor="middle">Dein biologisches Alter</text>
-                  <text x="250" y="310" fill="rgba(15,23,42,0.4)" fontSize="14" textAnchor="middle">Dein chronologisches Alter</text>
+                  <text x="20" y="160" fill="rgba(15,23,42,0.85)" fontSize="14" transform="rotate(-90 20 160)" textAnchor="middle">Dein biologisches Alter</text>
+                  <text x="250" y="310" fill="rgba(15,23,42,0.85)" fontSize="14" textAnchor="middle">Dein chronologisches Alter</text>
                   
                   {/* Gradient Definitions */}
                   <defs>
