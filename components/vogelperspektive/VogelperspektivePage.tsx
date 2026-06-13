@@ -294,9 +294,16 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
 
         {/* BOX 1: DEIN FOKUS HEUTE */}
         <div className="dash-card focus-box">
-          <div className="box-header">
+          <div className="box-header" style={{ position: 'relative' }}>
             <i className="bi bi-brightness-high focus-sun-icon"></i>
             <h2 className="box-label">Dein Fokus heute</h2>
+            <div className="info-tooltip-container">
+              <i className="bi bi-info-circle info-tooltip-icon"></i>
+              <div className="info-tooltip-text">
+                <strong>Dein Fokus heute:</strong> Tägliches gesundheitliches Hauptziel basierend auf Biomarkern und Wearables.<br/><br/>
+                <strong>Kundenvorteil:</strong> Hilft dir, dich ohne Überforderung auf die wirksamste Maßnahme zur Steigerung deiner Vitalität zu konzentrieren.
+              </div>
+            </div>
           </div>
           <div className="focus-main-content">
             <div className="focus-hero-row">
@@ -336,9 +343,16 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
 
         {/* BOX 2: ACTIVITY TRACKER */}
         <div className="dash-card tracker-box">
-          <div className="box-header">
+          <div className="box-header" style={{ position: 'relative' }}>
             <i className="bi bi-smartwatch tracker-icon"></i>
             <h2 className="box-label">Activity Tracker</h2>
+            <div className="info-tooltip-container">
+              <i className="bi bi-info-circle info-tooltip-icon"></i>
+              <div className="info-tooltip-text">
+                <strong>Activity Tracker:</strong> Schnelle Erfassung von Aktivitäten, Mahlzeiten und Routinen per Klick, Sprache oder Foto.<br/><br/>
+                <strong>Kundenvorteil:</strong> Ermöglicht müheloses Tracking im Alltag und belohnt dich mit Diamonds, die du gegen echte Longevity-Vorteile einlösen kannst.
+              </div>
+            </div>
           </div>
           <div className="tracker-top-btns">
             <button className="add-btn" onClick={() => setActiveModal('activity')}>+</button>
@@ -390,9 +404,16 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
 
         {/* BOX 3: DIREKT-EINSTIEG (NÄCHSTER LIVE CALL) */}
         <div className="dash-card entry-box-full live-call-box">
-          <div className="box-header">
+          <div className="box-header" style={{ position: 'relative' }}>
             <i className="bi bi-display live-call-icon" style={{ color: '#4498ca', fontSize: '1.2rem' }}></i>
             <h2 className="box-label">Nächster Live Call</h2>
+            <div className="info-tooltip-container">
+              <i className="bi bi-info-circle info-tooltip-icon"></i>
+              <div className="info-tooltip-text">
+                <strong>Nächster Live Call:</strong> Direkter Zugang zu exklusiven Fragerunden und Vorträgen mit führenden Longevity-Experten.<br/><br/>
+                <strong>Kundenvorteil:</strong> Erhalte wissenschaftlich fundiertes Insider-Wissen aus erster Hand und direkte Antworten auf deine persönlichen Fragen.
+              </div>
+            </div>
           </div>
           <div className="live-call-body">
             {/* LEFT COLUMN: Main Upcoming Call */}
@@ -486,9 +507,16 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         </div>
 
         <div className="dash-card feelgood-box-full">
-          <div className="box-header" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+          <div className="box-header" style={{ display: 'flex', alignItems: 'center', gap: '8px', position: 'relative' }}>
             <i className="bi bi-stars feelgood-star-icon"></i>
             <h2 className="box-label" style={{ margin: 0 }}>Feel-Good-Area</h2>
+            <div className="info-tooltip-container">
+              <i className="bi bi-info-circle info-tooltip-icon"></i>
+              <div className="info-tooltip-text" style={{ bottom: '135%' }}>
+                <strong>Feel-Good-Area:</strong> Exklusiver Premium-Bereich mit mentalen Impulsen, Entspannungsübungen und Verjüngungstipps.<br/><br/>
+                <strong>Kundenvorteil:</strong> Reduziert Stress sofort, steigert dein tägliches Wohlbefinden und fördert eine gesunde Zellregeneration.
+              </div>
+            </div>
             <span className="premium-badge" style={{
               marginLeft: '4px',
               fontSize: '0.65rem',
@@ -1645,6 +1673,63 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             flex-direction: column;
             align-items: stretch;
           }
+        }
+
+        /* Tooltip-Styling */
+        .info-tooltip-container {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          margin-left: 8px;
+          cursor: help;
+        }
+        .info-tooltip-icon {
+          color: #94a3b8;
+          font-size: 0.95rem;
+          transition: color 0.2s;
+        }
+        .info-tooltip-container:hover .info-tooltip-icon {
+          color: #4498ca;
+        }
+        .info-tooltip-text {
+          visibility: hidden;
+          width: 280px;
+          background-color: #0f172a;
+          color: #fff;
+          text-align: left;
+          border-radius: 12px;
+          padding: 0.85rem 1rem;
+          position: absolute;
+          z-index: 100;
+          bottom: 125%;
+          left: 50%;
+          transform: translateX(-50%);
+          opacity: 0;
+          transition: opacity 0.2s, visibility 0.2s;
+          box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
+          border: 1px solid rgba(255, 255, 255, 0.15);
+          font-size: 0.8rem;
+          font-weight: 500;
+          line-height: 1.45;
+          white-space: normal;
+        }
+        .info-tooltip-text strong {
+          color: #38bdf8;
+          font-weight: 700;
+        }
+        .info-tooltip-text::after {
+          content: "";
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          margin-left: -5px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: #0f172a transparent transparent transparent;
+        }
+        .info-tooltip-container:hover .info-tooltip-text {
+          visibility: visible;
+          opacity: 1;
         }
       `}</style>
     </div>
