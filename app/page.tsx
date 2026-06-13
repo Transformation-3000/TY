@@ -1165,7 +1165,7 @@ export default function LandingPage() {
             
             <div className="final-cta-visual-col">
               <div className="longevity-chart-wrapper">
-                <svg className="longevity-chart-svg" viewBox="0 0 500 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg className="longevity-chart-svg" viewBox="0 0 500 315" fill="none" xmlns="http://www.w3.org/2000/svg">
                   {/* Grid Lines */}
                   <line x1="75" y1="50" x2="475" y2="50" stroke="rgba(0,0,0,0.15)" />
                   <line x1="75" y1="125" x2="475" y2="125" stroke="rgba(0,0,0,0.15)" />
@@ -1201,7 +1201,7 @@ export default function LandingPage() {
                   
                   {/* Axis Labels */}
                   <text x="35" y="160" fill="rgba(15,23,42,0.85)" fontSize="16" transform="rotate(-90 35 160)" textAnchor="middle">Dein biologisches Alter</text>
-                  <text x="275" y="310" fill="rgba(15,23,42,0.85)" fontSize="16" textAnchor="middle">Dein chronologisches Alter</text>
+                  <text x="275" y="300" fill="rgba(15,23,42,0.85)" fontSize="16" textAnchor="middle">Dein chronologisches Alter</text>
                   
                   {/* Gradient Definitions */}
                   <defs>
