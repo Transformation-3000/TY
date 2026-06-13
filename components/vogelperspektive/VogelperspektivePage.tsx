@@ -299,9 +299,8 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             <h2 className="box-label">Dein Fokus heute</h2>
             <div className="info-tooltip-container">
               <i className="bi bi-info-circle info-tooltip-icon"></i>
-              <div className="info-tooltip-text">
-                <strong>Dein Fokus heute:</strong> Tägliches gesundheitliches Hauptziel basierend auf Biomarkern und Wearables.<br/><br/>
-                <strong>Kundenvorteil:</strong> Hilft dir, dich ohne Überforderung auf die wirksamste Maßnahme zur Steigerung deiner Vitalität zu konzentrieren.
+              <div className="info-tooltip-text tooltip-down">
+                Tägliches gesundheitliches Hauptziel basierend auf deinen Biomarkern und Wearable-Daten.
               </div>
             </div>
           </div>
@@ -348,9 +347,8 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             <h2 className="box-label">Activity Tracker</h2>
             <div className="info-tooltip-container">
               <i className="bi bi-info-circle info-tooltip-icon"></i>
-              <div className="info-tooltip-text">
-                <strong>Activity Tracker:</strong> Schnelle Erfassung von Aktivitäten, Mahlzeiten und Routinen per Klick, Sprache oder Foto.<br/><br/>
-                <strong>Kundenvorteil:</strong> Ermöglicht müheloses Tracking im Alltag und belohnt dich mit Diamonds, die du gegen echte Longevity-Vorteile einlösen kannst.
+              <div className="info-tooltip-text tooltip-down">
+                Schnelle Erfassung deiner Aktivitäten, Mahlzeiten und Routinen per Klick, Sprache oder Foto.
               </div>
             </div>
           </div>
@@ -410,8 +408,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             <div className="info-tooltip-container">
               <i className="bi bi-info-circle info-tooltip-icon"></i>
               <div className="info-tooltip-text">
-                <strong>Nächster Live Call:</strong> Direkter Zugang zu exklusiven Fragerunden und Vorträgen mit führenden Longevity-Experten.<br/><br/>
-                <strong>Kundenvorteil:</strong> Erhalte wissenschaftlich fundiertes Insider-Wissen aus erster Hand und direkte Antworten auf deine persönlichen Fragen.
+                Direkter Zugang zu exklusiven Fragerunden und Vorträgen mit führenden Longevity- und Medizin-Experten.
               </div>
             </div>
           </div>
@@ -513,8 +510,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             <div className="info-tooltip-container">
               <i className="bi bi-info-circle info-tooltip-icon"></i>
               <div className="info-tooltip-text" style={{ bottom: '135%' }}>
-                <strong>Feel-Good-Area:</strong> Exklusiver Premium-Bereich mit mentalen Impulsen, Entspannungsübungen und Verjüngungstipps.<br/><br/>
-                <strong>Kundenvorteil:</strong> Reduziert Stress sofort, steigert dein tägliches Wohlbefinden und fördert eine gesunde Zellregeneration.
+                Exklusiver Premium-Bereich mit mentalen Audio-Impulsen, Entspannungsübungen und Verjüngungstipps.
               </div>
             </div>
             <span className="premium-badge" style={{
@@ -1684,12 +1680,14 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           cursor: help;
         }
         .info-tooltip-icon {
-          color: #94a3b8;
-          font-size: 0.95rem;
-          transition: color 0.2s;
+          color: #4498ca;
+          font-size: 1.05rem;
+          transition: transform 0.2s, color 0.2s;
+          cursor: pointer;
         }
         .info-tooltip-container:hover .info-tooltip-icon {
-          color: #4498ca;
+          color: #006ea7;
+          transform: scale(1.2);
         }
         .info-tooltip-text {
           visibility: hidden;
@@ -1713,6 +1711,10 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           line-height: 1.45;
           white-space: normal;
         }
+        .info-tooltip-text.tooltip-down {
+          bottom: auto;
+          top: 125%;
+        }
         .info-tooltip-text strong {
           color: #38bdf8;
           font-weight: 700;
@@ -1726,6 +1728,11 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           border-width: 5px;
           border-style: solid;
           border-color: #0f172a transparent transparent transparent;
+        }
+        .info-tooltip-text.tooltip-down::after {
+          top: auto;
+          bottom: 100%;
+          border-color: transparent transparent #0f172a transparent;
         }
         .info-tooltip-container:hover .info-tooltip-text {
           visibility: visible;
