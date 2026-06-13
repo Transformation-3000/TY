@@ -523,7 +523,7 @@ export default function WelcomeSection({
           background: linear-gradient(180deg, #ffffff 0%, #fcfdfe 100%);
           border-radius: 28px;
           width: 95%;
-          max-width: 900px;
+          max-width: 1000px;
           box-shadow: 0 35px 70px -15px rgba(8, 15, 30, 0.25), 
                       inset 0 1px 0 rgba(255, 255, 255, 0.9);
           display: flex;
