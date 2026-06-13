@@ -434,6 +434,10 @@ section[id] {
   gap: 1.75rem;
 }
 
+.final-cta-header {
+  max-width: 1200px !important;
+}
+
 .final-cta-header h2 {
   color: #ffffff !important;
   background: none !important;
