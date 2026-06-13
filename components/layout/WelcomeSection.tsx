@@ -275,7 +275,7 @@ export default function WelcomeSection({
               </div>
 
               <div className="wearable-info-box" style={{
-                flex: '0 0 385px',
+                flex: '0 0 425px',
                 padding: '1.5rem',
                 background: '#f8fafc',
                 border: '1px solid #e2e8f0',
