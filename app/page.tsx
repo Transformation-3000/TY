@@ -1201,7 +1201,7 @@ export default function LandingPage() {
                   
                   {/* Axis Labels */}
                   <text x="35" y="150" fill="rgba(15,23,42,0.85)" fontSize="16" transform="rotate(-90 35 150)" textAnchor="middle">Dein biologisches Alter</text>
-                  <text x="275" y="290" fill="rgba(15,23,42,0.85)" fontSize="16" textAnchor="middle">Dein chronologisches Alter</text>
+                  <text x="275" y="300" fill="rgba(15,23,42,0.85)" fontSize="16" textAnchor="middle">Dein chronologisches Alter</text>
                   
                   {/* Gradient Definitions */}
                   <defs>
