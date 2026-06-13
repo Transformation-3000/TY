@@ -679,7 +679,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                   <div className="wbsb-left">
                     <div className="wbsb-body">
                       <div className="wbsb-title">2. Weekly</div>
-                      <div className="wbsb-desc">Baue kraftvolle Routinen auf, um Lebensstil und Lebensqualität spürbar zu verbessern</div>
+                      <div className="wbsb-desc">Baue kraftvolle Routinen auf, um deinen Lebensstil & deine Lebensqualität spürbar zu verbessern</div>
                     </div>
                   </div>
                   <div className="wbsb-right">
