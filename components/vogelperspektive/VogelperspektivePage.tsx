@@ -300,7 +300,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             <div className="info-tooltip-container">
               <i className="bi bi-info-circle info-tooltip-icon"></i>
               <div className="info-tooltip-text tooltip-down">
-                Tägliches gesundheitliches Hauptziel basierend auf deinen Biomarkern und Wearable-Daten.
+                Tägliches gesundheitliches Hauptziel basierend auf deinen Aktivitäts-, Verhaltens- und Biodaten.
               </div>
             </div>
           </div>
