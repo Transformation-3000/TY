@@ -367,8 +367,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
               <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>5. Blutzucker-Lab</h2>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#3b82f6' }}></i>
-              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', background: 'rgba(59, 130, 246, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#006ea7' }}></i>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#006ea7', background: 'rgba(0, 110, 167, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
             </div>
           </div>
           <div 
@@ -434,8 +434,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
               <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>6. HRV-Gym</h2>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#3b82f6' }}></i>
-              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', background: 'rgba(59, 130, 246, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#006ea7' }}></i>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#006ea7', background: 'rgba(0, 110, 167, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
             </div>
           </div>
           <div 
@@ -501,8 +501,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
               <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>7. Stress-Barometer</h2>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#3b82f6' }}></i>
-              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', background: 'rgba(59, 130, 246, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#006ea7' }}></i>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#006ea7', background: 'rgba(0, 110, 167, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
             </div>
           </div>
           <div 
@@ -568,8 +568,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
               <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>8. Longevity-Budgetplaner</h2>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#3b82f6' }}></i>
-              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', background: 'rgba(59, 130, 246, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#006ea7' }}></i>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#006ea7', background: 'rgba(0, 110, 167, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
             </div>
           </div>
           <div 
@@ -635,8 +635,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
               <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>9. Langlebigkeitsküche</h2>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#3b82f6' }}></i>
-              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', background: 'rgba(59, 130, 246, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#006ea7' }}></i>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#006ea7', background: 'rgba(0, 110, 167, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
             </div>
           </div>
           <div 
@@ -702,8 +702,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
               <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>10. Toxin-Simulator</h2>
             </div>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#3b82f6' }}></i>
-              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', background: 'rgba(59, 130, 246, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#006ea7' }}></i>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#006ea7', background: 'rgba(0, 110, 167, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
             </div>
           </div>
           <div 
