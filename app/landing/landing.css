@@ -125,7 +125,7 @@ section[id] {
 }
 
 .hero-fullscreen-bg img {
-  animation: kenburns-slow 28s ease-in-out infinite alternate;
+  animation: kenburns-slow 14s ease-in-out infinite alternate;
 }
 
 @keyframes kenburns-slow {
