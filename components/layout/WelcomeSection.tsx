@@ -285,8 +285,24 @@ export default function WelcomeSection({
                 flexDirection: 'column',
                 justifyContent: 'center'
               }}>
-                <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', margin: '0 0 1rem 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  So verbesserst du deine Ergebnisse über Wearable-Daten
+                <h4 style={{ fontSize: '1.2rem', fontWeight: 800, margin: '0 0 1rem 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <span className="live-pulse-dot" style={{
+                    width: '10px',
+                    height: '10px',
+                    backgroundColor: '#006ea7',
+                    borderRadius: '50%',
+                    display: 'inline-block',
+                    animation: 'pulse-blue-dot 2s infinite',
+                    flexShrink: 0
+                  }}></span>
+                  <span style={{
+                    background: 'linear-gradient(135deg, #006ea7 0%, #3b82f6 100%)',
+                    WebkitBackgroundClip: 'text',
+                    WebkitTextFillColor: 'transparent',
+                    display: 'inline-block'
+                  }}>
+                    So verbesserst du deine Ergebnisse über Wearable-Daten
+                  </span>
                 </h4>
                 <ul style={{ margin: 0, paddingLeft: '1.25rem', color: '#475569', fontSize: '1.0rem', display: 'flex', flexDirection: 'column', gap: '10px', lineHeight: 1.45 }}>
                   <li>
@@ -307,6 +323,20 @@ export default function WelcomeSection({
       )}
 
       <style jsx>{`
+        @keyframes pulse-blue-dot {
+          0% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(0, 110, 167, 0.7);
+          }
+          70% {
+            transform: scale(1.05);
+            box-shadow: 0 0 0 8px rgba(0, 110, 167, 0);
+          }
+          100% {
+            transform: scale(0.95);
+            box-shadow: 0 0 0 0 rgba(0, 110, 167, 0);
+          }
+        }
         .top-navigation-content {
           display: flex;
           justify-content: space-between;
