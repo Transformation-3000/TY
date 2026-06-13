@@ -1410,7 +1410,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .wbsb-num{font-size:1rem;font-weight:700;color:rgba(68,152,202,0.5);letter-spacing:-0.02em;flex-shrink:0;min-width:26px;font-variant-numeric:tabular-nums;padding-top:0.05rem}
         .wbsb-body{flex:1;min-width:0}
         .wbsb-title{font-size:1.38rem;font-weight:700;color:#e8f0fa;line-height:1.2;margin-bottom:0.35rem}
-        .wbsb-desc{font-size:1.02rem;color:rgba(180,210,240,0.6);line-height:1.45}
+        .wbsb-desc{font-size:1.12rem;color:rgba(180,210,240,0.6);line-height:1.45}
         .wbsb-right{display:flex;flex-direction:row;align-items:center;gap:0.75rem;flex-shrink:0;color:rgba(68,152,202,0.6)}
         .wbsb-time{font-size:1.18rem;font-weight:600;color:rgba(68,152,202,0.8);background:rgba(68,152,202,0.1);padding:0.4rem 0.8rem;border-radius:12px;border:1px solid rgba(68,152,202,0.2);white-space:nowrap}
         /* bottom history/config buttons */
