@@ -1704,8 +1704,9 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           position: absolute;
           z-index: 100;
           bottom: 125%;
-          left: 50%;
-          transform: translateX(-50%);
+          right: -20px;
+          left: auto;
+          transform: none;
           opacity: 0;
           transition: opacity 0.2s, visibility 0.2s;
           box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);
@@ -1727,8 +1728,9 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           content: "";
           position: absolute;
           top: 100%;
-          left: 50%;
-          margin-left: -5px;
+          right: 24px;
+          left: auto;
+          margin-left: 0;
           border-width: 5px;
           border-style: solid;
           border-color: #0f172a transparent transparent transparent;
@@ -1738,6 +1740,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           bottom: 100%;
           border-color: transparent transparent #0f172a transparent;
         }
+
         .info-tooltip-container:hover .info-tooltip-text {
           visibility: visible;
           opacity: 1;
