@@ -483,6 +483,7 @@ section[id] {
 .final-cta-text-col {
   display: flex;
   flex-direction: column;
+  margin-top: -10px;
 }
 
 .final-cta-visual-col {
