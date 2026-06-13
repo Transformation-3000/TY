@@ -202,13 +202,35 @@ export default function WelcomeSection({
         <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
           <div className="modal-container" onClick={(e) => e.stopPropagation()}>
             
-            <div className="modal-header">
+            <div className="modal-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
               <div>
                 <h3 className="modal-title">Verbinde dein Wearable</h3>
               </div>
-              <button className="modal-close-btn" onClick={() => setIsModalOpen(false)} aria-label="Schließen">
-                <i className="bi bi-x-lg"></i>
-              </button>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <button 
+                  className="heart-pulse-btn"
+                  style={{
+                    background: 'rgba(239, 68, 68, 0.1)',
+                    border: 'none',
+                    borderRadius: '50%',
+                    width: '36px',
+                    height: '36px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    cursor: 'pointer',
+                    color: '#ef4444',
+                    transition: 'all 0.2s',
+                    padding: 0
+                  }}
+                  title="Vitaldaten Live-Simulation"
+                >
+                  <i className="bi bi-heart-fill heart-beat" style={{ fontSize: '1.15rem', display: 'inline-block' }}></i>
+                </button>
+                <button className="modal-close-btn" onClick={() => setIsModalOpen(false)} aria-label="Schließen">
+                  <i className="bi bi-x-lg"></i>
+                </button>
+              </div>
             </div>
 
             <div className="modal-body-wrapper" style={{ display: 'flex', gap: '1.5rem', padding: '1rem 2rem 2rem' }}>
@@ -286,15 +308,6 @@ export default function WelcomeSection({
                 justifyContent: 'center'
               }}>
                 <h4 style={{ fontSize: '1.2rem', fontWeight: 800, margin: '0 0 1rem 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span className="live-pulse-dot" style={{
-                    width: '10px',
-                    height: '10px',
-                    backgroundColor: '#006ea7',
-                    borderRadius: '50%',
-                    display: 'inline-block',
-                    animation: 'pulse-blue-dot 2s infinite',
-                    flexShrink: 0
-                  }}></span>
                   <span style={{
                     background: 'linear-gradient(135deg, #006ea7 0%, #3b82f6 100%)',
                     WebkitBackgroundClip: 'text',
@@ -323,19 +336,15 @@ export default function WelcomeSection({
       )}
 
       <style jsx>{`
-        @keyframes pulse-blue-dot {
-          0% {
-            transform: scale(0.95);
-            box-shadow: 0 0 0 0 rgba(0, 110, 167, 0.7);
-          }
-          70% {
-            transform: scale(1.05);
-            box-shadow: 0 0 0 8px rgba(0, 110, 167, 0);
-          }
-          100% {
-            transform: scale(0.95);
-            box-shadow: 0 0 0 0 rgba(0, 110, 167, 0);
-          }
+        @keyframes heartbeat {
+          0% { transform: scale(1); }
+          14% { transform: scale(1.3); }
+          28% { transform: scale(1); }
+          42% { transform: scale(1.3); }
+          70% { transform: scale(1); }
+        }
+        .heart-beat {
+          animation: heartbeat 1.4s infinite;
         }
         .top-navigation-content {
           display: flex;
