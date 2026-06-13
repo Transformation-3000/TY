@@ -1154,7 +1154,7 @@ export default function LandingPage() {
                 Dein biologisches Alter ist ein dynamischer Wert, den du aktiv steuern kannst. Durch Kombination aus wissenschaftlich validierten Gewohnheiten, personalisierten Maßnahmen, Wearable-Tracking und Labor-Diagnostik lässt sich dein Alterungsprozess nachweisbar verlangsamen.
               </p>
               <p>
-                Während der normale Lebensweg zu einem stetigen, unkontrollierten Verlust an Zellvitalität führt, ermöglicht dir unser Ansatz eine signifikante Verjüngung. So sicherst du dir viele zusätzliche vitale & kraftvolle Lebensjahre mit mehr Lebensfreude.
+                Während der normale Lebensweg zu einem stetigen, unkontrollierten Verlust an Zellvitalität führt, ermöglicht dir unser Ansatz eine signifikante Verjüngung. So sicherst du dir viele zusätzliche vitale & kraftvolle Lebensjahre voller Lebensfreude.
               </p>
               <div className="final-cta-btns">
                 <Link href="#erfolgsprinzip" className="btn-primary-large final-cta-btn">
