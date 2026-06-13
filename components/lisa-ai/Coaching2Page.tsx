@@ -690,7 +690,11 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                 <button className="wb-stype-btn" onClick={() => startSession('quarterly')}>
                   <div className="wbsb-left">
                     <div className="wbsb-body">
-                      <div className="wbsb-title">3. Quarterly</div>
+                      <div className="wbsb-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                        3. Quarterly
+                        <i className="bi bi-lock-fill" style={{ fontSize: '1.1rem', color: '#006ea7', marginLeft: '4px' }}></i>
+                        <span style={{ fontSize: '0.65rem', fontWeight: 800, color: '#006ea7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+                      </div>
                       <div className="wbsb-desc">Quartalsweise Reflexion der Longevity-Reise</div>
                     </div>
                   </div>
