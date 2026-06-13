@@ -290,7 +290,7 @@ export default function WelcomeSection({
                 </h4>
                 <ul style={{ margin: 0, paddingLeft: '1.25rem', color: '#475569', fontSize: '1.0rem', display: 'flex', flexDirection: 'column', gap: '10px', lineHeight: 1.45 }}>
                   <li>
-                    <strong>Tägliches Bio-Alignment:</strong> Deine Werte (wie HRV und Schlafphasen) fließen direkt in Lisa & Tom AI ein, um deine Tagesempfehlungen anzupassen.
+                    <strong>Tägliches Bio-Alignment:</strong> Deine Werte (wie HRV, Herzfrequenz, Bewegungs-, Stress- und Schlafphasen) fließen direkt in Lisa & Tom AI ein, um deine Empfehlungen anzupassen.
                   </li>
                   <li>
                     <strong>Echtzeit-Erfolgsmessung:</strong> Du siehst sofort, wie sich dein Schlaf und Sport auf dein biologisches Alter und deine Vitalitäts-Scores auswirken.
