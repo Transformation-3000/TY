@@ -1167,41 +1167,41 @@ export default function LandingPage() {
               <div className="longevity-chart-wrapper">
                 <svg className="longevity-chart-svg" viewBox="0 0 500 315" fill="none" xmlns="http://www.w3.org/2000/svg">
                   {/* Grid Lines */}
-                  <line x1="75" y1="50" x2="475" y2="50" stroke="rgba(0,0,0,0.15)" />
-                  <line x1="75" y1="125" x2="475" y2="125" stroke="rgba(0,0,0,0.15)" />
-                  <line x1="75" y1="200" x2="475" y2="200" stroke="rgba(0,0,0,0.15)" />
-                  <line x1="75" y1="275" x2="475" y2="275" stroke="rgba(0,0,0,0.15)" strokeWidth="1.5" />
+                  <line x1="75" y1="40" x2="475" y2="40" stroke="rgba(0,0,0,0.15)" />
+                  <line x1="75" y1="115" x2="475" y2="115" stroke="rgba(0,0,0,0.15)" />
+                  <line x1="75" y1="190" x2="475" y2="190" stroke="rgba(0,0,0,0.15)" />
+                  <line x1="75" y1="265" x2="475" y2="265" stroke="rgba(0,0,0,0.15)" strokeWidth="1.5" />
                   
                   {/* Y Axis line */}
-                  <line x1="75" y1="30" x2="75" y2="275" stroke="rgba(0,0,0,0.3)" strokeWidth="1.5" />
+                  <line x1="75" y1="20" x2="75" y2="265" stroke="rgba(0,0,0,0.3)" strokeWidth="1.5" />
                   
                   {/* Diverging area fill gradient */}
-                  <path d="M 75 200 Q 245 180 475 100 L 475 220 Q 245 220 75 200 Z" fill="url(#diverge-gradient)" />
+                  <path d="M 75 190 Q 245 170 475 90 L 475 210 Q 245 210 75 190 Z" fill="url(#diverge-gradient)" />
                   
                   {/* Normal Curve (Red/Orange) */}
-                  <path d="M 75 200 Q 245 180 475 100" stroke="#f43f5e" strokeWidth="3.5" strokeLinecap="round" />
+                  <path d="M 75 190 Q 245 170 475 90" stroke="#f43f5e" strokeWidth="3.5" strokeLinecap="round" />
                   {/* TrueYears Curve (Green) */}
-                  <path d="M 75 200 Q 245 220 475 220" stroke="#10b981" strokeWidth="4" strokeLinecap="round" />
+                  <path d="M 75 190 Q 245 210 475 210" stroke="#10b981" strokeWidth="4" strokeLinecap="round" />
                   
                   {/* Anchor Point (Start of Intervention) */}
-                  <circle cx="75" cy="200" r="6" fill="#ffffff" stroke="#004b75" strokeWidth="2.5" />
+                  <circle cx="75" cy="190" r="6" fill="#ffffff" stroke="#004b75" strokeWidth="2.5" />
                   
                   {/* Endpoints indicators */}
-                  <circle cx="475" cy="100" r="5" fill="#f43f5e" />
-                  <circle cx="475" cy="220" r="5" fill="#10b981" />
+                  <circle cx="475" cy="90" r="5" fill="#f43f5e" />
+                  <circle cx="475" cy="210" r="5" fill="#10b981" />
                   
                   {/* Labels on curves */}
-                  <text x="245" y="115" fill="#f43f5e" fontSize="16" fontWeight="600">Standard-Alterung</text>
-                  <text x="245" y="250" fill="#10b981" fontSize="16" fontWeight="700">TrueYears Longevity-Pfad</text>
+                  <text x="245" y="105" fill="#f43f5e" fontSize="16" fontWeight="600">Standard-Alterung</text>
+                  <text x="245" y="240" fill="#10b981" fontSize="16" fontWeight="700">TrueYears Longevity-Pfad</text>
                   
                   {/* Rejuvenation Gap Text (Styled as a Button/Badge) */}
-                  <rect x="321" y="157" width="108" height="38" rx="19" ry="19" fill="rgba(255, 255, 255, 0.8)" stroke="#006EA7" strokeWidth="1.5" />
-                  <text x="375" y="173" fill="#006EA7" fontSize="12" fontWeight="800" textAnchor="middle" letterSpacing="0.05em">Vitalitäts-</text>
-                  <text x="375" y="187" fill="#006EA7" fontSize="12" fontWeight="800" textAnchor="middle" letterSpacing="0.05em">Gewinn</text>
+                  <rect x="321" y="147" width="108" height="38" rx="19" ry="19" fill="rgba(255, 255, 255, 0.8)" stroke="#006EA7" strokeWidth="1.5" />
+                  <text x="375" y="163" fill="#006EA7" fontSize="12" fontWeight="800" textAnchor="middle" letterSpacing="0.05em">Vitalitäts-</text>
+                  <text x="375" y="177" fill="#006EA7" fontSize="12" fontWeight="800" textAnchor="middle" letterSpacing="0.05em">Gewinn</text>
                   
                   {/* Axis Labels */}
-                  <text x="35" y="160" fill="rgba(15,23,42,0.85)" fontSize="16" transform="rotate(-90 35 160)" textAnchor="middle">Dein biologisches Alter</text>
-                  <text x="275" y="300" fill="rgba(15,23,42,0.85)" fontSize="16" textAnchor="middle">Dein chronologisches Alter</text>
+                  <text x="35" y="150" fill="rgba(15,23,42,0.85)" fontSize="16" transform="rotate(-90 35 150)" textAnchor="middle">Dein biologisches Alter</text>
+                  <text x="275" y="290" fill="rgba(15,23,42,0.85)" fontSize="16" textAnchor="middle">Dein chronologisches Alter</text>
                   
                   {/* Gradient Definitions */}
                   <defs>
