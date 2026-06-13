@@ -408,7 +408,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             <div className="info-tooltip-container">
               <i className="bi bi-info-circle info-tooltip-icon"></i>
               <div className="info-tooltip-text">
-                Direkter Zugang zu exklusiven Fragerunden und Vorträgen mit führenden Longevity- und Medizin-Experten.
+                Direkter Zugang zu monatlichen exklusiven 45-Minuten-Sessions auf Teams mit Vorträgen von Longevity-Experten und anschließenden Fragerunden.
               </div>
             </div>
           </div>
