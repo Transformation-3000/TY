@@ -281,20 +281,23 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
             className={`entw-tab ${activeTab === tab.id ? 'active' : ''}`}
             style={tab.id === 'journey' ? { display: 'inline-flex', alignItems: 'center', gap: '6px' } : undefined}
           >
-            {tab.id === 'journey' && (
-              <i className="bi bi-lock-fill" style={{ fontSize: '0.9rem', color: activeTab === 'journey' ? '#fff' : '#64748b' }}></i>
-            )}
             {tab.label}
             {tab.id === 'journey' && (
               <span className="premium-badge" style={{
-                fontSize: '0.62rem',
-                background: activeTab === 'journey' ? 'rgba(255, 255, 255, 0.25)' : 'rgba(68, 152, 202, 0.15)',
-                color: activeTab === 'journey' ? 'white' : '#4498ca',
-                padding: '2px 5px',
-                borderRadius: '4px',
-                fontWeight: 'bold',
-                letterSpacing: '0.5px'
-              }}>PREMIUM</span>
+                marginLeft: '4px',
+                fontSize: '0.65rem',
+                background: 'linear-gradient(135deg, #006ea7 0%, #3b82f6 100%)',
+                color: 'white',
+                padding: '2px 6px',
+                borderRadius: '6px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '2px',
+                fontWeight: 800,
+                textTransform: 'uppercase'
+              }}>
+                <i className="bi bi-lock-fill" style={{ fontSize: '0.65rem', color: 'white' }}></i> Premium
+              </span>
             )}
           </button>
         ))}
@@ -315,21 +318,21 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
                 className="upload-trigger-btn" 
                 onClick={() => setShowUploadModal(true)}
               >
-                <i className="bi bi-lock-fill" style={{ color: 'white' }}></i>
                 <span>BioAge-Optimizer</span>
                 <span className="premium-badge" style={{
-                  marginLeft: '4px',
+                  marginLeft: '6px',
                   fontSize: '0.65rem',
-                  background: 'rgba(255, 255, 255, 0.22)',
+                  background: 'linear-gradient(135deg, #006ea7 0%, #3b82f6 100%)',
                   color: 'white',
-                  padding: '1px 5px',
-                  borderRadius: '4px',
-                  fontWeight: 800,
-                  textTransform: 'uppercase',
+                  padding: '2px 6px',
+                  borderRadius: '6px',
                   display: 'inline-flex',
-                  alignItems: 'center'
+                  alignItems: 'center',
+                  gap: '2px',
+                  fontWeight: 800,
+                  textTransform: 'uppercase'
                 }}>
-                  Premium
+                  <i className="bi bi-lock-fill" style={{ fontSize: '0.65rem', color: 'white' }}></i> Premium
                 </span>
               </button>
             </div>
