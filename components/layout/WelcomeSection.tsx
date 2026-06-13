@@ -287,7 +287,7 @@ export default function WelcomeSection({
               }}>
                 <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', margin: '0 0 1rem 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
                   <i className="bi bi-shield-check" style={{ color: '#006ea7', fontSize: '1.4rem' }}></i>
-                  Wie True Years deine Wearable-Daten für dich einsetzt:
+                  So verbesserst du deine Longevity-Ergebnisse mit deinen Wearable-Daten:
                 </h4>
                 <ul style={{ margin: 0, paddingLeft: '1.25rem', color: '#475569', fontSize: '1.0rem', display: 'flex', flexDirection: 'column', gap: '10px', lineHeight: 1.45 }}>
                   <li>
