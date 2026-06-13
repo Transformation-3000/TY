@@ -347,8 +347,12 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             <h2 className="box-label">Activity Tracker</h2>
             <div className="info-tooltip-container">
               <i className="bi bi-info-circle info-tooltip-icon"></i>
-              <div className="info-tooltip-text tooltip-down">
-                Schnelle Erfassung deiner Aktivitäten, Mahlzeiten und Routinen per Klick, Sprache oder Foto.
+              <div className="info-tooltip-text tooltip-down" style={{ width: '320px' }}>
+                Schnelle Erfassung deiner Aktivitäten:<br/>
+                1. Entweder du wählst diese aus einer Liste aus mit Suchfunktion<br/>
+                2. Oder du sprichst diese einfach ein<br/>
+                3. Oder du machst ein Bild von deinen Mahlzeiten<br/><br/>
+                Je mehr Daten du uns zur Verfügung stellst, desto besser lernen wir dich kennen und können die Empfehlungen aus der Wissenschaft auf dein persönliches Profil zuschneiden. So bekommst du immer relevantere Hinweise.
               </div>
             </div>
           </div>
