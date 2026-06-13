@@ -273,6 +273,31 @@ export default function WelcomeSection({
               })}
             </div>
 
+            <div className="wearable-info-box" style={{
+              margin: '0rem 1.5rem 1.5rem 1.5rem',
+              padding: '1.25rem 1.5rem',
+              background: '#f8fafc',
+              border: '1px solid #e2e8f0',
+              borderRadius: '16px',
+              textAlign: 'left'
+            }}>
+              <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.75rem 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <i className="bi bi-shield-check" style={{ color: '#006ea7', fontSize: '1.2rem' }}></i>
+                Wie True Years deine Wearable-Daten für dich einsetzt:
+              </h4>
+              <ul style={{ margin: 0, paddingLeft: '1.25rem', color: '#475569', fontSize: '0.88rem', display: 'flex', flexDirection: 'column', gap: '8px', lineHeight: 1.4 }}>
+                <li>
+                  <strong>Tägliches Bio-Alignment:</strong> Deine Werte (wie HRV und Schlafphasen) fließen direkt in Lisa & Tom AI ein, um deine Tagesempfehlungen anzupassen.
+                </li>
+                <li>
+                  <strong>Echtzeit-Erfolgsmessung:</strong> Du siehst sofort, wie sich dein Schlaf und Sport auf dein biologisches Alter und deine Vitalitäts-Scores auswirken.
+                </li>
+                <li>
+                  <strong>100% Datensouveränität:</strong> Deine Gesundheitsdaten werden ausschließlich verschlüsselt übertragen, niemals weiterverkauft und dienen rein deiner persönlichen Optimierung.
+                </li>
+              </ul>
+            </div>
+
           </div>
         </div>
       )}
