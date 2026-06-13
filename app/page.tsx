@@ -1167,13 +1167,13 @@ export default function LandingPage() {
               <div className="longevity-chart-wrapper">
                 <svg className="longevity-chart-svg" viewBox="0 0 500 350" fill="none" xmlns="http://www.w3.org/2000/svg">
                   {/* Grid Lines */}
-                  <line x1="50" y1="50" x2="450" y2="50" stroke="rgba(255,255,255,0.05)" />
-                  <line x1="50" y1="125" x2="450" y2="125" stroke="rgba(255,255,255,0.05)" />
-                  <line x1="50" y1="200" x2="450" y2="200" stroke="rgba(255,255,255,0.05)" />
-                  <line x1="50" y1="275" x2="450" y2="275" stroke="rgba(255,255,255,0.05)" strokeWidth="1.5" />
+                  <line x1="50" y1="50" x2="450" y2="50" stroke="rgba(0,0,0,0.06)" />
+                  <line x1="50" y1="125" x2="450" y2="125" stroke="rgba(0,0,0,0.06)" />
+                  <line x1="50" y1="200" x2="450" y2="200" stroke="rgba(0,0,0,0.06)" />
+                  <line x1="50" y1="275" x2="450" y2="275" stroke="rgba(0,0,0,0.06)" strokeWidth="1.5" />
                   
                   {/* Y Axis line */}
-                  <line x1="50" y1="30" x2="50" y2="275" stroke="rgba(255,255,255,0.15)" strokeWidth="1.5" />
+                  <line x1="50" y1="30" x2="50" y2="275" stroke="rgba(0,0,0,0.12)" strokeWidth="1.5" />
                   
                   {/* Diverging area fill gradient */}
                   <path d="M 50 200 Q 220 180 450 100 L 450 220 Q 220 220 50 200 Z" fill="url(#diverge-gradient)" opacity="0.15" />
@@ -1195,22 +1195,22 @@ export default function LandingPage() {
                   <text x="220" y="250" fill="#10b981" fontSize="16" fontWeight="700">TrueYears Longevity-Pfad</text>
                   
                   {/* Rejuvenation Gap Text */}
-                  <text x="430" y="152" fill="#a5f3fc" fontSize="15" fontWeight="800" textAnchor="middle">VITALITÄTS-</text>
-                  <text x="430" y="172" fill="#a5f3fc" fontSize="15" fontWeight="800" textAnchor="middle">GEWINN</text>
-                  <path d="M 430 115 L 430 135" stroke="#a5f3fc" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <path d="M 430 185 L 430 205" stroke="#a5f3fc" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <path d="M 426 118 L 430 114 L 434 118" stroke="#a5f3fc" strokeWidth="1.5" fill="none" />
-                  <path d="M 426 201 L 430 205 L 434 201" stroke="#a5f3fc" strokeWidth="1.5" fill="none" />
+                  <text x="430" y="152" fill="#006EA7" fontSize="15" fontWeight="800" textAnchor="middle">VITALITÄTS-</text>
+                  <text x="430" y="172" fill="#006EA7" fontSize="15" fontWeight="800" textAnchor="middle">GEWINN</text>
+                  <path d="M 430 115 L 430 135" stroke="#006EA7" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 430 185 L 430 205" stroke="#006EA7" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 426 118 L 430 114 L 434 118" stroke="#006EA7" strokeWidth="1.5" fill="none" />
+                  <path d="M 426 201 L 430 205 L 434 201" stroke="#006EA7" strokeWidth="1.5" fill="none" />
                   
                   {/* Axis Labels */}
-                  <text x="20" y="160" fill="rgba(255,255,255,0.4)" fontSize="14" transform="rotate(-90 20 160)" textAnchor="middle">Biologisches Alter</text>
-                  <text x="250" y="310" fill="rgba(255,255,255,0.4)" fontSize="14" textAnchor="middle">Chronologisches Alter (Zeitverlauf)</text>
+                  <text x="20" y="160" fill="rgba(15,23,42,0.4)" fontSize="14" transform="rotate(-90 20 160)" textAnchor="middle">Dein biologisches Alter</text>
+                  <text x="250" y="310" fill="rgba(15,23,42,0.4)" fontSize="14" textAnchor="middle">Dein chronologisches Alter</text>
                   
                   {/* Gradient Definitions */}
                   <defs>
                     <linearGradient id="diverge-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#10b981" stopOpacity="0.1" />
-                      <stop offset="100%" stopColor="#10b981" stopOpacity="0.4" />
+                      <stop offset="0%" stopColor="#10b981" stopOpacity="0.05" />
+                      <stop offset="100%" stopColor="#10b981" stopOpacity="0.2" />
                     </linearGradient>
                   </defs>
                 </svg>
