@@ -348,11 +348,11 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             <div className="info-tooltip-container">
               <i className="bi bi-info-circle info-tooltip-icon"></i>
               <div className="info-tooltip-text tooltip-down" style={{ width: '380px' }}>
-                Schnelle Erfassung deiner Aktivitäten:<br/>
-                1. Entweder du wählst diese aus einer Liste aus mit Suchfunktion<br/>
-                2. Oder du sprichst diese einfach ein<br/>
-                3. Oder du machst ein Bild von deinen Mahlzeiten<br/><br/>
-                Je mehr Daten du uns zur Verfügung stellst, desto besser lernen wir dich kennen und können die Empfehlungen aus der Wissenschaft auf dein persönliches Profil zuschneiden. So bekommst du immer relevantere Hinweise.
+                3 Möglichkeiten für schnelle Erfassung deiner Aktivitäten:<br/><br/>
+                1. Auswahl aus Liste mit Suchfunktion<br/>
+                2. Mitteilung über Sprachsteuerung<br/>
+                3. Mitteilung über ein Bild der Mahlzeiten<br/><br/>
+                Je mehr Daten du uns zur Verfügung stellst, desto besser lernen wir dich kennen und können Empfehlungen aus der Wissenschaft auf dein persönliches Profil zuschneiden. So bekommst du immer relevantere Informationen.
               </div>
             </div>
           </div>
