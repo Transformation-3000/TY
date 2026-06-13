@@ -1195,9 +1195,9 @@ export default function LandingPage() {
                   <text x="245" y="240" fill="#10b981" fontSize="16" fontWeight="700">TrueYears Longevity-Pfad</text>
                   
                   {/* Rejuvenation Gap Text (Styled as a Button/Badge) */}
-                  <rect x="321" y="147" width="108" height="38" rx="19" ry="19" fill="rgba(255, 255, 255, 0.8)" stroke="#006EA7" strokeWidth="1.5" />
-                  <text x="375" y="163" fill="#006EA7" fontSize="12" fontWeight="800" textAnchor="middle" letterSpacing="0.05em">Vitalitäts-</text>
-                  <text x="375" y="177" fill="#006EA7" fontSize="12" fontWeight="800" textAnchor="middle" letterSpacing="0.05em">Gewinn</text>
+                  <rect x="321" y="150" width="108" height="38" rx="19" ry="19" fill="rgba(255, 255, 255, 0.8)" stroke="#006EA7" strokeWidth="1.5" />
+                  <text x="375" y="166" fill="#006EA7" fontSize="12" fontWeight="800" textAnchor="middle" letterSpacing="0.05em">Vitalitäts-</text>
+                  <text x="375" y="180" fill="#006EA7" fontSize="12" fontWeight="800" textAnchor="middle" letterSpacing="0.05em">Gewinn</text>
                   
                   {/* Axis Labels */}
                   <text x="35" y="150" fill="rgba(15,23,42,0.85)" fontSize="16" transform="rotate(-90 35 150)" textAnchor="middle">Dein biologisches Alter</text>
