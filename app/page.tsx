@@ -1195,12 +1195,12 @@ export default function LandingPage() {
                   <text x="220" y="250" fill="#10b981" fontSize="16" fontWeight="700">TrueYears Longevity-Pfad</text>
                   
                   {/* Rejuvenation Gap Text */}
-                  <text x="430" y="152" fill="#006EA7" fontSize="15" fontWeight="800" textAnchor="middle">VITALITÄTS-</text>
-                  <text x="430" y="172" fill="#006EA7" fontSize="15" fontWeight="800" textAnchor="middle">GEWINN</text>
-                  <path d="M 430 115 L 430 135" stroke="#006EA7" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <path d="M 430 185 L 430 205" stroke="#006EA7" strokeWidth="1.5" strokeDasharray="3 3" />
-                  <path d="M 426 118 L 430 114 L 434 118" stroke="#006EA7" strokeWidth="1.5" fill="none" />
-                  <path d="M 426 201 L 430 205 L 434 201" stroke="#006EA7" strokeWidth="1.5" fill="none" />
+                  <text x="370" y="152" fill="#004b75" fontSize="15" fontWeight="800" textAnchor="middle">VITALITÄTS-</text>
+                  <text x="370" y="172" fill="#004b75" fontSize="15" fontWeight="800" textAnchor="middle">GEWINN</text>
+                  <path d="M 370 115 L 370 135" stroke="#004b75" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 370 185 L 370 205" stroke="#004b75" strokeWidth="1.5" strokeDasharray="3 3" />
+                  <path d="M 366 118 L 370 114 L 374 118" stroke="#004b75" strokeWidth="1.5" fill="none" />
+                  <path d="M 366 201 L 370 205 L 374 201" stroke="#004b75" strokeWidth="1.5" fill="none" />
                   
                   {/* Axis Labels */}
                   <text x="20" y="160" fill="rgba(15,23,42,0.4)" fontSize="14" transform="rotate(-90 20 160)" textAnchor="middle">Dein biologisches Alter</text>
