@@ -1158,7 +1158,7 @@ export default function LandingPage() {
               </p>
               <div className="final-cta-btns">
                 <Link href="#erfolgsprinzip" className="btn-primary-large final-cta-btn">
-                  Jetzt Mitglied werden und BioAge berechnen
+                  Jetzt BioAge berechnen
                 </Link>
               </div>
             </div>
