@@ -1206,9 +1206,9 @@ export default function LandingPage() {
                   {/* Gradient Definitions */}
                   <defs>
                     <linearGradient id="diverge-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                      <stop offset="0%" stopColor="#e0f2fe" stopOpacity="0.8" />
-                      <stop offset="50%" stopColor="#0ea5e9" stopOpacity="0.5" />
-                      <stop offset="100%" stopColor="#006EA7" stopOpacity="0.3" />
+                      <stop offset="0%" stopColor="#cbeeff" stopOpacity="0.85" />
+                      <stop offset="50%" stopColor="#7dd3fc" stopOpacity="0.6" />
+                      <stop offset="100%" stopColor="#00d2ff" stopOpacity="0.35" />
                     </linearGradient>
                   </defs>
                 </svg>
