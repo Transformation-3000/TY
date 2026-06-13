@@ -48,7 +48,7 @@ const PLANS: Record<PlanKey, PlanDetails> = {
       'Longevity Insights',
       'Monatliche Live-Calls',
       'Wearable-Integration',
-      'Analysen zum biologischen Alter',
+      'BioAge-Optimizer',
       'Feel-Good-Area'
     ]
   },
@@ -66,7 +66,7 @@ const PLANS: Record<PlanKey, PlanDetails> = {
       'Longevity Insights',
       'Monatliche Live-Calls',
       'Wearable-Integration',
-      'Analysen zum biologischen Alter',
+      'BioAge-Optimizer',
       'Feel-Good-Area',
       'Biomarker-Tracking mit Lab-Analysen',
       'Jährliches 1:1-Expertengespräch'

@@ -1098,7 +1098,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Longevity Insights</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
-              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Analysen zum biologischen Alter</li>
+              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> BioAge-Optimizer</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
             </ul>
             <Link href="/checkout?plan=premium" className="btn-pricing btn-filled">
@@ -1127,7 +1127,7 @@ export default function LandingPage() {
               <li><i className="bi bi-check-circle-fill"></i> Longevity Insights</li>
               <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
               <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
-              <li><i className="bi bi-check-circle-fill"></i> Analysen zum biologischen Alter</li>
+              <li><i className="bi bi-check-circle-fill"></i> BioAge-Optimizer</li>
               <li><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Biomarker-Tracking mit Lab-Analysen</li>
               <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Jährliches 1:1-Expertengespräch</li>
