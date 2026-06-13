@@ -1745,6 +1745,28 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           visibility: visible;
           opacity: 1;
         }
+
+        /* Responsive Mobile Centering for Tooltips in App View */
+        @media (max-width: 992px) {
+          .box-header {
+            position: relative;
+          }
+          .info-tooltip-container {
+            position: static;
+          }
+          .info-tooltip-text {
+            left: 10px !important;
+            right: 10px !important;
+            width: auto !important;
+            transform: none !important;
+            bottom: auto !important;
+            top: 45px !important;
+            box-sizing: border-box;
+          }
+          .info-tooltip-text::after {
+            display: none !important;
+          }
+        }
       `}</style>
     </div>
   );
