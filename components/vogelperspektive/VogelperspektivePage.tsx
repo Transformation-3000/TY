@@ -485,11 +485,25 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           </div>
         </div>
 
-        {/* BOX 4: FEEL-GOOD-AREA */}
         <div className="dash-card feelgood-box-full">
-          <div className="box-header">
+          <div className="box-header" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <i className="bi bi-stars feelgood-star-icon"></i>
-            <h2 className="box-label">Feel-Good-Area</h2>
+            <h2 className="box-label" style={{ margin: 0 }}>Feel-Good-Area</h2>
+            <span className="premium-badge" style={{
+              marginLeft: '4px',
+              fontSize: '0.65rem',
+              background: 'linear-gradient(135deg, #006ea7 0%, #3b82f6 100%)',
+              color: 'white',
+              padding: '2px 6px',
+              borderRadius: '6px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '2px',
+              fontWeight: 800,
+              textTransform: 'uppercase'
+            }}>
+              <i className="bi bi-lock-fill" style={{ fontSize: '0.65rem', color: 'white' }}></i> Premium
+            </span>
           </div>
           <div className="fg-items-grid">
             {/* CARD 1: ENERGIETANKSTELLE */}
