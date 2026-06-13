@@ -695,7 +695,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                         <i className="bi bi-lock-fill" style={{ fontSize: '1.1rem', color: '#006ea7', marginLeft: '4px' }}></i>
                         <span style={{ fontSize: '0.65rem', fontWeight: 800, color: '#006ea7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
                       </div>
-                      <div className="wbsb-desc">Quartalsweise Reflexion der Longevity-Reise</div>
+                      <div className="wbsb-desc">Quartalsweise Reflexion deiner Longevity-Reise</div>
                     </div>
                   </div>
                   <div className="wbsb-right">
@@ -1037,6 +1037,35 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                 <span className="we-countdown-sm">{getFormattedCurrentDate()}</span>
               </div>
               <div className="str">
+                <button 
+                  onClick={handleEndSession}
+                  style={{
+                    background: 'transparent',
+                    border: 'none',
+                    color: 'rgba(255, 255, 255, 0.7)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    fontSize: '1rem',
+                    fontWeight: 600,
+                    marginRight: '1rem',
+                    padding: '0.4rem 0.8rem',
+                    borderRadius: '12px',
+                    transition: 'all 0.2s',
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.color = '#fff';
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.color = 'rgba(255, 255, 255, 0.7)';
+                    e.currentTarget.style.background = 'transparent';
+                  }}
+                >
+                  <i className="bi bi-chevron-left" style={{ fontSize: '1rem' }}></i>
+                  Zurück
+                </button>
                 <div className="stimer">
                   <span className="tval">{formatTime(sessionTime)}</span>
                 </div>
