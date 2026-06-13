@@ -279,8 +279,23 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
             key={tab.id}
             onClick={() => setActiveTab(tab.id as SubTab)}
             className={`entw-tab ${activeTab === tab.id ? 'active' : ''}`}
+            style={tab.id === 'journey' ? { display: 'inline-flex', alignItems: 'center', gap: '6px' } : undefined}
           >
+            {tab.id === 'journey' && (
+              <i className="bi bi-lock-fill" style={{ fontSize: '0.9rem', color: activeTab === 'journey' ? '#fff' : '#64748b' }}></i>
+            )}
             {tab.label}
+            {tab.id === 'journey' && (
+              <span className="premium-badge" style={{
+                fontSize: '0.62rem',
+                background: activeTab === 'journey' ? 'rgba(255, 255, 255, 0.25)' : 'rgba(68, 152, 202, 0.15)',
+                color: activeTab === 'journey' ? 'white' : '#4498ca',
+                padding: '2px 5px',
+                borderRadius: '4px',
+                fontWeight: 'bold',
+                letterSpacing: '0.5px'
+              }}>PREMIUM</span>
+            )}
           </button>
         ))}
       </div>
