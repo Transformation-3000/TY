@@ -1212,6 +1212,18 @@ export default function LandingPage() {
                     </linearGradient>
                   </defs>
                 </svg>
+                <p className="chart-caption" style={{ 
+                  marginTop: '1.25rem', 
+                  fontSize: '0.95rem', 
+                  color: '#475569', 
+                  textAlign: 'center', 
+                  lineHeight: '1.5', 
+                  fontWeight: 500,
+                  padding: '0 0.5rem',
+                  marginBottom: '0.25rem'
+                }}>
+                  Mit dem TrueYears-Ansatz verlangsamst du deinen Alterungsprozess aktiv und gewinnst wertvolle vitale Lebensjahre zurück.
+                </p>
               </div>
             </div>
           </div>
