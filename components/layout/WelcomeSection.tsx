@@ -296,7 +296,7 @@ export default function WelcomeSection({
                     <strong>Echtzeit-Erfolgsmessung:</strong> Du siehst sofort, wie sich dein Schlaf, deine nächtliche Regeneration und Sport auf dein biologisches Alter und deine Vitalitäts-Scores auswirken
                   </li>
                   <li>
-                    <strong>100% Datensouveränität:</strong> Deine Gesundheitsdaten werden ausschließlich verschlüsselt übertragen, niemals weiterverkauft und dienen rein deiner persönlichen Optimierung.
+                    <strong>100% Datensouveränität:</strong> Deine Vitaldaten werden ausschließlich verschlüsselt übertragen, niemals weiterverkauft und dienen rein deiner persönlichen Optimierung nach höchsten Datenschutzstandards
                   </li>
                 </ul>
               </div>
