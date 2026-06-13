@@ -549,11 +549,11 @@ export default function LandingPage() {
         <div className="hero-fullscreen-overlay" />
         
         <div className="hero-content-fullscreen">
-          <h1>Dein Weg zu 100+ Jahre Vitalität.</h1>
+          <h1>Dein Weg zu 100+ Jahre hohe Vitalität.</h1>
           <p>
             TrueYears ist dein persönlicher Longevity-Assistent. Hier bringst du deine 
             biologische Daten, Aktivitäten, KI-gestütztes Training und wissenschaftlich 
-            fundierte Routinen in einer App zusammen.
+            fundierte Routinen in einer Anwendung zusammen.
           </p>
           <div className="hero-btns">
             <Link href="/dashboard" className="btn-primary-large">LOGIN</Link>
