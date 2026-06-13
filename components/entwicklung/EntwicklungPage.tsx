@@ -300,8 +300,22 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
                 className="upload-trigger-btn" 
                 onClick={() => setShowUploadModal(true)}
               >
-                <i className="bi bi-cloud-arrow-up-fill" style={{ color: 'white' }}></i>
-                BioAge Nachweise hochladen
+                <i className="bi bi-lock-fill" style={{ color: 'white' }}></i>
+                <span>BioAge-Optimizer</span>
+                <span className="premium-badge" style={{
+                  marginLeft: '4px',
+                  fontSize: '0.65rem',
+                  background: 'rgba(255, 255, 255, 0.22)',
+                  color: 'white',
+                  padding: '1px 5px',
+                  borderRadius: '4px',
+                  fontWeight: 800,
+                  textTransform: 'uppercase',
+                  display: 'inline-flex',
+                  alignItems: 'center'
+                }}>
+                  Premium
+                </span>
               </button>
             </div>
           </div>

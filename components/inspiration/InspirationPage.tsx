@@ -173,11 +173,11 @@ const reels: Reel[] = [
     author: 'Dave Asprey', role: 'Vater des Biohackings & Autor', readTime: '3 Min', image: '/images/dave-asprey.png', tag: 'FOKUS', tagColor: '#f59e0b', saved: false, authorImage: '/images/dave-asprey.png',
   },
   {
-    id: 'h1', category: 'hacks',
-    title: 'Was passiert, wenn du frisches Felsquellwasser trinkst?',
-    teaser: 'Reines, unfiltriertes Quellwasser steckt voller natürlicher Mineralien, die deine zelluläre Hydration sofort maximieren.',
-    fullText: 'Frisches Felsquellwasser ist hexagonal strukturiert und reich an essenziellen Elektrolyten wie Magnesium, Calcium und Kieselsäure. Diese natürliche Struktur ermöglicht es deinen Zellen, das Wasser viel schneller aufzunehmen als behandeltes Leitungswasser. Zudem ist es frei von Mikroplastik und Chlor-Rückständen, was deine Mitochondrien-Gesundheit schützt!',
-    author: 'Lisa AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/photo_water.png', tag: 'HYDRATION', tagColor: '#3b82f6', saved: false, authorImage: '/images/lisa.png',
+    id: 'h_beer', category: 'hacks',
+    title: 'Was passiert wenn du ein Glas Bier trinkst',
+    teaser: 'Bereits geringe Mengen Alkohol stören die nächtliche Zellregeneration, blockieren die Autophagie und dehydrieren deine Zellen.',
+    fullText: 'Sobald du Bier oder Alkohol trinkst, priorisiert deine Leber sofort den Abbau von Ethanol. Dadurch werden alle anderen zellulären Regenerationsprozesse und die Autophagie (die zelluläre Müllabfuhr) komplett blockiert. Zudem stört der Alkohol das Vagusnerv-Signal, was deine Tiefschlafphasen um bis zu 80% verkürzt und die Herzfrequenzvariabilität (HRV) drastisch senkt. Der Dehydrations-Effekt entzieht deinen Mitochondrien wichtiges Wasser und beschleunigt die biologische Alterung spürbar!',
+    author: 'Tom AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/beer_longevity_hack.png', tag: 'ALKOHOL', tagColor: '#ef4444', videoSrc: '/videos/reels/reel2.mp4', saved: false, authorImage: '/images/tom_jung.png',
   },
   {
     id: 'h2', category: 'hacks',
@@ -185,6 +185,20 @@ const reels: Reel[] = [
     teaser: 'Schon eine einzige Nacht unter 6 Stunden Schlaf lässt dein Gehirn um Jahre altern und blockiert die zelluläre Entgiftung.',
     fullText: 'Wenn du unter 6 Stunden schläfst, bleibt das glymphatische System – die Müllabfuhr deines Gehirns – inaktiv. Toxische Proteine (Amyloid-Beta) können nicht abgebaut werden. Zudem sinkt deine Testosteronausschüttung und deine Genexpression für Entzündungen steigt sprunghaft an. Dauerhafter Schlafmangel verkürzt deine Telomere massiv!',
     author: 'Tom AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/hacks-schlaf.png', tag: 'REGENERATION', tagColor: '#ef4444', saved: false, authorImage: '/images/tom_jung.png',
+  },
+  {
+    id: 'h_ginger', category: 'hacks',
+    title: 'Was passiert in deinem Körper wenn du Ingwer isst',
+    teaser: 'Schon kleine Mengen Ingwer aktivieren Langlebigkeitsgene, lindern chronische Entzündungen und kurbeln deine Fettverbrennung an.',
+    fullText: 'Ingwer enthält hochwirksame Gingerole und Shogaole. Diese bioaktiven Scharfstoffe hemmen Entzündungs-Signalwege (wie NF-kB) auf zellulärer Ebene ähnlich wie moderne Schmerzmittel – ganz ohne Nebenwirkungen. Zudem regt Ingwer die mitochondriale Thermogenese an, erhöht die Insulinsensitivität und unterstützt die Verdauung, indem er den Gallenfluss stimuliert und deine Darmbarriere schützt!',
+    author: 'Lisa AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/hacks-coffee.png', tag: 'INGWER', tagColor: '#f59e0b', videoSrc: '/videos/reels/reel1.mp4', saved: false, authorImage: '/images/lisa.png',
+  },
+  {
+    id: 'h1', category: 'hacks',
+    title: 'Was passiert, wenn du frisches Felsquellwasser trinkst?',
+    teaser: 'Reines, unfiltriertes Quellwasser steckt voller natürlicher Mineralien, die deine zelluläre Hydration sofort maximieren.',
+    fullText: 'Frisches Felsquellwasser is hexagonal strukturiert und reich an essenziellen Elektrolyten wie Magnesium, Calcium und Kieselsäure. Diese natürliche Struktur ermöglicht es deinen Zellen, das Wasser viel schneller aufzunehmen als behandeltes Leitungswasser. Zudem ist es frei von Mikroplastik und Chlor-Rückständen, was deine Mitochondrien-Gesundheit schützt!',
+    author: 'Lisa AI', role: 'Longevity Snack', readTime: '30 Sek', image: '/images/photo_water.png', tag: 'HYDRATION', tagColor: '#3b82f6', saved: false, authorImage: '/images/lisa.png',
   },
   {
     id: 'h3_steps', category: 'hacks',
@@ -302,9 +316,9 @@ const reels: Reel[] = [
 
 const tabLabels: { id: Tab; label: string; icon: string }[] = [
   { id: 'hacks', label: 'Longevity Snacks', icon: 'bi-lightning-charge' },
-  { id: 'experten', label: 'Biohacking', icon: 'bi-star-fill' },
   { id: 'science', label: 'Wissenschaft', icon: 'bi-journal-medical' },
   { id: 'womens-health', label: "Female Vitality", icon: 'bi-gender-female' },
+  { id: 'experten', label: 'Biohacking', icon: 'bi-star-fill' },
   { id: 'gespeichert', label: 'Gespeichert', icon: 'bi-bookmark-fill' },
 ];
 
@@ -330,6 +344,8 @@ const GIT_COMMIT_DATES: Record<string, string> = {
   r_hamilton: '29.05.26',
   r_diamandis: '08.06.26',
   r_asprey: '29.05.26',
+  h_beer: '13.06.26',
+  h_ginger: '13.06.26',
   h1: '11.05.26',
   h2: '29.05.26',
   h3_steps: '29.05.26',
@@ -451,9 +467,33 @@ export default function InspirationPage() {
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
             className={`ins-tab ${activeTab === tab.id ? 'active' : ''}`}
+            style={{ 
+              display: 'flex', 
+              alignItems: 'center',
+              background: tab.id === 'experten' && activeTab !== 'experten' ? 'rgba(0, 110, 167, 0.07)' : undefined,
+              borderColor: tab.id === 'experten' && activeTab !== 'experten' ? 'rgba(0, 110, 167, 0.18)' : undefined
+            }}
           >
             <i className={`bi ${tab.icon}`} />
             <span>{tab.label}</span>
+            {tab.id === 'experten' && (
+              <span className="premium-badge" style={{
+                marginLeft: '6px',
+                fontSize: '0.65rem',
+                background: 'linear-gradient(135deg, #006ea7 0%, #3b82f6 100%)',
+                color: 'white',
+                padding: '1px 5px',
+                borderRadius: '6px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '2px',
+                fontWeight: 800,
+                textTransform: 'uppercase',
+                verticalAlign: 'middle'
+              }}>
+                <i className="bi bi-lock-fill" style={{ fontSize: '0.65rem', color: 'white' }}></i> Premium
+              </span>
+            )}
             {tab.id === 'gespeichert' && savedIds.length > 0 && (
               <span className="ins-tab-count">{savedIds.length}</span>
             )}
@@ -474,16 +514,22 @@ export default function InspirationPage() {
             return (
               <div key={reel.id} className={`reel-card ${expandedId === reel.id ? 'expanded' : ''}`}>
                 {/* Thumbnail */}
-                <div className="reel-thumb" onClick={() => openFocus(globalIdx)} style={{ cursor: 'pointer' }}>
-                  <Image src={reel.image} alt={reel.title} fill style={{ objectFit: 'cover', objectPosition: 'center 15%' }} />
+                <div className="reel-thumb" onClick={() => openFocus(globalIdx)} style={{ cursor: 'pointer', position: 'relative' }}>
+                  {reel.videoSrc ? (
+                    <div style={{ position: 'absolute', inset: 0 }}>
+                      <video 
+                        src={reel.videoSrc} 
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%' }}
+                        preload="metadata"
+                        muted
+                        playsInline
+                      />
+                    </div>
+                  ) : (
+                    <Image src={reel.image} alt={reel.title} fill style={{ objectFit: 'cover', objectPosition: 'center 15%' }} />
+                  )}
                   <div className="reel-thumb-overlay" />
                   <span className="reel-tag" style={{ background: reel.tagColor }}>{reel.tag}</span>
-                  {/* Play button overlay */}
-                  <div className="reel-play-overlay">
-                    <div className="reel-play-btn">
-                      <i className={`bi ${reel.videoSrc ? 'bi-play-fill' : 'bi-book-fill'}`} />
-                    </div>
-                  </div>
                   <button
                     className={`reel-save-btn ${savedIds.includes(reel.id) ? 'saved' : ''}`}
                     onClick={e => { e.stopPropagation(); toggleSave(reel.id); }}
@@ -585,13 +631,13 @@ export default function InspirationPage() {
         .reel-thumb:hover .reel-play-btn { transform: scale(1); }
 
         .ins-tabs {
-          display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap;
+          display: flex; gap: 0.35rem; margin-bottom: 1.5rem; flex-wrap: wrap;
         }
         .ins-tab {
-          display: flex; align-items: center; gap: 0.45rem; padding: 0.8rem 1.6rem;
+          display: flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.1rem;
           border-radius: 12px; border: 1.5px solid rgba(68,152,202,0.12);
           background: rgba(255,255,255,0.8); color: #64748b;
-          font-size: 1.05rem; font-weight: 700; cursor: pointer; transition: all 0.2s; position: relative;
+          font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.2s; position: relative;
         }
         .ins-tab.active {
           background: linear-gradient(135deg, #4498ca, #2c6a8c);

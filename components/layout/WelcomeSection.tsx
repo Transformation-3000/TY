@@ -202,30 +202,8 @@ export default function WelcomeSection({
         <div className="modal-backdrop" onClick={() => setIsModalOpen(false)}>
           <div className="modal-container" onClick={(e) => e.stopPropagation()}>
             
-            <div className="modal-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <h3 className="modal-title">Verbinde dein Wearable</h3>
-                <button 
-                  className="heart-pulse-btn"
-                  style={{
-                    background: 'transparent',
-                    border: '1px solid rgba(239, 68, 68, 0.4)',
-                    borderRadius: '50%',
-                    width: '32px',
-                    height: '32px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    cursor: 'pointer',
-                    color: '#ef4444',
-                    transition: 'all 0.2s',
-                    padding: 0
-                  }}
-                  title="Vitaldaten Live-Simulation"
-                >
-                  <i className="bi bi-heart-fill heart-beat" style={{ fontSize: '1rem', display: 'inline-block' }}></i>
-                </button>
-              </div>
+            <div className="modal-header">
+              <h3 className="modal-title">Verbinde dein Wearable</h3>
               <button className="modal-close-btn" onClick={() => setIsModalOpen(false)} aria-label="Schließen">
                 <i className="bi bi-x-lg"></i>
               </button>
@@ -305,15 +283,35 @@ export default function WelcomeSection({
                 flexDirection: 'column',
                 justifyContent: 'center'
               }}>
-                <h4 style={{ fontSize: '1.2rem', fontWeight: 800, margin: '0 0 1rem 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <h4 style={{ fontSize: '1.2rem', fontWeight: 800, margin: '0 0 1rem 0', display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <span style={{
                     background: 'linear-gradient(135deg, #006ea7 0%, #3b82f6 100%)',
                     WebkitBackgroundClip: 'text',
                     WebkitTextFillColor: 'transparent',
                     display: 'inline-block'
                   }}>
-                    So verbesserst du deine Ergebnisse über Wearable-Daten
+                    So verarbeiten wir deine Daten
                   </span>
+                  <div className="tech-ring-wrapper equalizer-effect" style={{
+                    position: 'relative',
+                    width: '45px',
+                    height: '45px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '3px',
+                    flexShrink: 0,
+                    border: '1.5px solid rgba(0, 110, 167, 0.4)',
+                    borderRadius: '50%',
+                    overflow: 'hidden',
+                    background: 'rgba(0, 110, 167, 0.03)'
+                  }} title="Daten-Verarbeitung live">
+                    <div className="radar-sweep-hand" style={{ transformOrigin: 'center' }}></div>
+                    <div className="eq-bar eq-bar-1" style={{ zIndex: 1 }}></div>
+                    <div className="eq-bar eq-bar-2" style={{ zIndex: 1 }}></div>
+                    <div className="eq-bar eq-bar-3" style={{ zIndex: 1 }}></div>
+                    <div className="eq-bar eq-bar-4" style={{ zIndex: 1 }}></div>
+                  </div>
                 </h4>
                 <ul style={{ margin: 0, paddingLeft: '1.25rem', color: '#475569', fontSize: '1.0rem', display: 'flex', flexDirection: 'column', gap: '10px', lineHeight: 1.45 }}>
                   <li>
@@ -323,7 +321,7 @@ export default function WelcomeSection({
                     <strong>Echtzeit-Erfolgsmessung:</strong> Du siehst sofort, wie sich dein Schlaf, deine nächtliche Regeneration und Sport auf dein biologisches Alter und deine Vitalitäts-Scores auswirken
                   </li>
                   <li>
-                    <strong>100% Datensouveränität:</strong> Deine Vitaldaten werden ausschließlich verschlüsselt übertragen, niemals weiterverkauft und dienen rein deiner persönlichen Optimierung nach höchsten Datenschutzstandards
+                    <strong>100% Datensouveränität:</strong> Deine Vitaldaten werden ausschließlich verschlüsselt übertragen, niemals weiterverkauft und dienen rein deiner persönlichen Optimierung nach DSGVO- und EU-Datenschutzstandards
                   </li>
                 </ul>
               </div>
@@ -334,16 +332,37 @@ export default function WelcomeSection({
       )}
 
       <style jsx>{`
-        @keyframes heartbeat {
-          0% { transform: scale(1); }
-          14% { transform: scale(1.3); }
-          28% { transform: scale(1); }
-          42% { transform: scale(1.3); }
-          70% { transform: scale(1); }
+        /* Equalizer Data Bars Effect */
+        .eq-bar {
+          width: 3px;
+          background: #006ea7;
+          border-radius: 1.5px;
+          animation: bounce-bar 1.2s infinite ease-in-out;
         }
-        .heart-beat {
-          animation: heartbeat 2.8s infinite;
+        .eq-bar-1 { height: 11px; animation-delay: 0.1s; }
+        .eq-bar-2 { height: 20px; animation-delay: 0.3s; }
+        .eq-bar-3 { height: 14px; animation-delay: 0.5s; }
+        .eq-bar-4 { height: 17px; animation-delay: 0.2s; }
+        @keyframes bounce-bar {
+          0%, 100% { transform: scaleY(0.4); }
+          50% { transform: scaleY(1.1); }
         }
+
+        /* Radar Sonar Sweep Background */
+        .radar-sweep-hand {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background: conic-gradient(from 0deg, transparent 50%, rgba(59, 130, 246, 0.35) 100%);
+          border-radius: 50%;
+          animation: spin-clockwise 3s linear infinite;
+        }
+
+        @keyframes spin-clockwise {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+
         .top-navigation-content {
           display: flex;
           justify-content: space-between;

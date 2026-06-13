@@ -96,11 +96,11 @@ export default function ReelsFocusView({ reels, startIndex = 0, onClose }: Props
         <div className="rfv-topbar-right">
           {cur.videoSrc && (
             <button className="rfv-icon-btn" onClick={() => setMuted(m => !m)} title={muted ? 'Ton an' : 'Ton aus'}>
-              <i className={`bi ${muted ? 'bi-volume-mute-fill' : 'bi-volume-up-fill'}`} />
+              <i className={`bi ${muted ? 'bi-volume-mute-fill' : 'bi-volume-up-fill'}`} style={{ color: '#ffffff', fontSize: '1.2rem' }} />
             </button>
           )}
           <button className="rfv-icon-btn" onClick={onClose} title="Schließen">
-            <i className="bi bi-x-lg" />
+            <i className="bi bi-x-lg" style={{ color: '#ffffff', fontWeight: 'bold' }} />
           </button>
         </div>
       </div>
@@ -239,14 +239,14 @@ export default function ReelsFocusView({ reels, startIndex = 0, onClose }: Props
 
         .rfv-topbar-right { display: flex; align-items: center; gap: 0.5rem; }
         .rfv-icon-btn {
-          width: 36px; height: 36px; border-radius: 50%;
-          background: rgba(0,0,0,0.5); backdrop-filter: blur(10px);
-          border: 1px solid rgba(255,255,255,0.2);
-          color: #fff; font-size: 0.9rem;
+          width: 38px; height: 38px; border-radius: 50%;
+          background: rgba(0,0,0,0.6); backdrop-filter: blur(10px);
+          border: 2px solid #ffffff;
+          color: #fff; font-size: 1rem;
           display: flex; align-items: center; justify-content: center;
           cursor: pointer; transition: all 0.2s;
         }
-        .rfv-icon-btn:hover { background: rgba(255,255,255,0.18); }
+        .rfv-icon-btn:hover { background: rgba(255,255,255,0.25); transform: scale(1.05); }
 
         /* ── Stage ── */
         .rfv-stage {
