@@ -347,7 +347,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             <h2 className="box-label">Activity Tracker</h2>
             <div className="info-tooltip-container">
               <i className="bi bi-info-circle info-tooltip-icon"></i>
-              <div className="info-tooltip-text tooltip-down" style={{ width: '320px' }}>
+              <div className="info-tooltip-text tooltip-down" style={{ width: '380px' }}>
                 Schnelle Erfassung deiner Aktivitäten:<br/>
                 1. Entweder du wählst diese aus einer Liste aus mit Suchfunktion<br/>
                 2. Oder du sprichst diese einfach ein<br/>
@@ -1695,7 +1695,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         }
         .info-tooltip-text {
           visibility: hidden;
-          width: 280px;
+          width: 340px;
           background-color: #0f172a;
           color: #fff;
           text-align: left;
