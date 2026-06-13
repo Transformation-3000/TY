@@ -1195,7 +1195,7 @@ export default function LandingPage() {
                   <text x="220" y="250" fill="#10b981" fontSize="16" fontWeight="700">TrueYears Longevity-Pfad</text>
                   
                   {/* Rejuvenation Gap Text (Styled as a Button/Badge) */}
-                  <rect x="280" y="135" width="140" height="50" rx="25" ry="25" fill="#006EA7" />
+                  <rect x="280" y="135" width="140" height="50" rx="25" ry="25" fill="#7FD049" />
                   <text x="350" y="158" fill="#ffffff" fontSize="12" fontWeight="800" textAnchor="middle" letterSpacing="0.05em">VITALITÄTS-</text>
                   <text x="350" y="174" fill="#ffffff" fontSize="12" fontWeight="800" textAnchor="middle" letterSpacing="0.05em">GEWINN</text>
                   
