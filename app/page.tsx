@@ -1151,7 +1151,7 @@ export default function LandingPage() {
           <div className="final-cta-grid">
             <div className="final-cta-text-col">
               <p>
-                Dein biologisches Alter ist ein dynamischer Wert, den du aktiv steuern kannst. Durch Kombination aus Labor-Diagnostik, Wearable-Tracking und wissenschaftlich validierten Gewohnheiten und personalisierten Maßnahmen lässt sich dein Alterungsprozess nachweisbar verlangsamen.
+                Dein biologisches Alter ist ein dynamischer Wert, den du aktiv steuern kannst. Durch Kombination aus wissenschaftlich validierten Gewohnheiten, personalisierten Maßnahmen, Wearable-Tracking und Labor-Diagnostik lässt sich dein Alterungsprozess nachweisbar verlangsamen.
               </p>
               <p>
                 Während der normale Lebensweg meist zu einem stetigen, unkontrollierten Verlust an zellulärer Vitalität führt, ermöglicht dir der TrueYears-Ansatz eine signifikante Verjüngung. So sicherst du dir viele vitale und kraftvolle Lebensjahre.
