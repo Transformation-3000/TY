@@ -286,7 +286,7 @@ export default function WelcomeSection({
                 justifyContent: 'center'
               }}>
                 <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', margin: '0 0 1rem 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  So verbesserst du Ergebnisse mit deinen Wearable-Daten:
+                  So verbesserst du deine Ergebnisse über Wearable-Daten:
                 </h4>
                 <ul style={{ margin: 0, paddingLeft: '1.25rem', color: '#475569', fontSize: '1.0rem', display: 'flex', flexDirection: 'column', gap: '10px', lineHeight: 1.45 }}>
                   <li>
