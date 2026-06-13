@@ -39,9 +39,15 @@ interface WachstumPageProps {
   onStartAutophagy?: () => void;
   onStartChronotyp?: () => void;
   onStartCardio?: () => void;
+  onStartGlucose?: () => void;
+  onStartVagus?: () => void;
+  onStartKitchen?: () => void;
+  onStartBudget?: () => void;
+  onStartStress?: () => void;
+  onStartToxins?: () => void;
 }
 
-export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimulation, onStartAutophagy, onStartChronotyp, onStartCardio }: WachstumPageProps) {
+export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimulation, onStartAutophagy, onStartChronotyp, onStartCardio, onStartGlucose, onStartVagus, onStartKitchen, onStartBudget, onStartStress, onStartToxins }: WachstumPageProps) {
   const [selectedField, setSelectedField] = useState(OPTIMIZATION_FIELDS[0]);
   const [selectedStyle, setSelectedStyle] = useState<number>(2); // 1 = Einfach, 2 = Mittel, 3 = Tiefgründig
   const userMaturity = 2; // Beispiel-Reifegrad für die Logik rechts
@@ -57,7 +63,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
             <span className="blue-bar"></span>
             <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>
-              Konfiguration: <span style={{ fontWeight: 500, color: '#475569', marginLeft: '0.25rem' }}>Wähle einen Stil aus, der am besten zu dir passt:</span>
+              Wähle einen Stil aus, der am besten zu dir passt: <span style={{ fontWeight: 500, color: '#475569', marginLeft: '0.25rem' }}>Diese Tools helfen dir dabei spielerisch neue Bereiche zu erkunden, Wirkungsweisen besser zu verstehen und deinen Lifestyle zu optimieren</span>
             </h2>
           </div>
           <div style={{ height: '1px', background: '#e2e8f0', width: '100%', marginBottom: '1.5rem' }}></div>
@@ -96,11 +102,11 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
 
       <div className="wachstum-layout">
         
-        {/* Card 1: Zellalter-Simulation */}
+        {/* Card 1: Zellalter-Simulator */}
         <div>
           <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1.25rem' }}>
             <span className="blue-bar"></span>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>1. Zellalter-Simulation</h2>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>1. Zellalter-Simulator</h2>
           </div>
           <div 
             className="sim-card-wide"
@@ -109,7 +115,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
             <div className="sim-card-wide-img-wrap">
               <Image 
                 src="/images/dna_helix_vibrant.png" 
-                alt="Zellalter Simulation" 
+                alt="Zellalter-Simulator" 
                 fill
                 style={{ objectFit: 'cover' }}
               />
@@ -166,11 +172,11 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           </div>
         </div>
 
-        {/* Card 2: Chronotyp-Planer */}
+        {/* Card 2: Chronotyp-Tagesplaner */}
         <div>
           <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '1.25rem' }}>
             <span className="blue-bar"></span>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>2. Chronotyp-Planer</h2>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>2. Chronotyp-Tagesplaner</h2>
           </div>
           <div 
             className="sim-card-wide"
@@ -179,7 +185,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
             <div className="sim-card-wide-img-wrap">
               <Image 
                 src="/images/sleep_option_16.jpg" 
-                alt="Chronotyp-Planer" 
+                alt="Chronotyp-Tagesplaner" 
                 fill
                 style={{ objectFit: 'cover', objectPosition: 'center 35%' }}
               />
@@ -352,6 +358,409 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
             </div>
           </div>
         </div>
+
+        {/* Card 5: Blutzucker-Lab */}
+        <div>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span className="blue-bar"></span>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>5. Blutzucker-Lab</h2>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#3b82f6' }}></i>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', background: 'rgba(59, 130, 246, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+            </div>
+          </div>
+          <div 
+            className="sim-card-wide"
+            onClick={() => onStartGlucose?.()}
+          >
+            <div className="sim-card-wide-img-wrap">
+              <Image 
+                src="/images/meal_with_meat.png" 
+                alt="Blutzucker-Lab" 
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+            <div className="sim-card-wide-content">
+              <div className="sim-card-grid-layout">
+                <div className="sim-card-left-col">
+                  <h3>Optimiere deine Glukosekurve und Energie</h3>
+                  <p>
+                    Verstehe den Einfluss deiner Ernährung auf deinen Blutzuckerspiegel. Lerne, wie du Glukosespitzen durch smarte Kombinationen vermeidest.
+                  </p>
+                </div>
+                <div className="sim-card-right-col">
+                  <div className="bac-circle-container-mini">
+                    <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                      <circle 
+                        cx="50" 
+                        cy="50" 
+                        r="41" 
+                        fill="none" 
+                        stroke="url(#simAgeScoreGrad)" 
+                        strokeWidth="7.5" 
+                        strokeDasharray="257.6" 
+                        strokeDashoffset={257.6 * (1 - 94 / 100)} 
+                        strokeLinecap="round" 
+                        filter="url(#simSoftGlow)"
+                        transform="rotate(-90 50 50)"
+                      />
+                    </svg>
+                    <div className="bac-circle-text-box-mini">
+                      <span className="bac-circle-val-mini">94%</span>
+                      <span className="bac-circle-lab-mini">Stabil</span>
+                    </div>
+                  </div>
+                  <button className="sim-card-blue-button" style={{ background: '#8b5cf6', boxShadow: '0 4px 12px rgba(139, 92, 246, 0.25)' }} onClick={(e) => {
+                    e.stopPropagation();
+                    onStartGlucose?.();
+                  }}>
+                    Lab<br />starten
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 6: HRV-Gym */}
+        <div>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span className="blue-bar"></span>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>6. HRV-Gym</h2>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#3b82f6' }}></i>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', background: 'rgba(59, 130, 246, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+            </div>
+          </div>
+          <div 
+            className="sim-card-wide"
+            onClick={() => onStartVagus?.()}
+          >
+            <div className="sim-card-wide-img-wrap">
+              <Image 
+                src="/images/hrv_female_resilience.png" 
+                alt="HRV-Gym" 
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+            <div className="sim-card-wide-content">
+              <div className="sim-card-grid-layout">
+                <div className="sim-card-left-col">
+                  <h3>Maximiere deine HRV und Stressresilienz</h3>
+                  <p>
+                    Bringe deinen Sympathikus und Parasympathikus in Balance. Trainiere deinen Vagus-Nerv für eine schnellere Regeneration.
+                  </p>
+                </div>
+                <div className="sim-card-right-col">
+                  <div className="bac-circle-container-mini">
+                    <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                      <circle 
+                        cx="50" 
+                        cy="50" 
+                        r="41" 
+                        fill="none" 
+                        stroke="url(#simAgeScoreGrad)" 
+                        strokeWidth="7.5" 
+                        strokeDasharray="257.6" 
+                        strokeDashoffset={257.6 * (1 - 74 / 100)} 
+                        strokeLinecap="round" 
+                        filter="url(#simSoftGlow)"
+                        transform="rotate(-90 50 50)"
+                      />
+                    </svg>
+                    <div className="bac-circle-text-box-mini">
+                      <span className="bac-circle-val-mini">74</span>
+                      <span className="bac-circle-lab-mini">HRV</span>
+                    </div>
+                  </div>
+                  <button className="sim-card-blue-button" style={{ background: '#8b5cf6', boxShadow: '0 4px 12px rgba(139, 92, 246, 0.25)' }} onClick={(e) => {
+                    e.stopPropagation();
+                    onStartVagus?.();
+                  }}>
+                    Gym<br />starten
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 7: Stress-Barometer */}
+        <div>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span className="blue-bar"></span>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>7. Stress-Barometer</h2>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#3b82f6' }}></i>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', background: 'rgba(59, 130, 246, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+            </div>
+          </div>
+          <div 
+            className="sim-card-wide"
+            onClick={() => onStartStress?.()}
+          >
+            <div className="sim-card-wide-img-wrap">
+              <Image 
+                src="/images/stress_barometer_new.png" 
+                alt="Stress-Barometer" 
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+            <div className="sim-card-wide-content">
+              <div className="sim-card-grid-layout">
+                <div className="sim-card-left-col">
+                  <h3>Visualisiere deine allostatische Last</h3>
+                  <p>
+                    Finde heraus, wie emotionaler, physischer und umweltbedingter Stress deine Zellen beeinflusst. Lerne passende Gegenmaßnahmen kennen.
+                  </p>
+                </div>
+                <div className="sim-card-right-col">
+                  <div className="bac-circle-container-mini">
+                    <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                      <circle 
+                        cx="50" 
+                        cy="50" 
+                        r="41" 
+                        fill="none" 
+                        stroke="url(#simAgeScoreGrad)" 
+                        strokeWidth="7.5" 
+                        strokeDasharray="257.6" 
+                        strokeDashoffset={257.6 * (1 - 42 / 100)} 
+                        strokeLinecap="round" 
+                        filter="url(#simSoftGlow)"
+                        transform="rotate(-90 50 50)"
+                      />
+                    </svg>
+                    <div className="bac-circle-text-box-mini">
+                      <span className="bac-circle-val-mini">42</span>
+                      <span className="bac-circle-lab-mini">Index</span>
+                    </div>
+                  </div>
+                  <button className="sim-card-blue-button" style={{ background: '#f59e0b', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.25)' }} onClick={(e) => {
+                    e.stopPropagation();
+                    onStartStress?.();
+                  }}>
+                    Barometer<br />starten
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 8: Longevity-Budgetplaner */}
+        <div>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span className="blue-bar"></span>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>8. Longevity-Budgetplaner</h2>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#3b82f6' }}></i>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', background: 'rgba(59, 130, 246, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+            </div>
+          </div>
+          <div 
+            className="sim-card-wide"
+            onClick={() => onStartBudget?.()}
+          >
+            <div className="sim-card-wide-img-wrap">
+              <Image 
+                src="/images/budget_planer_new.png" 
+                alt="Longevity-Budgetplaner" 
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+            <div className="sim-card-wide-content">
+              <div className="sim-card-grid-layout">
+                <div className="sim-card-left-col">
+                  <h3>Optimiere deine Ausgaben für maximale Wirkung</h3>
+                  <p>
+                    Vergleiche günstige Langlebigkeits-Hacks mit teurem High-Tech Equipment. Erstelle deinen persönlichen Plan basierend auf deinem Budget.
+                  </p>
+                </div>
+                <div className="sim-card-right-col">
+                  <div className="bac-circle-container-mini">
+                    <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                      <circle 
+                        cx="50" 
+                        cy="50" 
+                        r="41" 
+                        fill="none" 
+                        stroke="url(#simAgeScoreGrad)" 
+                        strokeWidth="7.5" 
+                        strokeDasharray="257.6" 
+                        strokeDashoffset={257.6 * (1 - 90 / 100)} 
+                        strokeLinecap="round" 
+                        filter="url(#simSoftGlow)"
+                        transform="rotate(-90 50 50)"
+                      />
+                    </svg>
+                    <div className="bac-circle-text-box-mini">
+                      <span className="bac-circle-val-mini">Hoch</span>
+                      <span className="bac-circle-lab-mini">ROI</span>
+                    </div>
+                  </div>
+                  <button className="sim-card-blue-button" style={{ background: '#f59e0b', boxShadow: '0 4px 12px rgba(245, 158, 11, 0.25)' }} onClick={(e) => {
+                    e.stopPropagation();
+                    onStartBudget?.();
+                  }}>
+                    Planer<br />starten
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 9: Langlebigkeitsküche */}
+        <div>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span className="blue-bar"></span>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>9. Langlebigkeitsküche</h2>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#3b82f6' }}></i>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', background: 'rgba(59, 130, 246, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+            </div>
+          </div>
+          <div 
+            className="sim-card-wide"
+            onClick={() => onStartKitchen?.()}
+          >
+            <div className="sim-card-wide-img-wrap">
+              <Image 
+                src="/images/longevity_kitchen_new.png" 
+                alt="Langlebigkeitsküche" 
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+            <div className="sim-card-wide-content">
+              <div className="sim-card-grid-layout">
+                <div className="sim-card-left-col">
+                  <h3>Aktiviere Langlebigkeits-Gene durch Nahrungs-Synergien</h3>
+                  <p>
+                    Kombiniere Zutaten gezielt, um Wirkstoff-Synergien freizusetzen. Lerne, wie du die Bioverfügbarkeit von sekundären Pflanzenstoffen vervielfachst.
+                  </p>
+                </div>
+                <div className="sim-card-right-col">
+                  <div className="bac-circle-container-mini">
+                    <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                      <circle 
+                        cx="50" 
+                        cy="50" 
+                        r="41" 
+                        fill="none" 
+                        stroke="url(#simAgeScoreGrad)" 
+                        strokeWidth="7.5" 
+                        strokeDasharray="257.6" 
+                        strokeDashoffset={257.6 * (1 - 85 / 100)} 
+                        strokeLinecap="round" 
+                        filter="url(#simSoftGlow)"
+                        transform="rotate(-90 50 50)"
+                      />
+                    </svg>
+                    <div className="bac-circle-text-box-mini">
+                      <span className="bac-circle-val-mini">85%</span>
+                      <span className="bac-circle-lab-mini">Synergie</span>
+                    </div>
+                  </div>
+                  <button className="sim-card-blue-button" style={{ background: '#ef4444', boxShadow: '0 4px 12px rgba(239, 68, 68, 0.25)' }} onClick={(e) => {
+                    e.stopPropagation();
+                    onStartKitchen?.();
+                  }}>
+                    Küche<br />starten
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 10: Toxin-Simulator */}
+        <div>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span className="blue-bar"></span>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>10. Toxin-Simulator</h2>
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#3b82f6' }}></i>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#3b82f6', background: 'rgba(59, 130, 246, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+            </div>
+          </div>
+          <div 
+            className="sim-card-wide"
+            onClick={() => onStartToxins?.()}
+          >
+            <div className="sim-card-wide-img-wrap">
+              <Image 
+                src="/images/toxin_simulator_new.png" 
+                alt="Toxin-Simulator" 
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+            <div className="sim-card-wide-content">
+              <div className="sim-card-grid-layout">
+                <div className="sim-card-left-col">
+                  <h3>Erkenne und eliminiere Belastungen</h3>
+                  <p>
+                    Simuliere den Einfluss von Mikroplastik, Schwermetallen und Genussmitteln auf deine Zelle. Entwickle ein effektives Entgiftungsprotokoll.
+                  </p>
+                </div>
+                <div className="sim-card-right-col">
+                  <div className="bac-circle-container-mini">
+                    <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                      <circle 
+                        cx="50" 
+                        cy="50" 
+                        r="41" 
+                        fill="none" 
+                        stroke="url(#simAgeScoreGrad)" 
+                        strokeWidth="7.5" 
+                        strokeDasharray="257.6" 
+                        strokeDashoffset={257.6 * (1 - 92 / 100)} 
+                        strokeLinecap="round" 
+                        filter="url(#simSoftGlow)"
+                        transform="rotate(-90 50 50)"
+                      />
+                    </svg>
+                    <div className="bac-circle-text-box-mini">
+                      <span className="bac-circle-val-mini">92%</span>
+                      <span className="bac-circle-lab-mini">Rein</span>
+                    </div>
+                  </div>
+                  <button className="sim-card-blue-button" style={{ background: '#ef4444', boxShadow: '0 4px 12px rgba(239, 68, 68, 0.25)' }} onClick={(e) => {
+                    e.stopPropagation();
+                    onStartToxins?.();
+                  }}>
+                    Simulator<br />starten
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <style jsx>{`

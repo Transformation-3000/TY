@@ -417,7 +417,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
     <div className="sim-container">
       <div className="sim-header">
         <div className="sim-header-title-row">
-          <h1 className="sim-title">Chronotyp-Planer</h1>
+          <h1 className="sim-title">Chronotyp-Tagesplaner</h1>
           <button className="sim-back-btn" onClick={onBack}>
             <svg width="6" height="10" viewBox="0 0 6 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 9L1 5L5 1" />
