@@ -211,91 +211,96 @@ export default function WelcomeSection({
               </button>
             </div>
 
-            <div className="wearables-grid">
-              {wearables.map((w) => {
-                const isConnected = activeWearableId === w.id;
-                const isSelected = isConnected;
-                const isPairing = pairingId === w.id;
+            <div className="modal-body-wrapper" style={{ display: 'flex', gap: '1.5rem', padding: '1rem 2rem 2rem' }}>
+              <div className="wearables-grid" style={{ flex: '1', padding: 0 }}>
+                {wearables.map((w) => {
+                  const isConnected = activeWearableId === w.id;
+                  const isSelected = isConnected;
+                  const isPairing = pairingId === w.id;
 
-                return (
-                  <div 
-                    key={w.id} 
-                    className={`wearable-card ${isSelected ? 'selected' : ''} ${isPairing ? 'pairing-active' : ''}`}
-                    onClick={() => handleSelectWearable(w.id)}
-                    style={{
-                      '--brand-color': w.brandColor,
-                      '--glow-color': w.glowColor,
-                      '--bg-color': w.bgColor,
-                      '--light-bg-color': w.lightBgColor
-                    } as React.CSSProperties}
-                  >
-                    <div className="wearable-card-selector">
-                      <div className={`selector-ring ${isSelected ? 'selected' : ''} ${isPairing ? 'pairing' : ''}`}>
-                        {isPairing ? (
-                          <span className="selector-spinner"></span>
-                        ) : (
-                          isSelected && <i className="bi bi-check-lg selector-check"></i>
-                        )}
+                  return (
+                    <div 
+                      key={w.id} 
+                      className={`wearable-card ${isSelected ? 'selected' : ''} ${isPairing ? 'pairing-active' : ''}`}
+                      onClick={() => handleSelectWearable(w.id)}
+                      style={{
+                        '--brand-color': w.brandColor,
+                        '--glow-color': w.glowColor,
+                        '--bg-color': w.bgColor,
+                        '--light-bg-color': w.lightBgColor
+                      } as React.CSSProperties}
+                    >
+                      <div className="wearable-card-selector">
+                        <div className={`selector-ring ${isSelected ? 'selected' : ''} ${isPairing ? 'pairing' : ''}`}>
+                          {isPairing ? (
+                            <span className="selector-spinner"></span>
+                          ) : (
+                            isSelected && <i className="bi bi-check-lg selector-check"></i>
+                          )}
+                        </div>
                       </div>
-                    </div>
 
-                    <div className="wearable-card-img-wrapper">
-                      <div className="img-glow-accent"></div>
-                      <Image 
-                        src={w.image} 
-                        alt={w.name} 
-                        width={90} 
-                        height={90} 
-                        style={{ objectFit: 'contain', transform: w.customScale || 'none', mixBlendMode: 'multiply' }} 
-                        className="wearable-card-img"
-                      />
-                    </div>
-                    
-                    <div className="wearable-card-info">
-                      <span className="wearable-card-title">{w.name}</span>
+                      <div className="wearable-card-img-wrapper">
+                        <div className="img-glow-accent"></div>
+                        <Image 
+                          src={w.image} 
+                          alt={w.name} 
+                          width={90} 
+                          height={90} 
+                          style={{ objectFit: 'contain', transform: w.customScale || 'none', mixBlendMode: 'multiply' }} 
+                          className="wearable-card-img"
+                        />
+                      </div>
                       
-                      <div className="connection-badge-wrapper">
-                        {isPairing ? (
-                          <span className="connection-badge pairing">
-                            <span className="pairing-spinner"></span> KOPPELT...
-                          </span>
-                        ) : isConnected ? (
-                          <span className="connection-badge">
-                            <span className="connection-dot"></span> VERBUNDEN
-                          </span>
-                        ) : (
-                          <span className="connection-badge-placeholder"></span>
-                        )}
+                      <div className="wearable-card-info">
+                        <span className="wearable-card-title">{w.name}</span>
+                        
+                        <div className="connection-badge-wrapper">
+                          {isPairing ? (
+                            <span className="connection-badge pairing">
+                              <span className="pairing-spinner"></span> KOPPELT...
+                            </span>
+                          ) : isConnected ? (
+                            <span className="connection-badge">
+                              <span className="connection-dot"></span> VERBUNDEN
+                            </span>
+                          ) : (
+                            <span className="connection-badge-placeholder"></span>
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
 
-            <div className="wearable-info-box" style={{
-              margin: '0rem 1.5rem 1.5rem 1.5rem',
-              padding: '1.25rem 1.5rem',
-              background: '#f8fafc',
-              border: '1px solid #e2e8f0',
-              borderRadius: '16px',
-              textAlign: 'left'
-            }}>
-              <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.75rem 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <i className="bi bi-shield-check" style={{ color: '#006ea7', fontSize: '1.2rem' }}></i>
-                Wie True Years deine Wearable-Daten für dich einsetzt:
-              </h4>
-              <ul style={{ margin: 0, paddingLeft: '1.25rem', color: '#475569', fontSize: '0.88rem', display: 'flex', flexDirection: 'column', gap: '8px', lineHeight: 1.4 }}>
-                <li>
-                  <strong>Tägliches Bio-Alignment:</strong> Deine Werte (wie HRV und Schlafphasen) fließen direkt in Lisa & Tom AI ein, um deine Tagesempfehlungen anzupassen.
-                </li>
-                <li>
-                  <strong>Echtzeit-Erfolgsmessung:</strong> Du siehst sofort, wie sich dein Schlaf und Sport auf dein biologisches Alter und deine Vitalitäts-Scores auswirken.
-                </li>
-                <li>
-                  <strong>100% Datensouveränität:</strong> Deine Gesundheitsdaten werden ausschließlich verschlüsselt übertragen, niemals weiterverkauft und dienen rein deiner persönlichen Optimierung.
-                </li>
-              </ul>
+              <div className="wearable-info-box" style={{
+                flex: '0 0 350px',
+                padding: '1.5rem',
+                background: '#f8fafc',
+                border: '1px solid #e2e8f0',
+                borderRadius: '20px',
+                textAlign: 'left',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center'
+              }}>
+                <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', margin: '0 0 1rem 0', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <i className="bi bi-shield-check" style={{ color: '#006ea7', fontSize: '1.4rem' }}></i>
+                  Wie True Years deine Wearable-Daten für dich einsetzt:
+                </h4>
+                <ul style={{ margin: 0, paddingLeft: '1.25rem', color: '#475569', fontSize: '1.0rem', display: 'flex', flexDirection: 'column', gap: '10px', lineHeight: 1.45 }}>
+                  <li>
+                    <strong>Tägliches Bio-Alignment:</strong> Deine Werte (wie HRV und Schlafphasen) fließen direkt in Lisa & Tom AI ein, um deine Tagesempfehlungen anzupassen.
+                  </li>
+                  <li>
+                    <strong>Echtzeit-Erfolgsmessung:</strong> Du siehst sofort, wie sich dein Schlaf und Sport auf dein biologisches Alter und deine Vitalitäts-Scores auswirken.
+                  </li>
+                  <li>
+                    <strong>100% Datensouveränität:</strong> Deine Gesundheitsdaten werden ausschließlich verschlüsselt übertragen, niemals weiterverkauft und dienen rein deiner persönlichen Optimierung.
+                  </li>
+                </ul>
+              </div>
             </div>
 
           </div>
@@ -518,7 +523,7 @@ export default function WelcomeSection({
           background: linear-gradient(180deg, #ffffff 0%, #fcfdfe 100%);
           border-radius: 28px;
           width: 95%;
-          max-width: 700px;
+          max-width: 900px;
           box-shadow: 0 35px 70px -15px rgba(8, 15, 30, 0.25), 
                       inset 0 1px 0 rgba(255, 255, 255, 0.9);
           display: flex;
