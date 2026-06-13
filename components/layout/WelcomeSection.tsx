@@ -203,18 +203,16 @@ export default function WelcomeSection({
           <div className="modal-container" onClick={(e) => e.stopPropagation()}>
             
             <div className="modal-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <div>
-                <h3 className="modal-title">Verbinde dein Wearable</h3>
-              </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <h3 className="modal-title">Verbinde dein Wearable</h3>
                 <button 
                   className="heart-pulse-btn"
                   style={{
-                    background: 'rgba(239, 68, 68, 0.1)',
-                    border: 'none',
+                    background: 'transparent',
+                    border: '1px solid rgba(239, 68, 68, 0.4)',
                     borderRadius: '50%',
-                    width: '36px',
-                    height: '36px',
+                    width: '32px',
+                    height: '32px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -225,12 +223,12 @@ export default function WelcomeSection({
                   }}
                   title="Vitaldaten Live-Simulation"
                 >
-                  <i className="bi bi-heart-fill heart-beat" style={{ fontSize: '1.15rem', display: 'inline-block' }}></i>
-                </button>
-                <button className="modal-close-btn" onClick={() => setIsModalOpen(false)} aria-label="Schließen">
-                  <i className="bi bi-x-lg"></i>
+                  <i className="bi bi-heart-fill heart-beat" style={{ fontSize: '1rem', display: 'inline-block' }}></i>
                 </button>
               </div>
+              <button className="modal-close-btn" onClick={() => setIsModalOpen(false)} aria-label="Schließen">
+                <i className="bi bi-x-lg"></i>
+              </button>
             </div>
 
             <div className="modal-body-wrapper" style={{ display: 'flex', gap: '1.5rem', padding: '1rem 2rem 2rem' }}>
@@ -344,7 +342,7 @@ export default function WelcomeSection({
           70% { transform: scale(1); }
         }
         .heart-beat {
-          animation: heartbeat 1.4s infinite;
+          animation: heartbeat 2.8s infinite;
         }
         .top-navigation-content {
           display: flex;
