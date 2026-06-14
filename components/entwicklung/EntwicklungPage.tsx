@@ -149,7 +149,7 @@ interface EntwicklungPageProps {
 }
 
 export default function EntwicklungPage({ onStartSimulation, onNavigate }: EntwicklungPageProps) {
-  const [activeTab, setActiveTab] = useState<SubTab>('hebel');
+  const [activeTab, setActiveTab] = useState<SubTab>('trends');
   const [selectedMetric, setSelectedMetric] = useState<'chronological' | 'difference' | 'dna'>('difference');
   const [trendPeriod, setTrendPeriod] = useState<TrendPeriod>('12m');
   const [showBioAgeDetails, setShowBioAgeDetails] = useState(false);
@@ -646,10 +646,10 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
       {/* Main Tabs */}
       <div className="entw-tabs">
         {[
+          { id: 'trends', label: 'Trends' },
           { id: 'hebel', label: 'Lifestyle-Hebel' },
           { id: 'goals', label: 'Wochenaktivitäten' },
           { id: 'reports', label: 'Monatsreports' },
-          { id: 'trends', label: 'Trends' },
           { id: 'journey', label: 'Journey' },
         ].map(tab => (
           <button
