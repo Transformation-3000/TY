@@ -283,6 +283,21 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
       };
 
       win.html2pdf().set(opt).from(element).toPdf().get('pdf').then((pdfObj: any) => {
+        // Add footer dynamically at bottom right of each page
+        const totalPages = pdfObj.internal.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
+          pdfObj.setPage(i);
+          pdfObj.setFontSize(8);
+          pdfObj.setTextColor(148, 163, 184); // Slate 400
+          
+          const userText = `True Years Monatsreport ${selectedReport?.monthName || 'Report'} - Seite ${i}`;
+          
+          const pageWidth = pdfObj.internal.pageSize.getWidth();
+          const pageHeight = pdfObj.internal.pageSize.getHeight();
+          
+          pdfObj.text(userText, pageWidth - 10, pageHeight - 6, { align: 'right' });
+        }
+
         const blobUrl = pdfObj.output('bloburl');
         window.open(blobUrl, '_blank');
         
