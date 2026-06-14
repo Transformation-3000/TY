@@ -2279,25 +2279,32 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           line-height: 1.25 !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-goals-comparison {
-          gap: 0.75rem !important;
-          margin-top: 0.75rem !important;
+          gap: 0.5rem !important;
+          margin-top: 0.5rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-goals-col {
-          border-radius: 12px !important;
+          border-radius: 10px !important;
         }
         .report-detail-subpage.pdf-render-mode .rgc-header {
-          padding: 0.6rem 0.85rem !important;
-          gap: 0.5rem !important;
+          padding: 0.45rem 0.75rem !important;
+          gap: 0.35rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rgc-header h3 {
-          font-size: 0.85rem !important;
+          font-size: 0.82rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rgc-header i {
+          font-size: 0.95rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rgc-body {
-          padding: 0.75rem !important;
-          gap: 0.5rem !important;
+          padding: 0.5rem 0.75rem !important;
+          gap: 0.4rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rgc-item {
-          font-size: 0.75rem !important;
+          font-size: 0.66rem !important;
+          line-height: 1.2 !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rgc-item i {
+          font-size: 0.8rem !important;
         }
         .rep-detail-branding {
           display: none;
