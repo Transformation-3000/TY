@@ -16,8 +16,6 @@ const mainNavItems: MainNavItem[] = [
   { id: 'insights', label: 'Inspiration', icon: <i className="bi bi-stars"></i> },
   { id: 'entwicklung', label: 'Entwicklung', icon: <i className="bi bi-graph-up-arrow"></i> },
   { id: 'referral', label: 'Weiterempfehlen', icon: <i className="bi bi-gift-fill"></i>, special: true },
-  { id: 'onboarding-link', label: 'Onboarding', icon: <i className="bi bi-card-checklist"></i> },
-  { id: 'results-link', label: 'Ergebnisse', icon: <i className="bi bi-clipboard-data-fill"></i> },
 ];
 
 export default function Sidebar({ activeItem, onItemClick }: { activeItem?: string | null, onItemClick?: (id: string) => void }) {
@@ -33,15 +31,7 @@ export default function Sidebar({ activeItem, onItemClick }: { activeItem?: stri
             <button
               key={item.id}
               className={`sb-item ${isActive ? 'sb-item--active' : ''} ${item.special ? 'sb-item--special' : ''}`}
-              onClick={() => {
-                if (item.id === 'onboarding-link') {
-                  window.location.href = '/onboarding';
-                } else if (item.id === 'results-link') {
-                  window.location.href = '/onboarding/ergebnisse';
-                } else {
-                  onItemClick?.(item.id);
-                }
-              }}
+              onClick={() => onItemClick?.(item.id)}
             >
               <span className="sb-item-icon">{item.icon}</span>
               <div className="sb-item-content">
@@ -51,6 +41,22 @@ export default function Sidebar({ activeItem, onItemClick }: { activeItem?: stri
             </button>
           );
         })}
+        <button
+          className="sb-onboarding-btn"
+          onClick={() => window.location.href = '/onboarding'}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: 'calc(100% - 2rem)', cursor: 'pointer' }}
+        >
+          <i className="bi bi-card-checklist" style={{ fontSize: '1.25rem' }}></i>
+          <span>Onboarding</span>
+        </button>
+        <button
+          className="sb-results-btn"
+          onClick={() => window.location.href = '/onboarding/ergebnisse'}
+          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: 'calc(100% - 2rem)', cursor: 'pointer' }}
+        >
+          <i className="bi bi-clipboard-data-fill" style={{ fontSize: '1.25rem' }}></i>
+          <span>Ergebnisse</span>
+        </button>
       </nav>
 
       <style jsx>{`
