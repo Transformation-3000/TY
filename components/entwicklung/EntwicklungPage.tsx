@@ -274,7 +274,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
       element.classList.add('pdf-render-mode');
 
       const opt = {
-        margin: [10, 10, 10, 10],
+        margin: [4, 10, 10, 10],
         filename: `Monatsreport_${selectedReport?.monthName || 'Report'}_${selectedReport?.year || '2026'}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 3, useCORS: true, logging: false },
@@ -1248,7 +1248,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
               </div>
 
               {/* Pillars Score */}
-              <div className="rep-section-title">
+              <div className="rep-section-title rep-pillars-section-title">
                 <span className="blue-bar"></span>
                 <h3>Auswertung der 6 Optimierungsfelder</h3>
               </div>
@@ -2072,7 +2072,8 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         /* --- PDF Render-Mode Scaling (-25%) --- */
         .report-detail-subpage.pdf-render-mode {
           font-size: 11px !important;
-          padding-top: 0.25rem !important;
+          margin-top: 0 !important;
+          padding-top: 0 !important;
           padding-left: 1.25rem !important;
           padding-right: 1.25rem !important;
           padding-bottom: 1.25rem !important;
@@ -2171,6 +2172,11 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         }
         .report-detail-subpage.pdf-render-mode .rep-section-title h3 {
           font-size: 1rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-pillars-section-title {
+          page-break-before: always !important;
+          break-before: page !important;
+          margin-top: 0 !important;
         }
         .report-detail-subpage.pdf-render-mode .blue-bar {
           height: 16px !important;
