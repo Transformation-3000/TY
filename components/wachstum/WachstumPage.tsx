@@ -57,13 +57,13 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
   return (
     <div className="wachstum-container">
       <header style={{ marginBottom: '2.5rem' }}>
-        <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Do Longevity yourself</h1>
+        <h1 className="growth-page-title">Do Longevity yourself</h1>
         
         <div className="style-selector-wrapper" style={{ marginTop: '1.75rem' }}>
           <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
             <span className="blue-bar"></span>
-            <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>
-              Wähle einen Informationsstil aus, der am besten zu dir passt: <span style={{ fontWeight: 500, color: '#475569', marginLeft: '0.25rem' }}>Die 10 Tools helfen dir dabei spielerisch zu erkunden, Wirkungsweisen besser zu verstehen und deinen Lifestyle zu optimieren</span>
+            <h2 className="style-selector-title">
+              Wähle einen Informationsstil aus, der am besten zu dir passt: <span className="style-selector-subtitle">Die 10 Tools helfen dir dabei spielerisch zu erkunden, Wirkungsweisen besser zu verstehen und deinen Lifestyle zu optimieren</span>
             </h2>
           </div>
           <div style={{ height: '1px', background: '#e2e8f0', width: '100%', marginBottom: '1.5rem' }}></div>
@@ -1022,6 +1022,25 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           line-height: 1.5;
         }
 
+        .growth-page-title {
+          font-size: 2.2rem;
+          font-weight: 800;
+          color: #1e293b;
+          margin: 0;
+        }
+        .style-selector-title {
+          font-size: 1.4rem;
+          font-weight: 800;
+          color: #1e293b;
+          margin: 0;
+          line-height: 1.4;
+        }
+        .style-selector-subtitle {
+          font-weight: 500;
+          color: #475569;
+          margin-left: 0.25rem;
+        }
+
         .wachstum-container {
           padding: 2rem 3.5rem 2rem 2rem;
           max-width: 1200px;
@@ -1062,11 +1081,31 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
             gap: 1.5rem;
           }
           .wachstum-container {
-            padding: 1rem 2rem 1rem 1rem;
+            padding: 1rem 1rem 1rem 1rem;
           }
         }
 
         @media (max-width: 768px) {
+          .growth-page-title {
+            font-size: 1.6rem;
+            text-align: center;
+          }
+          .style-selector-title {
+            font-size: 1.1rem;
+            text-align: center;
+          }
+          .style-selector-subtitle {
+            display: block;
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            margin-left: 0;
+          }
+          .sim-card-headline-row {
+            justify-content: center;
+          }
+          .wachstum-container {
+            padding: 0.75rem 0.5rem;
+          }
           .segmented-control {
             flex-direction: column;
             border-radius: 20px;

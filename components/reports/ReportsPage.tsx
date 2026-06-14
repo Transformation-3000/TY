@@ -136,20 +136,10 @@ export default function ReportsPage() {
   // Detail-Ansicht
   if (viewMode === 'detail' && selectedReport) {
     return (
-      <div style={{ 
-        position: 'fixed', 
-        top: 0, 
-        left: 0, 
-        right: 0, 
-        bottom: 0, 
-        background: '#F0F4F8', 
-        zIndex: 1000, 
-        overflowY: 'auto',
-        padding: '2rem',
-      }}>
+      <div className="report-detail-wrapper">
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
           {/* Header */}
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+          <div className="detail-header-row">
             <button
               onClick={closeDetail}
               style={{
@@ -188,13 +178,7 @@ export default function ReportsPage() {
           {/* Report Content */}
           <div style={{ background: 'white', borderRadius: '20px', overflow: 'hidden', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
             {/* Report Header */}
-            <div style={{ 
-              background: 'linear-gradient(135deg, #1a365d 0%, #2c5282 100%)', 
-              padding: '2rem', 
-              color: 'white',
-              position: 'relative',
-              overflow: 'hidden',
-            }}>
+            <div className="report-cover-header">
               <div style={{ position: 'absolute', top: '-50px', right: '-50px', width: '200px', height: '200px', background: 'rgba(255,255,255,0.05)', borderRadius: '50%' }} />
               <div style={{ position: 'absolute', bottom: '-80px', left: '-80px', width: '250px', height: '250px', background: 'rgba(255,255,255,0.03)', borderRadius: '50%' }} />
               
@@ -213,8 +197,8 @@ export default function ReportsPage() {
             </div>
 
             {/* Health Score Section */}
-            <div style={{ padding: '2rem', borderBottom: '1px solid #E2E3E4' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+            <div className="detail-section-card">
+              <div className="health-score-container">
                 {/* Score Circle */}
                 <div style={{ position: 'relative', width: '140px', height: '140px' }}>
                   <svg viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)' }}>
@@ -273,12 +257,12 @@ export default function ReportsPage() {
             </div>
 
             {/* Key Metrics */}
-            <div style={{ padding: '2rem', borderBottom: '1px solid #E2E3E4' }}>
+            <div className="detail-section-card">
               <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#374A5A', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <i className="bi bi-graph-up" style={{ color: '#006EA7' }} />
                 Wichtigste Metriken
               </h3>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
+              <div className="key-metrics-grid">
                 {[
                   { key: 'sleep', label: 'Schlaf', icon: 'bi-moon-stars', isGoodUp: true },
                   { key: 'steps', label: 'Schritte', icon: 'bi-person-walking', isGoodUp: true },
@@ -311,7 +295,7 @@ export default function ReportsPage() {
                         color: getTrendColor(data.trend, metric.isGoodUp),
                         fontSize: '0.85rem',
                         fontWeight: 500,
-                      }}>
+                       }}>
                         <i className={`bi ${getTrendIcon(data.trend)}`} />
                         <span>{data.trend === 'up' ? 'Gestiegen' : data.trend === 'down' ? 'Gesunken' : 'Stabil'}</span>
                       </div>
@@ -322,7 +306,7 @@ export default function ReportsPage() {
             </div>
 
             {/* Next Best Actions */}
-            <div style={{ padding: '2rem', borderBottom: '1px solid #E2E3E4' }}>
+            <div className="detail-section-card">
               <h3 style={{ fontSize: '1.1rem', fontWeight: 600, color: '#374A5A', marginBottom: '1.25rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                 <i className="bi bi-rocket-takeoff" style={{ color: '#006EA7' }} />
                 Next Best Actions
@@ -331,15 +315,8 @@ export default function ReportsPage() {
                 {selectedReport.nextBestActions.map((action) => {
                   const priorityStyle = getPriorityColor(action.priority);
                   return (
-                    <div key={action.id} style={{ 
-                      display: 'flex', 
-                      alignItems: 'center', 
-                      gap: '1rem',
-                      padding: '1rem 1.25rem',
-                      background: 'white',
-                      borderRadius: '12px',
+                    <div key={action.id} className="next-best-action-item" style={{ 
                       border: `1px solid ${priorityStyle.border}`,
-                      boxShadow: '0 2px 8px rgba(0,0,0,0.04)',
                     }}>
                       <div style={{
                         width: '48px',
@@ -387,7 +364,7 @@ export default function ReportsPage() {
             </div>
 
             {/* Highlights & Blockers */}
-            <div style={{ padding: '2rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+            <div className="highlights-blockers-container">
               {/* Highlights */}
               <div>
                 <h3 style={{ fontSize: '1rem', fontWeight: 600, color: '#2D7A0F', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
@@ -444,7 +421,7 @@ export default function ReportsPage() {
 
   // Übersicht mit 3 Reports nebeneinander
   return (
-    <div style={{ padding: '1.5rem', maxWidth: '1400px', margin: '0 auto' }}>
+    <div className="reports-page-container">
       {/* Header */}
       <div style={{ marginBottom: '2rem' }}>
         <h1 style={{ fontSize: '1.75rem', fontWeight: 700, color: '#374A5A', margin: '0 0 0.5rem 0' }}>
@@ -456,7 +433,7 @@ export default function ReportsPage() {
       </div>
 
       {/* Reports Grid - 3 nebeneinander */}
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+      <div className="reports-grid">
         {monthlyReports.map((report, index) => (
           <div 
             key={report.id}
@@ -690,16 +667,7 @@ export default function ReportsPage() {
       </div>
 
       {/* Bottom Info */}
-      <div style={{ 
-        marginTop: '2rem', 
-        padding: '1.25rem', 
-        background: 'white', 
-        borderRadius: '12px',
-        border: '1px solid #E2E3E4',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}>
+      <div className="bottom-info-box">
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
           <div style={{
             width: '48px',
@@ -735,6 +703,181 @@ export default function ReportsPage() {
           Erinnerung aktivieren
         </button>
       </div>
+
+      <style jsx global>{`
+        .reports-page-container {
+          padding: 1.5rem;
+          max-width: 1400px;
+          margin: 0 auto;
+        }
+
+        .reports-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.5rem;
+        }
+
+        .bottom-info-box {
+          margin-top: 2rem;
+          padding: 1.25rem;
+          background: white;
+          border-radius: 12px;
+          border: 1px solid #E2E3E4;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1rem;
+        }
+
+        /* Detail View Styles */
+        .report-detail-wrapper {
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: #F0F4F8;
+          z-index: 1000;
+          overflow-y: auto;
+          padding: 2rem;
+        }
+
+        .detail-header-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 1.5rem;
+          gap: 1rem;
+        }
+
+        .report-cover-header {
+          background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+          padding: 2rem;
+          color: white;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .detail-section-card {
+          padding: 2rem;
+          border-bottom: 1px solid #E2E3E4;
+        }
+
+        .health-score-container {
+          display: flex;
+          align-items: center;
+          gap: 2rem;
+        }
+
+        .key-metrics-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1rem;
+        }
+
+        .next-best-action-item {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          padding: 1rem 1.25rem;
+          background: white;
+          border-radius: 12px;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+
+        .highlights-blockers-container {
+          padding: 2rem;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 1.5rem;
+        }
+
+        @media (max-width: 992px) {
+          .reports-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .key-metrics-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+        }
+
+        @media (max-width: 768px) {
+          .reports-page-container {
+            padding: 1rem 0.5rem;
+          }
+          .reports-grid {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+          }
+          .bottom-info-box {
+            flex-direction: column;
+            align-items: stretch;
+            text-align: center;
+          }
+          .bottom-info-box > div {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.75rem !important;
+          }
+          .bottom-info-box button {
+            width: 100%;
+            justify-content: center;
+          }
+          .report-detail-wrapper {
+            padding: 1rem 0.5rem;
+          }
+          .detail-header-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.75rem;
+          }
+          .detail-header-row button {
+            width: 100%;
+            justify-content: center;
+          }
+          .report-cover-header {
+            padding: 1.5rem 1rem;
+          }
+          .report-cover-header h1 {
+            font-size: 1.5rem !important;
+          }
+          .report-cover-header p {
+            font-size: 0.85rem !important;
+          }
+          .detail-section-card {
+            padding: 1.25rem 1rem;
+          }
+          .health-score-container {
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 1rem;
+          }
+          .key-metrics-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .next-best-action-item {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.75rem;
+          }
+          .next-best-action-item span {
+            align-self: flex-start;
+          }
+          .highlights-blockers-container {
+            grid-template-columns: 1fr;
+            padding: 1.25rem 1rem;
+            gap: 1.5rem;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .key-metrics-grid {
+            grid-template-columns: 1fr;
+          }
+        }
+      `}</style>
     </div>
   );
 }

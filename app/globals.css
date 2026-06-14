@@ -6129,6 +6129,10 @@ i[class*="bi-"] {
     font-size: 1.9rem;
   }
 
+  .journey-title-single {
+    white-space: normal !important;
+  }
+
   .progress-card-content {
     flex-direction: column;
     text-align: center;
