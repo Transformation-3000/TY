@@ -274,12 +274,12 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
       element.classList.add('pdf-render-mode');
 
       const opt = {
-        margin: [4, 10, 10, 10],
+        margin: [5, 10, 10, 10],
         filename: `Monatsreport_${selectedReport?.monthName || 'Report'}_${selectedReport?.year || '2026'}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 3, useCORS: true, logging: false },
         jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+        pagebreak: { mode: ['css', 'legacy'] }
       };
 
       win.html2pdf().set(opt).from(element).toPdf().get('pdf').then((pdfObj: any) => {
@@ -2117,7 +2117,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           display: flex !important;
           justify-content: flex-start !important;
           align-items: center !important;
-          margin-top: -24px !important;
+          margin-top: 0px !important;
           padding-top: 0 !important;
           margin-bottom: 0.85rem !important;
           padding-bottom: 0.5rem !important;
