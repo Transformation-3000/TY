@@ -28,7 +28,7 @@ export default function BottomNav({ activeTab, onTabChange }: { activeTab: strin
           bottom: 0;
           left: 0;
           right: 0;
-          height: 80px;
+          height: 88px;
           background: rgba(255, 255, 255, 0.94);
           backdrop-filter: blur(12px);
           display: flex;
