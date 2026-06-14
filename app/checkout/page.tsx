@@ -256,8 +256,8 @@ function CheckoutContent() {
               <span className="success-detail-value">{formData.email}</span>
             </div>
           </div>
-          <Link href="/dashboard" className="btn-success-action">
-            Direkt zum Dashboard gehen
+          <Link href="/onboarding" className="btn-success-action">
+            Zum Onboarding gehen
           </Link>
         </div>
       </div>
