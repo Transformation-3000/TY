@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 export default function BottomNav({ activeTab, onTabChange }: { activeTab: string, onTabChange: (tab: string) => void }) {
   const tabs = [
-    { id: 'quick-wins', label: 'Quick Wins', icon: 'bi-rocket-takeoff' },
+    { id: 'quick-wins', label: 'Do it yourself', icon: 'bi-rocket-takeoff' },
     { id: 'coaching', label: 'Personal Trainer', icon: 'bi-person-circle' },
     { id: 'insights', label: 'Inspiration', icon: 'bi-stars' },
     { id: 'entwicklung', label: 'Entwicklung', icon: 'bi-graph-up-arrow' },
