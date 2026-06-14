@@ -471,7 +471,8 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-top: 0.35rem;
+          margin-top: 0.5rem;
+          gap: 1rem;
         }
 
         .nba-pillar {
@@ -479,6 +480,7 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
           font-weight: 700;
           padding: 3px 10px;
           border-radius: 9999px;
+          white-space: nowrap;
         }
         .pillar-hoch {
           background: rgba(34, 197, 94, 0.08);
@@ -503,10 +505,88 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
           cursor: pointer;
           text-align: left;
           transition: color 0.2s;
+          text-decoration: none;
         }
         .activate-hebel-btn:hover {
           color: #004d77;
           text-decoration: underline;
+        }
+
+        /* Mobile Optimization / App View responsiveness */
+        @media (max-width: 768px) {
+          .hebel-page-container {
+            padding: 0.75rem 0.25rem;
+          }
+          .hebel-header {
+            margin-bottom: 1.25rem;
+            padding: 0 0.5rem;
+          }
+          .hebel-header h1 {
+            font-size: 1.5rem;
+          }
+          .hebel-header p {
+            font-size: 0.95rem;
+          }
+          .hebel-grid {
+            gap: 1rem;
+          }
+          .rubric-hebel-card {
+            border-radius: 14px;
+          }
+          .rubric-hebel-card-header {
+            padding: 1rem;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+          }
+          .rubric-hebel-card-header .header-left h3 {
+            font-size: 0.95rem;
+          }
+          .score-badge {
+            font-size: 0.85rem;
+            padding: 0.2rem 0.5rem;
+          }
+          .rubric-hebel-card-body {
+            padding: 0.75rem;
+          }
+          .hebel-items-list {
+            gap: 0.75rem;
+          }
+          .hebel-item-box {
+            padding: 1rem;
+            border-radius: 12px;
+          }
+          .item-title {
+            font-size: 0.9rem;
+          }
+          .nba-priority {
+            font-size: 0.7rem;
+          }
+          .item-desc {
+            font-size: 0.82rem;
+            line-height: 1.4;
+          }
+          .item-footer-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+          }
+          .activate-hebel-btn {
+            font-size: 0.8rem;
+            padding: 0.4rem 0.75rem;
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+          }
+          .nba-pillar {
+            align-self: flex-start;
+            font-size: 0.7rem;
+          }
         }
       `}</style>
     </div>
