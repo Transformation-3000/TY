@@ -46,7 +46,7 @@ export default function BottomNav({ activeTab, onTabChange }: { activeTab: strin
           flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: 0.2rem;
+          gap: 0.1rem;
           background: none;
           border: none;
           color: #64748b;
