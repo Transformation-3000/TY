@@ -158,6 +158,10 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
   const [coachVariant, setCoachVariant] = useState<'lisa-jung' | 'lisa-alt' | 'tom-jung' | 'tom-alt'>('lisa-jung');
   const [activeWearableId, setActiveWearableId] = useState<string>('whoop');
 
+  const [calendarAge, setCalendarAge] = useState<number>(46.7);
+  const [bioAge, setBioAge] = useState<number>(42.5);
+  const [savedYears, setSavedYears] = useState<number>(4.2);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('ty-coach-variant');
@@ -165,6 +169,18 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
 
       const savedWearable = localStorage.getItem('ty_selected_wearable');
       if (savedWearable) setActiveWearableId(savedWearable);
+
+      const loadAges = () => {
+        const savedCal = localStorage.getItem('ty_onboarding_calendar_age');
+        const savedBio = localStorage.getItem('ty_onboarding_bio_age');
+        const savedDiff = localStorage.getItem('ty_onboarding_saved_years');
+        if (savedCal && savedBio && savedDiff) {
+          setCalendarAge(parseFloat(savedCal));
+          setBioAge(parseFloat(savedBio));
+          setSavedYears(parseFloat(savedDiff));
+        }
+      };
+      loadAges();
 
       const handleSync = () => {
         const updated = localStorage.getItem('ty-coach-variant');
@@ -174,14 +190,19 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         if (e.key === 'ty_selected_wearable' && e.newValue) {
           setActiveWearableId(e.newValue);
         }
+        if (e.key === 'ty_onboarding_bio_age' || e.key === 'ty_onboarding_calendar_age' || e.key === 'ty_onboarding_saved_years') {
+          loadAges();
+        }
       };
       window.addEventListener('storage', handleStorageChange);
       window.addEventListener('storage', handleSync);
       window.addEventListener('ty-coach-sync', handleSync);
+      window.addEventListener('ty-onboarding-age-sync', loadAges);
       return () => {
         window.removeEventListener('storage', handleStorageChange);
         window.removeEventListener('storage', handleSync);
         window.removeEventListener('ty-coach-sync', handleSync);
+        window.removeEventListener('ty-onboarding-age-sync', loadAges);
       };
     }
   }, []);
@@ -511,25 +532,32 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
   }, []);
 
   // --- DYNAMIC METRICS FOR CIRCLE ---
-  const circleValue = selectedMetric === 'chronological' ? '46,7' : selectedMetric === 'difference' ? '42,5' : '0,82';
+  const circleValue = useMemo(() => {
+    if (selectedMetric === 'chronological') {
+      return calendarAge.toFixed(1).replace('.', ',');
+    } else if (selectedMetric === 'difference') {
+      return bioAge.toFixed(1).replace('.', ',');
+    } else {
+      return '0,82';
+    }
+  }, [selectedMetric, calendarAge, bioAge]);
+
   const circleLabel = selectedMetric === 'dna' ? 'DNA' : 'Jahre';
 
   // activeDashoffset determines the active stroke outline of the circle based on selected metric.
   // 100% of the circle corresponds to 111 years.
   const activeDashoffset = useMemo(() => {
     if (selectedMetric === 'difference') {
-      // biological age = 42.5 years
-      const P = 42.5 / 111;
+      const P = bioAge / 111;
       return 257.6 * (1 - P);
     } else if (selectedMetric === 'chronological') {
-      // chronological age = 46.7 years
-      const P = 46.7 / 111;
+      const P = calendarAge / 111;
       return 257.6 * (1 - P);
     } else {
       // DNA aging rate 0.82x -> 82% fill
       return 257.6 * 0.18;
     }
-  }, [selectedMetric]);
+  }, [selectedMetric, bioAge, calendarAge]);
 
   return (
     <div className="entw-page">
@@ -671,7 +699,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                   style={{ cursor: 'pointer' }}
                 >
                   <span className="bac-stat-label">CHRONOLOGISCH</span>
-                  <span className="bac-stat-val" style={{ fontSize: '1.15rem' }}>46,7 Jahre</span>
+                  <span className="bac-stat-val" style={{ fontSize: '1.15rem' }}>{calendarAge.toFixed(1).replace('.', ',')} Jahre</span>
                 </div>
                 <div 
                   className={`bac-stat-card ${selectedMetric === 'difference' ? 'active-metric-green' : ''}`}
@@ -682,7 +710,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                   style={{ cursor: 'pointer' }}
                 >
                   <span className="bac-stat-label">DIFFERENZ</span>
-                  <span className="bac-stat-val" style={{ fontSize: '1.15rem' }}>-4,2 Jahre jünger</span>
+                  <span className="bac-stat-val" style={{ fontSize: '1.15rem' }}>-{savedYears.toFixed(1).replace('.', ',')} Jahre jünger</span>
                 </div>
                 <div 
                   className={`bac-stat-card ${selectedMetric === 'dna' ? 'active-metric' : ''}`}

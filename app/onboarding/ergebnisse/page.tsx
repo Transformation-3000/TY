@@ -143,6 +143,19 @@ export default function ErgebnissePage() {
   const scores = calculateScores();
   const activeScoreDetails = scores.find(s => s.id === selectedRubric) || scores[1];
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const totalSaved = parseFloat(scores.reduce((acc, s) => acc + s.savedYears, 0).toFixed(1));
+      const calAge = 53;
+      const bAge = parseFloat((calAge - totalSaved).toFixed(1));
+      localStorage.setItem('ty_onboarding_calendar_age', calAge.toString());
+      localStorage.setItem('ty_onboarding_bio_age', bAge.toString());
+      localStorage.setItem('ty_onboarding_saved_years', totalSaved.toString());
+      window.dispatchEvent(new Event('storage'));
+      window.dispatchEvent(new Event('ty-onboarding-age-sync'));
+    }
+  }, [answers]);
+
   // Calculate overall bio age based on sum of saved years
   const totalSavedYears = parseFloat(scores.reduce((acc, s) => acc + s.savedYears, 0).toFixed(1));
   const calendarAge = 53;
