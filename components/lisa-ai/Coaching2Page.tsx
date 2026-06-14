@@ -122,6 +122,23 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
   const [view, setView] = useState<ViewMode>('welcome');
   const [coachVariant, setCoachVariant] = useState<CoachVariant>('lisa-jung');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('ty-coach-variant');
+      if (saved) {
+        setCoachVariant(saved as CoachVariant);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem('ty-coach-variant', coachVariant);
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new Event('ty-coach-sync'));
+    }
+  }, [coachVariant]);
+
   const [setupStep, setSetupStep] = useState<SetupStep>('coach');
   const [dataVisualType, setDataVisualType] = useState('emotional');
   const [coachGender, setCoachGender] = useState<'female' | 'male' | null>(null);

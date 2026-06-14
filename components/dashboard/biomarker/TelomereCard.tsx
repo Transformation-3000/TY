@@ -6,7 +6,7 @@ export default function TelomereCard() {
       <div className="telomere-container">
         <div className="telomere-header" style={{ marginBottom: '2rem' }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 600, color: '#2e6ca3', marginBottom: '0.5rem' }}>
-            Telomerlängenmessung - Befundinterpretation
+            Telomerlängenmessung - Interpretation & Auswertung
           </h2>
           <p style={{ color: '#666', lineHeight: '1.6' }}>
             Telomere sind die Schutzkappen an den Enden der Chromosomen. Ihre Länge ist ein wichtiger Indikator für das biologische Alter und die Zellvitalität.

@@ -37,11 +37,13 @@ export default function Sidebar({ activeItem, onItemClick }: { activeItem?: stri
             </button>
           );
         })}
+        <a href="/onboarding" className="sb-onboarding-btn">
+          Onboarding
+        </a>
+        <a href="/onboarding/ergebnisse" className="sb-results-btn">
+          Ergebnisse
+        </a>
       </nav>
-
-      <div className="sb-footer">
-        {/* Footer is now empty or used for other things */}
-      </div>
 
       <style jsx>{`
         .sidebar-navigation { display: flex; flex-direction: column; height: 100%; padding: 1.5rem 0.5rem 1.5rem; }
@@ -92,6 +94,8 @@ export default function Sidebar({ activeItem, onItemClick }: { activeItem?: stri
         .sb-item:hover .sb-item-icon { color: #006EA7; }
         .sb-item--active { background: #d1e5f5 !important; color: #1e293b !important; border-radius: 12px; margin: 4px; border-bottom: none !important; }
         .sb-item--active .sb-item-icon { color: #006EA7; }
+        .sb-item--active-parent { background: #f0f7ff !important; color: #006EA7 !important; border-radius: 12px; margin: 4px; border-bottom: none !important; }
+        .sb-item--active-parent .sb-item-icon { color: #006EA7; }
         .sb-item-icon { font-size: 1.5rem; display: flex; align-items: center; justify-content: center; width: 32px; flex-shrink: 0; }
         .sb-item-content { display: flex; flex-direction: column; align-items: flex-start; }
         .sb-item-label { font-size: calc(0.95rem + 1pt); font-weight: 700; }
@@ -103,7 +107,6 @@ export default function Sidebar({ activeItem, onItemClick }: { activeItem?: stri
         .sb-item--special .sb-item-label { color: #fff; }
         .sb-item--special .sb-item-sub { color: rgba(255, 255, 255, 0.8); }
         
-        .sb-footer { margin-top: auto; padding-top: 1rem; }
       `}</style>
     </div>
   );

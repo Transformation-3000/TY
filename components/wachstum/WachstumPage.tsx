@@ -57,13 +57,13 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
   return (
     <div className="wachstum-container">
       <header style={{ marginBottom: '2.5rem' }}>
-        <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Do it yourself</h1>
+        <h1 style={{ fontSize: '2.2rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>Do Longevity yourself</h1>
         
         <div className="style-selector-wrapper" style={{ marginTop: '1.75rem' }}>
           <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
             <span className="blue-bar"></span>
             <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>
-              Wähle einen Stil aus, der am besten zu dir passt: <span style={{ fontWeight: 500, color: '#475569', marginLeft: '0.25rem' }}>Diese Tools helfen dir dabei spielerisch neue Bereiche zu erkunden, Wirkungsweisen besser zu verstehen und deinen Lifestyle zu optimieren</span>
+              Wähle einen Informationsstil aus, der am besten zu dir passt: <span style={{ fontWeight: 500, color: '#475569', marginLeft: '0.25rem' }}>Die 10 Tools helfen dir dabei spielerisch zu erkunden, Wirkungsweisen besser zu verstehen und deinen Lifestyle zu optimieren</span>
             </h2>
           </div>
           <div style={{ height: '1px', background: '#e2e8f0', width: '100%', marginBottom: '1.5rem' }}></div>

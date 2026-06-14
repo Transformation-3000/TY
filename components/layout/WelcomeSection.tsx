@@ -62,20 +62,43 @@ const wearables: Wearable[] = [
   }
 ];
 
+const RUBRICS = [
+  { id: 'Einstieg', label: 'Einstieg', icon: 'bi-rocket-takeoff' },
+  { id: 'Schlaf', label: 'Schlaf', icon: 'bi-moon-stars' },
+  { id: 'Kraft', label: 'Kraft', icon: 'bi-lightning' },
+  { id: 'Zellversorgung', label: 'Zelle', icon: 'bi-apple' },
+  { id: 'Immunbalance', label: 'Immun', icon: 'bi-yin-yang' },
+  { id: 'Soziale Bindungen', label: 'Soziales', icon: 'bi-heart' },
+  { id: 'Mindset', label: 'Resilienz', icon: 'bi-sun' }
+];
+
 export default function WelcomeSection({ 
   onNavigate, 
   onToggleSidebar, 
-  sidebarOpen 
+  sidebarOpen,
+  isOnboarding = false,
+  onboardingCategory = 'Einstieg',
+  onRubricClick
 }: { 
   onNavigate?: (menuItem: string) => void; 
   onToggleSidebar?: () => void; 
   sidebarOpen?: boolean; 
+  isOnboarding?: boolean;
+  onboardingCategory?: string;
+  onRubricClick?: (rubricId: string) => void;
 }) {
   const [activeWearableId, setActiveWearableId] = useState<string>('whoop');
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [tempSelectedId, setTempSelectedId] = useState<string>('whoop');
   const [pairingId, setPairingId] = useState<string | null>(null);
   const [pairingTimeoutId, setPairingTimeoutId] = useState<any>(null);
+
+  const getRubricStatus = (rubricId: string, index: number) => {
+    const currentRubricIndex = RUBRICS.findIndex(r => r.id === onboardingCategory);
+    if (index < currentRubricIndex) return 'completed';
+    if (index === currentRubricIndex) return 'active';
+    return 'upcoming';
+  };
 
   useEffect(() => {
     const saved = localStorage.getItem('ty_selected_wearable');
@@ -135,17 +158,40 @@ export default function WelcomeSection({
         <Image src="/images/logoneu.png" alt="True Years Logo" width={180} height={180} className="top-nav-logo" style={{ objectFit: 'contain' }} />
       </div>
 
+      {/* Onboarding Rubrics Tracker in Center */}
+      {isOnboarding && (
+        <div className="onboarding-header-tracker">
+          {RUBRICS.map((rubric, index) => {
+            const status = getRubricStatus(rubric.id, index);
+            return (
+              <div 
+                key={rubric.id} 
+                className={`rubric-step ${status}`}
+                onClick={() => onRubricClick?.(rubric.id)}
+                style={{ cursor: 'pointer' }}
+              >
+                <div className="rubric-icon-wrap">
+                  <i className={`bi ${rubric.icon}`}></i>
+                  {status === 'completed' && <span className="check-badge"><i className="bi bi-check-lg"></i></span>}
+                </div>
+                <span className="rubric-label">{rubric.label}</span>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       {/* 3 Areas Right */}
       <div className="top-nav-right-section">
         
         {/* WEARABLE STATUS TEXT "AKTIV" */}
-        <span className="status-text-active" onClick={handleOpenModal} style={{ cursor: 'pointer' }}>AKTIV</span>
+        <span className="status-text-active" onClick={isOnboarding ? undefined : handleOpenModal} style={{ cursor: isOnboarding ? 'default' : 'pointer' }}>AKTIV</span>
 
         {/* EQUALLY SPACED NAV ELEMENTS */}
         <div className="nav-elements-container">
           
           {/* AREA 1: WEARABLE */}
-          <div className="header-area wearable-area" onClick={handleOpenModal}>
+          <div className="header-area wearable-area" onClick={isOnboarding ? undefined : handleOpenModal} style={{ cursor: isOnboarding ? 'default' : 'pointer' }}>
             <div className="wearable-wrapper" title={`Aktiviertes Wearable: ${activeWearable.name}`}>
               <div className="wearable-img-container">
                 <Image 
@@ -165,7 +211,7 @@ export default function WelcomeSection({
           </div>
 
           {/* AREA 2: PROFILE */}
-          <div className="header-area profile-area" onClick={() => onNavigate?.('settings')}>
+          <div className="header-area profile-area" onClick={isOnboarding ? undefined : () => onNavigate?.('settings')} style={{ cursor: isOnboarding ? 'default' : 'pointer' }}>
             <div className="profile-border-circle">
               <div className="profile-img-container">
                 <Image 

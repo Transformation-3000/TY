@@ -8,6 +8,7 @@ import MicroHabitsPage from '@/components/microhabits/MicroHabitsPage';
 import BlackBoardPage from '@/components/blackboard/BlackBoardPage';
 import InsightsPage from '@/components/insights/InsightsPage';
 import EntwicklungPage from '@/components/entwicklung/EntwicklungPage';
+import OnboardingHebelPage from '@/components/entwicklung/OnboardingHebelPage';
 import SettingsPage from '@/components/settings/SettingsPage';
 import LongevityJourneyPage from '@/components/longevity/LongevityJourneyPage';
 import LongevityJourney7LevelsPage from '@/components/longevity/LongevityJourney7LevelsPage';
@@ -44,6 +45,12 @@ export default function Dashboard() {
       } else {
         sessionStorage.removeItem('ty_first_name');
         sessionStorage.removeItem('ty_email');
+      }
+      
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get('tab');
+      if (tab) {
+        setActiveMenuItem(tab);
       }
     }
   }, []);
@@ -151,7 +158,14 @@ export default function Dashboard() {
           )}
 
           {activeMenuItem === 'entwicklung' && (
-            <EntwicklungPage onStartSimulation={() => setActiveMenuItem('zellalter-simulation')} />
+            <EntwicklungPage 
+              onStartSimulation={() => setActiveMenuItem('zellalter-simulation')} 
+              onNavigate={navigate}
+            />
+          )}
+
+          {activeMenuItem === 'onboarding-hebel' && (
+            <OnboardingHebelPage onNavigate={navigate} />
           )}
 
           {activeMenuItem === 'zellalter-simulation' && (
