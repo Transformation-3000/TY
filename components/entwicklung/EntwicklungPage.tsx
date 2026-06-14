@@ -1264,7 +1264,13 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                           <span className="rpdc-num">{pIdx + 1}</span>
                           <h4>{pillar.name}</h4>
                         </div>
-                        <span className={`rpdc-status ${statusClass}`}>{pillar.status}</span>
+                        <span className={`rpdc-status ${statusClass}`}>
+                          {pillar.status === 'Ausbaufähig' ? (
+                            <>Ausbau-<br />fähig</>
+                          ) : (
+                            pillar.status
+                          )}
+                        </span>
                       </div>
                       <div className="rpdc-score-row">
                         <div className="rpdc-score-num">
@@ -2631,12 +2637,23 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           font-size: 0.72rem;
           font-weight: 800;
           padding: 0.25rem 0.6rem;
-          border-radius: 100px;
+          border-radius: 12px;
           text-transform: uppercase;
+          text-align: center;
+          line-height: 1.1;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
         }
         .rpdc-status.excellent { background: #dcfce7; color: #15803d; }
         .rpdc-status.gut { background: #ecfdf5; color: #047857; }
-        .rpdc-status.middle { background: #fef3c7; color: #b45309; }
+        .rpdc-status.middle { 
+          background: #fef3c7; 
+          color: #b45309; 
+          padding: 0.35rem 0.6rem;
+          min-width: 65px;
+          border-radius: 8px;
+        }
 
         .rpdc-score-row {
           display: flex;
