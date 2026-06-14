@@ -926,6 +926,50 @@ export default function ErgebnissePage() {
           background: #f8fafc;
           border-color: #cbd5e1;
         }
+        @media (max-width: 768px) {
+          .results-subpage {
+            padding: 90px 0.5rem 1.5rem !important;
+          }
+          .results-container {
+            padding: 0 !important;
+            gap: 1rem !important;
+          }
+          .results-banner {
+            flex-direction: column !important;
+            padding: 1.5rem 1rem !important;
+            border-radius: 16px !important;
+            text-align: center !important;
+            gap: 1.5rem !important;
+          }
+          .banner-title {
+            font-size: 1.5rem !important;
+          }
+          .banner-desc {
+            font-size: 0.92rem !important;
+          }
+          .diagrams-row {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+          }
+          .diagram-card {
+            padding: 1.25rem 1rem !important;
+            border-radius: 16px !important;
+          }
+          .radar-wrapper {
+            height: 280px !important;
+          }
+          .radar-svg {
+            max-width: 280px !important;
+          }
+          .detail-body {
+            padding: 1.25rem 1rem !important;
+            gap: 1.25rem !important;
+          }
+          .detail-desc {
+            font-size: 0.9rem !important;
+            margin-bottom: 1rem !important;
+          }
+        }
       `}</style>
     </div>
   );

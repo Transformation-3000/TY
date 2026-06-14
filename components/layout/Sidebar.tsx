@@ -16,6 +16,8 @@ const mainNavItems: MainNavItem[] = [
   { id: 'insights', label: 'Inspiration', icon: <i className="bi bi-stars"></i> },
   { id: 'entwicklung', label: 'Entwicklung', icon: <i className="bi bi-graph-up-arrow"></i> },
   { id: 'referral', label: 'Weiterempfehlen', icon: <i className="bi bi-gift-fill"></i>, special: true },
+  { id: 'onboarding-link', label: 'Onboarding', icon: <i className="bi bi-card-checklist"></i> },
+  { id: 'results-link', label: 'Ergebnisse', icon: <i className="bi bi-clipboard-data-fill"></i> },
 ];
 
 export default function Sidebar({ activeItem, onItemClick }: { activeItem?: string | null, onItemClick?: (id: string) => void }) {
@@ -28,7 +30,19 @@ export default function Sidebar({ activeItem, onItemClick }: { activeItem?: stri
         {mainNavItems.map((item) => {
           const isActive = currentActiveItem === item.id;
           return (
-            <button key={item.id} className={`sb-item ${isActive ? 'sb-item--active' : ''} ${item.special ? 'sb-item--special' : ''}`} onClick={() => onItemClick?.(item.id)}>
+            <button
+              key={item.id}
+              className={`sb-item ${isActive ? 'sb-item--active' : ''} ${item.special ? 'sb-item--special' : ''}`}
+              onClick={() => {
+                if (item.id === 'onboarding-link') {
+                  window.location.href = '/onboarding';
+                } else if (item.id === 'results-link') {
+                  window.location.href = '/onboarding/ergebnisse';
+                } else {
+                  onItemClick?.(item.id);
+                }
+              }}
+            >
               <span className="sb-item-icon">{item.icon}</span>
               <div className="sb-item-content">
                 <span className="sb-item-label">{item.label}</span>
@@ -37,12 +51,6 @@ export default function Sidebar({ activeItem, onItemClick }: { activeItem?: stri
             </button>
           );
         })}
-        <a href="/onboarding" className="sb-onboarding-btn">
-          Onboarding
-        </a>
-        <a href="/onboarding/ergebnisse" className="sb-results-btn">
-          Ergebnisse
-        </a>
       </nav>
 
       <style jsx>{`

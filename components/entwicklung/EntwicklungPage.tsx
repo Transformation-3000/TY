@@ -2120,12 +2120,12 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         }
         /* --- PDF Render-Mode Scaling (-25%) --- */
         .report-detail-subpage.pdf-render-mode {
-          font-size: 10.5px !important;
+          font-size: 11px !important;
           margin-top: 0 !important;
           padding-top: 0 !important;
-          padding-left: 1rem !important;
-          padding-right: 1rem !important;
-          padding-bottom: 1rem !important;
+          padding-left: 1.25rem !important;
+          padding-right: 1.25rem !important;
+          padding-bottom: 1.25rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-summary-card,
         .report-detail-subpage.pdf-render-mode .rep-bio-card,
@@ -2147,8 +2147,8 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           align-items: center !important;
           margin-top: 0px !important;
           padding-top: 0 !important;
-          margin-bottom: 0.4rem !important;
-          padding-bottom: 0.25rem !important;
+          margin-bottom: 0.6rem !important;
+          padding-bottom: 0.35rem !important;
           border-bottom: none !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-branding-left {
@@ -2163,172 +2163,175 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           display: block !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-detail-banner-wrap {
-          display: none !important;
+          display: block !important;
+          height: 110px !important;
+          margin-bottom: 0.75rem !important;
+          border-radius: 12px !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-detail-header-row {
-          margin-bottom: 0.5rem !important;
-          gap: 0.75rem !important;
+          margin-bottom: 0.75rem !important;
+          gap: 0.85rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-detail-title {
-          font-size: 1.15rem !important;
+          font-size: 1.2rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-detail-subtitle {
-          font-size: 0.7rem !important;
+          font-size: 0.72rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-detail-score-box {
-          padding: 0.35rem 0.6rem !important;
-          border-radius: 10px !important;
-          gap: 0.5rem !important;
+          padding: 0.45rem 0.75rem !important;
+          border-radius: 12px !important;
+          gap: 0.65rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-detail-score-circle {
-          width: 44px !important;
-          height: 44px !important;
-          border-width: 1px !important;
+          width: 46px !important;
+          height: 46px !important;
+          border-width: 1.5px !important;
         }
         .report-detail-subpage.pdf-render-mode .rdsc-val {
-          font-size: 1.15rem !important;
+          font-size: 1.2rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rdsc-label {
-          font-size: 0.55rem !important;
+          font-size: 0.58rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rdsi-label {
-          font-size: 0.55rem !important;
+          font-size: 0.58rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rdsi-change {
-          font-size: 0.68rem !important;
+          font-size: 0.7rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-summary-card {
-          padding: 0.75rem !important;
-          border-radius: 12px !important;
-          margin-bottom: 0.5rem !important;
+          padding: 0.95rem !important;
+          border-radius: 14px !important;
+          margin-bottom: 0.85rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rsc-header {
-          margin-bottom: 0.5rem !important;
-          gap: 0.5rem !important;
+          margin-bottom: 0.6rem !important;
+          gap: 0.6rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rsc-coach-avatar-wrap {
-          width: 36px !important;
-          height: 36px !important;
+          width: 38px !important;
+          height: 38px !important;
         }
         .report-detail-subpage.pdf-render-mode .rsc-coach-title {
-          font-size: 0.9rem !important;
+          font-size: 0.95rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rsc-coach-subtitle {
-          font-size: 0.65rem !important;
+          font-size: 0.68rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rsc-text {
-          font-size: 0.76rem !important;
-          line-height: 1.3 !important;
+          font-size: 0.8rem !important;
+          line-height: 1.35 !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-section-title {
-          margin-top: 0.6rem !important;
-          margin-bottom: 0.4rem !important;
+          margin-top: 1.1rem !important;
+          margin-bottom: 0.6rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-section-title h3 {
-          font-size: 0.9rem !important;
+          font-size: 0.95rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-pillars-section-title {
           page-break-before: avoid !important;
           break-before: avoid !important;
-          margin-top: 0.6rem !important;
+          margin-top: 1.1rem !important;
         }
         .report-detail-subpage.pdf-render-mode .blue-bar {
-          height: 12px !important;
-          width: 2.5px !important;
-          margin-right: 6px !important;
+          height: 14px !important;
+          width: 3px !important;
+          margin-right: 8px !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-wearable-source-badge {
           transform: none !important;
-          padding: 0.15rem 0.4rem !important;
-          border-radius: 6px !important;
-          gap: 0.25rem !important;
+          padding: 0.2rem 0.5rem !important;
+          border-radius: 8px !important;
+          gap: 0.35rem !important;
           border-width: 1px !important;
         }
         .report-detail-subpage.pdf-render-mode .rwsb-label {
-          font-size: 0.6rem !important;
+          font-size: 0.62rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rwsb-img {
-          width: 14px !important;
-          height: 14px !important;
+          width: 16px !important;
+          height: 16px !important;
         }
         .report-detail-subpage.pdf-render-mode .rwsb-name {
-          font-size: 0.6rem !important;
+          font-size: 0.65rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rwsb-status-dot {
-          width: 5px !important;
-          height: 5px !important;
+          width: 6px !important;
+          height: 6px !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-biomarker-grid {
           display: flex !important;
           flex-wrap: wrap !important;
-          gap: 0.35rem !important;
+          gap: 0.5rem !important;
           justify-content: space-between !important;
-          margin-bottom: 0.5rem !important;
+          margin-bottom: 0.85rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-bio-card {
-          width: 24% !important;
+          width: 23.5% !important;
           box-sizing: border-box !important;
-          padding: 0.45rem !important;
-          border-radius: 8px !important;
+          padding: 0.55rem !important;
+          border-radius: 10px !important;
         }
         .report-detail-subpage.pdf-render-mode .rbc-label {
-          font-size: 0.55rem !important;
+          font-size: 0.6rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rbc-value {
-          font-size: 0.95rem !important;
+          font-size: 1.05rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rbc-change {
-          font-size: 0.65rem !important;
+          font-size: 0.68rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-pillars-grid {
           display: flex !important;
           flex-wrap: wrap !important;
-          gap: 0.35rem !important;
+          gap: 0.5rem !important;
           justify-content: space-between !important;
-          margin-bottom: 0.5rem !important;
+          margin-bottom: 0.85rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-pillar-detail-card {
-          width: 32.5% !important;
+          width: 32% !important;
           box-sizing: border-box !important;
-          padding: 0.6rem !important;
-          border-radius: 10px !important;
+          padding: 0.75rem !important;
+          border-radius: 12px !important;
         }
         .report-detail-subpage.pdf-render-mode .rpdc-header {
-          margin-bottom: 0.4rem !important;
+          margin-bottom: 0.5rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rpdc-num {
-          width: 24px !important;
-          height: 24px !important;
-          font-size: 0.8rem !important;
+          width: 28px !important;
+          height: 28px !important;
+          font-size: 0.9rem !important;
           border-width: 1px !important;
         }
         .report-detail-subpage.pdf-render-mode .rpdc-title-group h4 {
-          font-size: 0.8rem !important;
+          font-size: 0.85rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rpdc-status {
-          font-size: 0.58rem !important;
-          padding: 0.15rem 0.35rem !important;
+          font-size: 0.62rem !important;
+          padding: 0.18rem 0.4rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rpdc-score-row {
-          margin-bottom: 0.35rem !important;
-          padding-bottom: 0.35rem !important;
+          margin-bottom: 0.4rem !important;
+          padding-bottom: 0.4rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rpdc-score-num .rpdc-score-val {
-          font-size: 1.05rem !important;
+          font-size: 1.15rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rpdc-score-num .rpdc-score-lbl {
-          font-size: 0.6rem !important;
+          font-size: 0.62rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rpdc-change {
-          font-size: 0.7rem !important;
+          font-size: 0.72rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rpdc-desc {
-          font-size: 0.65rem !important;
-          line-height: 1.2 !important;
+          font-size: 0.7rem !important;
+          line-height: 1.25 !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-goals-comparison {
-          gap: 0.35rem !important;
-          margin-top: 0.5rem !important;
+          gap: 0.5rem !important;
+          margin-top: 0.85rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-goals-col {
           border-radius: 10px !important;

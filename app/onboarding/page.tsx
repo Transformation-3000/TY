@@ -691,6 +691,47 @@ export default function OnboardingPage() {
           text-align: center;
           text-decoration: none;
         }
+        @media (max-width: 768px) {
+          .onboarding-page {
+            padding: 90px 0.5rem 1.5rem !important;
+          }
+          .question-card {
+            padding: 1.5rem 1rem !important;
+            border-radius: 16px !important;
+          }
+          .question-text {
+            font-size: 1.3rem !important;
+            line-height: 1.4 !important;
+          }
+          .option-card {
+            padding: 0.85rem 1rem !important;
+            font-size: 0.92rem !important;
+          }
+          .category-badge {
+            font-size: 0.85rem !important;
+            margin-left: 0 !important;
+          }
+          .step-counter {
+            font-size: 0.85rem !important;
+          }
+          .card-actions {
+            margin-top: 1.5rem !important;
+            gap: 0.5rem !important;
+          }
+          .action-btn {
+            padding: 0.65rem 1.25rem !important;
+            font-size: 0.9rem !important;
+          }
+          .rubrics-tracker {
+            padding: 0.5rem !important;
+            gap: 0.25rem !important;
+          }
+          .rubric-icon-wrap {
+            width: 32px !important;
+            height: 32px !important;
+            font-size: 0.95rem !important;
+          }
+        }
       `}</style>
     </div>
   );
