@@ -437,7 +437,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         score: 67,
         diff: '-8',
         isPos: false,
-        summary: 'Der April war von erhöhten beruflichen Belastungen geprägt, was sich in einer leicht reduzierten Schlafqualität und weniger Trainingseinheiten widerspiegelt. Dein Fokus sollte darauf liegen, die Aktivitätsschwelle wieder anzuheben.',
+        summary: 'Der April war von erhöhten beruflichen Belastungen geprägt, was sich in einer leicht reduzierten Schlafqualität und weniger Trainingseinheiten widerspiegelt. Dein Fokus sollte darauf liegen, die Alltagsbewegung und das Schrittziel im Mai wieder konsequent anzuheben. Versuche zudem, feste Entlastungstage einzubauen und späte Bildschirmarbeit zu meiden, um das Stressniveau am Abend zu senken und die Regeneration deines Nervensystems zu unterstützen.',
         pillars: [
           { name: 'Schlaf & Erholung', score: 70, change: '-5%', status: 'Gut', desc: 'Erhöhte Einschlafzeit durch späte Bildschirmarbeit.' },
           { name: 'Kraft & Ausdauer', score: 79, change: '-3%', status: 'Gut', desc: 'Nur 2 Trainingseinheiten pro Woche im Durchschnitt geschafft.' },
@@ -468,7 +468,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         score: 75,
         diff: '+4',
         isPos: true,
-        summary: 'Ein solider Einstieg im März. Du konntest deine Alltagsbewegung spürbar steigern und hast erste regenerative Atemübungen erfolgreich in deinen Arbeitsalltag integriert.',
+        summary: 'Ein solider Einstieg im März. Du konntest deine Alltagsbewegung spürbar steigern und hast erste regenerative Atemübungen erfolgreich in deinen Arbeitsalltag integriert. Für den April empfehlen wir, den Fokus verstärkt auf die Schlafhygiene zu legen und Koffein strikt ab 14 Uhr zu meiden. Dies wird dir helfen, die Einschlafzeit zu verkürzen und deine Tiefschlafphasen für eine spürbar bessere Erholung am Morgen weiter zu stabilisieren.',
         pillars: [
           { name: 'Schlaf & Erholung', score: 75, change: '+3%', status: 'Gut', desc: 'Erste positive Effekte durch den Chronotyp-Tagesplaner.' },
           { name: 'Kraft & Ausdauer', score: 82, change: '+7%', status: 'Exzellent', desc: 'Hohe Motivation zu Beginn der Trainingszyklen.' },
