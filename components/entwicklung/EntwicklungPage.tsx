@@ -2300,11 +2300,15 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           gap: 0.4rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rgc-item {
-          font-size: 0.66rem !important;
+          line-height: 1.2 !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rgc-item span {
+          font-size: 0.65rem !important;
           line-height: 1.2 !important;
         }
         .report-detail-subpage.pdf-render-mode .rgc-item i {
           font-size: 0.8rem !important;
+          margin-top: 1px !important;
         }
         .rep-detail-branding {
           display: none;
