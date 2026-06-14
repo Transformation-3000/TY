@@ -2106,11 +2106,18 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           page-break-inside: avoid !important;
           break-inside: avoid !important;
         }
+        .report-detail-subpage.pdf-render-mode .rep-detail-nav {
+          display: none !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          height: 0 !important;
+          overflow: hidden !important;
+        }
         .report-detail-subpage.pdf-render-mode .rep-detail-branding {
           display: flex !important;
           justify-content: flex-start !important;
           align-items: center !important;
-          margin-top: 0 !important;
+          margin-top: -24px !important;
           padding-top: 0 !important;
           margin-bottom: 0.85rem !important;
           padding-bottom: 0.5rem !important;
