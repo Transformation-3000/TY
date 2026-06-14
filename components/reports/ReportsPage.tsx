@@ -803,7 +803,7 @@ export default function ReportsPage() {
 
         @media (max-width: 768px) {
           .reports-page-container {
-            padding: 1rem 0.5rem;
+            padding: 1rem 1rem;
           }
           .reports-grid {
             grid-template-columns: 1fr;
@@ -825,7 +825,7 @@ export default function ReportsPage() {
             justify-content: center;
           }
           .report-detail-wrapper {
-            padding: 1rem 0.5rem;
+            padding: 1rem 1rem;
           }
           .detail-header-row {
             flex-direction: column;

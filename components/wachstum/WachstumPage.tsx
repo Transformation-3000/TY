@@ -1104,7 +1104,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
             justify-content: center;
           }
           .wachstum-container {
-            padding: 0.75rem 0.5rem;
+            padding: 0.75rem 1rem;
           }
           .segmented-control {
             flex-direction: column;

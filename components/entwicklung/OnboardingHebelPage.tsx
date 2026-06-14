@@ -515,7 +515,7 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
         /* Mobile Optimization / App View responsiveness */
         @media (max-width: 768px) {
           .hebel-page-container {
-            padding: 0.75rem 0.25rem;
+            padding: 0.75rem 1rem;
           }
           .hebel-header {
             margin-bottom: 1.25rem;
