@@ -174,10 +174,87 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         const savedCal = localStorage.getItem('ty_onboarding_calendar_age');
         const savedBio = localStorage.getItem('ty_onboarding_bio_age');
         const savedDiff = localStorage.getItem('ty_onboarding_saved_years');
+        
         if (savedCal && savedBio && savedDiff) {
           setCalendarAge(parseFloat(savedCal));
           setBioAge(parseFloat(savedBio));
           setSavedYears(parseFloat(savedDiff));
+          return;
+        }
+
+        // Dynamic fallback: compute age parameters directly if ty_onboarding_answers exists
+        const savedAnswersStr = localStorage.getItem('ty_onboarding_answers');
+        if (savedAnswersStr) {
+          try {
+            const answers = JSON.parse(savedAnswersStr);
+            const categories = ['Einstieg', 'Schlaf', 'Kraft', 'Zellversorgung', 'Immunbalance', 'Soziale Bindungen', 'Mindset'];
+            let totalSaved = 0;
+
+            categories.forEach(cat => {
+              if (cat === 'Einstieg') return;
+              
+              let score = 50;
+              if (cat === 'Schlaf') score = 85;
+              else if (cat === 'Kraft') score = 48;
+              else if (cat === 'Zellversorgung') score = 56;
+              else if (cat === 'Immunbalance') score = 52;
+              else if (cat === 'Soziale Bindungen') score = 80;
+              else if (cat === 'Mindset') score = 36;
+
+              const categoryAnswerKeys = Object.keys(answers).filter(key => {
+                const id = parseInt(key);
+                if (cat === 'Schlaf' && id >= 21 && id <= 30) return true;
+                if (cat === 'Kraft' && id >= 31 && id <= 40) return true;
+                if (cat === 'Zellversorgung' && id >= 41 && id <= 50) return true;
+                if (cat === 'Immunbalance' && id >= 51 && id <= 60) return true;
+                if (cat === 'Soziale Bindungen' && id >= 61 && id <= 70) return true;
+                if (cat === 'Mindset' && id >= 71 && id <= 80) return true;
+                return false;
+              });
+
+              if (categoryAnswerKeys.length > 0) {
+                let totalVal = 0;
+                categoryAnswerKeys.forEach(k => {
+                  const val = answers[parseInt(k)];
+                  if (Array.isArray(val)) {
+                    totalVal += val.length > 2 ? 80 : 50;
+                  } else {
+                    const lower = val.toLowerCase();
+                    if (lower.includes('sehr gut') || lower.includes('täglich') || lower.includes('sehr hoch') || lower.includes('stark') || lower.includes('nie')) {
+                      totalVal += 90;
+                    } else if (lower.includes('gut') || lower.includes('oft') || lower.includes('hoch') || lower.includes('selten')) {
+                      totalVal += 75;
+                    } else if (lower.includes('mittel') || lower.includes('manchmal') || lower.includes('gelegentlich')) {
+                      totalVal += 55;
+                    } else if (lower.includes('schlecht') || lower.includes('kaum') || lower.includes('wenig')) {
+                      totalVal += 35;
+                    } else {
+                      totalVal += 15;
+                    }
+                  }
+                });
+                score = Math.round(totalVal / categoryAnswerKeys.length);
+              }
+
+              const savedYearsForCat = parseFloat(((score / 100) * 0.5).toFixed(1));
+              totalSaved += savedYearsForCat;
+            });
+
+            totalSaved = parseFloat(totalSaved.toFixed(1));
+            const calAge = 53;
+            const bAge = parseFloat((calAge - totalSaved).toFixed(1));
+
+            setCalendarAge(calAge);
+            setBioAge(bAge);
+            setSavedYears(totalSaved);
+
+            // Save computed fallback in localStorage for persistence
+            localStorage.setItem('ty_onboarding_calendar_age', calAge.toString());
+            localStorage.setItem('ty_onboarding_bio_age', bAge.toString());
+            localStorage.setItem('ty_onboarding_saved_years', totalSaved.toString());
+          } catch (e) {
+            console.error('Error parsing answers in fallback', e);
+          }
         }
       };
       loadAges();
