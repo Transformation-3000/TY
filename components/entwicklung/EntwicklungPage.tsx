@@ -2,8 +2,9 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import LongevityJourney7LevelsPage from '@/components/longevity/LongevityJourney7LevelsPage';
+import OnboardingHebelPage from './OnboardingHebelPage';
 
-type SubTab = 'trends' | 'goals' | 'activities' | 'reports' | 'journey';
+type SubTab = 'hebel' | 'trends' | 'goals' | 'reports' | 'journey';
 type TrendPeriod = '3m' | '6m' | '12m';
 
 interface ActivityItem {
@@ -14,7 +15,7 @@ interface ActivityItem {
 
 const wochenAktivitaeten: ActivityItem[] = [
   // Schlaf & Erholung (10 items)
-  { id: '8-8,5 Std. geschlafen', label: '8-8,5 Std. geschlafen', cluster: 'Schlaf & Erholung' },
+  { id: '8–8,5 Std. geschlafen', label: '8–8,5 Std. geschlafen', cluster: 'Schlaf & Erholung' },
   { id: 'Zur Chronotyp-Zeit geschlafen', label: 'Zur Chronotyp-Zeit geschlafen', cluster: 'Schlaf & Erholung' },
   { id: 'Vor Schlafen bildschirmfrei', label: 'Vor Schlafen bildschirmfrei', cluster: 'Schlaf & Erholung' },
   { id: 'Schlafzimmer kühl + dunkel gehalten', label: 'Schlafzimmer kühl + dunkel gehalten', cluster: 'Schlaf & Erholung' },
@@ -128,26 +129,90 @@ const clusterNames = [
   'Mentale Resilienz'
 ];
 
+const coachConfigs = {
+  'lisa-jung': { name: 'Lisa AI', image: '/images/lisa.png' },
+  'lisa-alt': { name: 'Lisa AI', image: '/images/lisa_alt.png' },
+  'tom-jung': { name: 'Tom AI', image: '/images/tom_jung.png' },
+  'tom-alt': { name: 'Tom AI', image: '/images/tom_alt.png' },
+};
+
+const wearablesList = [
+  { id: 'whoop', name: 'Whoop Armband', image: '/images/whoop.png' },
+  { id: 'oura', name: 'Oura Ring', image: '/images/oura_bright.png' },
+  { id: 'apple', name: 'Apple Smartwatch', image: '/images/apple_clean.png' },
+  { id: 'garmin', name: 'Garmin Smartwatch', image: '/images/garmin_clean.png' }
+];
+
 interface EntwicklungPageProps {
   onStartSimulation?: () => void;
+  onNavigate?: (tab: string) => void;
 }
 
-export default function EntwicklungPage({ onStartSimulation }: EntwicklungPageProps) {
-  const [activeTab, setActiveTab] = useState<SubTab>('trends');
+export default function EntwicklungPage({ onStartSimulation, onNavigate }: EntwicklungPageProps) {
+  const [activeTab, setActiveTab] = useState<SubTab>('hebel');
   const [selectedMetric, setSelectedMetric] = useState<'chronological' | 'difference' | 'dna'>('difference');
   const [trendPeriod, setTrendPeriod] = useState<TrendPeriod>('12m');
   const [showBioAgeDetails, setShowBioAgeDetails] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
+  const [selectedReport, setSelectedReport] = useState<any | null>(null);
+  const [coachVariant, setCoachVariant] = useState<'lisa-jung' | 'lisa-alt' | 'tom-jung' | 'tom-alt'>('lisa-jung');
+  const [activeWearableId, setActiveWearableId] = useState<string>('whoop');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('ty-coach-variant');
+      if (saved) setCoachVariant(saved as any);
+
+      const savedWearable = localStorage.getItem('ty_selected_wearable');
+      if (savedWearable) setActiveWearableId(savedWearable);
+
+      const handleSync = () => {
+        const updated = localStorage.getItem('ty-coach-variant');
+        if (updated) setCoachVariant(updated as any);
+      };
+      const handleStorageChange = (e: StorageEvent) => {
+        if (e.key === 'ty_selected_wearable' && e.newValue) {
+          setActiveWearableId(e.newValue);
+        }
+      };
+      window.addEventListener('storage', handleStorageChange);
+      window.addEventListener('storage', handleSync);
+      window.addEventListener('ty-coach-sync', handleSync);
+      return () => {
+        window.removeEventListener('storage', handleStorageChange);
+        window.removeEventListener('storage', handleSync);
+        window.removeEventListener('ty-coach-sync', handleSync);
+      };
+    }
+  }, []);
 
   const [checkedActivities, setCheckedActivities] = useState<string[]>([]);
   const [activitySearchQuery, setActivitySearchQuery] = useState('');
+
+  const currentWeekRange = useMemo(() => {
+    const today = new Date();
+    const day = today.getDay();
+    const diffToMonday = day === 0 ? -6 : 1 - day;
+    const monday = new Date(today);
+    monday.setDate(today.getDate() + diffToMonday);
+    const sunday = new Date(monday);
+    sunday.setDate(monday.getDate() + 6);
+    
+    const formatDate = (d: Date) => {
+      const dd = String(d.getDate()).padStart(2, '0');
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const yyyy = d.getFullYear();
+      return `${dd}.${mm}.${yyyy}`;
+    };
+    return `${formatDate(monday)} - ${formatDate(sunday)}`;
+  }, []);
 
   useEffect(() => {
     const saved = localStorage.getItem('ty-checked-activities');
     if (saved) {
       setCheckedActivities(JSON.parse(saved));
     } else {
-      const defaultChecked = ['8-8,5 Std. geschlafen', 'Schritte gegangen'];
+      const defaultChecked = ['8–8,5 Std. geschlafen', 'Schritte gegangen'];
       setCheckedActivities(defaultChecked);
       localStorage.setItem('ty-checked-activities', JSON.stringify(defaultChecked));
     }
@@ -192,6 +257,56 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
     window.dispatchEvent(new Event('ty-activities-sync'));
   };
 
+  const handleGeneratePDF = () => {
+    if (typeof window === 'undefined') return;
+    const button = document.querySelector('.rep-download-btn');
+    if (button) button.innerHTML = '<i class="bi bi-hourglass-split"></i> Generiere...';
+
+    const win = window as any;
+
+    const generate = () => {
+      const element = document.querySelector('.report-detail-subpage');
+      if (!element) return;
+
+      const nav = element.querySelector('.rep-detail-nav');
+      if (nav) (nav as HTMLElement).style.display = 'none';
+
+      element.classList.add('pdf-render-mode');
+
+      const opt = {
+        margin: [10, 10, 10, 10],
+        filename: `Monatsreport_${selectedReport?.monthName || 'Report'}_${selectedReport?.year || '2026'}.pdf`,
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 3, useCORS: true, logging: false },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      };
+
+      win.html2pdf().set(opt).from(element).toPdf().get('pdf').then((pdfObj: any) => {
+        const blobUrl = pdfObj.output('bloburl');
+        window.open(blobUrl, '_blank');
+        
+        element.classList.remove('pdf-render-mode');
+        if (nav) (nav as HTMLElement).style.display = 'flex';
+        if (button) button.innerHTML = '<i class="bi bi-file-pdf-fill" style="color: #ef4444; font-size: 1.25rem;"></i> PDF anzeigen';
+      }).catch((err: any) => {
+        console.error(err);
+        element.classList.remove('pdf-render-mode');
+        if (nav) (nav as HTMLElement).style.display = 'flex';
+        if (button) button.innerHTML = '<i class="bi bi-file-pdf-fill" style="color: #ef4444; font-size: 1.25rem;"></i> PDF anzeigen';
+      });
+    };
+
+    if (win.html2pdf) {
+      generate();
+    } else {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js';
+      script.onload = generate;
+      document.body.appendChild(script);
+    }
+  };
+
   const [yesterdayStr, setYesterdayStr] = useState('10. MAI');
   useEffect(() => {
     const yesterday = new Date();
@@ -223,6 +338,148 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
   ];
 
   const monthNames = ['Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez'];
+
+  const mockReportsData = useMemo(() => {
+    const dynamicAchievements = [];
+    if (checkedActivities.includes('8–8,5 Std. geschlafen')) {
+      dynamicAchievements.push('Schlafdauer-Ziel (8–8,5 Std.) regelmäßig eingehalten');
+    }
+    if (checkedActivities.includes('Zur Chronotyp-Zeit geschlafen')) {
+      dynamicAchievements.push('Schlafrhythmus erfolgreich an den Chronotyp angepasst');
+    }
+    if (checkedActivities.includes('Vor Schlafen bildschirmfrei')) {
+      dynamicAchievements.push('Abendliche Bildschirm-Auszeit konsequent umgesetzt');
+    }
+    if (checkedActivities.includes('Schritte gegangen')) {
+      dynamicAchievements.push('Tägliches Schrittziel von über 9.000 Schritten erreicht');
+    }
+    if (checkedActivities.includes('Krafttraining abgeschlossen')) {
+      dynamicAchievements.push('Krafttraining-Einheiten planmäßig absolviert');
+    }
+    if (checkedActivities.includes('Protein (Ziel 160g) aufgenommen')) {
+      dynamicAchievements.push('Optimale Proteinzufuhr (160g) für Muskelregeneration gesichert');
+    }
+    if (checkedActivities.includes('Esspause eingehalten')) {
+      dynamicAchievements.push('Esspausen zur Aktivierung der Autophagie eingehalten');
+    }
+    if (checkedActivities.includes('Keinen Alkohol konsumiert')) {
+      dynamicAchievements.push('Alkoholfreie Phasen zur optimalen Regeneration genutzt');
+    }
+    if (checkedActivities.includes('Meditiert') || checkedActivities.includes('Atemübung durchgeführt')) {
+      dynamicAchievements.push('Mentale Resilienz durch Meditation/Atemübungen gestärkt');
+    }
+    if (checkedActivities.includes('Tageslicht am Morgen getankt')) {
+      dynamicAchievements.push('Morgenlicht-Routine zur Stabilisierung des Biorhythmus etabliert');
+    }
+
+    // Default fallbacks if less than 3 matched
+    const defaults = [
+      '3x Kälteexposition (Eisbad) erfolgreich durchgeführt',
+      '22 Tage ohne industriellen Zucker gemeistert',
+      'Wochenziel Kraftaufbau zu 100% erfüllt'
+    ];
+    while (dynamicAchievements.length < 3) {
+      const nextDef = defaults.find(d => !dynamicAchievements.includes(d));
+      if (nextDef) {
+        dynamicAchievements.push(nextDef);
+      } else {
+        break;
+      }
+    }
+
+    return [
+      {
+        monthName: 'Mai',
+        year: 2026,
+        score: 78,
+        diff: '+11',
+        isPos: true,
+        summary: 'Im Mai hast du herausragende Fortschritte erzielt. Dein Schlaf-Rhythmus hat sich stabilisiert und deine HRV stieg um durchschnittlich 8ms, was auf eine hervorragende Aktivierung des Parasympathikus hindeutet. Deine größte Stellschraube für Juni ist die Reduzierung von späten Mahlzeiten. Versuche, mindestens 3 Stunden vor dem Schlafen nichts mehr zu essen, um deine Tiefschlafphasen weiter zu verlängern und die nächtliche Zellregeneration optimal zu unterstützen.',
+        pillars: [
+          { name: 'Schlaf & Erholung', score: 78, change: '+8%', status: 'Exzellent', desc: 'Regelmäßige Zubettgehzeiten haben deinen Tiefschlaf stabilisiert.' },
+          { name: 'Kraft & Ausdauer', score: 84, change: '+5%', status: 'Exzellent', desc: 'Du hast 85% deiner geplanten HIIT- und Krafteinheiten absolviert.' },
+          { name: 'Zellerneuerung & Wachstum', score: 81, change: '+9%', status: 'Gut', desc: 'Gesteigerte Proteinzufuhr hat den Muskelaufbau ideal unterstützt.' },
+          { name: 'Immunbalance & Entlastung', score: 62, change: '-4%', status: 'Ausbaufähig', desc: 'Wenig Entlastungstage. Autophagie-Fastenzeiten wurden selten eingehalten.' },
+          { name: 'Selbstfürsorge & Soziale Bindungen', score: 73, change: '+1%', status: 'Gut', desc: 'Gute Balance und sozialer Austausch während der Wochenenden.' },
+          { name: 'Mentale Resilienz', score: 57, change: '+2%', status: 'Mittel', desc: 'Kurze Mikropausen am Bildschirmarbeitsplatz zeigten erste Entlastung.' },
+        ],
+        biomarkers: [
+          { label: 'HRV', val: '68 ms', change: '+6 ms (Besser)', status: 'better' },
+          { label: 'Schlafqualität', val: '91%', change: '+3% (Besser)', status: 'better' },
+          { label: 'Ruhepuls', val: '57 bpm', change: '+3 bpm (Schlechter)', status: 'worse' },
+          { label: 'Schritte', val: '9.420 / Tag', change: '+840 (Besser)', status: 'better' },
+        ],
+        achievements: dynamicAchievements,
+        nextMonthFokus: [
+          'Eiweißzufuhr konstant über 1.5g/kg halten',
+          'Späte Mahlzeiten min. 3 Stunden vor dem Schlafen beenden',
+          '10 Min. Morgenlicht direkt nach dem Aufstehen tanken'
+        ]
+      },
+      {
+        monthName: 'April',
+        year: 2026,
+        score: 67,
+        diff: '-8',
+        isPos: false,
+        summary: 'Der April war von erhöhten beruflichen Belastungen geprägt, was sich in einer leicht reduzierten Schlafqualität und weniger Trainingseinheiten widerspiegelt. Dein Fokus sollte darauf liegen, die Aktivitätsschwelle wieder anzuheben.',
+        pillars: [
+          { name: 'Schlaf & Erholung', score: 70, change: '-5%', status: 'Gut', desc: 'Erhöhte Einschlafzeit durch späte Bildschirmarbeit.' },
+          { name: 'Kraft & Ausdauer', score: 79, change: '-3%', status: 'Gut', desc: 'Nur 2 Trainingseinheiten pro Woche im Durchschnitt geschafft.' },
+          { name: 'Zellerneuerung & Wachstum', score: 72, change: '+6%', status: 'Gut', desc: 'Ernährungsqualität blieb trotz Stress stabil hoch.' },
+          { name: 'Immunbalance & Entlastung', score: 66, change: '+2%', status: 'Gut', desc: 'Erfolgreich mehrere alkoholfreie Wochenenden absolviert.' },
+          { name: 'Selbstfürsorge & Soziale Bindungen', score: 72, change: '0%', status: 'Gut', desc: 'Stabiles soziales Umfeld gab Rückhalt in Stressphasen.' },
+          { name: 'Mentale Resilienz', score: 55, change: '-2%', status: 'Mittel', desc: 'Cortisol-Niveau durch Stress gefühlt leicht erhöht.' },
+        ],
+        biomarkers: [
+          { label: 'HRV', val: '62 ms', change: '-4 ms', status: 'worse' },
+          { label: 'Schlafqualität', val: '88%', change: '-2%', status: 'worse' },
+          { label: 'Ruhepuls', val: '56 bpm', change: '+1 bpm', status: 'worse' },
+          { label: 'Schritte', val: '8.580 / Tag', change: '-420', status: 'worse' },
+        ],
+        achievements: [
+          'Trotz Stress 80% Nährstoffdichte in der Ernährung gehalten',
+          '15 Tage am Stück Schrittziel von 8k Schritten geschafft'
+        ],
+        nextMonthFokus: [
+          'Schlafzimmer kühl und vollkommen dunkel halten',
+          'Bildschirmfreie Zeit ab 21 Uhr etablieren',
+          'Koffein strikt ab 14 Uhr meiden'
+        ]
+      },
+      {
+        monthName: 'März',
+        year: 2026,
+        score: 75,
+        diff: '+4',
+        isPos: true,
+        summary: 'Ein solider Einstieg im März. Du konntest deine Alltagsbewegung spürbar steigern und hast erste regenerative Atemübungen erfolgreich in deinen Arbeitsalltag integriert.',
+        pillars: [
+          { name: 'Schlaf & Erholung', score: 75, change: '+3%', status: 'Gut', desc: 'Erste positive Effekte durch den Chronotyp-Tagesplaner.' },
+          { name: 'Kraft & Ausdauer', score: 82, change: '+7%', status: 'Exzellent', desc: 'Hohe Motivation zu Beginn der Trainingszyklen.' },
+          { name: 'Zellerneuerung & Wachstum', score: 66, change: '0%', status: 'Mittel', desc: 'Ernährungsumstellung läuft planmäßig an.' },
+          { name: 'Immunbalance & Entlastung', score: 64, change: '+1%', status: 'Mittel', desc: 'Regelmäßiges Lüften und Hydration gesteigert.' },
+          { name: 'Selbstfürsorge & Soziale Bindungen', score: 72, change: '+2%', status: 'Gut', desc: 'Gemeinsame gesunde Abendessen mit der Familie etabliert.' },
+          { name: 'Mentale Resilienz', score: 57, change: '+4%', status: 'Mittel', desc: 'Tageslicht am Morgen stabilisiert Stimmung.' },
+        ],
+        biomarkers: [
+          { label: 'HRV', val: '66 ms', change: '+3 ms (Besser)', status: 'better' },
+          { label: 'Schlafqualität', val: '90%', change: '+1% (Besser)', status: 'better' },
+          { label: 'Ruhepuls', val: '55 bpm', change: '-1 bpm (Besser)', status: 'better' },
+          { label: 'Schritte', val: '9.000 / Tag', change: '+150 (Besser)', status: 'better' },
+        ],
+        achievements: [
+          'Erfolgreicher Programmstart mit vollständiger Baseline-Diagnostik',
+          'Meditation 3x wöchentlich etabliert'
+        ],
+        nextMonthFokus: [
+          'Ausdauerwerte durch HIIT-Training weiter reizen',
+          'Esspausen von 12 Stunden auf 14 Stunden steigern',
+          'Sozialen Austausch auch unter der Woche aktiv suchen'
+        ]
+      }
+    ];
+  }, [checkedActivities]);
 
   const lastThreeMonths = useMemo(() => {
     const fullMonths = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
@@ -269,10 +526,10 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
       {/* Main Tabs */}
       <div className="entw-tabs">
         {[
-          { id: 'trends', label: 'Trends' },
-          { id: 'goals', label: 'Wochenziele' },
-          { id: 'activities', label: 'Wochenaktivitäten' },
+          { id: 'hebel', label: 'Lifestyle-Hebel' },
+          { id: 'goals', label: 'Wochenaktivitäten' },
           { id: 'reports', label: 'Monatsreports' },
+          { id: 'trends', label: 'Trends' },
           { id: 'journey', label: 'Journey' },
         ].map(tab => (
           <button
@@ -302,6 +559,11 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
           </button>
         ))}
       </div>
+
+      {/* ── HEBEL TAB ── */}
+      {activeTab === 'hebel' && (
+        <OnboardingHebelPage onNavigate={onNavigate || (() => {})} />
+      )}
 
       {/* ── TRENDS TAB ── */}
       {activeTab === 'trends' && (
@@ -705,87 +967,85 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
               </div>
             </div>
           </div>
-        </div>
-      )}
 
-      {/* ── AKTIVITÄTEN ── */}
-      {activeTab === 'activities' && (
-        <div className="activities-view">
-          <div className="goals-section-header">
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span className="blue-bar"></span>
-              <h2>Deine erfassten Wochenaktivitäten</h2>
+          {/* ── EMBEDDED WOCHENAKTIVITÄTEN ── */}
+          <div className="activities-view" style={{ marginTop: '3rem' }}>
+            <div className="goals-section-header">
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <span className="blue-bar"></span>
+                <h2>Deine erfassten Wochenaktivitäten: <span style={{ fontWeight: 'normal' }}>{currentWeekRange}</span></h2>
+              </div>
             </div>
-          </div>
 
-          <div className="act-search-row">
-            <div className="act-search-wrap">
-              <i className="bi bi-search" style={{ color: '#94a3b8', marginRight: '8px' }}></i>
-              <input
-                type="text"
-                placeholder="Aktivität suchen (z.B. Yoga, Spaziergang, Fokus...)"
-                value={activitySearchQuery}
-                onChange={e => setActivitySearchQuery(e.target.value)}
-                className="act-search-input"
-              />
-              {activitySearchQuery && (
-                <button className="act-search-clear" onClick={() => setActivitySearchQuery('')}>&times;</button>
-              )}
+            <div className="act-search-row">
+              <div className="act-search-wrap">
+                <i className="bi bi-search" style={{ color: '#94a3b8', marginRight: '8px' }}></i>
+                <input
+                  type="text"
+                  placeholder="Aktivität suchen (z.B. Yoga, Spaziergang, Fokus...)"
+                  value={activitySearchQuery}
+                  onChange={e => setActivitySearchQuery(e.target.value)}
+                  className="act-search-input"
+                />
+                {activitySearchQuery && (
+                  <button className="act-search-clear" onClick={() => setActivitySearchQuery('')}>&times;</button>
+                )}
+              </div>
             </div>
-          </div>
 
-          <div className="act-count-text">
-            49 Aktivitäten in 6 Clustern
-          </div>
+            <div className="act-count-text">
+              49 Aktivitäten in 6 Clustern
+            </div>
 
-          <div className="act-cluster-grid">
-            {clusterNames.map((clusterName, idx) => {
-              const config = CLUSTER_CONFIGS[clusterName];
-              const items = groupedActivities[clusterName] || [];
-              const totalCount = wochenAktivitaeten.filter(act => act.cluster === clusterName).length;
-              const doneCount = wochenAktivitaeten.filter(act => act.cluster === clusterName && checkedActivities.includes(act.id)).length;
-              
-              return (
-                <div key={clusterName} className="act-cluster-card">
-                  <div className="acc-header">
-                    <div className="acc-icon-box" style={{ background: config.bgColor, color: config.color }}>
-                      <i className={`bi ${config.icon}`} style={{ color: config.color }}></i>
+            <div className="act-cluster-grid">
+              {clusterNames.map((clusterName, idx) => {
+                const config = CLUSTER_CONFIGS[clusterName];
+                const items = groupedActivities[clusterName] || [];
+                const totalCount = wochenAktivitaeten.filter(act => act.cluster === clusterName).length;
+                const doneCount = wochenAktivitaeten.filter(act => act.cluster === clusterName && checkedActivities.includes(act.id)).length;
+                
+                return (
+                  <div key={clusterName} className="act-cluster-card">
+                    <div className="acc-header">
+                      <div className="acc-icon-box" style={{ background: config.bgColor, color: config.color }}>
+                        <i className={`bi ${config.icon}`} style={{ color: config.color }}></i>
+                      </div>
+                      <span className="acc-status" style={{ color: config.color }}>
+                        {doneCount}/{totalCount} Erledigt
+                      </span>
                     </div>
-                    <span className="acc-status" style={{ color: config.color }}>
-                      {doneCount}/{totalCount} Erledigt
-                    </span>
-                  </div>
-                  
-                  <div className="acc-title-box">
-                    <h3>{idx + 1}. {clusterName}</h3>
-                    <div className="acc-underline" style={{ background: config.color }}></div>
-                  </div>
-                  
-                  <div className="acc-list">
-                    {items.length === 0 ? (
-                      <div style={{ fontStyle: 'italic', color: '#94a3b8', fontSize: '0.85rem', padding: '0.5rem 0' }}>Keine Treffer</div>
-                    ) : (
-                      items.map(act => {
-                        const isChecked = checkedActivities.includes(act.id);
-                        return (
-                          <div
-                            key={act.id}
-                            className={`acc-item ${isChecked ? 'checked' : ''}`}
-                            onClick={() => toggleActivity(act.id)}
-                            style={isChecked ? { background: config.lightBg } : {}}
-                          >
-                            <div className="acc-checkbox" style={isChecked ? { background: config.color, borderColor: config.color } : {}}>
-                              {isChecked && <i className="bi bi-check-lg" style={{ color: 'white', fontSize: '0.8rem' }}></i>}
+                    
+                    <div className="acc-title-box">
+                      <h3>{idx + 1}. {clusterName}</h3>
+                      <div className="acc-underline" style={{ background: config.color }}></div>
+                    </div>
+                    
+                    <div className="acc-list">
+                      {items.length === 0 ? (
+                        <div style={{ fontStyle: 'italic', color: '#94a3b8', fontSize: '0.85rem', padding: '0.5rem 0' }}>Keine Treffer</div>
+                      ) : (
+                        items.map(act => {
+                          const isChecked = checkedActivities.includes(act.id);
+                          return (
+                            <div
+                              key={act.id}
+                              className={`acc-item ${isChecked ? 'checked' : ''}`}
+                              onClick={() => toggleActivity(act.id)}
+                              style={isChecked ? { background: config.lightBg } : {}}
+                            >
+                              <div className="acc-checkbox" style={isChecked ? { background: config.color, borderColor: config.color } : {}}>
+                                {isChecked && <i className="bi bi-check-lg" style={{ color: 'white', fontSize: '0.8rem' }}></i>}
+                              </div>
+                              <span className="acc-label">{act.label}</span>
                             </div>
-                            <span className="acc-label">{act.label}</span>
-                          </div>
-                        );
-                      })
-                    )}
+                          );
+                        })
+                      )}
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
       )}
@@ -793,94 +1053,268 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
       {/* ── REPORTS ── */}
       {activeTab === 'reports' && (
         <div className="reports-view">
-          <div className="goals-section-header" style={{ marginBottom: '0.35rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span className="blue-bar"></span>
-              <h2>Deine Monatsreports</h2>
-            </div>
-          </div>
-          <p style={{ color: '#64748b', fontSize: '1.05rem', margin: '0 0 2rem 0' }}>
-            Analysiere deine Fortschritte und entdecke personalisierte Empfehlungen
-          </p>
+          {!selectedReport ? (
+            <>
+              <div className="goals-section-header" style={{ marginBottom: '0.35rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <span className="blue-bar"></span>
+                  <h2>Deine Monatsreports</h2>
+                </div>
+              </div>
+              <p style={{ color: '#64748b', fontSize: '1.25rem', margin: '0 0 2rem 0', fontWeight: 500 }}>
+                Analysiere deine Fortschritte und entdecke personalisierte Empfehlungen
+              </p>
 
-          <div className="rep-grid-custom">
-            {lastThreeMonths.map((m, idx) => {
-              const scores = [78, 67, 75, 71];
-              const score = scores[idx];
-              const diffVal = score - scores[idx + 1];
-              const diff = diffVal >= 0 ? `+${diffVal}` : `${diffVal}`;
-              const isPos = diffVal >= 0;
+              <div className="rep-grid-custom">
+                {mockReportsData.map((m, idx) => {
+                  let bgClass = "bg-blue";
+                  let strokeClass = "stroke-blue";
+                  let barHeights = ['8px', '8px', '16px', '12px', '18px', '10px', '14px', '22px'];
 
-              let bgClass = "bg-blue";
-              let strokeClass = "stroke-blue";
-              let isCurrent = idx === 0;
-              let barHeights = ['8px', '8px', '16px', '12px', '18px', '10px', '14px', '22px'];
+                  if (idx === 1) {
+                    bgClass = "bg-dark";
+                    strokeClass = "stroke-dark";
+                    barHeights = ['14px', '8px', '16px', '14px', '14px', '14px', '22px', '16px'];
+                  } else if (idx === 2) {
+                    bgClass = "bg-green";
+                    strokeClass = "stroke-green";
+                    barHeights = ['12px', '8px', '14px', '14px', '18px', '14px', '20px', '16px'];
+                  }
 
-              if (idx === 1) {
-                bgClass = "bg-dark";
-                strokeClass = "stroke-dark";
-                barHeights = ['14px', '8px', '16px', '14px', '14px', '14px', '22px', '16px'];
-              } else if (idx === 2) {
-                bgClass = "bg-green";
-                strokeClass = "stroke-green";
-                barHeights = ['12px', '8px', '14px', '14px', '18px', '14px', '20px', '16px'];
-              }
-
-              return (
-                <div key={idx} className="rep-card-custom">
-                  <div className={`rep-card-top ${bgClass}`}>
-                    <div className="rep-top-header">
-                      <span className="rep-meta" style={{ color: '#ffffff', opacity: 1 }}>
-                        <i className="bi bi-file-earmark-text" style={{ marginRight: '6.5px', color: '#ffffff' }}></i>
-                        Monatsreport
-                      </span>
-                      {isCurrent && <span className="rep-badge-aktuell">Aktuell</span>}
+                  return (
+                    <div 
+                      key={idx} 
+                      className="rep-card-custom" 
+                      onClick={() => setSelectedReport(m)}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <div className={`rep-card-top ${bgClass}`}>
+                        <div className="rep-top-header">
+                          <span className="rep-meta" style={{ color: '#ffffff', opacity: 1 }}>
+                            <i className="bi bi-file-earmark-text" style={{ marginRight: '6.5px', color: '#ffffff' }}></i>
+                            Monatsreport
+                          </span>
+                        </div>
+                        <div className="rep-month-year">
+                          <h3>{m.monthName}</h3>
+                          <span className="rep-year">{m.year}</span>
+                        </div>
+                        <div className="rep-mini-chart">
+                          {barHeights.map((h, bIdx) => (
+                            <div key={bIdx} className="rep-bar" style={{ height: h }}></div>
+                          ))}
+                        </div>
+                      </div>
+                      <div className="rep-card-bottom">
+                        <div className="rep-bottom-left">
+                          <span className="rep-index-label">LIFESTYLE INDEX</span>
+                          <div className="rep-score-row">
+                            <span className="rep-score-val">{m.score}</span>
+                            <span className={`rep-diff-badge ${m.isPos ? 'pos' : 'neg'}`}>{m.diff}</span>
+                          </div>
+                        </div>
+                        <div className="rep-bottom-right">
+                          <div className="rep-circle-wrap">
+                            <svg className="rep-circle-svg" viewBox="0 0 36 36">
+                              <path
+                                className="rep-circle-bg"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none"
+                                stroke="#e2e8f0"
+                                strokeWidth="3.5"
+                              />
+                              <path
+                                className={`rep-circle-fg ${strokeClass}`}
+                                strokeDasharray={`${m.score}, 100`}
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                fill="none"
+                                strokeWidth="3.5"
+                                strokeLinecap="round"
+                              />
+                            </svg>
+                            <div className="rep-circle-text">{m.score}%</div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    <div className="rep-month-year">
-                      <h3>{m.monthName}</h3>
-                      <span className="rep-year">{m.year}</span>
-                    </div>
-                    <div className="rep-mini-chart">
-                      {barHeights.map((h, bIdx) => (
-                        <div key={bIdx} className="rep-bar" style={{ height: h }}></div>
-                      ))}
-                    </div>
+                  );
+                })}
+              </div>
+            </>
+          ) : (
+            /* REPORT DETAIL SUB-PAGE */
+            <div className="report-detail-subpage animate-fadeIn">
+              {/* Navigation Back & Download */}
+              <div className="rep-detail-nav">
+                <button className="rep-back-btn" onClick={() => setSelectedReport(null)}>
+                  <i className="bi bi-chevron-left"></i> Zurück zur Monatsübersicht
+                </button>
+                <button className="rep-download-btn" onClick={handleGeneratePDF}>
+                  <i className="bi bi-file-pdf-fill" style={{ color: '#ef4444', fontSize: '1.25rem' }}></i> PDF anzeigen
+                </button>
+              </div>
+
+              {/* Branding Header at the top of the report/PDF */}
+              <div className="rep-detail-branding">
+                <div className="rep-branding-left">
+                  <img src="/images/logoneu.png" alt="True Years Logo" className="rep-branding-logo-img" />
+                </div>
+              </div>
+
+              {/* Chronotyp Banner Image */}
+              <div className="rep-detail-banner-wrap">
+                <img 
+                  src="/images/sleep_option_16.jpg" 
+                  alt="Circadianer Rhythmus" 
+                  className="rep-detail-banner-img"
+                />
+              </div>
+
+              {/* Header Title Info */}
+              <div className="rep-detail-header-row">
+                <div>
+                  <h2 className="rep-detail-title">Monatsreport {selectedReport.monthName} {selectedReport.year}</h2>
+                  <p className="rep-detail-subtitle">Auswertung deiner Lebensstil-Metriken</p>
+                </div>
+                
+                {/* Score badge next to title */}
+                <div className="rep-detail-score-box">
+                  <div className="rep-detail-score-circle">
+                    <span className="rdsc-val">{selectedReport.score}</span>
+                    <span className="rdsc-label">Pkt.</span>
                   </div>
-                  <div className="rep-card-bottom">
-                    <div className="rep-bottom-left">
-                      <span className="rep-index-label">LIFESTYLE INDEX</span>
-                      <div className="rep-score-row">
-                        <span className="rep-score-val">{score}</span>
-                        <span className={`rep-diff-badge ${isPos ? 'pos' : 'neg'}`}>{diff}</span>
-                      </div>
-                    </div>
-                    <div className="rep-bottom-right">
-                      <div className="rep-circle-wrap">
-                        <svg className="rep-circle-svg" viewBox="0 0 36 36">
-                          <path
-                            className="rep-circle-bg"
-                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                            fill="none"
-                            stroke="#e2e8f0"
-                            strokeWidth="3.5"
-                          />
-                          <path
-                            className={`rep-circle-fg ${strokeClass}`}
-                            strokeDasharray={`${score}, 100`}
-                            d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                            fill="none"
-                            strokeWidth="3.5"
-                            strokeLinecap="round"
-                          />
-                        </svg>
-                        <div className="rep-circle-text">{score}%</div>
-                      </div>
-                    </div>
+                  <div className="rep-detail-score-info">
+                    <span className="rdsi-label">Lifestyle Index</span>
+                    <span className={`rdsi-change ${selectedReport.isPos ? 'pos' : 'neg'}`}>
+                      {selectedReport.isPos ? '↗' : '↘'} {selectedReport.diff} Pkt. <span style={{ fontWeight: 'normal', color: '#64748b' }}>im Vergleich zum Vormonat</span>
+                    </span>
                   </div>
                 </div>
-              );
-            })}
-          </div>
+              </div>
+
+              {/* Executive Summary */}
+              <div className="rep-summary-card">
+                <div className="rsc-header">
+                  <div className="rsc-coach-avatar-wrap">
+                    <img 
+                      src={coachConfigs[coachVariant]?.image || '/images/lisa.png'} 
+                      alt={coachConfigs[coachVariant]?.name || 'Lisa AI'} 
+                      className="rsc-coach-avatar"
+                    />
+                    <span className="rsc-coach-badge">AI</span>
+                  </div>
+                  <div>
+                    <h3 className="rsc-coach-title">Zusammenfassung &amp; Empfehlung</h3>
+                    <span className="rsc-coach-subtitle">Feedback von {coachConfigs[coachVariant]?.name || 'Lisa AI'}</span>
+                  </div>
+                </div>
+                <p className="rsc-text">{selectedReport.summary}</p>
+              </div>
+
+              {/* Biomarkers snapshot */}
+              <div className="rep-section-title" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1rem', width: '100%' }}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <span className="blue-bar"></span>
+                  <h3>Monatsdurchschnitt auf Basis deiner Wearable-Daten</h3>
+                </div>
+                {/* Source Badge with Image */}
+                <div className="rep-wearable-source-badge">
+                  <span className="rwsb-label">Quelle:</span>
+                  <div className="rwsb-wrapper">
+                    <img 
+                      src={wearablesList.find(w => w.id === activeWearableId)?.image || '/images/whoop.png'} 
+                      alt={wearablesList.find(w => w.id === activeWearableId)?.name || 'Whoop Armband'} 
+                      className="rwsb-img"
+                    />
+                    <span className="rwsb-name">{wearablesList.find(w => w.id === activeWearableId)?.name || 'Whoop Armband'}</span>
+                    <span className="rwsb-status-dot"></span>
+                  </div>
+                </div>
+              </div>
+              
+              <div className="rep-biomarker-grid">
+                {selectedReport.biomarkers.map((bio: any, bIdx: number) => {
+                  const statusClass = bio.status === 'better' ? 'pos' : bio.status === 'worse' ? 'neg' : 'neutral';
+                  return (
+                    <div key={bIdx} className="rep-bio-card">
+                      <span className="rbc-label">{bio.label}</span>
+                      <span className="rbc-value">{bio.val}</span>
+                      <span className={`rbc-change ${statusClass}`}>
+                        {bio.change}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Pillars Score */}
+              <div className="rep-section-title">
+                <span className="blue-bar"></span>
+                <h3>Auswertung der 6 Optimierungsfelder</h3>
+              </div>
+
+              <div className="rep-pillars-grid">
+                {selectedReport.pillars.map((pillar: any, pIdx: number) => {
+                  const isPos = !pillar.change.includes('-');
+                  const statusClass = pillar.status === 'Exzellent' ? 'excellent' : pillar.status === 'Gut' ? 'gut' : 'middle';
+                  return (
+                    <div key={pIdx} className="rep-pillar-detail-card">
+                      <div className="rpdc-header">
+                        <div className="rpdc-title-group">
+                          <span className="rpdc-num">{pIdx + 1}</span>
+                          <h4>{pillar.name}</h4>
+                        </div>
+                        <span className={`rpdc-status ${statusClass}`}>{pillar.status}</span>
+                      </div>
+                      <div className="rpdc-score-row">
+                        <div className="rpdc-score-num">
+                          <span className="rpdc-score-val">{pillar.score}</span>
+                          <span className="rpdc-score-lbl">Pkt.</span>
+                        </div>
+                        <span className={`rpdc-change ${isPos ? 'pos' : 'neg'}`}>
+                          {pillar.change}
+                        </span>
+                      </div>
+                      <p className="rpdc-desc">{pillar.desc}</p>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Achievements & Next Month Focus */}
+              <div className="rep-goals-comparison">
+                <div className="rep-goals-col">
+                  <div className="rgc-header bg-green-tint">
+                    <i className="bi bi-trophy-fill text-green"></i>
+                    <h3>Erfolge im {selectedReport.monthName}</h3>
+                  </div>
+                  <div className="rgc-body">
+                    {selectedReport.achievements.map((ach: string, aIdx: number) => (
+                      <div key={aIdx} className="rgc-item">
+                        <i className="bi bi-check-circle-fill text-green"></i>
+                        <span>{ach}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rep-goals-col">
+                  <div className="rgc-header bg-blue-tint">
+                    <i className="bi bi-compass-fill text-blue"></i>
+                    <h3>Fokus für {selectedReport.monthName === 'Mai' ? 'Juni' : selectedReport.monthName === 'April' ? 'Mai' : 'April'}</h3>
+                  </div>
+                  <div className="rgc-body">
+                    {selectedReport.nextMonthFokus.map((fok: string, fIdx: number) => (
+                      <div key={fIdx} className="rgc-item">
+                        <i className="bi bi-arrow-right-circle-fill text-blue"></i>
+                        <span>{fok}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       )}
 
@@ -1627,9 +2061,686 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
           color: #1e293b;
         }
 
+        /* ── REPORT DETAIL SUBPAGE ── */
+        .report-detail-subpage {
+          background: #f8fafc;
+          border-radius: 28px;
+          padding: 2rem;
+          border: 1px solid #e2e8f0;
+          margin-top: 1.5rem;
+        }
+        /* --- PDF Render-Mode Scaling (-25%) --- */
+        .report-detail-subpage.pdf-render-mode {
+          font-size: 11px !important;
+          padding-top: 0.25rem !important;
+          padding-left: 1.25rem !important;
+          padding-right: 1.25rem !important;
+          padding-bottom: 1.25rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-summary-card,
+        .report-detail-subpage.pdf-render-mode .rep-bio-card,
+        .report-detail-subpage.pdf-render-mode .rep-pillar-detail-card,
+        .report-detail-subpage.pdf-render-mode .rep-goals-col {
+          page-break-inside: avoid !important;
+          break-inside: avoid !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-detail-branding {
+          display: flex !important;
+          justify-content: flex-start !important;
+          align-items: center !important;
+          margin-top: 0 !important;
+          padding-top: 0 !important;
+          margin-bottom: 0.85rem !important;
+          padding-bottom: 0.5rem !important;
+          border-bottom: none !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-branding-left {
+          display: block !important;
+          text-align: left !important;
+          margin: 0 !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-branding-logo-img {
+          height: 62px !important;
+          width: auto !important;
+          margin: 0 !important;
+          display: block !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-detail-banner-wrap {
+          height: 180px !important;
+          margin-bottom: 1rem !important;
+          border-radius: 14px !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-detail-header-row {
+          margin-bottom: 1rem !important;
+          gap: 1rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-detail-title {
+          font-size: 1.25rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-detail-subtitle {
+          font-size: 0.75rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-detail-score-box {
+          padding: 0.5rem 0.75rem !important;
+          border-radius: 12px !important;
+          gap: 0.75rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-detail-score-circle {
+          width: 50px !important;
+          height: 50px !important;
+          border-width: 1.5px !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rdsc-val {
+          font-size: 1.3rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rdsc-label {
+          font-size: 0.6rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rdsi-label {
+          font-size: 0.6rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rdsi-change {
+          font-size: 0.72rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-summary-card {
+          padding: 1rem !important;
+          border-radius: 14px !important;
+          margin-bottom: 1rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rsc-header {
+          margin-bottom: 0.75rem !important;
+          gap: 0.75rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rsc-coach-avatar-wrap {
+          width: 40px !important;
+          height: 40px !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rsc-coach-title {
+          font-size: 1rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rsc-coach-subtitle {
+          font-size: 0.7rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rsc-text {
+          font-size: 0.8rem !important;
+          line-height: 1.35 !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-section-title {
+          margin-top: 1.25rem !important;
+          margin-bottom: 0.75rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-section-title h3 {
+          font-size: 1rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .blue-bar {
+          height: 16px !important;
+          width: 3px !important;
+          margin-right: 8px !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-wearable-source-badge {
+          transform: none !important;
+          padding: 0.22rem 0.5rem !important;
+          border-radius: 8px !important;
+          gap: 0.35rem !important;
+          border-width: 1px !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rwsb-label {
+          font-size: 0.65rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rwsb-img {
+          width: 18px !important;
+          height: 18px !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rwsb-name {
+          font-size: 0.68rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rwsb-status-dot {
+          width: 6px !important;
+          height: 6px !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-biomarker-grid {
+          display: flex !important;
+          flex-wrap: wrap !important;
+          gap: 0.5rem !important;
+          justify-content: space-between !important;
+          margin-bottom: 1rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-bio-card {
+          width: 23.5% !important;
+          box-sizing: border-box !important;
+          padding: 0.6rem !important;
+          border-radius: 10px !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rbc-label {
+          font-size: 0.62rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rbc-value {
+          font-size: 1.1rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rbc-change {
+          font-size: 0.7rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-pillars-grid {
+          display: flex !important;
+          flex-wrap: wrap !important;
+          gap: 0.5rem !important;
+          justify-content: space-between !important;
+          margin-bottom: 1rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-pillar-detail-card {
+          width: 32% !important;
+          box-sizing: border-box !important;
+          padding: 0.85rem !important;
+          border-radius: 12px !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rpdc-header {
+          margin-bottom: 0.75rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rpdc-num {
+          width: 30px !important;
+          height: 30px !important;
+          font-size: 0.95rem !important;
+          border-width: 1.5px !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rpdc-title-group h4 {
+          font-size: 0.85rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rpdc-status {
+          font-size: 0.65rem !important;
+          padding: 0.2rem 0.45rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rpdc-score-row {
+          margin-bottom: 0.5rem !important;
+          padding-bottom: 0.5rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rpdc-score-num .rpdc-score-val {
+          font-size: 1.2rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rpdc-score-num .rpdc-score-lbl {
+          font-size: 0.65rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rpdc-change {
+          font-size: 0.78rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rpdc-desc {
+          font-size: 0.72rem !important;
+          line-height: 1.25 !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-goals-comparison {
+          gap: 0.75rem !important;
+          margin-top: 0.75rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rep-goals-col {
+          border-radius: 12px !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rgc-header {
+          padding: 0.6rem 0.85rem !important;
+          gap: 0.5rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rgc-header h3 {
+          font-size: 0.85rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rgc-body {
+          padding: 0.75rem !important;
+          gap: 0.5rem !important;
+        }
+        .report-detail-subpage.pdf-render-mode .rgc-item {
+          font-size: 0.75rem !important;
+        }
+        .rep-detail-branding {
+          display: none;
+        }
+        .rep-detail-banner-wrap {
+          width: 100%;
+          height: 260px;
+          border-radius: 20px;
+          overflow: hidden;
+          margin-bottom: 2rem;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+          border: 1px solid #e2e8f0;
+        }
+        .rep-detail-banner-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center 38%;
+        }
+        .rep-detail-nav {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 2rem;
+        }
+        .rep-back-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: white;
+          border: 1.5px solid #e2e8f0;
+          padding: 0.6rem 1.2rem;
+          border-radius: 12px;
+          color: #64748b;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .rep-back-btn:hover {
+          border-color: #3b7a24;
+          color: #3b7a24;
+          background: #f4faf2;
+        }
+        .rep-download-btn {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: white;
+          border: 1.5px solid #e2e8f0;
+          padding: 0.6rem 1.2rem;
+          border-radius: 12px;
+          color: #1e293b;
+          font-weight: 700;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+        .rep-download-btn:hover {
+          border-color: #ef4444;
+          background: #fdf2f2;
+          color: #b91c1c;
+        }
+        .rep-detail-header-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 2rem;
+          gap: 1.5rem;
+        }
+        .rep-detail-title {
+          font-size: calc(1.6rem + 2pt);
+          font-weight: 850;
+          color: #0f172a;
+          margin: 0;
+          letter-spacing: -0.03em;
+        }
+        .rep-detail-subtitle {
+          color: #64748b;
+          font-size: calc(0.95rem + 2pt);
+          margin: 0.25rem 0 0 0;
+        }
+        .rep-detail-score-box {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          background: white;
+          padding: 0.85rem 1.25rem;
+          border-radius: 20px;
+          border: 1.5px solid #e2e8f0;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.01);
+        }
+        .rep-detail-score-circle {
+          width: 76px;
+          height: 76px;
+          border-radius: 50%;
+          background: #e0f2fe;
+          border: 2.5px solid #bae6fd;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+        .rdsc-val {
+          font-size: 1.95rem;
+          font-weight: 900;
+          color: #0369a1;
+          line-height: 1.05;
+        }
+        .rdsc-label {
+          font-size: 0.72rem;
+          font-weight: 800;
+          color: #0284c7;
+          text-transform: uppercase;
+        }
+        .rep-detail-score-info {
+          display: flex;
+          flex-direction: column;
+        }
+        .rdsi-label {
+          font-size: 0.9rem;
+          font-weight: 800;
+          color: #94a3b8;
+          letter-spacing: 0.05em;
+          text-transform: uppercase;
+        }
+        .rdsi-change {
+          font-size: 1.2rem;
+          font-weight: 750;
+          margin-top: 3px;
+        }
+        .rdsi-change.pos { color: #22c55e; }
+        .rdsi-change.neg { color: #ef4444; }
+
+        /* EXECUTIVE SUMMARY WITH COACH */
+        .rep-summary-card {
+          background: white;
+          border-radius: 24px;
+          padding: 1.8rem;
+          border: 1.5px solid #e2e8f0;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.01);
+          margin-bottom: 2.5rem;
+        }
+        .rsc-header {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          margin-bottom: 1.25rem;
+        }
+        .rsc-coach-avatar-wrap {
+          position: relative;
+          width: 52px;
+          height: 52px;
+          flex-shrink: 0;
+        }
+        .rsc-coach-avatar {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          object-fit: cover;
+          border: 2px solid #3b7a24;
+          box-shadow: 0 4px 10px rgba(59,122,36,0.15);
+        }
+        .rsc-coach-badge {
+          position: absolute;
+          bottom: -2px;
+          right: -2px;
+          background: #3b7a24;
+          color: white;
+          font-size: 0.55rem;
+          font-weight: 900;
+          padding: 1px 4px;
+          border-radius: 4px;
+          border: 1.5px solid white;
+        }
+        .rsc-coach-title {
+          font-size: 1.3rem;
+          font-weight: 800;
+          color: #1e293b;
+          margin: 0;
+        }
+        .rsc-coach-subtitle {
+          font-size: calc(0.85rem + 2pt);
+          color: #64748b;
+          font-weight: 600;
+          display: block;
+          margin-top: 2px;
+        }
+        .rsc-text {
+          font-size: 1.15rem;
+          line-height: 1.6;
+          color: #475569;
+          margin: 0;
+          font-weight: 550;
+        }
+
+        /* BIOMARKER SNAPSHOT */
+        .rep-section-title {
+          display: flex;
+          align-items: center;
+          margin-bottom: 1.25rem;
+          margin-top: 2.5rem;
+        }
+        .rep-section-title h3 {
+          font-size: 1.45rem;
+          font-weight: 800;
+          color: #1e3a5f;
+          margin: 0;
+        }
+        .rep-wearable-source-badge {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.5rem;
+          background: white;
+          padding: 0.4rem 0.85rem;
+          border-radius: 12px;
+          border: 1.5px solid #e2e8f0;
+          box-shadow: 0 2px 8px rgba(0,0,0,0.01);
+        }
+        .rwsb-label {
+          font-size: 0.85rem;
+          font-weight: 700;
+          color: #64748b;
+        }
+        .rwsb-wrapper {
+          display: flex;
+          align-items: center;
+          gap: 0.4rem;
+          position: relative;
+        }
+        .rwsb-img {
+          width: 26px;
+          height: 26px;
+          object-fit: contain;
+          mix-blend-mode: multiply;
+        }
+        .rwsb-name {
+          font-size: 0.85rem;
+          font-weight: 800;
+          color: #1e293b;
+        }
+        .rwsb-status-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #22c55e;
+          display: inline-block;
+          box-shadow: 0 0 6px rgba(34,197,94,0.4);
+        }
+        .rep-biomarker-grid {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          gap: 1.25rem;
+          margin-bottom: 2.5rem;
+        }
+        .rep-bio-card {
+          background: white;
+          border-radius: 20px;
+          padding: 1.25rem;
+          border: 1.5px solid #e2e8f0;
+          display: flex;
+          flex-direction: column;
+          gap: 0.25rem;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+        }
+        .rbc-label {
+          font-size: 0.72rem;
+          font-weight: 800;
+          color: #94a3b8;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+        }
+        .rbc-value {
+          font-size: 1.5rem;
+          font-weight: 850;
+          color: #0f172a;
+        }
+        .rbc-change {
+          font-size: calc(0.85rem + 2pt);
+          font-weight: 700;
+          margin-top: 2px;
+        }
+        .rbc-change.pos { color: #22c55e; }
+        .rbc-change.neg { color: #ef4444; }
+        .rbc-change.neutral { color: #64748b; }
+
+        /* PILLARS GRID */
+        .rep-pillars-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 1.25rem;
+          margin-bottom: 2.5rem;
+        }
+        .rep-pillar-detail-card {
+          background: white;
+          border-radius: 22px;
+          padding: 1.5rem;
+          border: 1.5px solid #e2e8f0;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.01);
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+        .rpdc-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          gap: 0.5rem;
+          margin-bottom: 1rem;
+        }
+        .rpdc-title-group {
+          display: flex;
+          align-items: center;
+          gap: 0.6rem;
+        }
+        .rpdc-num {
+          width: 42px;
+          height: 42px;
+          border-radius: 50%;
+          background: #f0f9ff;
+          border: 2.5px solid #bae6fd;
+          color: #0369a1;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.4rem;
+          font-weight: 800;
+          flex-shrink: 0;
+        }
+        .rpdc-title-group h4 {
+          font-size: 1.1rem;
+          font-weight: 800;
+          color: #1e293b;
+          margin: 0;
+          line-height: 1.25;
+        }
+        .rpdc-status {
+          font-size: 0.72rem;
+          font-weight: 800;
+          padding: 0.25rem 0.6rem;
+          border-radius: 100px;
+          text-transform: uppercase;
+        }
+        .rpdc-status.excellent { background: #dcfce7; color: #15803d; }
+        .rpdc-status.gut { background: #ecfdf5; color: #047857; }
+        .rpdc-status.middle { background: #fef3c7; color: #b45309; }
+
+        .rpdc-score-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          margin-bottom: 0.75rem;
+          border-bottom: 1px solid #f1f5f9;
+          padding-bottom: 0.75rem;
+        }
+        .rpdc-score-num {
+          display: flex;
+          align-items: baseline;
+          gap: 0.2rem;
+        }
+        .rpdc-score-val {
+          font-size: 1.8rem;
+          font-weight: 850;
+          color: #0f172a;
+          line-height: 1;
+        }
+        .rpdc-score-lbl {
+          font-size: 0.75rem;
+          color: #94a3b8;
+          font-weight: 700;
+        }
+        .rpdc-change {
+          font-size: 0.9rem;
+          font-weight: 750;
+        }
+        .rpdc-change.pos { color: #22c55e; }
+        .rpdc-change.neg { color: #ef4444; }
+        .rpdc-desc {
+          font-size: 0.95rem;
+          color: #64748b;
+          line-height: 1.4;
+          margin: 0;
+          font-weight: 500;
+        }
+
+        /* GOALS COMPARISON */
+        .rep-goals-comparison {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          gap: 1.5rem;
+          margin-top: 1rem;
+        }
+        .rep-goals-col {
+          background: white;
+          border-radius: 24px;
+          border: 1.5px solid #e2e8f0;
+          overflow: hidden;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.015);
+        }
+        .rgc-header {
+          padding: 1.25rem 1.5rem;
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          border-bottom: 1px solid #f1f5f9;
+        }
+        .rgc-header h3 {
+          font-size: 1.15rem;
+          font-weight: 800;
+          color: #1e293b;
+          margin: 0;
+        }
+        .rgc-header.bg-green-tint { background: #f4fbf7; }
+        .rgc-header.bg-blue-tint { background: #f0f9ff; }
+        .text-green { color: #22c55e; font-size: 1.2rem; }
+        .text-blue { color: #3b82f6; font-size: 1.2rem; }
+        .rgc-body {
+          padding: 1.5rem;
+          display: flex;
+          flex-direction: column;
+          gap: 1rem;
+        }
+        .rgc-item {
+          display: flex;
+          align-items: flex-start;
+          gap: 0.75rem;
+        }
+        .rgc-item i {
+          font-size: 1.1rem;
+          margin-top: 2px;
+          flex-shrink: 0;
+        }
+        .rgc-item span {
+          font-size: 1.05rem;
+          color: #475569;
+          line-height: 1.4;
+          font-weight: 550;
+        }
+
+        .animate-fadeIn {
+          animation: fadeInEffect 0.4s ease-out forwards;
+        }
+        @keyframes fadeInEffect {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
         /* Mobile adaptation for Reports Grid */
         @media (max-width: 1000px) {
           .rep-grid-custom {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .rep-biomarker-grid {
+            grid-template-columns: repeat(2, 1fr);
+          }
+          .rep-pillars-grid {
             grid-template-columns: repeat(2, 1fr);
           }
         }
@@ -1637,6 +2748,23 @@ export default function EntwicklungPage({ onStartSimulation }: EntwicklungPagePr
           .rep-grid-custom {
             grid-template-columns: 1fr;
             gap: 1.25rem;
+          }
+          .rep-detail-header-row {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 1rem;
+          }
+          .rep-detail-score-box {
+            width: 100%;
+          }
+          .rep-biomarker-grid {
+            grid-template-columns: 1fr;
+          }
+          .rep-pillars-grid {
+            grid-template-columns: 1fr;
+          }
+          .rep-goals-comparison {
+            grid-template-columns: 1fr;
           }
         }
 
