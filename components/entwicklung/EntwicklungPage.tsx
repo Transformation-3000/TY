@@ -295,7 +295,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
       element.classList.add('pdf-render-mode');
 
       const opt = {
-        margin: [5, 10, 10, 10],
+        margin: [10, 10, 10, 10],
         filename: `Monatsreport_${selectedReport?.monthName || 'Report'}_${selectedReport?.year || '2026'}.pdf`,
         image: { type: 'jpeg', quality: 0.98 },
         html2canvas: { scale: 3, useCORS: true, logging: false },
@@ -2120,12 +2120,12 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         }
         /* --- PDF Render-Mode Scaling (-25%) --- */
         .report-detail-subpage.pdf-render-mode {
-          font-size: 11px !important;
+          font-size: 10.2px !important;
           margin-top: 0 !important;
           padding-top: 0 !important;
           padding-left: 1.25rem !important;
           padding-right: 1.25rem !important;
-          padding-bottom: 1.25rem !important;
+          padding-bottom: 0px !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-summary-card,
         .report-detail-subpage.pdf-render-mode .rep-bio-card,
@@ -2147,7 +2147,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           align-items: center !important;
           margin-top: 0px !important;
           padding-top: 0 !important;
-          margin-bottom: 0.6rem !important;
+          margin-bottom: 0.65rem !important;
           padding-bottom: 0.35rem !important;
           border-bottom: none !important;
         }
@@ -2165,11 +2165,11 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         .report-detail-subpage.pdf-render-mode .rep-detail-banner-wrap {
           display: block !important;
           height: 110px !important;
-          margin-bottom: 0.75rem !important;
+          margin-bottom: 0.95rem !important;
           border-radius: 12px !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-detail-header-row {
-          margin-bottom: 0.75rem !important;
+          margin-bottom: 0.95rem !important;
           gap: 0.85rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-detail-title {
@@ -2203,7 +2203,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         .report-detail-subpage.pdf-render-mode .rep-summary-card {
           padding: 0.95rem !important;
           border-radius: 14px !important;
-          margin-bottom: 0.85rem !important;
+          margin-bottom: 1rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rsc-header {
           margin-bottom: 0.6rem !important;
@@ -2224,8 +2224,8 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           line-height: 1.35 !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-section-title {
-          margin-top: 1.1rem !important;
-          margin-bottom: 0.6rem !important;
+          margin-top: 1.25rem !important;
+          margin-bottom: 0.75rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-section-title h3 {
           font-size: 0.95rem !important;
@@ -2233,7 +2233,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         .report-detail-subpage.pdf-render-mode .rep-pillars-section-title {
           page-break-before: avoid !important;
           break-before: avoid !important;
-          margin-top: 1.1rem !important;
+          margin-top: 1.25rem !important;
         }
         .report-detail-subpage.pdf-render-mode .blue-bar {
           height: 14px !important;
@@ -2266,7 +2266,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           flex-wrap: wrap !important;
           gap: 0.5rem !important;
           justify-content: space-between !important;
-          margin-bottom: 0.85rem !important;
+          margin-bottom: 1.1rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-bio-card {
           width: 23.5% !important;
@@ -2288,7 +2288,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           flex-wrap: wrap !important;
           gap: 0.5rem !important;
           justify-content: space-between !important;
-          margin-bottom: 0.85rem !important;
+          margin-bottom: 1.1rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-pillar-detail-card {
           width: 32% !important;
@@ -2331,7 +2331,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         }
         .report-detail-subpage.pdf-render-mode .rep-goals-comparison {
           gap: 0.5rem !important;
-          margin-top: 0.85rem !important;
+          margin-top: 1.1rem !important;
         }
         .report-detail-subpage.pdf-render-mode .rep-goals-col {
           border-radius: 10px !important;
