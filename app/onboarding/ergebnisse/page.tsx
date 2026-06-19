@@ -277,7 +277,7 @@ export default function ErgebnissePage() {
               </div>
             </div>
             <div className="gauge-title-wrapper">
-              <h3>Age Speed</h3>
+              <h3>True Years Age Speed</h3>
               <span className="gauge-subtitle">Wie schnell alterst du?</span>
             </div>
             <div className="gauge-main-val" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
