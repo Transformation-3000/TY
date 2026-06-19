@@ -25,6 +25,11 @@ const RUBRIC_DEFAULTS: Record<string, { color: string; icon: string; name: strin
   Mindset: { name: 'Mentale Resilienz', color: '#06b6d4', icon: 'bi-sun', details: 'Stressbewältigungsstrategien, mentale Flexibilität und Achtsamkeit.', optimalRange: '80-100%', savedYears: 0.7 }
 };
 
+const getDarkColor = (color: string) => {
+  if (color.toLowerCase() === '#ace189') return '#15803d'; // dark green for Zellversorgung
+  return color;
+};
+
 export default function ErgebnissePage() {
   const [answers, setAnswers] = useState<Record<number, string | string[]>>({});
   const [finished, setFinished] = useState<boolean>(false);
@@ -201,7 +206,7 @@ export default function ErgebnissePage() {
           <div className="banner-left">
             <span className="results-tag">Auswertung Onboarding</span>
             <h1 className="banner-title">Initiale Baseline</h1>
-            <p className="banner-desc">Basierend auf deinem Onboarding haben wir dein initiales <span className="highlight-text">TRUE YEARS BIOAGE ©</span> berechnet und erste mögliche <span className="highlight-text">HEBEL</span> identifiziert. Besonders bei deiner Schlafqualität zeigt sich bereits ein starker präventiver Fortschritt (+{sleepSavedYears} biologische Jahre), während in den Bereichen Kraft und Resilienz deine größten Potenziale zur weiteren Verjüngung liegen.</p>
+            <p className="banner-desc">Basierend auf deinem Onboarding haben wir dein initiales <span className="highlight-text">TRUE YEARS BIOAGE ©</span> berechnet und erste mögliche <span className="highlight-text">HEBEL</span> identifiziert. Besonders bei deiner Schlafqualität zeigt sich bereits ein starker präventiver Fortschritt (-{sleepSavedYears.toFixed(1).replace('.', ',')} biologische Jahre), während in den Bereichen Kraft und Resilienz deine größten Potenziale zur weiteren Verjüngung liegen.</p>
           </div>
           <div className="banner-right">
             <div className="age-circle-wrapper">
@@ -222,8 +227,8 @@ export default function ErgebnissePage() {
               </div>
             </div>
             <div className="age-legend">
-              <div>Kalendarisch: <strong>{calendarAge} J.</strong></div>
-              <div className="saved-green">Differenz: <strong>-{totalSavedYears} Jahre</strong></div>
+              <div>Kalendarisch: <strong>{calendarAge.toFixed(1).replace('.', ',')} Jahre</strong></div>
+              <div className="saved-green">Differenz: <strong>-{totalSavedYears.toFixed(1).replace('.', ',')} Jahre</strong></div>
             </div>
           </div>
         </div>
@@ -262,7 +267,7 @@ export default function ErgebnissePage() {
                         alignmentBaseline="middle" 
                         className="radar-axis-label"
                       >
-                        {s.name.split(' ')[0]}
+                        {`${idx + 1}. ${s.name.split(' ')[0]}`}
                       </text>
                     </g>
                   );
@@ -306,7 +311,7 @@ export default function ErgebnissePage() {
                     className={`rubric-score-row ${isActive ? 'active' : ''}`}
                     onClick={() => setSelectedRubric(s.id)}
                   >
-                    <span className="rubric-icon" style={{ backgroundColor: s.color + '15', color: s.color }}>
+                    <span className="rubric-icon" style={{ backgroundColor: 'transparent', border: '1.5px solid #006EA7', color: '#006EA7' }}>
                       <i className={`bi ${s.icon}`}></i>
                     </span>
                     <span className="rubric-name">{s.name}</span>
@@ -314,7 +319,9 @@ export default function ErgebnissePage() {
                       <div className="rubric-progress-fill" style={{ width: `${s.score}%`, backgroundColor: s.color }}></div>
                     </div>
                     <span className="rubric-value">{s.score}%</span>
-                    <span className="rubric-years">+{s.savedYears} J.</span>
+                    <span className="rubric-years">
+                      {s.savedYears === 0 ? '0,0 J.' : `-${s.savedYears.toFixed(1).replace('.', ',')} J.`}
+                    </span>
                   </button>
                 );
               })}
@@ -326,12 +333,12 @@ export default function ErgebnissePage() {
         {/* DETAILED RUBRIC BREAKDOWN */}
         <div className="detail-breakdown-card">
           <div className="detail-header" style={{ borderBottomColor: activeScoreDetails.color }}>
-            <span className="rubric-badge" style={{ backgroundColor: activeScoreDetails.color + '20', color: activeScoreDetails.color }}>
+            <span className="rubric-badge" style={{ backgroundColor: activeScoreDetails.color + '20', color: getDarkColor(activeScoreDetails.color) }}>
               <i className={`bi ${activeScoreDetails.icon} badge-icon`}></i> {activeScoreDetails.name}
             </span>
             <div className="detail-header-right">
               <div>Optimalbereich: <strong>{activeScoreDetails.optimalRange}</strong></div>
-              <div>Dein Beitrag: <strong className="green-accent">-{activeScoreDetails.savedYears} Jahre</strong></div>
+              <div>Dein Beitrag: <strong className="green-accent">-{activeScoreDetails.savedYears.toFixed(1).replace('.', ',')} Jahre</strong></div>
             </div>
           </div>
 
@@ -341,7 +348,7 @@ export default function ErgebnissePage() {
               <p className="detail-desc">{activeScoreDetails.details} Deine Antworten zeigen ein Optimierungspotenzial von <strong>{100 - activeScoreDetails.score}%</strong> in diesem Bereich.</p>
               
               <div className="answers-impact-box">
-                <h5>Deine wichtigsten Lebensstil-Hebel:</h5>
+                <h5>Deine aktuell wichtigsten Lebensstil-Hebel:</h5>
                 <div className="impact-items">
                   {selectedRubric === 'Schlaf' && (
                     <>
@@ -364,7 +371,7 @@ export default function ErgebnissePage() {
                       <div className="impact-item warning">
                         <i className="bi bi-exclamation-triangle-fill"></i>
                         <div>
-                          <strong>Sitzender Lebensstil:</strong> Mehr als 6 Stunden Sitzen täglich korreliert mit verringerter Insulinsensitivität. Wir empfehlen kurze Aktivitätsunterbrechungen.
+                          <strong>Sitzender Lebensstil:</strong> Mehr als 60 Stunden Sitzen wöchentlich korreliert mit verringerter Insulinsensitivität. Wir empfehlen kurze Aktivitätsunterbrechungen.
                         </div>
                       </div>
                       <div className="impact-item positive">
@@ -403,7 +410,7 @@ export default function ErgebnissePage() {
                   </div>
                   <div className="lisa-title-block">
                     <h4>Empfehlungen von Lisa AI</h4>
-                    <span>Dein Personal Trainer</span>
+                    <span>Deine Personal Trainerin</span>
                   </div>
                 </div>
                 <div className="lisa-quote">
@@ -766,19 +773,19 @@ export default function ErgebnissePage() {
           }
         }
         .detail-text-col h4 {
-          font-size: 1.1rem;
+          font-size: calc(1.1rem + 2pt);
           font-weight: 700;
           color: #0f172a;
           margin-bottom: 0.5rem;
         }
         .detail-desc {
-          font-size: 0.98rem;
+          font-size: calc(0.98rem + 2pt);
           line-height: 1.5;
           color: #475569;
           margin-bottom: 1.5rem;
         }
         .answers-impact-box h5 {
-          font-size: 0.92rem;
+          font-size: calc(0.92rem + 2pt);
           font-weight: 700;
           color: #475569;
           margin-bottom: 0.75rem;
@@ -795,7 +802,7 @@ export default function ErgebnissePage() {
           gap: 0.75rem;
           padding: 0.85rem 1rem;
           border-radius: 12px;
-          font-size: 0.9rem;
+          font-size: calc(0.9rem + 2pt);
           line-height: 1.4;
         }
         .impact-item.positive {
@@ -857,7 +864,7 @@ export default function ErgebnissePage() {
           color: #64748b;
         }
         .lisa-quote {
-          font-size: 0.92rem;
+          font-size: calc(0.92rem + 2pt);
           line-height: 1.5;
           color: #334155;
           font-style: italic;
@@ -872,7 +879,7 @@ export default function ErgebnissePage() {
           background: #006EA7;
           color: #ffffff !important;
           font-weight: 700;
-          font-size: 0.95rem;
+          font-size: calc(0.95rem + 2pt);
           padding: 0.75rem;
           border-radius: 10px;
           text-align: center;
