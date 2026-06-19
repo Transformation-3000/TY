@@ -269,7 +269,13 @@ export default function ErgebnissePage() {
         {/* GAUGE LOGIC ROW */}
         <div className="gauges-row">
           {/* Card 1: Age Speed */}
-          <div className="gauge-card">
+          <div className="gauge-card" style={{ position: 'relative' }}>
+            <div className="gauge-tooltip-container">
+              <i className="bi bi-info-circle tooltip-trigger"></i>
+              <div className="gauge-tooltip-text">
+                Das Alterungstempo (Age Speed) gibt an, wie viele biologische Jahre du pro kalendarischem Jahr alterst. Ein Wert von 0,82 bedeutet beispielsweise, dass du in einem normalen Jahr biologisch nur um 0,82 Jahre alterst. Ein Wert unter 1,0 verlangsamt den Alterungsprozess.
+              </div>
+            </div>
             <div className="gauge-title-wrapper">
               <h3>Age Speed</h3>
               <span className="gauge-subtitle">Wie schnell alterst du?</span>
@@ -295,10 +301,16 @@ export default function ErgebnissePage() {
             </div>
           </div>
 
-          {/* Card 2: Inner Age */}
-          <div className="gauge-card">
+          {/* Card 2: BioAge */}
+          <div className="gauge-card" style={{ position: 'relative' }}>
+            <div className="gauge-tooltip-container">
+              <i className="bi bi-info-circle tooltip-trigger"></i>
+              <div className="gauge-tooltip-text">
+                Dein biologisches Alter (BioAge) zeigt den Zustand deiner Zellen und deiner allgemeinen Gesundheit im Vergleich zu deinem tatsächlichen (kalendarischen) Alter. Da dein biologisches Alter unter deinem kalendarischen Alter liegt, alterst du gesünder und langsamer.
+              </div>
+            </div>
             <div className="gauge-title-wrapper">
-              <h3>Inner Age</h3>
+              <h3>BioAge</h3>
               <span className="gauge-subtitle">Dein Biologisches Alter</span>
             </div>
             <div className="gauge-main-val">{bioAge.toFixed(1).replace('.', ',')}</div>
@@ -322,7 +334,7 @@ export default function ErgebnissePage() {
             </div>
             <div className="gauge-bottom-info">
               <span className="gauge-bottom-val">{calendarAge.toFixed(1).replace('.', ',')}</span>
-              <span className="gauge-bottom-label">Dein Alter (Jahre)</span>
+              <span className="gauge-bottom-label">Dein kalendarisches Alter</span>
             </div>
           </div>
         </div>
@@ -991,6 +1003,55 @@ export default function ErgebnissePage() {
         .gauge-bottom-label {
           font-size: 0.85rem;
           color: #64748b;
+        }
+
+        /* GAUGE TOOLTIP */
+        .gauge-tooltip-container {
+          position: absolute;
+          top: 16px;
+          right: 16px;
+          z-index: 10;
+        }
+        .tooltip-trigger {
+          font-size: 1.15rem;
+          color: #94a3b8;
+          cursor: pointer;
+          transition: color 0.2s;
+        }
+        .tooltip-trigger:hover {
+          color: #006ea7;
+        }
+        .gauge-tooltip-text {
+          visibility: hidden;
+          width: 240px;
+          background-color: #1e293b;
+          color: #fff;
+          text-align: left;
+          border-radius: 8px;
+          padding: 10px 12px;
+          position: absolute;
+          z-index: 20;
+          top: 125%;
+          right: 0;
+          opacity: 0;
+          transition: opacity 0.2s, visibility 0.2s;
+          font-size: 0.82rem;
+          font-weight: 500;
+          line-height: 1.4;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+        .gauge-tooltip-text::after {
+          content: "";
+          position: absolute;
+          bottom: 100%;
+          right: 10px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: transparent transparent #1e293b transparent;
+        }
+        .gauge-tooltip-container:hover .gauge-tooltip-text {
+          visibility: visible;
+          opacity: 1;
         }
 
         /* LISA COACH CARD */
