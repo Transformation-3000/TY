@@ -253,7 +253,7 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
         <div className="hebel-hero-left">
           <h1 className="hebel-title-gradient">Deine Lifestyle-Hebel</h1>
           <p className="hebel-subtitle">
-            Basierend auf deiner Onboarding-Baseline haben wir deine stärksten Hebel zur Zellverjüngung identifiziert. Setze diese gezielt ein, um dein biologisches Alter positiv zu beeinflussen.
+            Basierend auf deiner Onboarding-Baseline haben wir deine stärksten Hebel zur Zellverjüngung identifiziert. Setze diese gezielt ein, um dein biologisches Alter positiv zu beeinflussen und dein Lebensgefühl noch weiter positiv zu verbessern
           </p>
           <div className="hebel-quick-stats">
             <div className="quick-stat-pill">
@@ -387,7 +387,7 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
           max-width: 1250px;
           margin: 0 auto;
           font-family: 'Plus Jakarta Sans', sans-serif;
-          background: #fafbfc;
+          background: #f1f5f9;
           animation: pageLoadFade 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -542,15 +542,15 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
         .hebel-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 2.25rem;
+          gap: 2.75rem;
         }
 
         /* HEBEL CARDS */
         .rubric-hebel-card {
           background: #ffffff;
-          border: 1px solid #e2e8f0;
+          border: 1px solid rgba(226, 232, 240, 0.8);
           border-radius: 28px;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.015);
+          box-shadow: 0 15px 35px -5px rgba(15, 23, 42, 0.05), 0 5px 15px -3px rgba(15, 23, 42, 0.03);
           overflow: hidden;
           transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
           position: relative;
@@ -564,15 +564,15 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
           top: 0;
           left: 0;
           right: 0;
-          height: 4px;
+          height: 6px;
           background-color: var(--theme-color);
           opacity: 0.85;
         }
 
         .rubric-hebel-card:hover {
-          transform: translateY(-5px);
-          box-shadow: 0 20px 35px -10px rgba(0, 110, 167, 0.06),
-                      0 0 0 1px var(--theme-color);
+          transform: translateY(-6px);
+          box-shadow: 0 25px 45px -12px rgba(15, 23, 42, 0.12),
+                      0 0 0 1.5px var(--theme-color);
           border-color: transparent;
         }
 
@@ -604,7 +604,7 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
         }
 
         .header-index {
-          font-size: 0.72rem;
+          font-size: calc(0.72rem + 2pt);
           font-weight: 800;
           color: #94a3b8;
           text-transform: uppercase;
