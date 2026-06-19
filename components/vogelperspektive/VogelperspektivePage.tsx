@@ -1141,21 +1141,21 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           right: 15px;
           width: 52px;
           height: 52px;
-          background: #006EA7;
-          color: white;
+          background: white;
+          color: #006EA7;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          border: 4px solid white;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+          box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
           transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           z-index: 5;
         }
         .avatar-outer-circle:hover .avatar-camera-badge {
-          background: #004D77;
+          background: #006EA7;
+          color: white;
           transform: scale(1.1);
-          box-shadow: 0 6px 20px rgba(0, 110, 167, 0.4);
+          box-shadow: 0 10px 24px rgba(0, 110, 167, 0.3);
         }
 
         /* BOX 2: TRACKER */
