@@ -318,7 +318,18 @@ export default function ErgebnissePage() {
               <h3>BioAge</h3>
               <span className="gauge-subtitle">Wie ist dein inneres biologisches Alter?</span>
             </div>
-            <div className="gauge-main-val">{bioAge.toFixed(1).replace('.', ',')}</div>
+            <div className="gauge-main-val" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
+              <div>{bioAge.toFixed(1).replace('.', ',')} <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b' }}>Jahre</span></div>
+              {bioAge <= calendarAge ? (
+                <span className="speed-badge" style={{ fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#e8f7ee', color: '#15803d' }}>
+                  Biologisch verjüngt um -{totalSavedYears.toFixed(1).replace('.', ',')} Jahre
+                </span>
+              ) : (
+                <span className="speed-badge" style={{ fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#fef2f2', color: '#b91c1c' }}>
+                  Biologisch gealtert um +{totalSavedYears.toFixed(1).replace('.', ',')} Jahre
+                </span>
+              )}
+            </div>
             <div className="gauge-visual-wrapper">
               <svg viewBox="0 0 200 120" className="gauge-svg-element">
                 {/* Background arc */}
@@ -337,8 +348,8 @@ export default function ErgebnissePage() {
                 <text x="180" y="118" className="gauge-scale-label" textAnchor="end">60</text>
               </svg>
             </div>
-            <div className="gauge-bottom-info">
-              <span className="gauge-bottom-val">{calendarAge.toFixed(1).replace('.', ',')}</span>
+            <div className="gauge-bottom-info" style={{ marginTop: '5px' }}>
+              <span className="gauge-bottom-val" style={{ color: '#475569' }}>{calendarAge.toFixed(1).replace('.', ',')}</span>
               <span className="gauge-bottom-label">Dein kalendarisches Alter</span>
             </div>
           </div>
