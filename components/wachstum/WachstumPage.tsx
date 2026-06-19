@@ -1066,7 +1066,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         
         .wachstum-layout {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(2, 1fr);
           gap: 2rem;
         }
 
@@ -1089,13 +1089,6 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         }
         .quick-win-card:last-child {
           border-bottom: none;
-        }
-
-        @media (max-width: 1200px) {
-          .wachstum-layout {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 2rem;
-          }
         }
 
         @media (max-width: 991px) {
