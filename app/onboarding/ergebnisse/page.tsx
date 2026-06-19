@@ -167,6 +167,39 @@ export default function ErgebnissePage() {
   const bioAge = parseFloat((calendarAge - totalSavedYears).toFixed(1));
   const sleepSavedYears = scores.find(s => s.id === 'Schlaf')?.savedYears || 0.4;
 
+  // Gauge Calculations for Inner Age
+  const gaugeMin = 30;
+  const gaugeMax = 60;
+  const percentBio = Math.max(0, Math.min(1, (bioAge - gaugeMin) / (gaugeMax - gaugeMin)));
+  const percentCal = Math.max(0, Math.min(1, (calendarAge - gaugeMin) / (gaugeMax - gaugeMin)));
+  
+  const angleBio = Math.PI - (percentBio * Math.PI);
+  const angleCal = Math.PI - (percentCal * Math.PI);
+  
+  const xBio = 100 + 80 * Math.cos(angleBio);
+  const yBio = 100 - 80 * Math.sin(angleBio);
+  
+  const xCal = 100 + 80 * Math.cos(angleCal);
+  const yCal = 100 - 80 * Math.sin(angleCal);
+  
+  const xNeedleBio = 100 + 65 * Math.cos(angleBio);
+  const yNeedleBio = 100 - 65 * Math.sin(angleBio);
+
+  const isYounger = bioAge <= calendarAge;
+  const arcPath = isYounger
+    ? `M ${xBio},${yBio} A 80,80 0 0,1 ${xCal},${yCal}`
+    : `M ${xCal},${yCal} A 80,80 0 0,1 ${xBio},${yBio}`;
+  const arcColor = isYounger ? '#7FD049' : '#ef4444'; // TrueYears green if younger, red if older
+
+  // Age Speed Calculations (0.0 to 2.0 scale)
+  const speedVal = 0.82;
+  const speedPercent = Math.max(0, Math.min(1, speedVal / 2.0));
+  const speedAngle = Math.PI - (speedPercent * Math.PI);
+  const xSpeed = 100 + 80 * Math.cos(speedAngle);
+  const ySpeed = 100 - 80 * Math.sin(speedAngle);
+  const xNeedleSpeed = 100 + 65 * Math.cos(speedAngle);
+  const yNeedleSpeed = 100 - 65 * Math.sin(speedAngle);
+
   // Visual Coordinates for SVG Radar chart (7 axes)
   // Center is (150, 150), radius is 100
   const radarAxes = scores.filter(s => s.id !== 'Einstieg'); // The 6 optimization fields
@@ -229,6 +262,67 @@ export default function ErgebnissePage() {
             <div className="age-legend">
               <div>Kalendarisch: <strong>{calendarAge.toFixed(1).replace('.', ',')} Jahre</strong></div>
               <div className="saved-green">Differenz: <strong>-{totalSavedYears.toFixed(1).replace('.', ',')} Jahre</strong></div>
+            </div>
+          </div>
+        </div>
+
+        {/* GAUGE LOGIC ROW */}
+        <div className="gauges-row">
+          {/* Card 1: Age Speed */}
+          <div className="gauge-card">
+            <div className="gauge-title-wrapper">
+              <h3>Age Speed</h3>
+              <span className="gauge-subtitle">Wie schnell alterst du?</span>
+            </div>
+            <div className="gauge-main-val">{speedVal.toFixed(2).replace('.', ',')}</div>
+            <div className="gauge-visual-wrapper">
+              <svg viewBox="0 0 200 120" className="gauge-svg-element">
+                {/* Background arc */}
+                <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#e2e8f0" strokeWidth="12" strokeLinecap="round" />
+                {/* Active colored arc (green) */}
+                <path d={`M20,100 A80,80 0 0,1 ${xSpeed},${ySpeed}`} fill="none" stroke="#7FD049" strokeWidth="12" strokeLinecap="round" />
+                {/* Needle */}
+                <line x1="100" y1="100" x2={xNeedleSpeed} y2={yNeedleSpeed} stroke="#0f172a" strokeWidth="3.5" strokeLinecap="round" />
+                <circle cx="100" cy="100" r="6" fill="#0f172a" />
+                {/* Scale labels */}
+                <text x="20" y="118" className="gauge-scale-label">0,0</text>
+                <text x="180" y="118" className="gauge-scale-label" textAnchor="end">2,0</text>
+              </svg>
+            </div>
+            <div className="gauge-bottom-info">
+              <span className="gauge-bottom-val">0,95</span>
+              <span className="gauge-bottom-label">Letzte 3 Monate</span>
+            </div>
+          </div>
+
+          {/* Card 2: Inner Age */}
+          <div className="gauge-card">
+            <div className="gauge-title-wrapper">
+              <h3>Inner Age</h3>
+              <span className="gauge-subtitle">Dein Biologisches Alter</span>
+            </div>
+            <div className="gauge-main-val">{bioAge.toFixed(1).replace('.', ',')}</div>
+            <div className="gauge-visual-wrapper">
+              <svg viewBox="0 0 200 120" className="gauge-svg-element">
+                {/* Background arc */}
+                <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#e2e8f0" strokeWidth="12" strokeLinecap="round" />
+                {/* Active colored arc (green/red) */}
+                {bioAge !== calendarAge && (
+                  <path d={arcPath} fill="none" stroke={arcColor} strokeWidth="12" />
+                )}
+                {/* Vertical thin line representing calendar age */}
+                <line x1="100" y1="100" x2={xCal} y2={yCal} stroke="#64748b" strokeWidth="1.5" strokeDasharray="3,3" />
+                {/* Needle */}
+                <line x1="100" y1="100" x2={xNeedleBio} y2={yNeedleBio} stroke="#0f172a" strokeWidth="3.5" strokeLinecap="round" />
+                <circle cx="100" cy="100" r="6" fill="#0f172a" />
+                {/* Scale labels */}
+                <text x="20" y="118" className="gauge-scale-label">30</text>
+                <text x="180" y="118" className="gauge-scale-label" textAnchor="end">60</text>
+              </svg>
+            </div>
+            <div className="gauge-bottom-info">
+              <span className="gauge-bottom-val">{calendarAge.toFixed(1).replace('.', ',')}</span>
+              <span className="gauge-bottom-label">Dein Alter (Jahre)</span>
             </div>
           </div>
         </div>
@@ -822,6 +916,81 @@ export default function ErgebnissePage() {
         .impact-item.warning i {
           color: #f59e0b;
           font-size: 1.1rem;
+        }
+
+        /* GAUGE LOGIC METER */
+        .gauges-row {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 2rem;
+          margin-top: 1rem;
+          margin-bottom: 1rem;
+        }
+        @media (max-width: 768px) {
+          .gauges-row {
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+          }
+        }
+        .gauge-card {
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 20px;
+          padding: 2rem;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+        }
+        .gauge-title-wrapper {
+          margin-bottom: 0.75rem;
+        }
+        .gauge-title-wrapper h3 {
+          font-size: 1.4rem;
+          font-weight: 800;
+          color: #0f172a;
+          margin: 0 0 2px 0;
+        }
+        .gauge-subtitle {
+          font-size: 0.88rem;
+          color: #64748b;
+        }
+        .gauge-main-val {
+          font-size: 2.2rem;
+          font-weight: 900;
+          color: #0f172a;
+          margin-bottom: 0.75rem;
+        }
+        .gauge-visual-wrapper {
+          width: 100%;
+          max-width: 240px;
+          height: auto;
+        }
+        .gauge-svg-element {
+          width: 100%;
+          height: auto;
+        }
+        .gauge-scale-label {
+          font-size: 10px;
+          font-weight: 700;
+          fill: #64748b;
+        }
+        .gauge-bottom-info {
+          margin-top: 0.75rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          line-height: 1.3;
+        }
+        .gauge-bottom-val {
+          font-size: 1.2rem;
+          font-weight: 800;
+          color: #0f172a;
+        }
+        .gauge-bottom-label {
+          font-size: 0.85rem;
+          color: #64748b;
         }
 
         /* LISA COACH CARD */
