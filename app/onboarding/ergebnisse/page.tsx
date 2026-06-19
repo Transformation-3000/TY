@@ -315,7 +315,7 @@ export default function ErgebnissePage() {
               </div>
             </div>
             <div className="gauge-title-wrapper">
-              <h3>BioAge</h3>
+              <h3>True Years BioAge</h3>
               <span className="gauge-subtitle">Wie ist dein inneres biologisches Alter?</span>
             </div>
             <div className="gauge-main-val" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
