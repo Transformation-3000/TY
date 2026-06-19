@@ -61,6 +61,16 @@ export default function Dashboard() {
     return () => window.removeEventListener('resize', onResize);
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo(0, 0);
+      const wrapper = document.querySelector('.content-wrapper');
+      if (wrapper) {
+        wrapper.scrollTop = 0;
+      }
+    }
+  }, [activeMenuItem]);
+
   const navigate = (id: string) => {
     if (id === 'website') {
       window.location.href = '/';
