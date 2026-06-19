@@ -302,7 +302,7 @@ export default function ErgebnissePage() {
             </div>
             <div className="gauge-bottom-info" style={{ marginTop: '5px' }}>
               <span className="gauge-bottom-val" style={{ color: '#475569' }}>0,95</span>
-              <span className="gauge-bottom-label">Dein Durchschnitt der letzten 3 Monate vor Programmstart</span>
+              <span className="gauge-bottom-label">Durchschnitt der letzten 3 Monate</span>
             </div>
           </div>
 
