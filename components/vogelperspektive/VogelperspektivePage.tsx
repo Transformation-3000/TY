@@ -1148,11 +1148,17 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           z-index: 5;
         }
+        .avatar-camera-badge i {
+          color: #006EA7 !important;
+          transition: color 0.2s ease;
+        }
         .avatar-camera-badge:hover {
           background: #006EA7;
-          color: white;
           transform: scale(1.1);
           box-shadow: 0 10px 24px rgba(0, 110, 167, 0.3);
+        }
+        .avatar-camera-badge:hover i {
+          color: white !important;
         }
 
         /* BOX 2: TRACKER */
