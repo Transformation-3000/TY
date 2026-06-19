@@ -411,7 +411,7 @@ export default function ErgebnissePage() {
                         <circle 
                           cx={pt[0]} 
                           cy={pt[1]} 
-                          r="13.5" 
+                          r="9.5" 
                           fill={s.color} 
                           className="radar-dot-glow"
                         />
@@ -419,7 +419,7 @@ export default function ErgebnissePage() {
                       <circle 
                         cx={pt[0]} 
                         cy={pt[1]} 
-                        r={isActive ? "13.5" : "4.5"} 
+                        r={isActive ? "9.5" : "4.5"} 
                         className={`radar-shape-dot ${isActive ? 'active' : ''}`} 
                         style={{ fill: s.color, '--color-dot': s.color } as React.CSSProperties}
                       />
@@ -436,7 +436,7 @@ export default function ErgebnissePage() {
             <p className="diagram-subtitle">Wähle eine Rubrik aus, um tiefergehende physiologische Auswertungen zu erhalten.</p>
             
             <div className="rubrics-interactive-list">
-              {scores.filter(s => s.id !== 'Einstieg').map(s => {
+              {scores.filter(s => s.id !== 'Einstieg').map((s, idx) => {
                 const isActive = selectedRubric === s.id;
                 return (
                   <button 
@@ -444,8 +444,8 @@ export default function ErgebnissePage() {
                     className={`rubric-score-row ${isActive ? 'active' : ''}`}
                     onClick={() => setSelectedRubric(s.id)}
                   >
-                    <span className="rubric-icon" style={{ backgroundColor: 'transparent', border: '1.5px solid #006EA7', color: '#006EA7' }}>
-                      <i className={`bi ${s.icon}`}></i>
+                    <span className="rubric-number">
+                      {idx + 1}
                     </span>
                     <span className="rubric-name">{s.name}</span>
                     <div className="rubric-progress-track">
@@ -822,15 +822,17 @@ export default function ErgebnissePage() {
           text-align: left;
         }
         .rubric-score-row:hover {
-          border-color: #cbd5e1;
-          transform: translateY(-1px);
+          border-color: #006EA7;
+          background: rgba(0, 110, 167, 0.04);
+          box-shadow: 0 6px 16px rgba(0, 110, 167, 0.08);
+          transform: translateY(-2px);
         }
         .rubric-score-row.active {
           border-color: #006EA7;
           background: #f0f7ff;
-          box-shadow: 0 4px 12px rgba(0, 110, 167, 0.05);
+          box-shadow: 0 4px 12px rgba(0, 110, 167, 0.1);
         }
-        .rubric-icon {
+        .rubric-number {
           width: 32px;
           height: 32px;
           border-radius: 50%;
@@ -838,8 +840,17 @@ export default function ErgebnissePage() {
           align-items: center;
           justify-content: center;
           font-size: 0.95rem;
+          font-weight: 800;
           margin-right: 0.75rem;
           flex-shrink: 0;
+          background: transparent;
+          border: 1.5px solid #006EA7;
+          color: #006EA7;
+          transition: all 0.2s ease;
+        }
+        .rubric-score-row.active .rubric-number {
+          background: #006EA7;
+          color: #ffffff;
         }
         .rubric-name {
           font-weight: 700;
@@ -872,7 +883,7 @@ export default function ErgebnissePage() {
           font-weight: 800;
           color: #ffffff;
           margin-left: 0.75rem;
-          background: #166534; /* Darker green (emerald-800 / green-800) */
+          background: #16a34a; /* Medium green (green-600) for better visibility */
           padding: 0.2rem 0.5rem;
           border-radius: 6px;
           white-space: nowrap;
