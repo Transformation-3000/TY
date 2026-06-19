@@ -92,6 +92,28 @@ export default function WelcomeSection({
   const [tempSelectedId, setTempSelectedId] = useState<string>('whoop');
   const [pairingId, setPairingId] = useState<string | null>(null);
   const [pairingTimeoutId, setPairingTimeoutId] = useState<any>(null);
+  const [profileImage, setProfileImage] = useState('/images/woman_53_blonde.png');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedImage = localStorage.getItem('ty_profile_image');
+      if (savedImage) {
+        setProfileImage(savedImage);
+      }
+
+      const handleImageChange = () => {
+        const updatedImage = localStorage.getItem('ty_profile_image');
+        if (updatedImage) {
+          setProfileImage(updatedImage);
+        }
+      };
+
+      window.addEventListener('ty_profile_image_changed', handleImageChange);
+      return () => {
+        window.removeEventListener('ty_profile_image_changed', handleImageChange);
+      };
+    }
+  }, []);
 
   const getRubricStatus = (rubricId: string, index: number) => {
     const currentRubricIndex = RUBRICS.findIndex(r => r.id === onboardingCategory);
@@ -215,7 +237,7 @@ export default function WelcomeSection({
             <div className="profile-border-circle">
               <div className="profile-img-container">
                 <Image 
-                  src="/images/woman_53_blonde.png" 
+                  src={profileImage} 
                   alt="Profile" 
                   fill
                   sizes="44px"

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 
 interface VogelperspektivePageProps {
@@ -11,6 +11,8 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   const [currentDate, setCurrentDate] = useState('');
   const [greeting, setGreeting] = useState('Guten Tag');
   const [userName, setUserName] = useState('Monique');
+  const [profileImage, setProfileImage] = useState('/images/woman_53_blonde.png');
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -18,8 +20,35 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       if (savedName) {
         setUserName(savedName);
       }
+      const savedImage = localStorage.getItem('ty_profile_image');
+      if (savedImage) {
+        setProfileImage(savedImage);
+      }
     }
   }, []);
+
+  const triggerFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const result = event.target?.result as string;
+        if (result) {
+          setProfileImage(result);
+          localStorage.setItem('ty_profile_image', result);
+          // Event to sync header avatar
+          window.dispatchEvent(new Event('ty_profile_image_changed'));
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+  };
 
   useEffect(() => {
     const dateOptions: Intl.DateTimeFormatOptions = { 
@@ -333,10 +362,36 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             <span className="date-display">{currentDate}</span>
             <h1 className="greeting-h1">{greeting}, <br /><span className="name-blue">{userName}</span></h1>
           </div>
-          <div className="avatar-outer-circle">
-            <div className="avatar-inner">
-              <Image src="/images/woman_53_blonde.png" width={288} height={288} alt={userName} priority />
+          <div 
+            className="avatar-outer-circle" 
+            style={{ cursor: 'pointer', position: 'relative' }} 
+            onClick={triggerFileInput}
+            title="Profilbild ändern"
+          >
+            <div className="avatar-inner" style={{ position: 'relative' }}>
+              <Image 
+                src={profileImage} 
+                width={288} 
+                height={288} 
+                alt={userName} 
+                priority 
+                style={{ objectFit: 'cover', borderRadius: '50%', width: '100%', height: '100%' }} 
+              />
+              <div className="avatar-hover-overlay">
+                <i className="bi bi-camera" style={{ fontSize: '2.2rem', marginBottom: '8px' }}></i>
+                <span>Foto hochladen</span>
+              </div>
             </div>
+            <div className="avatar-camera-badge" title="Foto hochladen">
+              <i className="bi bi-camera-fill" style={{ fontSize: '1.4rem' }}></i>
+            </div>
+            <input 
+              type="file" 
+              ref={fileInputRef} 
+              onChange={handleFileChange} 
+              style={{ display: 'none' }} 
+              accept="image/*"
+            />
           </div>
         </div>
 
@@ -1061,7 +1116,47 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         .greeting-h1 { font-size: 2.2rem; font-weight: 500; color: #1e293b; margin: 0.4rem 0 1.5rem; line-height: 1.1; }
         .name-blue { color: #4498ca; font-weight: 800; }
         .avatar-outer-circle { display: inline-block; padding: 10px; border-radius: 50%; background: #fff; box-shadow: 0 15px 35px rgba(0,0,0,0.1); max-width: 100%; box-sizing: border-box; }
-        .avatar-inner { width: 288px; height: 288px; max-width: 100%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; }
+        .avatar-inner { width: 288px; height: 288px; max-width: 100%; aspect-ratio: 1; border-radius: 50%; overflow: hidden; position: relative; }
+        .avatar-hover-overlay {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 110, 167, 0.75);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-weight: 800;
+          font-size: 1.1rem;
+          border-radius: 50%;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+        .avatar-outer-circle:hover .avatar-hover-overlay {
+          opacity: 1;
+        }
+        .avatar-camera-badge {
+          position: absolute;
+          bottom: 15px;
+          right: 15px;
+          width: 52px;
+          height: 52px;
+          background: #006EA7;
+          color: white;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          border: 4px solid white;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+          transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+          z-index: 5;
+        }
+        .avatar-outer-circle:hover .avatar-camera-badge {
+          background: #004D77;
+          transform: scale(1.1);
+          box-shadow: 0 6px 20px rgba(0, 110, 167, 0.4);
+        }
 
         /* BOX 2: TRACKER */
         .tracker-top-btns { display: grid; grid-template-columns: 55px 1fr 1fr; gap: 0.6rem; margin-bottom: 1.25rem; }
