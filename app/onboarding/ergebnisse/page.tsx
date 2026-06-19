@@ -881,9 +881,9 @@ export default function ErgebnissePage() {
         .rubric-years {
           font-size: 0.85rem;
           font-weight: 800;
-          color: #ffffff;
+          color: #166534; /* Dark green text for readability */
           margin-left: 0.75rem;
-          background: #16a34a; /* Medium green (green-600) for better visibility */
+          background: #bbf7d0; /* Light, bright green background */
           padding: 0.2rem 0.5rem;
           border-radius: 6px;
           white-space: nowrap;
