@@ -762,10 +762,10 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
             <div className="bac-right">
               <div className="bac-badges-row">
                 <span className="badge-pill badge-excellent">
-                  <span className="dot-green"></span>Exzellenter Status
+                  <span className="dot-green"></span>{savedYears >= 5 ? 'Exzellenter Status' : 'Guter Status'}
                 </span>
                 <span className="badge-pill badge-top5">
-                  Top 5% deiner Altersgruppe
+                  {savedYears >= 5 ? 'Top 5%' : 'Top 25%'} deiner Altersgruppe
                 </span>
               </div>
               
@@ -776,7 +776,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                   style={{ cursor: 'pointer' }}
                 >
                   <span className="bac-stat-label">CHRONOLOGISCH</span>
-                  <span className="bac-stat-val" style={{ fontSize: '1.15rem' }}>{calendarAge.toFixed(1).replace('.', ',')} Jahre</span>
+                  <span className="bac-stat-val" style={{ fontSize: '1.3rem' }}>{calendarAge.toFixed(1).replace('.', ',')} Jahre</span>
                 </div>
                 <div 
                   className={`bac-stat-card ${selectedMetric === 'difference' ? 'active-metric-green' : ''}`}
@@ -787,7 +787,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                   style={{ cursor: 'pointer' }}
                 >
                   <span className="bac-stat-label">DIFFERENZ</span>
-                  <span className="bac-stat-val" style={{ fontSize: '1.15rem' }}>-{savedYears.toFixed(1).replace('.', ',')} Jahre jünger</span>
+                  <span className="bac-stat-val" style={{ fontSize: '1.3rem' }}>-{savedYears.toFixed(1).replace('.', ',')} Jahre jünger</span>
                 </div>
                 <div 
                   className={`bac-stat-card ${selectedMetric === 'dna' ? 'active-metric' : ''}`}
@@ -795,7 +795,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                   style={{ cursor: 'pointer' }}
                 >
                   <span className="bac-stat-label">DNA-ALTERUNG</span>
-                  <span className="bac-stat-val" style={{ fontSize: '1.15rem' }}>0.82x</span>
+                  <span className="bac-stat-val" style={{ fontSize: '1.3rem' }}>0.82x</span>
                 </div>
               </div>
 
@@ -805,10 +805,121 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
               
               <div className="bac-footer-info">
                 <i className="bi bi-info-circle" style={{ marginRight: '8px', color: '#3b82f6', fontSize: '1.15rem', flexShrink: 0 }}></i>
-                <span><strong>Datengrundlage deiner Auswertung:</strong> Fragebogen bei Programmstart, Whoop Age, Epi-Proteomic-Age</span>
+                <span><strong>Datengrundlage Auswertung:</strong> Fragebogen bei Programmstart, Whoop Age, Epi-Proteomic-Age</span>
               </div>
             </div>
           </div>
+
+          {/* Tacho Gauges in development view */}
+          {(() => {
+            const speedVal = 0.82;
+            const speedPercent = Math.max(0, Math.min(1, speedVal / 2.0));
+            const speedAngle = Math.PI - (speedPercent * Math.PI);
+            const xSpeed = 100 + 80 * Math.cos(speedAngle);
+            const ySpeed = 100 - 80 * Math.sin(speedAngle);
+            const xNeedleSpeed = 100 + 65 * Math.cos(speedAngle);
+            const yNeedleSpeed = 100 - 65 * Math.sin(speedAngle);
+            
+            const gaugeMin = 30;
+            const gaugeMax = 60;
+            const percentBio = Math.max(0, Math.min(1, (bioAge - gaugeMin) / (gaugeMax - gaugeMin)));
+            const percentCal = Math.max(0, Math.min(1, (calendarAge - gaugeMin) / (gaugeMax - gaugeMin)));
+            const angleBio = Math.PI - (percentBio * Math.PI);
+            const angleCal = Math.PI - (percentCal * Math.PI);
+            const xBio = 100 + 80 * Math.cos(angleBio);
+            const yBio = 100 - 80 * Math.sin(angleBio);
+            const xCal = 100 + 80 * Math.cos(angleCal);
+            const yCal = 100 - 80 * Math.sin(angleCal);
+            const xNeedleBio = 100 + 65 * Math.cos(angleBio);
+            const yNeedleBio = 100 - 65 * Math.sin(angleBio);
+            const isYounger = bioAge <= calendarAge;
+            const arcPath = isYounger
+              ? `M ${xBio},${yBio} A 80,80 0 0,1 ${xCal},${yCal}`
+              : `M ${xCal},${yCal} A 80,80 0 0,1 ${xBio},${yBio}`;
+            const arcColor = isYounger ? '#7FD049' : '#ef4444';
+            const diffYears = Math.abs(calendarAge - bioAge);
+            
+            return (
+              <div className="gauges-row dev-gauges" style={{ display: 'flex', gap: '1.5rem', marginBottom: '2.25rem' }}>
+                {/* Card 1: Age Speed */}
+                <div className="gauge-card" style={{ position: 'relative', flex: 1 }}>
+                  <div className="gauge-tooltip-container">
+                    <i className="bi bi-info-circle tooltip-trigger"></i>
+                    <div className="gauge-tooltip-text">
+                      Das Alterungstempo (Age Speed) gibt an, wie viele biologische Jahre du pro kalendarischem Jahr alterst. Ein Wert von 0,82 bedeutet beispielsweise, dass du in einem normalen Jahr biologisch nur um 0,82 Jahre alterst. Ein Wert unter 1,0 verlangsamt den Alterungsprozess.
+                    </div>
+                  </div>
+                  <div className="gauge-title-wrapper">
+                    <h3>True Years Age Speed</h3>
+                    <span className="gauge-subtitle">Wie schnell alterst du?</span>
+                  </div>
+                  <div className="gauge-main-val" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
+                    <div>{speedVal.toFixed(2).replace('.', ',')} <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b' }}>Bio-Jahre / Jahr</span></div>
+                    <span className="speed-badge" style={{ fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#e8f7ee', color: '#15803d' }}>
+                      Verlangsamte Alterung (Ziel: &lt; 1,0)
+                    </span>
+                  </div>
+                  <div className="gauge-visual-wrapper">
+                    <svg viewBox="0 0 200 120" className="gauge-svg-element">
+                      <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#e2e8f0" strokeWidth="12" strokeLinecap="round" />
+                      <path d={`M20,100 A80,80 0 0,1 ${xSpeed},${ySpeed}`} fill="none" stroke="#7FD049" strokeWidth="12" strokeLinecap="round" />
+                      <line x1="100" y1="100" x2={xNeedleSpeed} y2={yNeedleSpeed} stroke="#0f172a" strokeWidth="3.5" strokeLinecap="round" />
+                      <circle cx="100" cy="100" r="6" fill="#0f172a" />
+                      <text x="20" y="118" className="gauge-scale-label">0,0</text>
+                      <text x="180" y="118" className="gauge-scale-label" textAnchor="end">2,0</text>
+                    </svg>
+                  </div>
+                  <div className="gauge-bottom-info" style={{ marginTop: '5px' }}>
+                    <span className="gauge-bottom-val" style={{ color: '#475569' }}>0,95</span>
+                    <span className="gauge-bottom-label">Durchschnitt der letzten 3 Monate</span>
+                  </div>
+                </div>
+
+                {/* Card 2: BioAge */}
+                <div className="gauge-card" style={{ position: 'relative', flex: 1 }}>
+                  <div className="gauge-tooltip-container">
+                    <i className="bi bi-info-circle tooltip-trigger"></i>
+                    <div className="gauge-tooltip-text">
+                      Dein biologisches Alter (BioAge) zeigt den Zustand deiner Zellen und deiner allgemeinen Gesundheit im Vergleich zu deinem tatsächlichen (kalendarischen) Alter. Da dein biologisches Alter unter deinem kalendarischen Alter liegt, alterst du gesünder und langsamer.
+                    </div>
+                  </div>
+                  <div className="gauge-title-wrapper">
+                    <h3>True Years BioAge</h3>
+                    <span className="gauge-subtitle">Wie ist dein inneres biologisches Alter?</span>
+                  </div>
+                  <div className="gauge-main-val" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
+                    <div>{bioAge.toFixed(1).replace('.', ',')} <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b' }}>Jahre</span></div>
+                    {bioAge <= calendarAge ? (
+                      <span className="speed-badge" style={{ fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#e8f7ee', color: '#15803d' }}>
+                        Biologisch verjüngt um -{diffYears.toFixed(1).replace('.', ',')} Jahre
+                      </span>
+                    ) : (
+                      <span className="speed-badge" style={{ fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#fef2f2', color: '#b91c1c' }}>
+                        Biologisch gealtert um +{diffYears.toFixed(1).replace('.', ',')} Jahre
+                      </span>
+                    )}
+                  </div>
+                  <div className="gauge-visual-wrapper">
+                    <svg viewBox="0 0 200 120" className="gauge-svg-element">
+                      <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#e2e8f0" strokeWidth="12" strokeLinecap="round" />
+                      {bioAge !== calendarAge && (
+                        <path d={arcPath} fill="none" stroke={arcColor} strokeWidth="12" />
+                      )}
+                      <line x1="100" y1="100" x2={xCal} y2={yCal} stroke="#64748b" strokeWidth="1.5" strokeDasharray="3,3" />
+                      <line x1="100" y1="100" x2={xNeedleBio} y2={yNeedleBio} stroke="#0f172a" strokeWidth="3.5" strokeLinecap="round" />
+                      <circle cx="100" cy="100" r="6" fill="#0f172a" />
+                      <text x="20" y="118" className="gauge-scale-label">30</text>
+                      <text x="180" y="118" className="gauge-scale-label" textAnchor="end">60</text>
+                    </svg>
+                  </div>
+                  <div className="gauge-bottom-info" style={{ marginTop: '5px' }}>
+                    <span className="gauge-bottom-val" style={{ color: '#475569' }}>{calendarAge.toFixed(1).replace('.', ',')}</span>
+                    <span className="gauge-bottom-label">Dein kalendarisches Alter</span>
+                  </div>
+                </div>
+              </div>
+            );
+          })()}
 
           {/* Headline & Period Selector Row */}
           <div className="trends-opt-header">
@@ -1668,7 +1779,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         }
         .bac-stat-card.active-metric { background: #4498ca; border-color: #4498ca; color: white; transition: all 0.2s; }
         .bac-stat-card.active-metric-green { background: #22c55e; border-color: #22c55e; color: white; transition: all 0.2s; }
-        .bac-stat-label { font-size: 0.72rem; font-weight: 750; color: #94a3b8; letter-spacing: 0.05em; }
+        .bac-stat-label { font-size: calc(0.72rem + 2pt); font-weight: 750; color: #94a3b8; letter-spacing: 0.05em; }
         .bac-stat-card.active-metric .bac-stat-label,
         .bac-stat-card.active-metric-green .bac-stat-label { color: rgba(255,255,255,0.85); }
         .bac-stat-val { font-size: 1.4rem; font-weight: 900; color: #0f172a; }
@@ -1676,6 +1787,118 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         .bac-stat-card.active-metric-green .bac-stat-val { color: white; }
 
         .bac-footer-info { display: flex; align-items: center; font-size: 0.95rem; color: #64748b; font-weight: 500; line-height: 1.4; }
+
+        /* Tacho gauge styles */
+        .gauge-card {
+          background: #ffffff;
+          border: 1px solid #e2e8f0;
+          border-radius: 20px;
+          padding: 1.5rem;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          position: relative;
+        }
+        .gauge-title-wrapper {
+          margin-bottom: 0.75rem;
+        }
+        .gauge-title-wrapper h3 {
+          font-size: 1.25rem;
+          font-weight: 800;
+          color: #0f172a;
+          margin: 0 0 2px 0;
+        }
+        .gauge-subtitle {
+          font-size: 0.82rem;
+          color: #64748b;
+        }
+        .gauge-main-val {
+          font-size: 1.8rem;
+          font-weight: 900;
+          color: #0f172a;
+          margin-bottom: 0.75rem;
+        }
+        .gauge-visual-wrapper {
+          width: 100%;
+          max-width: 200px;
+          height: auto;
+        }
+        .gauge-svg-element {
+          width: 100%;
+          height: auto;
+        }
+        .gauge-scale-label {
+          font-size: 10px;
+          font-weight: 700;
+          fill: #64748b;
+        }
+        .gauge-bottom-info {
+          margin-top: 0.75rem;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          line-height: 1.3;
+        }
+        .gauge-bottom-val {
+          font-size: 1.1rem;
+          font-weight: 800;
+          color: #0f172a;
+        }
+        .gauge-bottom-label {
+          font-size: 0.8rem;
+          color: #64748b;
+          text-align: center;
+        }
+        .speed-badge {
+          display: inline-block;
+          margin-top: 2px;
+        }
+        .gauge-tooltip-container {
+          position: absolute;
+          top: 14px;
+          right: 14px;
+          z-index: 10;
+        }
+        .tooltip-trigger {
+          font-size: 1.1rem;
+          color: #94a3b8;
+          cursor: pointer;
+        }
+        .gauge-tooltip-text {
+          visibility: hidden;
+          width: 220px;
+          background-color: #1e293b;
+          color: #fff;
+          text-align: left;
+          border-radius: 8px;
+          padding: 8px 10px;
+          position: absolute;
+          z-index: 20;
+          bottom: 125%;
+          right: 0;
+          margin-right: -10px;
+          opacity: 0;
+          transition: opacity 0.2s ease, visibility 0.2s ease;
+          font-size: 0.78rem;
+          font-weight: 500;
+          line-height: 1.35;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .gauge-tooltip-text::after {
+          content: "";
+          position: absolute;
+          top: 100%;
+          right: 14px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: #1e293b transparent transparent transparent;
+        }
+        .gauge-tooltip-container:hover .gauge-tooltip-text {
+          visibility: visible;
+          opacity: 1;
+        }
 
         .trends-opt-header {
           display: flex;
