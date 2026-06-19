@@ -22,7 +22,7 @@ const RUBRIC_DEFAULTS: Record<string, { color: string; icon: string; name: strin
   Zellversorgung: { name: 'Zellversorgung', color: '#ACE189', icon: 'bi-apple', details: 'Nährstoffdichte, Blutzuckervariabilität und Hydratation.', optimalRange: '80-100%', savedYears: 1.1 },
   Immunbalance: { name: 'Immunbalance', color: '#f59e0b', icon: 'bi-yin-yang', details: 'Chronische Entzündungsmarker, Regeneration und Stressresilienz.', optimalRange: '85-100%', savedYears: 0.5 },
   'Soziale Bindungen': { name: 'Soziale Bindungen', color: '#ec4899', icon: 'bi-heart', details: 'Qualität deines Unterstützungsnetzwerks und soziale Interaktionen.', optimalRange: '70-100%', savedYears: 1.5 },
-  Mindset: { name: 'Mentale Resilienz', color: '#06b6d4', icon: 'bi-sun', details: 'Stressbewältigungsstrategien, mentale Flexibilität und Achtsamkeit.', optimalRange: '80-100%', savedYears: 0.7 }
+  Mindset: { name: 'Mentale Resilienz', color: '#a855f7', icon: 'bi-sun', details: 'Stressbewältigungsstrategien, mentale Flexibilität und Achtsamkeit.', optimalRange: '80-100%', savedYears: 0.7 }
 };
 
 const getDarkColor = (color: string) => {
@@ -371,33 +371,6 @@ export default function ErgebnissePage() {
                 <circle cx="150" cy="150" r="50" className="radar-grid" />
                 <circle cx="150" cy="150" r="25" className="radar-grid" />
                 
-                {/* Active Category Wedge Highlight (glowing background wedge) */}
-                {radarAxes.map((s, idx) => {
-                  const isActive = selectedRubric === s.id;
-                  if (!isActive) return null;
-                  
-                  // Math to calculate wedge points
-                  const angleStart = ((idx - 0.5) * 2 * Math.PI) / 6 - Math.PI / 2;
-                  const angleEnd = ((idx + 0.5) * 2 * Math.PI) / 6 - Math.PI / 2;
-                  const r = 100;
-                  const x1 = 150 + r * Math.cos(angleStart);
-                  const y1 = 150 + r * Math.sin(angleStart);
-                  const x2 = 150 + r * Math.cos(angleEnd);
-                  const y2 = 150 + r * Math.sin(angleEnd);
-                  const pathData = `M 150,150 L ${x1},${y1} A 100,100 0 0,1 ${x2},${y2} Z`;
-                  
-                  return (
-                    <path 
-                      key={`wedge-${s.id}`} 
-                      d={pathData} 
-                      fill={s.color} 
-                      opacity="0.15" 
-                      style={{ transition: 'all 0.4s ease' }} 
-                      className="radar-active-wedge"
-                    />
-                  );
-                })}
-
                 {/* Axis lines */}
                 {radarAxes.map((s, idx) => {
                   const angle = (idx * 2 * Math.PI) / 6 - Math.PI / 2;
@@ -405,25 +378,16 @@ export default function ErgebnissePage() {
                   const y = 150 + 100 * Math.sin(angle);
                   const textX = 150 + 120 * Math.cos(angle);
                   const textY = 150 + 120 * Math.sin(angle);
-                  const isActive = selectedRubric === s.id;
                   
                   return (
                     <g key={s.id}>
-                      <line 
-                        x1="150" 
-                        y1="150" 
-                        x2={x} 
-                        y2={y} 
-                        className={`radar-axis ${isActive ? 'active' : ''}`} 
-                        style={isActive ? { stroke: s.color, strokeWidth: '3px' } : {}}
-                      />
+                      <line x1="150" y1="150" x2={x} y2={y} className="radar-axis" />
                       <text 
                         x={textX} 
                         y={textY} 
                         textAnchor="middle" 
                         alignmentBaseline="middle" 
-                        className={`radar-axis-label ${isActive ? 'active' : ''}`}
-                        style={isActive ? { fill: getDarkColor(s.color), fontSize: '13px', fontWeight: 800 } : {}}
+                        className="radar-axis-label"
                       >
                         {`${idx + 1}. ${s.name.split(' ')[0]}`}
                       </text>
@@ -447,7 +411,7 @@ export default function ErgebnissePage() {
                         <circle 
                           cx={pt[0]} 
                           cy={pt[1]} 
-                          r="10" 
+                          r="13.5" 
                           fill={s.color} 
                           className="radar-dot-glow"
                         />
@@ -455,7 +419,7 @@ export default function ErgebnissePage() {
                       <circle 
                         cx={pt[0]} 
                         cy={pt[1]} 
-                        r={isActive ? "6" : "4.5"} 
+                        r={isActive ? "13.5" : "4.5"} 
                         className={`radar-shape-dot ${isActive ? 'active' : ''}`} 
                         style={{ fill: s.color, '--color-dot': s.color } as React.CSSProperties}
                       />
@@ -826,11 +790,11 @@ export default function ErgebnissePage() {
         }
         @keyframes radar-pulse {
           0% {
-            r: 6px;
-            opacity: 0.7;
+            r: 13.5px;
+            opacity: 0.6;
           }
           100% {
-            r: 16px;
+            r: 32px;
             opacity: 0;
           }
         }
