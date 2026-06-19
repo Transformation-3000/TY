@@ -21,12 +21,12 @@ interface RubricHebel {
 }
 
 const RUBRIC_DEFAULTS = {
-  Schlaf: { name: 'Schlaf & Erholung', color: '#4498ca', icon: 'bi-moon-stars', defaultScore: 85 },
-  Kraft: { name: 'Kraft & Ausdauer', color: '#22c55e', icon: 'bi-lightning', defaultScore: 48 },
-  Zellversorgung: { name: 'Zellversorgung', color: '#ACE189', icon: 'bi-apple', defaultScore: 56 },
-  Immunbalance: { name: 'Immunbalance', color: '#f59e0b', icon: 'bi-yin-yang', defaultScore: 52 },
-  'Soziale Bindungen': { name: 'Soziale Bindungen', color: '#ec4899', icon: 'bi-heart', defaultScore: 80 },
-  Mindset: { name: 'Mentale Resilienz', color: '#06b6d4', icon: 'bi-sun', defaultScore: 36 }
+  Schlaf: { name: 'Schlaf & Erholung', color: '#3b82f6', icon: 'bi-moon-stars-fill', defaultScore: 85 },
+  Kraft: { name: 'Kraft & Ausdauer', color: '#10b981', icon: 'bi-lightning-charge-fill', defaultScore: 48 },
+  Zellversorgung: { name: 'Zellversorgung', color: '#f59e0b', icon: 'bi-apple', defaultScore: 56 },
+  Immunbalance: { name: 'Immunbalance', color: '#8b5cf6', icon: 'bi-yin-yang', defaultScore: 52 },
+  'Soziale Bindungen': { name: 'Soziale Bindungen', color: '#ec4899', icon: 'bi-heart-fill', defaultScore: 80 },
+  Mindset: { name: 'Mentale Resilienz', color: '#06b6d4', icon: 'bi-sun-fill', defaultScore: 36 }
 };
 
 export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: string) => void }) {
@@ -108,7 +108,7 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
             desc: 'Deine Aufstehzeiten variieren kaum, was deinen zirkadianen Rhythmus stabilisiert.',
             impact: 'Hoch',
             field: 'Schlafrhythmus',
-            actionLabel: 'Chronotyp-Tagesplaner starten',
+            actionLabel: 'Tagesplaner starten',
             actionTab: 'chronotyp-planer'
           },
           {
@@ -116,7 +116,7 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
             desc: 'Essen weniger als 3 Stunden vor dem Schlaf hemmt die nächtliche Kerntemperaturabsenkung.',
             impact: 'Mittel',
             field: 'Chronotyp',
-            actionLabel: 'Chronotyp-Tagesplaner starten',
+            actionLabel: 'Tagesplaner starten',
             actionTab: 'chronotyp-planer'
           }
         ]
@@ -133,7 +133,7 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
             desc: 'Mehr als 6 Stunden tägliches Sitzen hemmt die Insulinsensitivität. Kurze Aktivpausen einbauen.',
             impact: 'Hoch',
             field: 'Cardio-Training',
-            actionLabel: 'VO2-Max & Cardio-Simulator starten',
+            actionLabel: 'Cardio-Simulator starten',
             actionTab: 'quick-wins'
           },
           {
@@ -141,7 +141,7 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
             desc: 'Baut Muskelgewebe auf und schützt vor altersbedingtem Abbau (Sarkopenie).',
             impact: 'Hoch',
             field: 'Kraftaufbau',
-            actionLabel: 'VO2-Max & Cardio-Simulator starten',
+            actionLabel: 'Cardio-Simulator starten',
             actionTab: 'quick-wins'
           }
         ]
@@ -183,7 +183,7 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
             desc: 'Durch bewusste Essenspausen (Autophagie) können entartete Proteinstrukturen abgebaut werden.',
             impact: 'Mittel',
             field: 'Autophagie',
-            actionLabel: 'Autophagie & Fasten-Timer starten',
+            actionLabel: 'Fasten-Timer starten',
             actionTab: 'quick-wins'
           },
           {
@@ -230,7 +230,7 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
           },
           {
             title: 'Stimmung stabilisieren',
-            desc: 'Fest etablierem mentale Routinen beugen emotionalen Erschöpfungsphasen vor.',
+            desc: 'Fest etablierte mentale Routinen beugen emotionalen Erschöpfungsphasen vor.',
             impact: 'Mittel',
             field: 'Routinen',
             actionLabel: 'Stress-Barometer starten',
@@ -242,229 +242,509 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
   };
 
   const hebelData = getHebelData();
+  const scores = hebelData.map(r => r.score);
+  const averageScore = Math.round(scores.reduce((a, b) => a + b, 0) / scores.length);
+  const highImpactCount = hebelData.reduce((acc, curr) => acc + curr.items.filter(i => i.impact === 'Hoch').length, 0);
 
   return (
     <div className="hebel-page-container">
-      <div className="hebel-header">
-        <h1>Lebensstil-Hebel aus dem Onboarding</h1>
-        <p>Hier siehst du alle Hebel, die wir basierend auf deiner initialen Baseline berechnet haben. Aktiviere gezielte Routinen, um deinen Alterungsprozess zu verlangsamen.</p>
-      </div>
-
-      <div className="hebel-grid">
-        {hebelData.map((rubric, idx) => (
-          <div key={rubric.id} className="rubric-hebel-card" style={{ borderColor: rubric.color + '30' }}>
-            <div className="rubric-hebel-card-header" style={{ borderBottomColor: rubric.color + '15' }}>
-              <div className="header-left" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <h3>{idx + 1}. {rubric.name}</h3>
-                <span className="rubric-icon-right" style={{ color: rubric.color, fontSize: '1.15rem', display: 'inline-flex', alignItems: 'center', marginLeft: '4px' }}>
-                  <i className={`bi ${rubric.icon}`}></i>
-                </span>
-              </div>
-              <div className="header-right">
-                <span className="score-badge" style={{ backgroundColor: rubric.color + '10', color: rubric.color }}>
-                  Initialscore: {rubric.score}%
-                </span>
-              </div>
+      {/* HEADER SECTION WITH STATS CARDS */}
+      <div className="hebel-hero-section">
+        <div className="hebel-hero-left">
+          <h1 className="hebel-title-gradient">Deine Lifestyle-Hebel</h1>
+          <p className="hebel-subtitle">
+            Basierend auf deiner Onboarding-Baseline haben wir deine stärksten Hebel zur Zellverjüngung identifiziert. Setze diese gezielt ein, um dein biologisches Alter positiv zu beeinflussen.
+          </p>
+          <div className="hebel-quick-stats">
+            <div className="quick-stat-pill">
+              <span className="stat-num">{highImpactCount}</span>
+              <span className="stat-lbl">Hebel mit hoher Wirkung</span>
             </div>
-
-            <div className="rubric-hebel-card-body">
-              <div className="hebel-items-list">
-                {rubric.items.map((item, idx) => (
-                  <div key={idx} className={`hebel-item-box border-${item.impact.toLowerCase()}`}>
-                    <div className="item-content-wrap">
-                      <div className="item-title-row">
-                        <h4 className="item-title">
-                          <span className={`dot dot-${item.impact.toLowerCase()}`}></span>
-                          {item.title}
-                        </h4>
-                        <span className={`nba-priority text-${item.impact.toLowerCase()}`}>{item.impact}</span>
-                      </div>
-                      <p className="item-desc">{item.desc}</p>
-                      <div className="item-footer-row">
-                        <button className="activate-hebel-btn" onClick={() => onNavigate(item.actionTab)} style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
-                          {item.actionLabel} <i className="bi bi-chevron-right" style={{ fontSize: '0.75rem', fontWeight: 'bold' }}></i>
-                        </button>
-                        <span className={`nba-pillar pillar-${item.impact.toLowerCase()}`}>{item.field}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
+            <div className="quick-stat-pill font-blue">
+              <span className="stat-num">11</span>
+              <span className="stat-lbl">Identifizierte Routinen</span>
             </div>
           </div>
-        ))}
+        </div>
+
+        {/* RADIAL SCORE WIDGET */}
+        <div className="score-summary-widget">
+          <div className="widget-circle-wrap">
+            <svg className="widget-svg" viewBox="0 0 100 100">
+              <circle cx="50" cy="50" r="42" fill="none" stroke="rgba(255, 255, 255, 0.08)" strokeWidth="6" />
+              <circle 
+                cx="50" 
+                cy="50" 
+                r="42" 
+                fill="none" 
+                stroke="url(#summaryGrad)" 
+                strokeWidth="7" 
+                strokeDasharray="263.8" 
+                strokeDashoffset={263.8 * (1 - averageScore / 100)}
+                strokeLinecap="round"
+                transform="rotate(-90 50 50)"
+              />
+              <defs>
+                <linearGradient id="summaryGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#006EA7" />
+                  <stop offset="50%" stopColor="#3b82f6" />
+                  <stop offset="100%" stopColor="#10b981" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <div className="widget-value-box">
+              <span className="widget-score">{averageScore}%</span>
+              <span className="widget-label">Lifestyle Score</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* DYNAMIC LEVERS GRID */}
+      <div className="hebel-grid">
+        {hebelData.map((rubric, idx) => {
+          const dashArray = 2 * Math.PI * 18;
+          const dashOffset = dashArray * (1 - rubric.score / 100);
+
+          return (
+            <div key={rubric.id} className="rubric-hebel-card" style={{ '--theme-color': rubric.color } as React.CSSProperties}>
+              <div className="rubric-hebel-card-header">
+                <div className="header-left-group">
+                  <div className="header-icon-box" style={{ backgroundColor: rubric.color + '15', color: rubric.color }}>
+                    <i className={`bi ${rubric.icon}`}></i>
+                  </div>
+                  <div>
+                    <span className="header-index">Säule {idx + 1}</span>
+                    <h3>{rubric.name}</h3>
+                  </div>
+                </div>
+
+                <div className="header-right-gauge">
+                  <svg className="mini-gauge-svg" width="50" height="50" viewBox="0 0 50 50">
+                    <circle cx="25" cy="25" r="18" fill="none" stroke="#f1f5f9" strokeWidth="3" />
+                    <circle 
+                      cx="25" 
+                      cy="25" 
+                      r="18" 
+                      fill="none" 
+                      stroke={rubric.color} 
+                      strokeWidth="3.5" 
+                      strokeDasharray={dashArray}
+                      strokeDashoffset={dashOffset}
+                      strokeLinecap="round"
+                      transform="rotate(-90 25 25)"
+                    />
+                  </svg>
+                  <span className="gauge-text" style={{ color: rubric.color }}>{rubric.score}%</span>
+                </div>
+              </div>
+
+              <div className="rubric-hebel-card-body">
+                <div className="hebel-items-list">
+                  {rubric.items.map((item, iIdx) => {
+                    const impactClass = item.impact.toLowerCase();
+                    const iconPill = item.impact === 'Hoch' ? '🔥' : item.impact === 'Mittel' ? '⚡' : '✨';
+                    
+                    return (
+                      <div key={iIdx} className={`hebel-item-box priority-${impactClass}`}>
+                        <div className="item-content-wrap">
+                          <div className="item-title-row">
+                            <h4 className="item-title">
+                              <span className="priority-emoji">{iconPill}</span>
+                              {item.title}
+                            </h4>
+                            <span className={`nba-priority-pill priority-bg-${impactClass}`}>
+                              {item.impact}
+                            </span>
+                          </div>
+                          
+                          <p className="item-desc">{item.desc}</p>
+                          
+                          <div className="item-footer-row">
+                            <button className="activate-hebel-btn-styled" onClick={() => onNavigate(item.actionTab)}>
+                              <span>{item.actionLabel}</span>
+                              <i className="bi bi-arrow-right-short icon-slide"></i>
+                            </button>
+                            <span className="nba-pillar-tag">{item.field}</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
 
       <style jsx global>{`
+        /* TY - PREMIUM STYLING LIFESTYLE HEBEL */
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
         .hebel-page-container {
-          padding: 2rem;
-          max-width: 1200px;
+          padding: 2.5rem 2rem;
+          max-width: 1250px;
           margin: 0 auto;
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'Plus Jakarta Sans', sans-serif;
+          background: #fafbfc;
+          animation: pageLoadFade 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .hebel-header {
-          margin-bottom: 2rem;
+
+        @keyframes pageLoadFade {
+          from { opacity: 0; transform: translateY(15px); }
+          to { opacity: 1; transform: translateY(0); }
         }
-        .hebel-header h1 {
-          font-size: 2rem;
-          font-weight: 800;
-          color: #0f172a;
-          margin-bottom: 0.5rem;
+
+        /* HERO STATS SECTION */
+        .hebel-hero-section {
+          background: linear-gradient(135deg, #0b1528 0%, #0e1e38 100%);
+          border-radius: 28px;
+          padding: 2.5rem 3rem;
+          margin-bottom: 3rem;
+          color: #ffffff;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 3rem;
+          box-shadow: 0 20px 40px rgba(11, 21, 40, 0.08), 
+                      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+          position: relative;
+          overflow: hidden;
+        }
+
+        .hebel-hero-section::before {
+          content: '';
+          position: absolute;
+          width: 350px;
+          height: 350px;
+          border-radius: 50%;
+          background: radial-gradient(circle, rgba(0, 110, 167, 0.15) 0%, transparent 70%);
+          top: -100px;
+          right: -50px;
+          pointer-events: none;
+        }
+
+        .hebel-hero-left {
+          flex: 1;
+          z-index: 1;
+        }
+
+        .hebel-title-gradient {
+          font-family: 'Outfit', sans-serif;
+          font-size: 2.5rem;
+          font-weight: 900;
+          letter-spacing: -0.03em;
+          background: linear-gradient(135deg, #ffffff 30%, #a5f3fc 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          margin: 0 0 0.75rem 0;
+        }
+
+        .hebel-subtitle {
+          font-size: 1.08rem;
+          line-height: 1.6;
+          color: #94a3b8;
+          max-width: 680px;
+          margin: 0 0 1.75rem 0;
+        }
+
+        .hebel-quick-stats {
+          display: flex;
+          gap: 1rem;
+          flex-wrap: wrap;
+        }
+
+        .quick-stat-pill {
+          background: rgba(255, 255, 255, 0.06);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          border-radius: 100px;
+          padding: 0.6rem 1.2rem;
+          display: flex;
+          align-items: center;
+          gap: 10px;
+        }
+
+        .quick-stat-pill.font-blue {
+          border-color: rgba(59, 130, 246, 0.25);
+          background: rgba(59, 130, 246, 0.08);
+        }
+
+        .quick-stat-pill .stat-num {
+          font-family: 'Outfit', sans-serif;
+          font-size: 1.25rem;
+          font-weight: 850;
+          color: #22c55e;
+          line-height: 1;
+        }
+
+        .quick-stat-pill.font-blue .stat-num {
+          color: #67e8f9;
+        }
+
+        .quick-stat-pill .stat-lbl {
+          font-size: 0.85rem;
+          font-weight: 600;
+          color: #cbd5e1;
+        }
+
+        /* SCORE SUMMARY WIDGET */
+        .score-summary-widget {
+          flex-shrink: 0;
+          z-index: 1;
+        }
+
+        .widget-circle-wrap {
+          position: relative;
+          width: 160px;
+          height: 160px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .widget-svg {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          top: 0;
+          left: 0;
+        }
+
+        .widget-value-box {
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          margin-top: 3px;
+        }
+
+        .widget-score {
+          font-family: 'Outfit', sans-serif;
+          font-size: 2.6rem;
+          font-weight: 900;
+          color: #ffffff;
+          line-height: 1;
           letter-spacing: -0.02em;
         }
-        .hebel-header p {
-          color: #64748b;
-          font-size: 1.2rem;
-          line-height: 1.5;
-          max-width: 800px;
+
+        .widget-label {
+          font-size: 0.72rem;
+          font-weight: 800;
+          color: #94a3b8;
+          text-transform: uppercase;
+          letter-spacing: 0.08em;
+          margin-top: 4px;
         }
-        
+
+        /* HEBEL GRID LAYOUT */
         .hebel-grid {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 2rem;
-        }
-        @media (max-width: 992px) {
-          .hebel-grid {
-            grid-template-columns: 1fr;
-          }
+          gap: 2.25rem;
         }
 
+        /* HEBEL CARDS */
         .rubric-hebel-card {
           background: #ffffff;
-          border: 1.5px solid #e2e8f0;
-          border-radius: 20px;
-          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+          border: 1px solid #e2e8f0;
+          border-radius: 28px;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.015);
           overflow: hidden;
-          transition: transform 0.2s, box-shadow 0.2s;
+          transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+          position: relative;
+          display: flex;
+          flex-direction: column;
         }
+
+        .rubric-hebel-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background-color: var(--theme-color);
+          opacity: 0.85;
+        }
+
         .rubric-hebel-card:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 30px rgba(0, 110, 167, 0.05);
+          transform: translateY(-5px);
+          box-shadow: 0 20px 35px -10px rgba(0, 110, 167, 0.06),
+                      0 0 0 1px var(--theme-color);
+          border-color: transparent;
         }
+
         .rubric-hebel-card-header {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          padding: 1.25rem 1.5rem;
-          border-bottom: 1px solid #e2e8f0;
+          padding: 1.5rem 1.75rem 1.25rem;
+          border-bottom: 1px solid #f1f5f9;
           background: #fafcfd;
         }
-        .rubric-hebel-card-header .header-left {
+
+        .header-left-group {
           display: flex;
           align-items: center;
-          gap: 0.75rem;
+          gap: 1rem;
         }
-        .rubric-hebel-card-header .header-left h3 {
-          font-size: 1.1rem;
+
+        .header-icon-box {
+          width: 48px;
+          height: 48px;
+          border-radius: 14px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 1.35rem;
+          box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.02);
+          flex-shrink: 0;
+        }
+
+        .header-index {
+          font-size: 0.72rem;
+          font-weight: 800;
+          color: #94a3b8;
+          text-transform: uppercase;
+          letter-spacing: 0.06em;
+          display: block;
+          margin-bottom: 2px;
+        }
+
+        .header-left-group h3 {
+          font-family: 'Outfit', sans-serif;
+          font-size: 1.15rem;
           font-weight: 800;
           color: #0f172a;
           margin: 0;
+          letter-spacing: -0.01em;
         }
-        .score-badge {
-          font-size: 1.05rem;
-          font-weight: 700;
-          padding: 0.25rem 0.6rem;
-          border-radius: 6px;
+
+        .header-right-gauge {
+          position: relative;
+          width: 50px;
+          height: 50px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
-        
+
+        .mini-gauge-svg {
+          position: absolute;
+          top: 0;
+          left: 0;
+        }
+
+        .gauge-text {
+          font-family: 'Outfit', sans-serif;
+          font-size: 0.85rem;
+          font-weight: 850;
+          z-index: 1;
+          letter-spacing: -0.02em;
+        }
+
         .rubric-hebel-card-body {
-          padding: 1.5rem;
+          padding: 1.75rem;
+          flex: 1;
+          display: flex;
+          flex-direction: column;
         }
+
         .hebel-items-list {
           display: flex;
           flex-direction: column;
-          gap: 1.25rem;
+          gap: 1.5rem;
+          flex: 1;
         }
-        
+
+        /* HEBEL INDIVIDUAL LEVER ITEM BOX */
         .hebel-item-box {
-          display: flex;
-          flex-direction: column;
-          padding: 1.25rem 1.4rem;
-          border-radius: 16px;
-          background: #ffffff;
-          border: 1.5px solid #e2e8f0;
-          box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+          background: linear-gradient(135deg, #ffffff 0%, #fcfdfe 100%);
+          border: 1px solid #e2e8f0;
+          border-radius: 20px;
+          padding: 1.5rem;
           position: relative;
-          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+          box-shadow: 0 4px 12px rgba(8, 15, 30, 0.01);
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+          display: flex;
         }
+
+        .hebel-item-box::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 20px;
+          bottom: 20px;
+          width: 4px;
+          border-radius: 0 4px 4px 0;
+          transition: all 0.3s ease;
+        }
+
+        .hebel-item-box.priority-hoch::before { background-color: #10b981; }
+        .hebel-item-box.priority-mittel::before { background-color: #f59e0b; }
+        .hebel-item-box.priority-niedrig::before { background-color: #3b82f6; }
+
         .hebel-item-box:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+          transform: translateX(4px);
+          box-shadow: 0 10px 24px -5px rgba(8, 15, 30, 0.05);
+          border-color: #cbd5e1;
         }
-        
-        .hebel-item-box.border-hoch {
-          border-left: 5px solid #22c55e;
-        }
-        .hebel-item-box.border-mittel {
-          border-left: 5px solid #f59e0b;
-        }
-        .hebel-item-box.border-niedrig {
-          border-left: 5px solid #3b82f6;
-        }
+
+        .hebel-item-box.priority-hoch:hover { border-color: rgba(16, 185, 129, 0.3); }
+        .hebel-item-box.priority-mittel:hover { border-color: rgba(245, 158, 11, 0.3); }
+        .hebel-item-box.priority-niedrig:hover { border-color: rgba(59, 130, 246, 0.3); }
 
         .item-content-wrap {
           display: flex;
           flex-direction: column;
-          gap: 0.5rem;
           width: 100%;
+          gap: 0.6rem;
         }
 
         .item-title-row {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          gap: 0.5rem;
+          gap: 1rem;
         }
 
         .item-title {
-          font-size: 1rem;
-          font-weight: 700;
+          font-size: 1.02rem;
+          font-weight: 800;
           margin: 0;
           color: #1e293b;
-          display: inline-flex;
+          display: flex;
           align-items: center;
           gap: 8px;
+          letter-spacing: -0.015em;
         }
 
-        .dot {
-          display: inline-block;
-          width: 7px;
-          height: 7px;
-          border-radius: 50%;
-          flex-shrink: 0;
-        }
-        .dot-hoch {
-          background-color: #22c55e;
-        }
-        .dot-mittel {
-          background-color: #f59e0b;
-        }
-        .dot-niedrig {
-          background-color: #3b82f6;
+        .priority-emoji {
+          font-size: 1.1rem;
+          line-height: 1;
         }
 
-        .nba-priority {
-          font-size: 0.8rem;
-          font-weight: 700;
+        .nba-priority-pill {
+          font-size: 0.65rem;
+          font-weight: 850;
           text-transform: uppercase;
-          letter-spacing: 0.05em;
+          letter-spacing: 0.06em;
+          padding: 0.25rem 0.6rem;
+          border-radius: 100px;
         }
-        .text-hoch {
-          color: #22c55e;
-        }
-        .text-mittel {
-          color: #f59e0b;
-        }
-        .text-niedrig {
-          color: #3b82f6;
-        }
+
+        .priority-bg-hoch { background: rgba(16, 185, 129, 0.08); color: #065f46; }
+        .priority-bg-mittel { background: rgba(245, 158, 11, 0.08); color: #92400e; }
+        .priority-bg-niedrig { background: rgba(59, 130, 246, 0.08); color: #1e40af; }
 
         .item-desc {
-          font-size: 0.88rem;
-          line-height: 1.45;
+          font-size: 0.9rem;
+          line-height: 1.5;
           color: #475569;
           margin: 0;
+          font-weight: 500;
         }
 
         .item-footer-row {
@@ -475,117 +755,124 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
           gap: 1rem;
         }
 
-        .nba-pillar {
-          font-size: 0.75rem;
-          font-weight: 700;
-          padding: 3px 10px;
-          border-radius: 9999px;
+        .nba-pillar-tag {
+          font-size: 0.72rem;
+          font-weight: 750;
+          padding: 4px 10px;
+          border-radius: 100px;
           white-space: nowrap;
-        }
-        .pillar-hoch {
-          background: rgba(34, 197, 94, 0.08);
-          color: #166534;
-        }
-        .pillar-mittel {
-          background: rgba(245, 158, 11, 0.08);
-          color: #92400e;
-        }
-        .pillar-niedrig {
-          background: rgba(59, 130, 246, 0.08);
-          color: #1e40af;
+          background: #f1f5f9;
+          color: #475569;
+          border: 1px solid #e2e8f0;
         }
 
-        .activate-hebel-btn {
-          background: none;
-          border: none;
-          padding: 0;
+        .activate-hebel-btn-styled {
+          background: rgba(0, 110, 167, 0.05);
+          border: 1px solid rgba(0, 110, 167, 0.08);
+          padding: 0.5rem 1.1rem;
           color: #006ea7;
-          font-size: 0.85rem;
+          font-size: 0.82rem;
           font-weight: 800;
           cursor: pointer;
-          text-align: left;
-          transition: color 0.2s;
-          text-decoration: none;
-        }
-        .activate-hebel-btn:hover {
-          color: #004d77;
-          text-decoration: underline;
+          border-radius: 100px;
+          display: flex;
+          align-items: center;
+          gap: 4px;
+          transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Mobile Optimization / App View responsiveness */
-        @media (max-width: 768px) {
-          .hebel-page-container {
-            padding: 0.75rem 1rem;
-          }
-          .hebel-header {
-            margin-bottom: 1.25rem;
-            padding: 0 0.5rem;
-          }
-          .hebel-header h1 {
-            font-size: 1.5rem;
-          }
-          .hebel-header p {
-            font-size: 0.95rem;
-          }
+        .icon-slide {
+          font-size: 1.15rem;
+          transition: transform 0.25s ease;
+          display: inline-block;
+          line-height: 1;
+        }
+
+        .activate-hebel-btn-styled:hover {
+          background: #006ea7;
+          color: #ffffff;
+          border-color: #006ea7;
+          box-shadow: 0 4px 12px rgba(0, 110, 167, 0.25);
+        }
+
+        .activate-hebel-btn-styled:hover .icon-slide {
+          transform: translateX(3px);
+        }
+
+        /* RESPONSIBER BREAKPOINTS */
+        @media (max-width: 992px) {
           .hebel-grid {
-            gap: 1rem;
+            grid-template-columns: 1fr;
+            gap: 1.75rem;
           }
-          .rubric-hebel-card {
-            border-radius: 14px;
+          .hebel-hero-section {
+            flex-direction: column;
+            gap: 2rem;
+            padding: 2rem;
+            text-align: center;
           }
-          .rubric-hebel-card-header {
-            padding: 1rem;
-            flex-direction: row;
-            justify-content: space-between;
+          .hebel-hero-left {
+            display: flex;
+            flex-direction: column;
             align-items: center;
           }
-          .rubric-hebel-card-header .header-left h3 {
+          .hebel-quick-stats {
+            justify-content: center;
+          }
+          .hebel-subtitle {
+            text-align: center;
+          }
+        }
+
+        @media (max-width: 768px) {
+          .hebel-page-container {
+            padding: 1rem 0.75rem;
+          }
+          .hebel-title-gradient {
+            font-size: 1.85rem;
+          }
+          .hebel-subtitle {
             font-size: 0.95rem;
           }
-          .score-badge {
-            font-size: 0.85rem;
-            padding: 0.2rem 0.5rem;
+          .rubric-hebel-card-header {
+            padding: 1.1rem 1.25rem;
+          }
+          .header-left-group h3 {
+            font-size: 1.02rem;
           }
           .rubric-hebel-card-body {
-            padding: 0.75rem;
+            padding: 1.1rem;
           }
           .hebel-items-list {
-            gap: 0.75rem;
+            gap: 1rem;
           }
           .hebel-item-box {
-            padding: 1rem;
-            border-radius: 12px;
+            padding: 1.1rem;
+            border-radius: 16px;
           }
           .item-title {
-            font-size: 0.9rem;
-          }
-          .nba-priority {
-            font-size: 0.7rem;
+            font-size: 0.92rem;
           }
           .item-desc {
-            font-size: 0.82rem;
-            line-height: 1.4;
+            font-size: 0.85rem;
+            line-height: 1.45;
           }
           .item-footer-row {
             flex-direction: column;
             align-items: stretch;
-            gap: 0.5rem;
+            gap: 0.6rem;
             margin-top: 0.5rem;
           }
-          .activate-hebel-btn {
-            font-size: 0.8rem;
-            padding: 0.4rem 0.75rem;
-            background-color: #f1f5f9;
-            border-radius: 8px;
-            text-align: center;
-            display: flex;
+          .activate-hebel-btn-styled {
             justify-content: space-between;
-            align-items: center;
+            font-size: 0.8rem;
             width: 100%;
+            padding: 0.6rem 1.1rem;
           }
-          .nba-pillar {
+          .nba-pillar-tag {
             align-self: flex-start;
             font-size: 0.7rem;
+            padding: 3px 8px;
           }
         }
       `}</style>
