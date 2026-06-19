@@ -1132,9 +1132,6 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           opacity: 0;
           transition: opacity 0.3s ease;
         }
-        .avatar-outer-circle:hover .avatar-hover-overlay {
-          opacity: 1;
-        }
         .avatar-camera-badge {
           position: absolute;
           bottom: 15px;
@@ -1151,7 +1148,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
           z-index: 5;
         }
-        .avatar-outer-circle:hover .avatar-camera-badge {
+        .avatar-camera-badge:hover {
           background: #006EA7;
           color: white;
           transform: scale(1.1);
