@@ -71,7 +71,7 @@ const reels: Reel[] = [
     title: 'Intermittiertes Fasten & Autophagie: Was sagt die Forschung?',
     teaser: 'Neue Metaanalyse mit 47 Studien zeigt: 16:8-Fasten reduziert Entzündungsmarker um durchschnittlich 28%.',
     fullText: 'Autophagie – der zelluläre Reinigungsprozess – wird durch Fastenperioden massiv aktiviert. Bei 16:8 beginnt die Autophagie nach 12–14 Stunden ohne Nahrung. Wichtig: Kaffee (schwarz) und Wasser brechen das Fasten nicht. Voraussichtlich größter Benefit bei Kombination mit Krafttraining am Ende des Fastenfensters.',
-    author: 'Nature Aging Journal', role: 'Peer-reviewed, 2022', readTime: '4 Min', image: '/images/insights-fasten.jpeg', tag: 'ZELLEN', tagColor: '#f59e0b', videoSrc: '/videos/reels/reel2.mp4', saved: false,
+    author: 'Nature Aging Journal', role: 'Peer-reviewed, 2022', readTime: '4 Min', image: '/images/fasting-alt3.png', tag: 'ZELLEN', tagColor: '#f59e0b', saved: false,
   },
   {
     id: 'r3', category: 'experten',

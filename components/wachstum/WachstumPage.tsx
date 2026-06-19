@@ -837,33 +837,47 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         }
         .sim-card-wide-content {
           padding: 1.5rem;
-          text-align: left;
-        }
-        .sim-card-grid-layout {
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-start;
-          gap: 2rem;
-        }
-        .sim-card-left-col {
-          flex: 1;
-        }
-        .sim-card-right-col {
-          flex-shrink: 0;
+          text-align: center;
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: flex-start;
+          justify-content: space-between;
+          flex: 1;
+        }
+        .sim-card-grid-layout {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: space-between;
+          gap: 1.25rem;
+          width: 100%;
+          flex: 1;
+        }
+        .sim-card-left-col {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          flex: 1;
+        }
+        .sim-card-right-col {
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 12px;
+          margin-top: auto;
         }
         .bac-circle-container-mini {
           position: relative;
-          width: 187px;
-          height: 187px;
+          width: 130px;
+          height: 130px;
           display: flex;
           align-items: center;
           justify-content: center;
-          margin-top: -0.25rem;
-          margin-right: -0.25rem;
+          margin: 0.5rem auto;
         }
         .bac-circle-svg-mini {
           position: absolute;
@@ -882,14 +896,14 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           text-align: center;
         }
         .bac-circle-val-mini {
-          font-size: 3.1rem;
+          font-size: 2.1rem;
           font-weight: 900;
           color: #1c2b3e;
           line-height: 1;
           letter-spacing: -0.02em;
         }
         .bac-circle-lab-mini {
-          font-size: 1.05rem;
+          font-size: 0.8rem;
           font-weight: 700;
           color: #8fa0b5;
           margin-top: 3px;
@@ -899,8 +913,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           color: #ffffff;
           border: none;
           border-radius: 100px;
-          padding: 0.95rem 2.25rem;
-          font-size: 0.95rem;
+          padding: 0.75rem 1.75rem;
+          font-size: 0.9rem;
           font-weight: 800;
           cursor: pointer;
           transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -911,7 +925,9 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           justify-content: center;
           text-align: center;
           line-height: 1.2;
-          margin-top: 10px;
+          width: 100%;
+          max-width: 180px;
+          margin-top: 5px;
           position: relative;
           z-index: 5;
         }
@@ -1050,8 +1066,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         
         .wachstum-layout {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 3rem;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 2rem;
         }
 
         .navigator-box {
@@ -1073,6 +1089,13 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
         }
         .quick-win-card:last-child {
           border-bottom: none;
+        }
+
+        @media (max-width: 1200px) {
+          .wachstum-layout {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+          }
         }
 
         @media (max-width: 991px) {
