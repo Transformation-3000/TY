@@ -371,6 +371,33 @@ export default function ErgebnissePage() {
                 <circle cx="150" cy="150" r="50" className="radar-grid" />
                 <circle cx="150" cy="150" r="25" className="radar-grid" />
                 
+                {/* Active Category Wedge Highlight (glowing background wedge) */}
+                {radarAxes.map((s, idx) => {
+                  const isActive = selectedRubric === s.id;
+                  if (!isActive) return null;
+                  
+                  // Math to calculate wedge points
+                  const angleStart = ((idx - 0.5) * 2 * Math.PI) / 6 - Math.PI / 2;
+                  const angleEnd = ((idx + 0.5) * 2 * Math.PI) / 6 - Math.PI / 2;
+                  const r = 100;
+                  const x1 = 150 + r * Math.cos(angleStart);
+                  const y1 = 150 + r * Math.sin(angleStart);
+                  const x2 = 150 + r * Math.cos(angleEnd);
+                  const y2 = 150 + r * Math.sin(angleEnd);
+                  const pathData = `M 150,150 L ${x1},${y1} A 100,100 0 0,1 ${x2},${y2} Z`;
+                  
+                  return (
+                    <path 
+                      key={`wedge-${s.id}`} 
+                      d={pathData} 
+                      fill={s.color} 
+                      opacity="0.15" 
+                      style={{ transition: 'all 0.4s ease' }} 
+                      className="radar-active-wedge"
+                    />
+                  );
+                })}
+
                 {/* Axis lines */}
                 {radarAxes.map((s, idx) => {
                   const angle = (idx * 2 * Math.PI) / 6 - Math.PI / 2;
@@ -382,13 +409,21 @@ export default function ErgebnissePage() {
                   
                   return (
                     <g key={s.id}>
-                      <line x1="150" y1="150" x2={x} y2={y} className={`radar-axis ${isActive ? 'active' : ''}`} />
+                      <line 
+                        x1="150" 
+                        y1="150" 
+                        x2={x} 
+                        y2={y} 
+                        className={`radar-axis ${isActive ? 'active' : ''}`} 
+                        style={isActive ? { stroke: s.color, strokeWidth: '3px' } : {}}
+                      />
                       <text 
                         x={textX} 
                         y={textY} 
                         textAnchor="middle" 
                         alignmentBaseline="middle" 
                         className={`radar-axis-label ${isActive ? 'active' : ''}`}
+                        style={isActive ? { fill: getDarkColor(s.color), fontSize: '13px', fontWeight: 800 } : {}}
                       >
                         {`${idx + 1}. ${s.name.split(' ')[0]}`}
                       </text>
