@@ -800,7 +800,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
               </div>
 
               <h3 className="bac-main-text" style={{ marginTop: '1.25rem', marginBottom: '1.25rem' }}>
-                Du alterst aktuell <strong>15,5% langsamer</strong> als der Durchschnitt.
+                Du alterst aktuell <strong>18,0% langsamer</strong> als der Durchschnitt.
               </h3>
               
               <div className="bac-footer-info">
@@ -854,17 +854,34 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                     <span className="gauge-subtitle">Wie schnell alterst du?</span>
                   </div>
                   <div className="gauge-main-val" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
-                    <div>{speedVal.toFixed(2).replace('.', ',')} <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b' }}>Bio-Jahre / Jahr</span></div>
-                    <span className="speed-badge" style={{ fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#e8f7ee', color: '#15803d' }}>
+                    <div>{speedVal.toFixed(2).replace('.', ',')} <span style={{ fontSize: '1.05rem', fontWeight: 600, color: '#64748b' }}>Bio-Jahre / Jahr</span></div>
+                    <span className="speed-badge" style={{ fontSize: '0.95rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#e8f7ee', color: '#15803d' }}>
                       Verlangsamte Alterung (Ziel: &lt; 1,0)
                     </span>
                   </div>
                   <div className="gauge-visual-wrapper">
                     <svg viewBox="0 0 200 120" className="gauge-svg-element">
-                      <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#e2e8f0" strokeWidth="12" strokeLinecap="round" />
-                      <path d={`M20,100 A80,80 0 0,1 ${xSpeed},${ySpeed}`} fill="none" stroke="#7FD049" strokeWidth="12" strokeLinecap="round" />
+                      <defs>
+                        <filter id="speedGlowDev" x="-20%" y="-20%" width="140%" height="140%">
+                          <feDropShadow dx="0" dy="3" stdDeviation="3" floodColor="#22c55e" floodOpacity="0.4" />
+                        </filter>
+                        <linearGradient id="speedGradDev" x1="0%" y1="0%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="#4498ca" />
+                          <stop offset="100%" stopColor="#22c55e" />
+                        </linearGradient>
+                      </defs>
+                      {/* Background track */}
+                      <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#f1f5f9" strokeWidth="12" strokeLinecap="round" />
+                      {/* Ticks */}
+                      <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="1,6" style={{ opacity: 0.7 }} />
+                      <path d="M26,100 A74,74 0 0,1 174,100" fill="none" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="3,3" />
+                      {/* Active colored arc */}
+                      <path d={`M20,100 A80,80 0 0,1 ${xSpeed},${ySpeed}`} fill="none" stroke="url(#speedGradDev)" strokeWidth="12" strokeLinecap="round" filter="url(#speedGlowDev)" />
+                      {/* Needle */}
                       <line x1="100" y1="100" x2={xNeedleSpeed} y2={yNeedleSpeed} stroke="#0f172a" strokeWidth="3.5" strokeLinecap="round" />
-                      <circle cx="100" cy="100" r="6" fill="#0f172a" />
+                      <circle cx="100" cy="100" r="8" fill="#1e293b" />
+                      <circle cx="100" cy="100" r="3" fill="#ffffff" />
+                      {/* Scale labels */}
                       <text x="20" y="118" className="gauge-scale-label">0,0</text>
                       <text x="180" y="118" className="gauge-scale-label" textAnchor="end">2,0</text>
                     </svg>
@@ -888,26 +905,39 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                     <span className="gauge-subtitle">Wie ist dein inneres biologisches Alter?</span>
                   </div>
                   <div className="gauge-main-val" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
-                    <div>{bioAge.toFixed(1).replace('.', ',')} <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b' }}>Jahre</span></div>
+                    <div>{bioAge.toFixed(1).replace('.', ',')} <span style={{ fontSize: '1.05rem', fontWeight: 600, color: '#64748b' }}>Jahre</span></div>
                     {bioAge <= calendarAge ? (
-                      <span className="speed-badge" style={{ fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#e8f7ee', color: '#15803d' }}>
+                      <span className="speed-badge" style={{ fontSize: '0.95rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#e8f7ee', color: '#15803d' }}>
                         Biologisch verjüngt um -{diffYears.toFixed(1).replace('.', ',')} Jahre
                       </span>
                     ) : (
-                      <span className="speed-badge" style={{ fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#fef2f2', color: '#b91c1c' }}>
+                      <span className="speed-badge" style={{ fontSize: '0.95rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#fef2f2', color: '#b91c1c' }}>
                         Biologisch gealtert um +{diffYears.toFixed(1).replace('.', ',')} Jahre
                       </span>
                     )}
                   </div>
                   <div className="gauge-visual-wrapper">
                     <svg viewBox="0 0 200 120" className="gauge-svg-element">
-                      <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#e2e8f0" strokeWidth="12" strokeLinecap="round" />
+                      <defs>
+                        <filter id="bioGlowDev" x="-20%" y="-20%" width="140%" height="140%">
+                          <feDropShadow dx="0" dy="3" stdDeviation="3" floodColor={arcColor} floodOpacity="0.4" />
+                        </filter>
+                      </defs>
+                      {/* Background track */}
+                      <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#f1f5f9" strokeWidth="12" strokeLinecap="round" />
+                      {/* Ticks */}
+                      <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="1,6" style={{ opacity: 0.7 }} />
+                      <path d="M26,100 A74,74 0 0,1 174,100" fill="none" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="3,3" />
+                      {/* Active colored arc */}
                       {bioAge !== calendarAge && (
-                        <path d={arcPath} fill="none" stroke={arcColor} strokeWidth="12" />
+                        <path d={arcPath} fill="none" stroke={arcColor} strokeWidth="12" strokeLinecap="round" filter="url(#bioGlowDev)" />
                       )}
                       <line x1="100" y1="100" x2={xCal} y2={yCal} stroke="#64748b" strokeWidth="1.5" strokeDasharray="3,3" />
+                      {/* Needle */}
                       <line x1="100" y1="100" x2={xNeedleBio} y2={yNeedleBio} stroke="#0f172a" strokeWidth="3.5" strokeLinecap="round" />
-                      <circle cx="100" cy="100" r="6" fill="#0f172a" />
+                      <circle cx="100" cy="100" r="8" fill="#1e293b" />
+                      <circle cx="100" cy="100" r="3" fill="#ffffff" />
+                      {/* Scale labels */}
                       <text x="20" y="118" className="gauge-scale-label">30</text>
                       <text x="180" y="118" className="gauge-scale-label" textAnchor="end">60</text>
                     </svg>

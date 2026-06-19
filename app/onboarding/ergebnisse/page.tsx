@@ -281,20 +281,33 @@ export default function ErgebnissePage() {
               <span className="gauge-subtitle">Wie schnell alterst du?</span>
             </div>
             <div className="gauge-main-val" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
-              <div>{speedVal.toFixed(2).replace('.', ',')} <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b' }}>Bio-Jahre / Jahr</span></div>
-              <span className="speed-badge" style={{ fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#e8f7ee', color: '#15803d' }}>
+              <div>{speedVal.toFixed(2).replace('.', ',')} <span style={{ fontSize: '1.05rem', fontWeight: 600, color: '#64748b' }}>Bio-Jahre / Jahr</span></div>
+              <span className="speed-badge" style={{ fontSize: '0.95rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#e8f7ee', color: '#15803d' }}>
                 Verlangsamte Alterung (Ziel: &lt; 1,0)
               </span>
             </div>
             <div className="gauge-visual-wrapper">
               <svg viewBox="0 0 200 120" className="gauge-svg-element">
-                {/* Background arc */}
-                <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#e2e8f0" strokeWidth="12" strokeLinecap="round" />
-                {/* Active colored arc (green) */}
-                <path d={`M20,100 A80,80 0 0,1 ${xSpeed},${ySpeed}`} fill="none" stroke="#7FD049" strokeWidth="12" strokeLinecap="round" />
+                <defs>
+                  <filter id="speedGlowRes" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="3" stdDeviation="3" floodColor="#22c55e" floodOpacity="0.4" />
+                  </filter>
+                  <linearGradient id="speedGradRes" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#4498ca" />
+                    <stop offset="100%" stopColor="#22c55e" />
+                  </linearGradient>
+                </defs>
+                {/* Background track */}
+                <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#f1f5f9" strokeWidth="12" strokeLinecap="round" />
+                {/* Ticks */}
+                <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="1,6" style={{ opacity: 0.7 }} />
+                <path d="M26,100 A74,74 0 0,1 174,100" fill="none" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="3,3" />
+                {/* Active colored arc */}
+                <path d={`M20,100 A80,80 0 0,1 ${xSpeed},${ySpeed}`} fill="none" stroke="url(#speedGradRes)" strokeWidth="12" strokeLinecap="round" filter="url(#speedGlowRes)" />
                 {/* Needle */}
                 <line x1="100" y1="100" x2={xNeedleSpeed} y2={yNeedleSpeed} stroke="#0f172a" strokeWidth="3.5" strokeLinecap="round" />
-                <circle cx="100" cy="100" r="6" fill="#0f172a" />
+                <circle cx="100" cy="100" r="8" fill="#1e293b" />
+                <circle cx="100" cy="100" r="3" fill="#ffffff" />
                 {/* Scale labels */}
                 <text x="20" y="118" className="gauge-scale-label">0,0</text>
                 <text x="180" y="118" className="gauge-scale-label" textAnchor="end">2,0</text>
@@ -319,30 +332,38 @@ export default function ErgebnissePage() {
               <span className="gauge-subtitle">Wie ist dein inneres biologisches Alter?</span>
             </div>
             <div className="gauge-main-val" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
-              <div>{bioAge.toFixed(1).replace('.', ',')} <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b' }}>Jahre</span></div>
+              <div>{bioAge.toFixed(1).replace('.', ',')} <span style={{ fontSize: '1.05rem', fontWeight: 600, color: '#64748b' }}>Jahre</span></div>
               {bioAge <= calendarAge ? (
-                <span className="speed-badge" style={{ fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#e8f7ee', color: '#15803d' }}>
+                <span className="speed-badge" style={{ fontSize: '0.95rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#e8f7ee', color: '#15803d' }}>
                   Biologisch verjüngt um -{totalSavedYears.toFixed(1).replace('.', ',')} Jahre
                 </span>
               ) : (
-                <span className="speed-badge" style={{ fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#fef2f2', color: '#b91c1c' }}>
+                <span className="speed-badge" style={{ fontSize: '0.95rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#fef2f2', color: '#b91c1c' }}>
                   Biologisch gealtert um +{totalSavedYears.toFixed(1).replace('.', ',')} Jahre
                 </span>
               )}
             </div>
             <div className="gauge-visual-wrapper">
               <svg viewBox="0 0 200 120" className="gauge-svg-element">
-                {/* Background arc */}
-                <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#e2e8f0" strokeWidth="12" strokeLinecap="round" />
-                {/* Active colored arc (green/red) */}
+                <defs>
+                  <filter id="bioGlowRes" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="3" stdDeviation="3" floodColor={arcColor} floodOpacity="0.4" />
+                  </filter>
+                </defs>
+                {/* Background track */}
+                <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#f1f5f9" strokeWidth="12" strokeLinecap="round" />
+                {/* Ticks */}
+                <path d="M20,100 A80,80 0 0,1 180,100" fill="none" stroke="#cbd5e1" strokeWidth="1.5" strokeDasharray="1,6" style={{ opacity: 0.7 }} />
+                <path d="M26,100 A74,74 0 0,1 174,100" fill="none" stroke="#e2e8f0" strokeWidth="1" strokeDasharray="3,3" />
+                {/* Active colored arc */}
                 {bioAge !== calendarAge && (
-                  <path d={arcPath} fill="none" stroke={arcColor} strokeWidth="12" />
+                  <path d={arcPath} fill="none" stroke={arcColor} strokeWidth="12" strokeLinecap="round" filter="url(#bioGlowRes)" />
                 )}
-                {/* Vertical thin line representing calendar age */}
                 <line x1="100" y1="100" x2={xCal} y2={yCal} stroke="#64748b" strokeWidth="1.5" strokeDasharray="3,3" />
                 {/* Needle */}
                 <line x1="100" y1="100" x2={xNeedleBio} y2={yNeedleBio} stroke="#0f172a" strokeWidth="3.5" strokeLinecap="round" />
-                <circle cx="100" cy="100" r="6" fill="#0f172a" />
+                <circle cx="100" cy="100" r="8" fill="#1e293b" />
+                <circle cx="100" cy="100" r="3" fill="#ffffff" />
                 {/* Scale labels */}
                 <text x="20" y="118" className="gauge-scale-label">30</text>
                 <text x="180" y="118" className="gauge-scale-label" textAnchor="end">60</text>
@@ -1028,17 +1049,17 @@ export default function ErgebnissePage() {
           margin-bottom: 0.75rem;
         }
         .gauge-title-wrapper h3 {
-          font-size: 1.4rem;
+          font-size: 1.6rem;
           font-weight: 800;
           color: #0f172a;
           margin: 0 0 2px 0;
         }
         .gauge-subtitle {
-          font-size: 0.88rem;
+          font-size: 1.05rem;
           color: #64748b;
         }
         .gauge-main-val {
-          font-size: 2.2rem;
+          font-size: 2.45rem;
           font-weight: 900;
           color: #0f172a;
           margin-bottom: 0.75rem;
@@ -1053,7 +1074,7 @@ export default function ErgebnissePage() {
           height: auto;
         }
         .gauge-scale-label {
-          font-size: 10px;
+          font-size: 12px;
           font-weight: 700;
           fill: #64748b;
         }
@@ -1065,12 +1086,12 @@ export default function ErgebnissePage() {
           line-height: 1.3;
         }
         .gauge-bottom-val {
-          font-size: 1.2rem;
+          font-size: 1.4rem;
           font-weight: 800;
           color: #0f172a;
         }
         .gauge-bottom-label {
-          font-size: 0.85rem;
+          font-size: 1.05rem;
           color: #64748b;
         }
 
