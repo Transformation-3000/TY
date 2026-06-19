@@ -822,22 +822,41 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                 <i className="bi bi-x-lg" style={{ fontSize: '1rem' }}></i>
               </button>
               <div className="smod-h">
-                <div style={{width:80}}></div>
+                <div className="smod-h-spacer"></div>
                 <div className="smod-steps">
-                  <span className={`smod-s ${setupStep === 'coach' && !coachGender ? 'act' : 'done'}`}>
-                    <span className="smod-num">1</span> Geschlecht
-                  </span>
-                  <span className={`smod-s ${setupStep === 'coach' && coachGender ? 'act' : (setupStep === 'personality' || setupStep === 'data' ? 'done' : '')}`}>
-                    <span className="smod-num">2</span> Aussehen & Stimme
-                  </span>
-                  <span className={`smod-s ${setupStep === 'personality' ? 'act' : (setupStep === 'data' ? 'done' : '')}`}>
-                    <span className="smod-num">3</span> Persönlichkeit
-                  </span>
-                  <span className={`smod-s ${setupStep === 'data' ? 'act' : ''}`}>
-                    <span className="smod-num">4</span> Zusammenfassung
-                  </span>
+                  <button 
+                    type="button"
+                    className={`smod-s-btn ${setupStep === 'coach' && !coachGender ? 'act' : 'done'}`}
+                    onClick={() => { setSetupStep('coach'); setCoachGender(null); }}
+                  >
+                    <span className="smod-num">1</span> <span className="smod-text-label">Geschlecht</span>
+                  </button>
+                  <button 
+                    type="button"
+                    className={`smod-s-btn ${setupStep === 'coach' && coachGender ? 'act' : (setupStep === 'personality' || setupStep === 'data' ? 'done' : '')}`}
+                    onClick={() => { if (coachGender) setSetupStep('coach'); }}
+                    disabled={!coachGender}
+                  >
+                    <span className="smod-num">2</span> <span className="smod-text-label">Aussehen & Stimme</span>
+                  </button>
+                  <button 
+                    type="button"
+                    className={`smod-s-btn ${setupStep === 'personality' ? 'act' : (setupStep === 'data' ? 'done' : '')}`}
+                    onClick={() => { if (coachGender) setSetupStep('personality'); }}
+                    disabled={!coachGender}
+                  >
+                    <span className="smod-num">3</span> <span className="smod-text-label">Persönlichkeit</span>
+                  </button>
+                  <button 
+                    type="button"
+                    className={`smod-s-btn ${setupStep === 'data' ? 'act' : ''}`}
+                    onClick={() => { if (coachGender) setSetupStep('data'); }}
+                    disabled={!coachGender}
+                  >
+                    <span className="smod-num">4</span> <span className="smod-text-label">Zusammenfassung</span>
+                  </button>
                 </div>
-                <div style={{width:80}} />
+                <div className="smod-h-spacer" />
               </div>
 
               {setupStep === 'coach' && (
@@ -874,7 +893,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                           .map(v => {
                             const cv = coachVariants[v];
                             return (
-                              <button key={v} className={`ccard ${coachVariant===v?'sel':''}`} onClick={() => setCoachVariant(v)}>
+                              <div key={v} className={`ccard ${coachVariant===v?'sel':''}`} onClick={() => setCoachVariant(v)} style={{ cursor: 'pointer' }}>
                                 <div className="ccard-img"><Image src={cv.image} alt={cv.name} width={210} height={210} style={{objectFit:'cover',borderRadius:'50%'}} />{coachVariant===v&&<span className="ccard-chk">✓</span>}</div>
                                 <div className="ccard-name">
                                   {cv.name.split(', ')[0]}
@@ -888,12 +907,9 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                                   )}
                                   <span style={{fontSize: '0.9rem'}}>Stimme (Sample)</span>
                                 </button>
-                              </button>
+                              </div>
                             );
                           })}
-                      </div>
-                      <div style={{display:'flex', gap:'1rem', justifyContent:'center', marginTop:'2.5rem'}}>
-                        <button className="smod-next" style={{marginTop:0}} onClick={() => setSetupStep('personality')}>Weiter</button>
                       </div>
                     </div>
                   )}
@@ -902,14 +918,13 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
               {setupStep === 'personality' && (
                 <div className="smod-cnt" style={{ display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5rem', flex: 1, margin: '0 auto', width: '100%', maxWidth: '850px' }}>
-                    <div style={{ flex: '0 0 320px', textAlign: 'left' }}>
+                  <div className="smod-pers-flex">
+                    <div className="smod-pers-text">
                       <h2 className="smod-t" style={{ textAlign: 'left', marginBottom: '1rem', fontSize: '1.4rem', lineHeight: 1.3 }}>Trainer/in Persönlichkeit<br/>nach DISC-Methodik</h2>
                       <p className="smod-sub" style={{ textAlign: 'left', marginBottom: '2.5rem', fontSize: '1.1rem' }}>Setze den Punkt dort, wo du dich am ehesten wiederfindest.</p>
-                      <button className="smod-next" onClick={() => setSetupStep('data')} style={{ marginTop: 0 }}>Weiter</button>
                     </div>
-                    <div>
-                      <div className="pf-wrap" style={{ margin: '2rem 0' }}>
+                    <div className="smod-pers-chart-container">
+                      <div className="pf-wrap" style={{ margin: '2rem auto' }}>
                         <div className="pf-labels">
                           <span className="pf-l pf-tl">Rot<br/><small>Kompakt</small></span>
                           <span className="pf-l pf-tr">Gelb<br/><small>Inspirativ</small></span>
@@ -938,20 +953,8 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                     background: `radial-gradient(circle at ${personalityPos.x * 100}% ${personalityPos.y * 100}%, #00b4d8, #7209b7, transparent 70%)`
                   }} />
 
-                  <div style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative', zIndex: 1, padding: 0 }}>
-                    <div style={{ 
-                      width: '100%', maxWidth: '800px', 
-                      display: 'grid',
-                      gridTemplateColumns: '1fr 1fr',
-                      gap: '1rem',
-                      background: 'linear-gradient(145deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85))', 
-                      backdropFilter: 'blur(20px)',
-                      border: '1px solid rgba(255,255,255,0.5)', 
-                      borderRadius: '20px', 
-                      padding: '1rem 1.5rem', 
-                      boxShadow: '0 10px 25px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,1)',
-                      position: 'relative', overflow: 'hidden'
-                    }}>
+                  <div className="smod-summary-outer">
+                    <div className="smod-summary-grid">
                       <div style={{ position: 'absolute', top: 0, left: 0, width: '200px', height: '200px', background: 'radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 70%)', transform: 'translate(-30%, -30%)', borderRadius: '50%' }} />
 
                       {/* Left Column: Picture and Info */}
@@ -1009,21 +1012,43 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                       </div>
                     </div>
                   </div>
+                </div>
+              )}
 
-                  <div style={{ textAlign: 'center', marginTop: '1rem', position: 'relative', zIndex: 1 }}>
-                    <button className="smod-next" style={{ 
-                      background: 'linear-gradient(135deg, #1e293b, #0f172a)', 
-                      boxShadow: '0 6px 12px rgba(0,0,0,0.15), 0 0 0 2px rgba(255,255,255,0.2) inset', 
-                      borderRadius: '999px', padding: '0.6rem 1.5rem', fontSize: '0.95rem', fontWeight: 600, 
-                      color: 'white', border: 'none', cursor: 'pointer', transition: 'all 0.3s ease',
-                      marginTop: 0
-                    }} 
-                    onMouseEnter={(e) => { e.currentTarget.style.transform = 'translateY(-2px)'; e.currentTarget.style.boxShadow = '0 8px 16px rgba(0,0,0,0.2), 0 0 0 2px rgba(255,255,255,0.3) inset'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15), 0 0 0 2px rgba(255,255,255,0.2) inset'; }}
-                    onClick={() => { setView('welcome'); setSetupStep('coach'); setCoachGender(null); }}>
-                      Trainer/in speichern & starten
-                    </button>
-                  </div>
+              {coachGender !== null && (
+                <div className="smod-footer">
+                  <button 
+                    type="button" 
+                    className="smod-footer-btn btn-back"
+                    onClick={() => {
+                      if (setupStep === 'coach') {
+                        setCoachGender(null);
+                      } else if (setupStep === 'personality') {
+                        setSetupStep('coach');
+                      } else if (setupStep === 'data') {
+                        setSetupStep('personality');
+                      }
+                    }}
+                  >
+                    Zurück
+                  </button>
+                  <button 
+                    type="button" 
+                    className="smod-footer-btn btn-next"
+                    onClick={() => {
+                      if (setupStep === 'coach') {
+                        setSetupStep('personality');
+                      } else if (setupStep === 'personality') {
+                        setSetupStep('data');
+                      } else if (setupStep === 'data') {
+                        setView('welcome');
+                        setSetupStep('coach');
+                        setCoachGender(null);
+                      }
+                    }}
+                  >
+                    {setupStep === 'data' ? 'Speichern & starten' : 'Weiter'}
+                  </button>
                 </div>
               )}
             </div>
@@ -1502,7 +1527,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .ps-output{display:inline-flex;align-items:center;padding:.25rem .6rem;border-radius:7px;background:rgba(68,152,202,.05);border:1px solid rgba(68,152,202,.07)}
         .ps-ol{font-size:.74rem;font-weight:600;color:#2c6a8c}
 
-        .smod{position:fixed;inset:0;z-index:900;background:rgba(15,30,45,.45);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;animation:smodIn .3s ease both}
+        .smod{position:fixed;inset:0;z-index:9999;background:rgba(15,30,45,.45);backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;animation:smodIn .3s ease both}
         @keyframes smodIn{from{opacity:0}to{opacity:1}}
         .smod-in{width:98%;max-width:900px;max-height:96vh;background:#fff;border-radius:24px;box-shadow:0 24px 80px rgba(0,40,80,.18);display:flex;flex-direction:column;overflow:hidden;animation:smodUp .35s ease both}
         @keyframes smodUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
@@ -1510,14 +1535,45 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .smod-back{background:none;border:none;color:#7a9ab0;font-size:.85rem;cursor:pointer;font-weight:500;padding:0;width:80px;text-align:left}
         .smod-back:hover{color:#4498ca}
         .smod-steps{display:flex;align-items:center;gap:1.2rem;background:#f8fafc;padding:0.6rem 1.4rem;border-radius:100px;border:1px solid #e2e8f0;box-shadow:0 4px 15px rgba(0,0,0,0.03)}
-        .smod-s{font-size:0.95rem;font-weight:600;color:#94a3b8;display:flex;align-items:center;gap:0.5rem;transition:all 0.3s}
+        .smod-s-btn{background:none;border:none;padding:0;font-family:inherit;font-size:0.95rem;font-weight:600;color:#94a3b8;display:flex;align-items:center;gap:0.5rem;transition:all 0.3s;cursor:pointer}
+        .smod-s-btn:disabled{cursor:default;opacity:0.5}
+        .smod-s-btn.act{color:#0f172a;font-weight:700}
+        .smod-s-btn.act .smod-num{background:#4498ca;color:#fff;box-shadow:0 0 12px rgba(68,152,202,0.3)}
+        .smod-s-btn.done{color:#4498ca}
+        .smod-s-btn.done .smod-num{background:rgba(68,152,202,0.15);color:#4498ca}
         .smod-num{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;flex-shrink:0;border-radius:50%;background:#e2e8f0;color:#64748b;font-size:1.05rem;font-weight:800}
-        .smod-s.act{color:#0f172a;font-weight:700}
-        .smod-s.act .smod-num{background:#4498ca;color:#fff;box-shadow:0 0 12px rgba(68,152,202,0.3)}
-        .smod-s.done{color:#4498ca}
-        .smod-s.done .smod-num{background:rgba(68,152,202,0.15);color:#4498ca}
         .smod-sep{width:20px;height:2px;border-radius:1px;background:#e2e8f0}
-        .smod-cnt{padding:1rem 1.5rem 1.5rem;overflow-y:auto;flex:1;text-align:center}
+        .smod-h-spacer{width:80px;flex-shrink:0}
+        .smod-pers-flex{display:flex;align-items:center;justify-content:center;gap:3rem;flex:1;margin:0 auto;width:100%;max-width:850px}
+        .smod-pers-text{flex:0 0 320px;text-align:left}
+        .smod-pers-chart-container{flex:1;display:flex;justify-content:center}
+        .smod-summary-outer{flex:1;display:flex;justify-content:center;align-items:center;position:relative;z-index:1;padding:0}
+        .smod-summary-grid{width:100%;max-width:800px;display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;background:linear-gradient(145deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.5);border-radius:20px;padding:1.5rem;box-shadow:0 10px 25px rgba(0,0,0,0.08), inset 0 0 0 1px rgba(255,255,255,1);position:relative;overflow:hidden}
+        .smod-back-btn:hover{background:#f8fafc!important;border-color:#94a3b8!important;color:#334155!important;transform:translateY(-1px)}
+        .smod-cnt{padding:1rem 1.5rem 80px;overflow-y:auto;flex:1;text-align:center}
+        .smod-footer{position:absolute;bottom:0;left:0;right:0;height:80px;display:flex;gap:1.5rem;padding:1rem 2.5rem;border-top:1px solid rgba(68,152,202,.08);background:#fff;justify-content:center;align-items:center;z-index:100;box-sizing:border-box}
+        .smod-footer-btn{flex:1;max-width:240px;height:48px;display:inline-flex;align-items:center;justify-content:center;border-radius:14px;font-size:1rem;font-weight:600;cursor:pointer;transition:all 0.3s}
+        .smod-footer-btn.btn-back{border:1px solid #cbd5e1;background:#fff;color:#64748b}
+        .smod-footer-btn.btn-back:hover{background:#f8fafc;border-color:#94a3b8;color:#334155;transform:translateY(-1px)}
+        .smod-footer-btn.btn-next{border:none;background:linear-gradient(135deg,#4498ca,#2c6a8c);color:#fff;box-shadow:0 6px 20px rgba(68,152,202,.3)}
+        .smod-footer-btn.btn-next:hover{transform:translateY(-1px);box-shadow:0 10px 28px rgba(68,152,202,.4)}
+        @media(max-width:768px){
+          .smod-h-spacer{width:0}
+          .smod-h{padding:1.5rem 1rem 0.75rem;justify-content:center}
+          .smod-pers-flex{flex-direction:column;gap:1.5rem;padding:0.5rem}
+          .smod-pers-text{flex:none;width:100%;text-align:center}
+          .smod-pers-text .smod-t, .smod-pers-text .smod-sub{text-align:center!important}
+          .smod-pers-chart-container{width:100%}
+          .smod-summary-outer{padding:0.5rem}
+          .smod-summary-grid{grid-template-columns:1fr;gap:1.2rem;padding:1.25rem 1rem}
+          .smod-footer{padding:0.75rem 1.5rem!important;gap:1rem!important;height:70px!important}
+          .smod-footer-btn{max-width:none!important;height:42px!important}
+          .smod-cnt{padding-bottom:75px!important}
+        }
+        @media(max-width:600px){
+          .smod-text-label{display:none}
+          .smod-steps{gap:0.6rem;padding:0.4rem 0.8rem}
+        }
         .smod-t{font-size:1.3rem;font-weight:700;color:#1a3a50;margin:0 0 0.75rem}
         .smod-sub{font-size:.88rem;color:#7a9ab0;margin:-.25rem 0 1rem;line-height:1.5}
         .smod-next{display:inline-flex;padding:.75rem 2rem;border:none;border-radius:14px;background:linear-gradient(135deg,#4498ca,#2c6a8c);color:#fff;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(68,152,202,.3);transition:all .3s;margin-top:0.5rem}
@@ -1920,6 +1976,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
           .smod-in{width:100%;max-width:100%;max-height:92vh;border-radius:20px 20px 0 0;animation:smodSlide .3s ease both}
           @keyframes smodSlide{from{transform:translateY(100%)}to{transform:translateY(0)}}
           .smod-t{font-size:1.15rem}
+          .smod-cnt{padding-bottom:5.5rem!important}
           .ggrid{flex-direction:column;gap:1rem;margin:1rem 0}
           .gcard{padding:2rem 2rem}
           .gcard-ico{font-size:4rem}

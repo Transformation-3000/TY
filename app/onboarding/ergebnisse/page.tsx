@@ -280,7 +280,12 @@ export default function ErgebnissePage() {
               <h3>Age Speed</h3>
               <span className="gauge-subtitle">Wie schnell alterst du?</span>
             </div>
-            <div className="gauge-main-val">{speedVal.toFixed(2).replace('.', ',')}</div>
+            <div className="gauge-main-val" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px' }}>
+              <div>{speedVal.toFixed(2).replace('.', ',')} <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b' }}>Bio-Jahre / Jahr</span></div>
+              <span className="speed-badge" style={{ fontSize: '0.75rem', fontWeight: 700, padding: '2px 8px', borderRadius: '12px', background: '#e8f7ee', color: '#15803d' }}>
+                Verlangsamte Alterung (Ziel: &lt; 1,0)
+              </span>
+            </div>
             <div className="gauge-visual-wrapper">
               <svg viewBox="0 0 200 120" className="gauge-svg-element">
                 {/* Background arc */}
@@ -295,9 +300,9 @@ export default function ErgebnissePage() {
                 <text x="180" y="118" className="gauge-scale-label" textAnchor="end">2,0</text>
               </svg>
             </div>
-            <div className="gauge-bottom-info">
-              <span className="gauge-bottom-val">0,95</span>
-              <span className="gauge-bottom-label">Letzte 3 Monate</span>
+            <div className="gauge-bottom-info" style={{ marginTop: '5px' }}>
+              <span className="gauge-bottom-val" style={{ color: '#475569' }}>0,95</span>
+              <span className="gauge-bottom-label">Dein Durchschnitt der letzten 3 Monate vor Programmstart</span>
             </div>
           </div>
 
@@ -311,7 +316,7 @@ export default function ErgebnissePage() {
             </div>
             <div className="gauge-title-wrapper">
               <h3>BioAge</h3>
-              <span className="gauge-subtitle">Dein Biologisches Alter</span>
+              <span className="gauge-subtitle">Wie ist dein inneres biologisches Alter?</span>
             </div>
             <div className="gauge-main-val">{bioAge.toFixed(1).replace('.', ',')}</div>
             <div className="gauge-visual-wrapper">
@@ -344,7 +349,7 @@ export default function ErgebnissePage() {
           
           {/* RADAR CHART CARD */}
           <div className="diagram-card radar-card">
-            <h3>Initiale Einschätzung</h3>
+            <h3>Initiale Onboarding-Einschätzung</h3>
             <p className="diagram-subtitle">Dein Profil (grüne Linie) im Vergleich zum optimalen Bereich (gestrichelte Linie).</p>
             
             <div className="radar-wrapper">
@@ -362,16 +367,17 @@ export default function ErgebnissePage() {
                   const y = 150 + 100 * Math.sin(angle);
                   const textX = 150 + 120 * Math.cos(angle);
                   const textY = 150 + 120 * Math.sin(angle);
+                  const isActive = selectedRubric === s.id;
                   
                   return (
                     <g key={s.id}>
-                      <line x1="150" y1="150" x2={x} y2={y} className="radar-axis" />
+                      <line x1="150" y1="150" x2={x} y2={y} className={`radar-axis ${isActive ? 'active' : ''}`} />
                       <text 
                         x={textX} 
                         y={textY} 
                         textAnchor="middle" 
                         alignmentBaseline="middle" 
-                        className="radar-axis-label"
+                        className={`radar-axis-label ${isActive ? 'active' : ''}`}
                       >
                         {`${idx + 1}. ${s.name.split(' ')[0]}`}
                       </text>
@@ -388,15 +394,26 @@ export default function ErgebnissePage() {
                 {/* Points */}
                 {radarAxes.map((s, idx) => {
                   const pt = getRadarPoint(idx, s.score).split(',');
+                  const isActive = selectedRubric === s.id;
                   return (
-                    <circle 
-                      key={s.id}
-                      cx={pt[0]} 
-                      cy={pt[1]} 
-                      r="4" 
-                      className="radar-shape-dot" 
-                      style={{ fill: s.color }}
-                    />
+                    <g key={s.id}>
+                      {isActive && (
+                        <circle 
+                          cx={pt[0]} 
+                          cy={pt[1]} 
+                          r="10" 
+                          fill={s.color} 
+                          className="radar-dot-glow"
+                        />
+                      )}
+                      <circle 
+                        cx={pt[0]} 
+                        cy={pt[1]} 
+                        r={isActive ? "6" : "4.5"} 
+                        className={`radar-shape-dot ${isActive ? 'active' : ''}`} 
+                        style={{ fill: s.color, '--color-dot': s.color } as React.CSSProperties}
+                      />
+                    </g>
                   );
                 })}
               </svg>
@@ -723,11 +740,22 @@ export default function ErgebnissePage() {
         .radar-axis {
           stroke: #e2e8f0;
           stroke-width: 1.5;
+          transition: stroke 0.3s ease, stroke-width 0.3s ease;
+        }
+        .radar-axis.active {
+          stroke: #006EA7;
+          stroke-width: 3.5;
         }
         .radar-axis-label {
           font-size: 12px;
           font-weight: 700;
           fill: #64748b;
+          transition: fill 0.3s ease, font-size 0.3s ease, font-weight 0.3s ease;
+        }
+        .radar-axis-label.active {
+          font-size: 14px;
+          font-weight: 800;
+          fill: #006EA7;
         }
         .radar-shape-optimal {
           fill: rgba(0, 110, 167, 0.03);
@@ -743,6 +771,26 @@ export default function ErgebnissePage() {
         }
         .radar-shape-dot {
           filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+          transition: r 0.3s ease;
+        }
+        .radar-shape-dot.active {
+          stroke: #ffffff;
+          stroke-width: 1.5;
+          filter: drop-shadow(0 0 6px var(--color-dot, #7FD049));
+        }
+        @keyframes radar-pulse {
+          0% {
+            r: 6px;
+            opacity: 0.7;
+          }
+          100% {
+            r: 16px;
+            opacity: 0;
+          }
+        }
+        .radar-dot-glow {
+          animation: radar-pulse 1.8s infinite ease-out;
+          transform-origin: center;
         }
 
         /* RUBRICS INTERACTIVE LIST */
@@ -812,10 +860,10 @@ export default function ErgebnissePage() {
         .rubric-years {
           font-size: 0.85rem;
           font-weight: 800;
-          color: #10b981;
+          color: #ffffff;
           margin-left: 0.75rem;
-          background: rgba(16, 185, 129, 0.1);
-          padding: 0.15rem 0.4rem;
+          background: #166534; /* Darker green (emerald-800 / green-800) */
+          padding: 0.2rem 0.5rem;
           border-radius: 6px;
           white-space: nowrap;
         }

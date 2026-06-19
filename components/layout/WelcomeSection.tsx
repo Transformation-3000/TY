@@ -152,7 +152,7 @@ export default function WelcomeSection({
   const activeWearable = wearables.find(w => w.id === activeWearableId) || wearables[0];
 
   return (
-    <div className="top-navigation-content">
+    <div className={`top-navigation-content ${isOnboarding ? 'is-onboarding' : ''}`}>
       {/* Logo Left */}
       <div className="top-nav-logo-section" onClick={() => onNavigate?.('website')} style={{ cursor: 'pointer' }}>
         <Image src="/images/logoneu.png" alt="True Years Logo" width={180} height={180} className="top-nav-logo" style={{ objectFit: 'contain' }} />

@@ -9334,6 +9334,58 @@ i[class*="bi-"] {
   border: 1px solid white;
 }
 
+/* Responsive fixes for onboarding navigation tracker to prevent overlaps */
+@media (max-width: 1150px) {
+  .top-navigation-content.is-onboarding .top-nav-logo-section {
+    min-width: auto;
+  }
+  .top-navigation-content.is-onboarding .top-nav-right-section {
+    min-width: auto;
+  }
+  .top-navigation-content.is-onboarding .onboarding-header-tracker {
+    max-width: 500px;
+    margin-left: 0;
+  }
+  .top-navigation-content.is-onboarding .onboarding-header-tracker .rubric-label {
+    font-size: calc(0.6rem + 1pt);
+  }
+}
+
+@media (max-width: 820px) {
+  /* Hide logo entirely on onboarding screens to make space for the step icons */
+  .top-navigation-content.is-onboarding .top-nav-logo-section {
+    display: none !important;
+  }
+  
+  .top-navigation-content.is-onboarding {
+    justify-content: space-between;
+    padding: 0 1rem;
+  }
+
+  .top-navigation-content.is-onboarding .onboarding-header-tracker {
+    position: relative;
+    left: 0;
+    transform: none;
+    max-width: none;
+    width: auto;
+    flex: 1;
+    justify-content: flex-start;
+    gap: 12px;
+    margin: 0;
+  }
+
+  /* Hide rubric text labels on smaller screens to keep only icons */
+  .top-navigation-content.is-onboarding .onboarding-header-tracker .rubric-label {
+    display: none;
+  }
+
+  .top-navigation-content.is-onboarding .onboarding-header-tracker .rubric-icon-wrap {
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
+  }
+}
+
 /* Compact layout for onboarding page */
 .theme-playful.onboarding-page {
   padding-top: 120px !important;
