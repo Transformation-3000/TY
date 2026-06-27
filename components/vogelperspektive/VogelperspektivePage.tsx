@@ -7,6 +7,36 @@ interface VogelperspektivePageProps {
   onNavigate?: (id: string) => void;
 }
 
+const getIconForActivity = (name: string) => {
+  const lower = typeof name === 'string' ? name.toLowerCase() : '';
+  if (lower.includes('rad')) return 'bi-bicycle';
+  if (lower.includes('kraft') || lower.includes('hit-')) return 'bi-activity';
+  if (lower.includes('joggen') || lower.includes('cooper')) return 'bi-person-running';
+  if (lower.includes('spazieren') || lower.includes('schritte') || lower.includes('spazier')) return 'bi-person-walking';
+  if (lower.includes('medit')) return 'bi-flower1';
+  if (lower.includes('nap')) return 'bi-moon-stars';
+  if (lower.includes('schlaf') || lower.includes('geschlafen')) return 'bi-moon';
+  if (lower.includes('aufstehzeit')) return 'bi-alarm';
+  if (lower.includes('koffein')) return 'bi-cup-hot';
+  if (lower.includes('schläf') || lower.includes('abendroutine')) return 'bi-moon';
+  if (lower.includes('schwimm')) return 'bi-droplet';
+  if (lower.includes('yoga') || lower.includes('dehnung')) return 'bi-heart-pulse';
+  if (lower.includes('atem')) return 'bi-wind';
+  if (lower.includes('licht') || lower.includes('sonne')) return 'bi-sun';
+  if (lower.includes('treppe')) return 'bi-stairs';
+  if (lower.includes('hang') || lower.includes('griff')) return 'bi-award';
+  if (lower.includes('wasser')) return 'bi-droplet-half';
+  if (lower.includes('gemüse') || lower.includes('obst') || lower.includes('mahlzeit') || lower.includes('essen') || lower.includes('snack') || lower.includes('zucker') || lower.includes('protein') || lower.includes('omega') || lower.includes('ballast')) return 'bi-apple';
+  if (lower.includes('alkohol')) return 'bi-x-circle';
+  if (lower.includes('sozial') || lower.includes('freund') || lower.includes('unterstützung') || lower.includes('verbundenheit')) return 'bi-people';
+  if (lower.includes('nikotin')) return 'bi-x-circle';
+  if (lower.includes('journaling')) return 'bi-book';
+  if (lower.includes('handy')) return 'bi-phone';
+  if (lower.includes('pause')) return 'bi-clock';
+  if (lower.includes('lüft')) return 'bi-wind';
+  return 'bi-lightning-charge';
+};
+
 export default function VogelperspektivePage({ onNavigate }: VogelperspektivePageProps) {
   const [currentDate, setCurrentDate] = useState('');
   const [greeting, setGreeting] = useState('Guten Tag');
@@ -1184,6 +1214,32 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
     );
   }
 
+  const dashboardTotalDiamonds = useMemo(() => {
+    let sum = 0;
+    const safeSelected = Array.isArray(selectedActivities) ? selectedActivities : [];
+    
+    // 1. Core activities
+    safeSelected.forEach(name => {
+      if (name === 'alchemist-elixir') return;
+      const actConfig = activityOptions.find(a => a.name === name);
+      if (actConfig) {
+        const detail = activityValues[name] || actConfig.defaultOption;
+        sum += calculateDiamonds(actConfig, detail);
+      }
+    });
+
+    // 2. Feel-Good integration
+    const cryoDismissed = typeof window !== 'undefined' ? localStorage.getItem('ty-cryo-dismissed') === 'true' : false;
+    if (!cryoDismissed) {
+      sum += 5;
+    }
+    if (safeSelected.includes('alchemist-elixir')) {
+      sum += 5;
+    }
+
+    return sum;
+  }, [selectedActivities, activityValues]);
+
   return (
     <div className="dashboard-container">
       {/* TOP ROW: 3 COLUMNS */}
@@ -1318,7 +1374,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                 <path d="M13 3l3 6-3 12"></path>
                 <path d="M2 9h20"></path>
               </svg>
-              <span>18</span>
+              <span>{dashboardTotalDiamonds}</span>
             </div>
           </div>
         </div>
@@ -1540,35 +1596,6 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
 
                     const finalActs = displayActs.slice(0, 4);
 
-                    const getIconForActivity = (name: string) => {
-                      const lower = typeof name === 'string' ? name.toLowerCase() : '';
-                      if (lower.includes('rad')) return 'bi-bicycle';
-                      if (lower.includes('kraft') || lower.includes('hit-')) return 'bi-activity';
-                      if (lower.includes('joggen') || lower.includes('cooper')) return 'bi-person-running';
-                      if (lower.includes('spazieren') || lower.includes('schritte') || lower.includes('spazier')) return 'bi-person-walking';
-                      if (lower.includes('medit')) return 'bi-flower1';
-                      if (lower.includes('nap')) return 'bi-moon-stars';
-                      if (lower.includes('schlaf') || lower.includes('geschlafen')) return 'bi-moon';
-                      if (lower.includes('aufstehzeit')) return 'bi-alarm';
-                      if (lower.includes('koffein')) return 'bi-cup-hot';
-                      if (lower.includes('schläf') || lower.includes('abendroutine')) return 'bi-moon';
-                      if (lower.includes('schwimm')) return 'bi-droplet';
-                      if (lower.includes('yoga') || lower.includes('dehnung')) return 'bi-heart-pulse';
-                      if (lower.includes('atem')) return 'bi-wind';
-                      if (lower.includes('licht') || lower.includes('sonne')) return 'bi-sun';
-                      if (lower.includes('treppe')) return 'bi-stairs';
-                      if (lower.includes('hang') || lower.includes('griff')) return 'bi-award';
-                      if (lower.includes('wasser')) return 'bi-droplet-half';
-                      if (lower.includes('gemüse') || lower.includes('obst') || lower.includes('mahlzeit') || lower.includes('essen') || lower.includes('snack') || lower.includes('zucker') || lower.includes('protein') || lower.includes('omega') || lower.includes('ballast')) return 'bi-apple';
-                      if (lower.includes('alkohol')) return 'bi-x-circle';
-                      if (lower.includes('sozial') || lower.includes('freund') || lower.includes('unterstützung') || lower.includes('verbundenheit')) return 'bi-people';
-                      if (lower.includes('nikotin')) return 'bi-x-circle';
-                      if (lower.includes('journaling')) return 'bi-book';
-                      if (lower.includes('handy')) return 'bi-phone';
-                      if (lower.includes('pause')) return 'bi-clock';
-                      if (lower.includes('lüft')) return 'bi-wind';
-                      return 'bi-lightning-charge';
-                    };
 
                     return (
                       <div className="activity-options" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
