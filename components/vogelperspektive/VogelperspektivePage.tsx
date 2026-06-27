@@ -917,13 +917,21 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                      width: '100%',
                      height: '100%',
                      backfaceVisibility: 'hidden',
-                     background: `url(${currentCard.image}) center/cover`,
+                     background: '#040b19',
                      borderRadius: '28px',
                      border: '3px solid #38bdf8',
                      boxShadow: '0 20px 40px rgba(56, 189, 248, 0.3), 0 10px 30px rgba(0,0,0,0.5), inset 0 3px 6px rgba(255,255,255,0.3)',
                      filter: 'drop-shadow(0 0 15px rgba(56, 189, 248, 0.35))',
-                     boxSizing: 'border-box'
+                     boxSizing: 'border-box',
+                     overflow: 'hidden'
                    }}>
+                     <div style={{
+                        width: '100%',
+                        height: '100%',
+                        background: `url(${currentCard.image}) center/contain no-repeat`,
+                        transform: (currentCard.id === 'Fasten-Sprint' || currentCard.id === 'Beeren-Detox') ? 'scale(0.8)' : 'scale(1.0)',
+                        transition: 'transform 0.3s ease'
+                      }} />
                      <button 
                        onClick={(e) => {
                          e.stopPropagation();
