@@ -1431,7 +1431,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                     onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.transform = 'none'; }}
                     title="Ereignis löschen"
                   >
-                    <i className="bi bi-x-lg" style={{ color: '#ef4444', fontSize: '1rem', fontWeight: 900 }}></i>
+                    <i className="bi bi-trash" style={{ color: '#ef4444', fontSize: '1.05rem' }}></i>
                   </button>
                 </div>
 
@@ -1512,7 +1512,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                     onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.transform = 'none'; }}
                     title="Ereignis löschen"
                   >
-                    <i className="bi bi-x-lg" style={{ color: '#ef4444', fontSize: '1rem', fontWeight: 900 }}></i>
+                    <i className="bi bi-trash" style={{ color: '#ef4444', fontSize: '1.05rem' }}></i>
                   </button>
                 </div>
 
@@ -1781,7 +1781,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                               onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.transform = 'none'; }}
                               title="Aktivität löschen"
                             >
-                              <i className="bi bi-x-lg" style={{ color: '#ef4444', fontSize: '1rem', fontWeight: 900 }}></i>
+                              <i className="bi bi-trash" style={{ color: '#ef4444', fontSize: '1.05rem' }}></i>
                             </button>
                           </div>
                         </div>
