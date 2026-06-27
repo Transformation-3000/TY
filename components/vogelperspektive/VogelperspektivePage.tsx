@@ -412,6 +412,32 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
     return rawDiamonds;
   };
 
+  const dashboardTotalDiamonds = useMemo(() => {
+    let sum = 0;
+    const safeSelected = Array.isArray(selectedActivities) ? selectedActivities : [];
+    
+    // 1. Core activities
+    safeSelected.forEach(name => {
+      if (name === 'alchemist-elixir') return;
+      const actConfig = activityOptions.find(a => a.name === name);
+      if (actConfig) {
+        const detail = activityValues[name] || actConfig.defaultOption;
+        sum += calculateDiamonds(actConfig, detail);
+      }
+    });
+
+    // 2. Feel-Good integration
+    const cryoDismissed = typeof window !== 'undefined' ? localStorage.getItem('ty-cryo-dismissed') === 'true' : false;
+    if (!cryoDismissed) {
+      sum += 3;
+    }
+    if (safeSelected.includes('alchemist-elixir')) {
+      sum += 5;
+    }
+
+    return sum;
+  }, [selectedActivities, activityValues]);
+
   if (jungbrunnenSubView === 'selection') {
     return (
       <div className="dashboard-container jungbrunnen-subpage-container selection-subpage-container" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', background: 'linear-gradient(160deg,#091221 0%,#0f1d33 40%,#080e1a 70%,#0a1424 100%)', minHeight: 'calc(100vh - 72px)', color: '#fff', boxSizing: 'border-box', width: '100%', maxWidth: 'none', margin: 0, padding: '1.25rem 2rem', position: 'relative', overflowY: 'auto', paddingBottom: '140px' }}>
@@ -1213,32 +1239,6 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       </div>
     );
   }
-
-  const dashboardTotalDiamonds = useMemo(() => {
-    let sum = 0;
-    const safeSelected = Array.isArray(selectedActivities) ? selectedActivities : [];
-    
-    // 1. Core activities
-    safeSelected.forEach(name => {
-      if (name === 'alchemist-elixir') return;
-      const actConfig = activityOptions.find(a => a.name === name);
-      if (actConfig) {
-        const detail = activityValues[name] || actConfig.defaultOption;
-        sum += calculateDiamonds(actConfig, detail);
-      }
-    });
-
-    // 2. Feel-Good integration
-    const cryoDismissed = typeof window !== 'undefined' ? localStorage.getItem('ty-cryo-dismissed') === 'true' : false;
-    if (!cryoDismissed) {
-      sum += 3;
-    }
-    if (safeSelected.includes('alchemist-elixir')) {
-      sum += 5;
-    }
-
-    return sum;
-  }, [selectedActivities, activityValues]);
 
   return (
     <div className="dashboard-container">
