@@ -2344,7 +2344,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         .taci-unit { font-size: 0.9rem; font-weight: 700; color: #94a3b8; margin-left: 2px; }
         .taci-sparkline { height: 70px; margin-bottom: 1.25rem; }
         .taci-labels { display: flex; justify-content: space-between; padding: 0 0.25rem; }
-        .taci-labels span { font-size: 0.75rem; font-weight: 700; color: #a1b0cb; opacity: 1 !important; }
+        .taci-labels span { font-size: calc(0.75rem + 4pt); font-weight: 700; color: #a1b0cb; opacity: 1 !important; }
 
         /* MODAL */
         .modal-overlay { 

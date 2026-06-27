@@ -1966,7 +1966,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                     
                     if (!cryoDismissed) {
                       dynamicLoungeActivities.push({
-                        name: 'Cryo-Challenge',
+                        name: 'Jungbrunnen: Cryo-Challenge',
                         detail: '2 Min. Eisdusche',
                         daysAgo: 0,
                         diamonds: 5,
@@ -2035,7 +2035,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                               <span className="col-gems" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1rem' }}>
                                 <div className="diamond-preview" style={{ display: 'flex', gap: '3px' }}>
                                   {[...Array(5)].map((_, i) => (
-                                    <i key={i} className={`bi bi-gem ${i < act.diamonds ? 'active-gem-green' : 'inactive-gem-green'}`} style={{ fontSize: '1.15rem' }}></i>
+                                    <i key={i} className={`bi bi-gem ${i < act.diamonds ? 'active-gem-blue' : 'inactive-gem'}`} style={{ fontSize: '1.15rem' }}></i>
                                   ))}
                                 </div>
                               </span>
@@ -2054,13 +2054,13 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                             Letzte 7 Tage
                           </span>
                           <span className="col-gems" style={{ padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1.3em', height: '1.3em', color: '#22c55e' }}>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1.3em', height: '1.3em', color: '#6099cf' }}>
                               <path d="M6 3h12l4 6-10 12L2 9z"></path>
                               <path d="M11 3L8 9l3 12"></path>
                               <path d="M13 3l3 6-3 12"></path>
                               <path d="M2 9h20"></path>
                             </svg>
-                            <span style={{ fontSize: '1.25rem', color: '#22c55e', fontWeight: 800 }}>{totalDiamonds} Diamanten</span>
+                            <span style={{ fontSize: '1.25rem', color: '#6099cf', fontWeight: 800 }}>{totalDiamonds} Diamanten</span>
                           </span>
                         </div>
                         {/* TREND ROW */}
