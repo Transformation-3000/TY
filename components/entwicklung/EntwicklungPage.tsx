@@ -349,6 +349,17 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
   const [activityCounts, setActivityCounts] = useState<Record<string, number>>({});
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setCryoDismissed(localStorage.getItem('ty-cryo-dismissed') === 'true');
+    }
+    const handleSync = () => {
+      setCryoDismissed(localStorage.getItem('ty-cryo-dismissed') === 'true');
+    };
+    window.addEventListener('ty-activities-sync', handleSync);
+    return () => window.removeEventListener('ty-activities-sync', handleSync);
+  }, []);
+
+  useEffect(() => {
     const savedCounts = localStorage.getItem('ty-activity-counts');
     if (savedCounts) {
       setActivityCounts(JSON.parse(savedCounts));
@@ -372,6 +383,8 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
   const handleRemoveFeelGood = (id: string) => {
     if (id === 'Cryo-Challenge') {
       setCryoDismissed(true);
+      localStorage.setItem('ty-cryo-dismissed', 'true');
+      window.dispatchEvent(new Event('ty-activities-sync'));
     } else {
       toggleActivity(id);
     }

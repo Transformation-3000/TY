@@ -1880,32 +1880,62 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                       return `${weekdayShort}, ${dayAndMonth}`;
                     };
 
-                    const dynamicLoungeActivities = selectedActivities.map(name => {
-                      const actConfig = activityOptions.find(a => a.name === name);
-                      if (!actConfig) return null;
-                      
-                      const detail = activityValues[name] || actConfig.defaultOption;
-                      const diamonds = calculateDiamonds(actConfig, detail);
-                      const icon = getIconForActivity(name);
-                      const isBarbell = name.toLowerCase().includes('kraft');
-                      
-                      return {
-                        name,
-                        detail,
-                        daysAgo: 0, // logged this week -> show as "Heute"
-                        diamonds,
-                        icon,
-                        isBarbell
-                      };
-                    }).filter(Boolean) as any[];
+                    const dynamicLoungeActivities = selectedActivities
+                      .filter(name => name !== 'alchemist-elixir') // exclude raw ID so we render it as custom Feel-Good item below
+                      .map(name => {
+                        const actConfig = activityOptions.find(a => a.name === name);
+                        if (!actConfig) return null;
+                        
+                        const detail = activityValues[name] || actConfig.defaultOption;
+                        const diamonds = calculateDiamonds(actConfig, detail);
+                        const icon = getIconForActivity(name);
+                        const isBarbell = name.toLowerCase().includes('kraft');
+                        
+                        return {
+                          name,
+                          detail,
+                          daysAgo: 0, // logged this week -> show as "Heute"
+                          diamonds,
+                          icon,
+                          isBarbell,
+                          isCustomEmoji: false
+                        };
+                      }).filter(Boolean) as any[];
 
-                    // Fallback to sample data only if no activities have been checked yet
+                    // 2. Feel-Good integration
+                    const cryoDismissed = typeof window !== 'undefined' ? localStorage.getItem('ty-cryo-dismissed') === 'true' : false;
+                    
+                    if (!cryoDismissed) {
+                      dynamicLoungeActivities.push({
+                        name: 'Cryo-Challenge',
+                        detail: '2 Min. Eisdusche',
+                        daysAgo: 0,
+                        diamonds: 5,
+                        icon: '❄️',
+                        isBarbell: false,
+                        isCustomEmoji: true
+                      });
+                    }
+
+                    if (selectedActivities.includes('alchemist-elixir')) {
+                      dynamicLoungeActivities.push({
+                        name: 'Elixier des Zell-Recyclings',
+                        detail: '14 Std. Fasten + Eisdusche',
+                        daysAgo: 0,
+                        diamonds: 5,
+                        icon: '🧪',
+                        isBarbell: false,
+                        isCustomEmoji: true
+                      });
+                    }
+
+                    // Fallback to sample data only if no activities have been checked/active yet
                     const displayActivities = dynamicLoungeActivities.length > 0 
                       ? dynamicLoungeActivities 
                       : [
-                          { name: 'Rad gefahren', detail: '30 Min.', daysAgo: 0, diamonds: 2, icon: 'bi-bicycle' },
-                          { name: 'Vollwertige Hauptmahlzeit gegessen', detail: 'Ja', daysAgo: 0, diamonds: 3, icon: 'bi-apple' },
-                          { name: 'Krafttraining abgeschlossen', detail: '60 Min.', daysAgo: 1, diamonds: 4, isBarbell: true }
+                          { name: 'Rad gefahren', detail: '30 Min.', daysAgo: 0, diamonds: 2, icon: 'bi-bicycle', isCustomEmoji: false },
+                          { name: 'Vollwertige Hauptmahlzeit gegessen', detail: 'Ja', daysAgo: 0, diamonds: 3, icon: 'bi-apple', isCustomEmoji: false },
+                          { name: 'Krafttraining abgeschlossen', detail: '60 Min.', daysAgo: 1, diamonds: 4, isBarbell: true, isCustomEmoji: false }
                         ];
 
                     const totalDiamonds = displayActivities.reduce((sum, act) => sum + act.diamonds, 0);
@@ -1927,6 +1957,8 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                                     <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '1.4em', height: '1.4em', color: '#6099cf' }}>
                                       <path d="M6 7h1.5v10H6zm-2.5 2h1.5v6h-1.5zm13 0h1.5v6h-1.5zm2.5-2h1.5v10H19zm-11.5 4h10v2h-10z" />
                                     </svg>
+                                  ) : act.isCustomEmoji ? (
+                                    <span>{act.icon}</span>
                                   ) : (
                                     <i className={`bi ${act.icon}`}></i>
                                   )}
