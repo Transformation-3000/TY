@@ -310,6 +310,20 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
   const [activityCounts, setActivityCounts] = useState<Record<string, number>>({});
 
+  const allSelectedActivities = useMemo(() => {
+    const list = Array.isArray(selectedActivities) ? [...selectedActivities] : [];
+    completedRituals.forEach(cardId => {
+      const card = oracleCards.find(c => c.id === cardId);
+      if (card) {
+        const name = `Jungbrunnen: ${card.title}`;
+        if (!list.includes(name)) {
+          list.push(name);
+        }
+      }
+    });
+    return list;
+  }, [selectedActivities, completedRituals, oracleCards]);
+
   useEffect(() => {
     const handleResizeOrScroll = () => {
       if (typeof window !== 'undefined') {
@@ -518,6 +532,30 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
     }
   };
 
+  const handleDeleteLoungeActivity = (rawName: string) => {
+    // 1. Remove from selectedActivities
+    const newSelected = selectedActivities.filter(name => name !== rawName);
+    updateSelectedActivities(newSelected);
+    
+    // 2. If it is a Jungbrunnen activity, remove from completedRituals
+    if (typeof rawName === 'string' && rawName.startsWith('Jungbrunnen:')) {
+      const cardTitle = rawName.replace('Jungbrunnen: ', '');
+      const card = oracleCards.find(c => c.title === cardTitle || c.id === cardTitle);
+      if (card) {
+        const updatedCompletions = completedRituals.filter(id => id !== card.id);
+        setCompletedRituals(updatedCompletions);
+        localStorage.setItem('ty-completed-rituals', JSON.stringify(updatedCompletions));
+      }
+    }
+    
+    // 3. Clear count
+    const nextCounts = { ...activityCounts };
+    delete nextCounts[rawName];
+    setActivityCounts(nextCounts);
+    localStorage.setItem('ty-activity-counts', JSON.stringify(nextCounts));
+    window.dispatchEvent(new Event('ty-counts-sync'));
+  };
+
   const calculateDiamonds = (act: any, value: string) => {
     if (!value) return act.diamonds;
     
@@ -568,38 +606,26 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
 
   const dashboardTotalDiamonds = useMemo(() => {
     let sum = 0;
-    const safeSelected = Array.isArray(selectedActivities) ? selectedActivities : [];
+    const safeSelected = Array.isArray(allSelectedActivities) ? allSelectedActivities : [];
     
-    // 1. Core activities
+    // 1. Core activities (including Jungbrunnen daily cards registered in activityOptions)
     safeSelected.forEach(name => {
       if (name === 'alchemist-elixir') return;
       const actConfig = activityOptions.find(a => a.name === name);
       if (actConfig) {
         const detail = activityValues[name] || actConfig.defaultOption;
-        sum += calculateDiamonds(actConfig, detail);
+        const count = activityCounts[name] || 1;
+        sum += calculateDiamonds(actConfig, detail) * count;
       }
     });
 
-    // 2. Feel-Good integration
-    const cryoDismissed = typeof window !== 'undefined' ? localStorage.getItem('ty-cryo-dismissed') === 'true' : false;
-    if (!cryoDismissed) {
-      sum += 3;
-    }
+    // 2. Alchemist elixir special integration (if checked)
     if (safeSelected.includes('alchemist-elixir')) {
       sum += 5;
     }
 
-    // Add completed daily rituals diamonds (excluding Cryo-Challenge which is handled above via cryoDismissed)
-    completedRituals.forEach(cardId => {
-      if (cardId === 'Cryo-Challenge') return;
-      const card = oracleCards.find(c => c.id === cardId);
-      if (card) {
-        sum += card.diamonds;
-      }
-    });
-
     return sum;
-  }, [selectedActivities, activityValues, completedRituals]);
+  }, [allSelectedActivities, activityValues, activityCounts]);
 
   if (jungbrunnenSubView === 'selection') {
     return (
@@ -2012,7 +2038,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                             </h4>
                             <div className="activity-group-items" style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
                               {sortedActs.map((act) => {
-                                const isSelected = selectedActivities.includes(act.name);
+                                const isSelected = allSelectedActivities.includes(act.name);
                                 return (
                                   <div key={act.name} className={`act-list-item ${isSelected ? 'selected' : ''}`}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
@@ -2190,7 +2216,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                       return `${weekdayShort}, ${dayAndMonth}`;
                     };
 
-                    const safeSelected = Array.isArray(selectedActivities) ? selectedActivities : [];
+                    const safeSelected = Array.isArray(allSelectedActivities) ? allSelectedActivities : [];
                     const dynamicLoungeActivities = safeSelected
                       .filter(name => typeof name === 'string' && name !== 'alchemist-elixir')
                       .map(name => {
@@ -2198,8 +2224,12 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                         if (!actConfig) return null;
                         
                         const detail = activityValues[name] || actConfig.defaultOption;
-                        const diamonds = calculateDiamonds(actConfig, detail);
+                        let diamonds = calculateDiamonds(actConfig, detail);
                         
+                        // Multiply by activity frequency count if greater than 1
+                        const count = activityCounts[name] || 1;
+                        diamonds = diamonds * count;
+
                         // Handle custom emojis for daily Jungbrunnen cards
                         const isJungbrunnen = typeof name === 'string' && name.startsWith('Jungbrunnen:');
                         let icon = getIconForActivity(name);
@@ -2217,7 +2247,8 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                         const isBarbell = typeof name === 'string' && name.toLowerCase().includes('kraft');
                         
                         return {
-                          name,
+                          name: count > 1 ? `${name} (x${count})` : name,
+                          rawName: name,
                           detail,
                           daysAgo: 0, // logged this week -> show as "Heute"
                           diamonds,
@@ -2230,6 +2261,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                     if (safeSelected.includes('alchemist-elixir')) {
                       dynamicLoungeActivities.push({
                         name: 'Elixier des Zell-Recyclings',
+                        rawName: 'alchemist-elixir',
                         detail: '14 Std. Fasten + Eisdusche',
                         daysAgo: 0,
                         diamonds: 5,
@@ -2243,24 +2275,25 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                     const displayActivities = dynamicLoungeActivities.length > 0 
                       ? dynamicLoungeActivities 
                       : [
-                          { name: 'Rad gefahren', detail: '30 Min.', daysAgo: 0, diamonds: 2, icon: 'bi-bicycle', isCustomEmoji: false },
-                          { name: 'Vollwertige Hauptmahlzeit gegessen', detail: 'Ja', daysAgo: 0, diamonds: 3, icon: 'bi-apple', isCustomEmoji: false },
-                          { name: 'Krafttraining abgeschlossen', detail: '60 Min.', daysAgo: 1, diamonds: 4, isBarbell: true, isCustomEmoji: false }
+                          { name: 'Rad gefahren', rawName: 'Rad gefahren', detail: '30 Min.', daysAgo: 0, diamonds: 2, icon: 'bi-bicycle', isCustomEmoji: false },
+                          { name: 'Vollwertige Hauptmahlzeit gegessen', rawName: 'Vollwertige Hauptmahlzeit gegessen', detail: 'Ja', daysAgo: 0, diamonds: 3, icon: 'bi-apple', isCustomEmoji: false },
+                          { name: 'Krafttraining abgeschlossen', rawName: 'Krafttraining abgeschlossen', detail: '60 Min.', daysAgo: 1, diamonds: 4, isBarbell: true, isCustomEmoji: false }
                         ];
 
                     const totalDiamonds = displayActivities.reduce((sum, act) => sum + act.diamonds, 0);
 
                     return (
                       <div className="diamonds-activities-table" style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                        <div className="diamonds-table-header" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.5fr', padding: '0', borderBottom: '2px solid #e2e8f0', fontWeight: 800, fontSize: '1rem', color: '#000000', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        <div className="diamonds-table-header" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.2fr 0.4fr', padding: '0', borderBottom: '2px solid #e2e8f0', fontWeight: 800, fontSize: '1rem', color: '#000000', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                           <span className="col-act" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Aktivität</span>
                           <span className="col-val" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Wert</span>
                           <span className="col-date" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Datum</span>
-                          <span className="col-gems" style={{ padding: '0.6rem 1rem', display: 'flex', alignItems: 'center' }}>Gewonnene Diamanten</span>
+                          <span className="col-gems" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Diamanten</span>
+                          <span className="col-delete-hdr" style={{ padding: '0.6rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}></span>
                         </div>
                         <div className="diamonds-table-body" style={{ display: 'flex', flexDirection: 'column' }}>
                           {displayActivities.map((act, index) => (
-                            <div key={index} className="diamonds-table-row" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.5fr', padding: '0', borderBottom: '1px solid #e2e8f0' }}>
+                            <div key={index} className="diamonds-table-row" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.2fr 0.4fr', padding: '0', borderBottom: '1px solid #e2e8f0' }}>
                               <span className="col-act" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.8rem 1rem', borderRight: '1.5px solid #e2e8f0' }}>
                                 <div className="diamonds-act-icon-box" style={{ width: '44px', height: '44px', borderRadius: '12px', background: '#fff', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', color: '#6099cf', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
                                   {act.isBarbell ? (
@@ -2283,12 +2316,41 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                               <span className="col-date" style={{ display: 'flex', alignItems: 'center', padding: '0.8rem 1rem', borderRight: '1.5px solid #e2e8f0', fontSize: '1.1rem', color: '#475569', fontWeight: 400 }}>
                                 {getRelativeDateString(act.daysAgo)}
                               </span>
-                              <span className="col-gems" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1rem' }}>
+                              <span className="col-gems" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.8rem 1rem', borderRight: '1.5px solid #e2e8f0' }}>
                                 <div className="diamond-preview" style={{ display: 'flex', gap: '3px' }}>
                                   {[...Array(5)].map((_, i) => (
                                     <i key={i} className={`bi bi-gem ${i < act.diamonds ? 'active-gem-blue' : 'inactive-gem'}`} style={{ fontSize: '1.15rem' }}></i>
                                   ))}
                                 </div>
+                              </span>
+                              <span className="col-delete" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0.4rem' }}>
+                                <button 
+                                  onClick={() => handleDeleteLoungeActivity(act.rawName)}
+                                  style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    color: '#94a3b8',
+                                    cursor: 'pointer',
+                                    fontSize: '1.2rem',
+                                    padding: '6px 10px',
+                                    borderRadius: '8px',
+                                    transition: 'all 0.2s',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                  }}
+                                  onMouseEnter={(e) => {
+                                    e.currentTarget.style.color = '#ef4444';
+                                    e.currentTarget.style.background = '#fef2f2';
+                                  }}
+                                  onMouseLeave={(e) => {
+                                    e.currentTarget.style.color = '#94a3b8';
+                                    e.currentTarget.style.background = 'none';
+                                  }}
+                                  title="Aktivität löschen"
+                                >
+                                  <i className="bi bi-trash"></i>
+                                </button>
                               </span>
                             </div>
                           ))}
@@ -2296,7 +2358,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                         {/* BOTTOM STATS CARD CONTAINER */}
                         <div className="diamonds-bottom-stats-card" style={{ border: '1.5px solid #cbd5e1', borderRadius: '16px', overflow: 'hidden', marginTop: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
                           {/* SUM ROW */}
-                          <div className="diamonds-sum-row" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.5fr', padding: '0', background: '#ffffff', fontWeight: 700 }}>
+                          <div className="diamonds-sum-row" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.2fr 0.4fr', padding: '0', background: '#ffffff', fontWeight: 700 }}>
                             <span className="col-act" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.15rem', color: '#1e293b', fontWeight: 800 }}>
                               Gesamt
                             </span>
@@ -2306,7 +2368,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                             <span className="col-date" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.1rem', color: '#64748b', fontWeight: 500 }}>
                               Letzte 7 Tage
                             </span>
-                            <span className="col-gems" style={{ padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                            <span className="col-gems" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
                               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1.3em', height: '1.3em', color: '#22c55e' }}>
                                 <path d="M6 3h12l4 6-10 12L2 9z"></path>
                                 <path d="M11 3L8 9l3 12"></path>
@@ -2315,6 +2377,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                               </svg>
                               <span style={{ fontSize: '1.25rem', color: '#22c55e', fontWeight: 800 }}>{totalDiamonds} Diamanten</span>
                             </span>
+                            <span className="col-delete-filler" style={{ padding: '0.8rem 1rem' }}></span>
                           </div>
                           {/* TREND ROW */}
                           <div className="diamonds-trend-row" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.5fr', padding: '0', borderTop: '1px solid #cbd5e1', background: '#ffffff', fontWeight: 700 }}>

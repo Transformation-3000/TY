@@ -72,7 +72,14 @@ const wochenAktivitaeten: ActivityItem[] = [
   { id: 'Meditiert', label: 'Meditiert', cluster: 'Mentale Resilienz' },
   { id: 'Dankbarkeits-Journaling', label: 'Dankbarkeits-Journaling', cluster: 'Mentale Resilienz' },
   { id: 'Negativen Gedankenkreislauf durchbrochen', label: 'Negativen Gedankenkreislauf durchbrochen', cluster: 'Mentale Resilienz' },
-  { id: 'Social-Media-Zeit um 50% reduziert', label: 'Social-Media-Zeit um 50% reduziert', cluster: 'Mentale Resilienz' }
+  { id: 'Social-Media-Zeit um 50% reduziert', label: 'Social-Media-Zeit um 50% reduziert', cluster: 'Mentale Resilienz' },
+  { id: 'Jungbrunnen: Cryo-Challenge', label: 'Jungbrunnen: Cryo-Challenge', cluster: 'Jungbrunnen-Aktionen' },
+  { id: 'Jungbrunnen: HIIT Booster', label: 'Jungbrunnen: HIIT Booster', cluster: 'Jungbrunnen-Aktionen' },
+  { id: 'Jungbrunnen: Deep-Breath-Ritual', label: 'Jungbrunnen: Deep-Breath-Ritual', cluster: 'Jungbrunnen-Aktionen' },
+  { id: 'Jungbrunnen: Morgenlicht-Spaziergang', label: 'Jungbrunnen: Morgenlicht-Spaziergang', cluster: 'Jungbrunnen-Aktionen' },
+  { id: 'Jungbrunnen: Fasten-Sprint', label: 'Jungbrunnen: Fasten-Sprint', cluster: 'Jungbrunnen-Aktionen' },
+  { id: 'Jungbrunnen: Power-Nap', label: 'Jungbrunnen: Power-Nap', cluster: 'Jungbrunnen-Aktionen' },
+  { id: 'Jungbrunnen: Beeren-Detox-Snack', label: 'Jungbrunnen: Beeren-Detox-Snack', cluster: 'Jungbrunnen-Aktionen' }
 ];
 
 const getIconForActivity = (name: string) => {
@@ -147,6 +154,13 @@ const CLUSTER_CONFIGS: Record<string, { icon: string; color: string; bgColor: st
     bgColor: 'rgba(139, 92, 246, 0.1)',
     borderColor: 'rgba(139, 92, 246, 0.2)',
     lightBg: '#f5f3ff'
+  },
+  'Jungbrunnen-Aktionen': {
+    icon: 'bi-stars',
+    color: '#a855f7',
+    bgColor: 'rgba(168, 85, 247, 0.1)',
+    borderColor: 'rgba(168, 85, 247, 0.2)',
+    lightBg: '#faf5ff'
   }
 };
 
@@ -156,7 +170,8 @@ const clusterNames = [
   'Zellerneuerung & Wachstum',
   'Immunbalance & Entlastung',
   'Selbstfürsorge & Soziale Bindungen',
-  'Mentale Resilienz'
+  'Mentale Resilienz',
+  'Jungbrunnen-Aktionen'
 ];
 
 const coachConfigs = {
@@ -226,7 +241,14 @@ const ACTIVITY_DIAMONDS: Record<string, number> = {
   'Meditiert': 3,
   'Dankbarkeits-Journaling': 3,
   'Negativen Gedankenkreislauf durchbrochen': 4,
-  'Social-Media-Zeit um 50% reduziert': 3
+  'Social-Media-Zeit um 50% reduziert': 3,
+  'Jungbrunnen: Cryo-Challenge': 3,
+  'Jungbrunnen: HIIT Booster': 3,
+  'Jungbrunnen: Deep-Breath-Ritual': 2,
+  'Jungbrunnen: Morgenlicht-Spaziergang': 2,
+  'Jungbrunnen: Fasten-Sprint': 3,
+  'Jungbrunnen: Power-Nap': 2,
+  'Jungbrunnen: Beeren-Detox-Snack': 1
 };
 
 interface EntwicklungPageProps {
@@ -371,6 +393,31 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
   }, []);
 
   const [checkedActivities, setCheckedActivities] = useState<string[]>([]);
+  const [completedRituals, setCompletedRituals] = useState<string[]>([]);
+
+  const allCheckedActivities = useMemo(() => {
+    const list = Array.isArray(checkedActivities) ? [...checkedActivities] : [];
+    completedRituals.forEach(cardId => {
+      const oracleCardsList = [
+        { id: 'Cryo-Challenge', title: 'Cryo-Challenge' },
+        { id: 'HIIT-Booster', title: 'HIIT Booster' },
+        { id: 'Deep-Breath', title: 'Deep-Breath-Ritual' },
+        { id: 'Morgenlicht', title: 'Morgenlicht-Spaziergang' },
+        { id: 'Fasten-Sprint', title: 'Fasten-Sprint' },
+        { id: 'Power-Nap', title: 'Power-Nap' },
+        { id: 'Beeren-Detox', title: 'Beeren-Detox-Snack' }
+      ];
+      const card = oracleCardsList.find(c => c.id === cardId);
+      if (card) {
+        const name = `Jungbrunnen: ${card.title}`;
+        if (!list.includes(name)) {
+          list.push(name);
+        }
+      }
+    });
+    return list;
+  }, [checkedActivities, completedRituals]);
+
   const [activitySearchQuery, setActivitySearchQuery] = useState('');
   const [wochenziel1Progress, setWochenziel1Progress] = useState(2);
   const [wochenziel2Progress, setWochenziel2Progress] = useState(1);
@@ -476,7 +523,13 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
     const handleSync = () => {
       const updated = localStorage.getItem('ty-checked-activities');
       if (updated) setCheckedActivities(JSON.parse(updated));
+      const savedCompletions = localStorage.getItem('ty-completed-rituals');
+      if (savedCompletions) setCompletedRituals(JSON.parse(savedCompletions));
     };
+    
+    const savedCompletions = localStorage.getItem('ty-completed-rituals');
+    if (savedCompletions) setCompletedRituals(JSON.parse(savedCompletions));
+
     window.addEventListener('ty-activities-sync', handleSync);
     return () => window.removeEventListener('ty-activities-sync', handleSync);
   }, []);
@@ -495,6 +548,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
       'Immunbalance & Entlastung': [],
       'Selbstfürsorge & Soziale Bindungen': [],
       'Mentale Resilienz': [],
+      'Jungbrunnen-Aktionen': []
     };
     filteredActivities.forEach(act => {
       if (groups[act.cluster]) {
@@ -516,8 +570,48 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
     let nextChecked = [...checkedActivities];
     if (nextCount === 0) {
       nextChecked = nextChecked.filter(x => x !== id);
-    } else if (!nextChecked.includes(id)) {
-      nextChecked.push(id);
+      // Also remove from completedRituals if it is a Jungbrunnen activity
+      if (typeof id === 'string' && id.startsWith('Jungbrunnen:')) {
+        const cardTitle = id.replace('Jungbrunnen: ', '');
+        const oracleCards = [
+          { id: 'Cryo-Challenge', title: 'Cryo-Challenge' },
+          { id: 'HIIT-Booster', title: 'HIIT Booster' },
+          { id: 'Deep-Breath', title: 'Deep-Breath-Ritual' },
+          { id: 'Morgenlicht', title: 'Morgenlicht-Spaziergang' },
+          { id: 'Fasten-Sprint', title: 'Fasten-Sprint' },
+          { id: 'Power-Nap', title: 'Power-Nap' },
+          { id: 'Beeren-Detox', title: 'Beeren-Detox-Snack' }
+        ];
+        const card = oracleCards.find(c => c.title === cardTitle || c.id === cardTitle);
+        if (card) {
+          const updatedCompletions = completedRituals.filter(cId => cId !== card.id);
+          setCompletedRituals(updatedCompletions);
+          localStorage.setItem('ty-completed-rituals', JSON.stringify(updatedCompletions));
+        }
+      }
+    } else {
+      if (!nextChecked.includes(id)) {
+        nextChecked.push(id);
+      }
+      // Also add to completedRituals if it is a Jungbrunnen activity
+      if (typeof id === 'string' && id.startsWith('Jungbrunnen:')) {
+        const cardTitle = id.replace('Jungbrunnen: ', '');
+        const oracleCards = [
+          { id: 'Cryo-Challenge', title: 'Cryo-Challenge' },
+          { id: 'HIIT-Booster', title: 'HIIT Booster' },
+          { id: 'Deep-Breath', title: 'Deep-Breath-Ritual' },
+          { id: 'Morgenlicht', title: 'Morgenlicht-Spaziergang' },
+          { id: 'Fasten-Sprint', title: 'Fasten-Sprint' },
+          { id: 'Power-Nap', title: 'Power-Nap' },
+          { id: 'Beeren-Detox', title: 'Beeren-Detox-Snack' }
+        ];
+        const card = oracleCards.find(c => c.title === cardTitle || c.id === cardTitle);
+        if (card && !completedRituals.includes(card.id)) {
+          const updatedCompletions = [...completedRituals, card.id];
+          setCompletedRituals(updatedCompletions);
+          localStorage.setItem('ty-completed-rituals', JSON.stringify(updatedCompletions));
+        }
+      }
     }
     setCheckedActivities(nextChecked);
     localStorage.setItem('ty-checked-activities', JSON.stringify(nextChecked));
@@ -1551,7 +1645,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                 const config = CLUSTER_CONFIGS[clusterName];
                 const items = groupedActivities[clusterName] || [];
                 const totalCount = wochenAktivitaeten.filter(act => act.cluster === clusterName).length;
-                const doneCount = wochenAktivitaeten.filter(act => act.cluster === clusterName && checkedActivities.includes(act.id)).length;
+                const doneCount = wochenAktivitaeten.filter(act => act.cluster === clusterName && allCheckedActivities.includes(act.id)).length;
                 
                 return (
                   <div key={clusterName} className="act-cluster-card">
@@ -1574,7 +1668,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                         <div style={{ fontStyle: 'italic', color: '#94a3b8', fontSize: '0.85rem', padding: '0.5rem 0' }}>Keine Treffer</div>
                       ) : (
                         items.map(act => {
-                          const isChecked = checkedActivities.includes(act.id);
+                          const isChecked = allCheckedActivities.includes(act.id);
                           return (
                             <div
                               key={act.id}
@@ -1624,15 +1718,20 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
               <div style={{ background: '#ffffff', borderRadius: '24px', border: '1.5px solid #cbd5e1', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
                 {(() => {
                   const feelGoodActivitiesList = [
-                    { id: 'Cryo-Challenge', name: 'Cryo-Challenge', detail: '2 Min. Eisdusche', diamonds: 3, icon: '❄️' },
+                    { id: 'Jungbrunnen: Cryo-Challenge', name: 'Cryo-Challenge', detail: '2 Min. Eisdusche', diamonds: 3, icon: '❄️' },
+                    { id: 'Jungbrunnen: HIIT Booster', name: 'HIIT Booster', detail: '15 Min. HIIT', diamonds: 3, icon: '🔥' },
+                    { id: 'Jungbrunnen: Deep-Breath-Ritual', name: 'Deep-Breath-Ritual', detail: '10 Min. Atemübung', diamonds: 2, icon: '🧘' },
+                    { id: 'Jungbrunnen: Morgenlicht-Spaziergang', name: 'Morgenlicht-Spaziergang', detail: '30 Min. Auszeit', diamonds: 2, icon: '☀️' },
+                    { id: 'Jungbrunnen: Fasten-Sprint', name: 'Fasten-Sprint', detail: '14 Std. Esspause', diamonds: 3, icon: '⏳' },
+                    { id: 'Jungbrunnen: Power-Nap', name: 'Power-Nap', detail: 'Mikropause 5 Min.', diamonds: 2, icon: '😴' },
+                    { id: 'Jungbrunnen: Beeren-Detox-Snack', name: 'Beeren-Detox-Snack', detail: 'Vollwertiger Snack', diamonds: 1, icon: '🫐' },
                     { id: 'alchemist-elixir', name: 'Elixier des Zell-Recyclings', detail: '14 Std. Fasten + Eisdusche', diamonds: 5, icon: '🧪' },
                     { id: 'Tageslicht am Morgen getankt', name: 'Morgenlicht getankt', detail: '15 Min. Sonne', diamonds: 3, icon: '☀️' },
                     { id: 'Meditiert', name: 'Tiefen-Resilienz Meditation', detail: '15 Min. Atem & Geist', diamonds: 3, icon: '🧘' }
                   ];
 
                   const completedFeelGood = feelGoodActivitiesList.filter(act => {
-                    if (act.id === 'Cryo-Challenge') return !cryoDismissed;
-                    return checkedActivities.includes(act.id);
+                    return allCheckedActivities.includes(act.id);
                   });
 
                   if (completedFeelGood.length === 0) {
