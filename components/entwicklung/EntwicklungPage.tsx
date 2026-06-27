@@ -528,28 +528,70 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
       }
     }
 
-    const saved = localStorage.getItem('ty-checked-activities');
-    if (saved) {
-      setCheckedActivities(JSON.parse(saved));
-    } else {
-      const defaultChecked = ['8–8,5 Std. geschlafen', 'Schritte gegangen'];
-      setCheckedActivities(defaultChecked);
-      localStorage.setItem('ty-checked-activities', JSON.stringify(defaultChecked));
-    }
-
-    const handleSync = () => {
-      const updated = localStorage.getItem('ty-checked-activities');
-      if (updated) setCheckedActivities(JSON.parse(updated));
-      const savedCompletions = localStorage.getItem('ty-completed-rituals');
-      if (savedCompletions) setCompletedRituals(JSON.parse(savedCompletions));
-    };
-    
-    const savedCompletions = localStorage.getItem('ty-completed-rituals');
-    if (savedCompletions) setCompletedRituals(JSON.parse(savedCompletions));
-
-    window.addEventListener('ty-activities-sync', handleSync);
-    return () => window.removeEventListener('ty-activities-sync', handleSync);
-  }, []);
+     const saved = localStorage.getItem('ty-checked-activities');
+     let parsedChecked: string[] = [];
+     if (saved) {
+       parsedChecked = JSON.parse(saved);
+       setCheckedActivities(parsedChecked);
+     } else {
+       parsedChecked = ['8–8,5 Std. geschlafen', 'Schritte gegangen'];
+       setCheckedActivities(parsedChecked);
+       localStorage.setItem('ty-checked-activities', JSON.stringify(parsedChecked));
+     }
+ 
+     // Ensure all checked activities have a timestamp on load
+     const timestampsStr = localStorage.getItem('ty-activity-timestamps');
+     const timestamps = timestampsStr ? JSON.parse(timestampsStr) : {};
+     let modified = false;
+     const now = new Date();
+     const hrs = String(now.getHours()).padStart(2, '0');
+     const mins = String(now.getMinutes()).padStart(2, '0');
+     const timeStr = `${hrs}:${mins} Uhr`;
+ 
+     parsedChecked.forEach(id => {
+       if (!timestamps[id]) {
+         timestamps[id] = timeStr;
+         modified = true;
+       }
+     });
+     if (modified) {
+       localStorage.setItem('ty-activity-timestamps', JSON.stringify(timestamps));
+     }
+ 
+     const handleSync = () => {
+       const updated = localStorage.getItem('ty-checked-activities');
+       if (updated) {
+         const parsed = JSON.parse(updated) as string[];
+         setCheckedActivities(parsed);
+         
+         const tsStr = localStorage.getItem('ty-activity-timestamps');
+         const ts = tsStr ? JSON.parse(tsStr) : {};
+         let tsMod = false;
+         const syncNow = new Date();
+         const syncHrs = String(syncNow.getHours()).padStart(2, '0');
+         const syncMins = String(syncNow.getMinutes()).padStart(2, '0');
+         const syncTimeStr = `${syncHrs}:${syncMins} Uhr`;
+ 
+         parsed.forEach(id => {
+           if (!ts[id]) {
+             ts[id] = syncTimeStr;
+             tsMod = true;
+           }
+         });
+         if (tsMod) {
+           localStorage.setItem('ty-activity-timestamps', JSON.stringify(ts));
+         }
+       }
+       const savedCompletions = localStorage.getItem('ty-completed-rituals');
+       if (savedCompletions) setCompletedRituals(JSON.parse(savedCompletions));
+     };
+     
+     const savedCompletions = localStorage.getItem('ty-completed-rituals');
+     if (savedCompletions) setCompletedRituals(JSON.parse(savedCompletions));
+ 
+     window.addEventListener('ty-activities-sync', handleSync);
+     return () => window.removeEventListener('ty-activities-sync', handleSync);
+   }, []);
 
   const filteredActivities = useMemo(() => {
     if (!activitySearchQuery.trim()) return wochenAktivitaeten;
@@ -584,56 +626,67 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
     localStorage.setItem('ty-activity-counts', JSON.stringify(nextCounts));
     window.dispatchEvent(new Event('ty-counts-sync'));
 
-    let nextChecked = [...checkedActivities];
-    if (nextCount === 0) {
-      nextChecked = nextChecked.filter(x => x !== id);
-      // Also remove from completedRituals if it is a Jungbrunnen activity
-      if (typeof id === 'string' && id.startsWith('Jungbrunnen:')) {
-        const cardTitle = id.replace('Jungbrunnen: ', '');
-        const oracleCards = [
-          { id: 'Cryo-Challenge', title: 'Cryo-Challenge' },
-          { id: 'HIIT-Booster', title: 'HIIT Booster' },
-          { id: 'Deep-Breath', title: 'Deep-Breath-Ritual' },
-          { id: 'Morgenlicht', title: 'Morgenlicht-Spaziergang' },
-          { id: 'Fasten-Sprint', title: 'Fasten-Sprint' },
-          { id: 'Power-Nap', title: 'Power-Nap' },
-          { id: 'Beeren-Detox', title: 'Beeren-Detox-Snack' }
-        ];
-        const card = oracleCards.find(c => c.title === cardTitle || c.id === cardTitle);
-        if (card) {
-          const updatedCompletions = completedRituals.filter(cId => cId !== card.id);
-          setCompletedRituals(updatedCompletions);
-          localStorage.setItem('ty-completed-rituals', JSON.stringify(updatedCompletions));
-        }
-      }
-    } else {
-      if (!nextChecked.includes(id)) {
-        nextChecked.push(id);
-      }
-      // Also add to completedRituals if it is a Jungbrunnen activity
-      if (typeof id === 'string' && id.startsWith('Jungbrunnen:')) {
-        const cardTitle = id.replace('Jungbrunnen: ', '');
-        const oracleCards = [
-          { id: 'Cryo-Challenge', title: 'Cryo-Challenge' },
-          { id: 'HIIT-Booster', title: 'HIIT Booster' },
-          { id: 'Deep-Breath', title: 'Deep-Breath-Ritual' },
-          { id: 'Morgenlicht', title: 'Morgenlicht-Spaziergang' },
-          { id: 'Fasten-Sprint', title: 'Fasten-Sprint' },
-          { id: 'Power-Nap', title: 'Power-Nap' },
-          { id: 'Beeren-Detox', title: 'Beeren-Detox-Snack' }
-        ];
-        const card = oracleCards.find(c => c.title === cardTitle || c.id === cardTitle);
-        if (card && !completedRituals.includes(card.id)) {
-          const updatedCompletions = [...completedRituals, card.id];
-          setCompletedRituals(updatedCompletions);
-          localStorage.setItem('ty-completed-rituals', JSON.stringify(updatedCompletions));
-        }
-      }
-    }
-    setCheckedActivities(nextChecked);
-    localStorage.setItem('ty-checked-activities', JSON.stringify(nextChecked));
-    window.dispatchEvent(new Event('ty-activities-sync'));
-  };
+     let nextChecked = [...checkedActivities];
+     const tsStr = localStorage.getItem('ty-activity-timestamps');
+     const timestamps = tsStr ? JSON.parse(tsStr) : {};
+ 
+     if (nextCount === 0) {
+       nextChecked = nextChecked.filter(x => x !== id);
+       delete timestamps[id];
+       // Also remove from completedRituals if it is a Jungbrunnen activity
+       if (typeof id === 'string' && id.startsWith('Jungbrunnen:')) {
+         const cardTitle = id.replace('Jungbrunnen: ', '');
+         const oracleCards = [
+           { id: 'Cryo-Challenge', title: 'Cryo-Challenge' },
+           { id: 'HIIT-Booster', title: 'HIIT Booster' },
+           { id: 'Deep-Breath', title: 'Deep-Breath-Ritual' },
+           { id: 'Morgenlicht', title: 'Morgenlicht-Spaziergang' },
+           { id: 'Fasten-Sprint', title: 'Fasten-Sprint' },
+           { id: 'Power-Nap', title: 'Power-Nap' },
+           { id: 'Beeren-Detox', title: 'Beeren-Detox-Snack' }
+         ];
+         const card = oracleCards.find(c => c.title === cardTitle || c.id === cardTitle);
+         if (card) {
+           const updatedCompletions = completedRituals.filter(cId => cId !== card.id);
+           setCompletedRituals(updatedCompletions);
+           localStorage.setItem('ty-completed-rituals', JSON.stringify(updatedCompletions));
+         }
+       }
+     } else {
+       if (!nextChecked.includes(id)) {
+         nextChecked.push(id);
+       }
+       if (!timestamps[id]) {
+         const now = new Date();
+         const hrs = String(now.getHours()).padStart(2, '0');
+         const mins = String(now.getMinutes()).padStart(2, '0');
+         timestamps[id] = `${hrs}:${mins} Uhr`;
+       }
+       // Also add to completedRituals if it is a Jungbrunnen activity
+       if (typeof id === 'string' && id.startsWith('Jungbrunnen:')) {
+         const cardTitle = id.replace('Jungbrunnen: ', '');
+         const oracleCards = [
+           { id: 'Cryo-Challenge', title: 'Cryo-Challenge' },
+           { id: 'HIIT-Booster', title: 'HIIT Booster' },
+           { id: 'Deep-Breath', title: 'Deep-Breath-Ritual' },
+           { id: 'Morgenlicht', title: 'Morgenlicht-Spaziergang' },
+           { id: 'Fasten-Sprint', title: 'Fasten-Sprint' },
+           { id: 'Power-Nap', title: 'Power-Nap' },
+           { id: 'Beeren-Detox', title: 'Beeren-Detox-Snack' }
+         ];
+         const card = oracleCards.find(c => c.title === cardTitle || c.id === cardTitle);
+         if (card && !completedRituals.includes(card.id)) {
+           const updatedCompletions = [...completedRituals, card.id];
+           setCompletedRituals(updatedCompletions);
+           localStorage.setItem('ty-completed-rituals', JSON.stringify(updatedCompletions));
+         }
+       }
+     }
+     localStorage.setItem('ty-activity-timestamps', JSON.stringify(timestamps));
+     setCheckedActivities(nextChecked);
+     localStorage.setItem('ty-checked-activities', JSON.stringify(nextChecked));
+     window.dispatchEvent(new Event('ty-activities-sync'));
+   };
 
   const handleGeneratePDF = () => {
     if (typeof window === 'undefined') return;
@@ -1754,25 +1807,33 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                     return <div style={{ color: '#94a3b8', fontStyle: 'italic', textAlign: 'center', padding: '1rem' }}>Noch keine Feel Good Aktivitäten absolviert.</div>;
                   }
 
-                  return (
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                      {completedFeelGood.map((act, index) => (
-                        <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1rem 1.25rem', transition: 'all 0.2s ease', flexWrap: 'wrap', gap: '1rem' }} className="fg-activity-item">
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                            <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#fff', border: '1.5px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
-                              {act.icon}
-                            </div>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
-                              <strong style={{ fontSize: '1.1rem', color: '#1e293b', fontWeight: 700 }}>{act.name}</strong>
-                              <span style={{ fontSize: 'calc(0.85rem + 2pt)', color: '#64748b', fontWeight: 500 }}>{act.detail}</span>
-                            </div>
-                          </div>
-                          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                            <span style={{ fontSize: 'calc(0.85rem + 2pt)', color: '#64748b', fontWeight: 500 }}>Eingetragen: Heute, {logTimeStr}</span>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: '#f0f9ff', border: '1px solid #bae6fd', padding: '0.5rem 1rem', borderRadius: '12px', color: '#0369a1', fontWeight: 800, fontSize: '0.95rem' }}>
-                              <span>💎</span>
-                              <span>+{act.diamonds}</span>
-                            </div>
+                   const savedTimestamps = (() => {
+                     if (typeof window === 'undefined') return {};
+                     const saved = localStorage.getItem('ty-activity-timestamps');
+                     return saved ? JSON.parse(saved) : {};
+                   })();
+
+                   return (
+                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                       {completedFeelGood.map((act, index) => {
+                         const completionTime = savedTimestamps[act.id] || logTimeStr;
+                         return (
+                           <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1rem 1.25rem', transition: 'all 0.2s ease', flexWrap: 'wrap', gap: '1rem' }} className="fg-activity-item">
+                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                               <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#fff', border: '1.5px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                                 {act.icon}
+                               </div>
+                               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                                 <strong style={{ fontSize: '1.1rem', color: '#1e293b', fontWeight: 700 }}>{act.name}</strong>
+                                 <span style={{ fontSize: 'calc(0.85rem + 2pt)', color: '#64748b', fontWeight: 500 }}>{act.detail}</span>
+                               </div>
+                             </div>
+                             <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+                               <span style={{ fontSize: 'calc(0.85rem + 2pt)', color: '#64748b', fontWeight: 500 }}>Eingetragen: Heute, {completionTime}</span>
+                               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#f0f9ff', border: '1px solid #bae6fd', padding: '0.6rem 1.2rem', borderRadius: '14px', color: '#0369a1', fontWeight: 800, fontSize: '1.45rem', lineHeight: 1 }}>
+                                 <span style={{ fontSize: '1.5rem', display: 'inline-flex', alignItems: 'center' }}>💎</span>
+                                 <span style={{ display: 'inline-flex', alignItems: 'center' }}>+{act.diamonds}</span>
+                               </div>
                             
                             {/* Round X Delete Button */}
                             <button 
@@ -1799,9 +1860,10 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                             >
                               <i className="bi bi-trash" style={{ color: '#ef4444', fontSize: '1.1rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>
                             </button>
-                          </div>
-                        </div>
-                      ))}
+                           </div>
+                         </div>
+                       );
+                     })}
                     </div>
                   );
                 })()}
