@@ -1647,7 +1647,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                 </div>
                 
                 <div className="modal-pane-right">
-                  <h3 className="modal-title">Aktivität auswählen</h3>
+                  <h3 className="modal-title">Wochenaktivität auswählen</h3>
                   <div className="search-bar-container">
                     <input 
                       type="text" 
