@@ -217,16 +217,33 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   const [activityCounts, setActivityCounts] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (jungbrunnenSubView === 'oracle') {
-        document.body.classList.add('oracle-scroll-lock');
-      } else {
-        document.body.classList.remove('oracle-scroll-lock');
+    const handleResizeOrScroll = () => {
+      if (typeof window !== 'undefined') {
+        const isMobile = window.innerWidth <= 992;
+        if (jungbrunnenSubView === 'oracle' && !isMobile) {
+          document.body.classList.add('oracle-scroll-lock');
+        } else {
+          document.body.classList.remove('oracle-scroll-lock');
+        }
       }
+    };
+
+    if (typeof window !== 'undefined') {
+      if (['oracle', 'selection', 'alchemist'].includes(jungbrunnenSubView)) {
+        window.scrollTo(0, 0);
+        const wrapper = document.querySelector('.content-wrapper');
+        if (wrapper) {
+          wrapper.scrollTop = 0;
+        }
+      }
+      handleResizeOrScroll();
+      window.addEventListener('resize', handleResizeOrScroll);
     }
+
     return () => {
       if (typeof window !== 'undefined') {
         document.body.classList.remove('oracle-scroll-lock');
+        window.removeEventListener('resize', handleResizeOrScroll);
       }
     };
   }, [jungbrunnenSubView]);
@@ -783,7 +800,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                </div>
 
                {/* Right Widget: Reward in Diamonds */}
-                <div title="Verdiene +5 Diamanten durch erfolgreiches Abschließen des täglichen Rituals!" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', width: '160px', cursor: 'help' }}>
+                <div title="Verdiene +3 Diamanten durch erfolgreiches Abschließen des täglichen Rituals!" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', width: '160px', cursor: 'help' }}>
                   <div style={{ 
                     width: '96px', 
                     height: '96px', 
@@ -801,7 +818,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                     💎
                   </div>
                   <span style={{ display: 'block', width: '100%', fontSize: '1.15rem', color: '#f8fafc', fontWeight: 850, textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'center', lineHeight: '1.3', marginTop: '0.5rem' }}>
-                    +5 Diamanten<br />verdienen
+                    +3 Diamanten<br />verdienen
                   </span>
                 </div>
 
@@ -824,7 +841,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             <div style={{ display: 'flex', gap: '1rem', background: 'rgba(255,255,255,0.04)', padding: '0.6rem 1.5rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.08)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, color: '#fbbf24', fontSize: '1rem' }}>
                 <span>💎</span>
-                <span>+5 Diamanten</span>
+                <span>+3 Diamanten</span>
               </div>
               <div style={{ width: '1px', background: 'rgba(255,255,255,0.1)' }}></div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, color: '#60a5fa', fontSize: '1rem' }}>
