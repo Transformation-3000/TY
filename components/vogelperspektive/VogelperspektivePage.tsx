@@ -1648,6 +1648,9 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                 
                 <div className="modal-pane-right">
                   <h3 className="modal-title">Aktivität auswählen</h3>
+                  <p style={{ fontSize: '0.9rem', color: '#64748b', marginTop: '-1rem', marginBottom: '1.5rem', fontWeight: 500 }}>
+                    Diese Aktivitäten werden nur für eine Woche gespeichert und montags um 00:00 Uhr wieder auf Null gesetzt.
+                  </p>
                   <div className="search-bar-container">
                     <input 
                       type="text" 
