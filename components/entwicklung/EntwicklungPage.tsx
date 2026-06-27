@@ -409,6 +409,31 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
   }, []);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const currentMonday = (() => {
+        const today = new Date();
+        const day = today.getDay();
+        const diffToMonday = day === 0 ? -6 : 1 - day;
+        const monday = new Date(today);
+        monday.setDate(today.getDate() + diffToMonday);
+        monday.setHours(0, 0, 0, 0);
+        return monday.toISOString().split('T')[0];
+      })();
+
+      const lastWeekStart = localStorage.getItem('ty-last-week-start');
+      if (lastWeekStart && lastWeekStart !== currentMonday) {
+        const defaultChecked = ['8–8,5 Std. geschlafen', 'Schritte gegangen'];
+        localStorage.setItem('ty-checked-activities', JSON.stringify(defaultChecked));
+        localStorage.setItem('ty-activity-counts', JSON.stringify({}));
+        localStorage.removeItem('ty-cryo-dismissed');
+        localStorage.setItem('ty-last-week-start', currentMonday);
+        window.dispatchEvent(new Event('ty-activities-sync'));
+        window.dispatchEvent(new Event('ty-counts-sync'));
+      } else if (!lastWeekStart) {
+        localStorage.setItem('ty-last-week-start', currentMonday);
+      }
+    }
+
     const saved = localStorage.getItem('ty-checked-activities');
     if (saved) {
       setCheckedActivities(JSON.parse(saved));

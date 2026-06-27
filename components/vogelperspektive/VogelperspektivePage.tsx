@@ -202,6 +202,31 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   }, [jungbrunnenSubView]);
 
   useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const currentMonday = (() => {
+        const today = new Date();
+        const day = today.getDay();
+        const diffToMonday = day === 0 ? -6 : 1 - day;
+        const monday = new Date(today);
+        monday.setDate(today.getDate() + diffToMonday);
+        monday.setHours(0, 0, 0, 0);
+        return monday.toISOString().split('T')[0];
+      })();
+
+      const lastWeekStart = localStorage.getItem('ty-last-week-start');
+      if (lastWeekStart && lastWeekStart !== currentMonday) {
+        const defaultChecked = ['8-8,5 Std. geschlafen', 'Schritte gegangen'];
+        localStorage.setItem('ty-checked-activities', JSON.stringify(defaultChecked));
+        localStorage.setItem('ty-activity-counts', JSON.stringify({}));
+        localStorage.removeItem('ty-cryo-dismissed');
+        localStorage.setItem('ty-last-week-start', currentMonday);
+        window.dispatchEvent(new Event('ty-activities-sync'));
+        window.dispatchEvent(new Event('ty-counts-sync'));
+      } else if (!lastWeekStart) {
+        localStorage.setItem('ty-last-week-start', currentMonday);
+      }
+    }
+
     const saved = localStorage.getItem('ty-checked-activities');
     if (saved) {
       setSelectedActivities(JSON.parse(saved));
@@ -1648,9 +1673,6 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                 
                 <div className="modal-pane-right">
                   <h3 className="modal-title">Wochenaktivität auswählen</h3>
-                  <p style={{ fontSize: '0.9rem', color: '#64748b', marginTop: '-1rem', marginBottom: '1.5rem', fontWeight: 500 }}>
-                    Diese Aktivitäten werden dynamisch im Activity-Tracker nur für eine Woche gespeichert und montags um 00:00 Uhr wieder auf Null gesetzt.
-                  </p>
                   <div className="search-bar-container">
                     <input 
                       type="text" 
