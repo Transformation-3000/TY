@@ -1912,8 +1912,8 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             {activeModal === 'diamonds' && (
               <div className="modal-body diamonds-modal-body" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                 <div className="diamonds-modal-header-section" style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
-                  <div className="diamonds-modal-badge" style={{ width: '55px', height: '55px', borderRadius: '18px', background: '#eefdf8', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(115, 196, 128, 0.2)' }}>
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1.8em', height: '1.8em', color: '#73c480' }}>
+                  <div className="diamonds-modal-badge" style={{ width: '55px', height: '55px', borderRadius: '18px', background: '#f0f9ff', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(96, 153, 207, 0.2)' }}>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1.8em', height: '1.8em', color: '#6099cf' }}>
                       <path d="M6 3h12l4 6-10 12L2 9z"></path>
                       <path d="M11 3L8 9l3 12"></path>
                       <path d="M13 3l3 6-3 12"></path>
@@ -2042,110 +2042,113 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                             </div>
                           ))}
                         </div>
-                        {/* SUM ROW */}
-                        <div className="diamonds-sum-row" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.5fr', padding: '0', borderTop: '2px solid #cbd5e1', background: '#ffffff', fontWeight: 700 }}>
-                          <span className="col-act" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.15rem', color: '#1e293b', fontWeight: 400 }}>
-                            Gesamt
-                          </span>
-                          <span className="col-val" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.1rem', color: '#94a3b8', fontWeight: 400 }}>
-                            —
-                          </span>
-                          <span className="col-date" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.1rem', color: '#64748b', fontWeight: 500 }}>
-                            Letzte 7 Tage
-                          </span>
-                          <span className="col-gems" style={{ padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1.3em', height: '1.3em', color: '#6099cf' }}>
-                              <path d="M6 3h12l4 6-10 12L2 9z"></path>
-                              <path d="M11 3L8 9l3 12"></path>
-                              <path d="M13 3l3 6-3 12"></path>
-                              <path d="M2 9h20"></path>
-                            </svg>
-                            <span style={{ fontSize: '1.25rem', color: '#6099cf', fontWeight: 800 }}>{totalDiamonds} Diamanten</span>
-                          </span>
-                        </div>
-                        {/* TREND ROW */}
-                        <div className="diamonds-trend-row" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.5fr', padding: '0', borderTop: '1px solid #f1f5f9', background: '#ffffff', fontWeight: 700 }}>
-                          <span className="col-act" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.15rem', color: '#1e293b', fontWeight: 400 }}>
-                            Trend zu Vorwoche
-                          </span>
-                          <span className="col-val" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.1rem', color: '#94a3b8', fontWeight: 400 }}>
-                            —
-                          </span>
-                          <span className="col-date" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.1rem', color: '#16a34a', fontWeight: 600, gap: '0.4rem' }}>
-                            +12%
-                          </span>
-                          <span className="col-gems" style={{ padding: '0.8rem 1rem', display: 'flex', alignItems: 'center' }}>
-                            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 1rem', borderRadius: '50px', background: '#f0fdf4', border: '1.5px solid #bbf7d0', color: '#15803d', fontSize: '0.95rem', fontWeight: 700 }}>
-                              Auf Longevity-Kurs
-                            </div>
-                          </span>
-                        </div>
-                        {/* LONG-TERM TREND ROW WITH CHART */}
-                        <div className="diamonds-longterm-trend-row" style={{ display: 'grid', gridTemplateColumns: '2.2fr 3.7fr', padding: '0', borderTop: '1px solid #f1f5f9', background: '#ffffff', fontWeight: 700 }}>
-                          <span className="col-act" style={{ padding: '1.2rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.15rem', color: '#1e293b', fontWeight: 400 }}>
-                            Langzeittrend
-                          </span>
-                          <span style={{ padding: '0.65rem 1.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
-                            <div style={{ width: '100%', maxWidth: '420px', margin: '0 auto' }}>
-                              {(() => {
-                                const getWeekRangeString = (weeksAgo: number) => {
-                                  const now = new Date();
-                                  const currentDay = now.getDay();
-                                  const distanceToMonday = currentDay === 0 ? -6 : 1 - currentDay;
-                                  
-                                  const monday = new Date(now);
-                                  monday.setDate(now.getDate() + distanceToMonday - (weeksAgo * 7));
-                                  
-                                  const sunday = new Date(monday);
-                                  sunday.setDate(monday.getDate() + 6);
-                                  
-                                  const format = (d: Date) => {
-                                    return d.toLocaleDateString('de-DE', { day: 'numeric', month: 'short' });
+                        {/* BOTTOM STATS CARD CONTAINER */}
+                        <div className="diamonds-bottom-stats-card" style={{ border: '1.5px solid #cbd5e1', borderRadius: '16px', overflow: 'hidden', marginTop: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
+                          {/* SUM ROW */}
+                          <div className="diamonds-sum-row" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.5fr', padding: '0', background: '#ffffff', fontWeight: 700 }}>
+                            <span className="col-act" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.15rem', color: '#1e293b', fontWeight: 800 }}>
+                              Gesamt
+                            </span>
+                            <span className="col-val" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.1rem', color: '#94a3b8', fontWeight: 400 }}>
+                              —
+                            </span>
+                            <span className="col-date" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.1rem', color: '#64748b', fontWeight: 500 }}>
+                              Letzte 7 Tage
+                            </span>
+                            <span className="col-gems" style={{ padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1.3em', height: '1.3em', color: '#22c55e' }}>
+                                <path d="M6 3h12l4 6-10 12L2 9z"></path>
+                                <path d="M11 3L8 9l3 12"></path>
+                                <path d="M13 3l3 6-3 12"></path>
+                                <path d="M2 9h20"></path>
+                              </svg>
+                              <span style={{ fontSize: '1.25rem', color: '#22c55e', fontWeight: 800 }}>{totalDiamonds} Diamanten</span>
+                            </span>
+                          </div>
+                          {/* TREND ROW */}
+                          <div className="diamonds-trend-row" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.5fr', padding: '0', borderTop: '1px solid #cbd5e1', background: '#ffffff', fontWeight: 700 }}>
+                            <span className="col-act" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.15rem', color: '#1e293b', fontWeight: 800 }}>
+                              Trend zu Vorwoche
+                            </span>
+                            <span className="col-val" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.1rem', color: '#94a3b8', fontWeight: 400 }}>
+                              —
+                            </span>
+                            <span className="col-date" style={{ padding: '0.8rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.1rem', color: '#16a34a', fontWeight: 600, gap: '0.4rem' }}>
+                              +12%
+                            </span>
+                            <span className="col-gems" style={{ padding: '0.8rem 1rem', display: 'flex', alignItems: 'center' }}>
+                              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', padding: '0.4rem 1rem', borderRadius: '50px', background: '#f0fdf4', border: '1.5px solid #bbf7d0', color: '#15803d', fontSize: '0.95rem', fontWeight: 700 }}>
+                                Auf Longevity-Kurs
+                              </div>
+                            </span>
+                          </div>
+                          {/* LONG-TERM TREND ROW WITH CHART */}
+                          <div className="diamonds-longterm-trend-row" style={{ display: 'grid', gridTemplateColumns: '2.2fr 3.7fr', padding: '0', borderTop: '1px solid #cbd5e1', background: '#ffffff', fontWeight: 700 }}>
+                            <span className="col-act" style={{ padding: '1.2rem 1rem', borderRight: '1.5px solid #f1f5f9', display: 'flex', alignItems: 'center', fontSize: '1.15rem', color: '#1e293b', fontWeight: 800 }}>
+                              Langzeittrend
+                            </span>
+                            <span style={{ padding: '0.65rem 1.5rem', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                              <div style={{ width: '100%', maxWidth: '420px', margin: '0 auto' }}>
+                                {(() => {
+                                  const getWeekRangeString = (weeksAgo: number) => {
+                                    const now = new Date();
+                                    const currentDay = now.getDay();
+                                    const distanceToMonday = currentDay === 0 ? -6 : 1 - currentDay;
+                                    
+                                    const monday = new Date(now);
+                                    monday.setDate(now.getDate() + distanceToMonday - (weeksAgo * 7));
+                                    
+                                    const sunday = new Date(monday);
+                                    sunday.setDate(monday.getDate() + 6);
+                                    
+                                    const format = (d: Date) => {
+                                      return d.toLocaleDateString('de-DE', { day: 'numeric', month: 'short' });
+                                    };
+                                    
+                                    return format(sunday);
                                   };
-                                  
-                                  return format(sunday);
-                                };
 
-                                return (
-                                  <svg viewBox="0 0 400 90" style={{ width: '100%', height: 'auto', overflow: 'visible' }}>
-                                    <defs>
-                                      <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
-                                        <stop offset="0%" stopColor="#22c55e" stopOpacity="0.25" />
-                                        <stop offset="100%" stopColor="#22c55e" stopOpacity="0.0" />
-                                      </linearGradient>
-                                    </defs>
-                                    
-                                    {/* Background grid line */}
-                                    <line x1="15" y1="70" x2="385" y2="70" stroke="#f1f5f9" strokeWidth="1.5" strokeDasharray="3 3" />
-                                    <line x1="15" y1="45" x2="385" y2="45" stroke="#f1f5f9" strokeWidth="1.5" strokeDasharray="3 3" />
-                                    <line x1="15" y1="20" x2="385" y2="20" stroke="#f1f5f9" strokeWidth="1.5" strokeDasharray="3 3" />
+                                  return (
+                                    <svg viewBox="0 0 400 90" style={{ width: '100%', height: 'auto', overflow: 'visible' }}>
+                                      <defs>
+                                        <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                                          <stop offset="0%" stopColor="#22c55e" stopOpacity="0.25" />
+                                          <stop offset="100%" stopColor="#22c55e" stopOpacity="0.0" />
+                                        </linearGradient>
+                                      </defs>
+                                      
+                                      {/* Background grid line */}
+                                      <line x1="15" y1="70" x2="385" y2="70" stroke="#f1f5f9" strokeWidth="1.5" strokeDasharray="3 3" />
+                                      <line x1="15" y1="45" x2="385" y2="45" stroke="#f1f5f9" strokeWidth="1.5" strokeDasharray="3 3" />
+                                      <line x1="15" y1="20" x2="385" y2="20" stroke="#f1f5f9" strokeWidth="1.5" strokeDasharray="3 3" />
 
-                                    {/* Filled gradient area */}
-                                    <path d="M 15 60 C 80 40, 100 35, 138 35 C 180 35, 220 58, 261 58 C 300 58, 350 15, 385 15 L 385 70 L 15 70 Z" fill="url(#chartGrad)" />
+                                      {/* Filled gradient area */}
+                                      <path d="M 15 60 C 80 40, 100 35, 138 35 C 180 35, 220 58, 261 58 C 300 58, 350 15, 385 15 L 385 70 L 15 70 Z" fill="url(#chartGrad)" />
 
-                                    {/* Glow line */}
-                                    <path d="M 15 60 C 80 40, 100 35, 138 35 C 180 35, 220 58, 261 58 C 300 58, 350 15, 385 15" stroke="#22c55e" strokeWidth="6" strokeLinecap="round" strokeOpacity="0.15" fill="none" />
-                                    
-                                    {/* Chart line */}
-                                    <path d="M 15 60 C 80 40, 100 35, 138 35 C 180 35, 220 58, 261 58 C 300 58, 350 15, 385 15" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" fill="none" />
+                                      {/* Glow line */}
+                                      <path d="M 15 60 C 80 40, 100 35, 138 35 C 180 35, 220 58, 261 58 C 300 58, 350 15, 385 15" stroke="#22c55e" strokeWidth="6" strokeLinecap="round" strokeOpacity="0.15" fill="none" />
+                                      
+                                      {/* Chart line */}
+                                      <path d="M 15 60 C 80 40, 100 35, 138 35 C 180 35, 220 58, 261 58 C 300 58, 350 15, 385 15" stroke="#22c55e" strokeWidth="3" strokeLinecap="round" fill="none" />
 
-                                    {/* Data points */}
-                                    <circle cx="15" cy="60" r="4" fill="#fff" stroke="#22c55e" strokeWidth="2.5" />
-                                    <circle cx="138" cy="35" r="4" fill="#fff" stroke="#22c55e" strokeWidth="2.5" />
-                                    <circle cx="261" cy="58" r="4" fill="#fff" stroke="#22c55e" strokeWidth="2.5" />
-                                    <circle cx="385" cy="15" r="6" fill="#22c55e" stroke="#fff" strokeWidth="2" />
-                                    <circle cx="385" cy="15" r="9" fill="none" stroke="#22c55e" strokeWidth="1.5" strokeOpacity="0.5" />
+                                      {/* Data points */}
+                                      <circle cx="15" cy="60" r="4" fill="#fff" stroke="#22c55e" strokeWidth="2.5" />
+                                      <circle cx="138" cy="35" r="4" fill="#fff" stroke="#22c55e" strokeWidth="2.5" />
+                                      <circle cx="261" cy="58" r="4" fill="#fff" stroke="#22c55e" strokeWidth="2.5" />
+                                      <circle cx="385" cy="15" r="6" fill="#22c55e" stroke="#fff" strokeWidth="2" />
+                                      <circle cx="385" cy="15" r="9" fill="none" stroke="#22c55e" strokeWidth="1.5" strokeOpacity="0.5" />
 
-                                    {/* Labels */}
-                                    <text x="15" y="86" fontSize="9" fill="#94a3b8" fontWeight="600" textAnchor="middle">{getWeekRangeString(3)}</text>
-                                    <text x="138" y="86" fontSize="9" fill="#94a3b8" fontWeight="600" textAnchor="middle">{getWeekRangeString(2)}</text>
-                                    <text x="261" y="86" fontSize="9" fill="#94a3b8" fontWeight="600" textAnchor="middle">{getWeekRangeString(1)}</text>
-                                    <text x="385" y="86" fontSize="9" fill="#22c55e" fontWeight="700" textAnchor="middle">{getWeekRangeString(0)}</text>
-                                  </svg>
-                                );
-                              })()}
-                            </div>
-                          </span>
+                                      {/* Labels */}
+                                      <text x="15" y="86" fontSize="13" fill="#94a3b8" fontWeight="600" textAnchor="middle">{getWeekRangeString(3)}</text>
+                                      <text x="138" y="86" fontSize="13" fill="#94a3b8" fontWeight="600" textAnchor="middle">{getWeekRangeString(2)}</text>
+                                      <text x="261" y="86" fontSize="13" fill="#94a3b8" fontWeight="600" textAnchor="middle">{getWeekRangeString(1)}</text>
+                                      <text x="385" y="86" fontSize="13" fill="#22c55e" fontWeight="700" textAnchor="middle">{getWeekRangeString(0)}</text>
+                                    </svg>
+                                  );
+                                })()}
+                              </div>
+                            </span>
+                          </div>
                         </div>
                       </div>
                     );
@@ -2412,10 +2415,10 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         .act-duration { font-size: 0.8rem; color: #4498ca; font-weight: 500; }
 
         .diamonds-footer-pill { 
-          background: linear-gradient(90deg, #eefdf8 0%, #e8f4f8 100%); 
+          background: #eefdf8; 
           border-radius: 20px; padding: 0.9rem 1.25rem; 
           display: flex; justify-content: space-between; align-items: center; margin-top: auto; 
-          border: 1px solid rgba(115, 196, 128, 0.1);
+          border: 1px solid rgba(115, 196, 128, 0.2);
           cursor: pointer;
           transition: all 0.2s;
         }
