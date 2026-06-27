@@ -1700,12 +1700,14 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
 
                       return sortedCategoryNames.map(groupName => {
                         const sortedActs = [...groups[groupName]].sort((a, b) => a.name.localeCompare(b, 'de'));
+                        const orderIdx = categoryOrder.indexOf(groupName);
+                        const prefix = orderIdx !== -1 && groupName !== 'Sonstiges' ? (orderIdx + 1) + '. ' : '';
 
                         return (
                           <div key={groupName} className="activity-group" style={{ marginBottom: '1.5rem' }}>
                             <h4 className="activity-group-title">
                               <i className={`bi ${categoryIcons[groupName] || 'bi-bookmark'} group-icon`} style={{ color: '#6099cf', fontSize: '1.25rem' }}></i>
-                              <span>{groupName}</span>
+                              <span>{prefix}{groupName}</span>
                             </h4>
                             <div className="activity-group-items" style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
                               {sortedActs.map((act) => {
