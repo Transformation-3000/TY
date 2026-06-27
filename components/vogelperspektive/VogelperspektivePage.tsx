@@ -719,7 +719,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
 
   if (jungbrunnenSubView === 'oracle') {
     return (
-      <div className="dashboard-container jungbrunnen-subpage-container oracle-subpage-container" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: 'linear-gradient(160deg,#091221 0%,#0f1d33 40%,#080e1a 70%,#0a1424 100%)', minHeight: 'calc(100vh - 72px)', color: '#fff', boxSizing: 'border-box', width: '100%', maxWidth: 'none', margin: 0, padding: '1.25rem 2rem', position: 'relative' }}>
+      <div className="dashboard-container jungbrunnen-subpage-container oracle-subpage-container" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: 'linear-gradient(160deg,#091221 0%,#0f1d33 40%,#080e1a 70%,#0a1424 100%)', height: oracleQuestCompleted ? 'calc(100vh - 72px)' : 'auto', minHeight: 'calc(100vh - 72px)', overflow: oracleQuestCompleted ? 'hidden' : 'visible', justifyContent: oracleQuestCompleted ? 'center' : 'flex-start', alignItems: oracleQuestCompleted ? 'center' : 'stretch', color: '#fff', boxSizing: 'border-box', width: '100%', maxWidth: 'none', margin: 0, padding: '1.25rem 2rem', position: 'relative' }}>
          <style jsx global>{`
           .oracle-info-tooltip-container {
             position: absolute;
@@ -804,16 +804,18 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         `}</style>
 
         {/* Circular Info Tooltip */}
-        <div className="oracle-info-tooltip-container">
-          <div className="oracle-info-circle" style={{ width: '32px', height: '32px', borderRadius: '50%', border: '2px solid #ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff', cursor: 'help', fontWeight: 800, fontSize: '1.05rem', fontFamily: 'system-ui', position: 'relative' }}>
-            i
-            <div className="oracle-info-tooltip-text">
-              Diese Karte zeigt deine tägliche biologische Verjüngungsaktion.
-              Klicke nach erfolgreichem Abschluss auf „Ritual gemeistert“, um sie abzuhaken.
-              Die Aktivität wird automatisch in deinen Wochenaktivitäten und in der Diamond Lounge eingetragen.
+        {!oracleQuestCompleted && (
+          <div className="oracle-info-tooltip-container">
+            <div className="oracle-info-circle" style={{ width: '32px', height: '32px', borderRadius: '50%', border: '2px solid #ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff', cursor: 'help', fontWeight: 800, fontSize: '1.05rem', fontFamily: 'system-ui', position: 'relative' }}>
+              i
+              <div className="oracle-info-tooltip-text">
+                Diese Karte zeigt deine tägliche biologische Verjüngungsaktion.
+                Klicke nach erfolgreichem Abschluss auf „Ritual gemeistert“, um sie abzuhaken.
+                Die Aktivität wird automatisch in deinen Wochenaktivitäten und in der Diamond Lounge eingetragen.
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
         {/* Ambient Glowing Background Orbs */}
         <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0, pointerEvents: 'none' }}>
@@ -838,6 +840,9 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           }} 
           style={{ 
             alignSelf: 'flex-start', 
+            position: oracleQuestCompleted ? 'absolute' : 'static',
+            top: oracleQuestCompleted ? '1.5rem' : 'auto',
+            left: oracleQuestCompleted ? '2rem' : 'auto',
             background: 'rgba(255,255,255,0.06)', 
             border: '1px solid rgba(255,255,255,0.12)', 
             color: '#f8fafc', 
@@ -849,7 +854,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             gap: '8px', 
             fontWeight: 750,
             transition: 'all 0.2s',
-            zIndex: 2
+            zIndex: 10
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.background = 'rgba(255,255,255,0.35)';
@@ -864,9 +869,11 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         </button>
 
         {/* Tägliches Ritual Badge */}
-        <div style={{ textAlign: 'center', margin: '0 auto 0.75rem auto', zIndex: 1 }}>
-          <span style={{ background: '#16a34a', color: '#ffffff', padding: '0.4rem 1.2rem', borderRadius: '20px', fontSize: '0.95rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Tägliches Ritual</span>
-        </div>
+        {!oracleQuestCompleted && (
+          <div style={{ textAlign: 'center', margin: '0 auto 0.75rem auto', zIndex: 1 }}>
+            <span style={{ background: '#16a34a', color: '#ffffff', padding: '0.4rem 1.2rem', borderRadius: '20px', fontSize: '0.95rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Tägliches Ritual</span>
+          </div>
+        )}
         {!oracleQuestCompleted ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', zIndex: 1, width: '100%' }}>
             
@@ -1030,7 +1037,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                     <button 
                       onClick={(e) => {
                         e.stopPropagation();
-                        setOracleCardFlipped(true);
+                        setOracleCardFlipped(false);
                         setTimeout(() => {
                           setOracleCardIndex((prev) => (prev - 1 + 7) % 7);
                         }, 200);
@@ -1069,7 +1076,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                     <button 
                       onClick={(e) => {
                         e.stopPropagation();
-                        setOracleCardFlipped(true);
+                        setOracleCardFlipped(false);
                         setTimeout(() => {
                           setOracleCardIndex((prev) => (prev + 1) % 7);
                         }, 200);
@@ -1106,112 +1113,33 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                   </div>
                 </div>
 
-             </div>
-           </div>
-        ) : (
-          /* ORACLE SUCCESS SCREEN */
-          <div className="dash-card" style={{ padding: '1.5rem 2rem', background: 'rgba(255, 255, 255, 0.03)', backdropFilter: 'blur(20px)', borderRadius: '28px', border: '1px solid rgba(255, 255, 255, 0.08)', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)', maxWidth: '580px', margin: '0 auto' }}>
-            <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(22, 163, 74, 0.15)', color: '#22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', border: '1px solid rgba(22, 163, 74, 0.25)' }}>
-              <i className="bi bi-check-lg"></i>
-            </div>
-            
-            <div>
-              <h2 style={{ color: '#fff', fontSize: '1.7rem', fontWeight: 900, marginBottom: '0.25rem', margin: 0 }}>Quest Erfolgreich Absolviert!</h2>
-              <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: 0 }}>
-                Großartige Leistung! Sie haben Ihre Zellen heute erfolgreich herausgefordert.
-              </p>
-            </div>
-
-            <div style={{ display: 'flex', gap: '1rem', background: 'rgba(255,255,255,0.04)', padding: '0.6rem 1.5rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.08)' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, color: '#fbbf24', fontSize: '1rem' }}>
-                <span>💎</span>
-                <span>+{currentCard.diamonds} Diamanten</span>
-              </div>
-              <div style={{ width: '1px', background: 'rgba(255,255,255,0.1)' }}></div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, color: '#60a5fa', fontSize: '1rem' }}>
-                <span>✨</span>
-                <span>+120 XP</span>
               </div>
             </div>
-
-            {/* Emoji Rating Loop */}
-            {!oracleRating ? (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center', width: '100%' }}>
-                <h4 style={{ color: '#e2e8f0', margin: 0, fontWeight: 700, fontSize: '0.9rem' }}>Wie hat es sich angefühlt?</h4>
-                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
-                  {[
-                    { text: '🥶 Eiskalt', val: 'cold' },
-                    { text: '⚡ Voller Energie', val: 'energy' },
-                    { text: '🧘 Fokussiert', val: 'focused' },
-                    { text: '🔋 Regeneriert', val: 'charged' }
-                  ].map((rate) => (
-                    <button 
-                      key={rate.val}
-                      onClick={() => setOracleRating(rate.val)}
-                      style={{
-                        background: 'rgba(255,255,255,0.06)',
-                        border: '1px solid rgba(255,255,255,0.12)',
-                        padding: '0.4rem 0.8rem',
-                        borderRadius: '10px',
-                        cursor: 'pointer',
-                        fontSize: '0.8rem',
-                        fontWeight: 700,
-                        color: '#f8fafc',
-                        transition: 'all 0.2s'
-                      }}
-                      onMouseEnter={(e) => {
-                        e.currentTarget.style.borderColor = '#60a5fa';
-                        e.currentTarget.style.background = 'rgba(96, 165, 250, 0.15)';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
-                        e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
-                      }}
-                    >
-                      {rate.text}
-                    </button>
-                  ))}
+          ) : (
+            /* ORACLE SUCCESS SCREEN */
+            <div style={{ display: 'flex', flex: 1, alignItems: 'center', justifyContent: 'center', width: '100%' }}>
+              <div className="dash-card" style={{ padding: '2rem', background: 'rgba(255, 255, 255, 0.03)', backdropFilter: 'blur(20px)', borderRadius: '28px', border: '1px solid rgba(255, 255, 255, 0.08)', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.25rem', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)', maxWidth: '580px', width: '100%', margin: '0 auto' }}>
+                <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: '#22c55e', color: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', boxShadow: '0 4px 14px rgba(34, 197, 94, 0.4)' }}>
+                  <i className="bi bi-check-lg"></i>
                 </div>
-              </div>
-            ) : (
-              <div style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '18px', padding: '1rem', display: 'flex', gap: '0.75rem', alignItems: 'center', textAlign: 'left', width: '100%', boxSizing: 'border-box' }}>
-                <div style={{ width: '40px', height: '40px', borderRadius: '50%', overflow: 'hidden', position: 'relative', flexShrink: 0 }}>
-                  <Image src="/images/avatar_lisa.png" fill alt="Lisa Coach" style={{ objectFit: 'cover' }} />
-                </div>
+                
                 <div>
-                  <strong style={{ color: '#34d399', display: 'block', marginBottom: '0.1rem', fontSize: '0.85rem' }}>Coach Lisa sagt:</strong>
-                  <span style={{ color: '#a7f3d0', fontSize: '0.85rem', lineHeight: '1.4', fontStyle: 'italic' }}>
-                    {oracleRating && currentCard.successText}
-                  </span>
+                  <h2 style={{ color: '#fff', fontSize: '1.7rem', fontWeight: 900, marginBottom: '0.5rem', margin: 0 }}>Aktivität erfolgreich erfasst!</h2>
+                  <p style={{ color: '#94a3b8', fontSize: 'calc(0.95rem + 2pt)', margin: 0, maxWidth: '440px', lineHeight: '1.4' }}>
+                    Deine Diamanten wurden bei den Wochenaktivitäten und der Diamonds-Lounge erfasst.
+                  </p>
                 </div>
-              </div>
-            )}
 
-            <button 
-              onClick={() => {
-                setJungbrunnenSubView('none');
-                setActiveModal('jungbrunnen-selection');
-                setOracleCardFlipped(false);
-                setOracleQuestCompleted(false);
-                setOracleRating(null);
-                setSelectedCardDesign(null);
-              }}
-              style={{
-                marginTop: '0.5rem',
-                background: '#fff',
-                color: '#0f172a',
-                border: 'none',
-                padding: '0.6rem 1.5rem',
-                borderRadius: '10px',
-                fontWeight: 750,
-                fontSize: '0.85rem',
-                cursor: 'pointer'
-              }}
-            >
-              Zurück zu Jungbrunnen
-            </button>
-          </div>
-        )}
+                <div style={{ display: 'flex', background: 'rgba(255,255,255,0.04)', padding: '0.6rem 1.5rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.08)' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, color: '#22c55e', fontSize: '1.2rem' }}>
+                    <span>💎</span>
+                    <span>+{currentCard.diamonds}</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          )}
       </div>
     );
   }
