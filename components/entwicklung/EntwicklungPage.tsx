@@ -170,8 +170,7 @@ const clusterNames = [
   'Zellerneuerung & Wachstum',
   'Immunbalance & Entlastung',
   'Selbstfürsorge & Soziale Bindungen',
-  'Mentale Resilienz',
-  'Jungbrunnen-Aktionen'
+  'Mentale Resilienz'
 ];
 
 const coachConfigs = {
@@ -457,15 +456,33 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
     setLogTimeStr(`${hrs}:${mins} Uhr`);
   }, []);
 
-  const handleRemoveFeelGood = (id: string) => {
-    if (id === 'Cryo-Challenge') {
-      setCryoDismissed(true);
-      localStorage.setItem('ty-cryo-dismissed', 'true');
-      window.dispatchEvent(new Event('ty-activities-sync'));
-    } else {
-      toggleActivity(id);
-    }
-  };
+   const handleRemoveFeelGood = (id: string) => {
+     // 1. Remove from checkedActivities
+     const nextChecked = checkedActivities.filter(item => item !== id);
+     setCheckedActivities(nextChecked);
+     localStorage.setItem('ty-checked-activities', JSON.stringify(nextChecked));
+     window.dispatchEvent(new Event('ty-activities-sync'));
+ 
+     // 2. If it is a Jungbrunnen activity, also remove from completed-rituals so Today page resets
+     if (typeof id === 'string' && id.startsWith('Jungbrunnen:')) {
+       const cardTitle = id.replace('Jungbrunnen: ', '');
+       const savedCompletions = localStorage.getItem('ty-completed-rituals');
+       if (savedCompletions) {
+         const completionsList = JSON.parse(savedCompletions) as string[];
+         const updated = completionsList.filter(title => title !== cardTitle && title !== id);
+         localStorage.setItem('ty-completed-rituals', JSON.stringify(updated));
+         setCompletedRituals(updated);
+         window.dispatchEvent(new Event('ty-activities-sync'));
+       }
+     }
+ 
+     // 3. Clear count in activityCounts
+     const nextCounts = { ...activityCounts };
+     delete nextCounts[id];
+     setActivityCounts(nextCounts);
+     localStorage.setItem('ty-activity-counts', JSON.stringify(nextCounts));
+     window.dispatchEvent(new Event('ty-counts-sync'));
+   };
 
   const currentWeekRange = useMemo(() => {
     const today = new Date();
@@ -1378,7 +1395,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                 <div className="wzc-circles">
                   {[...Array(4)].map((_, i) => (
                     <div key={i} className={`wzc-circle ${i < wochenziel1Progress ? 'done' : 'empty'}`}>
-                      {i < wochenziel1Progress && <i className="bi bi-check"></i>}
+                      {i < wochenziel1Progress && <i className="bi bi-check" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>}
                     </div>
                   ))}
                 </div>
@@ -1407,7 +1424,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                     onMouseLeave={(e) => { e.currentTarget.style.background = '#0284c7'; e.currentTarget.style.transform = 'none'; }}
                     title="Ereignis hinzufügen"
                   >
-                    <i className="bi bi-plus-lg" style={{ color: '#fff', fontSize: '1.1rem', fontWeight: 800 }}></i>
+                    <i className="bi bi-plus-lg" style={{ color: '#fff', fontSize: '1.15rem', fontWeight: 800, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>
                   </button>
                   
                   <button 
@@ -1422,7 +1439,6 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
-                      cursor: 'pointer',
                       boxShadow: '0 2px 5px rgba(239, 68, 68, 0.15)',
                       transition: 'all 0.2s',
                       padding: 0
@@ -1431,7 +1447,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                     onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.transform = 'none'; }}
                     title="Ereignis löschen"
                   >
-                    <i className="bi bi-trash" style={{ color: '#ef4444', fontSize: '1.05rem' }}></i>
+                    <i className="bi bi-trash" style={{ color: '#ef4444', fontSize: '1.1rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>
                   </button>
                 </div>
 
@@ -1459,7 +1475,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                 <div className="wzc-circles">
                   {[...Array(3)].map((_, i) => (
                     <div key={i} className={`wzc-circle ${i < wochenziel2Progress ? 'done' : 'empty'}`}>
-                      {i < wochenziel2Progress && <i className="bi bi-check"></i>}
+                      {i < wochenziel2Progress && <i className="bi bi-check" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>}
                     </div>
                   ))}
                 </div>
@@ -1488,7 +1504,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                     onMouseLeave={(e) => { e.currentTarget.style.background = '#0284c7'; e.currentTarget.style.transform = 'none'; }}
                     title="Ereignis hinzufügen"
                   >
-                    <i className="bi bi-plus-lg" style={{ color: '#fff', fontSize: '1.1rem', fontWeight: 800 }}></i>
+                    <i className="bi bi-plus-lg" style={{ color: '#fff', fontSize: '1.15rem', fontWeight: 800, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>
                   </button>
                   
                   <button 
@@ -1512,7 +1528,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                     onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.transform = 'none'; }}
                     title="Ereignis löschen"
                   >
-                    <i className="bi bi-trash" style={{ color: '#ef4444', fontSize: '1.05rem' }}></i>
+                    <i className="bi bi-trash" style={{ color: '#ef4444', fontSize: '1.1rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>
                   </button>
                 </div>
 
@@ -1683,7 +1699,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                                       {activityCounts[act.id]}x
                                     </span>
                                   ) : (
-                                    <i className="bi bi-check-lg" style={{ color: 'white', fontSize: '0.8rem' }}></i>
+                                    <i className="bi bi-check-lg" style={{ color: 'white', fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>
                                   )
                                 )}
                               </div>
@@ -1753,9 +1769,9 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                           </div>
                           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
                             <span style={{ fontSize: 'calc(0.85rem + 2pt)', color: '#64748b', fontWeight: 500 }}>Eingetragen: Heute, {logTimeStr}</span>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#f0f9ff', border: '1px solid #bae6fd', padding: '0.5rem 1rem', borderRadius: '12px', color: '#0369a1', fontWeight: 800, fontSize: '0.95rem' }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', background: '#f0f9ff', border: '1px solid #bae6fd', padding: '0.5rem 1rem', borderRadius: '12px', color: '#0369a1', fontWeight: 800, fontSize: '0.95rem' }}>
                               <span>💎</span>
-                              <span>+{act.diamonds} Diamanten verdient</span>
+                              <span>+{act.diamonds}</span>
                             </div>
                             
                             {/* Round X Delete Button */}
@@ -1781,7 +1797,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                               onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.transform = 'none'; }}
                               title="Aktivität löschen"
                             >
-                              <i className="bi bi-trash" style={{ color: '#ef4444', fontSize: '1.05rem' }}></i>
+                              <i className="bi bi-trash" style={{ color: '#ef4444', fontSize: '1.1rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>
                             </button>
                           </div>
                         </div>
