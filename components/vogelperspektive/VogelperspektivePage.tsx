@@ -226,6 +226,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       detail: 'Beende deine Dusche heute mit 2 Minuten eiskaltem Wasser. Atme dabei ruhig durch die Nase.',
       diamonds: 3,
       icon: '❄️',
+      image: '/images/hacks-cold.png',
       successText: '"Hervorragend, Monique! Genau dieser Kälte-Schock aktiviert die braunen Fettzellen. Deine Fettverbrennung läuft jetzt auf Hochtouren!"'
     },
     {
@@ -234,6 +235,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       detail: 'Absolviere 4 Intervalle à 30 Sekunden Kniebeuge-Sprünge mit maximaler Intensität und 30 Sekunden Pause dazwischen.',
       diamonds: 3,
       icon: '🔥',
+      image: '/images/ritual_hiit.png',
       successText: '"Spitze! Dein metabolischer Ofen brennt. Das erhöht die mitochondriale Effizienz für Stunden!"'
     },
     {
@@ -242,6 +244,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       detail: 'Atme 5 Minuten im 4-7-8 Takt: 4 Sek. einatmen, 7 Sek. halten, 8 Sek. ausatmen, um dein Nervensystem zu entspannen.',
       diamonds: 2,
       icon: '🧘',
+      image: '/images/ritual_breath.png',
       successText: '"Wunderbar, der Vagusnerv ist aktiviert. Dein Herzschlag hat sich optimal harmonisiert."'
     },
     {
@@ -250,6 +253,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       detail: 'Gehe innerhalb von 30 Minuten nach dem Aufwachen für 15 Minuten ohne Sonnenbrille ins Freie, um deine innere Uhr zu stellen.',
       diamonds: 2,
       icon: '☀️',
+      image: '/images/ritual_morgenlicht.png',
       successText: '"Perfekt! Dein Melatonin-Spiegel sinkt, Cortisol steigt gesund an. Dein Schlaf heute Nacht wird tiefer sein!"'
     },
     {
@@ -258,6 +262,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       detail: 'Halte heute ein Essensfenster von maximal 8 Stunden ein (16 Stunden Fasten) für effektives Zell-Recycling (Autophagie).',
       diamonds: 3,
       icon: '⏳',
+      image: '/images/ritual_fasten.png',
       successText: '"Großartig! Deine Zellen recyceln unbrauchbaren Proteinmüll. Das verjüngt das Gewebe von innen heraus."'
     },
     {
@@ -266,6 +271,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       detail: 'Lege am frühen Nachmittag einen erfrischenden 15-minütigen Mittagsschlaf ein, um deine geistige Frische wieder aufzuladen.',
       diamonds: 2,
       icon: '😴',
+      image: '/images/ritual_nap.png',
       successText: '"Klasse! Dein Gehirn hat sich gereinigt, Fokus und geistige Frische sind wieder auf 100 % geladen."'
     },
     {
@@ -274,6 +280,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       detail: 'Iss eine Handvoll Heidelbeeren oder Brombeeren wegen der hohen Dosis Sirtuin-aktivierender Polyphenole.',
       diamonds: 1,
       icon: '🫐',
+      image: '/images/ritual_beeren.png',
       successText: '"Hervorragend! Die enthaltenen Anthocyane schützen deine Telomere und wirken stark antioxidativ."'
     }
   ];
@@ -903,7 +910,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                      width: '100%',
                      height: '100%',
                      backfaceVisibility: 'hidden',
-                     background: 'url(/images/dna_helix_vibrant.png) center/cover',
+                     background: `url(${currentCard.image}) center/cover`,
                      borderRadius: '28px',
                      border: '3px solid #38bdf8',
                      boxShadow: '0 20px 40px rgba(56, 189, 248, 0.3), 0 10px 30px rgba(0,0,0,0.5), inset 0 3px 6px rgba(255,255,255,0.3)',
