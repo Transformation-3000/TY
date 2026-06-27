@@ -2349,7 +2349,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                                   }}
                                   title="Aktivität löschen"
                                 >
-                                  <i className="bi bi-trash"></i>
+                                  <i className="bi bi-x-circle"></i>
                                 </button>
                               </span>
                             </div>
