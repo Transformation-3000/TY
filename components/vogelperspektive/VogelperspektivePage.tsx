@@ -1516,7 +1516,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                     const finalActs = displayActs.slice(0, 4);
 
                     const getIconForActivity = (name: string) => {
-                      const lower = name.toLowerCase();
+                      const lower = typeof name === 'string' ? name.toLowerCase() : '';
                       if (lower.includes('rad')) return 'bi-bicycle';
                       if (lower.includes('kraft') || lower.includes('hit-')) return 'bi-activity';
                       if (lower.includes('joggen') || lower.includes('cooper')) return 'bi-person-running';
@@ -1880,8 +1880,9 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                       return `${weekdayShort}, ${dayAndMonth}`;
                     };
 
-                    const dynamicLoungeActivities = selectedActivities
-                      .filter(name => name !== 'alchemist-elixir') // exclude raw ID so we render it as custom Feel-Good item below
+                    const safeSelected = Array.isArray(selectedActivities) ? selectedActivities : [];
+                    const dynamicLoungeActivities = safeSelected
+                      .filter(name => typeof name === 'string' && name !== 'alchemist-elixir') // exclude raw ID so we render it as custom Feel-Good item below
                       .map(name => {
                         const actConfig = activityOptions.find(a => a.name === name);
                         if (!actConfig) return null;
@@ -1889,7 +1890,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                         const detail = activityValues[name] || actConfig.defaultOption;
                         const diamonds = calculateDiamonds(actConfig, detail);
                         const icon = getIconForActivity(name);
-                        const isBarbell = name.toLowerCase().includes('kraft');
+                        const isBarbell = typeof name === 'string' && name.toLowerCase().includes('kraft');
                         
                         return {
                           name,
@@ -1917,7 +1918,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                       });
                     }
 
-                    if (selectedActivities.includes('alchemist-elixir')) {
+                    if (safeSelected.includes('alchemist-elixir')) {
                       dynamicLoungeActivities.push({
                         name: 'Elixier des Zell-Recyclings',
                         detail: '14 Std. Fasten + Eisdusche',
