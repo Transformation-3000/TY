@@ -827,11 +827,16 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         <button 
           className="back-btn oracle-back-btn" 
           onClick={() => {
-            if (window.innerWidth <= 992) {
-              setJungbrunnenSubView('selection');
-            } else {
+            if (oracleQuestCompleted) {
               setJungbrunnenSubView('none');
-              setActiveModal('jungbrunnen-selection');
+              setActiveModal(null);
+            } else {
+              if (window.innerWidth <= 992) {
+                setJungbrunnenSubView('selection');
+              } else {
+                setJungbrunnenSubView('none');
+                setActiveModal('jungbrunnen-selection');
+              }
             }
             setOracleCardFlipped(false);
             setOracleQuestCompleted(false);
@@ -865,7 +870,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
           }}
         >
-          <i className="bi bi-arrow-left"></i> Zurück zu Jungbrunnen
+          <i className="bi bi-arrow-left"></i> {oracleQuestCompleted ? 'Zurück zur Startseite' : 'Zurück zu Jungbrunnen'}
         </button>
 
         {/* Tägliches Ritual Badge */}
