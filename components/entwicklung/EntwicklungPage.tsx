@@ -75,6 +75,36 @@ const wochenAktivitaeten: ActivityItem[] = [
   { id: 'Social-Media-Zeit um 50% reduziert', label: 'Social-Media-Zeit um 50% reduziert', cluster: 'Mentale Resilienz' }
 ];
 
+const getIconForActivity = (name: string) => {
+  const lower = typeof name === 'string' ? name.toLowerCase() : '';
+  if (lower.includes('rad')) return 'bi-bicycle';
+  if (lower.includes('kraft') || lower.includes('hit-')) return 'bi-activity';
+  if (lower.includes('joggen') || lower.includes('cooper')) return 'bi-person-running';
+  if (lower.includes('spazieren') || lower.includes('schritte') || lower.includes('spazier')) return 'bi-person-walking';
+  if (lower.includes('medit')) return 'bi-flower1';
+  if (lower.includes('nap')) return 'bi-moon-stars';
+  if (lower.includes('schlaf') || lower.includes('geschlafen')) return 'bi-moon';
+  if (lower.includes('aufstehzeit')) return 'bi-alarm';
+  if (lower.includes('koffein')) return 'bi-cup-hot';
+  if (lower.includes('schläf') || lower.includes('abendroutine')) return 'bi-moon';
+  if (lower.includes('schwimm')) return 'bi-droplet';
+  if (lower.includes('yoga') || lower.includes('dehnung')) return 'bi-heart-pulse';
+  if (lower.includes('atem')) return 'bi-wind';
+  if (lower.includes('licht') || lower.includes('sonne')) return 'bi-sun';
+  if (lower.includes('treppe')) return 'bi-stairs';
+  if (lower.includes('hang') || lower.includes('griff')) return 'bi-award';
+  if (lower.includes('wasser')) return 'bi-droplet-half';
+  if (lower.includes('gemüse') || lower.includes('obst') || lower.includes('mahlzeit') || lower.includes('essen') || lower.includes('snack') || lower.includes('zucker') || lower.includes('protein') || lower.includes('omega') || lower.includes('ballast')) return 'bi-apple';
+  if (lower.includes('alkohol')) return 'bi-x-circle';
+  if (lower.includes('sozial') || lower.includes('freund') || lower.includes('unterstützung') || lower.includes('verbundenheit')) return 'bi-people';
+  if (lower.includes('nikotin')) return 'bi-x-circle';
+  if (lower.includes('journaling')) return 'bi-book';
+  if (lower.includes('handy')) return 'bi-phone';
+  if (lower.includes('pause')) return 'bi-clock';
+  if (lower.includes('lüft')) return 'bi-wind';
+  return 'bi-lightning-charge';
+};
+
 const CLUSTER_CONFIGS: Record<string, { icon: string; color: string; bgColor: string; borderColor: string; lightBg: string }> = {
   'Schlaf & Erholung': {
     icon: 'bi-moon-stars-fill',
@@ -1563,6 +1593,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                                   )
                                 )}
                               </div>
+                              <i className={`bi ${getIconForActivity(act.id)}`} style={{ color: isChecked ? config.color : '#64748b', fontSize: '1.25rem', marginRight: '0.6rem', display: 'flex', alignItems: 'center' }}></i>
                               <span className="acc-label">
                                 {act.label}
                                 {isChecked && (

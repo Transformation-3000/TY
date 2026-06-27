@@ -1740,7 +1740,12 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                                 const isSelected = selectedActivities.includes(act.name);
                                 return (
                                   <div key={act.name} className={`act-list-item ${isSelected ? 'selected' : ''}`}>
-                                    <span className="act-name">{act.name}</span>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                      <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.05rem', color: isSelected ? '#10b981' : '#6099cf' }}>
+                                        <i className={`bi ${getIconForActivity(act.name)}`}></i>
+                                      </div>
+                                      <span className="act-name">{act.name}</span>
+                                    </div>
                                     <div className="act-right-group">
                                       {(() => {
                                         const currentVal = activityValues[act.name] || act.defaultOption;
