@@ -79,7 +79,7 @@ const getIconForActivity = (name: string) => {
   const lower = typeof name === 'string' ? name.toLowerCase() : '';
   if (lower.includes('rad')) return 'bi-bicycle';
   if (lower.includes('kraft') || lower.includes('hit-')) return 'bi-activity';
-  if (lower.includes('joggen') || lower.includes('cooper')) return 'bi-person-running';
+  if (lower.includes('joggen') || lower.includes('cooper')) return 'bi-stopwatch';
   if (lower.includes('spazieren') || lower.includes('schritte') || lower.includes('spazier')) return 'bi-person-walking';
   if (lower.includes('medit')) return 'bi-flower1';
   if (lower.includes('nap')) return 'bi-moon-stars';
@@ -1624,7 +1624,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
               <div style={{ background: '#ffffff', borderRadius: '24px', border: '1.5px solid #cbd5e1', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
                 {(() => {
                   const feelGoodActivitiesList = [
-                    { id: 'Cryo-Challenge', name: 'Cryo-Challenge', detail: '2 Min. Eisdusche', diamonds: 5, icon: '❄️' },
+                    { id: 'Cryo-Challenge', name: 'Cryo-Challenge', detail: '2 Min. Eisdusche', diamonds: 3, icon: '❄️' },
                     { id: 'alchemist-elixir', name: 'Elixier des Zell-Recyclings', detail: '14 Std. Fasten + Eisdusche', diamonds: 5, icon: '🧪' },
                     { id: 'Tageslicht am Morgen getankt', name: 'Morgenlicht getankt', detail: '15 Min. Sonne', diamonds: 3, icon: '☀️' },
                     { id: 'Meditiert', name: 'Tiefen-Resilienz Meditation', detail: '15 Min. Atem & Geist', diamonds: 3, icon: '🧘' }

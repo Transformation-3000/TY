@@ -11,7 +11,7 @@ const getIconForActivity = (name: string) => {
   const lower = typeof name === 'string' ? name.toLowerCase() : '';
   if (lower.includes('rad')) return 'bi-bicycle';
   if (lower.includes('kraft') || lower.includes('hit-')) return 'bi-activity';
-  if (lower.includes('joggen') || lower.includes('cooper')) return 'bi-person-running';
+  if (lower.includes('joggen') || lower.includes('cooper')) return 'bi-stopwatch';
   if (lower.includes('spazieren') || lower.includes('schritte') || lower.includes('spazier')) return 'bi-person-walking';
   if (lower.includes('medit')) return 'bi-flower1';
   if (lower.includes('nap')) return 'bi-moon-stars';
@@ -1231,7 +1231,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
     // 2. Feel-Good integration
     const cryoDismissed = typeof window !== 'undefined' ? localStorage.getItem('ty-cryo-dismissed') === 'true' : false;
     if (!cryoDismissed) {
-      sum += 5;
+      sum += 3;
     }
     if (safeSelected.includes('alchemist-elixir')) {
       sum += 5;
@@ -1969,7 +1969,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                         name: 'Jungbrunnen: Cryo-Challenge',
                         detail: '2 Min. Eisdusche',
                         daysAgo: 0,
-                        diamonds: 5,
+                        diamonds: 3,
                         icon: '❄️',
                         isBarbell: false,
                         isCustomEmoji: true
@@ -2001,7 +2001,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
 
                     return (
                       <div className="diamonds-activities-table" style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                        <div className="diamonds-table-header" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.5fr', padding: '0', borderBottom: '2px solid #e2e8f0', fontWeight: 800, fontSize: '1rem', color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        <div className="diamonds-table-header" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.5fr', padding: '0', borderBottom: '2px solid #e2e8f0', fontWeight: 800, fontSize: '1rem', color: '#000000', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                           <span className="col-act" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Aktivität</span>
                           <span className="col-val" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Wert</span>
                           <span className="col-date" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Datum</span>
