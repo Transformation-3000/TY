@@ -1560,11 +1560,12 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                       if (lower.includes('hang') || lower.includes('griff')) return 'bi-award';
                       if (lower.includes('wasser')) return 'bi-droplet-half';
                       if (lower.includes('gemüse') || lower.includes('obst') || lower.includes('mahlzeit') || lower.includes('essen') || lower.includes('snack') || lower.includes('zucker') || lower.includes('protein') || lower.includes('omega') || lower.includes('ballast')) return 'bi-apple';
-                      if (lower.includes('alkohol')) return 'bi-glass-takeout';
+                      if (lower.includes('alkohol')) return 'bi-x-circle';
                       if (lower.includes('sozial') || lower.includes('freund') || lower.includes('unterstützung') || lower.includes('verbundenheit')) return 'bi-people';
                       if (lower.includes('nikotin')) return 'bi-x-circle';
                       if (lower.includes('journaling')) return 'bi-book';
-                      if (lower.includes('handy') || lower.includes('pause')) return 'bi-phone-mute';
+                      if (lower.includes('handy')) return 'bi-phone';
+                      if (lower.includes('pause')) return 'bi-clock';
                       if (lower.includes('lüft')) return 'bi-wind';
                       return 'bi-lightning-charge';
                     };
