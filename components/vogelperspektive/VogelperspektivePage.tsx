@@ -2283,7 +2283,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
 
                     const totalDiamonds = displayActivities.reduce((sum, act) => sum + act.diamonds, 0);
 
-                    return (
+return (
                       <div className="diamonds-activities-table" style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
                         <div className="diamonds-table-header" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.2fr 0.4fr', padding: '0', borderBottom: '2px solid #e2e8f0', fontWeight: 800, fontSize: '1rem', color: '#000000', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                           <span className="col-act" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Aktivität</span>
@@ -2291,7 +2291,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                           <span className="col-date" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Datum</span>
                           <span className="col-gems" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Diamanten</span>
                           <span className="col-delete-hdr" style={{ padding: '0.6rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <i className="bi bi-x-circle" style={{ fontSize: '1rem' }}></i>
+                            <i className="bi bi-x-circle" style={{ fontSize: '1.05rem', fontWeight: 900, WebkitTextStroke: '0.8px #000000' }}></i>
                           </span>
                         </div>
                         <div className="diamonds-table-body" style={{ display: 'flex', flexDirection: 'column' }}>
@@ -2891,8 +2891,14 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         .btn-clear-text:hover { color: #64748b; }
         .modal-close-btn {
           position: absolute; top: 1.5rem; right: 1.5rem;
-          background: #f1f5f9; border: none; width: 40px; height: 40px; border-radius: 50%;
+          background: #f1f5f9; border: none; width: 44px; height: 44px; border-radius: 50%;
           display: flex; align-items: center; justify-content: center; cursor: pointer; color: #64748b;
+          font-size: 1.5rem;
+          transition: all 0.2s;
+        }
+        .modal-close-btn:hover {
+          background: #e2e8f0;
+          color: #0f172a;
         }
         .modal-title { font-size: 1.6rem; font-weight: 850; color: #1e293b; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
         
