@@ -169,11 +169,37 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
     });
   }, []);
 
-  const [activeModal, setActiveModal] = useState<'activity' | 'voice' | 'photo' | 'diamonds' | null>(null);
+  const [activeModal, setActiveModal] = useState<'activity' | 'voice' | 'photo' | 'diamonds' | 'jungbrunnen-selection' | null>(null);
   const [isRecording, setIsRecording] = useState(false);
+  const [jungbrunnenSubView, setJungbrunnenSubView] = useState<'none' | 'oracle' | 'alchemist' | 'selection'>('none');
+  const [oracleCardFlipped, setOracleCardFlipped] = useState(false);
+  const [oracleQuestCompleted, setOracleQuestCompleted] = useState(false);
+  const [oracleRating, setOracleRating] = useState<string | null>(null);
+  const [selectedCardDesign, setSelectedCardDesign] = useState<'tree' | 'scifi' | 'geometry' | null>(null);
+  
+  const [alchemistSelected, setAlchemistSelected] = useState<string[]>([]);
+  const [alchemistBrewed, setAlchemistBrewed] = useState(false);
+  const [alchemistRating, setAlchemistRating] = useState<string | null>(null);
+  const [brewingProgress, setBrewingProgress] = useState(0);
   
   const [activitySearchTerm, setActivitySearchTerm] = useState('');
   const [selectedActivities, setSelectedActivities] = useState<string[]>([]);
+  const [activityCounts, setActivityCounts] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (jungbrunnenSubView === 'oracle') {
+        document.body.classList.add('oracle-scroll-lock');
+      } else {
+        document.body.classList.remove('oracle-scroll-lock');
+      }
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        document.body.classList.remove('oracle-scroll-lock');
+      }
+    };
+  }, [jungbrunnenSubView]);
 
   useEffect(() => {
     const saved = localStorage.getItem('ty-checked-activities');
@@ -189,8 +215,23 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       const updated = localStorage.getItem('ty-checked-activities');
       if (updated) setSelectedActivities(JSON.parse(updated));
     };
+
+    const savedCounts = localStorage.getItem('ty-activity-counts');
+    if (savedCounts) {
+      setActivityCounts(JSON.parse(savedCounts));
+    }
+
+    const handleCountsSync = () => {
+      const updated = localStorage.getItem('ty-activity-counts');
+      if (updated) setActivityCounts(JSON.parse(updated));
+    };
+
     window.addEventListener('ty-activities-sync', handleSync);
-    return () => window.removeEventListener('ty-activities-sync', handleSync);
+    window.addEventListener('ty-counts-sync', handleCountsSync);
+    return () => {
+      window.removeEventListener('ty-activities-sync', handleSync);
+      window.removeEventListener('ty-counts-sync', handleCountsSync);
+    };
   }, []);
 
   const updateSelectedActivities = (newSelected: string[]) => {
@@ -200,7 +241,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   };
 
   const [activityValues, setActivityValues] = useState<Record<string, string>>({});
-  const [quickSelected, setQuickSelected] = useState<string>('Radfahren');
+  const [quickSelected, setQuickSelected] = useState<string>('Rad gefahren');
 
   const optTimeShort = ['5 Min.', '10 Min.', '15 Min.', '20 Min.', '30 Min.', '45 Min.', '60 Min.'];
   const optTimeLong = ['5 Min.', '10 Min.', '15 Min.', '20 Min.', '30 Min.', '45 Min.', '60 Min.', '90 Min.', '120 Min.', '120+ Min.'];
@@ -315,6 +356,808 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
 
     return rawDiamonds;
   };
+
+  if (jungbrunnenSubView === 'selection') {
+    return (
+      <div className="dashboard-container jungbrunnen-subpage-container selection-subpage-container" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', background: 'linear-gradient(160deg,#091221 0%,#0f1d33 40%,#080e1a 70%,#0a1424 100%)', minHeight: 'calc(100vh - 72px)', color: '#fff', boxSizing: 'border-box', width: '100%', maxWidth: 'none', margin: 0, padding: '1.25rem 2rem', position: 'relative', overflowY: 'auto', paddingBottom: '140px' }}>
+        <button 
+          className="back-btn" 
+          onClick={() => setJungbrunnenSubView('none')} 
+          style={{ 
+            alignSelf: 'flex-start', 
+            background: 'rgba(255,255,255,0.06)', 
+            border: '1px solid rgba(255,255,255,0.12)', 
+            color: '#f8fafc', 
+            padding: '0.5rem 1.1rem', 
+            borderRadius: '12px', 
+            cursor: 'pointer', 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '8px', 
+            fontWeight: 750,
+            transition: 'all 0.2s',
+            zIndex: 2
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(255,255,255,0.12)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
+          }}
+        >
+          <i className="bi bi-arrow-left"></i> Zurück
+        </button>
+
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem', zIndex: 1 }}>
+          <div style={{ width: '55px', height: '55px', borderRadius: '18px', background: '#ffffff', border: '2.5px solid #0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0284c7', fontSize: '1.8rem' }}>
+            <i className="bi bi-droplet-fill"></i>
+          </div>
+          <div>
+            <h3 className="modal-title" style={{ margin: 0, color: '#fff' }}>Dein täglicher Jungbrunnen</h3>
+          </div>
+        </div>
+
+        <div className="selection-options-grid" style={{ gap: '1.25rem', marginTop: '0.5rem', zIndex: 1 }}>
+          {/* OPTION 1: DAS LANGLEBIGKEITS-ORAKEL */}
+          <div 
+            onClick={() => setJungbrunnenSubView('oracle')}
+            style={{
+              background: '#fff',
+              border: '2px solid #e2e8f0',
+              borderRadius: '24px',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              display: 'flex',
+              flexDirection: 'row',
+              overflow: 'hidden',
+              boxShadow: '0 4px 10px rgba(0,0,0,0.01)',
+              textAlign: 'left'
+            }}
+          >
+            {/* Left 25% Image */}
+            <div style={{ width: '25%', position: 'relative', minHeight: '130px' }}>
+              <Image 
+                src="/images/feelgood_youth.png" 
+                fill 
+                alt="Orakel" 
+                style={{ objectFit: 'cover' }} 
+              />
+            </div>
+            
+            {/* Right 75% Content */}
+            <div style={{ width: '75%', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+              <strong style={{ fontSize: 'calc(1.1rem + 3pt)', color: '#1e293b' }}>1. Verjüngungskarte</strong>
+              <p style={{ fontSize: 'calc(0.9rem + 2pt)', color: '#64748b', margin: 0, lineHeight: 1.4 }}>
+                Ziehe deine Tageskarte und enthülle deine tägliche biologische Verjüngungsaktion.
+              </p>
+              <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', gap: '0.25rem', color: '#3b82f6', fontWeight: 700, fontSize: 'calc(0.9rem + 2pt)' }}>
+                Karte ziehen <i className="bi bi-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+
+          {/* OPTION 2: DER LONGEVITY-ALCHEMIST */}
+          <div 
+            onClick={() => setJungbrunnenSubView('alchemist')}
+            style={{
+              background: '#fff',
+              border: '2px solid #e2e8f0',
+              borderRadius: '24px',
+              cursor: 'pointer',
+              transition: 'all 0.2s ease',
+              display: 'flex',
+              flexDirection: 'row',
+              overflow: 'hidden',
+              boxShadow: '0 4px 10px rgba(0,0,0,0.01)',
+              textAlign: 'left'
+            }}
+          >
+            {/* Left 25% Image */}
+            <div style={{ width: '25%', position: 'relative', minHeight: '130px' }}>
+              <Image 
+                src="/images/feelgood_energy.png" 
+                fill 
+                alt="Alchemist" 
+                style={{ objectFit: 'cover' }} 
+              />
+            </div>
+
+            {/* Right 75% Content */}
+            <div style={{ width: '75%', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+              <strong style={{ fontSize: 'calc(1.1rem + 3pt)', color: '#1e293b' }}>2. Verjüngungselixier</strong>
+              <p style={{ fontSize: 'calc(0.9rem + 2pt)', color: '#64748b', margin: 0, lineHeight: 1.4 }}>
+                Mische dein tägliches Verjüngungselixier aus Langlebigkeitszutaten zusammen.
+              </p>
+              <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', gap: '0.25rem', color: '#16a34a', fontWeight: 700, fontSize: 'calc(0.9rem + 2pt)' }}>
+                Trank brauen <i className="bi bi-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (jungbrunnenSubView === 'oracle') {
+    return (
+      <div className="dashboard-container jungbrunnen-subpage-container oracle-subpage-container" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: 'linear-gradient(160deg,#091221 0%,#0f1d33 40%,#080e1a 70%,#0a1424 100%)', minHeight: 'calc(100vh - 72px)', color: '#fff', boxSizing: 'border-box', width: '100%', maxWidth: 'none', margin: 0, padding: '1.25rem 2rem', position: 'relative' }}>
+        <style jsx global>{`
+          @media (min-width: 993px) {
+            .oracle-subpage-container {
+              overflow: hidden !important;
+            }
+            /* Hover flip removed - flip only on click */
+          }
+          @media (max-width: 992px) {
+            .oracle-subpage-container {
+              overflow-y: auto !important;
+              padding-bottom: 140px !important;
+            }
+            .oracle-back-btn {
+              order: 999 !important;
+              align-self: center !important;
+              margin-top: 2.5rem !important;
+              margin-bottom: 1.5rem !important;
+            }
+          }
+          .oracle-card-row {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            gap: 3.5rem;
+            width: 100%;
+            max-width: 850px;
+          }
+          @media (max-width: 768px) {
+            .oracle-card-row {
+              flex-direction: column !important;
+              gap: 1.5rem !important;
+            }
+          }
+        `}</style>
+
+        {/* Ambient Glowing Background Orbs */}
+        <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0, pointerEvents: 'none' }}>
+          <div style={{ position: 'absolute', borderRadius: '50%', filter: 'blur(80px)', opacity: 0.15, width: '45vw', height: '45vw', background: '#102a4a', top: '-10%', left: '-10%' }} />
+          <div style={{ position: 'absolute', borderRadius: '50%', filter: 'blur(80px)', opacity: 0.15, width: '40vw', height: '40vw', background: '#0c1f38', bottom: '-20%', right: '-10%' }} />
+          <div style={{ position: 'absolute', borderRadius: '50%', filter: 'blur(80px)', opacity: 0.12, width: '45vw', height: '45vw', background: '#14345c', top: '30%', left: '30%' }} />
+        </div>
+
+        <button 
+          className="back-btn oracle-back-btn" 
+          onClick={() => {
+            if (window.innerWidth <= 992) {
+              setJungbrunnenSubView('selection');
+            } else {
+              setJungbrunnenSubView('none');
+              setActiveModal('jungbrunnen-selection');
+            }
+            setOracleCardFlipped(false);
+            setOracleQuestCompleted(false);
+            setOracleRating(null);
+            setSelectedCardDesign(null);
+          }} 
+          style={{ 
+            alignSelf: 'flex-start', 
+            background: 'rgba(255,255,255,0.06)', 
+            border: '1px solid rgba(255,255,255,0.12)', 
+            color: '#f8fafc', 
+            padding: '0.5rem 1.1rem', 
+            borderRadius: '12px', 
+            cursor: 'pointer', 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '8px', 
+            fontWeight: 750,
+            transition: 'all 0.2s',
+            zIndex: 2
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(255,255,255,0.12)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
+          }}
+        >
+          <i className="bi bi-arrow-left"></i> Zurück zu Jungbrunnen
+        </button>
+
+        {/* Tägliches Ritual Badge */}
+        <div style={{ textAlign: 'center', margin: '0 auto 0.75rem auto', zIndex: 1 }}>
+          <span style={{ background: '#16a34a', color: '#ffffff', padding: '0.4rem 1.2rem', borderRadius: '20px', fontSize: '0.95rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Tägliches Ritual</span>
+        </div>
+        {!oracleQuestCompleted ? (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', zIndex: 1, width: '100%' }}>
+            
+             {/* ONE CARD VIEW WITH SIDE WIDGETS */}
+             <div className="oracle-card-row">
+               
+               {/* Left Widget: Date as a clock symbol */}
+               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', width: '160px' }}>
+                 <div style={{ 
+                   width: '96px', 
+                   height: '96px', 
+                   position: 'relative',
+                   filter: 'drop-shadow(0 12px 24px rgba(56, 189, 248, 0.45))'
+                 }}>
+                   <Image 
+                     src="/images/clock_3d.png" 
+                     fill 
+                     alt="3D Clock" 
+                     style={{ objectFit: 'contain' }} 
+                   />
+                 </div>
+                 <span style={{ fontSize: '1.15rem', color: '#f8fafc', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'center', lineHeight: '1.3', marginTop: '0.5rem' }}>
+                   {currentDate.split(',')[1] ? currentDate.split(',')[1].trim() : currentDate}
+                 </span>
+               </div>
+
+               {/* Center: The Card */}
+                <div className="oracle-card-container" style={{ perspective: '1200px', width: '326px', height: '429px', cursor: 'pointer' }} onClick={() => setOracleCardFlipped(!oracleCardFlipped)}>
+                  <div className={`oracle-card-inner ${oracleCardFlipped ? 'flipped' : ''}`} style={{
+                    position: 'relative',
+                    width: '100%',
+                    height: '100%',
+                    transition: 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
+                    transformStyle: 'preserve-3d',
+                    transform: oracleCardFlipped ? 'rotateY(180deg)' : 'none'
+                  }}>
+                   {/* Front representation of choice: Bio-Hologramm */}
+                   <div style={{
+                     position: 'absolute',
+                     width: '100%',
+                     height: '100%',
+                     backfaceVisibility: 'hidden',
+                     background: 'url(/images/dna_helix_vibrant.png) center/cover',
+                     borderRadius: '28px',
+                     border: '3px solid #38bdf8',
+                     boxShadow: '0 20px 40px rgba(56, 189, 248, 0.3), 0 10px 30px rgba(0,0,0,0.5), inset 0 3px 6px rgba(255,255,255,0.3)',
+                     filter: 'drop-shadow(0 0 15px rgba(56, 189, 248, 0.35))',
+                     boxSizing: 'border-box'
+                   }}>
+                     <button 
+                       onClick={(e) => {
+                         e.stopPropagation();
+                         setOracleCardFlipped(true);
+                       }}
+                       style={{
+                         position: 'absolute',
+                         bottom: '20px',
+                         left: '50%',
+                         transform: 'translateX(-50%)',
+                         background: 'linear-gradient(135deg, #22c55e 0%, #15803d 100%)',
+                         color: '#fff',
+                         border: 'none',
+                         padding: '0.55rem 1.4rem',
+                         borderRadius: '12px',
+                         fontWeight: 800,
+                         fontSize: '1.0rem',
+                         cursor: 'pointer',
+                         boxShadow: '0 4px 12px rgba(34, 197, 94, 0.25)',
+                         transition: 'all 0.2s ease',
+                         whiteSpace: 'nowrap',
+                         zIndex: 10
+                       }}
+                     >
+                       Karte umdrehen
+                     </button>
+                   </div>
+
+                   {/* BACK SIDE (Enthüllt) */}
+                   <div style={{
+                     position: 'absolute',
+                     width: '100%',
+                     height: '100%',
+                     backfaceVisibility: 'hidden',
+                     transform: 'rotateY(180deg)',
+                     background: '#ffffff',
+                     borderRadius: '28px',
+                     border: '2.5px solid #cbd5e1',
+                     display: 'flex',
+                     flexDirection: 'column',
+                     padding: '1.5rem',
+                     boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+                     textAlign: 'center',
+                     alignItems: 'center',
+                     color: '#0f172a',
+                     boxSizing: 'border-box'
+                   }}
+                   onClick={() => setOracleCardFlipped(false)}
+                   >
+                     {/* Centered flex wrapper for upper card content */}
+                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1, width: '100%', gap: '1rem' }}>
+                       <span style={{ fontSize: '3.2rem', lineHeight: 1 }}>❄️</span>
+                       <h3 style={{ fontSize: '1.55rem', color: '#0f172a', fontWeight: 900, margin: 0 }}>Cryo-Challenge</h3>
+                       <p style={{ fontSize: '1.3rem', color: '#475569', lineHeight: '1.4', margin: '0.25rem 0.5rem 0 0.5rem' }}>
+                         Beende deine Dusche heute mit <strong>2 Minuten eiskaltem Wasser</strong>. Atme dabei ruhig durch die Nase.
+                       </p>
+                     </div>
+
+                     <button 
+                       onClick={() => setOracleQuestCompleted(true)}
+                       style={{ 
+                         width: '100%', 
+                         background: 'linear-gradient(135deg, #22c55e 0%, #15803d 100%)', 
+                         color: '#fff', 
+                         border: 'none', 
+                         padding: '0.75rem', 
+                         borderRadius: '12px', 
+                         fontWeight: 800, 
+                         fontSize: '1.05rem',
+                         cursor: 'pointer',
+                         boxShadow: '0 4px 10px rgba(34, 197, 94, 0.2)',
+                         marginTop: '1rem'
+                       }}
+                     >
+                       Ritual gemeistert
+                     </button>
+                   </div>
+
+                 </div>
+               </div>
+
+               {/* Right Widget: Reward in Diamonds */}
+                <div title="Verdiene +5 Diamanten durch erfolgreiches Abschließen des täglichen Rituals!" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', width: '160px', cursor: 'help' }}>
+                  <div style={{ 
+                    width: '96px', 
+                    height: '96px', 
+                    borderRadius: '50%', 
+                    background: 'radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.25) 0%, rgba(12, 74, 110, 0.6) 80%)', 
+                    border: '3px solid #38bdf8', 
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    fontSize: '3.2rem', 
+                    boxShadow: '0 12px 24px rgba(56, 189, 248, 0.35), inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -4px 8px rgba(0,0,0,0.5)', 
+                    backdropFilter: 'blur(10px)',
+                    filter: 'drop-shadow(0 0 12px rgba(56, 189, 248, 0.45))'
+                  }}>
+                    💎
+                  </div>
+                  <span style={{ display: 'block', width: '100%', fontSize: '1.15rem', color: '#f8fafc', fontWeight: 850, textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'center', lineHeight: '1.3', marginTop: '0.5rem' }}>
+                    +5 Diamanten<br />verdienen
+                  </span>
+                </div>
+
+             </div>
+           </div>
+        ) : (
+          /* ORACLE SUCCESS SCREEN */
+          <div className="dash-card" style={{ padding: '1.5rem 2rem', background: 'rgba(255, 255, 255, 0.03)', backdropFilter: 'blur(20px)', borderRadius: '28px', border: '1px solid rgba(255, 255, 255, 0.08)', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)', maxWidth: '580px', margin: '0 auto' }}>
+            <div style={{ width: '60px', height: '60px', borderRadius: '50%', background: 'rgba(22, 163, 74, 0.15)', color: '#22c55e', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2rem', border: '1px solid rgba(22, 163, 74, 0.25)' }}>
+              <i className="bi bi-check-lg"></i>
+            </div>
+            
+            <div>
+              <h2 style={{ color: '#fff', fontSize: '1.7rem', fontWeight: 900, marginBottom: '0.25rem', margin: 0 }}>Quest Erfolgreich Absolviert!</h2>
+              <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: 0 }}>
+                Großartige Leistung! Sie haben Ihre Zellen heute erfolgreich herausgefordert.
+              </p>
+            </div>
+
+            <div style={{ display: 'flex', gap: '1rem', background: 'rgba(255,255,255,0.04)', padding: '0.6rem 1.5rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, color: '#fbbf24', fontSize: '1rem' }}>
+                <span>💎</span>
+                <span>+5 Diamanten</span>
+              </div>
+              <div style={{ width: '1px', background: 'rgba(255,255,255,0.1)' }}></div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, color: '#60a5fa', fontSize: '1rem' }}>
+                <span>✨</span>
+                <span>+120 XP</span>
+              </div>
+            </div>
+
+            {/* Emoji Rating Loop */}
+            {!oracleRating ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center', width: '100%' }}>
+                <h4 style={{ color: '#e2e8f0', margin: 0, fontWeight: 700, fontSize: '0.9rem' }}>Wie hat es sich angefühlt?</h4>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  {[
+                    { text: '🥶 Eiskalt', val: 'cold' },
+                    { text: '⚡ Voller Energie', val: 'energy' },
+                    { text: '🧘 Fokussiert', val: 'focused' },
+                    { text: '🔋 Regeneriert', val: 'charged' }
+                  ].map((rate) => (
+                    <button 
+                      key={rate.val}
+                      onClick={() => setOracleRating(rate.val)}
+                      style={{
+                        background: 'rgba(255,255,255,0.06)',
+                        border: '1px solid rgba(255,255,255,0.12)',
+                        padding: '0.4rem 0.8rem',
+                        borderRadius: '10px',
+                        cursor: 'pointer',
+                        fontSize: '0.8rem',
+                        fontWeight: 700,
+                        color: '#f8fafc',
+                        transition: 'all 0.2s'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = '#60a5fa';
+                        e.currentTarget.style.background = 'rgba(96, 165, 250, 0.15)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
+                        e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+                      }}
+                    >
+                      {rate.text}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '18px', padding: '1rem', display: 'flex', gap: '0.75rem', alignItems: 'center', textAlign: 'left', width: '100%', boxSizing: 'border-box' }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '50%', overflow: 'hidden', position: 'relative', flexShrink: 0 }}>
+                  <Image src="/images/avatar_lisa.png" fill alt="Lisa Coach" style={{ objectFit: 'cover' }} />
+                </div>
+                <div>
+                  <strong style={{ color: '#34d399', display: 'block', marginBottom: '0.1rem', fontSize: '0.85rem' }}>Coach Lisa sagt:</strong>
+                  <span style={{ color: '#a7f3d0', fontSize: '0.8rem', lineHeight: '1.4' }}>
+                    {oracleRating === 'cold' && '„Hervorragend, Monique! Genau dieser Kälte-Schock aktiviert die braunen Fettzellen. Deine Fettverbrennung läuft jetzt auf Hochtouren!“'}
+                    {oracleRating === 'energy' && '„Perfekt! Das Noradrenalin zirkuliert in deinen Adern. Nutze diesen Energie-Schub für deine Fokus-Aufgaben heute.“'}
+                    {oracleRating === 'focused' && '„Wunderbar, die tiefe Atmung hat deine Herzratenvariabilität harmonisiert. Dein Stress-Resilienz-Level ist optimal geschützt.“'}
+                    {oracleRating === 'charged' && '„Großartig! Du hast deinen Mitochondrien neuen Schwung gegeben. Komm morgen zurück für deine Streak-Erfolgsserie!“'}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <button 
+              onClick={() => {
+                setJungbrunnenSubView('none');
+                setActiveModal('jungbrunnen-selection');
+                setOracleCardFlipped(false);
+                setOracleQuestCompleted(false);
+                setOracleRating(null);
+                setSelectedCardDesign(null);
+              }}
+              style={{
+                marginTop: '0.5rem',
+                background: '#fff',
+                color: '#0f172a',
+                border: 'none',
+                padding: '0.6rem 1.5rem',
+                borderRadius: '10px',
+                fontWeight: 750,
+                fontSize: '0.85rem',
+                cursor: 'pointer'
+              }}
+            >
+              Zurück zu Jungbrunnen
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  if (jungbrunnenSubView === 'alchemist') {
+    const isReadyToBrew = alchemistSelected.length === 2;
+
+    const startBrewingAnimation = () => {
+      setBrewingProgress(1);
+      const interval = setInterval(() => {
+        setBrewingProgress((prev) => {
+          if (prev >= 100) {
+            clearInterval(interval);
+            setAlchemistBrewed(true);
+            return 100;
+          }
+          return prev + 10;
+        });
+      }, 150);
+    };
+
+    const getPotionName = () => {
+      if (alchemistSelected.includes('physisch') && alchemistSelected.includes('ernaehrung')) {
+        return {
+          title: '⚡ Elixier des Zell-Recyclings',
+          quest: 'Kryo-Schock & 14h Autophagie-Fasten',
+          desc: 'Duschen Sie morgen 3 Minuten eiskalt und essen Sie heute 14 Std. nichts, um das zelluläre Recyclingsystem auf Maximum zu stellen.',
+          diamonds: 5,
+          xp: 150,
+          effect: 'Autophagie-Verjüngung'
+        };
+      }
+      if (alchemistSelected.includes('physisch') && alchemistSelected.includes('regen')) {
+        return {
+          title: '🧘 Trank der Tiefen-Resilienz',
+          quest: 'Sauna/Kälte & 10 Min. Box-Breathing',
+          desc: 'Absolvieren Sie einen Kälte- oder Hitzereiz gefolgt von 10 Minuten tiefer, kontrollierter Atmung zur Parasympathikus-Aktivierung.',
+          diamonds: 4,
+          xp: 120,
+          effect: 'HRV-Steigerung'
+        };
+      }
+      return {
+        title: '🍏 Nektar der Zellerneuerung',
+        quest: 'Polyphenol-Snack & 15 Min. Erdungs-Meditation',
+        desc: 'Verzehren Sie eine Handvoll dunkler Beeren (Sirtuin-Aktivator) und meditieren Sie barfuß im Freien.',
+        diamonds: 3,
+        xp: 90,
+        effect: 'DNA-Schutz'
+      };
+    };
+
+    const potionInfo = getPotionName();
+
+    return (
+      <div className="dashboard-container jungbrunnen-subpage-container" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: 'linear-gradient(160deg,#091221 0%,#0f1d33 40%,#080e1a 70%,#0a1424 100%)', minHeight: 'calc(100vh - 72px)', color: '#fff', boxSizing: 'border-box', overflowY: 'auto', width: '100%', maxWidth: 'none', margin: 0, padding: '1.25rem 2rem' }}>
+        <button 
+          className="back-btn" 
+          onClick={() => {
+            if (window.innerWidth <= 992) {
+              setJungbrunnenSubView('selection');
+            } else {
+              setJungbrunnenSubView('none');
+              setActiveModal('jungbrunnen-selection');
+            }
+            setAlchemistSelected([]);
+            setAlchemistBrewed(false);
+            setAlchemistRating(null);
+            setBrewingProgress(0);
+          }} 
+          style={{ 
+            alignSelf: 'flex-start', 
+            background: 'rgba(255,255,255,0.06)', 
+            border: '1px solid rgba(255,255,255,0.12)', 
+            color: '#f8fafc', 
+            padding: '0.5rem 1.1rem', 
+            borderRadius: '12px', 
+            cursor: 'pointer', 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '8px', 
+            fontWeight: 750,
+            transition: 'all 0.2s'
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(255,255,255,0.12)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
+          }}
+        >
+          <i className="bi bi-arrow-left"></i> Zurück zu Jungbrunnen
+        </button>
+
+        {/* Alchemist Header */}
+        <div style={{ textAlign: 'center', margin: '0 auto 1rem auto', maxWidth: '600px' }}>
+          <span style={{ background: '#16a34a', color: '#ffffff', padding: '0.2rem 0.6rem', borderRadius: '20px', fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Zell-Labor</span>
+          <h1 style={{ fontSize: '1.8rem', fontWeight: 900, margin: '0.25rem 0 0.15rem 0', color: '#fff' }}>Der Longevity-Alchemist</h1>
+          <p style={{ margin: 0, color: '#94a3b8', fontSize: '0.9rem', lineHeight: '1.4' }}>
+            Mischen Sie zwei Langlebigkeits-Zutaten zusammen, um Ihr ganz persönliches Verjüngungselixier für heute zu kreieren!
+          </p>
+        </div>
+
+        {!alchemistBrewed ? (
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
+            
+            {/* The 3 flasks grid */}
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem', width: '100%', maxWidth: '750px' }}>
+              {[
+                { id: 'physisch', name: 'Physischer Reiz', icon: 'bi-thermometer-snow', bg: '#e0f2fe', color: '#0284c7', borderGlow: 'rgba(2, 132, 199, 0.4)' },
+                { id: 'ernaehrung', name: 'Ernährung & Fasten', icon: 'bi-apple', bg: '#dcfce7', color: '#16a34a', borderGlow: 'rgba(22, 163, 74, 0.4)' },
+                { id: 'regen', name: 'Regeneration & Schlaf', icon: 'bi-moon-stars', bg: '#f3e8ff', color: '#9333ea', borderGlow: 'rgba(147, 51, 234, 0.4)' }
+              ].map((item) => {
+                const isSelected = alchemistSelected.includes(item.id);
+                return (
+                  <div
+                    key={item.id}
+                    onClick={() => {
+                      if (brewingProgress > 0) return;
+                      if (isSelected) {
+                        setAlchemistSelected(alchemistSelected.filter(x => x !== item.id));
+                      } else if (alchemistSelected.length < 2) {
+                        setAlchemistSelected([...alchemistSelected, item.id]);
+                      }
+                    }}
+                    style={{
+                      background: '#ffffff',
+                      border: isSelected ? '3px solid #38bdf8' : '2.5px solid #e2e8f0',
+                      borderRadius: '28px',
+                      padding: '2rem 1.5rem',
+                      textAlign: 'center',
+                      cursor: brewingProgress > 0 ? 'not-allowed' : 'pointer',
+                      transition: 'all 0.25s ease',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      gap: '1rem',
+                      boxShadow: isSelected ? '0 20px 40px rgba(56, 189, 248, 0.2), 0 10px 30px rgba(0,0,0,0.15), inset 0 3px 6px rgba(255,255,255,0.4)' : '0 4px 12px rgba(0,0,0,0.01)'
+                    }}
+                    onMouseEnter={(e) => {
+                      if (brewingProgress > 0) return;
+                      if (!isSelected) {
+                        e.currentTarget.style.borderColor = item.color;
+                        e.currentTarget.style.transform = 'translateY(-4px)';
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (brewingProgress > 0) return;
+                      if (!isSelected) {
+                        e.currentTarget.style.borderColor = '#e2e8f0';
+                        e.currentTarget.style.transform = 'none';
+                      }
+                    }}
+                  >
+                    <div style={{ width: '70px', height: '70px', borderRadius: '20px', background: item.bg, color: item.color, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.2rem' }}>
+                      <i className={`bi ${item.icon}`}></i>
+                    </div>
+                    <strong style={{ fontSize: '1.1rem', color: '#1e293b' }}>{item.name}</strong>
+                    
+                    {isSelected && (
+                      <span style={{ background: item.color, color: '#fff', fontSize: '0.75rem', fontWeight: 800, padding: '0.2rem 0.6rem', borderRadius: '8px', position: 'absolute', top: '12px', right: '12px' }}>
+                        AKTIV
+                      </span>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Brewing action area */}
+            <div style={{ width: '100%', maxWidth: '500px', textAlign: 'center', marginTop: '1rem' }}>
+              {brewingProgress === 0 ? (
+                <div>
+                  {isReadyToBrew ? (
+                    <button
+                      onClick={startBrewingAnimation}
+                      style={{
+                        background: 'linear-gradient(135deg, #16a34a 0%, #22c55e 100%)',
+                        color: '#fff',
+                        border: 'none',
+                        padding: '1.2rem 3rem',
+                        borderRadius: '20px',
+                        fontSize: '1.2rem',
+                        fontWeight: 900,
+                        cursor: 'pointer',
+                        boxShadow: '0 8px 20px rgba(22, 163, 74, 0.3)',
+                        animation: 'pulse 1.8s infinite'
+                      }}
+                    >
+                      🧪 Elixier brauen!
+                    </button>
+                  ) : (
+                    <div style={{ background: '#f1f5f9', border: '1px solid #cbd5e1', padding: '1rem', borderRadius: '16px', color: '#475569', fontWeight: 600 }}>
+                      Wählen Sie genau {2 - alchemistSelected.length} weitere Zutat{2 - alchemistSelected.length > 1 ? 'en' : ''} aus der Auswahl oben.
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', alignItems: 'center' }}>
+                  <span style={{ fontWeight: 800, color: '#16a34a', animation: 'pulse 1s infinite' }}>Trank wird gemischt... {brewingProgress}%</span>
+                  <div style={{ width: '100%', height: '14px', background: '#cbd5e1', borderRadius: '7px', overflow: 'hidden' }}>
+                    <div style={{ width: `${brewingProgress}%`, height: '100%', background: '#16a34a', transition: 'width 0.15s ease-out' }}></div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+          </div>
+        ) : (
+          /* ALCHEMIST POTION SUCCESS SCREEN */
+          <div className="dash-card" style={{ padding: '1.5rem 2rem', background: 'rgba(255, 255, 255, 0.03)', backdropFilter: 'blur(20px)', borderRadius: '28px', border: '1px solid rgba(255, 255, 255, 0.08)', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem', boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)', maxWidth: '580px', margin: '0 auto' }}>
+            
+            <div style={{ width: '70px', height: '70px', borderRadius: '20px', background: 'linear-gradient(135deg, #16a34a 0%, #22c55e 100%)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '2.5rem', animation: 'bounce 2.5s infinite', boxShadow: '0 10px 20px rgba(22, 163, 74, 0.2)' }}>
+              <i className="bi bi-droplet-fill"></i>
+            </div>
+            
+            <div>
+              <span className="badge" style={{ background: 'rgba(22, 163, 74, 0.15)', color: '#22c55e', padding: '0.3rem 0.8rem', borderRadius: '20px', fontSize: '0.7rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', border: '1px solid rgba(22, 163, 74, 0.25)' }}>Elixier gebraut!</span>
+              <h2 style={{ color: '#fff', fontSize: '1.6rem', fontWeight: 900, marginTop: '0.5rem', marginBottom: '0.2rem' }}>{potionInfo.title}</h2>
+              <p style={{ color: '#94a3b8', fontSize: '0.9rem', margin: 0 }}>
+                Zellulärer Effekt: <strong style={{ color: '#22c55e' }}>{potionInfo.effect}</strong>
+              </p>
+            </div>
+
+            <div style={{ padding: '1rem 1.25rem', background: 'rgba(255,255,255,0.04)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '18px', width: '100%', textAlign: 'left', boxSizing: 'border-box' }}>
+              <strong style={{ display: 'block', marginBottom: '0.25rem', color: '#e2e8f0', fontSize: '0.85rem' }}>Deine Tages-Herausforderung:</strong>
+              <p style={{ margin: 0, color: '#94a3b8', fontSize: '0.8rem', lineHeight: '1.4' }}>{potionInfo.desc}</p>
+            </div>
+
+            <div style={{ display: 'flex', gap: '1rem', background: 'rgba(255,255,255,0.04)', padding: '0.6rem 1.5rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.08)' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, color: '#fbbf24', fontSize: '1rem' }}>
+                <span>💎</span>
+                <span>+{potionInfo.diamonds} Diamanten</span>
+              </div>
+              <div style={{ width: '1px', background: 'rgba(255,255,255,0.1)' }}></div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, color: '#60a5fa', fontSize: '1rem' }}>
+                <span>✨</span>
+                <span>+{potionInfo.xp} XP</span>
+              </div>
+            </div>
+
+            {/* Emoji Rating Loop */}
+            {!alchemistRating ? (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', alignItems: 'center', width: '100%' }}>
+                <h4 style={{ color: '#e2e8f0', margin: 0, fontWeight: 700, fontSize: '0.85rem' }}>Trank eingenommen? Wie fühlt sich dein Körper an?</h4>
+                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  {[
+                    { text: '⚡ Voller Energie', val: 'energy' },
+                    { text: '🧘 Fokussiert', val: 'focused' },
+                    { text: '🔋 Regeneriert', val: 'charged' }
+                  ].map((rate) => (
+                    <button 
+                      key={rate.val}
+                      onClick={() => setAlchemistRating(rate.val)}
+                      style={{
+                        background: 'rgba(255,255,255,0.06)',
+                        border: '1px solid rgba(255,255,255,0.12)',
+                        padding: '0.4rem 0.8rem',
+                        borderRadius: '10px',
+                        cursor: 'pointer',
+                        fontSize: '0.8rem',
+                        fontWeight: 700,
+                        color: '#f8fafc',
+                        transition: 'all 0.2s'
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.borderColor = '#60a5fa';
+                        e.currentTarget.style.background = 'rgba(96, 165, 250, 0.15)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.12)';
+                        e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+                      }}
+                    >
+                      {rate.text}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div style={{ background: 'rgba(16, 185, 129, 0.1)', border: '1px solid rgba(16, 185, 129, 0.2)', borderRadius: '18px', padding: '1rem', display: 'flex', gap: '0.75rem', alignItems: 'center', textAlign: 'left', width: '100%', boxSizing: 'border-box' }}>
+                <div style={{ width: '40px', height: '40px', borderRadius: '50%', overflow: 'hidden', position: 'relative', flexShrink: 0 }}>
+                  <Image src="/images/avatar_lisa.png" fill alt="Lisa Coach" style={{ objectFit: 'cover' }} />
+                </div>
+                <div>
+                  <strong style={{ color: '#34d399', display: 'block', marginBottom: '0.1rem', fontSize: '0.85rem' }}>Coach Lisa sagt:</strong>
+                  <span style={{ color: '#a7f3d0', fontSize: '0.8rem', lineHeight: '1.4' }}>
+                    {alchemistRating === 'energy' && '„Hervorragend, Monique! Deine chemischen Rezeptoren feuern jetzt Langlebigkeits-Signale an deine Muskeln. Ein perfekter Start in den Tag!“'}
+                    {alchemistRating === 'focused' && '„Wunderbar, die Synergie aus Nährstoffen und Sauerstoff hat deine Alpha-Wellen im Gehirn beruhigt. Dein mentaler Fokus ist jetzt geschärft.“'}
+                    {alchemistRating === 'charged' && '„Großartig! Du hast das Beste aus zwei biologischen Welten miteinander verschmolzen. Deine Zellen regenerieren nun tiefgehend.“'}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <button 
+              onClick={() => {
+                setJungbrunnenSubView('none');
+                setActiveModal('jungbrunnen-selection');
+                setAlchemistSelected([]);
+                setAlchemistBrewed(false);
+                setAlchemistRating(null);
+                setBrewingProgress(0);
+              }}
+              style={{
+                marginTop: '0.5rem',
+                background: '#fff',
+                color: '#0f172a',
+                border: 'none',
+                padding: '0.6rem 1.5rem',
+                borderRadius: '10px',
+                fontWeight: 750,
+                fontSize: '0.85rem',
+                cursor: 'pointer'
+              }}
+            >
+              Zurück zu Jungbrunnen
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="dashboard-container">
@@ -608,7 +1451,17 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             </div>
 
             {/* CARD 3: JUNGBRUNNEN */}
-            <div className="fg-v-card">
+            <div 
+               className="fg-v-card" 
+               onClick={() => {
+                 if (window.innerWidth <= 992) {
+                   setJungbrunnenSubView('selection');
+                 } else {
+                   setActiveModal('jungbrunnen-selection');
+                 }
+               }} 
+               style={{ cursor: 'pointer' }}
+             >
               <div className="fgh-img-16-9"><Image src="/images/feelgood_youth.png" fill alt="Regeneration" style={{ objectFit: 'cover' }} /></div>
               <div className="fgh-content">
                 <strong>Jungbrunnen</strong>
@@ -632,40 +1485,165 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       {/* --- MODALS --- */}
       {activeModal && (
         <div className="modal-overlay" onClick={() => { setActiveModal(null); setIsRecording(false); }}>
-          <div className={`modal-content ${activeModal === 'activity' || activeModal === 'diamonds' ? 'large-modal' : ''}`} onClick={e => e.stopPropagation()}>
+          <div className={`modal-content ${activeModal === 'activity' || activeModal === 'diamonds' || activeModal === 'jungbrunnen-selection' ? 'large-modal' : ''}`} onClick={e => e.stopPropagation()}>
             <button className="modal-close-btn" onClick={() => { setActiveModal(null); setIsRecording(false); }}><i className="bi bi-x-lg"></i></button>
             
             {activeModal === 'activity' && (
               <div className="modal-body dual-pane">
                 <div className="modal-pane-left">
-                  <h3 className="modal-title">Schnellauswahl</h3>
-                  <div className="activity-options">
-                    <div className={`act-opt-card ${quickSelected === 'Radfahren' ? 'active' : ''}`} onClick={() => setQuickSelected('Radfahren')}><i className="bi bi-bicycle"></i><span>Radfahren</span></div>
-                    <div className={`act-opt-card ${quickSelected === 'Krafttraining' ? 'active' : ''}`} onClick={() => setQuickSelected('Krafttraining')}>
-                      <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '1.6rem', height: '1.6rem', marginBottom: '0.1rem', color: quickSelected === 'Krafttraining' ? '#4498ca' : '#6099cf' }}>
-                        <path d="M6 7h1.5v10H6zm-2.5 2h1.5v6h-1.5zm13 0h1.5v6h-1.5zm2.5-2h1.5v10H19zm-11.5 4h10v2h-10z" />
-                      </svg>
-                      <span>Krafttraining</span>
-                    </div>
-                    <div className={`act-opt-card ${quickSelected === 'Spazieren' ? 'active' : ''}`} onClick={() => setQuickSelected('Spazieren')}><i className="bi bi-person-walking"></i><span>Spazieren</span></div>
-                    <div className={`act-opt-card ${quickSelected === 'Schwimmen' ? 'active' : ''}`} onClick={() => setQuickSelected('Schwimmen')}><i className="bi bi-droplet"></i><span>Schwimmen</span></div>
-                    <div className={`act-opt-card ${quickSelected === 'Yoga' ? 'active' : ''}`} onClick={() => setQuickSelected('Yoga')}><i className="bi bi-heart-pulse"></i><span>Yoga</span></div>
-                    <div className={`act-opt-card ${quickSelected === 'Power Nap' ? 'active' : ''}`} onClick={() => setQuickSelected('Power Nap')}><i className="bi bi-moon-stars"></i><span>Power Nap</span></div>
-                  </div>
-                  <div className="input-group">
-                    <label>Dauer (Minuten)</label>
-                    <select className="qs-dropdown-select" style={{ width: '100%', padding: '0.8rem', border: '1px solid #cbd5e1', borderRadius: '10px', background: '#fff', fontSize: '1rem', color: '#1e293b', outline: 'none', cursor: 'pointer', marginTop: '0.5rem' }}>
-                      <option>5 Min.</option>
-                      <option>10 Min.</option>
-                      <option>15 Min.</option>
-                      <option>30 Min.</option>
-                      <option>45 Min.</option>
-                      <option>60 Min.</option>
-                      <option>90 Min.</option>
-                      <option>120 Min.</option>
-                    </select>
-                  </div>
-                  <button className="save-btn" onClick={() => setActiveModal(null)}>Speichern</button>
+                  <h3 className="modal-title">Schnelleingabe letzte Aktivitäten</h3>
+                  {(() => {
+                    const fallbackActs = [
+                      { name: 'Rad gefahren', icon: 'bi-bicycle' },
+                      { name: 'Krafttraining abgeschlossen', icon: 'bi-activity' },
+                      { name: 'Zügig spazieren gegangen', icon: 'bi-person-walking' },
+                      { name: 'Meditiert', icon: 'bi-flower1' },
+                      { name: 'Power Nap gemacht', icon: 'bi-moon-stars' }
+                    ];
+                    
+                    const recentActs = selectedActivities
+                      .filter(name => name !== '8-8,5 Std. geschlafen' && name !== 'Zur Chronotyp-Zeit geschlafen')
+                      .slice(-4)
+                      .reverse();
+
+                    const displayActs = [...recentActs];
+                    fallbackActs.forEach(fallback => {
+                      if (displayActs.length < 4 && !displayActs.includes(fallback.name)) {
+                        displayActs.push(fallback.name);
+                      }
+                    });
+
+                    const finalActs = displayActs.slice(0, 4);
+
+                    const getIconForActivity = (name: string) => {
+                      const lower = name.toLowerCase();
+                      if (lower.includes('rad')) return 'bi-bicycle';
+                      if (lower.includes('kraft') || lower.includes('hit-')) return 'bi-activity';
+                      if (lower.includes('joggen') || lower.includes('cooper')) return 'bi-person-running';
+                      if (lower.includes('spazieren') || lower.includes('schritte') || lower.includes('spazier')) return 'bi-person-walking';
+                      if (lower.includes('medit')) return 'bi-flower1';
+                      if (lower.includes('nap')) return 'bi-moon-stars';
+                      if (lower.includes('schlaf') || lower.includes('geschlafen')) return 'bi-moon';
+                      if (lower.includes('aufstehzeit')) return 'bi-alarm';
+                      if (lower.includes('koffein')) return 'bi-cup-hot';
+                      if (lower.includes('schläf') || lower.includes('abendroutine')) return 'bi-moon';
+                      if (lower.includes('schwimm')) return 'bi-droplet';
+                      if (lower.includes('yoga') || lower.includes('dehnung')) return 'bi-heart-pulse';
+                      if (lower.includes('atem')) return 'bi-wind';
+                      if (lower.includes('licht') || lower.includes('sonne')) return 'bi-sun';
+                      if (lower.includes('treppe')) return 'bi-stairs';
+                      if (lower.includes('hang') || lower.includes('griff')) return 'bi-award';
+                      if (lower.includes('wasser')) return 'bi-droplet-half';
+                      if (lower.includes('gemüse') || lower.includes('obst') || lower.includes('mahlzeit') || lower.includes('essen') || lower.includes('snack') || lower.includes('zucker') || lower.includes('protein') || lower.includes('omega') || lower.includes('ballast')) return 'bi-apple';
+                      if (lower.includes('alkohol')) return 'bi-glass-takeout';
+                      if (lower.includes('sozial') || lower.includes('freund') || lower.includes('unterstützung') || lower.includes('verbundenheit')) return 'bi-people';
+                      if (lower.includes('nikotin')) return 'bi-x-circle';
+                      if (lower.includes('journaling')) return 'bi-book';
+                      if (lower.includes('handy') || lower.includes('pause')) return 'bi-phone-mute';
+                      if (lower.includes('lüft')) return 'bi-wind';
+                      return 'bi-lightning-charge';
+                    };
+
+                    return (
+                      <div className="activity-options" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
+                        {finalActs.map(name => {
+                          const icon = getIconForActivity(name);
+                          const isActive = quickSelected === name;
+                          const hasLogged = selectedActivities.includes(name);
+                          const count = activityCounts[name] || 0;
+
+                          return (
+                            <div 
+                              key={name} 
+                              className={`act-opt-card ${isActive ? 'active' : ''}`} 
+                              onClick={() => setQuickSelected(name)}
+                              style={{ padding: '0.8rem 0.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '120px', position: 'relative', gap: '0.1rem' }}
+                            >
+                              {hasLogged && count > 0 && (
+                                <span style={{
+                                  position: 'absolute',
+                                  top: '8px',
+                                  right: '8px',
+                                  background: '#22c55e',
+                                  color: 'white',
+                                  fontSize: '1.05rem',
+                                  fontWeight: 900,
+                                  borderRadius: '50px',
+                                  padding: '3px 8px',
+                                  lineHeight: 1,
+                                  boxShadow: '0 2px 6px rgba(34, 197, 94, 0.4)'
+                                }}>
+                                  x{count}
+                                </span>
+                              )}
+                              <i className={`bi ${icon}`} style={{ fontSize: '2.8rem', marginBottom: '0.05rem' }}></i>
+                              <span style={{ fontSize: '0.88rem', lineHeight: '1.2', fontWeight: 500 }}>{name}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    );
+                  })()}
+                  {(() => {
+                    const selectedActConfig = activityOptions.find(a => a.name === quickSelected);
+                    const dropdownOptions = selectedActConfig ? selectedActConfig.options : ['5 Min.', '10 Min.', '15 Min.', '30 Min.', '45 Min.', '60 Min.', '90 Min.', '120 Min.'];
+                    const defaultVal = selectedActConfig ? selectedActConfig.defaultOption : '30 Min.';
+
+                    let dropdownLabel = 'Wert';
+                    if (selectedActConfig) {
+                      const firstOpt = selectedActConfig.options[0];
+                      if (firstOpt.includes('Min.') || firstOpt.includes('Std.')) {
+                        dropdownLabel = 'Dauer';
+                      } else if (firstOpt.includes('L')) {
+                        dropdownLabel = 'Menge';
+                      } else if (firstOpt.includes('Portion')) {
+                        dropdownLabel = 'Portionen';
+                      } else if (firstOpt.includes('Sek.')) {
+                        dropdownLabel = 'Dauer (Sekunden)';
+                      } else if (selectedActConfig.name.includes('Schritte')) {
+                        dropdownLabel = 'Schritte';
+                      } else if (firstOpt === 'Ja' || firstOpt === 'Nein') {
+                        dropdownLabel = 'Erfolgreich absolviert';
+                      }
+                    }
+
+                    return (
+                      <div className="input-group">
+                        <label>{dropdownLabel}</label>
+                        <select 
+                          className="qs-dropdown-select" 
+                          value={activityValues[quickSelected] || defaultVal}
+                          onChange={(e) => setActivityValues({...activityValues, [quickSelected]: e.target.value})}
+                          style={{ width: '100%', padding: '0.8rem', border: '1px solid #cbd5e1', borderRadius: '10px', background: '#fff', fontSize: '1rem', color: '#1e293b', outline: 'none', cursor: 'pointer', marginTop: '0.5rem' }}
+                        >
+                          {dropdownOptions.map(opt => (
+                            <option key={opt} value={opt}>{opt}</option>
+                          ))}
+                        </select>
+                      </div>
+                    );
+                  })()}
+                  <button 
+                    className="save-btn" 
+                    onClick={() => {
+                      if (quickSelected) {
+                        const currentCount = activityCounts[quickSelected] || 0;
+                        const nextCount = currentCount + 1;
+                        
+                        const nextCounts = { ...activityCounts, [quickSelected]: nextCount };
+                        setActivityCounts(nextCounts);
+                        localStorage.setItem('ty-activity-counts', JSON.stringify(nextCounts));
+                        window.dispatchEvent(new Event('ty-counts-sync'));
+
+                        if (!selectedActivities.includes(quickSelected)) {
+                          updateSelectedActivities([...selectedActivities, quickSelected]);
+                        }
+                      }
+                      setActiveModal(null);
+                    }}
+                  >
+                    Speichern
+                  </button>
                 </div>
                 
                 <div className="modal-pane-right">
@@ -726,7 +1704,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                         return (
                           <div key={groupName} className="activity-group" style={{ marginBottom: '1.5rem' }}>
                             <h4 className="activity-group-title">
-                              <i className={`bi ${categoryIcons[groupName] || 'bi-bookmark'} group-icon`} style={{ color: '#6099cf', fontSize: '1.05rem' }}></i>
+                              <i className={`bi ${categoryIcons[groupName] || 'bi-bookmark'} group-icon`} style={{ color: '#6099cf', fontSize: '1.25rem' }}></i>
                               <span>{groupName}</span>
                             </h4>
                             <div className="activity-group-items" style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
@@ -758,14 +1736,28 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                                             <button 
                                               className={`add-list-btn ${isSelected ? 'checked' : ''}`}
                                               onClick={() => {
-                                                if (isSelected) {
+                                                const currentCount = activityCounts[act.name] || 0;
+                                                const nextCount = (currentCount + 1) % 6; // cycles 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 0
+                                                
+                                                const nextCounts = { ...activityCounts, [act.name]: nextCount };
+                                                setActivityCounts(nextCounts);
+                                                localStorage.setItem('ty-activity-counts', JSON.stringify(nextCounts));
+                                                window.dispatchEvent(new Event('ty-counts-sync'));
+
+                                                if (nextCount === 0) {
                                                   updateSelectedActivities(selectedActivities.filter(a => a !== act.name));
-                                                } else {
+                                                } else if (!isSelected) {
                                                   updateSelectedActivities([...selectedActivities, act.name]);
                                                 }
                                               }}
                                             >
-                                              <i className={isSelected ? 'bi bi-check-lg' : 'bi bi-plus'}></i>
+                                              {isSelected && (activityCounts[act.name] || 1) > 1 ? (
+                                                <span style={{ fontSize: '1.05rem', fontWeight: 900 }}>
+                                                  x{activityCounts[act.name]}
+                                                </span>
+                                              ) : (
+                                                <i className={isSelected ? 'bi bi-check-lg' : 'bi bi-plus'} style={{ fontSize: '1.2rem' }}></i>
+                                              )}
                                             </button>
                                           </>
                                         );
@@ -1057,6 +2049,125 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                 </div>
               </div>
             )}
+
+            {activeModal === 'jungbrunnen-selection' && (
+              <div className="modal-body jungbrunnen-selection-modal" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', padding: '1rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
+                  <div style={{ width: '55px', height: '55px', borderRadius: '18px', background: '#ffffff', border: '2.5px solid #0284c7', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#0284c7', fontSize: '1.8rem' }}>
+                    <i className="bi bi-droplet-fill"></i>
+                  </div>
+                  <div>
+                    <h3 className="modal-title" style={{ margin: 0 }}>Dein täglicher Jungbrunnen</h3>
+                  </div>
+                </div>
+
+                <div className="selection-options-grid" style={{ gap: '1.25rem', marginTop: '0.5rem' }}>
+                  
+                  {/* OPTION 1: DAS LANGLEBIGKEITS-ORAKEL */}
+                  <div 
+                    onClick={() => {
+                      setJungbrunnenSubView('oracle');
+                      setActiveModal(null);
+                    }}
+                    style={{
+                      background: '#fff',
+                      border: '2px solid #e2e8f0',
+                      borderRadius: '24px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      overflow: 'hidden',
+                      boxShadow: '0 4px 10px rgba(0,0,0,0.01)',
+                      textAlign: 'left'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = '#3b82f6';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(59, 130, 246, 0.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = '#e2e8f0';
+                      e.currentTarget.style.transform = 'none';
+                      e.currentTarget.style.boxShadow = '0 4px 10px rgba(0,0,0,0.01)';
+                    }}
+                  >
+                    {/* Left 25% Image */}
+                    <div style={{ width: '25%', position: 'relative', minHeight: '130px' }}>
+                      <Image 
+                        src="/images/feelgood_youth.png" 
+                        fill 
+                        alt="Orakel" 
+                        style={{ objectFit: 'cover' }} 
+                      />
+                    </div>
+                    
+                    {/* Right 75% Content */}
+                    <div style={{ width: '75%', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                      <strong style={{ fontSize: 'calc(1.1rem + 3pt)', color: '#1e293b' }}>1. Verjüngungskarte</strong>
+                      <p style={{ fontSize: 'calc(0.9rem + 2pt)', color: '#64748b', margin: 0, lineHeight: 1.4 }}>
+                        Ziehe deine Tageskarte und enthülle deine tägliche biologische Verjüngungsaktion.
+                      </p>
+                      <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', gap: '0.25rem', color: '#3b82f6', fontWeight: 700, fontSize: 'calc(0.9rem + 2pt)' }}>
+                        Karte ziehen <i className="bi bi-chevron-right"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* OPTION 2: DER LONGEVITY-ALCHEMIST */}
+                  <div 
+                    onClick={() => {
+                      setJungbrunnenSubView('alchemist');
+                      setActiveModal(null);
+                    }}
+                    style={{
+                      background: '#fff',
+                      border: '2px solid #e2e8f0',
+                      borderRadius: '24px',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      display: 'flex',
+                      flexDirection: 'row',
+                      overflow: 'hidden',
+                      boxShadow: '0 4px 10px rgba(0,0,0,0.01)',
+                      textAlign: 'left'
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.borderColor = '#16a34a';
+                      e.currentTarget.style.transform = 'translateY(-2px)';
+                      e.currentTarget.style.boxShadow = '0 8px 20px rgba(22, 163, 74, 0.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.borderColor = '#e2e8f0';
+                      e.currentTarget.style.transform = 'none';
+                      e.currentTarget.style.boxShadow = '0 4px 10px rgba(0,0,0,0.01)';
+                    }}
+                  >
+                    {/* Left 25% Image */}
+                    <div style={{ width: '25%', position: 'relative', minHeight: '130px' }}>
+                      <Image 
+                        src="/images/feelgood_energy.png" 
+                        fill 
+                        alt="Alchemist" 
+                        style={{ objectFit: 'cover' }} 
+                      />
+                    </div>
+
+                    {/* Right 75% Content */}
+                    <div style={{ width: '75%', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                      <strong style={{ fontSize: 'calc(1.1rem + 3pt)', color: '#1e293b' }}>2. Verjüngungselixier</strong>
+                      <p style={{ fontSize: 'calc(0.9rem + 2pt)', color: '#64748b', margin: 0, lineHeight: 1.4 }}>
+                        Mische dein tägliches Verjüngungselixier aus Langlebigkeitszutaten zusammen.
+                      </p>
+                      <div style={{ marginTop: 'auto', display: 'flex', alignItems: 'center', gap: '0.25rem', color: '#16a34a', fontWeight: 700, fontSize: 'calc(0.9rem + 2pt)' }}>
+                        Trank brauen <i className="bi bi-chevron-right"></i>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -1225,7 +2336,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         .fg-v-card {
           background: #f8fafc;
           border-radius: 20px;
-          border: 1px solid #f1f5f9;
+          border: 1.5px solid #cbd5e1;
           cursor: pointer;
           transition: all 0.2s ease;
           display: flex;
@@ -1236,7 +2347,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         .fg-v-card:hover {
           transform: translateY(-4px);
           box-shadow: 0 10px 20px rgba(0,0,0,0.04);
-          border-color: #cbd5e1;
+          border-color: #38bdf8;
         }
         .fgh-img-16-9 {
           position: relative;
@@ -1275,7 +2386,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           background: #fff; width: 100%; max-width: 500px; border-radius: 32px;
           padding: 2.5rem; position: relative; box-shadow: 0 40px 80px rgba(0,0,0,0.15);
         }
-        .modal-content.large-modal { max-width: 1000px; }
+        .modal-content.large-modal { max-width: 1150px; }
         
         .dual-pane { display: grid; grid-template-columns: 1fr 1.2fr; gap: 3rem; }
         .modal-pane-left { display: flex; flex-direction: column; }
@@ -1294,8 +2405,8 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         .activity-list::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         
         .activity-group-title {
-          font-size: 0.85rem;
-          font-weight: 800;
+          font-size: 1.05rem;
+          font-weight: 900;
           color: #64748b;
           text-transform: uppercase;
           letter-spacing: 0.05em;
@@ -1311,7 +2422,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         .act-list-item { background: #f0f8ff; border: 1.5px solid #e0f2fe; border-radius: 12px; padding: 0.8rem 1rem; display: flex; align-items: center; justify-content: space-between; }
         .act-list-item.selected { background: #f0fdf4; border-color: #86d59b; }
         
-        .act-name { font-weight: 400; color: #1e293b; font-size: 0.95rem; }
+        .act-name { font-weight: 400 !important; color: #1e293b; font-size: 0.95rem; }
         .act-right-group { display: flex; align-items: center; gap: 1rem; }
         
         .act-duration-select { border: 1px solid #cbd5e1; border-radius: 8px; padding: 0.3rem 0.5rem; background: #fff; outline: none; font-size: 0.8rem; color: #334155; cursor: pointer; }
@@ -1323,7 +2434,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         .active-gem-green { color: #22c55e; }
         .inactive-gem-green { color: #bbf7d0; }
         
-        .add-list-btn { width: 28px; height: 28px; border-radius: 50%; border: 1.5px solid #6099cf; background: transparent; color: #6099cf; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.2rem; padding: 0; }
+        .add-list-btn { width: 39px; height: 39px; border-radius: 50%; border: 2px solid #6099cf; background: transparent; color: #6099cf; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.3rem; padding: 0; }
         .add-list-btn.checked { background: #22c55e; border-color: #22c55e; color: #fff; }
         
         .pane-right-footer { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
@@ -1844,6 +2955,17 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           opacity: 1;
         }
 
+        .selection-options-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+        }
+        @media (max-width: 992px) {
+          .selection-options-grid {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+          }
+        }
+
         /* Responsive Mobile Centering for Tooltips in App View */
         @media (max-width: 992px) {
           .box-header {
@@ -1864,6 +2986,11 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           .info-tooltip-text::after {
             display: none !important;
           }
+        }
+
+        body.oracle-scroll-lock {
+          overflow: hidden !important;
+          height: 100% !important;
         }
       `}</style>
     </div>

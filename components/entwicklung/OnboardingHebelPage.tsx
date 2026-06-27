@@ -387,7 +387,7 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
           max-width: 1250px;
           margin: 0 auto;
           font-family: 'Plus Jakarta Sans', sans-serif;
-          background: #f1f5f9;
+          background: transparent;
           animation: pageLoadFade 0.6s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
@@ -604,7 +604,7 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
         }
 
         .header-index {
-          font-size: calc(0.72rem + 2pt);
+          font-size: calc(0.72rem + 4pt);
           font-weight: 800;
           color: #94a3b8;
           text-transform: uppercase;
@@ -615,7 +615,7 @@ export default function OnboardingHebelPage({ onNavigate }: { onNavigate: (tab: 
 
         .header-left-group h3 {
           font-family: 'Outfit', sans-serif;
-          font-size: 1.15rem;
+          font-size: calc(1.15rem + 2pt);
           font-weight: 800;
           color: #0f172a;
           margin: 0;

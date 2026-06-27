@@ -143,6 +143,62 @@ const wearablesList = [
   { id: 'garmin', name: 'Garmin Smartwatch', image: '/images/garmin_clean.png' }
 ];
 
+const ACTIVITY_DIAMONDS: Record<string, number> = {
+  '8–8,5 Std. geschlafen': 5,
+  'Zur Chronotyp-Zeit geschlafen': 3,
+  'Vor Schlafen bildschirmfrei': 2,
+  'Schlafzimmer kühl + dunkel gehalten': 2,
+  'Feste Aufstehzeit eingehalten': 3,
+  'Nach 14 Uhr kein Koffein mehr': 2,
+  'Power Nap gemacht': 1,
+  'Abendroutine durchgeführt': 1,
+  'Wahrgenommene Schlafqualität': 4,
+  'Vor Schlaf keinen Alk. konsumiert': 2,
+
+  'Schritte gegangen': 4,
+  'Zügig spazieren gegangen': 3,
+  'Joggen gegangen': 4,
+  'Krafttraining abgeschlossen': 4,
+  'Dehnungen durchgeführt': 2,
+  'Rad gefahren': 4,
+  'Treppen gestiegen': 3,
+  'HIT-Intervalltraining': 5,
+  'Dead Hang gehalten': 3,
+  'Griffkraft-Training durchgeführt': 3,
+  'Cooper-Test: 2,3 km gelaufen': 4,
+
+  'Protein (Ziel 160g) aufgenommen': 4,
+  'Omega-3-reiche Lebensmittel / Fischöl': 3,
+  'Esspause eingehalten': 2,
+  'Vollwertige Hauptmahlzeit gegessen': 3,
+  'Ballaststoffe (Ziel 30g) zugeführt': 4,
+  'Wasser getrunken': 2,
+  'Gemüse + Obst gegessen': 4,
+  'Kein Ultra-Processed-Snacking': 4,
+  'Zuckerarm gegessen': 4,
+  'Keinen Alkohol konsumiert': 5,
+
+  'Innenraum aktiv gelüftet': 1,
+  'Sonnenschutz bewusst eingehalten': 2,
+  'Nikotinfreien Tag geschafft': 4,
+  'Atemübung durchgeführt': 2,
+  'Bewusste Auszeit in Natur': 3,
+  'Eine Pause ohne Handy gemacht': 2,
+
+  'Echten sozialen Austausch erlebt': 4,
+  'Freund / Familienmitglied kontaktiert': 2,
+  'Mahlzeit mit Verbundenheit erlebt': 2,
+  'Unterstützung gegeben/angenommen': 3,
+  'Im soz. Kontext alkoholfrei geblieben': 3,
+
+  'Tageslicht am Morgen getankt': 3,
+  'Mikropause 5 Min. eingebaut': 1,
+  'Meditiert': 3,
+  'Dankbarkeits-Journaling': 3,
+  'Negativen Gedankenkreislauf durchbrochen': 4,
+  'Social-Media-Zeit um 50% reduziert': 3
+};
+
 interface EntwicklungPageProps {
   onStartSimulation?: () => void;
   onNavigate?: (tab: string) => void;
@@ -286,6 +342,40 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
 
   const [checkedActivities, setCheckedActivities] = useState<string[]>([]);
   const [activitySearchQuery, setActivitySearchQuery] = useState('');
+  const [wochenziel1Progress, setWochenziel1Progress] = useState(2);
+  const [wochenziel2Progress, setWochenziel2Progress] = useState(1);
+  const [cryoDismissed, setCryoDismissed] = useState(false);
+  const [logTimeStr, setLogTimeStr] = useState('20:55 Uhr');
+  const [activityCounts, setActivityCounts] = useState<Record<string, number>>({});
+
+  useEffect(() => {
+    const savedCounts = localStorage.getItem('ty-activity-counts');
+    if (savedCounts) {
+      setActivityCounts(JSON.parse(savedCounts));
+    }
+
+    const handleCountsSync = () => {
+      const updated = localStorage.getItem('ty-activity-counts');
+      if (updated) setActivityCounts(JSON.parse(updated));
+    };
+    window.addEventListener('ty-counts-sync', handleCountsSync);
+    return () => window.removeEventListener('ty-counts-sync', handleCountsSync);
+  }, []);
+
+  useEffect(() => {
+    const today = new Date();
+    const hrs = String(today.getHours()).padStart(2, '0');
+    const mins = String(today.getMinutes()).padStart(2, '0');
+    setLogTimeStr(`${hrs}:${mins} Uhr`);
+  }, []);
+
+  const handleRemoveFeelGood = (id: string) => {
+    if (id === 'Cryo-Challenge') {
+      setCryoDismissed(true);
+    } else {
+      toggleActivity(id);
+    }
+  };
 
   const currentWeekRange = useMemo(() => {
     const today = new Date();
@@ -347,11 +437,22 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
   }, [filteredActivities]);
 
   const toggleActivity = (id: string) => {
-    const next = checkedActivities.includes(id)
-      ? checkedActivities.filter(x => x !== id)
-      : [...checkedActivities, id];
-    setCheckedActivities(next);
-    localStorage.setItem('ty-checked-activities', JSON.stringify(next));
+    const currentCount = activityCounts[id] || 0;
+    const nextCount = (currentCount + 1) % 6; // cycles 0 -> 1 -> 2 -> 3 -> 4 -> 5 -> 0
+    
+    const nextCounts = { ...activityCounts, [id]: nextCount };
+    setActivityCounts(nextCounts);
+    localStorage.setItem('ty-activity-counts', JSON.stringify(nextCounts));
+    window.dispatchEvent(new Event('ty-counts-sync'));
+
+    let nextChecked = [...checkedActivities];
+    if (nextCount === 0) {
+      nextChecked = nextChecked.filter(x => x !== id);
+    } else if (!nextChecked.includes(id)) {
+      nextChecked.push(id);
+    }
+    setCheckedActivities(nextChecked);
+    localStorage.setItem('ty-checked-activities', JSON.stringify(nextChecked));
     window.dispatchEvent(new Event('ty-activities-sync'));
   };
 
@@ -420,14 +521,22 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
     }
   };
 
-  const [yesterdayStr, setYesterdayStr] = useState('10. MAI');
+  const [todayStr, setTodayStr] = useState('');
+  const [goalDaysLeftLabel, setGoalDaysLeftLabel] = useState('Letzter Tag');
   useEffect(() => {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const day = yesterday.getDate();
+    const today = new Date();
+    const day = today.getDay();
+    const dateNum = today.getDate();
     const months = ['JAN', 'FEB', 'MÄR', 'APR', 'MAI', 'JUN', 'JUL', 'AUG', 'SEP', 'OKT', 'NOV', 'DEZ'];
-    const month = months[yesterday.getMonth()];
-    setYesterdayStr(`${day}. ${month}`);
+    const month = months[today.getMonth()];
+    setTodayStr(`${dateNum}. ${month}`);
+
+    if (day === 0) {
+      setGoalDaysLeftLabel('Letzter Tag');
+    } else {
+      const daysLeft = 8 - day;
+      setGoalDaysLeftLabel(`Noch ${daysLeft} Tage`);
+    }
   }, []);
 
 
@@ -646,10 +755,10 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
       {/* Main Tabs */}
       <div className="entw-tabs">
         {[
-          { id: 'trends', label: 'Trends' },
-          { id: 'hebel', label: 'Lifestyle-Hebel' },
           { id: 'goals', label: 'Wochenaktivitäten' },
           { id: 'reports', label: 'Monatsreports' },
+          { id: 'trends', label: 'Trends' },
+          { id: 'hebel', label: 'Lifestyle-Hebel' },
           { id: 'journey', label: 'Journey' },
         ].map(tab => (
           <button
@@ -1081,7 +1190,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           <div className="goals-section-header">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span className="blue-bar"></span>
-              <h2>Deine Wochenziele</h2>
+              <h2>Deine Wochenziele: <span style={{ fontWeight: 'normal' }}>{currentWeekRange}</span></h2>
             </div>
             <button className="adjust-goals-btn">
               <i className="bi bi-sliders" style={{ marginRight: '6px', color: 'white' }}></i>
@@ -1091,52 +1200,163 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
 
           <div className="wochenziele-grid">
             {/* Card 1 */}
-            <div className="wochenziel-card">
+            <div className="wochenziel-card" style={{ paddingBottom: '1.25rem' }}>
               <div className="wzc-top">
                 <div className="wzc-left-content">
-                  <h3>1. Schlafrhythmus stabilisieren</h3>
+                  <div className="wzc-badge-container" style={{ marginBottom: '0.4rem' }}><span className="wzc-badge" style={{ background: '#e0f2fe', color: '#0369a1', border: '1.5px solid #bae6fd', fontSize: 'calc(0.68rem + 2pt)', fontWeight: 850, padding: '3px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'inline-block' }}>Wochenziel 1</span></div>
+                  <h3>Schlafrhythmus stabilisieren</h3>
                   <p>Stelle 4x in Folge regelmäßige Einschlafzeiten sicher (+/- 30 Min.), um maximale Regeneration und vollen Fokus am Tag zu erreichen.</p>
                 </div>
                 <div className="wzc-date-badge">
                   <i className="bi bi-calendar3"></i>
-                  <span>{yesterdayStr}<br/><small>Letzter Tag</small></span>
+                  <span>{todayStr}<br/><small>{goalDaysLeftLabel}</small></span>
                 </div>
               </div>
-              <div className="wzc-progress-box">
+              <div className="wzc-progress-box" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
                 <div className="wzc-circles">
-                  <div className="wzc-circle done"><i className="bi bi-check"></i></div>
-                  <div className="wzc-circle done"><i className="bi bi-check"></i></div>
-                  <div className="wzc-circle empty"></div>
-                  <div className="wzc-circle empty"></div>
+                  {[...Array(4)].map((_, i) => (
+                    <div key={i} className={`wzc-circle ${i < wochenziel1Progress ? 'done' : 'empty'}`}>
+                      {i < wochenziel1Progress && <i className="bi bi-check"></i>}
+                    </div>
+                  ))}
                 </div>
-                <div className="wzc-progress-text">
-                  <strong>50%</strong>
-                  <span>2/4 Tagen</span>
+                
+                {/* Interactive Controls to the left of progress text */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: 'auto', marginRight: '0.5rem' }}>
+                  <button 
+                    onClick={() => setWochenziel1Progress(prev => Math.min(4, prev + 1))}
+                    style={{
+                      width: '38px',
+                      height: '38px',
+                      borderRadius: '50%',
+                      background: '#0284c7',
+                      color: '#fff',
+                      border: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1.4rem',
+                      cursor: 'pointer',
+                      boxShadow: '0 2px 5px rgba(2, 132, 199, 0.25)',
+                      transition: 'all 0.2s',
+                      padding: 0
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = '#0369a1'; e.currentTarget.style.transform = 'scale(1.1)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = '#0284c7'; e.currentTarget.style.transform = 'none'; }}
+                    title="Ereignis hinzufügen"
+                  >
+                    <i className="bi bi-plus-lg" style={{ color: '#fff', fontSize: '1.1rem', fontWeight: 800 }}></i>
+                  </button>
+                  
+                  <button 
+                    onClick={() => setWochenziel1Progress(prev => Math.max(0, prev - 1))}
+                    style={{
+                      width: '38px',
+                      height: '38px',
+                      borderRadius: '50%',
+                      background: '#fff',
+                      color: '#ef4444',
+                      border: '2px solid #ef4444',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      boxShadow: '0 2px 5px rgba(239, 68, 68, 0.15)',
+                      transition: 'all 0.2s',
+                      padding: 0
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.transform = 'scale(1.1)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.transform = 'none'; }}
+                    title="Ereignis löschen"
+                  >
+                    <i className="bi bi-x-lg" style={{ color: '#ef4444', fontSize: '1rem', fontWeight: 900 }}></i>
+                  </button>
+                </div>
+
+                <div className="wzc-progress-text" style={{ flexShrink: 0 }}>
+                  <strong>{Math.round((wochenziel1Progress / 4) * 100)}%</strong>
+                  <span>{wochenziel1Progress}/4 Tagen</span>
                 </div>
               </div>
             </div>
 
             {/* Card 2 */}
-            <div className="wochenziel-card">
+            <div className="wochenziel-card" style={{ paddingBottom: '1.25rem' }}>
               <div className="wzc-top">
                 <div className="wzc-left-content">
-                  <h3>2. Kraftaufbau</h3>
+                  <div className="wzc-badge-container" style={{ marginBottom: '0.4rem' }}><span className="wzc-badge" style={{ background: '#dcfce7', color: '#15803d', border: '1.5px solid #bbf7d0', fontSize: 'calc(0.68rem + 2pt)', fontWeight: 850, padding: '3px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'inline-block' }}>Wochenziel 2</span></div>
+                  <h3>Kraftaufbau</h3>
                   <p>Absolviere diese Woche 3 Trainingseinheiten, um deinen Bewegungsapparat und deine Haltung nachhaltig zu stärken.</p>
                 </div>
                 <div className="wzc-date-badge">
                   <i className="bi bi-calendar3"></i>
-                  <span>{yesterdayStr}<br/><small>Letzter Tag</small></span>
+                  <span>{todayStr}<br/><small>{goalDaysLeftLabel}</small></span>
                 </div>
               </div>
-              <div className="wzc-progress-box">
+              <div className="wzc-progress-box" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
                 <div className="wzc-circles">
-                  <div className="wzc-circle done"><i className="bi bi-check"></i></div>
-                  <div className="wzc-circle empty"></div>
-                  <div className="wzc-circle empty"></div>
+                  {[...Array(3)].map((_, i) => (
+                    <div key={i} className={`wzc-circle ${i < wochenziel2Progress ? 'done' : 'empty'}`}>
+                      {i < wochenziel2Progress && <i className="bi bi-check"></i>}
+                    </div>
+                  ))}
                 </div>
-                <div className="wzc-progress-text">
-                  <strong>33%</strong>
-                  <span>1/3 Einheiten</span>
+                
+                {/* Interactive Controls to the left of progress text */}
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: 'auto', marginRight: '0.5rem' }}>
+                  <button 
+                    onClick={() => setWochenziel2Progress(prev => Math.min(3, prev + 1))}
+                    style={{
+                      width: '38px',
+                      height: '38px',
+                      borderRadius: '50%',
+                      background: '#0284c7',
+                      color: '#fff',
+                      border: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1.4rem',
+                      cursor: 'pointer',
+                      boxShadow: '0 2px 5px rgba(2, 132, 199, 0.25)',
+                      transition: 'all 0.2s',
+                      padding: 0
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = '#0369a1'; e.currentTarget.style.transform = 'scale(1.1)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = '#0284c7'; e.currentTarget.style.transform = 'none'; }}
+                    title="Ereignis hinzufügen"
+                  >
+                    <i className="bi bi-plus-lg" style={{ color: '#fff', fontSize: '1.1rem', fontWeight: 800 }}></i>
+                  </button>
+                  
+                  <button 
+                    onClick={() => setWochenziel2Progress(prev => Math.max(0, prev - 1))}
+                    style={{
+                      width: '38px',
+                      height: '38px',
+                      borderRadius: '50%',
+                      background: '#fff',
+                      color: '#ef4444',
+                      border: '2px solid #ef4444',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      boxShadow: '0 2px 5px rgba(239, 68, 68, 0.15)',
+                      transition: 'all 0.2s',
+                      padding: 0
+                    }}
+                    onMouseEnter={(e) => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.transform = 'scale(1.1)'; }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.transform = 'none'; }}
+                    title="Ereignis löschen"
+                  >
+                    <i className="bi bi-x-lg" style={{ color: '#ef4444', fontSize: '1rem', fontWeight: 900 }}></i>
+                  </button>
+                </div>
+
+                <div className="wzc-progress-text" style={{ flexShrink: 0 }}>
+                  <strong>{Math.round((wochenziel2Progress / 3) * 100)}%</strong>
+                  <span>{wochenziel2Progress}/3 Einheiten</span>
                 </div>
               </div>
             </div>
@@ -1145,7 +1365,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           <div className="goals-section-header" style={{ marginTop: '2.5rem' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span className="blue-bar"></span>
-              <h2>Next Best Actions</h2>
+              <h2>Deine Next Best Actions bei Wochenzielen</h2>
             </div>
           </div>
 
@@ -1294,10 +1514,25 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                               onClick={() => toggleActivity(act.id)}
                               style={isChecked ? { background: config.lightBg } : {}}
                             >
-                              <div className="acc-checkbox" style={isChecked ? { background: config.color, borderColor: config.color } : {}}>
-                                {isChecked && <i className="bi bi-check-lg" style={{ color: 'white', fontSize: '0.8rem' }}></i>}
+                              <div className="acc-checkbox" style={isChecked ? { background: config.color, borderColor: config.color, display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
+                                {isChecked && (
+                                  (activityCounts[act.id] || 1) > 1 ? (
+                                    <span style={{ color: 'white', fontSize: '0.62rem', fontWeight: 900, lineHeight: 1 }}>
+                                      {activityCounts[act.id]}x
+                                    </span>
+                                  ) : (
+                                    <i className="bi bi-check-lg" style={{ color: 'white', fontSize: '0.8rem' }}></i>
+                                  )
+                                )}
                               </div>
-                              <span className="acc-label">{act.label}</span>
+                              <span className="acc-label">
+                                {act.label}
+                                {isChecked && (
+                                  <span style={{ color: '#0284c7', marginLeft: '6px', fontSize: '0.85rem', fontWeight: 800 }}>
+                                    (💎 +{(ACTIVITY_DIAMONDS[act.id] || 2) * (activityCounts[act.id] || 1)})
+                                  </span>
+                                )}
+                              </span>
                             </div>
                           );
                         })
@@ -1307,6 +1542,88 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                 );
               })}
             </div>
+
+            {/* ── FEEL GOOD AREA AKTIVITÄTEN ── */}
+            <div className="feelgood-activities-section" style={{ marginTop: '3rem', width: '100%' }}>
+              <div className="goals-section-header" style={{ marginBottom: '1.5rem' }}>
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <span className="blue-bar" style={{ background: '#38bdf8' }}></span>
+                  <h2>Deine Feel-Good-Aktivitäten: <span style={{ fontWeight: 'normal' }}>{currentWeekRange}</span></h2>
+                </div>
+              </div>
+
+              <div style={{ background: '#ffffff', borderRadius: '24px', border: '1.5px solid #cbd5e1', padding: '1.5rem', boxShadow: '0 4px 12px rgba(0,0,0,0.02)' }}>
+                {(() => {
+                  const feelGoodActivitiesList = [
+                    { id: 'Cryo-Challenge', name: 'Cryo-Challenge', detail: '2 Min. Eisdusche', diamonds: 5, icon: '❄️' },
+                    { id: 'alchemist-elixir', name: 'Elixier des Zell-Recyclings', detail: '14 Std. Fasten + Eisdusche', diamonds: 5, icon: '🧪' },
+                    { id: 'Tageslicht am Morgen getankt', name: 'Morgenlicht getankt', detail: '15 Min. Sonne', diamonds: 3, icon: '☀️' },
+                    { id: 'Meditiert', name: 'Tiefen-Resilienz Meditation', detail: '15 Min. Atem & Geist', diamonds: 3, icon: '🧘' }
+                  ];
+
+                  const completedFeelGood = feelGoodActivitiesList.filter(act => {
+                    if (act.id === 'Cryo-Challenge') return !cryoDismissed;
+                    return checkedActivities.includes(act.id);
+                  });
+
+                  if (completedFeelGood.length === 0) {
+                    return <div style={{ color: '#94a3b8', fontStyle: 'italic', textAlign: 'center', padding: '1rem' }}>Noch keine Feel Good Aktivitäten absolviert.</div>;
+                  }
+
+                  return (
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                      {completedFeelGood.map((act, index) => (
+                        <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1rem 1.25rem', transition: 'all 0.2s ease', flexWrap: 'wrap', gap: '1rem' }} className="fg-activity-item">
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                            <div style={{ width: '48px', height: '48px', borderRadius: '12px', background: '#fff', border: '1.5px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.6rem', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
+                              {act.icon}
+                            </div>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+                              <strong style={{ fontSize: '1.1rem', color: '#1e293b', fontWeight: 700 }}>{act.name}</strong>
+                              <span style={{ fontSize: 'calc(0.85rem + 2pt)', color: '#64748b', fontWeight: 500 }}>{act.detail}</span>
+                            </div>
+                          </div>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+                            <span style={{ fontSize: 'calc(0.85rem + 2pt)', color: '#64748b', fontWeight: 500 }}>Eingetragen: Heute, {logTimeStr}</span>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#f0f9ff', border: '1px solid #bae6fd', padding: '0.5rem 1rem', borderRadius: '12px', color: '#0369a1', fontWeight: 800, fontSize: '0.95rem' }}>
+                              <span>💎</span>
+                              <span>+{act.diamonds} Diamanten verdient</span>
+                            </div>
+                            
+                            {/* Round X Delete Button */}
+                            <button 
+                              onClick={() => handleRemoveFeelGood(act.id)}
+                              style={{
+                                width: '38px',
+                                height: '38px',
+                                borderRadius: '50%',
+                                background: '#fff',
+                                color: '#ef4444',
+                                border: '2px solid #ef4444',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                cursor: 'pointer',
+                                boxShadow: '0 2px 5px rgba(239, 68, 68, 0.15)',
+                                transition: 'all 0.2s',
+                                padding: 0,
+                                flexShrink: 0
+                              }}
+                              onMouseEnter={(e) => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.transform = 'scale(1.1)'; }}
+                              onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.transform = 'none'; }}
+                              title="Aktivität löschen"
+                            >
+                              <i className="bi bi-x-lg" style={{ color: '#ef4444', fontSize: '1rem', fontWeight: 900 }}></i>
+                            </button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  );
+                })()}
+              </div>
+            </div>
+
           </div>
         </div>
       )}
@@ -3315,11 +3632,6 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
             grid-template-columns: 1fr;
             gap: 0.75rem;
           }
-          .wzc-top {
-            flex-direction: column-reverse;
-            align-items: flex-start;
-            gap: 0.75rem;
-          }
           .nba-card {
             flex-direction: column;
             align-items: flex-start;
@@ -3528,6 +3840,23 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           }
         }
         @media (max-width: 768px) {
+        .wzc-controls-wrapper {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 1.25rem;
+          flex-shrink: 0;
+        }
+        @media (max-width: 992px) {
+          .wzc-controls-wrapper {
+            flex-direction: row !important;
+            align-items: center !important;
+            gap: 1.5rem !important;
+            margin-top: 0.5rem !important;
+            width: 100% !important;
+            justify-content: flex-start !important;
+          }
+        }
           .act-cluster-grid {
             grid-template-columns: 1fr;
             gap: 1rem;

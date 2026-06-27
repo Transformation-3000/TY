@@ -766,6 +766,7 @@ i[class*="bi-"] {
   max-width: calc(100% - 250px);
   width: 100%;
   overflow: visible;
+  position: relative;
 }
 
 /* Dashboard Container */

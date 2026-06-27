@@ -627,6 +627,12 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
   return (
     <div className="cr">
+      <style jsx global>{`
+        html, body {
+          overflow: hidden !important;
+          height: 100% !important;
+        }
+      `}</style>
       <div className="cr-bg"><div className="cr-g" /><div className="cr-d" /></div>
       <div className="cr-in">
 
