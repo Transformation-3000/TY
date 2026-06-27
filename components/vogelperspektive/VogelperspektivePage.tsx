@@ -1880,20 +1880,35 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                       return `${weekdayShort}, ${dayAndMonth}`;
                     };
 
-                    const mockDiamondsLoungeActivities = [
-                      { name: 'Rad fahren', detail: '30 Min.', daysAgo: 0, diamonds: 2, icon: 'bi-bicycle' },
-                      { name: 'Vollwertige Hauptmahlzeit gegessen', detail: 'Ja', daysAgo: 0, diamonds: 3, icon: 'bi-egg-fried' },
-                      { name: 'Krafttraining abgeschlossen', detail: '60 Min.', daysAgo: 1, diamonds: 4, isBarbell: true },
-                      { name: '8–8,5 Std. geschlafen', detail: 'Ja', daysAgo: 1, diamonds: 5, icon: 'bi-moon-stars' },
-                      { name: 'Dead Hang gehalten', detail: '60 Sek.', daysAgo: 2, diamonds: 3, icon: 'bi-activity' },
-                      { name: 'Atemübung durchgeführt', detail: '10 Min.', daysAgo: 2, diamonds: 2, icon: 'bi-wind' },
-                      { name: 'Gemüse + Obst gegessen', detail: '5 Portionen', daysAgo: 3, diamonds: 4, icon: 'bi-apple' },
-                      { name: 'Zügig spazieren gegangen', detail: '30 Min.', daysAgo: 4, diamonds: 4, icon: 'bi-person-walking' },
-                      { name: 'Kein Ultra-Processed-Snacking', detail: 'Ja', daysAgo: 5, diamonds: 4, icon: 'bi-shield-check' },
-                      { name: 'Meditiert', detail: '15 Min.', daysAgo: 6, diamonds: 3, icon: 'bi-flower1' }
-                    ];
+                    const dynamicLoungeActivities = selectedActivities.map(name => {
+                      const actConfig = activityOptions.find(a => a.name === name);
+                      if (!actConfig) return null;
+                      
+                      const detail = activityValues[name] || actConfig.defaultOption;
+                      const diamonds = calculateDiamonds(actConfig, detail);
+                      const icon = getIconForActivity(name);
+                      const isBarbell = name.toLowerCase().includes('kraft');
+                      
+                      return {
+                        name,
+                        detail,
+                        daysAgo: 0, // logged this week -> show as "Heute"
+                        diamonds,
+                        icon,
+                        isBarbell
+                      };
+                    }).filter(Boolean) as any[];
 
-                    const totalDiamonds = mockDiamondsLoungeActivities.reduce((sum, act) => sum + act.diamonds, 0);
+                    // Fallback to sample data only if no activities have been checked yet
+                    const displayActivities = dynamicLoungeActivities.length > 0 
+                      ? dynamicLoungeActivities 
+                      : [
+                          { name: 'Rad gefahren', detail: '30 Min.', daysAgo: 0, diamonds: 2, icon: 'bi-bicycle' },
+                          { name: 'Vollwertige Hauptmahlzeit gegessen', detail: 'Ja', daysAgo: 0, diamonds: 3, icon: 'bi-apple' },
+                          { name: 'Krafttraining abgeschlossen', detail: '60 Min.', daysAgo: 1, diamonds: 4, isBarbell: true }
+                        ];
+
+                    const totalDiamonds = displayActivities.reduce((sum, act) => sum + act.diamonds, 0);
 
                     return (
                       <div className="diamonds-activities-table" style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
@@ -1904,7 +1919,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                           <span className="col-gems" style={{ padding: '0.6rem 1rem', display: 'flex', alignItems: 'center' }}>Gewonnene Diamanten</span>
                         </div>
                         <div className="diamonds-table-body" style={{ display: 'flex', flexDirection: 'column' }}>
-                          {mockDiamondsLoungeActivities.map((act, index) => (
+                          {displayActivities.map((act, index) => (
                             <div key={index} className="diamonds-table-row" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.5fr', padding: '0', borderBottom: '1px solid #e2e8f0' }}>
                               <span className="col-act" style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.8rem 1rem', borderRight: '1.5px solid #e2e8f0' }}>
                                 <div className="diamonds-act-icon-box" style={{ width: '44px', height: '44px', borderRadius: '12px', background: '#fff', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', color: '#6099cf', boxShadow: '0 2px 4px rgba(0,0,0,0.02)' }}>
