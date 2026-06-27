@@ -206,6 +206,93 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   const [oracleQuestCompleted, setOracleQuestCompleted] = useState(false);
   const [oracleRating, setOracleRating] = useState<string | null>(null);
   const [selectedCardDesign, setSelectedCardDesign] = useState<'tree' | 'scifi' | 'geometry' | null>(null);
+
+  const [oracleCardIndex, setOracleCardIndex] = useState(0);
+  const [completedRituals, setCompletedRituals] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('ty-completed-rituals');
+      if (saved) {
+        setCompletedRituals(JSON.parse(saved));
+      }
+    }
+  }, []);
+
+  const oracleCards = [
+    {
+      id: 'Cryo-Challenge',
+      title: 'Cryo-Challenge',
+      detail: 'Beende deine Dusche heute mit 2 Minuten eiskaltem Wasser. Atme dabei ruhig durch die Nase.',
+      diamonds: 3,
+      icon: '❄️',
+      successText: '"Hervorragend, Monique! Genau dieser Kälte-Schock aktiviert die braunen Fettzellen. Deine Fettverbrennung läuft jetzt auf Hochtouren!"'
+    },
+    {
+      id: 'HIIT-Booster',
+      title: 'HIIT Booster',
+      detail: 'Absolviere 4 Intervalle à 30 Sekunden Kniebeuge-Sprünge mit maximaler Intensität und 30 Sekunden Pause dazwischen.',
+      diamonds: 3,
+      icon: '🔥',
+      successText: '"Spitze! Dein metabolischer Ofen brennt. Das erhöht die mitochondriale Effizienz für Stunden!"'
+    },
+    {
+      id: 'Deep-Breath',
+      title: 'Deep-Breath-Ritual',
+      detail: 'Atme 5 Minuten im 4-7-8 Takt: 4 Sek. einatmen, 7 Sek. halten, 8 Sek. ausatmen, um dein Nervensystem zu entspannen.',
+      diamonds: 2,
+      icon: '🧘',
+      successText: '"Wunderbar, der Vagusnerv ist aktiviert. Dein Herzschlag hat sich optimal harmonisiert."'
+    },
+    {
+      id: 'Morgenlicht',
+      title: 'Morgenlicht-Spaziergang',
+      detail: 'Gehe innerhalb von 30 Minuten nach dem Aufwachen für 15 Minuten ohne Sonnenbrille ins Freie, um deine innere Uhr zu stellen.',
+      diamonds: 3,
+      icon: '☀️',
+      successText: '"Perfekt! Dein Melatonin-Spiegel sinkt, Cortisol steigt gesund an. Dein Schlaf heute Nacht wird tiefer sein!"'
+    },
+    {
+      id: 'Fasten-Sprint',
+      title: 'Fasten-Sprint',
+      detail: 'Halte heute ein Essensfenster von maximal 8 Stunden ein (16 Stunden Fasten) für effektives Zell-Recycling (Autophagie).',
+      diamonds: 3,
+      icon: '⏳',
+      successText: '"Großartig! Deine Zellen recyceln unbrauchbaren Proteinmüll. Das verjüngt das Gewebe von innen heraus."'
+    },
+    {
+      id: 'Power-Nap',
+      title: 'Power-Nap',
+      detail: 'Lege am frühen Nachmittag einen erfrischenden 15-minütigen Mittagsschlaf ein, um deine geistige Frische wieder aufzuladen.',
+      diamonds: 2,
+      icon: '😴',
+      successText: '"Klasse! Dein Gehirn hat sich gereinigt, Fokus und geistige Frische sind wieder auf 100 % geladen."'
+    },
+    {
+      id: 'Beeren-Detox',
+      title: 'Beeren-Detox-Snack',
+      detail: 'Iss eine Handvoll Heidelbeeren oder Brombeeren wegen der hohen Dosis Sirtuin-aktivierender Polyphenole.',
+      diamonds: 2,
+      icon: '🫐',
+      successText: '"Hervorragend! Die enthaltenen Anthocyane schützen deine Telomere und wirken stark antioxidativ."'
+    }
+  ];
+
+  const currentCard = oracleCards[oracleCardIndex];
+
+  const getRitualDateString = (cardIdx: number) => {
+    const now = new Date();
+    const currentDay = now.getDay();
+    const distanceToMonday = currentDay === 0 ? -6 : 1 - currentDay;
+    const targetDate = new Date(now);
+    targetDate.setDate(now.getDate() + distanceToMonday + cardIdx);
+    return targetDate.toLocaleDateString('de-DE', { day: 'numeric', month: 'long', year: 'numeric' });
+  };
+
+  const getRitualDayName = (cardIdx: number) => {
+    const names = ['Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Sonntag'];
+    return names[cardIdx];
+  };
   
   const [alchemistSelected, setAlchemistSelected] = useState<string[]>([]);
   const [alchemistBrewed, setAlchemistBrewed] = useState(false);
@@ -381,6 +468,42 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   ];
   const filteredActivities = activityOptions.filter(a => a.name.toLowerCase().includes(activitySearchTerm.toLowerCase()));
 
+  const handleCompleteRitual = (cardId: string) => {
+    setOracleQuestCompleted(true);
+    
+    // Add to completed list
+    const updated = [...completedRituals];
+    if (!updated.includes(cardId)) {
+      updated.push(cardId);
+      setCompletedRituals(updated);
+      localStorage.setItem('ty-completed-rituals', JSON.stringify(updated));
+      window.dispatchEvent(new Event('ty-activities-sync'));
+    }
+    
+    // If it's the Cryo-Challenge, also mark as cryo-dismissed so it syncs with other pages!
+    if (cardId === 'Cryo-Challenge') {
+      localStorage.setItem('ty-cryo-dismissed', 'true');
+      window.dispatchEvent(new Event('ty-activities-sync'));
+    }
+    
+    // Also, add this activity to the weekly checked activities so it appears in the Diamond Lounge and in the week activities!
+    const activityMapping: Record<string, string> = {
+      'Cryo-Challenge': 'Jungbrunnen: Cryo-Challenge',
+      'HIIT-Booster': 'Krafttraining abgeschlossen',
+      'Deep-Breath': 'Atemübung durchgeführt',
+      'Morgenlicht': 'Bewusste Auszeit in Natur',
+      'Fasten-Sprint': 'Elixier des Zell-Recyclings',
+      'Power-Nap': 'Mikropause 5 Min. eingebaut',
+      'Beeren-Detox': 'Vollwertige Hauptmahlzeit gegessen'
+    };
+    
+    const activityName = activityMapping[cardId];
+    if (activityName && !selectedActivities.includes(activityName)) {
+      const newSelected = [...selectedActivities, activityName];
+      updateSelectedActivities(newSelected);
+    }
+  };
+
   const calculateDiamonds = (act: any, value: string) => {
     if (!value) return act.diamonds;
     
@@ -452,8 +575,17 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       sum += 5;
     }
 
+    // Add completed daily rituals diamonds (excluding Cryo-Challenge which is handled above via cryoDismissed)
+    completedRituals.forEach(cardId => {
+      if (cardId === 'Cryo-Challenge') return;
+      const card = oracleCards.find(c => c.id === cardId);
+      if (card) {
+        sum += card.diamonds;
+      }
+    });
+
     return sum;
-  }, [selectedActivities, activityValues]);
+  }, [selectedActivities, activityValues, completedRituals]);
 
   if (jungbrunnenSubView === 'selection') {
     return (
@@ -477,8 +609,8 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             zIndex: 2
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(255,255,255,0.12)';
-            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
+            e.currentTarget.style.background = 'rgba(255,255,255,0.35)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
@@ -581,7 +713,54 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   if (jungbrunnenSubView === 'oracle') {
     return (
       <div className="dashboard-container jungbrunnen-subpage-container oracle-subpage-container" style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: 'linear-gradient(160deg,#091221 0%,#0f1d33 40%,#080e1a 70%,#0a1424 100%)', minHeight: 'calc(100vh - 72px)', color: '#fff', boxSizing: 'border-box', width: '100%', maxWidth: 'none', margin: 0, padding: '1.25rem 2rem', position: 'relative' }}>
-        <style jsx global>{`
+         <style jsx global>{`
+          .oracle-info-tooltip-container {
+            position: absolute;
+            top: 1.25rem;
+            right: 2rem;
+            z-index: 10;
+          }
+          .oracle-info-circle {
+            transition: all 0.2s ease;
+          }
+          .oracle-info-circle:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: scale(1.05);
+          }
+          .oracle-info-tooltip-text {
+            visibility: hidden;
+            width: 280px;
+            background: rgba(15, 23, 42, 0.95);
+            color: #ffffff;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            position: absolute;
+            z-index: 100;
+            top: 40px;
+            right: 0;
+            opacity: 0;
+            transition: opacity 0.3s, visibility 0.3s;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            font-weight: 500;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+          }
+          .oracle-info-circle:hover .oracle-info-tooltip-text {
+            visibility: visible;
+            opacity: 1;
+          }
+          @media (max-width: 992px) {
+            .oracle-info-tooltip-container {
+              top: 1rem !important;
+              right: 1rem !important;
+            }
+            .oracle-info-tooltip-text {
+              width: 240px;
+              right: -10px;
+            }
+          }
           @media (min-width: 993px) {
             .oracle-subpage-container {
               overflow: hidden !important;
@@ -616,6 +795,18 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             }
           }
         `}</style>
+
+        {/* Circular Info Tooltip */}
+        <div className="oracle-info-tooltip-container">
+          <div className="oracle-info-circle" style={{ width: '32px', height: '32px', borderRadius: '50%', border: '2px solid #ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#ffffff', cursor: 'help', fontWeight: 800, fontSize: '1.05rem', fontFamily: 'system-ui', position: 'relative' }}>
+            i
+            <div className="oracle-info-tooltip-text">
+              Diese Karte zeigt deine tägliche biologische Verjüngungsaktion.
+              Klicke nach erfolgreichem Abschluss auf „Ritual gemeistert“, um sie abzuhaken.
+              Die Aktivität wird automatisch in deinen Wochenaktivitäten und in der Diamond Lounge eingetragen.
+            </div>
+          </div>
+        </div>
 
         {/* Ambient Glowing Background Orbs */}
         <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', zIndex: 0, pointerEvents: 'none' }}>
@@ -654,8 +845,8 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             zIndex: 2
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(255,255,255,0.12)';
-            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
+            e.currentTarget.style.background = 'rgba(255,255,255,0.35)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
@@ -691,8 +882,9 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                    />
                  </div>
                  <span style={{ fontSize: '1.15rem', color: '#f8fafc', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'center', lineHeight: '1.3', marginTop: '0.5rem' }}>
-                   {currentDate.split(',')[1] ? currentDate.split(',')[1].trim() : currentDate}
-                 </span>
+                    {getRitualDayName(oracleCardIndex)}<br />
+                    <span style={{ fontSize: '0.9rem', opacity: 0.8, fontWeight: 600 }}>{getRitualDateString(oracleCardIndex)}</span>
+                  </span>
                </div>
 
                {/* Center: The Card */}
@@ -769,15 +961,18 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                    >
                      {/* Centered flex wrapper for upper card content */}
                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', flex: 1, width: '100%', gap: '1rem' }}>
-                       <span style={{ fontSize: '3.2rem', lineHeight: 1 }}>❄️</span>
-                       <h3 style={{ fontSize: '1.55rem', color: '#0f172a', fontWeight: 900, margin: 0 }}>Cryo-Challenge</h3>
-                       <p style={{ fontSize: '1.3rem', color: '#475569', lineHeight: '1.4', margin: '0.25rem 0.5rem 0 0.5rem' }}>
-                         Beende deine Dusche heute mit <strong>2 Minuten eiskaltem Wasser</strong>. Atme dabei ruhig durch die Nase.
+                       <span style={{ fontSize: '3.2rem', lineHeight: 1 }}>{currentCard.icon}</span>
+                       <h3 style={{ fontSize: '1.55rem', color: '#0f172a', fontWeight: 900, margin: 0 }}>{currentCard.title}</h3>
+                       <p style={{ fontSize: '1.2rem', color: '#475569', lineHeight: '1.4', margin: '0.25rem 0.5rem 0 0.5rem' }}>
+                         {currentCard.detail}
                        </p>
                      </div>
 
                      <button 
-                       onClick={() => setOracleQuestCompleted(true)}
+                       onClick={(e) => {
+                          e.stopPropagation();
+                          handleCompleteRitual(currentCard.id);
+                        }}
                        style={{ 
                          width: '100%', 
                          background: 'linear-gradient(135deg, #22c55e 0%, #15803d 100%)', 
@@ -799,27 +994,67 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                  </div>
                </div>
 
-               {/* Right Widget: Reward in Diamonds */}
-                <div title="Verdiene +3 Diamanten durch erfolgreiches Abschließen des täglichen Rituals!" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', width: '160px', cursor: 'help' }}>
-                  <div style={{ 
-                    width: '96px', 
-                    height: '96px', 
-                    borderRadius: '50%', 
-                    background: 'radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.25) 0%, rgba(12, 74, 110, 0.6) 80%)', 
-                    border: '3px solid #38bdf8', 
-                    display: 'flex', 
-                    alignItems: 'center', 
-                    justifyContent: 'center', 
-                    fontSize: '3.2rem', 
-                    boxShadow: '0 12px 24px rgba(56, 189, 248, 0.35), inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -4px 8px rgba(0,0,0,0.5)', 
-                    backdropFilter: 'blur(10px)',
-                    filter: 'drop-shadow(0 0 12px rgba(56, 189, 248, 0.45))'
-                  }}>
-                    💎
+               {/* Right Widget: Reward in Diamonds & Next Card */}
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.5rem', width: '160px' }}>
+                  <div title={`Verdiene +${currentCard.diamonds} Diamanten durch erfolgreiches Abschließen des täglichen Rituals!`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.75rem', cursor: 'help' }}>
+                    <div style={{ 
+                      width: '96px', 
+                      height: '96px', 
+                      borderRadius: '50%', 
+                      background: 'radial-gradient(circle at 30% 30%, rgba(56, 189, 248, 0.25) 0%, rgba(12, 74, 110, 0.6) 80%)', 
+                      border: '3px solid #38bdf8', 
+                      display: 'flex', 
+                      alignItems: 'center', 
+                      justifyContent: 'center', 
+                      fontSize: '3.2rem', 
+                      boxShadow: '0 12px 24px rgba(56, 189, 248, 0.35), inset 0 2px 4px rgba(255,255,255,0.4), inset 0 -4px 8px rgba(0,0,0,0.5)', 
+                      backdropFilter: 'blur(10px)',
+                      filter: 'drop-shadow(0 0 12px rgba(56, 189, 248, 0.45))'
+                    }}>
+                      💎
+                    </div>
+                    <span style={{ display: 'block', width: '100%', fontSize: '1.15rem', color: '#f8fafc', fontWeight: 850, textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'center', lineHeight: '1.3', marginTop: '0.5rem' }}>
+                      +{currentCard.diamonds} Diamanten<br />verdienen
+                    </span>
                   </div>
-                  <span style={{ display: 'block', width: '100%', fontSize: '1.15rem', color: '#f8fafc', fontWeight: 850, textTransform: 'uppercase', letterSpacing: '0.05em', textAlign: 'center', lineHeight: '1.3', marginTop: '0.5rem' }}>
-                    +3 Diamanten<br />verdienen
-                  </span>
+
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setOracleCardFlipped(false);
+                      setTimeout(() => {
+                        setOracleCardIndex((prev) => (prev + 1) % 7);
+                      }, 200);
+                    }}
+                    style={{
+                      background: 'rgba(255,255,255,0.06)',
+                      border: '1.5px solid rgba(255,255,255,0.2)',
+                      color: '#ffffff',
+                      width: '44px',
+                      height: '44px',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      transition: 'all 0.2s ease',
+                      boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
+                      zIndex: 5
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
+                      e.currentTarget.style.borderColor = '#ffffff';
+                      e.currentTarget.style.transform = 'scale(1.1)';
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+                      e.currentTarget.style.transform = 'none';
+                    }}
+                    title="Nächste Karte für diese Woche"
+                  >
+                    <i className="bi bi-arrow-right" style={{ fontSize: '1.3rem' }}></i>
+                  </button>
                 </div>
 
              </div>
@@ -841,7 +1076,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             <div style={{ display: 'flex', gap: '1rem', background: 'rgba(255,255,255,0.04)', padding: '0.6rem 1.5rem', borderRadius: '16px', border: '1px solid rgba(255,255,255,0.08)' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, color: '#fbbf24', fontSize: '1rem' }}>
                 <span>💎</span>
-                <span>+3 Diamanten</span>
+                <span>+{currentCard.diamonds} Diamanten</span>
               </div>
               <div style={{ width: '1px', background: 'rgba(255,255,255,0.1)' }}></div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 800, color: '#60a5fa', fontSize: '1rem' }}>
@@ -896,11 +1131,8 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                 </div>
                 <div>
                   <strong style={{ color: '#34d399', display: 'block', marginBottom: '0.1rem', fontSize: '0.85rem' }}>Coach Lisa sagt:</strong>
-                  <span style={{ color: '#a7f3d0', fontSize: '0.8rem', lineHeight: '1.4' }}>
-                    {oracleRating === 'cold' && '„Hervorragend, Monique! Genau dieser Kälte-Schock aktiviert die braunen Fettzellen. Deine Fettverbrennung läuft jetzt auf Hochtouren!“'}
-                    {oracleRating === 'energy' && '„Perfekt! Das Noradrenalin zirkuliert in deinen Adern. Nutze diesen Energie-Schub für deine Fokus-Aufgaben heute.“'}
-                    {oracleRating === 'focused' && '„Wunderbar, die tiefe Atmung hat deine Herzratenvariabilität harmonisiert. Dein Stress-Resilienz-Level ist optimal geschützt.“'}
-                    {oracleRating === 'charged' && '„Großartig! Du hast deinen Mitochondrien neuen Schwung gegeben. Komm morgen zurück für deine Streak-Erfolgsserie!“'}
+                  <span style={{ color: '#a7f3d0', fontSize: '0.85rem', lineHeight: '1.4', fontStyle: 'italic' }}>
+                    {oracleRating && currentCard.successText}
                   </span>
                 </div>
               </div>
@@ -1016,8 +1248,8 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             transition: 'all 0.2s'
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(255,255,255,0.12)';
-            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.25)';
+            e.currentTarget.style.background = 'rgba(255,255,255,0.35)';
+            e.currentTarget.style.borderColor = 'rgba(255,255,255,0.5)';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
