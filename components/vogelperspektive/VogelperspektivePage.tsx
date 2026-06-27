@@ -248,7 +248,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       id: 'Morgenlicht',
       title: 'Morgenlicht-Spaziergang',
       detail: 'Gehe innerhalb von 30 Minuten nach dem Aufwachen für 15 Minuten ohne Sonnenbrille ins Freie, um deine innere Uhr zu stellen.',
-      diamonds: 3,
+      diamonds: 2,
       icon: '☀️',
       successText: '"Perfekt! Dein Melatonin-Spiegel sinkt, Cortisol steigt gesund an. Dein Schlaf heute Nacht wird tiefer sein!"'
     },
@@ -272,7 +272,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       id: 'Beeren-Detox',
       title: 'Beeren-Detox-Snack',
       detail: 'Iss eine Handvoll Heidelbeeren oder Brombeeren wegen der hohen Dosis Sirtuin-aktivierender Polyphenole.',
-      diamonds: 2,
+      diamonds: 1,
       icon: '🫐',
       successText: '"Hervorragend! Die enthaltenen Anthocyane schützen deine Telomere und wirken stark antioxidativ."'
     }
