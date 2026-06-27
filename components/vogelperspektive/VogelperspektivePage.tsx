@@ -472,6 +472,13 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
     { name: 'Dankbarkeits-Journaling', category: 'Mentale Resilienz & Mindset', options: optBoolean, defaultOption: 'Ja', diamonds: 2 },
     { name: 'Negativen Gedankenkreislauf durchbrochen', category: 'Mentale Resilienz & Mindset', options: optBoolean, defaultOption: 'Ja', diamonds: 2 },
     { name: 'Social-Media-Zeit um 50% reduziert', category: 'Mentale Resilienz & Mindset', options: optBoolean, defaultOption: 'Ja', diamonds: 2 },
+    { name: 'Jungbrunnen: Cryo-Challenge', category: 'Jungbrunnen-Aktionen', options: optBoolean, defaultOption: 'Ja', diamonds: 3 },
+    { name: 'Jungbrunnen: HIIT Booster', category: 'Jungbrunnen-Aktionen', options: optBoolean, defaultOption: 'Ja', diamonds: 3 },
+    { name: 'Jungbrunnen: Deep-Breath-Ritual', category: 'Jungbrunnen-Aktionen', options: optBoolean, defaultOption: 'Ja', diamonds: 2 },
+    { name: 'Jungbrunnen: Morgenlicht-Spaziergang', category: 'Jungbrunnen-Aktionen', options: optBoolean, defaultOption: 'Ja', diamonds: 2 },
+    { name: 'Jungbrunnen: Fasten-Sprint', category: 'Jungbrunnen-Aktionen', options: optBoolean, defaultOption: 'Ja', diamonds: 3 },
+    { name: 'Jungbrunnen: Power-Nap', category: 'Jungbrunnen-Aktionen', options: optBoolean, defaultOption: 'Ja', diamonds: 2 },
+    { name: 'Jungbrunnen: Beeren-Detox-Snack', category: 'Jungbrunnen-Aktionen', options: optBoolean, defaultOption: 'Ja', diamonds: 1 }
   ];
   const filteredActivities = activityOptions.filter(a => a.name.toLowerCase().includes(activitySearchTerm.toLowerCase()));
 
@@ -496,12 +503,12 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
     // Also, add this activity to the weekly checked activities so it appears in the Diamond Lounge and in the week activities!
     const activityMapping: Record<string, string> = {
       'Cryo-Challenge': 'Jungbrunnen: Cryo-Challenge',
-      'HIIT-Booster': 'Krafttraining abgeschlossen',
-      'Deep-Breath': 'Atemübung durchgeführt',
-      'Morgenlicht': 'Bewusste Auszeit in Natur',
-      'Fasten-Sprint': 'Elixier des Zell-Recyclings',
-      'Power-Nap': 'Mikropause 5 Min. eingebaut',
-      'Beeren-Detox': 'Vollwertige Hauptmahlzeit gegessen'
+      'HIIT-Booster': 'Jungbrunnen: HIIT Booster',
+      'Deep-Breath': 'Jungbrunnen: Deep-Breath-Ritual',
+      'Morgenlicht': 'Jungbrunnen: Morgenlicht-Spaziergang',
+      'Fasten-Sprint': 'Jungbrunnen: Fasten-Sprint',
+      'Power-Nap': 'Jungbrunnen: Power-Nap',
+      'Beeren-Detox': 'Jungbrunnen: Beeren-Detox-Snack'
     };
     
     const activityName = activityMapping[cardId];
@@ -1969,6 +1976,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                         'Immunbalance & Entlastung',
                         'Selbstfürsorge & Soziale Bindungen',
                         'Mentale Resilienz & Mindset',
+                        'Jungbrunnen-Aktionen',
                         'Sonstiges'
                       ];
 
@@ -1987,7 +1995,8 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                         'Zellerneuerung & Wachstum': 'bi-dna',
                         'Immunbalance & Entlastung': 'bi-shield-check',
                         'Selbstfürsorge & Soziale Bindungen': 'bi-people',
-                        'Mentale Resilienz & Mindset': 'bi-flower1'
+                        'Mentale Resilienz & Mindset': 'bi-flower1',
+                        'Jungbrunnen-Aktionen': 'bi-stars'
                       };
 
                       return sortedCategoryNames.map(groupName => {
@@ -2007,8 +2016,12 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                                 return (
                                   <div key={act.name} className={`act-list-item ${isSelected ? 'selected' : ''}`}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                      <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.05rem', color: isSelected ? '#10b981' : '#6099cf' }}>
-                                        <i className={`bi ${getIconForActivity(act.name)}`}></i>
+                                      <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: act.category === 'Jungbrunnen-Aktionen' ? '1.3rem' : '1.05rem', color: isSelected ? '#10b981' : '#6099cf' }}>
+                                        {act.category === 'Jungbrunnen-Aktionen' ? (
+                                          <span>{oracleCards.find(c => `Jungbrunnen: ${c.title}` === act.name || `Jungbrunnen: ${c.id}` === act.name)?.icon || '✨'}</span>
+                                        ) : (
+                                          <i className={`bi ${getIconForActivity(act.name)}`}></i>
+                                        )}
                                       </div>
                                       <span className="act-name">{act.name}</span>
                                     </div>
@@ -2179,14 +2192,28 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
 
                     const safeSelected = Array.isArray(selectedActivities) ? selectedActivities : [];
                     const dynamicLoungeActivities = safeSelected
-                      .filter(name => typeof name === 'string' && name !== 'alchemist-elixir') // exclude raw ID so we render it as custom Feel-Good item below
+                      .filter(name => typeof name === 'string' && name !== 'alchemist-elixir')
                       .map(name => {
                         const actConfig = activityOptions.find(a => a.name === name);
                         if (!actConfig) return null;
                         
                         const detail = activityValues[name] || actConfig.defaultOption;
                         const diamonds = calculateDiamonds(actConfig, detail);
-                        const icon = getIconForActivity(name);
+                        
+                        // Handle custom emojis for daily Jungbrunnen cards
+                        const isJungbrunnen = typeof name === 'string' && name.startsWith('Jungbrunnen:');
+                        let icon = getIconForActivity(name);
+                        let isCustomEmoji = false;
+                        
+                        if (isJungbrunnen) {
+                          const cardTitle = name.replace('Jungbrunnen: ', '');
+                          const card = oracleCards.find(c => c.title === cardTitle || c.id === cardTitle);
+                          if (card) {
+                            icon = card.icon;
+                            isCustomEmoji = true;
+                          }
+                        }
+                        
                         const isBarbell = typeof name === 'string' && name.toLowerCase().includes('kraft');
                         
                         return {
@@ -2196,24 +2223,9 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                           diamonds,
                           icon,
                           isBarbell,
-                          isCustomEmoji: false
+                          isCustomEmoji
                         };
                       }).filter(Boolean) as any[];
-
-                    // 2. Feel-Good integration
-                    const cryoDismissed = typeof window !== 'undefined' ? localStorage.getItem('ty-cryo-dismissed') === 'true' : false;
-                    
-                    if (!cryoDismissed) {
-                      dynamicLoungeActivities.push({
-                        name: 'Jungbrunnen: Cryo-Challenge',
-                        detail: '2 Min. Eisdusche',
-                        daysAgo: 0,
-                        diamonds: 3,
-                        icon: '❄️',
-                        isBarbell: false,
-                        isCustomEmoji: true
-                      });
-                    }
 
                     if (safeSelected.includes('alchemist-elixir')) {
                       dynamicLoungeActivities.push({
