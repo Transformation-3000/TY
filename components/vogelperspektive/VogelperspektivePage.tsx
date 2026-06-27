@@ -1018,43 +1018,85 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                     </span>
                   </div>
 
-                  <button 
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setOracleCardFlipped(false);
-                      setTimeout(() => {
-                        setOracleCardIndex((prev) => (prev + 1) % 7);
-                      }, 200);
-                    }}
-                    style={{
-                      background: 'rgba(255,255,255,0.06)',
-                      border: '1.5px solid rgba(255,255,255,0.2)',
-                      color: '#ffffff',
-                      width: '44px',
-                      height: '44px',
-                      borderRadius: '50%',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      transition: 'all 0.2s ease',
-                      boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
-                      zIndex: 5
-                    }}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
-                      e.currentTarget.style.borderColor = '#ffffff';
-                      e.currentTarget.style.transform = 'scale(1.1)';
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
-                      e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
-                      e.currentTarget.style.transform = 'none';
-                    }}
-                    title="Nächste Karte für diese Woche"
-                  >
-                    <i className="bi bi-arrow-right" style={{ fontSize: '1.3rem' }}></i>
-                  </button>
+                  <div style={{ display: 'flex', gap: '0.75rem', marginTop: '0.25rem' }}>
+                    {/* Previous Card Arrow Button */}
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOracleCardFlipped(true);
+                        setTimeout(() => {
+                          setOracleCardIndex((prev) => (prev - 1 + 7) % 7);
+                        }, 200);
+                      }}
+                      style={{
+                        background: 'rgba(255,255,255,0.06)',
+                        border: '1.5px solid rgba(255,255,255,0.2)',
+                        color: '#ffffff',
+                        width: '44px',
+                        height: '44px',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
+                        zIndex: 5
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
+                        e.currentTarget.style.borderColor = '#ffffff';
+                        e.currentTarget.style.transform = 'scale(1.1)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+                        e.currentTarget.style.transform = 'none';
+                      }}
+                      title="Vorherige Karte"
+                    >
+                      <i className="bi bi-arrow-left" style={{ fontSize: '1.3rem' }}></i>
+                    </button>
+
+                    {/* Next Card Arrow Button */}
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setOracleCardFlipped(true);
+                        setTimeout(() => {
+                          setOracleCardIndex((prev) => (prev + 1) % 7);
+                        }, 200);
+                      }}
+                      style={{
+                        background: 'rgba(255,255,255,0.06)',
+                        border: '1.5px solid rgba(255,255,255,0.2)',
+                        color: '#ffffff',
+                        width: '44px',
+                        height: '44px',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        cursor: 'pointer',
+                        transition: 'all 0.2s ease',
+                        boxShadow: '0 4px 10px rgba(0,0,0,0.15)',
+                        zIndex: 5
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(255,255,255,0.15)';
+                        e.currentTarget.style.borderColor = '#ffffff';
+                        e.currentTarget.style.transform = 'scale(1.1)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'rgba(255,255,255,0.06)';
+                        e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)';
+                        e.currentTarget.style.transform = 'none';
+                      }}
+                      title="Nächste Karte"
+                    >
+                      <i className="bi bi-arrow-right" style={{ fontSize: '1.3rem' }}></i>
+                    </button>
+                  </div>
                 </div>
 
              </div>
