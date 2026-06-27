@@ -2247,8 +2247,9 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                         const isBarbell = typeof name === 'string' && name.toLowerCase().includes('kraft');
                         
                         return {
-                          name: count > 1 ? `${name} (x${count})` : name,
+                          name,
                           rawName: name,
+                          count,
                           detail,
                           daysAgo: 0, // logged this week -> show as "Heute"
                           diamonds,
@@ -2289,7 +2290,9 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                           <span className="col-val" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Wert</span>
                           <span className="col-date" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Datum</span>
                           <span className="col-gems" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Diamanten</span>
-                          <span className="col-delete-hdr" style={{ padding: '0.6rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}></span>
+                          <span className="col-delete-hdr" style={{ padding: '0.6rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            <i className="bi bi-x-circle" style={{ fontSize: '1rem' }}></i>
+                          </span>
                         </div>
                         <div className="diamonds-table-body" style={{ display: 'flex', flexDirection: 'column' }}>
                           {displayActivities.map((act, index) => (
@@ -2306,9 +2309,28 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                                     <i className={`bi ${act.icon}`}></i>
                                   )}
                                 </div>
-                                <div className="diamonds-act-meta" style={{ display: 'flex', flexDirection: 'column' }}>
-                                  <span className="diamonds-act-name" style={{ fontSize: '1.1rem', color: '#1e293b', fontWeight: 400 }}>{act.name}</span>
-                                </div>
+                                <div className="diamonds-act-meta" style={{ display: 'flex', flexDirection: 'column', minWidth: 0 }}>
+                                   <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+                                     <span className="diamonds-act-name" style={{ fontSize: '1.1rem', color: '#1e293b', fontWeight: 400 }}>{act.name}</span>
+                                     {act.count > 1 && (
+                                       <span style={{
+                                         width: '26px',
+                                         height: '26px',
+                                         borderRadius: '50%',
+                                         background: '#22c55e',
+                                         color: '#ffffff',
+                                         display: 'inline-flex',
+                                         alignItems: 'center',
+                                         justifyContent: 'center',
+                                         fontSize: '0.8rem',
+                                         fontWeight: 900,
+                                         flexShrink: 0
+                                       }}>
+                                         x{act.count}
+                                       </span>
+                                     )}
+                                   </div>
+                                 </div>
                               </span>
                               <span className="col-val" style={{ display: 'flex', alignItems: 'center', padding: '0.8rem 1rem', borderRight: '1.5px solid #e2e8f0', fontSize: '1.1rem', color: '#1e293b', fontWeight: 400 }}>
                                 {act.detail}
@@ -2349,7 +2371,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                                   }}
                                   title="Aktivität löschen"
                                 >
-                                  <i className="bi bi-x-circle"></i>
+                                  <i className="bi bi-trash"></i>
                                 </button>
                               </span>
                             </div>
