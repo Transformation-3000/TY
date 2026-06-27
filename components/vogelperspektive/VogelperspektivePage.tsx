@@ -2285,13 +2285,13 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
 
 return (
                       <div className="diamonds-activities-table" style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                        <div className="diamonds-table-header" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.2fr 0.4fr', padding: '0', borderBottom: '2px solid #e2e8f0', fontWeight: 800, fontSize: '1rem', color: '#000000', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                        <div className="diamonds-table-header" style={{ display: 'grid', gridTemplateColumns: '2.2fr 1fr 1.2fr 1.2fr 0.4fr', padding: '0', borderBottom: '2px solid #e2e8f0', fontWeight: 800, fontSize: 'calc(1rem + 2pt)', color: '#000000', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
                           <span className="col-act" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Aktivität</span>
                           <span className="col-val" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Wert</span>
                           <span className="col-date" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Datum</span>
                           <span className="col-gems" style={{ padding: '0.6rem 1rem', borderRight: '1.5px solid #e2e8f0', display: 'flex', alignItems: 'center' }}>Diamanten</span>
                           <span className="col-delete-hdr" style={{ padding: '0.6rem 1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <i className="bi bi-x-circle" style={{ fontSize: '1.05rem', fontWeight: 900, WebkitTextStroke: '0.8px #000000' }}></i>
+                            <i className="bi bi-x-circle" style={{ fontWeight: 900, WebkitTextStroke: '0.8px #000000', transform: 'translateY(-2px)' }}></i>
                           </span>
                         </div>
                         <div className="diamonds-table-body" style={{ display: 'flex', flexDirection: 'column' }}>
