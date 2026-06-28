@@ -93,6 +93,32 @@ export default function WelcomeSection({
   const [pairingId, setPairingId] = useState<string | null>(null);
   const [pairingTimeoutId, setPairingTimeoutId] = useState<any>(null);
   const [profileImage, setProfileImage] = useState('/images/woman_53_blonde.png');
+  const [selectedPlan, setSelectedPlan] = useState<string>('Premium');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const loadPlan = () => {
+        const savedPlan = localStorage.getItem('ty_selected_plan');
+        if (savedPlan) {
+          if (savedPlan === 'basic') setSelectedPlan('Starter');
+          else if (savedPlan === 'premium') setSelectedPlan('Premium');
+          else if (savedPlan === 'platin') setSelectedPlan('Platin');
+        }
+      };
+      loadPlan();
+
+      const handlePlanChange = () => {
+        loadPlan();
+      };
+
+      window.addEventListener('ty_selected_plan_changed', handlePlanChange);
+      window.addEventListener('storage', handlePlanChange);
+      return () => {
+        window.removeEventListener('ty_selected_plan_changed', handlePlanChange);
+        window.removeEventListener('storage', handlePlanChange);
+      };
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -171,10 +197,39 @@ export default function WelcomeSection({
     setIsModalOpen(true);
   };
 
+  const handlePlanCycle = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    let nextPlanKey = 'premium';
+    if (selectedPlan === 'Starter') {
+      nextPlanKey = 'premium';
+    } else if (selectedPlan === 'Premium') {
+      nextPlanKey = 'platin';
+    } else if (selectedPlan === 'Platin') {
+      nextPlanKey = 'basic';
+    }
+    localStorage.setItem('ty_selected_plan', nextPlanKey);
+    window.dispatchEvent(new Event('ty_selected_plan_changed'));
+  };
+
   const activeWearable = wearables.find(w => w.id === activeWearableId) || wearables[0];
 
   return (
-    <div className={`top-navigation-content ${isOnboarding ? 'is-onboarding' : ''}`}>
+    <div 
+      className={`top-navigation-content ${isOnboarding ? 'is-onboarding' : ''}`}
+      onClick={(e) => {
+        const target = e.target as HTMLElement;
+        if (
+          target.closest('.top-nav-logo-section') || 
+          target.closest('.onboarding-header-tracker') || 
+          target.closest('.top-nav-right-section') ||
+          target.closest('.modal-container')
+        ) {
+          return;
+        }
+        onNavigate?.('dashboard');
+      }}
+      style={{ cursor: 'pointer' }}
+    >
       {/* Logo Left */}
       <div className="top-nav-logo-section" onClick={() => onNavigate?.('website')} style={{ cursor: 'pointer' }}>
         <Image src="/images/logoneu.png" alt="True Years Logo" width={180} height={180} className="top-nav-logo" style={{ objectFit: 'contain' }} />
@@ -206,12 +261,48 @@ export default function WelcomeSection({
       {/* 3 Areas Right */}
       <div className="top-nav-right-section">
         
-        {/* WEARABLE STATUS TEXT "AKTIV" */}
-        <span className="status-text-active" onClick={isOnboarding ? undefined : handleOpenModal} style={{ cursor: isOnboarding ? 'default' : 'pointer' }}>AKTIV</span>
-
-        {/* EQUALLY SPACED NAV ELEMENTS */}
         <div className="nav-elements-container">
           
+          {/* AREA 0: CONTRACT MODEL */}
+          <div className="header-area contract-area" onClick={handlePlanCycle} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+            <span style={{ 
+              background: selectedPlan === 'Platin' 
+                ? 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 30%, #e2e8f0 70%, #cbd5e1 100%)' 
+                : selectedPlan === 'Starter' 
+                  ? 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%)' 
+                  : 'linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%)', 
+              color: selectedPlan === 'Platin' 
+                ? '#334155' 
+                : selectedPlan === 'Starter' 
+                  ? '#1e3a8a' 
+                  : '#ffffff', 
+              padding: '4px 12px', 
+              borderRadius: '9999px', 
+              fontSize: '0.72rem', 
+              fontWeight: 800, 
+              letterSpacing: '0.05em', 
+              textTransform: 'uppercase',
+              boxShadow: selectedPlan === 'Platin' 
+                ? '0 2px 8px rgba(148, 163, 184, 0.2)' 
+                : selectedPlan === 'Starter' 
+                  ? '0 2px 8px rgba(59, 130, 246, 0.12)' 
+                  : '0 2px 8px rgba(16, 185, 129, 0.22)',
+              userSelect: 'none',
+              border: selectedPlan === 'Platin' 
+                ? '1px solid #94a3b8' 
+                : selectedPlan === 'Starter' 
+                  ? '1px solid #93c5fd' 
+                  : 'none',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              lineHeight: '1',
+              height: '24px'
+            }}>
+              {selectedPlan}
+            </span>
+          </div>
+
           {/* AREA 1: WEARABLE */}
           <div className="header-area wearable-area" onClick={isOnboarding ? undefined : handleOpenModal} style={{ cursor: isOnboarding ? 'default' : 'pointer' }}>
             <div className="wearable-wrapper" title={`Aktiviertes Wearable: ${activeWearable.name}`}>

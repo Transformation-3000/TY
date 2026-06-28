@@ -57,16 +57,45 @@ export default function SettingsPage() {
     }
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const handlePlanChange = () => {
+        const saved = localStorage.getItem('ty_selected_plan');
+        if (saved) {
+          let planName = 'Premium';
+          if (saved === 'basic') planName = 'Starter';
+          else if (saved === 'platin') planName = 'Platin';
+          setPayment(prev => ({ ...prev, plan: planName }));
+        }
+      };
+      window.addEventListener('ty_selected_plan_changed', handlePlanChange);
+      window.addEventListener('storage', handlePlanChange);
+      return () => {
+        window.removeEventListener('ty_selected_plan_changed', handlePlanChange);
+        window.removeEventListener('storage', handlePlanChange);
+      };
+    }
+  }, []);
+
   const [payment, setPayment] = useState(() => {
     const now = new Date();
     const mm = String(now.getMonth() + 1).padStart(2, '0');
     const yyyy = now.getFullYear() + 2; // Dynamically sets year to 2028 when current year is 2026
+    const initialPlan = typeof window !== 'undefined' 
+      ? (() => {
+          const saved = localStorage.getItem('ty_selected_plan');
+          if (saved === 'basic') return 'Starter';
+          if (saved === 'platin') return 'Platin';
+          return 'Premium';
+        })()
+      : 'Premium';
+
     return {
       paymentMethod: 'credit-card',
       cardNumber: '**** **** **** 1234',
       expiryDate: `${mm}/${yyyy}`,
       autoRenewal: true,
-      plan: 'Starter',
+      plan: initialPlan,
       startDate: '15.05.2025',
     };
   });
@@ -460,10 +489,21 @@ export default function SettingsPage() {
               <select
                 className="settings-select"
                 value={payment.plan}
-                onChange={(e) => setPayment({ ...payment, plan: e.target.value })}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setPayment({ ...payment, plan: val });
+                  if (typeof window !== 'undefined') {
+                    let key = 'premium';
+                    if (val === 'Starter') key = 'basic';
+                    else if (val === 'Platin') key = 'platin';
+                    localStorage.setItem('ty_selected_plan', key);
+                    window.dispatchEvent(new Event('ty_selected_plan_changed'));
+                  }
+                }}
               >
                 <option value="Starter">Starter</option>
                 <option value="Premium">Premium</option>
+                <option value="Platin">Platin</option>
               </select>
             </div>
             <div className="settings-option">

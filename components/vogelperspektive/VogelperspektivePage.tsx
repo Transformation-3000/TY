@@ -9,32 +9,32 @@ interface VogelperspektivePageProps {
 
 const getIconForActivity = (name: string) => {
   const lower = typeof name === 'string' ? name.toLowerCase() : '';
-  if (lower.includes('rad')) return 'bi-bicycle';
-  if (lower.includes('kraft') || lower.includes('hit-')) return 'bi-activity';
-  if (lower.includes('joggen') || lower.includes('cooper')) return 'bi-stopwatch';
-  if (lower.includes('spazieren') || lower.includes('schritte') || lower.includes('spazier')) return 'bi-person-walking';
-  if (lower.includes('medit')) return 'bi-flower1';
-  if (lower.includes('nap')) return 'bi-moon-stars';
-  if (lower.includes('schlaf') || lower.includes('geschlafen')) return 'bi-moon';
-  if (lower.includes('aufstehzeit')) return 'bi-alarm';
-  if (lower.includes('koffein')) return 'bi-cup-hot';
-  if (lower.includes('schläf') || lower.includes('abendroutine')) return 'bi-moon';
-  if (lower.includes('schwimm')) return 'bi-droplet';
-  if (lower.includes('yoga') || lower.includes('dehnung')) return 'bi-heart-pulse';
-  if (lower.includes('atem')) return 'bi-wind';
-  if (lower.includes('licht') || lower.includes('sonne')) return 'bi-sun';
-  if (lower.includes('treppe')) return 'bi-stairs';
-  if (lower.includes('hang') || lower.includes('griff')) return 'bi-award';
-  if (lower.includes('wasser')) return 'bi-droplet-half';
-  if (lower.includes('gemüse') || lower.includes('obst') || lower.includes('mahlzeit') || lower.includes('essen') || lower.includes('snack') || lower.includes('zucker') || lower.includes('protein') || lower.includes('omega') || lower.includes('ballast')) return 'bi-apple';
-  if (lower.includes('alkohol')) return 'bi-x-circle';
-  if (lower.includes('sozial') || lower.includes('freund') || lower.includes('unterstützung') || lower.includes('verbundenheit')) return 'bi-people';
-  if (lower.includes('nikotin')) return 'bi-x-circle';
-  if (lower.includes('journaling')) return 'bi-book';
-  if (lower.includes('handy')) return 'bi-phone';
-  if (lower.includes('pause')) return 'bi-clock';
-  if (lower.includes('lüft')) return 'bi-wind';
-  return 'bi-lightning-charge';
+  if (lower.includes('rad')) return '🚴';
+  if (lower.includes('kraft') || lower.includes('hit-')) return '💪';
+  if (lower.includes('joggen') || lower.includes('cooper')) return '🏃';
+  if (lower.includes('spazieren') || lower.includes('schritte') || lower.includes('spazier')) return '🚶';
+  if (lower.includes('medit')) return '🧘';
+  if (lower.includes('nap')) return '😴';
+  if (lower.includes('schlaf') || lower.includes('geschlafen')) return '😴';
+  if (lower.includes('aufstehzeit')) return '⏰';
+  if (lower.includes('koffein')) return '☕';
+  if (lower.includes('schläf') || lower.includes('abendroutine')) return '🌙';
+  if (lower.includes('schwimm')) return '🏊';
+  if (lower.includes('yoga') || lower.includes('dehnung')) return '🧘';
+  if (lower.includes('atem')) return '💨';
+  if (lower.includes('licht') || lower.includes('sonne')) return '☀️';
+  if (lower.includes('treppe')) return '🧗';
+  if (lower.includes('hang') || lower.includes('griff')) return '✊';
+  if (lower.includes('wasser')) return '💧';
+  if (lower.includes('gemüse') || lower.includes('obst') || lower.includes('mahlzeit') || lower.includes('essen') || lower.includes('snack') || lower.includes('zucker') || lower.includes('protein') || lower.includes('omega') || lower.includes('ballast')) return '🥗';
+  if (lower.includes('alkohol')) return '🚫';
+  if (lower.includes('sozial') || lower.includes('freund') || lower.includes('unterstützung') || lower.includes('verbundenheit')) return '👥';
+  if (lower.includes('nikotin')) return '🚫';
+  if (lower.includes('journaling')) return '📓';
+  if (lower.includes('handy')) return '📵';
+  if (lower.includes('pause')) return '⏸️';
+  if (lower.includes('lüft')) return '🍃';
+  return '✨';
 };
 
 export default function VogelperspektivePage({ onNavigate }: VogelperspektivePageProps) {
@@ -42,6 +42,32 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   const [greeting, setGreeting] = useState('Guten Tag');
   const [userName, setUserName] = useState('Monique');
   const [profileImage, setProfileImage] = useState('/images/woman_53_blonde.png');
+  const [selectedPlan, setSelectedPlan] = useState<string>('Premium');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const loadPlan = () => {
+        const savedPlan = localStorage.getItem('ty_selected_plan');
+        if (savedPlan) {
+          if (savedPlan === 'basic') setSelectedPlan('Starter');
+          else if (savedPlan === 'premium') setSelectedPlan('Premium');
+          else if (savedPlan === 'platin') setSelectedPlan('Platin');
+        }
+      };
+      loadPlan();
+
+      const handlePlanChange = () => {
+        loadPlan();
+      };
+      window.addEventListener('ty_selected_plan_changed', handlePlanChange);
+      window.addEventListener('storage', handlePlanChange);
+      return () => {
+        window.removeEventListener('ty_selected_plan_changed', handlePlanChange);
+        window.removeEventListener('storage', handlePlanChange);
+      };
+    }
+  }, []);
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -115,11 +141,12 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       targetDate.setHours(18, 0, 0, 0);
  
       const dateOptions: Intl.DateTimeFormatOptions = { 
-        weekday: 'long', 
+        weekday: 'short', 
         day: 'numeric', 
         month: 'long' 
       };
-      const formatted = new Intl.DateTimeFormat('de-DE', dateOptions).format(targetDate);
+      let formatted = new Intl.DateTimeFormat('de-DE', dateOptions).format(targetDate);
+      formatted = formatted.replace(/^([A-Za-z]+)\.?\s+/, '$1., ');
       setLiveCallDateStr(formatted);
  
       return targetDate;
@@ -188,13 +215,13 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         dateStr: call1Date.toLocaleDateString('de-DE', dateOptions),
         month: call1Date.toLocaleDateString('de-DE', monthOptions).toUpperCase().replace('.', ''),
         day: call1Date.getDate().toString(),
-        fullDateStr: `Montag, ${call1Date.getDate()}. ${call1Date.toLocaleDateString('de-DE', { month: 'long' })}`
+        fullDateStr: `Mo., ${call1Date.getDate()}. ${call1Date.toLocaleDateString('de-DE', { month: 'long' })}`
       },
       call2: {
         dateStr: call2Date.toLocaleDateString('de-DE', dateOptions),
         month: call2Date.toLocaleDateString('de-DE', monthOptions).toUpperCase().replace('.', ''),
         day: call2Date.getDate().toString(),
-        fullDateStr: `Montag, ${call2Date.getDate()}. ${call2Date.toLocaleDateString('de-DE', { month: 'long' })}`
+        fullDateStr: `Mo., ${call2Date.getDate()}. ${call2Date.toLocaleDateString('de-DE', { month: 'long' })}`
       }
     });
   }, []);
@@ -394,6 +421,8 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
     const handleSync = () => {
       const updated = localStorage.getItem('ty-checked-activities');
       if (updated) setSelectedActivities(JSON.parse(updated));
+      const savedCompletions = localStorage.getItem('ty-completed-rituals');
+      if (savedCompletions) setCompletedRituals(JSON.parse(savedCompletions));
     };
 
     const savedCounts = localStorage.getItem('ty-activity-counts');
@@ -496,6 +525,119 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   ];
   const filteredActivities = activityOptions.filter(a => a.name.toLowerCase().includes(activitySearchTerm.toLowerCase()));
 
+  const lastThreeActivities = useMemo(() => {
+    const savedTsStr = typeof window !== 'undefined' ? localStorage.getItem('ty-activity-timestamps') : null;
+    const savedTs = savedTsStr ? JSON.parse(savedTsStr) : {};
+
+    const safeSelected = Array.isArray(allSelectedActivities) ? allSelectedActivities : [];
+    
+    const activitiesWithTime = safeSelected
+      .filter(name => typeof name === 'string' && name !== 'alchemist-elixir')
+      .map(name => {
+        const actConfig = activityOptions.find(a => a.name === name);
+        let icon = getIconForActivity(name);
+        let isCustomEmoji = !icon.startsWith('bi-');
+        const isJungbrunnen = name.startsWith('Jungbrunnen:');
+        
+        if (isJungbrunnen) {
+          const cardTitle = name.replace('Jungbrunnen: ', '');
+          const card = oracleCards.find(c => c.title === cardTitle || c.id === cardTitle);
+          if (card) {
+            icon = card.icon;
+            isCustomEmoji = true;
+          }
+        }
+
+        const rawTime = savedTs[name];
+        let timestamp = 0;
+
+        if (rawTime) {
+          if (typeof rawTime === 'string' && rawTime.includes('Uhr')) {
+            const match = rawTime.match(/(\d+):(\d+)/);
+            if (match) {
+              const d = new Date();
+              d.setHours(parseInt(match[1]), parseInt(match[2]), 0, 0);
+              timestamp = d.getTime();
+            } else {
+              timestamp = Date.now();
+            }
+          } else {
+            timestamp = typeof rawTime === 'number' ? rawTime : (!isNaN(Number(rawTime)) ? Number(rawTime) : Date.now());
+          }
+        } else {
+          timestamp = 0;
+        }
+
+        // Get details
+        let detail = '';
+        if (actConfig) {
+          detail = activityValues[name] || actConfig.defaultOption;
+        }
+        if (isJungbrunnen) {
+          if (name.includes('Cryo-Challenge')) detail = '2 Min.';
+          else if (name.includes('HIIT Booster')) detail = '4 Min.';
+          else if (name.includes('Deep-Breath-Ritual')) detail = '5 Min.';
+          else if (name.includes('Morgenlicht-Spaziergang')) detail = '15 Min.';
+          else if (name.includes('Fasten-Sprint')) detail = '16 Std.';
+          else if (name.includes('Power-Nap')) detail = '15 Min.';
+          else if (name.includes('Beeren-Detox-Snack')) detail = '1 Handvoll';
+        } else {
+          const matchTime = detail.match(/(\d+(?:\s*-\s*\d+)?\s*(?:Min\.|Std\.|Handvoll|x|km|L|Portionen|Portion|Tage|Tag|Sek\.))/i);
+          if (matchTime) {
+            detail = matchTime[1];
+          }
+        }
+
+        let displayName = name;
+        if (isJungbrunnen) {
+          displayName = name.replace('Jungbrunnen: ', '');
+        } else {
+          displayName = name.replace(/^(Schlaf & Erholung|Kraft & Ausdauer|Zellerneuerung & Wachstum|Immunbalance & Entlastung|Selbstfürsorge & Soziale Bindungen|Mentale Resilienz):\s*/, '');
+          displayName = displayName.charAt(0).toUpperCase() + displayName.slice(1);
+          if (displayName.includes('geschlafen')) displayName = 'Schlaf';
+          else if (displayName.includes('spazieren')) displayName = 'Spazieren';
+          else if (displayName.includes('Joggen')) displayName = 'Joggen';
+          else if (displayName.includes('Krafttraining')) displayName = 'Fitness';
+          else if (displayName.includes('Meditiert')) displayName = 'Meditation';
+          else if (displayName.includes('Atemübung')) displayName = 'Atemübung';
+          else if (displayName.includes('Fasten') || displayName.includes('Esspause')) displayName = 'Fasten';
+        }
+
+        return {
+          name: displayName,
+          rawName: name,
+          icon,
+          isCustomEmoji,
+          timestamp,
+          detail
+        };
+      })
+      .filter(Boolean);
+
+    activitiesWithTime.sort((a, b) => b.timestamp - a.timestamp);
+
+    const result = activitiesWithTime.slice(0, 3);
+    const fallbacks = [
+      { name: 'Radfahren', icon: 'bi-bicycle', isCustomEmoji: false, detail: '30 Min.' },
+      { name: 'Fitness', icon: 'barbell', isCustomEmoji: true, detail: '1h 20 Min.' },
+      { name: 'Spazieren', icon: 'bi-person-walking', isCustomEmoji: false, detail: '15 Min.' }
+    ];
+
+    while (result.length < 3) {
+      const fallbackItem = fallbacks[result.length];
+      result.push({
+        name: fallbackItem.name,
+        rawName: fallbackItem.name,
+        icon: fallbackItem.icon,
+        isCustomEmoji: fallbackItem.isCustomEmoji,
+        timestamp: 0,
+        detail: fallbackItem.detail
+      });
+    }
+
+    return result;
+  }, [allSelectedActivities, activityValues, activityCounts, oracleCards, activityOptions]);
+
   const handleCompleteRitual = (cardId: string) => {
     setOracleQuestCompleted(true);
     
@@ -529,6 +671,14 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
     if (activityName && !selectedActivities.includes(activityName)) {
       const newSelected = [...selectedActivities, activityName];
       updateSelectedActivities(newSelected);
+      
+      // Write timestamp
+      const savedTs = localStorage.getItem('ty-activity-timestamps');
+      const timestamps = savedTs ? JSON.parse(savedTs) : {};
+      if (!timestamps[activityName]) {
+        timestamps[activityName] = Date.now();
+        localStorage.setItem('ty-activity-timestamps', JSON.stringify(timestamps));
+      }
     }
   };
 
@@ -554,6 +704,14 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
     setActivityCounts(nextCounts);
     localStorage.setItem('ty-activity-counts', JSON.stringify(nextCounts));
     window.dispatchEvent(new Event('ty-counts-sync'));
+
+    // 4. Remove timestamp
+    const savedTs = localStorage.getItem('ty-activity-timestamps');
+    if (savedTs) {
+      const timestamps = JSON.parse(savedTs);
+      delete timestamps[rawName];
+      localStorage.setItem('ty-activity-timestamps', JSON.stringify(timestamps));
+    }
   };
 
   const calculateDiamonds = (act: any, value: string) => {
@@ -615,7 +773,9 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       if (actConfig) {
         const detail = activityValues[name] || actConfig.defaultOption;
         const count = activityCounts[name] || 1;
-        sum += calculateDiamonds(actConfig, detail) * count;
+        const isJungbrunnen = typeof name === 'string' && name.startsWith('Jungbrunnen:');
+        const diamonds = isJungbrunnen ? actConfig.diamonds : calculateDiamonds(actConfig, detail);
+        sum += diamonds * count;
       }
     });
 
@@ -1521,7 +1681,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         <div className="dash-card focus-box">
           <div className="box-header" style={{ position: 'relative' }}>
             <i className="bi bi-brightness-high focus-sun-icon"></i>
-            <h2 className="box-label">Dein Fokus heute</h2>
+            <h2 className="box-label">Fokus heute</h2>
             <div className="info-tooltip-container">
               <i className="bi bi-info-circle info-tooltip-icon"></i>
               <div className="info-tooltip-text tooltip-down">
@@ -1614,25 +1774,22 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           </div>
           <div className="tracker-label">LETZTE 3 AKTIVITÄTEN</div>
           <div className="activities-grid">
-            <div className="activity-card">
-              <div className="act-icon-wrap"><i className="bi bi-bicycle"></i></div>
-              <strong>Radfahren</strong>
-              <span className="act-duration">30 Min.</span>
-            </div>
-            <div className="activity-card">
-              <div className="act-icon-wrap">
-                <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '1.4em', height: '1.4em' }}>
-                  <path d="M6 7h1.5v10H6zm-2.5 2h1.5v6h-1.5zm13 0h1.5v6h-1.5zm2.5-2h1.5v10H19zm-11.5 4h10v2h-10z" />
-                </svg>
+            {lastThreeActivities.map((item, idx) => (
+              <div key={idx} className="activity-card">
+                <div className="act-icon-wrap">
+                  {item.icon === 'barbell' ? (
+                    <svg viewBox="0 0 24 24" fill="currentColor" style={{ width: '1.05em', height: '1.05em' }}>
+                      <path d="M6 7h1.5v10H6zm-2.5 2h1.5v6h-1.5zm13 0h1.5v6h-1.5zm2.5-2h1.5v10H19zm-11.5 4h10v2h-10z" />
+                    </svg>
+                  ) : item.isCustomEmoji ? (
+                    <span style={{ fontSize: '1.7rem', lineHeight: 1 }}>{item.icon}</span>
+                  ) : (
+                    <i className={`bi ${item.icon}`}></i>
+                  )}
+                </div>
+                <strong>{item.name}</strong>
               </div>
-              <strong>Fitness</strong>
-              <span className="act-duration">1h 20 Min.</span>
-            </div>
-            <div className="activity-card">
-              <div className="act-icon-wrap"><i className="bi bi-person-walking"></i></div>
-              <strong>Spazieren</strong>
-              <span className="act-duration">15 Min.</span>
-            </div>
+            ))}
           </div>
           <div className="diamonds-footer-pill" onClick={() => setActiveModal('diamonds')}>
             <div className="diamonds-txt">
@@ -1659,11 +1816,11 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         <div className="dash-card entry-box-full live-call-box">
           <div className="box-header" style={{ position: 'relative' }}>
             <i className="bi bi-display live-call-icon" style={{ color: '#4498ca', fontSize: '1.2rem' }}></i>
-            <h2 className="box-label">Nächster Live Call</h2>
+            <h2 className="box-label">Terminausblick</h2>
             <div className="info-tooltip-container">
               <i className="bi bi-info-circle info-tooltip-icon"></i>
               <div className="info-tooltip-text">
-                Direkter Zugang zu monatlichen exklusiven 45-Minuten-Sessions auf Teams mit Vorträgen von Longevity-Experten und anschließenden Fragerunden.
+                Direkter Zugang zu monatlichen exklusiven 45-Minuten-Sessions auf Teams mit Vorträgen von Longevity-Experten und anschließenden Fragerunden sowie je nach Vertragsmodell weiteren Leistungen.
               </div>
             </div>
           </div>
@@ -1674,8 +1831,26 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                 <Image src="/images/hacks-schlaf.png" fill alt="Schlafforschung" style={{ objectFit: 'cover', borderRadius: '14px' }} />
               </div>
               <div className="live-call-details">
-                <span className="live-call-date-text">{liveCallDateStr}, <span style={{ fontWeight: 500 }}>18:00-18:45 Uhr</span></span>
-                <span style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600, marginTop: '1px', lineHeight: 1.4 }}>Schwerpunkt: "Neues aus der Schlafforschung: Wie du deinen Schlaf optimierst, um jeden Tag voller Energie und Fokus zu starten!"</span>
+                <div style={{ marginBottom: '4px' }}>
+                  <span className="topic-pill" style={{ 
+                    background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%)', 
+                    color: '#1e3a8a', 
+                    border: '1px solid #93c5fd', 
+                    fontWeight: 800, 
+                    padding: '2px 8px', 
+                    textTransform: 'uppercase', 
+                    fontSize: '0.62rem',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    lineHeight: '1',
+                    height: '22px'
+                  }}>Teams-Event</span>
+                </div>
+                <span className="live-call-date-text" style={{ fontSize: '0.92rem', fontWeight: 800, color: '#1e293b' }}>
+                  {liveCallDateStr}, <span style={{ whiteSpace: 'nowrap' }}>18:00-18:45 Uhr</span>
+                </span>
+                <span style={{ fontSize: '0.78rem', color: '#64748b', fontWeight: 600, marginTop: '1px', lineHeight: 1.4 }}>Schwerpunkt: "Neues aus der Schlafforschung: Wie du deinen Schlaf optimierst, um jeden Tag voller Energie & Fokus zu starten!"</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginTop: '8px', marginBottom: '4px' }}>
                   <div style={{ width: '45px', height: '45px', borderRadius: '50%', overflow: 'hidden', position: 'relative', border: '2px solid #4498ca', flexShrink: 0, boxShadow: '0 2px 8px rgba(68,152,202,0.15)' }}>
                     <Image src="/images/albrecht_keller.png" fill alt="Dr. med. Albrecht Keller" style={{ objectFit: 'cover' }} />
@@ -1715,7 +1890,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
 
             {/* RIGHT COLUMN: Outlook (Ausblick) */}
             <div className="lc-right-col">
-              <h3 className="outlook-title">Vorschau auf die folgenden Live-Calls</h3>
+              <h3 className="outlook-title">Weitere Termine</h3>
               
               <div className="outlook-items-list">
                 {/* CALL 1 */}
@@ -1725,35 +1900,162 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                     <span className="badge-day">{outlookCalls.call1.day}</span>
                   </div>
                   <div className="outlook-details">
-                    <span className="outlook-date-str" style={{ whiteSpace: 'nowrap' }}>{outlookCalls.call1.fullDateStr}</span>
-                    <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 500, marginTop: '-2px' }}>18:00-18:45 Uhr</span>
-                    <div className="outlook-topics">
-                      <span className="topic-pill">Fastenpraxis</span>
+                    <div className="outlook-topics" style={{ marginBottom: '4px' }}>
+                      <span className="topic-pill" style={{ 
+                        background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%)', 
+                        color: '#1e3a8a', 
+                        border: '1px solid #93c5fd', 
+                        fontWeight: 800, 
+                        padding: '2px 8px', 
+                        textTransform: 'uppercase', 
+                        fontSize: '0.62rem',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        lineHeight: '1',
+                        height: '22px'
+                      }}>Teams-Event</span>
                     </div>
-                    <span style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>Prof. Dr. Andreas Michalsen</span>
+                    <span className="outlook-date-str" style={{ fontWeight: 800, display: 'block' }}>HRV-Resilienz</span>
+                    <span style={{ display: 'block', fontSize: '0.75rem', color: '#64748b', fontWeight: 500, marginTop: '2px', lineHeight: 1.3 }}>
+                      {outlookCalls.call1.fullDateStr},
+                      <br />
+                      <span style={{ whiteSpace: 'nowrap' }}>18:00-18:45 Uhr</span>
+                    </span>
+                    <span style={{ display: 'block', fontSize: '0.72rem', color: '#64748b', fontWeight: 600, marginTop: '2px', lineHeight: 1.3 }}>
+                      Stressmanagement-Expertin
+                      <br />
+                      Prof. Dr. Nadine Galandi
+                    </span>
                   </div>
                 </div>
 
-                {/* CALL 2 */}
-                <div className="outlook-item">
-                  <div className="outlook-date-badge">
-                    <span className="badge-month">{outlookCalls.call2.month}</span>
-                    <span className="badge-day">{outlookCalls.call2.day}</span>
-                  </div>
-                  <div className="outlook-details">
-                    <span className="outlook-date-str" style={{ whiteSpace: 'nowrap' }}>{outlookCalls.call2.fullDateStr}</span>
-                    <span style={{ fontSize: '0.75rem', color: '#64748b', fontWeight: 500, marginTop: '-2px' }}>18:00-18:45 Uhr</span>
-                    <div className="outlook-topics">
-                      <span className="topic-pill">HRV-Resilienz</span>
+                {/* SEPTEMBER TEAMS CALL FOR STARTER AND PREMIUM */}
+                {selectedPlan !== 'Platin' && (
+                  <div className="outlook-item">
+                    <div className="outlook-date-badge">
+                      <span className="badge-month">{outlookCalls.call2.month}</span>
+                      <span className="badge-day">{outlookCalls.call2.day}</span>
                     </div>
-                    <span style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>Stressmanagement-Expertin Prof. Dr. Nadine Galandi</span>
+                    <div className="outlook-details">
+                      <div className="outlook-topics" style={{ marginBottom: '4px' }}>
+                        <span className="topic-pill" style={{ 
+                          background: 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%)', 
+                          color: '#1e3a8a', 
+                          border: '1px solid #93c5fd', 
+                          fontWeight: 800, 
+                          padding: '2px 8px', 
+                          textTransform: 'uppercase', 
+                          fontSize: '0.62rem',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          lineHeight: '1',
+                          height: '22px'
+                        }}>Teams-Event</span>
+                      </div>
+                      <span className="outlook-date-str" style={{ fontWeight: 800, display: 'block' }}>Zellgesundheit & Autophagie</span>
+                      <span style={{ display: 'block', fontSize: '0.75rem', color: '#64748b', fontWeight: 500, marginTop: '2px', lineHeight: 1.3 }}>
+                        {outlookCalls.call2.fullDateStr},
+                        <br />
+                        <span style={{ whiteSpace: 'nowrap' }}>18:00-18:45 Uhr</span>
+                      </span>
+                      <span style={{ display: 'block', fontSize: '0.72rem', color: '#64748b', fontWeight: 600, marginTop: '2px', lineHeight: 1.3 }}>
+                        Ernährungs-Expertin
+                        <br />
+                        Dr. rer. nat. Sarah Weber
+                      </span>
+                    </div>
                   </div>
-                </div>
+                )}
+
+                {/* CALL 2: Lab-Analyse */}
+                {selectedPlan === 'Platin' && (
+                  <div className="outlook-item">
+                    <div className="outlook-date-badge">
+                      <span className="badge-month">SEP</span>
+                      <span className="badge-day">30</span>
+                    </div>
+                    <div className="outlook-details">
+                      <div className="outlook-topics" style={{ marginBottom: '4px' }}>
+                        <span className="topic-pill" style={{ 
+                          background: selectedPlan === 'Platin' 
+                            ? 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 30%, #e2e8f0 70%, #cbd5e1 100%)' 
+                            : selectedPlan === 'Starter' 
+                              ? 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%)' 
+                              : 'linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%)', 
+                          color: selectedPlan === 'Platin' 
+                            ? '#334155' 
+                            : selectedPlan === 'Starter' 
+                              ? '#1e3a8a' 
+                              : '#ffffff', 
+                          border: selectedPlan === 'Platin' 
+                            ? '1px solid #94a3b8' 
+                            : selectedPlan === 'Starter' 
+                              ? '1px solid #93c5fd' 
+                              : 'none',
+                          fontWeight: 800, 
+                          padding: '2px 8px', 
+                          textTransform: 'uppercase', 
+                          fontSize: '0.62rem',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          lineHeight: '1',
+                          height: '22px'
+                        }}>{selectedPlan}</span>
+                      </div>
+                      <span className="outlook-date-str" style={{ fontWeight: 800, display: 'block' }}>Analyse</span>
+                      <span style={{ display: 'block', fontSize: '0.72rem', color: '#64748b', fontWeight: 600, marginTop: '2px', lineHeight: 1.3 }}>Lab: Lifespin</span>
+                      <span style={{ display: 'block', fontSize: '0.72rem', color: '#64748b', fontWeight: 600, marginTop: '2px', lineHeight: 1.3 }}>Home-Testkit</span>
+                    </div>
+                  </div>
+                )}
+
+                {/* CALL 3: Arzt-Gespräch */}
+                {selectedPlan === 'Platin' && (
+                  <div className="outlook-item">
+                    <div className="outlook-date-badge">
+                      <span className="badge-month">OKT</span>
+                      <span className="badge-day">15</span>
+                    </div>
+                    <div className="outlook-details">
+                      <div className="outlook-topics" style={{ marginBottom: '4px' }}>
+                        <span className="topic-pill" style={{ 
+                          background: selectedPlan === 'Platin' 
+                            ? 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 30%, #e2e8f0 70%, #cbd5e1 100%)' 
+                            : selectedPlan === 'Starter' 
+                              ? 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%)' 
+                              : 'linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%)', 
+                          color: selectedPlan === 'Platin' 
+                            ? '#334155' 
+                            : selectedPlan === 'Starter' 
+                              ? '#1e3a8a' 
+                              : '#ffffff', 
+                          border: selectedPlan === 'Platin' 
+                            ? '1px solid #94a3b8' 
+                            : selectedPlan === 'Starter' 
+                              ? '1px solid #93c5fd' 
+                              : 'none',
+                          fontWeight: 800, 
+                          padding: '2px 8px', 
+                          textTransform: 'uppercase', 
+                          fontSize: '0.62rem',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          lineHeight: '1',
+                          height: '22px'
+                        }}>{selectedPlan}</span>
+                      </div>
+                      <span className="outlook-date-str" style={{ fontWeight: 800, display: 'block' }}>Feedback-Gespräch</span>
+                      <span style={{ display: 'block', fontSize: '0.75rem', color: '#64748b', fontWeight: 500, marginTop: '2px', lineHeight: 1.3 }}>Dr. Petra Keller</span>
+                      <span style={{ display: 'block', fontSize: '0.72rem', color: '#4498ca', fontWeight: 700, cursor: 'pointer', textDecoration: 'underline', marginTop: '2px', lineHeight: 1.3 }} onClick={() => alert('Terminbuchung aufgerufen!')}>Termin vereinbaren</span>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              <button className="live-call-calendar-btn" style={{ marginTop: 'auto' }} onClick={() => alert('Erfolgreich zum Kalender hinzugefügt!')}>
-                In Kalender eintragen
-              </button>
             </div>
           </div>
         </div>
@@ -1768,21 +2070,23 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                 Exklusiver Premium-Bereich mit mentalen Audio-Impulsen, Entspannungsübungen und Verjüngungstipps.
               </div>
             </div>
-            <span className="premium-badge" style={{
-              marginLeft: '4px',
-              fontSize: '0.65rem',
-              background: 'linear-gradient(135deg, #006ea7 0%, #3b82f6 100%)',
-              color: 'white',
-              padding: '2px 6px',
-              borderRadius: '6px',
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '2px',
-              fontWeight: 800,
-              textTransform: 'uppercase'
-            }}>
-              <i className="bi bi-lock-fill" style={{ fontSize: '0.65rem', color: 'white' }}></i> Premium
-            </span>
+            {selectedPlan === 'Starter' && (
+              <span className="premium-badge" style={{
+                marginLeft: '4px',
+                fontSize: '0.65rem',
+                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
+                color: 'white',
+                padding: '2px 6px',
+                borderRadius: '6px',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '2px',
+                fontWeight: 800,
+                textTransform: 'uppercase'
+              }}>
+                <i className="bi bi-lock-fill" style={{ fontSize: '0.65rem', color: 'white' }}></i> Premium
+              </span>
+            )}
           </div>
           <div className="fg-items-grid">
             {/* CARD 1: ENERGIETANKSTELLE */}
@@ -1807,13 +2111,14 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             <div 
                className="fg-v-card" 
                onClick={() => {
+                 if (selectedPlan === 'Starter') return;
                  if (window.innerWidth <= 992) {
                    setJungbrunnenSubView('selection');
                  } else {
                    setActiveModal('jungbrunnen-selection');
                  }
                }} 
-               style={{ cursor: 'pointer' }}
+               style={{ cursor: selectedPlan === 'Starter' ? 'default' : 'pointer' }}
              >
               <div className="fgh-img-16-9"><Image src="/images/feelgood_youth.png" fill alt="Regeneration" style={{ objectFit: 'cover' }} /></div>
               <div className="fgh-content">
@@ -1901,7 +2206,11 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                                   x{count}
                                 </span>
                               )}
-                              <i className={`bi ${icon}`} style={{ fontSize: '2.8rem', marginBottom: '0.05rem' }}></i>
+                              {icon.startsWith('bi-') ? (
+                                <i className={`bi ${icon}`} style={{ fontSize: '2.8rem', marginBottom: '0.05rem' }}></i>
+                              ) : (
+                                <span style={{ fontSize: '2.8rem', marginBottom: '0.05rem', lineHeight: 1 }}>{icon}</span>
+                              )}
                               <span style={{ fontSize: '0.88rem', lineHeight: '1.2', fontWeight: 500 }}>{name}</span>
                             </div>
                           );
@@ -1959,6 +2268,14 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                         setActivityCounts(nextCounts);
                         localStorage.setItem('ty-activity-counts', JSON.stringify(nextCounts));
                         window.dispatchEvent(new Event('ty-counts-sync'));
+
+                        // 4. Remove timestamp
+                        const savedTs = localStorage.getItem('ty-activity-timestamps');
+                        if (savedTs) {
+                          const timestamps = JSON.parse(savedTs);
+                          delete timestamps[quickSelected];
+                          localStorage.setItem('ty-activity-timestamps', JSON.stringify(timestamps));
+                        }
 
                         if (!selectedActivities.includes(quickSelected)) {
                           updateSelectedActivities([...selectedActivities, quickSelected]);
@@ -2042,19 +2359,25 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                                 return (
                                   <div key={act.name} className={`act-list-item ${isSelected ? 'selected' : ''}`}>
                                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                                      <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: act.category === 'Jungbrunnen-Aktionen' ? '1.3rem' : '1.05rem', color: isSelected ? '#10b981' : '#6099cf' }}>
-                                        {act.category === 'Jungbrunnen-Aktionen' ? (
-                                          <span>{oracleCards.find(c => `Jungbrunnen: ${c.title}` === act.name || `Jungbrunnen: ${c.id}` === act.name)?.icon || '✨'}</span>
-                                        ) : (
-                                          <i className={`bi ${getIconForActivity(act.name)}`}></i>
-                                        )}
+                                      <div style={{ width: '32px', height: '32px', borderRadius: '8px', background: '#f8fafc', border: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.3rem', color: isSelected ? '#10b981' : '#6099cf' }}>
+                                        {(() => {
+                                          const icon = act.category === 'Jungbrunnen-Aktionen'
+                                            ? (oracleCards.find(c => `Jungbrunnen: ${c.title}` === act.name || `Jungbrunnen: ${c.id}` === act.name)?.icon || '✨')
+                                            : getIconForActivity(act.name);
+                                          return icon.startsWith('bi-') ? (
+                                            <i className={`bi ${icon}`} style={{ fontSize: '1.05rem' }}></i>
+                                          ) : (
+                                            <span>{icon}</span>
+                                          );
+                                        })()}
                                       </div>
                                       <span className="act-name">{act.name}</span>
                                     </div>
                                     <div className="act-right-group">
                                       {(() => {
                                         const currentVal = activityValues[act.name] || act.defaultOption;
-                                        const currentDiamonds = calculateDiamonds(act, currentVal);
+                                        const isJungbrunnen = typeof act.name === 'string' && act.name.startsWith('Jungbrunnen:');
+                                        const currentDiamonds = isJungbrunnen ? act.diamonds : calculateDiamonds(act, currentVal);
                                         return (
                                           <>
                                             <select 
@@ -2216,6 +2539,12 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                       return `${weekdayShort}, ${dayAndMonth}`;
                     };
 
+                    const savedTimestamps = (() => {
+                      if (typeof window === 'undefined') return {};
+                      const saved = localStorage.getItem('ty-activity-timestamps');
+                      return saved ? JSON.parse(saved) : {};
+                    })();
+
                     const safeSelected = Array.isArray(allSelectedActivities) ? allSelectedActivities : [];
                     const dynamicLoungeActivities = safeSelected
                       .filter(name => typeof name === 'string' && name !== 'alchemist-elixir')
@@ -2223,17 +2552,28 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                         const actConfig = activityOptions.find(a => a.name === name);
                         if (!actConfig) return null;
                         
-                        const detail = activityValues[name] || actConfig.defaultOption;
-                        let diamonds = calculateDiamonds(actConfig, detail);
+                        let detail = activityValues[name] || actConfig.defaultOption;
+                        const isJungbrunnen = typeof name === 'string' && name.startsWith('Jungbrunnen:');
+                        if (isJungbrunnen) {
+                          if (name.includes('Cryo-Challenge')) detail = '2 Min. Eisdusche';
+                          else if (name.includes('HIIT Booster')) detail = '4 Min. HIIT';
+                          else if (name.includes('Deep-Breath-Ritual')) detail = '5 Min. Atemübung';
+                          else if (name.includes('Morgenlicht-Spaziergang')) detail = '15 Min. Sonnenlicht';
+                          else if (name.includes('Fasten-Sprint')) detail = '16 Std. Fasten';
+                          else if (name.includes('Power-Nap')) detail = '15 Min. Mittagsschlaf';
+                          else if (name.includes('Beeren-Detox-Snack')) detail = '1 Handvoll Beeren';
+                        }
+                        
+                        let diamonds = isJungbrunnen ? actConfig.diamonds : calculateDiamonds(actConfig, detail);
                         
                         // Multiply by activity frequency count if greater than 1
                         const count = activityCounts[name] || 1;
                         diamonds = diamonds * count;
 
                         // Handle custom emojis for daily Jungbrunnen cards
-                        const isJungbrunnen = typeof name === 'string' && name.startsWith('Jungbrunnen:');
+
                         let icon = getIconForActivity(name);
-                        let isCustomEmoji = false;
+                        let isCustomEmoji = !icon.startsWith('bi-');
                         
                         if (isJungbrunnen) {
                           const cardTitle = name.replace('Jungbrunnen: ', '');
@@ -2246,12 +2586,26 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                         
                         const isBarbell = typeof name === 'string' && name.toLowerCase().includes('kraft');
                         
+                        const rawTime = savedTimestamps[name];
+                        let daysAgo = 0;
+                        if (rawTime && typeof rawTime === 'string' && rawTime.includes('Uhr')) {
+                          daysAgo = 0;
+                        } else {
+                          const ts = typeof rawTime === 'number' ? rawTime : (!isNaN(Number(rawTime)) ? Number(rawTime) : Date.now());
+                          const actDate = new Date(ts);
+                          const nowDate = new Date();
+                          const d1 = new Date(actDate.getFullYear(), actDate.getMonth(), actDate.getDate());
+                          const d2 = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
+                          const diffTime = Math.abs(d2.getTime() - d1.getTime());
+                          daysAgo = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                        }
+                        
                         return {
                           name,
                           rawName: name,
                           count,
                           detail,
-                          daysAgo: 0, // logged this week -> show as "Heute"
+                          daysAgo,
                           diamonds,
                           icon,
                           isBarbell,
@@ -2276,9 +2630,9 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                     const displayActivities = dynamicLoungeActivities.length > 0 
                       ? dynamicLoungeActivities 
                       : [
-                          { name: 'Rad gefahren', rawName: 'Rad gefahren', detail: '30 Min.', daysAgo: 0, diamonds: 2, icon: 'bi-bicycle', isCustomEmoji: false },
-                          { name: 'Vollwertige Hauptmahlzeit gegessen', rawName: 'Vollwertige Hauptmahlzeit gegessen', detail: 'Ja', daysAgo: 0, diamonds: 3, icon: 'bi-apple', isCustomEmoji: false },
-                          { name: 'Krafttraining abgeschlossen', rawName: 'Krafttraining abgeschlossen', detail: '60 Min.', daysAgo: 1, diamonds: 4, isBarbell: true, isCustomEmoji: false }
+                          { name: 'Rad gefahren', rawName: 'Rad gefahren', detail: '30 Min.', daysAgo: 0, diamonds: 2, icon: '🚴', isCustomEmoji: true },
+                          { name: 'Vollwertige Hauptmahlzeit gegessen', rawName: 'Vollwertige Hauptmahlzeit gegessen', detail: 'Ja', daysAgo: 0, diamonds: 3, icon: '🥗', isCustomEmoji: true },
+                          { name: 'Krafttraining abgeschlossen', rawName: 'Krafttraining abgeschlossen', detail: '60 Min.', daysAgo: 1, diamonds: 4, isBarbell: false, icon: '💪', isCustomEmoji: true }
                         ];
 
                     const totalDiamonds = displayActivities.reduce((sum, act) => sum + act.diamonds, 0);
@@ -2739,22 +3093,22 @@ return (
         .voice-btn:hover i, .photo-btn:hover i { color: #4498ca; }
         .voice-btn i, .photo-btn i { font-size: 1.40rem; color: #6099cf; transition: color 0.2s; }
 
-        .tracker-label { font-size: 0.6rem; font-weight: 800; color: #94a3b8; letter-spacing: 0.08em; margin-bottom: 0.75rem; text-transform: uppercase; }
-        .activities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.6rem; margin-bottom: 1.25rem; }
+        .tracker-label { font-size: calc(0.6rem + 2pt); font-weight: 800; color: #94a3b8; letter-spacing: 0.08em; margin-bottom: 0.75rem; text-transform: uppercase; }
+        .activities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-bottom: 1.25rem; border: 1px solid #cbd5e1; border-radius: 18px; background: #ffffff; overflow: hidden; padding: 0.5rem 0; }
         
         .activity-card {
-          background: #fff; border: 1px solid #f1f5f9; border-radius: 18px;
-          padding: 1rem 0.4rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
+          background: transparent; border: none; border-radius: 0;
+          padding: 0.5rem 0.4rem; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 0.3rem;
         }
         .act-icon-wrap { font-size: 2.1rem; color: #6099cf; margin-bottom: 0.15rem; display: flex; align-items: center; justify-content: center; }
         .activity-card strong { font-size: 0.85rem; color: #1e293b; }
         .act-duration { font-size: 0.8rem; color: #4498ca; font-weight: 500; }
 
         .diamonds-footer-pill { 
-          background: #eefdf8; 
+          background: #dcfce7; 
           border-radius: 20px; padding: 0.9rem 1.25rem; 
           display: flex; justify-content: space-between; align-items: center; margin-top: auto; 
-          border: 1px solid rgba(115, 196, 128, 0.2);
+          border: 1px solid rgba(34, 197, 94, 0.25);
           cursor: pointer;
           transition: all 0.2s;
         }
@@ -3078,11 +3432,13 @@ return (
           display: flex;
           flex-direction: column;
           gap: 0.85rem;
-          flex: 1.1;
+          flex: 1 1 0%;
+          width: 50%;
           align-items: stretch;
         }
         .lc-right-col {
-          flex: 0.9;
+          flex: 1 1 0%;
+          width: 50%;
           border-left: 1.5px solid #e2e8f0;
           padding-left: 1.5rem;
           display: flex;
@@ -3101,11 +3457,11 @@ return (
         .outlook-items-list {
           display: flex;
           flex-direction: column;
-          gap: 2rem;
+          gap: 0.75rem;
         }
         .outlook-item {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           gap: 0.75rem;
           background: #f8fafc;
           border: 1px solid #e2e8f0;
@@ -3160,7 +3516,8 @@ return (
           font-size: 0.82rem;
           font-weight: 800;
           color: #0f172a;
-          white-space: nowrap;
+          white-space: normal;
+          line-height: 1.25;
         }
         .outlook-topics {
           display: flex;
@@ -3260,9 +3617,9 @@ return (
           width: 100%;
         }
         .live-call-join-btn {
-          background: #004D77;
-          color: white;
-          border: none;
+          background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%);
+          color: #1e3a8a;
+          border: 1px solid #93c5fd;
           border-radius: 12px;
           padding: 0.5rem 1rem;
           font-size: 0.82rem;
@@ -3272,12 +3629,12 @@ return (
           align-items: center;
           justify-content: center;
           transition: all 0.2s;
-          box-shadow: 0 4px 10px rgba(0, 77, 119, 0.15);
+          box-shadow: 0 4px 10px rgba(30, 58, 138, 0.08);
           width: 100%;
         }
         .live-call-join-btn:hover {
-          background: #006EA7;
-          box-shadow: 0 4px 12px rgba(0, 110, 167, 0.2);
+          background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 50%, #93c5fd 100%);
+          box-shadow: 0 4px 12px rgba(30, 58, 138, 0.15);
           transform: translateY(-1px);
         }
         .live-call-calendar-btn {

@@ -111,6 +111,32 @@ interface Coaching2PageProps {
 
 export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAutoStart }: Coaching2PageProps) {
   const [userName, setUserName] = useState('Monique');
+  const [selectedPlan, setSelectedPlan] = useState<string>('Premium');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const loadPlan = () => {
+        const savedPlan = localStorage.getItem('ty_selected_plan');
+        if (savedPlan) {
+          if (savedPlan === 'basic') setSelectedPlan('Starter');
+          else if (savedPlan === 'premium') setSelectedPlan('Premium');
+          else if (savedPlan === 'platin') setSelectedPlan('Platin');
+        }
+      };
+      loadPlan();
+
+      const handlePlanChange = () => {
+        loadPlan();
+      };
+      window.addEventListener('ty_selected_plan_changed', handlePlanChange);
+      window.addEventListener('storage', handlePlanChange);
+      return () => {
+        window.removeEventListener('ty_selected_plan_changed', handlePlanChange);
+        window.removeEventListener('storage', handlePlanChange);
+      };
+    }
+  }, []);
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedName = sessionStorage.getItem('ty_first_name');
@@ -710,13 +736,24 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                   </div>
                 </button>
 
-                <button className="wb-stype-btn" onClick={() => startSession('quarterly')}>
+                <button 
+                  className="wb-stype-btn" 
+                  onClick={() => {
+                    if (selectedPlan === 'Starter') return;
+                    startSession('quarterly');
+                  }}
+                  style={{ cursor: selectedPlan === 'Starter' ? 'default' : 'pointer' }}
+                >
                   <div className="wbsb-left">
                     <div className="wbsb-body">
                       <div className="wbsb-title" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                         3. Quarterly
-                        <i className="bi bi-lock-fill" style={{ fontSize: '1.1rem', color: '#006ea7', marginLeft: '4px' }}></i>
-                        <span style={{ fontSize: '0.65rem', fontWeight: 800, color: '#006ea7', background: '#e0f2fe', padding: '2px 6px', borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+                        {selectedPlan === 'Starter' && (
+                          <>
+                            <i className="bi bi-lock-fill" style={{ fontSize: '1.1rem', color: '#10b981', marginLeft: '4px' }}></i>
+                            <span style={{ fontSize: '0.65rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.1)', padding: '2px 6px', borderRadius: '4px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+                          </>
+                        )}
                       </div>
                       <div className="wbsb-desc">Quartalsweise Reflexion deiner Longevity-Reise</div>
                     </div>

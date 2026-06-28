@@ -367,6 +367,32 @@ const GIT_COMMIT_DATES: Record<string, string> = {
 };
 
 export default function InspirationPage() {
+  const [selectedPlan, setSelectedPlan] = useState<string>('Premium');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const loadPlan = () => {
+        const savedPlan = localStorage.getItem('ty_selected_plan');
+        if (savedPlan) {
+          if (savedPlan === 'basic') setSelectedPlan('Starter');
+          else if (savedPlan === 'premium') setSelectedPlan('Premium');
+          else if (savedPlan === 'platin') setSelectedPlan('Platin');
+        }
+      };
+      loadPlan();
+
+      const handlePlanChange = () => {
+        loadPlan();
+      };
+      window.addEventListener('ty_selected_plan_changed', handlePlanChange);
+      window.addEventListener('storage', handlePlanChange);
+      return () => {
+        window.removeEventListener('ty_selected_plan_changed', handlePlanChange);
+        window.removeEventListener('storage', handlePlanChange);
+      };
+    }
+  }, []);
+
   const [activeTab, setActiveTab] = useState<Tab>('hacks');
   const [savedItems, setSavedItems] = useState<{ id: string; savedAt: string }[]>([
     { id: 'r1', savedAt: GIT_COMMIT_DATES['r1'] },
@@ -465,22 +491,26 @@ export default function InspirationPage() {
         {tabLabels.map(tab => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
+            onClick={() => {
+              if (tab.id === 'experten' && selectedPlan === 'Starter') return;
+              setActiveTab(tab.id);
+            }}
             className={`ins-tab ${activeTab === tab.id ? 'active' : ''}`}
             style={{ 
               display: 'flex', 
               alignItems: 'center',
               background: tab.id === 'experten' && activeTab !== 'experten' ? 'rgba(0, 110, 167, 0.07)' : undefined,
-              borderColor: tab.id === 'experten' && activeTab !== 'experten' ? 'rgba(0, 110, 167, 0.18)' : undefined
+              borderColor: tab.id === 'experten' && activeTab !== 'experten' ? 'rgba(0, 110, 167, 0.18)' : undefined,
+              cursor: (tab.id === 'experten' && selectedPlan === 'Starter') ? 'default' : 'pointer'
             }}
           >
             <i className={`bi ${tab.icon}`} />
             <span>{tab.label}</span>
-            {tab.id === 'experten' && (
+            {tab.id === 'experten' && selectedPlan === 'Starter' && (
               <span className="premium-badge" style={{
                 marginLeft: '6px',
                 fontSize: '0.65rem',
-                background: 'linear-gradient(135deg, #006ea7 0%, #3b82f6 100%)',
+                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                 color: 'white',
                 padding: '1px 5px',
                 borderRadius: '6px',

@@ -256,7 +256,7 @@ interface EntwicklungPageProps {
 }
 
 export default function EntwicklungPage({ onStartSimulation, onNavigate }: EntwicklungPageProps) {
-  const [activeTab, setActiveTab] = useState<SubTab>('trends');
+  const [activeTab, setActiveTab] = useState<SubTab>('goals');
   const [selectedMetric, setSelectedMetric] = useState<'chronological' | 'difference' | 'dna'>('difference');
   const [trendPeriod, setTrendPeriod] = useState<TrendPeriod>('12m');
   const [showBioAgeDetails, setShowBioAgeDetails] = useState(false);
@@ -264,10 +264,40 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
   const [selectedReport, setSelectedReport] = useState<any | null>(null);
   const [coachVariant, setCoachVariant] = useState<'lisa-jung' | 'lisa-alt' | 'tom-jung' | 'tom-alt'>('lisa-jung');
   const [activeWearableId, setActiveWearableId] = useState<string>('whoop');
+  const [selectedPlan, setSelectedPlan] = useState<string>('Premium');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const loadPlan = () => {
+        const savedPlan = localStorage.getItem('ty_selected_plan');
+        if (savedPlan) {
+          if (savedPlan === 'basic') setSelectedPlan('Starter');
+          else if (savedPlan === 'premium') setSelectedPlan('Premium');
+          else if (savedPlan === 'platin') setSelectedPlan('Platin');
+        }
+      };
+      loadPlan();
+
+      const handlePlanChange = () => {
+        loadPlan();
+      };
+      window.addEventListener('ty_selected_plan_changed', handlePlanChange);
+      window.addEventListener('storage', handlePlanChange);
+      return () => {
+        window.removeEventListener('ty_selected_plan_changed', handlePlanChange);
+        window.removeEventListener('storage', handlePlanChange);
+      };
+    }
+  }, []);
 
   const [calendarAge, setCalendarAge] = useState<number>(46.7);
   const [bioAge, setBioAge] = useState<number>(42.5);
   const [savedYears, setSavedYears] = useState<number>(4.2);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -456,33 +486,52 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
     setLogTimeStr(`${hrs}:${mins} Uhr`);
   }, []);
 
-   const handleRemoveFeelGood = (id: string) => {
-     // 1. Remove from checkedActivities
-     const nextChecked = checkedActivities.filter(item => item !== id);
-     setCheckedActivities(nextChecked);
-     localStorage.setItem('ty-checked-activities', JSON.stringify(nextChecked));
-     window.dispatchEvent(new Event('ty-activities-sync'));
- 
-     // 2. If it is a Jungbrunnen activity, also remove from completed-rituals so Today page resets
-     if (typeof id === 'string' && id.startsWith('Jungbrunnen:')) {
-       const cardTitle = id.replace('Jungbrunnen: ', '');
-       const savedCompletions = localStorage.getItem('ty-completed-rituals');
-       if (savedCompletions) {
-         const completionsList = JSON.parse(savedCompletions) as string[];
-         const updated = completionsList.filter(title => title !== cardTitle && title !== id);
-         localStorage.setItem('ty-completed-rituals', JSON.stringify(updated));
-         setCompletedRituals(updated);
-         window.dispatchEvent(new Event('ty-activities-sync'));
-       }
-     }
- 
-     // 3. Clear count in activityCounts
-     const nextCounts = { ...activityCounts };
-     delete nextCounts[id];
-     setActivityCounts(nextCounts);
-     localStorage.setItem('ty-activity-counts', JSON.stringify(nextCounts));
-     window.dispatchEvent(new Event('ty-counts-sync'));
-   };
+  const handleRemoveFeelGood = (id: string) => {
+    // 1. Remove from checkedActivities
+    const nextChecked = checkedActivities.filter(item => item !== id);
+    setCheckedActivities(nextChecked);
+    localStorage.setItem('ty-checked-activities', JSON.stringify(nextChecked));
+    window.dispatchEvent(new Event('ty-activities-sync'));
+
+    // 2. If it is a Jungbrunnen activity, also remove from completed-rituals so Today page resets
+    if (typeof id === 'string' && id.startsWith('Jungbrunnen:')) {
+      const cardTitle = id.replace('Jungbrunnen: ', '');
+      const oracleCards = [
+        { id: 'Cryo-Challenge', title: 'Cryo-Challenge' },
+        { id: 'HIIT-Booster', title: 'HIIT Booster' },
+        { id: 'Deep-Breath', title: 'Deep-Breath-Ritual' },
+        { id: 'Morgenlicht', title: 'Morgenlicht-Spaziergang' },
+        { id: 'Fasten-Sprint', title: 'Fasten-Sprint' },
+        { id: 'Power-Nap', title: 'Power-Nap' },
+        { id: 'Beeren-Detox', title: 'Beeren-Detox-Snack' }
+      ];
+      const card = oracleCards.find(c => c.title === cardTitle || c.id === cardTitle);
+      const cardId = card ? card.id : cardTitle;
+      const savedCompletions = localStorage.getItem('ty-completed-rituals');
+      if (savedCompletions) {
+        const completionsList = JSON.parse(savedCompletions) as string[];
+        const updated = completionsList.filter(item => item !== cardId && item !== cardTitle && item !== id);
+        localStorage.setItem('ty-completed-rituals', JSON.stringify(updated));
+        setCompletedRituals(updated);
+        window.dispatchEvent(new Event('ty-activities-sync'));
+      }
+    }
+
+    // 3. Clear count in activityCounts
+    const nextCounts = { ...activityCounts };
+    delete nextCounts[id];
+    setActivityCounts(nextCounts);
+    localStorage.setItem('ty-activity-counts', JSON.stringify(nextCounts));
+    window.dispatchEvent(new Event('ty-counts-sync'));
+
+    // 4. Remove timestamp
+    const savedTs = localStorage.getItem('ty-activity-timestamps');
+    if (savedTs) {
+      const timestamps = JSON.parse(savedTs);
+      delete timestamps[id];
+      localStorage.setItem('ty-activity-timestamps', JSON.stringify(timestamps));
+    }
+  };
 
   const currentWeekRange = useMemo(() => {
     const today = new Date();
@@ -539,18 +588,15 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
        localStorage.setItem('ty-checked-activities', JSON.stringify(parsedChecked));
      }
  
-     // Ensure all checked activities have a timestamp on load
+     // Ensure all checked Feel-Good activities have a timestamp on load
      const timestampsStr = localStorage.getItem('ty-activity-timestamps');
      const timestamps = timestampsStr ? JSON.parse(timestampsStr) : {};
      let modified = false;
-     const now = new Date();
-     const hrs = String(now.getHours()).padStart(2, '0');
-     const mins = String(now.getMinutes()).padStart(2, '0');
-     const timeStr = `${hrs}:${mins} Uhr`;
- 
+
      parsedChecked.forEach(id => {
-       if (!timestamps[id]) {
-         timestamps[id] = timeStr;
+       const isFeelGood = id.startsWith('Jungbrunnen:') || id === 'alchemist-elixir' || id === 'Tageslicht am Morgen getankt' || id === 'Meditiert';
+       if (isFeelGood && !timestamps[id]) {
+         timestamps[id] = Date.now();
          modified = true;
        }
      });
@@ -567,14 +613,11 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
          const tsStr = localStorage.getItem('ty-activity-timestamps');
          const ts = tsStr ? JSON.parse(tsStr) : {};
          let tsMod = false;
-         const syncNow = new Date();
-         const syncHrs = String(syncNow.getHours()).padStart(2, '0');
-         const syncMins = String(syncNow.getMinutes()).padStart(2, '0');
-         const syncTimeStr = `${syncHrs}:${syncMins} Uhr`;
  
          parsed.forEach(id => {
-           if (!ts[id]) {
-             ts[id] = syncTimeStr;
+           const isFeelGood = id.startsWith('Jungbrunnen:') || id === 'alchemist-elixir' || id === 'Tageslicht am Morgen getankt' || id === 'Meditiert';
+           if (isFeelGood && !ts[id]) {
+             ts[id] = Date.now();
              tsMod = true;
            }
          });
@@ -656,11 +699,9 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
        if (!nextChecked.includes(id)) {
          nextChecked.push(id);
        }
-       if (!timestamps[id]) {
-         const now = new Date();
-         const hrs = String(now.getHours()).padStart(2, '0');
-         const mins = String(now.getMinutes()).padStart(2, '0');
-         timestamps[id] = `${hrs}:${mins} Uhr`;
+       const isFeelGood = id.startsWith('Jungbrunnen:') || id === 'alchemist-elixir' || id === 'Tageslicht am Morgen getankt' || id === 'Meditiert';
+       if (isFeelGood && !timestamps[id]) {
+         timestamps[id] = Date.now();
        }
        // Also add to completedRituals if it is a Jungbrunnen activity
        if (typeof id === 'string' && id.startsWith('Jungbrunnen:')) {
@@ -977,6 +1018,8 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
     }
   }, [selectedMetric, bioAge, calendarAge]);
 
+  if (!mounted) return null;
+
   return (
     <div className="entw-page">
       {/* Header */}
@@ -995,16 +1038,22 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         ].map(tab => (
           <button
             key={tab.id}
-            onClick={() => setActiveTab(tab.id as SubTab)}
+            onClick={() => {
+              if (tab.id === 'journey' && selectedPlan === 'Starter') return;
+              setActiveTab(tab.id as SubTab);
+            }}
             className={`entw-tab ${activeTab === tab.id ? 'active' : ''}`}
-            style={tab.id === 'journey' ? { display: 'inline-flex', alignItems: 'center', gap: '6px' } : undefined}
+            style={{
+              ...(tab.id === 'journey' ? { display: 'inline-flex', alignItems: 'center', gap: '6px' } : {}),
+              cursor: (tab.id === 'journey' && selectedPlan === 'Starter') ? 'default' : 'pointer'
+            }}
           >
             {tab.label}
-            {tab.id === 'journey' && (
+            {tab.id === 'journey' && selectedPlan === 'Starter' && (
               <span className="premium-badge" style={{
                 marginLeft: '4px',
                 fontSize: '0.65rem',
-                background: 'linear-gradient(135deg, #006ea7 0%, #3b82f6 100%)',
+                background: 'linear-gradient(135deg, #10b981 0%, #059669 100%)',
                 color: 'white',
                 padding: '2px 6px',
                 borderRadius: '6px',
@@ -1799,24 +1848,55 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                     { id: 'Meditiert', name: 'Tiefen-Resilienz Meditation', detail: '15 Min. Atem & Geist', diamonds: 3, icon: '🧘' }
                   ];
 
-                  const completedFeelGood = feelGoodActivitiesList.filter(act => {
-                    return allCheckedActivities.includes(act.id);
-                  });
-
-                  if (completedFeelGood.length === 0) {
-                    return <div style={{ color: '#94a3b8', fontStyle: 'italic', textAlign: 'center', padding: '1rem' }}>Noch keine Feel Good Aktivitäten absolviert.</div>;
-                  }
-
                    const savedTimestamps = (() => {
                      if (typeof window === 'undefined') return {};
                      const saved = localStorage.getItem('ty-activity-timestamps');
                      return saved ? JSON.parse(saved) : {};
                    })();
 
+                   const completedFeelGood = feelGoodActivitiesList
+                     .filter(act => allCheckedActivities.includes(act.id))
+                     .sort((a, b) => {
+                       const valA = savedTimestamps[a.id];
+                       const valB = savedTimestamps[b.id];
+                       const timeA = valA ? (typeof valA === 'number' ? valA : (isNaN(Number(valA)) ? 0 : Number(valA))) : 0;
+                       const timeB = valB ? (typeof valB === 'number' ? valB : (isNaN(Number(valB)) ? 0 : Number(valB))) : 0;
+                       return timeB - timeA;
+                     });
+
+                   if (completedFeelGood.length === 0) {
+                     return <div style={{ color: '#94a3b8', fontStyle: 'italic', textAlign: 'center', padding: '1rem' }}>Noch keine Feel Good Aktivitäten absolviert.</div>;
+                   }
+
                    return (
                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                        {completedFeelGood.map((act, index) => {
-                         const completionTime = savedTimestamps[act.id] || logTimeStr;
+                          const rawTime = savedTimestamps[act.id];
+                          let timeStr = logTimeStr;
+                          let daysAgo = 0;
+                          let actDate = new Date();
+                          
+                          if (rawTime) {
+                            if (typeof rawTime === 'string' && rawTime.includes('Uhr')) {
+                              timeStr = rawTime;
+                              daysAgo = 0;
+                            } else {
+                              const ts = typeof rawTime === 'number' ? rawTime : (!isNaN(Number(rawTime)) ? Number(rawTime) : Date.now());
+                              actDate = new Date(ts);
+                              const hrs = String(actDate.getHours()).padStart(2, '0');
+                              const mins = String(actDate.getMinutes()).padStart(2, '0');
+                              timeStr = `${hrs}:${mins} Uhr`;
+
+                              const nowDate = new Date();
+                              const d1 = new Date(actDate.getFullYear(), actDate.getMonth(), actDate.getDate());
+                              const d2 = new Date(nowDate.getFullYear(), nowDate.getMonth(), nowDate.getDate());
+                              const diffTime = Math.abs(d2.getTime() - d1.getTime());
+                              daysAgo = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+                            }
+                          }
+                          
+                          const relativeDay = daysAgo === 0 ? 'Heute' : (daysAgo === 1 ? 'Gestern' : actDate.toLocaleDateString('de-DE', { weekday: 'short', day: 'numeric', month: 'long' }).replace('.', ''));
+
                          return (
                            <div key={index} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1rem 1.25rem', transition: 'all 0.2s ease', flexWrap: 'wrap', gap: '1rem' }} className="fg-activity-item">
                              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -1829,7 +1909,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                                </div>
                              </div>
                              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
-                               <span style={{ fontSize: 'calc(0.85rem + 2pt)', color: '#64748b', fontWeight: 500 }}>Eingetragen: Heute, {completionTime}</span>
+                               <span style={{ fontSize: 'calc(0.85rem + 2pt)', color: '#64748b', fontWeight: 500 }}>Eingetragen: {relativeDay === 'Heute' ? `Heute, ${timeStr}` : `${relativeDay}, ${timeStr}`}</span>
                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', background: '#f0f9ff', border: '1px solid #bae6fd', padding: '0.6rem 1.2rem', borderRadius: '14px', color: '#0369a1', fontWeight: 800, fontSize: '1.45rem', lineHeight: 1 }}>
                                  <span style={{ fontSize: '1.5rem', display: 'inline-flex', alignItems: 'center' }}>💎</span>
                                  <span style={{ display: 'inline-flex', alignItems: 'center' }}>+{act.diamonds}</span>

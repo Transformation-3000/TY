@@ -179,6 +179,10 @@ function CheckoutContent() {
 
         // Set local storage flags just like the login page
         localStorage.setItem('ty_is_member', 'true');
+        localStorage.setItem('ty_selected_plan', selectedPlan.id);
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new Event('ty_selected_plan_changed'));
+        }
         localStorage.setItem('ty_saved_password', 'Longevity3000');
         localStorage.setItem('ty_last_active', Date.now().toString());
         sessionStorage.setItem('ty_first_name', formData.firstName || 'Monique');
