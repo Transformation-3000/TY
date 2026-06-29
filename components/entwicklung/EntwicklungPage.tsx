@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import LongevityJourney7LevelsPage from '@/components/longevity/LongevityJourney7LevelsPage';
 import OnboardingHebelPage from './OnboardingHebelPage';
 
-type SubTab = 'hebel' | 'trends' | 'goals' | 'reports' | 'journey';
+type SubTab = 'hebel' | 'bioage' | 'trend' | 'goals' | 'reports' | 'journey';
 type TrendPeriod = '3m' | '6m' | '12m';
 
 interface ActivityItem {
@@ -256,7 +256,7 @@ interface EntwicklungPageProps {
 }
 
 export default function EntwicklungPage({ onStartSimulation, onNavigate }: EntwicklungPageProps) {
-  const [activeTab, setActiveTab] = useState<SubTab>('goals');
+  const [activeTab, setActiveTab] = useState<SubTab>('bioage');
   const [selectedMetric, setSelectedMetric] = useState<'chronological' | 'difference' | 'dna'>('difference');
   const [trendPeriod, setTrendPeriod] = useState<TrendPeriod>('12m');
   const [showBioAgeDetails, setShowBioAgeDetails] = useState(false);
@@ -1030,9 +1030,10 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
       {/* Main Tabs */}
       <div className="entw-tabs">
         {[
+          { id: 'bioage', label: 'BioAge' },
           { id: 'goals', label: 'Woche' },
           { id: 'reports', label: 'Monat' },
-          { id: 'trends', label: 'Trends' },
+          { id: 'trend', label: 'Trend' },
           { id: 'journey', label: 'Journey' },
           { id: 'hebel', label: 'Advanced' },
         ].map(tab => (
@@ -1075,8 +1076,8 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         <OnboardingHebelPage onNavigate={onNavigate || (() => {})} />
       )}
 
-      {/* ── TRENDS TAB ── */}
-      {activeTab === 'trends' && (
+      {/* ── BIOAGE TAB ── */}
+      {activeTab === 'bioage' && (
         <div className="trends-view">
           {/* Aktuelles True Years BioAge Headline */}
           <div className="bioage-headline-row">
@@ -1340,12 +1341,17 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
               </div>
             );
           })()}
+        </div>
+      )}
 
+      {/* ── TREND TAB ── */}
+      {activeTab === 'trend' && (
+        <div className="trends-view">
           {/* Headline & Period Selector Row */}
           <div className="trends-opt-header">
             <div className="trends-title-group">
               <span className="blue-bar"></span>
-              <h2>Trends Optimierungsfelder</h2>
+              <h2>Deine Lifestyle Optimierungsfelder</h2>
             </div>
             
             <div className="period-selector">
@@ -1471,7 +1477,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           <div className="goals-section-header">
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span className="blue-bar"></span>
-              <h2>Deine Wochenziele: <span style={{ fontWeight: 'normal' }}>{currentWeekRange}</span></h2>
+              <h2>Deine Wochenziele: <span style={{ fontWeight: 'normal' }}>Woche {currentWeekRange}</span></h2>
             </div>
             <button className="adjust-goals-btn">
               <i className="bi bi-sliders" style={{ marginRight: '6px', color: 'white' }}></i>
@@ -1479,251 +1485,200 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
             </button>
           </div>
 
+          {/* Emotional Banner Image */}
+          <div className="goals-banner-wrap">
+            <img 
+              src="/images/wochenziele_banner.png" 
+              alt="Wochenziele Motivation" 
+              className="goals-banner-img"
+            />
+          </div>
+
           <div className="wochenziele-grid">
-            {/* Card 1 */}
-            <div className="wochenziel-card" style={{ paddingBottom: '1.25rem' }}>
-              <div className="wzc-top">
-                <div className="wzc-left-content">
-                  <div className="wzc-badge-container" style={{ marginBottom: '0.4rem' }}><span className="wzc-badge" style={{ background: '#e0f2fe', color: '#0369a1', border: '1.5px solid #bae6fd', fontSize: 'calc(0.68rem + 2pt)', fontWeight: 850, padding: '3px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'inline-block' }}>Wochenziel 1</span></div>
-                  <h3>Schlafrhythmus stabilisieren</h3>
-                  <p>Stelle 4x in Folge regelmäßige Einschlafzeiten sicher (+/- 30 Min.), um maximale Regeneration und vollen Fokus am Tag zu erreichen.</p>
+            {/* Card 1 mit integrierten Actions */}
+            <div className="wochenziel-card" style={{ paddingBottom: '1.5rem', display: 'flex', flexDirection: 'column', height: '100%', margin: 0 }}>
+              <div style={{ flex: 1 }}>
+                <div className="wzc-top">
+                  <div className="wzc-left-content">
+                    <div className="wzc-badge-container" style={{ marginBottom: '0.4rem' }}><span className="wzc-badge" style={{ background: '#e0f2fe', color: '#0369a1', border: '1.5px solid #bae6fd', fontSize: 'calc(0.68rem + 2pt)', fontWeight: 850, padding: '3px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'inline-block' }}>Wochenziel 1</span></div>
+                    <h3>Schlafrhythmus stabilisieren</h3>
+                    <p>Stelle 4x in Folge regelmäßige Einschlafzeiten sicher (+/- 30 Min.), um maximale Regeneration und vollen Fokus am Tag zu erreichen.</p>
+                  </div>
+                  <div className="wzc-date-badge">
+                    <i className="bi bi-calendar3"></i>
+                    <span>{todayStr}<br/><small>{goalDaysLeftLabel}</small></span>
+                  </div>
                 </div>
-                <div className="wzc-date-badge">
-                  <i className="bi bi-calendar3"></i>
-                  <span>{todayStr}<br/><small>{goalDaysLeftLabel}</small></span>
+                <div className="wzc-progress-box" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                  <div className="wzc-circles">
+                    {[...Array(4)].map((_, i) => (
+                      <div key={i} className={`wzc-circle ${i < wochenziel1Progress ? 'done' : 'empty'}`}>
+                        {i < wochenziel1Progress && <i className="bi bi-check" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>}
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: 'auto', marginRight: '0.5rem' }}>
+                    <button 
+                      onClick={() => setWochenziel1Progress(prev => Math.min(4, prev + 1))}
+                      style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#0284c7', color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', cursor: 'pointer', boxShadow: '0 2px 5px rgba(2, 132, 199, 0.25)', transition: 'all 0.2s', padding: 0 }}
+                    >
+                      <i className="bi bi-plus-lg" style={{ color: '#fff', fontSize: '1.15rem', fontWeight: 800 }}></i>
+                    </button>
+                    <button 
+                      onClick={() => setWochenziel1Progress(prev => Math.max(0, prev - 1))}
+                      style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#fff', color: '#ef4444', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 5px rgba(239, 68, 68, 0.15)', transition: 'all 0.2s', padding: 0 }}
+                    >
+                      <i className="bi bi-trash" style={{ color: '#ef4444', fontSize: '1.1rem' }}></i>
+                    </button>
+                  </div>
+                  <div className="wzc-progress-text">
+                    <strong>{Math.round((wochenziel1Progress / 4) * 100)}%</strong>
+                    <span>{wochenziel1Progress}/4 Tagen</span>
+                  </div>
                 </div>
               </div>
-              <div className="wzc-progress-box" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
-                <div className="wzc-circles">
-                  {[...Array(4)].map((_, i) => (
-                    <div key={i} className={`wzc-circle ${i < wochenziel1Progress ? 'done' : 'empty'}`}>
-                      {i < wochenziel1Progress && <i className="bi bi-check" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>}
-                    </div>
-                  ))}
-                </div>
-                
-                {/* Interactive Controls to the left of progress text */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: 'auto', marginRight: '0.5rem' }}>
-                  <button 
-                    onClick={() => setWochenziel1Progress(prev => Math.min(4, prev + 1))}
-                    style={{
-                      width: '38px',
-                      height: '38px',
-                      borderRadius: '50%',
-                      background: '#0284c7',
-                      color: '#fff',
-                      border: 'none',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '1.4rem',
-                      cursor: 'pointer',
-                      boxShadow: '0 2px 5px rgba(2, 132, 199, 0.25)',
-                      transition: 'all 0.2s',
-                      padding: 0
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = '#0369a1'; e.currentTarget.style.transform = 'scale(1.1)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = '#0284c7'; e.currentTarget.style.transform = 'none'; }}
-                    title="Ereignis hinzufügen"
-                  >
-                    <i className="bi bi-plus-lg" style={{ color: '#fff', fontSize: '1.15rem', fontWeight: 800, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>
-                  </button>
-                  
-                  <button 
-                    onClick={() => setWochenziel1Progress(prev => Math.max(0, prev - 1))}
-                    style={{
-                      width: '38px',
-                      height: '38px',
-                      borderRadius: '50%',
-                      background: '#fff',
-                      color: '#ef4444',
-                      border: '2px solid #ef4444',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      boxShadow: '0 2px 5px rgba(239, 68, 68, 0.15)',
-                      transition: 'all 0.2s',
-                      padding: 0
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.transform = 'scale(1.1)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.transform = 'none'; }}
-                    title="Ereignis löschen"
-                  >
-                    <i className="bi bi-trash" style={{ color: '#ef4444', fontSize: '1.1rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>
-                  </button>
-                </div>
 
-                <div className="wzc-progress-text" style={{ flexShrink: 0 }}>
-                  <strong>{Math.round((wochenziel1Progress / 4) * 100)}%</strong>
-                  <span>{wochenziel1Progress}/4 Tagen</span>
+              {/* Integrierte Next Best Actions */}
+              <div style={{ background: '#f8fafc', border: '1.5px solid #e2e8f0', borderRadius: '20px', padding: '1.25rem', marginTop: 'auto' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.85rem' }}>
+                  <h4 style={{ fontSize: '0.95rem', fontWeight: 850, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0, paddingLeft: '4px' }}>
+                    Next Best Actions
+                  </h4>
+                  <span className="nba-pillar" style={{ cursor: 'default', background: '#e2e8f0', color: '#475569', border: '1px solid #cbd5e1' }}>Wirkungsgrad</span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                  <div className="nba-card border-grey" style={{ margin: 0 }}>
+                    <div className="nba-card-left">
+                      <h4 className="nba-title">1. Koffein-Sperrzeit ab 14 Uhr</h4>
+                      <p className="nba-desc">Verbessert die Schlafqualität und hilft, die Einschlafzeit am Abend stabil zu halten.</p>
+                    </div>
+                    <div className="nba-card-right" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '3px' }} title="Hoher Impact">
+                      <svg width="28" height="28" viewBox="0 0 20 20" style={{ display: 'block' }}>
+                        <circle cx="10" cy="10" r="8" fill="#94a3b8" />
+                      </svg>
+                      <span style={{ fontSize: '0.74rem', color: '#94a3b8', fontWeight: 700, textTransform: 'lowercase' }}>hoch</span>
+                    </div>
+                  </div>
+                  <div className="nba-card border-grey" style={{ margin: 0 }}>
+                    <div className="nba-card-left">
+                      <h4 className="nba-title">2. 15 Min. Morgenlicht</h4>
+                      <p className="nba-desc">Triggert die Serotonin-Produktion für besseren Schlaf am Abend.</p>
+                    </div>
+                    <div className="nba-card-right" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '3px' }} title="Mittlerer Impact">
+                      <svg width="28" height="28" viewBox="0 0 20 20" style={{ display: 'block' }}>
+                        <circle cx="10" cy="10" r="8" fill="none" stroke="#e2e8f0" strokeWidth="2.5" />
+                        <path d="M 10 2 A 8 8 0 0 1 10 18 L 10 10 Z" fill="#94a3b8" />
+                      </svg>
+                      <span style={{ fontSize: '0.74rem', color: '#94a3b8', fontWeight: 700, textTransform: 'lowercase' }}>mittel</span>
+                    </div>
+                  </div>
+                  <div className="nba-card border-grey" style={{ margin: 0 }}>
+                    <div className="nba-card-left">
+                      <h4 className="nba-title">3. Kein Blaulicht ab 21 Uhr</h4>
+                      <p className="nba-desc">Verhindert die Blockade der Melatonin-Ausschüttung durch Bildschirme.</p>
+                    </div>
+                    <div className="nba-card-right" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '3px' }} title="Niedriger Impact">
+                      <svg width="28" height="28" viewBox="0 0 20 20" style={{ display: 'block' }}>
+                        <circle cx="10" cy="10" r="8" fill="none" stroke="#e2e8f0" strokeWidth="2.5" />
+                        <path d="M 10 2 A 8 8 0 0 1 18 10 L 10 10 Z" fill="#94a3b8" />
+                      </svg>
+                      <span style={{ fontSize: '0.74rem', color: '#94a3b8', fontWeight: 700, textTransform: 'lowercase' }}>niedrig</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Card 2 */}
-            <div className="wochenziel-card" style={{ paddingBottom: '1.25rem' }}>
-              <div className="wzc-top">
-                <div className="wzc-left-content">
-                  <div className="wzc-badge-container" style={{ marginBottom: '0.4rem' }}><span className="wzc-badge" style={{ background: '#dcfce7', color: '#15803d', border: '1.5px solid #bbf7d0', fontSize: 'calc(0.68rem + 2pt)', fontWeight: 850, padding: '3px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'inline-block' }}>Wochenziel 2</span></div>
-                  <h3>Kraftaufbau</h3>
-                  <p>Absolviere diese Woche 3 Trainingseinheiten, um deinen Bewegungsapparat und deine Haltung nachhaltig zu stärken.</p>
+            <div className="wochenziel-card" style={{ paddingBottom: '1.5rem', display: 'flex', flexDirection: 'column', height: '100%', margin: 0 }}>
+              <div style={{ flex: 1 }}>
+                <div className="wzc-top">
+                  <div className="wzc-left-content">
+                    <div className="wzc-badge-container" style={{ marginBottom: '0.4rem' }}><span className="wzc-badge" style={{ background: '#dcfce7', color: '#15803d', border: '1.5px solid #bbf7d0', fontSize: 'calc(0.68rem + 2pt)', fontWeight: 850, padding: '3px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em', display: 'inline-block' }}>Wochenziel 2</span></div>
+                    <h3>Kraftaufbau</h3>
+                    <p>Absolviere diese Woche 3 Trainingseinheiten, um deinen Bewegungsapparat und deine Haltung nachhaltig zu stärken.</p>
+                  </div>
+                  <div className="wzc-date-badge">
+                    <i className="bi bi-calendar3"></i>
+                    <span>{todayStr}<br/><small>{goalDaysLeftLabel}</small></span>
+                  </div>
                 </div>
-                <div className="wzc-date-badge">
-                  <i className="bi bi-calendar3"></i>
-                  <span>{todayStr}<br/><small>{goalDaysLeftLabel}</small></span>
+                <div className="wzc-progress-box" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem', marginBottom: '1.5rem' }}>
+                  <div className="wzc-circles">
+                    {[...Array(3)].map((_, i) => (
+                      <div key={i} className={`wzc-circle ${i < wochenziel2Progress ? 'done' : 'empty'}`}>
+                        {i < wochenziel2Progress && <i className="bi bi-check" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>}
+                      </div>
+                    ))}
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: 'auto', marginRight: '0.5rem' }}>
+                    <button 
+                      onClick={() => setWochenziel2Progress(prev => Math.min(3, prev + 1))}
+                      style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#0284c7', color: '#fff', border: 'none', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '1.4rem', cursor: 'pointer', boxShadow: '0 2px 5px rgba(2, 132, 199, 0.25)', transition: 'all 0.2s', padding: 0 }}
+                    >
+                      <i className="bi bi-plus-lg" style={{ color: '#fff', fontSize: '1.15rem', fontWeight: 800 }}></i>
+                    </button>
+                    <button 
+                      onClick={() => setWochenziel2Progress(prev => Math.max(0, prev - 1))}
+                      style={{ width: '38px', height: '38px', borderRadius: '50%', background: '#fff', color: '#ef4444', border: '2px solid #ef4444', display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', boxShadow: '0 2px 5px rgba(239, 68, 68, 0.15)', transition: 'all 0.2s', padding: 0 }}
+                    >
+                      <i className="bi bi-trash" style={{ color: '#ef4444', fontSize: '1.1rem' }}></i>
+                    </button>
+                  </div>
+                  <div className="wzc-progress-text">
+                    <strong>{Math.round((wochenziel2Progress / 3) * 100)}%</strong>
+                    <span>{wochenziel2Progress}/3 Einheiten</span>
+                  </div>
                 </div>
               </div>
-              <div className="wzc-progress-box" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.5rem' }}>
-                <div className="wzc-circles">
-                  {[...Array(3)].map((_, i) => (
-                    <div key={i} className={`wzc-circle ${i < wochenziel2Progress ? 'done' : 'empty'}`}>
-                      {i < wochenziel2Progress && <i className="bi bi-check" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>}
+
+              {/* Integrierte Next Best Actions */}
+              <div style={{ background: '#f8fafc', border: '1.5px solid #e2e8f0', borderRadius: '20px', padding: '1.25rem', marginTop: 'auto' }}>
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '0.85rem' }}>
+                  <h4 style={{ fontSize: '0.95rem', fontWeight: 855, color: '#475569', textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0, paddingLeft: '4px' }}>
+                    Next Best Actions
+                  </h4>
+                  <span className="nba-pillar" style={{ cursor: 'default', background: '#e2e8f0', color: '#475569', border: '1px solid #cbd5e1' }}>Wirkungsgrad</span>
+                </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                  <div className="nba-card border-grey" style={{ margin: 0 }}>
+                    <div className="nba-card-left">
+                      <h4 className="nba-title">1. Protein-Intake optimieren</h4>
+                      <p className="nba-desc">Strebe täglich 1,5–2 g Protein je kg Körpergewicht an, um den Muskelaufbau optimal zu unterstützen.</p>
                     </div>
-                  ))}
-                </div>
-                
-                {/* Interactive Controls to the left of progress text */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginLeft: 'auto', marginRight: '0.5rem' }}>
-                  <button 
-                    onClick={() => setWochenziel2Progress(prev => Math.min(3, prev + 1))}
-                    style={{
-                      width: '38px',
-                      height: '38px',
-                      borderRadius: '50%',
-                      background: '#0284c7',
-                      color: '#fff',
-                      border: 'none',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      fontSize: '1.4rem',
-                      cursor: 'pointer',
-                      boxShadow: '0 2px 5px rgba(2, 132, 199, 0.25)',
-                      transition: 'all 0.2s',
-                      padding: 0
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = '#0369a1'; e.currentTarget.style.transform = 'scale(1.1)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = '#0284c7'; e.currentTarget.style.transform = 'none'; }}
-                    title="Ereignis hinzufügen"
-                  >
-                    <i className="bi bi-plus-lg" style={{ color: '#fff', fontSize: '1.15rem', fontWeight: 800, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>
-                  </button>
-                  
-                  <button 
-                    onClick={() => setWochenziel2Progress(prev => Math.max(0, prev - 1))}
-                    style={{
-                      width: '38px',
-                      height: '38px',
-                      borderRadius: '50%',
-                      background: '#fff',
-                      color: '#ef4444',
-                      border: '2px solid #ef4444',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      boxShadow: '0 2px 5px rgba(239, 68, 68, 0.15)',
-                      transition: 'all 0.2s',
-                      padding: 0
-                    }}
-                    onMouseEnter={(e) => { e.currentTarget.style.background = '#fef2f2'; e.currentTarget.style.transform = 'scale(1.1)'; }}
-                    onMouseLeave={(e) => { e.currentTarget.style.background = '#fff'; e.currentTarget.style.transform = 'none'; }}
-                    title="Ereignis löschen"
-                  >
-                    <i className="bi bi-trash" style={{ color: '#ef4444', fontSize: '1.1rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>
-                  </button>
-                </div>
-
-                <div className="wzc-progress-text" style={{ flexShrink: 0 }}>
-                  <strong>{Math.round((wochenziel2Progress / 3) * 100)}%</strong>
-                  <span>{wochenziel2Progress}/3 Einheiten</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className="goals-section-header" style={{ marginTop: '2.5rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <span className="blue-bar"></span>
-              <h2>Deine Next Best Actions bei Wochenzielen</h2>
-            </div>
-          </div>
-
-          <div className="nba-grid">
-            {/* Linke Spalte (passend zum linken Wochenziel: Schlafrhythmus) */}
-            <div className="nba-column">
-              {/* Action 1 */}
-              <div className="nba-card border-green">
-                <div className="nba-card-left">
-                  <h4 className="nba-title"><span className="dot dot-green"></span>Koffein-Sperrzeit ab 14 Uhr</h4>
-                  <p className="nba-desc">Verbessert die Schlafqualität und hilft, die Einschlafzeit am Abend stabil zu halten.</p>
-                </div>
-                <div className="nba-card-right">
-                  <span className="nba-priority">Hoch</span>
-                  <span className="nba-pillar pillar-schlaf">Schlafrhythmus</span>
-                </div>
-              </div>
-
-              {/* Action 2 */}
-              <div className="nba-card border-orange">
-                <div className="nba-card-left">
-                  <h4 className="nba-title"><span className="dot dot-orange"></span>15 Min. Morgenlicht</h4>
-                  <p className="nba-desc">Triggert die Serotonin-Produktion für besseren Schlaf am Abend.</p>
-                </div>
-                <div className="nba-card-right">
-                  <span className="nba-priority">Mittel</span>
-                  <span className="nba-pillar pillar-schlaf">Schlafrhythmus</span>
-                </div>
-              </div>
-
-              {/* Action 3 */}
-              <div className="nba-card border-blue">
-                <div className="nba-card-left">
-                  <h4 className="nba-title"><span className="dot dot-blue"></span>Kein Blaulicht ab 21 Uhr</h4>
-                  <p className="nba-desc">Verhindert die Blockade der Melatonin-Ausschüttung durch Bildschirme.</p>
-                </div>
-                <div className="nba-card-right">
-                  <span className="nba-priority">Niedrig</span>
-                  <span className="nba-pillar pillar-schlaf">Schlafrhythmus</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Rechte Spalte (passend zum rechten Wochenziel: Kraftaufbau) */}
-            <div className="nba-column">
-              {/* Action 3 */}
-              <div className="nba-card border-green">
-                <div className="nba-card-left">
-                  <h4 className="nba-title"><span className="dot dot-green"></span>Protein-Intake optimieren</h4>
-                  <p className="nba-desc">Strebe täglich 1,5–2 g Protein je kg Körpergewicht an, um den Muskelaufbau optimal zu unterstützen.</p>
-                </div>
-                <div className="nba-card-right">
-                  <span className="nba-priority">Hoch</span>
-                  <span className="nba-pillar pillar-kraft">Kraftaufbau</span>
-                </div>
-              </div>
-
-              {/* Action 4 */}
-              <div className="nba-card border-orange">
-                <div className="nba-card-left">
-                  <h4 className="nba-title"><span className="dot dot-orange"></span>15 Kniebeugen (Squats)</h4>
-                  <p className="nba-desc">Stärkt die Gesäß- und Oberschenkelmuskulatur für eine stabile Haltung.</p>
-                </div>
-                <div className="nba-card-right">
-                  <span className="nba-priority">Mittel</span>
-                  <span className="nba-pillar pillar-kraft">Kraftaufbau</span>
-                </div>
-              </div>
-
-              {/* Action 5 */}
-              <div className="nba-card border-blue">
-                <div className="nba-card-left">
-                  <h4 className="nba-title"><span className="dot dot-blue"></span>Griffkraft-Übung</h4>
-                  <p className="nba-desc">Fördert die funktionelle Kraft und ist ein starker Langlebigkeits-Indikator.</p>
-                </div>
-                <div className="nba-card-right">
-                  <span className="nba-priority">Niedrig</span>
-                  <span className="nba-pillar pillar-kraft">Kraftaufbau</span>
+                    <div className="nba-card-right" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '3px' }} title="Hoher Impact">
+                      <svg width="28" height="28" viewBox="0 0 20 20" style={{ display: 'block' }}>
+                        <circle cx="10" cy="10" r="8" fill="#94a3b8" />
+                      </svg>
+                      <span style={{ fontSize: '0.74rem', color: '#94a3b8', fontWeight: 700, textTransform: 'lowercase' }}>hoch</span>
+                    </div>
+                  </div>
+                  <div className="nba-card border-grey" style={{ margin: 0 }}>
+                    <div className="nba-card-left">
+                      <h4 className="nba-title">2. 15 Kniebeugen (Squats)</h4>
+                      <p className="nba-desc">Stärkt die Gesäß- und Oberschenkelmuskulatur für eine stabile Haltung.</p>
+                    </div>
+                    <div className="nba-card-right" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '3px' }} title="Mittlerer Impact">
+                      <svg width="28" height="28" viewBox="0 0 20 20" style={{ display: 'block' }}>
+                        <circle cx="10" cy="10" r="8" fill="none" stroke="#e2e8f0" strokeWidth="2.5" />
+                        <path d="M 10 2 A 8 8 0 0 1 10 18 L 10 10 Z" fill="#94a3b8" />
+                      </svg>
+                      <span style={{ fontSize: '0.74rem', color: '#94a3b8', fontWeight: 700, textTransform: 'lowercase' }}>mittel</span>
+                    </div>
+                  </div>
+                  <div className="nba-card border-grey" style={{ margin: 0 }}>
+                    <div className="nba-card-left">
+                      <h4 className="nba-title">3. Griffkraft-Übung</h4>
+                      <p className="nba-desc">Fördert die funktionelle Kraft und ist ein starker Langlebigkeits-Indikator.</p>
+                    </div>
+                    <div className="nba-card-right" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '3px' }} title="Niedriger Impact">
+                      <svg width="28" height="28" viewBox="0 0 20 20" style={{ display: 'block' }}>
+                        <circle cx="10" cy="10" r="8" fill="none" stroke="#e2e8f0" strokeWidth="2.5" />
+                        <path d="M 10 2 A 8 8 0 0 1 18 10 L 10 10 Z" fill="#94a3b8" />
+                      </svg>
+                      <span style={{ fontSize: '0.74rem', color: '#94a3b8', fontWeight: 700, textTransform: 'lowercase' }}>niedrig</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1734,8 +1689,17 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
             <div className="goals-section-header">
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <span className="blue-bar"></span>
-                <h2>Deine erfassten Wochenaktivitäten: <span style={{ fontWeight: 'normal' }}>{currentWeekRange}</span></h2>
+                <h2>Deine Aktivitäten: <span style={{ fontWeight: 'normal' }}>Woche {currentWeekRange}</span></h2>
               </div>
+            </div>
+
+            {/* Activities Banner Image */}
+            <div className="goals-banner-wrap">
+              <img 
+                src="/images/wochenaktivitaeten_banner.png" 
+                alt="Wochenaktivitäten Motivation" 
+                className="goals-banner-img"
+              />
             </div>
 
             <div className="act-search-row">
@@ -1743,7 +1707,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                 <i className="bi bi-search" style={{ color: '#94a3b8', marginRight: '8px' }}></i>
                 <input
                   type="text"
-                  placeholder="Aktivität suchen (z.B. Yoga, Spaziergang, Fokus...)"
+                  placeholder="Aktivität suchen (z.B. Fahrrad, Spazieren, Atemübung, Zuckerarm gegessen ... )"
                   value={activitySearchQuery}
                   onChange={e => setActivitySearchQuery(e.target.value)}
                   className="act-search-input"
@@ -1772,7 +1736,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                         <i className={`bi ${config.icon}`} style={{ color: config.color }}></i>
                       </div>
                       <span className="acc-status" style={{ color: config.color }}>
-                        {doneCount}/{totalCount} Erledigt
+                        {doneCount}/{totalCount} Erfasst
                       </span>
                     </div>
                     
@@ -1797,11 +1761,11 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                               <div className="acc-checkbox" style={isChecked ? { background: config.color, borderColor: config.color, display: 'flex', alignItems: 'center', justifyContent: 'center' } : {}}>
                                 {isChecked && (
                                   (activityCounts[act.id] || 1) > 1 ? (
-                                    <span style={{ color: 'white', fontSize: '0.62rem', fontWeight: 900, lineHeight: 1 }}>
+                                    <span style={{ color: 'white', fontSize: '0.74rem', fontWeight: 900, lineHeight: 1 }}>
                                       {activityCounts[act.id]}x
                                     </span>
                                   ) : (
-                                    <i className="bi bi-check-lg" style={{ color: 'white', fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>
+                                    <i className="bi bi-check-lg" style={{ color: 'white', fontSize: '0.92rem', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1 }}></i>
                                   )
                                 )}
                               </div>
@@ -1829,7 +1793,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
               <div className="goals-section-header" style={{ marginBottom: '1.5rem' }}>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <span className="blue-bar" style={{ background: '#38bdf8' }}></span>
-                  <h2>Deine Feel-Good-Aktivitäten: <span style={{ fontWeight: 'normal' }}>{currentWeekRange}</span></h2>
+                  <h2>Deine Feel-Good-Aktivitäten: <span style={{ fontWeight: 'normal' }}>Woche {currentWeekRange}</span></h2>
                 </div>
               </div>
 
@@ -1904,7 +1868,13 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                                  {act.icon}
                                </div>
                                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
-                                 <strong style={{ fontSize: '1.1rem', color: '#1e293b', fontWeight: 700 }}>{act.name}</strong>
+                                 <span style={{ fontSize: '1.1rem', color: '#1e293b' }}>
+                                   {act.id.startsWith('Jungbrunnen:') ? (
+                                     <>Jungbrunnen: <strong style={{ fontWeight: 700 }}>{act.name}</strong></>
+                                   ) : (
+                                     <strong style={{ fontWeight: 700 }}>{act.name}</strong>
+                                   )}
+                                 </span>
                                  <span style={{ fontSize: 'calc(0.85rem + 2pt)', color: '#64748b', fontWeight: 500 }}>{act.detail}</span>
                                </div>
                              </div>
@@ -2360,14 +2330,26 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         .entw-title { font-size: 2.4rem; font-weight: 850; letter-spacing: -0.04em; color: #0f172a; margin: 0; }
 
         /* TABS */
-        .entw-tabs { display: flex; gap: 0.75rem; margin-bottom: 2.5rem; }
+        .entw-tabs { display: flex; gap: 0.35rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
         .entw-tab { 
-          padding: 0.8rem 1.6rem; border-radius: 14px; border: 1.5px solid rgba(68,152,202,0.1);
-          background: #f8fafc; color: #64748b; font-size: 1rem; font-weight: 700;
-          cursor: pointer; transition: all 0.2s;
+          display: flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.1rem;
+          border-radius: 12px; border: 1.5px solid rgba(68,152,202,0.12);
+          background: rgba(255,255,255,0.8); color: #64748b;
+          font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.2s; position: relative;
         }
-        .entw-tab:hover { background: #fff; border-color: #4498ca; color: #4498ca; }
-        .entw-tab.active { background: #4498ca; color: white; border-color: #4498ca; box-shadow: 0 4px 15px rgba(68,152,202,0.3); }
+        .entw-tab:hover:not(.active) { border-color: rgba(68,152,202,0.3); color: #4498ca; }
+        .entw-tab.active { 
+          background: linear-gradient(135deg, #4498ca, #2c6a8c);
+          color: white; border-color: transparent;
+          box-shadow: 0 4px 12px rgba(68,152,202,0.25);
+        }
+
+        .woche-section-divider {
+          height: 1.5px;
+          background: linear-gradient(90deg, transparent, rgba(68,152,202,0.2) 15%, rgba(68,152,202,0.2) 85%, transparent);
+          margin: 4rem 0 3rem 0;
+          width: 100%;
+        }
 
         .bioage-headline-row { display: flex; align-items: center; margin-bottom: 1.5rem; justify-content: space-between; }
         .blue-bar { display: inline-block; width: 4px; height: 22px; background: #4498ca; margin-right: 12px; border-radius: 4px; }
@@ -2541,7 +2523,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         }
         .gauge-tooltip-text {
           visibility: hidden;
-          width: 220px;
+          width: 320px;
           background-color: #1e293b;
           color: #fff;
           text-align: left;
@@ -2577,7 +2559,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-top: 3.5rem;
+          margin-top: 0.5rem;
           margin-bottom: 1.5rem;
         }
 
@@ -2816,8 +2798,8 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           transition: all 0.25s ease;
         }
         .nba-card:hover {
-          border-color: #4498ca !important;
-          box-shadow: 0 8px 20px rgba(68,152,202,0.08) !important;
+          border-color: #94a3b8 !important;
+          box-shadow: 0 8px 20px rgba(0,0,0,0.05) !important;
           transform: translateY(-2px);
         }
         .nba-card.border-green {
@@ -2829,11 +2811,14 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         .nba-card.border-blue {
           border-left: 4px solid #3b82f6;
         }
+        .nba-card.border-grey {
+          border-left: 4px solid #cbd5e1;
+        }
         .nba-card-left {
           flex: 1;
         }
         .nba-title {
-          font-size: 1.26rem;
+          font-size: 1.1rem;
           font-weight: 800;
           color: #1e293b;
           margin: 0 0 0.35rem 0;
@@ -2857,7 +2842,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           background: #3b82f6;
         }
         .nba-desc {
-          font-size: 1.06rem;
+          font-size: 0.92rem;
           color: #64748b;
           line-height: 1.4;
           margin: 0;
@@ -2872,12 +2857,12 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           flex-shrink: 0;
         }
         .nba-priority {
-          font-size: 1.01rem;
+          font-size: 0.88rem;
           font-weight: 700;
           color: #4498ca;
         }
         .nba-pillar {
-          font-size: 0.85rem;
+          font-size: 0.75rem;
           font-weight: 700;
           padding: 0.35rem 0.8rem;
           border-radius: 100px;
@@ -3351,6 +3336,21 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           height: 100%;
           object-fit: cover;
           object-position: center 38%;
+        }
+        .goals-banner-wrap {
+          width: 100%;
+          height: 210px;
+          border-radius: 20px;
+          overflow: hidden;
+          margin-bottom: 2rem;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+          border: 1px solid #e2e8f0;
+        }
+        .goals-banner-img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center 50%;
         }
         .rep-detail-nav {
           display: flex;
@@ -3901,7 +3901,7 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
             flex-direction: column;
             align-items: flex-start;
             gap: 1rem;
-            margin-top: 2rem;
+            margin-top: 0.5rem;
           }
           .period-selector {
             width: 100%;
@@ -4137,9 +4137,9 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           border-color: rgba(0,0,0,0.01);
         }
         .acc-checkbox {
-          width: 18px;
-          height: 18px;
-          border-radius: 4px;
+          width: 21px;
+          height: 21px;
+          border-radius: 5px;
           border: 2px solid #cbd5e1;
           display: flex;
           align-items: center;

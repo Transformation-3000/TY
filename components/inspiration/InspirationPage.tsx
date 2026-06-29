@@ -504,7 +504,7 @@ export default function InspirationPage() {
               cursor: (tab.id === 'experten' && selectedPlan === 'Starter') ? 'default' : 'pointer'
             }}
           >
-            <i className={`bi ${tab.icon}`} />
+            {tab.id === 'gespeichert' && <i className={`bi ${tab.icon}`} />}
             <span>{tab.label}</span>
             {tab.id === 'experten' && selectedPlan === 'Starter' && (
               <span className="premium-badge" style={{

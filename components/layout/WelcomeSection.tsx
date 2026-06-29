@@ -531,6 +531,8 @@ export default function WelcomeSection({
           border-bottom: 1px solid #f1f5f9;
           height: 100%;
           position: relative;
+          width: 100%;
+          box-sizing: border-box;
         }
 
         .top-nav-right-section {

@@ -8722,13 +8722,19 @@ i[class*="bi-"] {
     height: 100px;
   }
 
+  .hamburger-btn {
+    display: none !important;
+  }
+
   .top-nav-logo {
-    height: 80px;
+    height: 46px;
   }
 
   .top-navigation-content {
-    padding: 0 0.5rem;
+    padding: 0 1rem;
     gap: 0.5rem;
+    width: 100%;
+    box-sizing: border-box;
   }
 
   .top-nav-right-section {
@@ -8786,7 +8792,7 @@ i[class*="bi-"] {
   }
 
   .top-nav-logo {
-    height: 64px;
+    height: 36px;
   }
 
   .top-nav-profile-image {
