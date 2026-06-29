@@ -89,7 +89,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
             <span className="blue-bar"></span>
             <h2 className="style-selector-title">
-              Wähle einen Informationsstil aus, der am besten zu dir passt: <span className="style-selector-subtitle">Die 10 Tools helfen dir dabei spielerisch zu erkunden, Wirkungsweisen besser zu verstehen und deinen Lifestyle zu optimieren</span>
+              Wähle einen Informationsstil aus, der am besten zu dir passt: <span className="style-selector-subtitle">Die 12 Tools helfen dir dabei spielerisch zu erkunden, Wirkungsweisen besser zu verstehen und deinen Lifestyle zu optimieren</span>
             </h2>
           </div>
           <div style={{ height: '1px', background: '#e2e8f0', width: '100%', marginBottom: '1.5rem' }}></div>
@@ -838,6 +838,172 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                     }}
                   >
                     Simulator<br />starten
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 11: Lebensalterabfluss-Simulator */}
+        <div>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span className="blue-bar"></span>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>11. Lebensalterabfluss-Simulator</h2>
+            </div>
+            {selectedPlan === 'Starter' && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#10b981' }}></i>
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+              </div>
+            )}
+          </div>
+          <div 
+            className="sim-card-wide"
+            onClick={() => {
+              if (selectedPlan === 'Starter') return;
+              alert("Der Lebensalterabfluss-Simulator befindet sich derzeit in der Entwicklung und steht in Kürze zur Verfügung!");
+            }}
+            style={{ cursor: selectedPlan === 'Starter' ? 'default' : 'pointer' }}
+          >
+            <div className="sim-card-wide-img-wrap" style={{ background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <Image 
+                src="/images/lifespan_drain_simulator.jpg" 
+                alt="Lebensalterabfluss-Simulator" 
+                fill
+                style={{ objectFit: 'contain', transform: 'scale(0.8)' }}
+              />
+            </div>
+            <div className="sim-card-wide-content">
+              <div className="sim-card-grid-layout">
+                <div className="sim-card-left-col">
+                  <h3>Schließe das Ventil deines biologischen Alterungsprozesses</h3>
+                  <p>
+                    Simuliere den kontinuierlichen Abfluss deines gesunden Lebensalters durch Alltagsbelastungen und lerne, wie du das Ventil durch gezielte Interventionen schließt.
+                  </p>
+                </div>
+                <div className="sim-card-right-col">
+                  <div className="bac-circle-container-mini">
+                    <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                      <circle 
+                        cx="50" 
+                        cy="50" 
+                        r="41" 
+                        fill="none" 
+                        stroke="url(#simAgeScoreGrad)" 
+                        strokeWidth="7.5" 
+                        strokeDasharray="257.6" 
+                        strokeDashoffset={257.6 * (1 - 90 / 100)} 
+                        strokeLinecap="round" 
+                        filter="url(#simSoftGlow)"
+                        transform="rotate(-90 50 50)"
+                      />
+                    </svg>
+                    <div className="bac-circle-text-box-mini">
+                      <span className="bac-circle-val-mini">90%</span>
+                      <span className="bac-circle-lab-mini">Erhalt</span>
+                    </div>
+                  </div>
+                  <button 
+                    className="sim-card-blue-button" 
+                    style={{ 
+                      background: '#ef4444', 
+                      boxShadow: '0 4px 12px rgba(239, 68, 68, 0.25)',
+                      cursor: selectedPlan === 'Starter' ? 'not-allowed' : 'pointer',
+                      opacity: selectedPlan === 'Starter' ? 0.6 : 1
+                    }} 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (selectedPlan === 'Starter') return;
+                      alert("Der Lebensalterabfluss-Simulator befindet sich derzeit in der Entwicklung und steht in Kürze zur Verfügung!");
+                    }}
+                  >
+                    Simulator<br />starten
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Card 12: Hallmarks-of-Aging-Navigator */}
+        <div>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <span className="blue-bar"></span>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>12. Hallmarks-of-Aging-Navigator</h2>
+            </div>
+            {selectedPlan === 'Starter' && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <i className="bi bi-lock-fill" style={{ fontSize: '1.2rem', color: '#10b981' }}></i>
+                <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#10b981', background: 'rgba(16, 185, 129, 0.1)', padding: '2px 8px', borderRadius: '6px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Premium</span>
+              </div>
+            )}
+          </div>
+          <div 
+            className="sim-card-wide"
+            onClick={() => {
+              if (selectedPlan === 'Starter') return;
+              alert("Der Hallmarks-of-Aging-Navigator befindet sich derzeit in der Entwicklung und steht in Kürze zur Verfügung!");
+            }}
+            style={{ cursor: selectedPlan === 'Starter' ? 'default' : 'pointer' }}
+          >
+            <div className="sim-card-wide-img-wrap">
+              <Image 
+                src="/images/hallmarks_aging_navigator.png" 
+                alt="Hallmarks-of-Aging-Navigator" 
+                fill
+                style={{ objectFit: 'cover' }}
+              />
+            </div>
+            <div className="sim-card-wide-content">
+              <div className="sim-card-grid-layout">
+                <div className="sim-card-left-col">
+                  <h3>Visualisiere und beeinflusse die Kernursachen des Alterns</h3>
+                  <p>
+                    Navigiere durch die 12 molekularen Kennzeichen des Alterns. Verstehe den Zustand deiner Telomere, epigenetische Veränderungen und zelluläre Seneszenz.
+                  </p>
+                </div>
+                <div className="sim-card-right-col">
+                  <div className="bac-circle-container-mini">
+                    <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                      <circle 
+                        cx="50" 
+                        cy="50" 
+                        r="41" 
+                        fill="none" 
+                        stroke="url(#simAgeScoreGrad)" 
+                        strokeWidth="7.5" 
+                        strokeDasharray="257.6" 
+                        strokeDashoffset={257.6 * (1 - 88 / 100)} 
+                        strokeLinecap="round" 
+                        filter="url(#simSoftGlow)"
+                        transform="rotate(-90 50 50)"
+                      />
+                    </svg>
+                    <div className="bac-circle-text-box-mini">
+                      <span className="bac-circle-val-mini">88%</span>
+                      <span className="bac-circle-lab-mini">Stabilität</span>
+                    </div>
+                  </div>
+                  <button 
+                    className="sim-card-blue-button" 
+                    style={{ 
+                      background: '#ef4444', 
+                      boxShadow: '0 4px 12px rgba(239, 68, 68, 0.25)',
+                      cursor: selectedPlan === 'Starter' ? 'not-allowed' : 'pointer',
+                      opacity: selectedPlan === 'Starter' ? 0.6 : 1
+                    }} 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (selectedPlan === 'Starter') return;
+                      alert("Der Hallmarks-of-Aging-Navigator befindet sich derzeit in der Entwicklung und steht in Kürze zur Verfügung!");
+                    }}
+                  >
+                    Navigator<br />starten
                   </button>
                 </div>
               </div>
