@@ -1030,11 +1030,11 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
       {/* Main Tabs */}
       <div className="entw-tabs">
         {[
-          { id: 'goals', label: 'Wochenaktivitäten' },
-          { id: 'reports', label: 'Monatsreports' },
+          { id: 'goals', label: 'Wochen' },
+          { id: 'reports', label: 'Monate' },
           { id: 'trends', label: 'Trends' },
-          { id: 'hebel', label: 'Lifestyle-Hebel' },
           { id: 'journey', label: 'Journey' },
+          { id: 'hebel', label: 'Advanced' },
         ].map(tab => (
           <button
             key={tab.id}
