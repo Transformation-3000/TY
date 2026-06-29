@@ -1030,8 +1030,8 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
       {/* Main Tabs */}
       <div className="entw-tabs">
         {[
-          { id: 'goals', label: 'Wochen' },
-          { id: 'reports', label: 'Monate' },
+          { id: 'goals', label: 'Woche' },
+          { id: 'reports', label: 'Monat' },
           { id: 'trends', label: 'Trends' },
           { id: 'journey', label: 'Journey' },
           { id: 'hebel', label: 'Advanced' },
