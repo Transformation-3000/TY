@@ -867,12 +867,12 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
             }}
             style={{ cursor: selectedPlan === 'Starter' ? 'default' : 'pointer' }}
           >
-            <div className="sim-card-wide-img-wrap" style={{ background: '#ffffff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className="sim-card-wide-img-wrap">
               <Image 
                 src="/images/lifespan_drain_simulator.jpg" 
                 alt="Lebensalterabfluss-Simulator" 
                 fill
-                style={{ objectFit: 'contain', transform: 'scale(0.8)' }}
+                style={{ objectFit: 'cover' }}
               />
             </div>
             <div className="sim-card-wide-content">
@@ -928,12 +928,12 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           </div>
         </div>
 
-        {/* Card 12: Hallmarks-of-Aging-Navigator */}
+        {/* Card 12: Hallmarks-of-Aging */}
         <div>
           <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.25rem', width: '100%' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <span className="blue-bar"></span>
-              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>12. Hallmarks-of-Aging-Navigator</h2>
+              <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>12. Hallmarks-of-Aging</h2>
             </div>
             {selectedPlan === 'Starter' && (
               <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
@@ -946,14 +946,14 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
             className="sim-card-wide"
             onClick={() => {
               if (selectedPlan === 'Starter') return;
-              alert("Der Hallmarks-of-Aging-Navigator befindet sich derzeit in der Entwicklung und steht in Kürze zur Verfügung!");
+              alert("Hallmarks-of-Aging befindet sich derzeit in der Entwicklung und steht in Kürze zur Verfügung!");
             }}
             style={{ cursor: selectedPlan === 'Starter' ? 'default' : 'pointer' }}
           >
             <div className="sim-card-wide-img-wrap">
               <Image 
                 src="/images/hallmarks_aging_navigator.png" 
-                alt="Hallmarks-of-Aging-Navigator" 
+                alt="Hallmarks-of-Aging" 
                 fill
                 style={{ objectFit: 'cover' }}
               />
@@ -1000,10 +1000,10 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                     onClick={(e) => {
                       e.stopPropagation();
                       if (selectedPlan === 'Starter') return;
-                      alert("Der Hallmarks-of-Aging-Navigator befindet sich derzeit in der Entwicklung und steht in Kürze zur Verfügung!");
+                      alert("Hallmarks-of-Aging befindet sich derzeit in der Entwicklung und steht in Kürze zur Verfügung!");
                     }}
                   >
-                    Navigator<br />starten
+                    Simulator<br />starten
                   </button>
                 </div>
               </div>
