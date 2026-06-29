@@ -8785,19 +8785,16 @@ i[class*="bi-"] {
   }
 
   .hamburger-btn {
-    width: 38px;
-    height: 38px;
-    font-size: 1.3rem;
-    margin-left: 0.25rem;
+    display: none !important;
+  }
+
+  .contract-area,
+  .profile-area {
+    display: none !important;
   }
 
   .top-nav-logo {
-    height: 48px;
-  }
-
-  .top-nav-profile-image {
-    width: 32px;
-    height: 32px;
+    height: 60px;
   }
 
   .main-content {
