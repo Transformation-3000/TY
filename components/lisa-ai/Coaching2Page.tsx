@@ -1331,7 +1331,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
                     {msg.widget==='data-pull'&&dataLoadStage<2&&(
                       <div className="wdp">
-                        <div className="dph"><div className="dpspin"/><span>{c.name} greift auf deine Daten zu...</span></div>
+                        <div className="dph"><div className="dpspin"/><span>{c.name.split(' ')[0]} greift auf deine Daten zu...</span></div>
                         <div className="dpsrc"><span className="dps">Apple Watch</span><span className="dps">Oura Ring</span><span className="dps">TrueYears</span></div>
                         <div className="dpits">{dataLabels.map((d,i)=>(<div key={i} className={`dpi ${dataItems>i?'ld':''}`}><span className="dpil">{dataItems>i?d.label:d.loading}</span><div className="dpib"><div className={`dpif ${dataItems>i?'dn':''}`}/></div></div>))}</div>
                       </div>
