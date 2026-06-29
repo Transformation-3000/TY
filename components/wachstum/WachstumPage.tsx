@@ -869,7 +869,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           >
             <div className="sim-card-wide-img-wrap">
               <Image 
-                src="/images/lifespan_drain_simulator.jpg" 
+                src="/images/lifespan_drain_simulator_wide.png" 
                 alt="Lebensalterabfluss-Simulator" 
                 fill
                 style={{ objectFit: 'cover' }}
