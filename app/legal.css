@@ -17,9 +17,10 @@
 }
 
 .legal-header-logo {
-  height: 60px;
+  height: 80px;
   width: auto;
   object-fit: contain;
+  margin-left: -10px;
 }
 
 .legal-back-btn {
@@ -41,6 +42,10 @@
   background: #006EA7;
   color: #ffffff;
   transform: translateY(-1px);
+}
+
+.legal-back-btn:hover i {
+  color: #ffffff !important;
 }
 
 .legal-content-card {
