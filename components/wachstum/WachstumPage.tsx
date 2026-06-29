@@ -878,7 +878,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
             <div className="sim-card-wide-content">
               <div className="sim-card-grid-layout">
                 <div className="sim-card-left-col">
-                  <h3>Schließe die Ventile deines biologischen Alterungsprozesses</h3>
+                  <h3>Schließe die wichtigsten Ventile deines biologischen Alterungsprozesses</h3>
                   <p>
                     Simuliere kontinuierliche Abflüsse deines Lebensalters.<br />
                     Verstehe wo du Lebensenergie verlierst und die Löcher schliessen kannst.
