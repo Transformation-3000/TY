@@ -964,7 +964,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                 <div className="sim-card-left-col">
                   <h3>Visualisiere und beeinflusse die Kernursachen des Alterns</h3>
                   <p>
-                    Navigiere durch die 12 molekularen Kennzeichen des Alterns. Verstehe den Zustand deiner Telomere, epigenetische Veränderungen und zelluläre Seneszenz.
+                    Navigiere durch die 12 molekularen Hallmarks of Aging.<br />
+                    Verstehe den Zustand deiner Telomere, epigenetische Veränderungen und zelluläre Seneszenz.
                   </p>
                 </div>
                 <div className="sim-card-right-col">
