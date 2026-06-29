@@ -20,8 +20,8 @@ export default function AGBPage() {
             priority
           />
         </Link>
-        <Link href="/checkout" className="legal-back-btn">
-          <i className="bi bi-arrow-left"></i> Zum Checkout
+        <Link href="/" className="legal-back-btn">
+          <i className="bi bi-arrow-left"></i> Zur Startseite
         </Link>
       </header>
 
