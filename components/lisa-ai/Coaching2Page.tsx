@@ -148,6 +148,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
   const [view, setView] = useState<ViewMode>('welcome');
   const [coachVariant, setCoachVariant] = useState<CoachVariant>('lisa-jung');
+  const isCoachLoaded = useRef(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -155,13 +156,16 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
       if (saved) {
         setCoachVariant(saved as CoachVariant);
       }
+      isCoachLoaded.current = true;
     }
   }, []);
 
   useEffect(() => {
-    localStorage.setItem('ty-coach-variant', coachVariant);
-    if (typeof window !== 'undefined') {
-      window.dispatchEvent(new Event('ty-coach-sync'));
+    if (isCoachLoaded.current) {
+      localStorage.setItem('ty-coach-variant', coachVariant);
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new Event('ty-coach-sync'));
+      }
     }
   }, [coachVariant]);
 
