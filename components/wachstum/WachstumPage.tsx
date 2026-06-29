@@ -910,8 +910,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                   <button 
                     className="sim-card-blue-button" 
                     style={{ 
-                      background: '#8b5cf6', 
-                      boxShadow: '0 4px 12px rgba(139, 92, 246, 0.25)',
+                      background: '#ef4444', 
+                      boxShadow: '0 4px 12px rgba(239, 68, 68, 0.25)',
                       cursor: selectedPlan === 'Starter' ? 'not-allowed' : 'pointer',
                       opacity: selectedPlan === 'Starter' ? 0.6 : 1
                     }} 
@@ -994,8 +994,8 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                   <button 
                     className="sim-card-blue-button" 
                     style={{ 
-                      background: '#8b5cf6', 
-                      boxShadow: '0 4px 12px rgba(139, 92, 246, 0.25)',
+                      background: '#ef4444', 
+                      boxShadow: '0 4px 12px rgba(239, 68, 68, 0.25)',
                       cursor: selectedPlan === 'Starter' ? 'not-allowed' : 'pointer',
                       opacity: selectedPlan === 'Starter' ? 0.6 : 1
                     }} 
