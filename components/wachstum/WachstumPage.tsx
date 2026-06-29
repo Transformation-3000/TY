@@ -953,7 +953,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           >
             <div className="sim-card-wide-img-wrap">
               <Image 
-                src="/images/hallmarks_aging_navigator.png" 
+                src="/images/hallmarks_aging.jpg" 
                 alt="Hallmarks-of-Aging" 
                 fill
                 style={{ objectFit: 'cover' }}
