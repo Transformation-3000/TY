@@ -217,13 +217,14 @@ export default function SimpleDashboard({ onNavigate }: Props) {
                 muted
                 playsInline
                 className={styles.linaImgRound}
+                style={{ objectPosition: coachVariant.startsWith('tom') ? 'center 30%' : 'center' }}
               />
             ) : (
               <img
                 src={centerImage}
                 alt="Coach Avatar"
                 className={styles.linaImgRound}
-                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+                style={{ objectFit: 'cover', width: '100%', height: '100%', objectPosition: coachVariant.startsWith('tom') ? 'center 30%' : 'center' }}
               />
             )}
 

@@ -680,6 +680,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                       muted 
                       playsInline 
                       className="wbl-video" 
+                      style={{ objectPosition: coachVariant.startsWith('tom') ? 'center 30%' : 'center' }}
                       ref={(el) => {
                         if (el) {
                           el.playbackRate = 0.75;
@@ -688,7 +689,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                       }}
                     />
                   ) : (
-                    <img src={c.image} alt={c.name} className="wbl-video" style={{ objectFit: 'cover' }} />
+                    <img src={c.image} alt={c.name} className="wbl-video" style={{ objectFit: 'cover', objectPosition: coachVariant.startsWith('tom') ? 'center 30%' : 'center' }} />
                   )}
               </div>
               <div className="wbl-name">{c.name.split(',')[0].trim()}</div>
@@ -834,6 +835,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                     muted 
                     playsInline 
                     className="pc-avatar" 
+                    style={{ objectPosition: coachVariant.startsWith('tom') ? 'center 30%' : 'center' }}
                     ref={(el) => {
                       if (el) {
                         el.playbackRate = 0.75;
@@ -842,7 +844,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                     }}
                   />
                 ) : (
-                  <img src={c.image} alt={c.name} className="pc-avatar" style={{ objectFit: 'cover' }} />
+                  <img src={c.image} alt={c.name} className="pc-avatar" style={{ objectFit: 'cover', objectPosition: coachVariant.startsWith('tom') ? 'center 30%' : 'center' }} />
                 )}
               </div>
               <h2 className="pc-title">Dein Mindspace wird vorbereitet</h2>
@@ -1185,6 +1187,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                           muted 
                           playsInline 
                           className="s-lisa-vid" 
+                          style={{ objectPosition: coachVariant.startsWith('tom') ? 'center 30%' : 'center' }}
                           ref={(el) => {
                             if (el) {
                               el.playbackRate = 0.75;
@@ -1193,7 +1196,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                           }}
                         />
                       ) : (
-                        <img src={c.image} alt={c.name} className="s-lisa-vid" style={{ objectFit: 'cover' }} />
+                        <img src={c.image} alt={c.name} className="s-lisa-vid" style={{ objectFit: 'cover', objectPosition: coachVariant.startsWith('tom') ? 'center 30%' : 'center' }} />
                       )}
                     <div className="s-lisa-glow" />
                   </div>
