@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './SimpleDashboard.module.css';
 
 type Props = {
@@ -21,6 +21,31 @@ const ACTIVITY_LIBRARY = [
 export default function SimpleDashboard({ onNavigate }: Props) {
   const [activityMode, setActivityMode] = useState<'default' | 'add' | 'voice'>('default');
   const [search, setSearch] = useState('');
+  const [coachVariant, setCoachVariant] = useState<string>('lisa-jung');
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('ty-coach-variant');
+      if (saved) {
+        setCoachVariant(saved);
+      }
+    }
+  }, []);
+
+  const coachVideos: Record<string, string> = {
+    'lisa-jung': '/videos/lisa-avatar.mp4',
+    'tom-jung': '/videos/Tom Jung animiert.mp4',
+    'tom-alt': '/videos/Tom erfahren animiert.mp4',
+  };
+  const coachImages: Record<string, string> = {
+    'lisa-jung': '/images/lisa.png',
+    'lisa-alt': '/images/lisa_alt.png',
+    'tom-jung': '/images/tom_jung.png',
+    'tom-alt': '/images/tom_alt.png',
+  };
+
+  const centerVideo = coachVideos[coachVariant];
+  const centerImage = coachImages[coachVariant] || '/images/lisa.png';
   const focusDays = [true, true, false, false];
 
   const rewards = [
@@ -184,14 +209,23 @@ export default function SimpleDashboard({ onNavigate }: Props) {
         {/* ========== CENTER: Lisa AI Video + CTA im Kreis ========== */}
         <div className={styles.centerHero}>
           <div className={styles.linaRing}>
-            <video
-              src="/videos/lisa-avatar.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              className={styles.linaImgRound}
-            />
+            {centerVideo ? (
+              <video
+                src={centerVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className={styles.linaImgRound}
+              />
+            ) : (
+              <img
+                src={centerImage}
+                alt="Coach Avatar"
+                className={styles.linaImgRound}
+                style={{ objectFit: 'cover', width: '100%', height: '100%' }}
+              />
+            )}
 
             {/* Overlay im unteren Bereich des Kreises */}
             <div className={styles.linaOverlay}>

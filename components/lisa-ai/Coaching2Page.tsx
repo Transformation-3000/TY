@@ -18,11 +18,11 @@ interface ChatMsg {
   answered?: boolean;
 }
 
-const coachVariants: Record<CoachVariant, { name: string; image: string; desc: string; voice: string; greeting: string }> = {
-  'lisa-jung': { name: 'Lisa AI, 25 Jahre', image: '/images/lisa.png', desc: 'Jung, modern & empathisch', voice: 'nova', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.' },
+const coachVariants: Record<CoachVariant, { name: string; image: string; desc: string; voice: string; greeting: string; video?: string }> = {
+  'lisa-jung': { name: 'Lisa AI, 25 Jahre', image: '/images/lisa.png', desc: 'Jung, modern & empathisch', voice: 'nova', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.', video: '/videos/lisa-avatar.mp4' },
   'lisa-alt': { name: 'Lisa AI, 50 Jahre', image: '/images/lisa_alt.png', desc: 'Erfahren, weise & warmherzig', voice: 'shimmer', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.' },
-  'tom-jung': { name: 'Tom AI, 25 Jahre', image: '/images/tom_jung.png', desc: 'Dynamisch, motivierend & direkt', voice: 'echo', greeting: 'Hallo, ich bin Tom – dein persönlicher Coach.' },
-  'tom-alt': { name: 'Tom AI, 50 Jahre', image: '/images/tom_alt.png', desc: 'Gelassen, strukturiert & erfahren', voice: 'onyx', greeting: 'Hallo, ich bin Tom – dein persönlicher Coach.' },
+  'tom-jung': { name: 'Tom AI, 25 Jahre', image: '/images/tom_jung.png', desc: 'Dynamisch, motivierend & direkt', voice: 'echo', greeting: 'Hallo, ich bin Tom – dein persönlicher Coach.', video: '/videos/Tom Jung animiert.mp4' },
+  'tom-alt': { name: 'Tom AI, 50 Jahre', image: '/images/tom_alt.png', desc: 'Gelassen, strukturiert & erfahren', voice: 'onyx', greeting: 'Hallo, ich bin Tom – dein persönlicher Coach.', video: '/videos/Tom erfahren animiert.mp4' },
 };
 const getPersonalityDesc = (x: number, y: number) => {
   const r = (1-x)*(1-y), ye = x*(1-y), g = x*y, b = (1-x)*y;
@@ -668,9 +668,9 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
             <div className="wb-main">
               <div className="wb-hero-lg">
                 <div className="wbl-glow"></div>
-                  {coachVariant === 'lisa-jung' ? (
+                  {c.video ? (
                     <video 
-                      src="/videos/lisa-avatar.mp4" 
+                      src={c.video} 
                       autoPlay 
                       loop 
                       muted 
@@ -822,9 +822,9 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
             </div>
             <div className="prep-content">
               <div className="pc-lens">
-                {coachVariant === 'lisa-jung' ? (
+                {c.video ? (
                   <video 
-                    src="/videos/lisa-avatar.mp4" 
+                    src={c.video} 
                     autoPlay 
                     loop 
                     muted 
@@ -1173,9 +1173,9 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                     <div className={`s-wave s-wave-3 ${isListening||isSpeaking?'act':''}`} />
                   </>)}
                   <div className="s-lisa-wrap">
-                      {coachVariant === 'lisa-jung' ? (
+                      {c.video ? (
                         <video 
-                          src="/videos/lisa-avatar.mp4" 
+                          src={c.video} 
                           autoPlay 
                           loop 
                           muted 
