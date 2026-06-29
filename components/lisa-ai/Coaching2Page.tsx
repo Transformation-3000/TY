@@ -148,7 +148,6 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
   const [view, setView] = useState<ViewMode>('welcome');
   const [coachVariant, setCoachVariant] = useState<CoachVariant>('lisa-jung');
-  const isCoachLoaded = useRef(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -156,18 +155,8 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
       if (saved) {
         setCoachVariant(saved as CoachVariant);
       }
-      isCoachLoaded.current = true;
     }
   }, []);
-
-  useEffect(() => {
-    if (isCoachLoaded.current) {
-      localStorage.setItem('ty-coach-variant', coachVariant);
-      if (typeof window !== 'undefined') {
-        window.dispatchEvent(new Event('ty-coach-sync'));
-      }
-    }
-  }, [coachVariant]);
 
   const [setupStep, setSetupStep] = useState<SetupStep>('coach');
   const [dataVisualType, setDataVisualType] = useState('emotional');
@@ -942,7 +931,13 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                           .map(v => {
                             const cv = coachVariants[v];
                             return (
-                              <div key={v} className={`ccard ${coachVariant===v?'sel':''}`} onClick={() => setCoachVariant(v)} style={{ cursor: 'pointer' }}>
+                              <div key={v} className={`ccard ${coachVariant===v?'sel':''}`} onClick={() => {
+                                setCoachVariant(v);
+                                localStorage.setItem('ty-coach-variant', v);
+                                if (typeof window !== 'undefined') {
+                                  window.dispatchEvent(new Event('ty-coach-sync'));
+                                }
+                              }} style={{ cursor: 'pointer' }}>
                                 <div className="ccard-img"><Image src={cv.image} alt={cv.name} width={210} height={210} style={{objectFit:'cover',borderRadius:'50%'}} />{coachVariant===v&&<span className="ccard-chk">✓</span>}</div>
                                 <div className="ccard-name">
                                   {cv.name.split(', ')[0]}
