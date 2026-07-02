@@ -34,6 +34,7 @@ export default function SimpleDashboard({ onNavigate }: Props) {
 
   const coachVideos: Record<string, string> = {
     'lisa-jung': '/videos/lisa-avatar.mp4',
+    'lisa-alt': '/videos/Lisa erfahren animiert.mp4',
     'tom-jung': '/videos/Tom Jung animiert.mp4',
     'tom-alt': '/videos/Tom erfahren animiert.mp4',
   };
@@ -99,6 +100,7 @@ export default function SimpleDashboard({ onNavigate }: Props) {
             </span>
             <i className={`bi bi-chevron-right ${styles.compassStepChevron}`} />
           </button>
+
         </div>
 
         {/* ========== TOP-RIGHT: Deine Aktivitäten ========== */}

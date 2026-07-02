@@ -20,7 +20,7 @@ interface ChatMsg {
 
 const coachVariants: Record<CoachVariant, { name: string; image: string; desc: string; voice: string; greeting: string; video?: string }> = {
   'lisa-jung': { name: 'Lisa AI, 25 Jahre', image: '/images/lisa.png', desc: 'Jung, modern & empathisch', voice: 'nova', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.', video: '/videos/lisa-avatar.mp4' },
-  'lisa-alt': { name: 'Lisa AI, 50 Jahre', image: '/images/lisa_alt.png', desc: 'Erfahren, weise & warmherzig', voice: 'shimmer', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.' },
+  'lisa-alt': { name: 'Lisa AI, 50 Jahre', image: '/images/lisa_alt.png', desc: 'Erfahren, weise & warmherzig', voice: 'shimmer', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.', video: '/videos/Lisa erfahren animiert.mp4' },
   'tom-jung': { name: 'Tom AI, 25 Jahre', image: '/images/tom_jung.png', desc: 'Dynamisch, motivierend & direkt', voice: 'echo', greeting: 'Hallo, ich bin Tom – dein persönlicher Coach.', video: '/videos/Tom Jung animiert.mp4' },
   'tom-alt': { name: 'Tom AI, 50 Jahre', image: '/images/tom_alt.png', desc: 'Gelassen, strukturiert & erfahren', voice: 'onyx', greeting: 'Hallo, ich bin Tom – dein persönlicher Coach.', video: '/videos/Tom erfahren animiert.mp4' },
 };

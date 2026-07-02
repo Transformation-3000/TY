@@ -174,6 +174,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   }, []);
 
   const [outlookCalls, setOutlookCalls] = useState({
+    lisaCall: { dateStr: '', month: '', day: '', fullDateStr: '' },
     call1: { dateStr: '', month: '', day: '', fullDateStr: '' },
     call2: { dateStr: '', month: '', day: '', fullDateStr: '' }
   });
@@ -207,10 +208,19 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
     // Call 2 is the month after Call 1 (August)
     const call2Date = getMiddleMonday(mainCallDate.getFullYear(), mainCallDate.getMonth() + 2);
 
+    // Lisa Call is Wednesday, 1 week before Call 1
+    const lisaCallDate = new Date(call1Date.getTime() - 5 * 24 * 60 * 60 * 1000);
+
     const monthOptions: Intl.DateTimeFormatOptions = { month: 'short' };
     const dateOptions: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long' };
 
     setOutlookCalls({
+      lisaCall: {
+        dateStr: lisaCallDate.toLocaleDateString('de-DE', dateOptions),
+        month: lisaCallDate.toLocaleDateString('de-DE', monthOptions).toUpperCase().replace('.', ''),
+        day: lisaCallDate.getDate().toString(),
+        fullDateStr: `Mi., ${lisaCallDate.getDate()}. ${lisaCallDate.toLocaleDateString('de-DE', { month: 'long' })}`
+      },
       call1: {
         dateStr: call1Date.toLocaleDateString('de-DE', dateOptions),
         month: call1Date.toLocaleDateString('de-DE', monthOptions).toUpperCase().replace('.', ''),
@@ -225,6 +235,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       }
     });
   }, []);
+
 
   const [activeModal, setActiveModal] = useState<'activity' | 'voice' | 'photo' | 'diamonds' | 'jungbrunnen-selection' | null>(null);
   const [isRecording, setIsRecording] = useState(false);
@@ -1690,25 +1701,24 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             </div>
           </div>
           <div className="focus-main-content">
-            <div className="focus-hero-row">
-              <div className="sunflower-circle">
-                <Image src="/images/focus_landscape.png" width={84} height={84} alt="Focus" style={{ borderRadius: '50%', objectFit: 'cover' }} />
-              </div>
-              <div className="focus-text-content">
-                <h3 className="focus-title">Stress reduzieren</h3>
-                <p className="focus-desc">Senke aktiv dein Cortisollevel und stärke deine Herzratenvariabilität (HRV) durch gezielte Entlastungsphasen und mentale Regeneration im Alltag.</p>
-              </div>
+            <div className="focus-header-img-container">
+              <Image src="/images/photo_walk.png" fill alt="Waldbaden" style={{ objectFit: 'cover', objectPosition: 'center 35%', borderRadius: '18px' }} />
             </div>
-            <div className="focus-cards-row">
-              <div className="f-card">
-                <div className="f-card-img"><Image src="/images/photo_breath_v2.png" fill alt="Atem" style={{ objectFit: 'cover' }} /></div>
-                <span className="f-card-label">Atemübung</span>
-              </div>
-              <div className="f-card">
-                <div className="f-card-img"><Image src="/images/photo_walk.png" fill alt="Walk" style={{ objectFit: 'cover' }} /></div>
-                <span className="f-card-label">Waldbaden</span>
-              </div>
+            <div className="focus-text-container-new">
+              <h3 className="focus-title-new">Stress reduzieren mit Waldbaden</h3>
+              <p className="focus-desc-new">
+                Senke aktiv dein Cortisollevel und stärke deine Herzratenvariabilität (HRV) durch gezielte Entlastungsphasen und mentale Regeneration.
+              </p>
             </div>
+            
+            <button className="focus-action-plan-btn-small" onClick={() => onNavigate?.('coaching')}>
+              <i className="bi bi-rocket-takeoff-fill"></i>
+              <div className="focus-action-plan-txt">
+                <strong className="focus-action-plan-title-small">Aktueller Action-Plan</strong>
+                <span className="focus-action-plan-sub-small">Basis: Letztes Weekly mit Lisa AI</span>
+              </div>
+              <i className="bi bi-chevron-right"></i>
+            </button>
           </div>
         </div>
 
@@ -1893,6 +1903,58 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
               <h3 className="outlook-title">Weitere Termine</h3>
               
               <div className="outlook-items-list">
+                {/* LISA AI COACHING CALL */}
+                <div className="outlook-item" style={{ borderLeft: '3px solid #10b981', background: '#f0fdf4' }}>
+                  <div className="outlook-date-badge" style={{ borderColor: '#bbf7d0' }}>
+                    <span className="badge-month" style={{ background: '#10b981' }}>{outlookCalls.lisaCall.month}</span>
+                    <span className="badge-day" style={{ color: '#14532d' }}>{outlookCalls.lisaCall.day}</span>
+                  </div>
+                  <div className="outlook-details">
+                    <div className="outlook-topics" style={{ marginBottom: '4px' }}>
+                      <button 
+                        onClick={() => onNavigate?.('coaching')}
+                        style={{ 
+                          background: 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)', 
+                          color: '#14532d', 
+                          border: '1.5px solid #10b981', 
+                          fontWeight: 800, 
+                          padding: '2px 10px', 
+                          borderRadius: '20px',
+                          textTransform: 'uppercase', 
+                          fontSize: '0.62rem',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          lineHeight: '1',
+                          height: '24px',
+                          cursor: 'pointer',
+                          boxShadow: '0 2px 4px rgba(16, 185, 129, 0.1)',
+                          transition: 'all 0.2s ease'
+                        }}
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.background = '#dcfce7';
+                          e.currentTarget.style.transform = 'translateY(-0.5px)';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.background = 'linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%)';
+                          e.currentTarget.style.transform = 'none';
+                        }}
+                      >
+                        Longevity Weekly
+                      </button>
+                    </div>
+                    <span className="outlook-date-str" style={{ fontWeight: 800, display: 'block', color: '#0f172a' }}>Schlafoptimierung</span>
+                    <span style={{ display: 'block', fontSize: '0.75rem', color: '#64748b', fontWeight: 500, marginTop: '2px', lineHeight: 1.3 }}>
+                      {outlookCalls.lisaCall.fullDateStr},
+                      <br />
+                      <span style={{ whiteSpace: 'nowrap', fontWeight: 700, color: '#15803d' }}>09:00 - 09:10 (10 Min.)</span>
+                    </span>
+                    <span style={{ display: 'block', fontSize: '0.72rem', color: '#64748b', fontWeight: 600, marginTop: '2px', lineHeight: 1.3 }}>
+                      Trainerin: <span style={{ color: '#10b981', fontWeight: 800 }}>Lisa AI</span>
+                    </span>
+                  </div>
+                </div>
+
                 {/* CALL 1 */}
                 <div className="outlook-item">
                   <div className="outlook-date-badge">
@@ -3022,6 +3084,105 @@ return (
         .f-card-label { font-size: 0.85rem; font-weight: 700; color: #1e293b; transition: color 0.2s; }
         .f-card:hover .f-card-label { color: #006ea7; }
 
+        .focus-action-plan-btn {
+          display: flex;
+          align-items: center;
+          gap: 0.85rem;
+          background: #dcfce7;
+          border: 1px solid rgba(34, 197, 94, 0.25);
+          border-radius: 20px;
+          padding: 0.8rem 1.25rem;
+          cursor: pointer;
+          width: 100%;
+          margin-top: 1.25rem;
+          transition: all 0.2s ease;
+        }
+        
+        .focus-header-img-container {
+          width: 100%;
+          height: 130px;
+          position: relative;
+          border-radius: 18px;
+          overflow: hidden;
+          margin-bottom: 1.0rem;
+          border: 1px solid #f1f5f9;
+        }
+        .focus-text-container-new {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          margin-bottom: 1.0rem;
+        }
+        .focus-title-new {
+          font-size: calc(1.35rem - 2pt);
+          font-weight: 900;
+          color: #0f172a;
+          margin: 0 0 4px 0;
+          text-align: left;
+        }
+        .focus-desc-new {
+          font-size: 0.85rem;
+          color: #64748b;
+          margin: 0;
+          line-height: 1.45;
+          text-align: left;
+        }
+
+        .focus-action-plan-btn-small {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          background: #dcfce7;
+          border: 1px solid rgba(34, 197, 94, 0.25);
+          border-radius: 20px;
+          padding: 0.9rem 1.25rem;
+          cursor: pointer;
+          width: 100%;
+          transition: all 0.2s ease;
+        }
+        .focus-action-plan-btn-small:hover {
+          background: #d1fae5;
+          border-color: rgba(34, 197, 94, 0.4);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 15px rgba(115, 196, 128, 0.15);
+        }
+        .focus-action-plan-btn-small i:first-of-type {
+          font-size: 1.25rem;
+          color: #16a34a;
+        }
+        .focus-action-plan-txt {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 1px;
+        }
+        .focus-action-plan-title-small {
+          font-size: 1rem;
+          font-weight: 800;
+          color: #2d4a57;
+          text-align: left;
+        }
+        .focus-action-plan-sub-small {
+          font-size: 0.9rem;
+          color: #64748b;
+          font-weight: 600;
+          text-align: left;
+          white-space: nowrap;
+        }
+        .focus-action-plan-btn-small i:last-of-type {
+          font-size: 0.95rem;
+          color: #73c480;
+          transition: transform 0.2s;
+        }
+        .focus-action-plan-btn-small:hover i:last-of-type {
+          transform: translateX(2.5px);
+        }
+
+
+
+
+
         /* CENTER SECTION */
         .center-section { text-align: center; }
         .date-display { font-size: 1.15rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; }
@@ -3093,7 +3254,7 @@ return (
         .voice-btn:hover i, .photo-btn:hover i { color: #4498ca; }
         .voice-btn i, .photo-btn i { font-size: 1.40rem; color: #6099cf; transition: color 0.2s; }
 
-        .tracker-label { font-size: calc(0.6rem + 2pt); font-weight: 800; color: #94a3b8; letter-spacing: 0.08em; margin-bottom: 0.75rem; text-transform: uppercase; }
+        .tracker-label { font-size: calc(0.6rem + 2pt); font-weight: 800; color: #94a3b8; letter-spacing: 0.08em; margin-bottom: 0.75rem; margin-top: 10px; text-transform: uppercase; }
         .activities-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin-bottom: 1.25rem; border: 1px solid #cbd5e1; border-radius: 18px; background: #ffffff; overflow: hidden; padding: 0.5rem 0; }
         
         .activity-card {

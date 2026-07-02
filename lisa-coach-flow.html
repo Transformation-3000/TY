@@ -230,8 +230,8 @@ let connections = [];
 let selectedNodeId = null;
 let dragNode = null;
 let dragOffset = { x: 0, y: 0 };
-let pan = { x: 0, y: 0 };
-let zoom = 1;
+let pan = { x: 200, y: 40 };
+let zoom = 0.65;
 let isPanning = false;
 let panStart = { x: 0, y: 0 };
 let connStart = null; // { nodeId, type:'out' }
@@ -297,55 +297,79 @@ function init() {
 
 function loadDefaultFlow() {
   const defaultNodes = [
-    { id:1, templateIdx:0, x:80, y:60, title:'Einstieg / Entry', desc:'Begrüßung: "Hallo Hendrik! Schön, dass du dir Zeit für dich nimmst."\n\n3 Optionen:\n• Letzte Session fortsetzen\n• Akutes Thema besprechen\n• Neuer Check-in', type:'phase', icon:'🎬', tags:['greeting','choice'], phase:'entry', custom:{} },
-    { id:2, templateIdx:1, x:80, y:300, title:'Check-in: Energie', desc:'Energie-Level abfragen (1-5 Skala)\n"Bevor wir starten – wie ist deine Energie heute?"', type:'phase', icon:'💡', tags:['energy'], phase:'checkin-energy', custom:{} },
-    { id:3, templateIdx:1, x:80, y:500, title:'Check-in: Stress', desc:'Stress-Level abfragen (1-5 Skala)\n"Und wie hoch ist dein Stress gerade?"', type:'phase', icon:'💡', tags:['stress'], phase:'checkin-stress', custom:{} },
-    { id:4, templateIdx:1, x:80, y:700, title:'Check-in: Fokus', desc:'Fokusthema wählen lassen:\n• Schlaf\n• Bewegung\n• Stress\n• Ernährung\n• Motivation & Routinen', type:'phase', icon:'💡', tags:['focus'], phase:'checkin-focus', custom:{} },
-    { id:5, templateIdx:2, x:420, y:700, title:'Datenanalyse', desc:'Wearable-Daten laden:\n• Apple Watch (Schritte, Puls)\n• Oura Ring (Schlaf, HRV)\n• TrueYears (Biomarker)\n\nAnimierter Ladevorgang, Daten-Karten mit Trends anzeigen.', type:'phase', icon:'📊', tags:['data-pull','wearable'], phase:'data-pull', custom:{} },
-    { id:6, templateIdx:3, x:420, y:950, title:'Verstehen', desc:'Coach analysiert Daten und fragt nach:\n"Was beschäftigt dich beim Thema [Fokus] am meisten?"\n\nQuick Replies verfügbar:\n• Ich schlafe genug, aber wache unausgeruht auf\n• Abends komme ich schwer zur Ruhe\n• Mein Schlafrhythmus ist durcheinander', type:'phase', icon:'🔍', tags:['deep-dive','questions'], phase:'verstehen', custom:{} },
-    { id:7, templateIdx:4, x:420, y:1230, title:'Fokus setzen', desc:'Coach grenzt Problem ein basierend auf Daten + Antwort.\n"Was passiert bei dir in der letzten Stunde vor dem Schlafen?"\n\nQuick Replies:\n• Ich bin abends oft noch am Handy\n• Ich schaue meistens noch Serien\n• Ich grüble über den nächsten Tag', type:'phase', icon:'🎯', tags:['focus','narrow-down'], phase:'fokus', custom:{} },
-    { id:8, templateIdx:5, x:420, y:1500, title:'Empfehlung / Action Plan', desc:'Konkreter Plan auf Basis der Daten:\n"Handy ab 21:30 aus dem Schlafzimmer"\n\nMetriken:\n• Schwierigkeit: Leicht (25%)\n• Wirkung: Hoch (85%)\n\nZusätzliche Schritte:\n• 5-Min Atemübung um 21:15\n• 10 Min Tageslicht am Morgen', type:'phase', icon:'💊', tags:['recommendation','action-plan'], phase:'empfehlung', custom:{} },
-    { id:9, templateIdx:6, x:420, y:1780, title:'Commitment', desc:'3 Optionen:\n✅ "Ja, mache ich heute" → Syncing\n🔄 "Anpassen" → Alternative vorschlagen → Syncing\n❌ "Nicht realistisch" → Closing', type:'phase', icon:'🤝', tags:['accept','adjust','decline'], phase:'commitment', custom:{} },
-    { id:10, templateIdx:7, x:420, y:2030, title:'Syncing', desc:'Plan wird ins System übertragen:\n1. Action Plan erstellt\n2. Erinnerung: 21:15 – Atemübung starten\n3. Erinnerung: 21:30 – Handy aus Schlafzimmer\n4. Tracking aktiviert: Schlafqualität\n5. Nächster Check-in: Morgen, 20:00 Uhr', type:'phase', icon:'🔄', tags:['sync','reminders'], phase:'syncing', custom:{} },
-    { id:11, templateIdx:8, x:420, y:2290, title:'Abschluss', desc:'"Alles eingerichtet! Für heute zählt nur ein Schritt: Handy um 21:30 raus."\n\nNächster Check-in anzeigen.\nSession beenden Button.', type:'phase', icon:'👋', tags:['closing','next-session'], phase:'closing', custom:{} },
+    // === FORMAT 1: DAILY (5 Min.) ===
+    { id:1, templateIdx:0, x:160, y:60, title:'1. Start & Begrüßung', desc:'Warmes Willkommen (Streak-Anzeige)\n+ Wohlfühl-Check (Skala 1-5)', type:'phase', icon:'🎬', tags:['streak','wellbeing'], phase:'daily-start', custom:{} },
+    { id:2, templateIdx:1, x:160, y:260, title:'2. Format-Auswahl', desc:'Wähle ein Thema:\n• (1) Was bewegt dich?\n• (2) Tages-Highlight\n• (3) Tages-Fokus\n• (4) Dankbarkeit', type:'input', icon:'🏷️', tags:['choice','daily-topics'], phase:'daily-choice', custom:{} },
+    { id:3, templateIdx:3, x:-80, y:460, title:'(1) Was bewegt dich?', desc:'Stressfaktoren, Sorgen, Blockaden oder euphorisierende Momente mitteilen.', type:'action', icon:'💬', tags:['sorgen','gefühle'], phase:'daily-topic-1', custom:{} },
+    { id:4, templateIdx:3, x:80, y:460, title:'(2) Tages-Highlight', desc:'Intrinsische Motivationsquellen & Dinge, die Freude bringen.', type:'action', icon:'⭐️', tags:['vorfreude','motivation'], phase:'daily-topic-2', custom:{} },
+    { id:5, templateIdx:3, x:240, y:460, title:'(3) Tages-Fokus', desc:'Pläne, anstehende Aufgaben und das eigene Zeitmanagement.', type:'action', icon:'🎯', tags:['priorität','fokus'], phase:'daily-topic-3', custom:{} },
+    { id:6, templateIdx:3, x:400, y:460, title:'(4) Dankbarkeit', desc:'Erkennen von Kernwerten und Dingen, die man wertschätzt.', type:'action', icon:'❤️', tags:['werte','dankbarkeit'], phase:'daily-topic-4', custom:{} },
+    { id:7, templateIdx:3, x:160, y:680, title:'3. Trainer-Impuls', desc:'Tom/Lisa stellt Kontextfragen (aufrichtiges Interesse) & gibt empathischen Impuls.', type:'phase', icon:'🧠', tags:['feedback','audio-impuls'], phase:'daily-impulse', custom:{} },
+    { id:8, templateIdx:5, x:160, y:880, title:'4. Abschluss', desc:'Wertschätzender Ausklang. Fragen nach Verbesserung des Nutzens + Verabschiedung.', type:'output', icon:'👋', tags:['abschluss','danke'], phase:'daily-end', custom:{} },
 
-    // Datenquellen
-    { id:12, templateIdx:16, x:780, y:600, title:'Apple Watch', desc:'Schritte/Tag, Ruhepuls (bpm), HRV (ms)', type:'data', icon:'⌚', tags:['wearable','healthkit'], custom:{} },
-    { id:13, templateIdx:17, x:780, y:740, title:'Oura Ring', desc:'Schlafqualität, Schlaf-Score, REM/Deep Sleep', type:'data', icon:'💍', tags:['wearable','sleep'], custom:{} },
-    { id:14, templateIdx:18, x:780, y:880, title:'TrueYears', desc:'Biomarker-Scores, Lifestyle-Daten', type:'data', icon:'📈', tags:['biomarker','score'], custom:{} },
+    // === FORMAT 2: WEEKLY (10 Min.) ===
+    { id:9, templateIdx:0, x:680, y:60, title:'1. Start & Bilanz', desc:'Begrüßung und quantitative Zusammenfassung der geschafften Habits der Woche.', type:'phase', icon:'📊', tags:['weekly','review'], phase:'weekly-start', custom:{} },
+    { id:10, templateIdx:2, x:680, y:260, title:'2. Wearable-Sync', desc:'Trends der letzten 7 Tage anzeigen (Schlaf, Stress, Schritte, HRV).', type:'data', icon:'⌚', tags:['wearables','trends'], phase:'weekly-sync', custom:{} },
+    { id:11, templateIdx:3, x:680, y:460, title:'3. Hürden-Reflexion', desc:'Psychologische Einordnung bei Rückschlägen (Motivation, Fähigkeit, Kontext, etc.).', type:'phase', icon:'🔍', tags:['psychologie','hürden'], phase:'weekly-hurdles', custom:{} },
+    { id:12, templateIdx:1, x:680, y:660, title:'4. Fokus-Auswahl', desc:'Optimierungsfeld für neue Woche wählen (z.B. Schlaf, Bewegung, Stress).', type:'input', icon:'🎯', tags:['fokus-feld','wochenziel'], phase:'weekly-focus', custom:{} },
+    { id:13, templateIdx:3, x:680, y:860, title:'5. Habit-Vorschlag', desc:'Konkrete Next Best Action zur Lebensstil- und Lebensqualitäts-Verbesserung.', type:'action', icon:'💊', tags:['nba','habits'], phase:'weekly-nba', custom:{} },
+    { id:14, templateIdx:1, x:680, y:1060, title:'6. Commitment', desc:'Handlung verbindlich machen: Wann? Wo? Was tun bei Hürden?', type:'input', icon:'🤝', tags:['commitment','barrieren'], phase:'weekly-commit', custom:{} },
+    { id:15, templateIdx:4, x:680, y:1260, title:'7. Sync & Kalender', desc:'Wochenziel im Dashboard aktivieren und Termine im Kalender eintragen.', type:'phase', icon:'🔄', tags:['calendar','sync'], phase:'weekly-end', custom:{} },
 
-    // System
-    { id:15, templateIdx:30, x:780, y:1100, title:'LLM / AI Engine', desc:'Generiert personalisierte Antworten basierend auf:\n• Nutzerprofil (DISC)\n• Aktuelle Daten\n• Session-Historie\n• Konversationskontext', type:'system', icon:'🤖', tags:['openai','gpt'], custom:{} },
-    { id:16, templateIdx:20, x:780, y:1350, title:'Nutzerprofil', desc:'DISC-Persönlichkeitstyp:\n• Rot: direkt & entschlossen\n• Gelb: optimistisch & kommunikativ\n• Grün: empathisch & geduldig\n• Blau: analytisch & strukturiert', type:'data', icon:'👤', tags:['profile','personality'], custom:{} },
+    // === FORMAT 3: QUARTERLY (15 Min.) ===
+    { id:16, templateIdx:0, x:1180, y:60, title:'1. Quartals-Review', desc:'Subjektive Reflexion des Wohlbefindens über die vergangenen 3 Monate.', type:'phase', icon:'🎬', tags:['quarterly','review'], phase:'quarterly-start', custom:{} },
+    { id:17, templateIdx:2, x:1180, y:260, title:'2. Longevity Status', desc:'Auswertung TrueYears BioAge, Zellstatus & metabolic balance.', type:'data', icon:'🧬', tags:['biomarker','bioage'], phase:'quarterly-biomarkers', custom:{} },
+    { id:18, templateIdx:3, x:1180, y:460, title:'3. Lebensstil-Audit', desc:'Abgleich der Laborwerte mit der persönlichen Vision & Masterclasses.', type:'phase', icon:'📚', tags:['audit','vision'], phase:'quarterly-audit', custom:{} },
+    { id:19, templateIdx:1, x:1180, y:660, title:'4. Coach-Einstellungen', desc:'Konfiguration Tom/Lisa AI (Stimme, Aussehen, DISC-Profil).', type:'input', icon:'⚙️', tags:['trainer-setup','config'], phase:'quarterly-config', custom:{} },
+    { id:20, templateIdx:3, x:1180, y:860, title:'5. 12-Wochen-Roadmap', desc:'Strategische Roadmap für das kommende Quartal festlegen.', type:'action', icon:'🗺️', tags:['roadmap','plan'], phase:'quarterly-roadmap', custom:{} },
+    { id:21, templateIdx:4, x:1180, y:1060, title:'6. Sync & Start', desc:'Aktivierung der Quartals-Roadmap & Starter-Freischaltung.', type:'phase', icon:'🔄', tags:['activation','start'], phase:'quarterly-end', custom:{} },
 
-    // Outputs
-    { id:17, templateIdx:26, x:780, y:1560, title:'TTS / Audio Output', desc:'OpenAI Text-to-Speech\nStimmen: nova, shimmer, echo, onyx', type:'output', icon:'🔊', tags:['audio','tts'], custom:{} },
+    // === GLOBALE INTEGRATION & DATEN ===
+    { id:22, templateIdx:16, x:920, y:260, title:'Wearables Hub', desc:'Oura, Apple Watch, Fitbit, Garmin Integration.', type:'system', icon:'📡', tags:['api','sync'], phase:'wearable-hub', custom:{} },
+    { id:23, templateIdx:30, x:440, y:680, title:'AI Engine / LLM', desc:'Personalisierung basierend auf DISC-Kommunikationsstil.', type:'system', icon:'🤖', tags:['gpt','ai'], phase:'llm-engine', custom:{} },
+    { id:24, templateIdx:20, x:440, y:880, title:'Nutzerprofil', desc:'Langfristiges Kontextgedächtnis & Werte.', type:'data', icon:'👤', tags:['context','profile'], phase:'user-profile', custom:{} }
   ];
 
   const defaultConnections = [
-    { from:1, to:2, label:'Auswahl getroffen' },
-    { from:2, to:3, label:'Energie erfasst' },
-    { from:3, to:4, label:'Stress erfasst' },
-    { from:4, to:5, label:'Fokus gewählt' },
-    { from:5, to:6, label:'Daten geladen' },
-    { from:6, to:7, label:'Antwort erhalten' },
-    { from:7, to:8, label:'Problem eingegrenzt' },
-    { from:8, to:9, label:'Plan präsentiert' },
-    { from:9, to:10, label:'Akzeptiert / Angepasst' },
-    { from:9, to:11, label:'Abgelehnt' },
-    { from:10, to:11, label:'Sync fertig' },
-    { from:12, to:5, label:'' },
-    { from:13, to:5, label:'' },
-    { from:14, to:5, label:'' },
-    { from:15, to:6, label:'Antwort' },
-    { from:15, to:7, label:'Antwort' },
-    { from:15, to:8, label:'Plan generiert' },
-    { from:16, to:15, label:'Persönlichkeit' },
+    // Daily Connections
+    { from:1, to:2, label:'begrüßt & bewertet' },
+    { from:2, to:3, label:'gewählt: Sorgen' },
+    { from:2, to:4, label:'gewählt: Highlight' },
+    { from:2, to:5, label:'gewählt: Fokus' },
+    { from:2, to:6, label:'gewählt: Dankbarkeit' },
+    { from:3, to:7, label:'Antwort' },
+    { from:4, to:7, label:'Antwort' },
+    { from:5, to:7, label:'Antwort' },
+    { from:6, to:7, label:'Antwort' },
+    { from:7, to:8, label:'Ausklang' },
+
+    // Weekly Connections
+    { from:9, to:10, label:'Daten laden' },
+    { from:10, to:11, label:'Erfolge analysieren' },
+    { from:11, to:12, label:'Fokus wählen' },
+    { from:12, to:13, label:'NBA generieren' },
+    { from:13, to:14, label:'Akzeptieren' },
+    { from:14, to:15, label:'Einrichten' },
+
+    // Quarterly Connections
+    { from:16, to:17, label:'Laborwerte laden' },
+    { from:17, to:18, label:'Zellalter analysieren' },
+    { from:18, to:19, label:'Trainer anpassen' },
+    { from:19, to:20, label:'Roadmap erstellen' },
+    { from:20, to:21, label:'Aktivieren' },
+
+    // Global Connections
+    { from:22, to:10, label:'Sync' },
+    { from:22, to:17, label:'Sync' },
+    { from:23, to:7, label:'Antwort generieren' },
+    { from:8, to:24, label:'Kontext speichern' },
+    { from:11, to:24, label:'Hürden speichern' },
+    { from:19, to:24, label:'Einstellungen speichern' }
   ];
 
   nodes = defaultNodes;
   connections = defaultConnections;
-  nextId = 18;
+  nextId = 25;
 }
 
 // ======================== SIDEBAR ========================
@@ -897,11 +921,12 @@ function resetZoom() {
 }
 
 function resetView() {
-  zoom = 1;
-  pan = { x: 20, y: 20 };
-  document.getElementById('zoomLabel').textContent = '100%';
+  zoom = 0.65;
+  pan = { x: 200, y: 40 };
+  document.getElementById('zoomLabel').textContent = '65%';
   const grid = document.getElementById('canvasGrid');
-  grid.style.backgroundSize = '24px 24px';
+  const size = Math.round(24 * zoom);
+  grid.style.backgroundSize = `${size}px ${size}px`;
   render();
 }
 
