@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface CardioSimulationPageProps {
   onBack: () => void;
@@ -22,117 +22,94 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
   const [lisaReport, setLisaReport] = useState<string | null>(null);
 
   const baseVO2 = 35.0;
-  const simInterval = useRef<NodeJS.Timeout | null>(null);
 
-  // Run week-by-week simulation
+  // Run week-by-week simulation cleanly using useEffect
+  useEffect(() => {
+    if (!isSimulating) return;
+
+    if (simWeek >= 12) {
+      setIsSimulating(false);
+      generateLisaReport(currentVO2);
+      return;
+    }
+
+    const timer = setTimeout(() => {
+      const nextWeek = simWeek + 1;
+      setSimWeek(nextWeek);
+
+      setCurrentVO2((prevVO2) => {
+        let weeklyChange = 0;
+        const regenFactor = (simRegen - 30) / 70; // 0 to 1
+
+        const isExtremeHIITNoRegen = simHIIT >= 3 && simRegen < 60;
+        const isModerateHIITNoRegen = simHIIT >= 2 && simRegen < 50;
+        const isCriticalSleepDeprived = simRegen < 40;
+        const isNoBaseOnlyHIIT = simZone2 < 45 && simHIIT >= 2;
+
+        if (isCriticalSleepDeprived) {
+          weeklyChange = -0.3;
+          setSimMessage(`Woche ${nextWeek}: Systemischer Schlafmangel! Deine Zellen können sich nicht regenerieren.`);
+          setSimStatusColor('#ef4444');
+        } else if (isExtremeHIITNoRegen && nextWeek > 4) {
+          weeklyChange = -0.5;
+          setSimMessage(`Woche ${nextWeek}: Übertraining! Chronische Entzündung und Muskelkater bremsen dich aus.`);
+          setSimStatusColor('#ef4444');
+        } else if (isModerateHIITNoRegen && nextWeek > 3) {
+          weeklyChange = -0.3;
+          setSimMessage(`Woche ${nextWeek}: Erschöpfung! Dein Körper fordert dringend Ruhetage.`);
+          setSimStatusColor('#f97316');
+        } else if (isNoBaseOnlyHIIT && nextWeek > 5) {
+          weeklyChange = -0.15;
+          setSimMessage(`Woche ${nextWeek}: Mitochondrien-Kollaps! Dir fehlt die aerobe Basis.`);
+          setSimStatusColor('#f97316');
+        } else {
+          const z2Adaptation = (simZone2 / 240) * 0.4;
+          let hiitAdaptation = (simHIIT / 4) * 0.5;
+          
+          if (simZone2 < 90 && nextWeek > 4) {
+            hiitAdaptation *= 0.5;
+          }
+
+          weeklyChange = (z2Adaptation + hiitAdaptation) * (0.3 + 0.7 * regenFactor);
+          
+          if (simZone2 >= 120 && simHIIT >= 1 && simRegen >= 75) {
+            setSimMessage(`Woche ${nextWeek}: Perfect Flow! Optimale Balance aus aerober Basis und Intervallen.`);
+            setSimStatusColor('#22c55e');
+          } else if (simHIIT > 0 && simRegen >= 70) {
+            setSimMessage(`Woche ${nextWeek}: Guter Reiz! Dein Herzschlagvolumen passt sich an.`);
+            setSimStatusColor('#4C99C2');
+          } else if (simZone2 > 0 && simHIIT === 0) {
+            setSimMessage(`Woche ${nextWeek}: Grundlagen-Aufbau. Du vermehrst deine Mitochondrien.`);
+            setSimStatusColor('#eab308');
+          } else {
+            setSimMessage(`Woche ${nextWeek}: Kaum Trainingsreize gesetzt. Dein VO2-Max stagniert.`);
+            setSimStatusColor('#64748b');
+          }
+        }
+
+        const nextVO2 = Math.min(48.5, Math.max(30.0, prevVO2 + weeklyChange));
+        setSimHistory((prevHistory) => [...prevHistory, nextVO2]);
+        return nextVO2;
+      });
+    }, 300);
+
+    return () => clearTimeout(timer);
+  }, [isSimulating, simWeek, simZone2, simHIIT, simRegen]);
+
   const startSimulation = () => {
     if (isSimulating) return;
 
-    // Reset simulation
-    setIsSimulating(true);
     setSimWeek(0);
     setSimHistory([baseVO2]);
     setCurrentVO2(baseVO2);
     setSimMessage('Woche 0: Starte Trainingszyklus...');
     setSimStatusColor('#006EA7');
     setLisaReport(null);
+    setIsSimulating(true);
   };
 
-  useEffect(() => {
-    if (!isSimulating) return;
-
-    const runNextWeek = () => {
-      setSimWeek((prevWeek) => {
-        const nextWeek = prevWeek + 1;
-        if (nextWeek > 12) {
-          setIsSimulating(false);
-          if (simInterval.current) clearInterval(simInterval.current);
-          generateLisaReport();
-          return prevWeek;
-        }
-
-        // Calculate VO2-Max for this specific week
-        setCurrentVO2((prevVO2) => {
-          let weeklyChange = 0;
-          const regenFactor = (simRegen - 30) / 70; // 0 to 1
-
-          // 1. Overtraining checks
-          const isExtremeHIITNoRegen = simHIIT >= 3 && simRegen < 60;
-          const isModerateHIITNoRegen = simHIIT >= 2 && simRegen < 50;
-          const isCriticalSleepDeprived = simRegen < 40;
-          const isNoBaseOnlyHIIT = simZone2 < 45 && simHIIT >= 2;
-
-          if (isCriticalSleepDeprived) {
-            // Constant decline due to sleep deprivation
-            weeklyChange = -0.3;
-            setSimMessage(`Woche ${nextWeek}: Systemischer Schlafmangel! Deine Zellen können sich nicht regenerieren.`);
-            setSimStatusColor('#ef4444');
-          } else if (isExtremeHIITNoRegen && nextWeek > 4) {
-            // Overtraining crash after week 4
-            weeklyChange = -0.5;
-            setSimMessage(`Woche ${nextWeek}: Übertraining! Chronische Entzündung und Muskelkater bremsen dich aus.`);
-            setSimStatusColor('#ef4444');
-          } else if (isModerateHIITNoRegen && nextWeek > 3) {
-            // Moderate overtraining crash after week 3
-            weeklyChange = -0.3;
-            setSimMessage(`Woche ${nextWeek}: Erschöpfung! Dein Körper fordert dringend Ruhetage.`);
-            setSimStatusColor('#f97316');
-          } else if (isNoBaseOnlyHIIT && nextWeek > 5) {
-            // Stalling/Crash due to no base
-            weeklyChange = -0.15;
-            setSimMessage(`Woche ${nextWeek}: Mitochondrien-Kollaps! Dir fehlt die aerobe Basis für dieses HIIT-Volumen.`);
-            setSimStatusColor('#f97316');
-          } else {
-            // 2. Normal adaptations
-            // Zone 2 builds the mitochondrial base (slow and steady)
-            const z2Adaptation = (simZone2 / 240) * 0.4; // Max +0.4 VO2-Max per week
-            
-            // HIIT builds cardiac output (needs base to adapt)
-            let hiitAdaptation = (simHIIT / 4) * 0.5; // Max +0.5 VO2-Max per week
-            
-            // If base is too low, HIIT adaptation is halved after week 4
-            if (simZone2 < 90 && nextWeek > 4) {
-              hiitAdaptation *= 0.5;
-            }
-
-            weeklyChange = (z2Adaptation + hiitAdaptation) * (0.3 + 0.7 * regenFactor);
-            
-            // Output message
-            if (simZone2 >= 120 && simHIIT >= 1 && simRegen >= 75) {
-              setSimMessage(`Woche ${nextWeek}: Perfect Flow! Optimale Balance aus aerober Basis und Intervallen.`);
-              setSimStatusColor('#22c55e');
-            } else if (simHIIT > 0 && simRegen >= 70) {
-              setSimMessage(`Woche ${nextWeek}: Guter Reiz! Dein Herzschlagvolumen passt sich an.`);
-              setSimStatusColor('#4C99C2');
-            } else if (simZone2 > 0 && simHIIT === 0) {
-              setSimMessage(`Woche ${nextWeek}: Grundlagen-Aufbau. Du vermehrst deine Mitochondrien.`);
-              setSimStatusColor('#eab308');
-            } else {
-              setSimMessage(`Woche ${nextWeek}: Kaum Trainingsreize gesetzt. Dein VO2-Max stagniert.`);
-              setSimStatusColor('#64748b');
-            }
-          }
-
-          const nextVO2 = Math.min(48.5, Math.max(30.0, prevVO2 + weeklyChange));
-          setSimHistory((prevHistory) => [...prevHistory, nextVO2]);
-          return nextVO2;
-        });
-
-        return nextWeek;
-      });
-    };
-
-    simInterval.current = setInterval(runNextWeek, 300);
-
-    return () => {
-      if (simInterval.current) clearInterval(simInterval.current);
-    };
-  }, [isSimulating, simZone2, simHIIT, simRegen]);
-
   // Generate the final analysis report from Lisa AI
-  const generateLisaReport = () => {
-    // Final check values
-    const finalVO2 = currentVO2;
+  const generateLisaReport = (finalVO2: number) => {
     const isExtremeHIITNoRegen = simHIIT >= 3 && simRegen < 60;
     const isNoBaseOnlyHIIT = simZone2 < 45 && simHIIT >= 2;
     const isCriticalSleepDeprived = simRegen < 40;
