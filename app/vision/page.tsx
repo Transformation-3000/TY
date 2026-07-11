@@ -217,37 +217,14 @@ export default function VisionPage() {
                   </div>
                 </div>
 
-                {/* Pain */}
-                <div style={{ marginBottom: '2rem' }}>
-                  <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#1e293b', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <i className="bi bi-lightning-charge-fill" style={{ color: '#ef4444' }}></i> Der Schmerzpunkt (Pains)
-                  </h4>
-                  <p style={{ fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', margin: 0 }}>
-                    „2020 – Als mir erstmalig bewusst geworden ist, wie anspruchsvoll und energiezehrend Strategieberatung ist. Die Kunden haben zurecht hohe Ansprüche an Zusammenarbeit und Ergebnis. Und dieses hängt sehr stark an meiner Person (Eintausch Zeit gegen Geld), die nicht richtig skalierbar ist.“
-                  </p>
-                </div>
-
                 {/* Believe */}
-                <div style={{ marginBottom: '2rem' }}>
+                <div style={{ marginBottom: 0 }}>
                   <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#1e293b', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <i className="bi bi-patch-check-fill" style={{ color: '#16a34a' }}></i> Die Überzeugung (Believe)
                   </h4>
                   <p style={{ fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', margin: 0 }}>
                     „Richtiger Zeitpunkt: Longevity auf dem Weg zum Mainstream. Noch nie zuvor hatten wir so viel Wissen über unsere Biologie & Tech, sie zu beeinflussen. Wir treten ein in ein neues Zeitalter der Selbstwirksamkeit: datengetrieben, präventiv und persönlich.“
                   </p>
-                </div>
-
-                {/* Vision */}
-                <div>
-                  <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#1e293b', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <i className="bi bi-eye-fill" style={{ color: '#3b82f6' }}></i> Das Motivationsziel (Vision)
-                  </h4>
-                  <ul style={{ fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', margin: 0, paddingLeft: '1.2rem' }}>
-                    <li style={{ marginBottom: '0.5rem' }}>Nur noch <strong>am System</strong> zu bauen, nicht mehr im System selbst zu arbeiten („Pure AI Player“).</li>
-                    <li style={{ marginBottom: '0.5rem' }}>True Years auch <strong>für mich</strong> nutzen, als Orientierungssystem, um 111+ Jahre alt zu werden.</li>
-                    <li style={{ marginBottom: '0.5rem' }}>Mit <strong>KI als größte Technologie</strong> der Menschheit werden wir schon bald Alterungsprozesse viel präziser verstehen – und sie durch personalisierte Programme verlangsamen.</li>
-                    <li>Ich glaube fest daran, dass wir mit True Years einen <strong>international bedeutsamen Player</strong> aufbauen können.</li>
-                  </ul>
                 </div>
               </div>
 
@@ -282,33 +259,13 @@ export default function VisionPage() {
                   </div>
                 </div>
 
-                {/* Pain */}
-                <div style={{ marginBottom: '2rem' }}>
-                  <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#1e293b', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <i className="bi bi-lightning-charge-fill" style={{ color: '#ef4444' }}></i> Der Schmerzpunkt (Pains)
-                  </h4>
-                  <p style={{ fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', margin: 0 }}>
-                    „Vor ca. 5 Jahren hatte ich verstärkt das Gefühl, es müsste noch etwas mehr geben im beruflichen Sinne als das bisher erreichte. Der Wunsch mit Menschen zusammen zu arbeiten, die einen eigenen inneren Antrieb haben, um Ziele zu erreichen wuchs zusehends. Ich hatte für mich erkannt, dass Größeres zu erreichen, nur in einem Umfeld stattfinden kann, in dem Ideen und Leistungen auf einen fruchtbaren Boden fallen (Alle ziehen an 1 Strang).“
-                  </p>
-                </div>
-
                 {/* Believe */}
-                <div style={{ marginBottom: '2rem' }}>
+                <div style={{ marginBottom: 0 }}>
                   <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#1e293b', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                     <i className="bi bi-patch-check-fill" style={{ color: '#16a34a' }}></i> Die Überzeugung (Believe)
                   </h4>
                   <p style={{ fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', margin: 0 }}>
                     „Im Laufe meiner beruflichen Tätigkeit hat sich ein Bild der Dinge ergeben, die die Bevölkerung wirklich braucht, um echte Verbesserung ihres Gesundheitszustandes zu erreichen. Das soll mit diesem Programm erreicht werden.“
-                  </p>
-                </div>
-
-                {/* Vision */}
-                <div>
-                  <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#1e293b', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <i className="bi bi-eye-fill" style={{ color: '#3b82f6' }}></i> Das Motivationsziel (Vision)
-                  </h4>
-                  <p style={{ fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', margin: 0 }}>
-                    „Die Idee, dass wir mittels solch eines Programms sehr viele Menschen erreichen können (Skalierbarkeit) und dass der hohe Automatisierungsgrad ein gewisses Maß an Unabhängigkeit in der Leistungserbringung verspricht.“
                   </p>
                 </div>
               </div>
