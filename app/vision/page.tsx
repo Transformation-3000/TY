@@ -181,8 +181,8 @@ export default function VisionPage() {
             <div style={{ marginBottom: '4rem' }}>
               <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem' }}>
                 <span style={{ display: 'inline-block', width: '5px', height: '32px', backgroundColor: '#4498ca', marginRight: '14px', borderRadius: '4px' }}></span>
-                <h2 style={{ fontSize: '2.4rem', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif' }}>
-                  Unsere Motivation: <span style={{ fontWeight: 400 }}>Warum wir True Years gegründet haben</span>
+                <h2 style={{ fontSize: '2.4rem', fontWeight: 400, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif' }}>
+                  Unsere Motivation: <span style={{ fontWeight: 800 }}>Warum wir True Years gegründet haben</span>
                 </h2>
               </div>
             </div>
