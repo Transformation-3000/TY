@@ -82,14 +82,15 @@ export default function VisionPage() {
           }}>
             Wir glauben an eine Welt, in der das biologische Alter nicht länger eine unveränderliche Konstante ist, sondern eine aktiv gestaltbare Stellgröße.
           </p>
-          <div style={{ maxWidth: '900px', margin: '2rem auto 0', textAlign: 'center' }}>
-            <p style={{ fontSize: '1.15rem', color: '#64748b', lineHeight: '1.7', marginBottom: '1.5rem' }}>
-              Die Alterungsforschung macht atemberaubende Fortschritte. Wir stehen an der Schwelle einer Ära, in der wir nicht nur die Jahre unseres Lebens verlängern, sondern die Vitalität und Strahlkraft innerhalb dieser Jahre sichern können.
-            </p>
-            <p style={{ fontSize: '1.15rem', color: '#64748b', lineHeight: '1.7', margin: 0 }}>
-              Unsere Vision geht über die reine Bereitstellung von Software hinaus: Wir bauen das globale Betriebssystem für gesundes Altern. Ein System, das motiviert, belohnt und fundiertes Wissen mühelos in Freude und Energie transformiert.
-            </p>
-          </div>
+          <p style={{ 
+            fontSize: '1.4rem', 
+            color: '#64748b', 
+            maxWidth: '900px', 
+            margin: '1.5rem auto 0', 
+            lineHeight: '1.6' 
+          }}>
+            Dank atemberaubender Fortschritte in der Alterungsforschung können wir heute unsere Vitalität bis ins hohe Alter sichern. Deshalb bauen wir das globale Betriebssystem für gesundes Altern – eine Plattform, die dich motiviert und komplexes Wissen mühelos in messbare Energie und Lebensfreude transformiert.
+          </p>
         </div>
 
         {/* Pillars Grid */}
