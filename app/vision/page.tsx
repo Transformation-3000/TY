@@ -268,42 +268,7 @@ export default function VisionPage() {
           </div>
         </div>
 
-        {/* Detailed Vision Section */}
-        <div style={{ padding: '5rem 2rem 5rem', maxWidth: '1200px', margin: '0 auto' }}>
 
-          {/* CTA Banner */}
-          <div style={{
-            background: 'linear-gradient(135deg, #1e3a8a 0%, #0d9488 100%)',
-            borderRadius: '24px',
-            padding: '4rem 3rem',
-            textAlign: 'center',
-            color: 'white'
-          }}>
-            <h2 style={{ fontSize: '2.2rem', fontWeight: 800, margin: '0 0 1rem', fontFamily: 'DM Sans, sans-serif', color: 'white' }}>
-              Bereit, deine Zukunft zu gestalten?
-            </h2>
-            <p style={{ fontSize: '1.15rem', color: 'rgba(255,255,255,0.9)', maxWidth: '700px', margin: '0 auto 2rem', lineHeight: '1.6' }}>
-              Warte nicht auf morgen. Starte noch heute dein persönliches TrueYears Programm und aktiviere dein gesundes Langlebigkeits-Potenzial.
-            </p>
-            <Link href="/#mitgliedschaften" style={{
-              display: 'inline-block',
-              padding: '16px 36px',
-              background: 'white',
-              color: '#1e3a8a',
-              fontWeight: 700,
-              borderRadius: '30px',
-              textDecoration: 'none',
-              transition: 'all 0.3s ease',
-              boxShadow: '0 4px 14px rgba(0,0,0,0.1)'
-            }}
-            onMouseOver={(e) => e.currentTarget.style.transform = 'translateY(-2px)'}
-            onMouseOut={(e) => e.currentTarget.style.transform = 'translateY(0)'}
-            >
-              Jetzt starten
-            </Link>
-          </div>
-
-        </div>
 
       </main>
 
