@@ -41,7 +41,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   const [currentDate, setCurrentDate] = useState('');
   const [greeting, setGreeting] = useState('Guten Tag');
   const [userName, setUserName] = useState('Monique');
-  const [profileImage, setProfileImage] = useState('/images/selfie_monique.png');
+  const [profileImage, setProfileImage] = useState('/images/woman_53_blonde.png');
   const [selectedPlan, setSelectedPlan] = useState<string>('Premium');
 
   useEffect(() => {
@@ -237,71 +237,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   }, []);
 
 
-  const [activeModal, setActiveModal] = useState<'activity' | 'voice' | 'photo' | 'diamonds' | 'jungbrunnen-selection' | 'nba' | null>(null);
-  
-  const [nbaItems, setNbaItems] = useState([
-    {
-      id: 'waldbaden',
-      category: 'Stressabbau',
-      title: 'Stress reduzieren mit Waldbaden',
-      desc: '30-45 Minuten achtsames Gehen im Wald senkt nachweislich dein Cortisollevel, reguliert die Herzfrequenz und stärkt das Immunsystem durch die Aufnahme von Phytonziden (Waldluft).',
-      duration: '30-45 Min.',
-      effect: '+1.2 Vitalitäts-Gewinn',
-      effectColor: '#16a34a',
-      effectIcon: 'bi-heart-pulse-fill',
-      diamonds: 40,
-      image: '/images/photo_walk.png',
-      bg: 'linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%)',
-      border: '2.5px solid #73c480',
-      isFavored: true,
-      photo: '/images/photo_walk.png'
-    },
-    {
-      id: 'breath',
-      category: 'Entspannung',
-      title: 'Regenerative 4-7-8 Atemübung',
-      desc: '5-10 Minuten bewusstes Ein- und Ausatmen beruhigen das parasympathische Nervensystem, bringen deinen Puls sofort runter und stabilisieren deine HRV.',
-      duration: '5-10 Min.',
-      effect: 'Sofort-Effekt',
-      effectColor: '#3b82f6',
-      effectIcon: 'bi-lightning-fill',
-      diamonds: 25,
-      image: '/images/photo_breath_v2.png',
-      bg: 'linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%)',
-      border: '1.5px solid #e2e8f0',
-      isFavored: false,
-      photo: '/images/photo_breath.png'
-    },
-    {
-      id: 'beeren',
-      category: 'Nährstoffe',
-      title: 'Zellschutz: Beeren-Detox-Snack',
-      desc: 'Snacke eine Handvoll frischer Wildbeeren reich an Polyphenolen kombiniert mit Walnüssen zur optimalen Bekämpfung von oxidativem Stress im Körper.',
-      duration: '5 Min.',
-      effect: 'Antioxidativer Zellschutz',
-      effectColor: '#ec4899',
-      effectIcon: 'bi-shield-fill-check',
-      diamonds: 15,
-      image: '/images/ritual_beeren.png',
-      bg: 'linear-gradient(135deg, #fdf2f8 0%, #ffffff 100%)',
-      border: '1.5px solid #e2e8f0',
-      isFavored: false,
-      photo: '/images/ritual_beeren.png'
-    }
-  ]);
-
-  const handleNbaClick = (id: string) => {
-    setNbaItems(prev => {
-      const updated = prev.map(item => ({
-        ...item,
-        isFavored: item.id === id,
-        border: item.id === id 
-          ? (item.id === 'waldbaden' ? '2.5px solid #73c480' : item.id === 'breath' ? '2.5px solid #3b82f6' : '2.5px solid #ec4899')
-          : '1.5px solid #e2e8f0'
-      }));
-      return [...updated].sort((a, b) => (a.isFavored ? -1 : b.isFavored ? 1 : 0));
-    });
-  };
+  const [activeModal, setActiveModal] = useState<'activity' | 'voice' | 'photo' | 'diamonds' | 'jungbrunnen-selection' | null>(null);
   const [isRecording, setIsRecording] = useState(false);
   const [jungbrunnenSubView, setJungbrunnenSubView] = useState<'none' | 'oracle' | 'alchemist' | 'selection'>('none');
   const [oracleCardFlipped, setOracleCardFlipped] = useState(false);
@@ -1766,16 +1702,16 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           </div>
           <div className="focus-main-content">
             <div className="focus-header-img-container">
-              <Image src={nbaItems[0].photo} fill alt={nbaItems[0].title} style={{ objectFit: 'cover', objectPosition: 'center 35%', borderRadius: '18px' }} />
+              <Image src="/images/photo_walk.png" fill alt="Waldbaden" style={{ objectFit: 'cover', objectPosition: 'center 35%', borderRadius: '18px' }} />
             </div>
             <div className="focus-text-container-new">
-              <h3 className="focus-title-new">{nbaItems[0].title}</h3>
+              <h3 className="focus-title-new">Stress reduzieren mit Waldbaden</h3>
               <p className="focus-desc-new">
-                {nbaItems[0].desc}
+                Senke aktiv dein Cortisollevel und stärke deine Herzratenvariabilität (HRV) durch gezielte Entlastungsphasen und mentale Regeneration.
               </p>
             </div>
             
-            <button className="focus-action-plan-btn-small" onClick={() => setActiveModal('nba')}>
+            <button className="focus-action-plan-btn-small" onClick={() => onNavigate?.('coaching')}>
               <i className="bi bi-rocket-takeoff-fill"></i>
               <div className="focus-action-plan-txt">
                 <strong className="focus-action-plan-title-small">Aktueller Action-Plan</strong>
@@ -2269,11 +2205,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       {/* --- MODALS --- */}
       {activeModal && (
         <div className="modal-overlay" onClick={() => { setActiveModal(null); setIsRecording(false); }}>
-          <div 
-            className={`modal-content ${activeModal === 'activity' || activeModal === 'diamonds' || activeModal === 'jungbrunnen-selection' || activeModal === 'nba' ? 'large-modal' : ''}`} 
-            style={activeModal === 'nba' ? { maxWidth: '760px' } : undefined}
-            onClick={e => e.stopPropagation()}
-          >
+          <div className={`modal-content ${activeModal === 'activity' || activeModal === 'diamonds' || activeModal === 'jungbrunnen-selection' ? 'large-modal' : ''}`} onClick={e => e.stopPropagation()}>
             <button className="modal-close-btn" onClick={() => { setActiveModal(null); setIsRecording(false); }}><i className="bi bi-x-lg"></i></button>
             
             {activeModal === 'activity' && (
@@ -3099,119 +3031,12 @@ return (
                 </div>
               </div>
             )}
-
-            {activeModal === 'nba' && (
-              <div className="modal-body nba-modal-body" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem', padding: '1.5rem' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '0.5rem' }}>
-                  <div style={{ width: '55px', height: '55px', borderRadius: '18px', background: '#eefdf8', border: '2.5px solid #73c480', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#16a34a', fontSize: '1.8rem' }}>
-                    <i className="bi bi-rocket-takeoff-fill"></i>
-                  </div>
-                  <div>
-                    <h3 className="modal-title" style={{ margin: 0, fontSize: '1.6rem', fontWeight: 800, color: '#1e293b' }}>Deine Fokusfelder für diese Woche</h3>
-                    <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '1.05rem' }}>
-                      Auf Basis deiner Vitalitätsdaten und des wöchentlichen Coachings mit Lisa AI.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="nba-cards-container" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
-                  {nbaItems.map((item, index) => {
-                    const isWaldbaden = item.id === 'waldbaden';
-                    const isBreath = item.id === 'breath';
-                    const isBeeren = item.id === 'beeren';
-                    const itemColor = isWaldbaden ? '#16a34a' : isBreath ? '#3b82f6' : '#ec4899';
-                    
-                    return (
-                      <div 
-                        key={item.id} 
-                        className="nba-card interactive-nba-card" 
-                        onClick={() => handleNbaClick(item.id)}
-                        style={{
-                          display: 'flex',
-                          background: item.isFavored ? (isWaldbaden ? 'linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%)' : isBreath ? 'linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%)' : 'linear-gradient(135deg, #fdf2f8 0%, #ffffff 100%)') : '#ffffff',
-                          border: item.border,
-                          borderRadius: '24px',
-                          overflow: 'hidden',
-                          position: 'relative',
-                          boxShadow: item.isFavored ? `0 10px 25px rgba(0,0,0,0.06)` : '0 4px 12px rgba(0,0,0,0.02)',
-                          cursor: 'pointer',
-                          transition: 'transform 0.2s ease, box-shadow 0.2s ease'
-                        }}
-                      >
-                        {/* Badge */}
-                        {item.isFavored && (
-                          <div style={{
-                            position: 'absolute',
-                            top: '12px',
-                            right: '12px',
-                            background: itemColor,
-                            color: '#fff',
-                            fontSize: '0.88rem',
-                            fontWeight: 800,
-                            padding: '4px 10px',
-                            borderRadius: '50px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '4px',
-                            boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
-                          }}>
-                            <i className="bi bi-star-fill"></i> Favorisiert
-                          </div>
-                        )}
-
-                        {/* Image */}
-                        <div style={{ width: '150px', position: 'relative', minHeight: '140px', flexShrink: 0, background: isBeeren ? '#f8fafc' : undefined, display: isBeeren ? 'flex' : undefined, alignItems: isBeeren ? 'center' : undefined, justifyContent: isBeeren ? 'center' : undefined }}>
-                          {isBeeren ? (
-                            <div style={{ width: '100%', height: '100%', position: 'relative', transform: 'scale(0.8)' }}>
-                              <Image 
-                                src={item.image} 
-                                fill 
-                                alt={item.title} 
-                                style={{ objectFit: 'contain' }} 
-                              />
-                            </div>
-                          ) : (
-                            <Image 
-                              src={item.image} 
-                              fill 
-                              alt={item.title} 
-                              style={{ objectFit: 'cover' }} 
-                            />
-                          )}
-                        </div>
-
-                        {/* Content */}
-                        <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 1 }}>
-                          <span style={{ fontSize: '0.88rem', color: itemColor, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Rank #{index + 1} • {item.category}</span>
-                          <strong style={{ fontSize: '1.38rem', color: '#1e293b', marginTop: '2px' }}>{item.title}</strong>
-                          <p style={{ fontSize: '0.98rem', color: '#64748b', margin: '6px 0 10px 0', lineHeight: 1.45 }}>
-                            {item.desc}
-                          </p>
-                          <div style={{ display: 'flex', gap: '20px', fontSize: '0.92rem', fontWeight: 700, color: '#475569', alignItems: 'center' }}>
-                            <span><i className="bi bi-clock"></i> {item.duration}</span>
-                            <span style={{ color: itemColor }}><i className={`bi ${item.effectIcon}`}></i> {item.effect}</span>
-                            <span style={{ color: '#0891b2', display: 'inline-flex', alignItems: 'center', gap: '3px' }}><i className="bi bi-gem"></i> +{item.diamonds} Diamanten</span>
-                          </div>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
           </div>
         </div>
       )}
 
       <style jsx>{`
         .dashboard-container { padding: 2rem; min-height: 100vh; display: flex; flex-direction: column; gap: 2rem; }
-        .interactive-nba-card {
-          transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .interactive-nba-card:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 10px 20px rgba(0,0,0,0.06) !important;
-        }
         
         .top-row { display: grid; grid-template-columns: 1fr 0.8fr 1fr; gap: 1.5rem; align-items: stretch; }
         .bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }

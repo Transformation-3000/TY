@@ -296,6 +296,7 @@ export default function Dashboard() {
           {activeMenuItem === 'mehr' && (
             <MehrPage onNavigate={navigate} />
           )}
+
         </div>
       </div>
       <BottomNav activeTab={activeMenuItem} onTabChange={navigate} />

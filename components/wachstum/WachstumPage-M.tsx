@@ -76,24 +76,6 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
 
   const [selectedField, setSelectedField] = useState(OPTIMIZATION_FIELDS[0]);
   const [selectedStyle, setSelectedStyle] = useState<number>(2); // 1 = Einfach, 2 = Mittel, 3 = Tiefgründig
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const loadStyle = () => {
-        const saved = localStorage.getItem('ty_selected_style');
-        if (saved) {
-          setSelectedStyle(parseInt(saved, 10));
-        }
-      };
-      loadStyle();
-      window.addEventListener('ty_selected_style_changed', loadStyle);
-      window.addEventListener('storage', loadStyle);
-      return () => {
-        window.removeEventListener('ty_selected_style_changed', loadStyle);
-        window.removeEventListener('storage', loadStyle);
-      };
-    }
-  }, []);
   const userMaturity = 2; // Beispiel-Reifegrad für die Logik rechts
 
   const filteredWins = QUICK_WINS.filter(win => win.category === selectedField.id && win.maturityRequired <= userMaturity);
@@ -103,6 +85,45 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
       <header style={{ marginBottom: '2.5rem' }}>
         <h1 className="growth-page-title">Do Longevity yourself</h1>
         
+        <div className="style-selector-wrapper" style={{ marginTop: '1.75rem' }}>
+          <div className="sim-card-headline-row" style={{ display: 'flex', alignItems: 'center', marginBottom: '0.75rem' }}>
+            <span className="blue-bar"></span>
+            <h2 className="style-selector-title">
+              Wähle einen Informationsstil aus, der am besten zu dir passt: <span className="style-selector-subtitle">Die 12 Tools helfen dir dabei spielerisch zu erkunden, Wirkungsweisen besser zu verstehen und deinen Lifestyle zu optimieren</span>
+            </h2>
+          </div>
+          <div style={{ height: '1px', background: '#e2e8f0', width: '100%', marginBottom: '1.5rem' }}></div>
+          <div className="segmented-control">
+            {[
+              { level: 1, name: 'Einfach', desc: 'Minimaler Aufwand: Fokus auf die wirkungsvollsten Gewohnheiten mit simplen Schritt-für-Schritt-Anleitungen.', image: '/images/icon_einfach_clean_3d.png?v=3' },
+              { level: 2, name: 'Mittel', desc: 'Gezielte Optimierung: Smarte Gewohnheiten kombiniert mit leicht verständlichen Hintergrundinformationen.', image: '/images/icon_mittel_clean_3d.png?v=3' },
+              { level: 3, name: 'Tiefgründig', desc: 'Hohe Tiefe: Voller Einblick in die dahinterliegenden biochemischen Prozesse und wissenschaftliche Evidenz.', image: '/images/icon_tief_clean_3d.png?v=3' }
+            ].map((item) => (
+              <button 
+                key={item.level} 
+                className={`segmented-button level-${item.level} ${selectedStyle === item.level ? 'active' : ''}`}
+                onClick={() => setSelectedStyle(item.level)}
+                type="button"
+              >
+                <div className="style-header-row" style={{ gap: item.level === 2 ? '0.375rem' : '0.18rem' }}>
+                  <img 
+                    src={item.image} 
+                    alt={item.name}
+                    style={{
+                      width: '38px',
+                      height: '38px',
+                      objectFit: 'contain',
+                      flexShrink: 0,
+                      marginLeft: '-6px'
+                    }}
+                  />
+                  <span className="style-name">{item.name}</span>
+                </div>
+                <span className="style-desc">{item.desc}</span>
+              </button>
+            ))}
+          </div>
+        </div>
       </header>
 
       <div className="wachstum-layout">

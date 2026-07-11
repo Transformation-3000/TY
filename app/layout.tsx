@@ -38,7 +38,8 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: `
           (function() {
             var pathname = window.location.pathname;
-            if (pathname !== '/login' && !pathname.startsWith('/api/auth')) {
+            var isPublicPath = pathname === '/' || pathname === '/login' || pathname === '/unternehmen' || pathname === '/impressum' || pathname === '/datenschutz' || pathname === '/agb' || pathname === '/checkout' || pathname.startsWith('/onboarding') || pathname.startsWith('/api/auth');
+            if (!isPublicPath) {
               var lastActive = localStorage.getItem('ty_last_active');
               var now = Date.now();
               var isSessionExpired = !lastActive || (now - Number(lastActive) > 10 * 60 * 1000); // 10 Minuten
