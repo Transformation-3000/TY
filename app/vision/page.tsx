@@ -219,11 +219,11 @@ export default function VisionPage() {
 
                 {/* Believe */}
                 <div style={{ marginBottom: 0 }}>
-                  <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#1e293b', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <i className="bi bi-patch-check-fill" style={{ color: '#16a34a' }}></i> Die Überzeugung (Believe)
+                  <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#1e293b', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <i className="bi bi-patch-check-fill" style={{ color: '#16a34a' }}></i> Die persönliche Vision
                   </h4>
-                  <p style={{ fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', margin: 0 }}>
-                    „Richtiger Zeitpunkt: Longevity auf dem Weg zum Mainstream. Noch nie zuvor hatten wir so viel Wissen über unsere Biologie & Tech, sie zu beeinflussen. Wir treten ein in ein neues Zeitalter der Selbstwirksamkeit: datengetrieben, präventiv und persönlich.“
+                  <p style={{ fontSize: '1.1rem', color: '#475569', lineHeight: '1.7', margin: 0 }}>
+                    „Wir stehen an der Schwelle zu einer bahnbrechenden Ära: Alterung ist kein Schicksal mehr, sondern ein gestaltbarer Prozess. Meine Vision für True Years ist es, modernste Wissenschaft und künstliche Intelligenz so einfach nutzbar zu machen, dass jeder Mensch die volle Kontrolle über seine biologische Uhr gewinnt. Wir möchten dir nicht nur Jahre schenken, sondern vitale, gesunde und kraftvolle Lebensjahre voller Energie – datengetrieben, präventiv und perfekt integriert in deinen Alltag. Lass uns das Älterwerden gemeinsam neu definieren.“
                   </p>
                 </div>
               </div>
@@ -261,11 +261,11 @@ export default function VisionPage() {
 
                 {/* Believe */}
                 <div style={{ marginBottom: 0 }}>
-                  <h4 style={{ fontSize: '1rem', fontWeight: 800, color: '#1e293b', marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <i className="bi bi-patch-check-fill" style={{ color: '#16a34a' }}></i> Die Überzeugung (Believe)
+                  <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#1e293b', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                    <i className="bi bi-patch-check-fill" style={{ color: '#16a34a' }}></i> Die persönliche Vision
                   </h4>
-                  <p style={{ fontSize: '0.95rem', color: '#475569', lineHeight: '1.6', margin: 0 }}>
-                    „Im Laufe meiner beruflichen Tätigkeit hat sich ein Bild der Dinge ergeben, die die Bevölkerung wirklich braucht, um echte Verbesserung ihres Gesundheitszustandes zu erreichen. Das soll mit diesem Programm erreicht werden.“
+                  <p style={{ fontSize: '1.1rem', color: '#475569', lineHeight: '1.7', margin: 0 }}>
+                    „In meiner beruflichen Laufbahn habe ich gelernt, dass Menschen keine Ratschläge ins Blaue hinein brauchen, sondern präzise, verlässliche Lösungen für ihre Gesundheit. Meine Vision ist es, die komplexesten biologischen Daten und Wearable-Routinen so elegant zu orchestrieren, dass sie dir als intuitiver, unsichtbarer Alltags-Kompass dienen. Wir bauen eine Plattform, die dir jeden Tag zeigt, was deine Zellen heute brauchen, um in Bestform zu bleiben. Wir machen Langlebigkeit transparent, nachweisbar und vor allem – einfach.“
                   </p>
                 </div>
               </div>
