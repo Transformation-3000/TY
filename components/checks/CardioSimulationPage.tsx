@@ -1,64 +1,196 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 interface CardioSimulationPageProps {
   onBack: () => void;
 }
 
 export default function CardioSimulationPage({ onBack }: CardioSimulationPageProps) {
-  // Inputs
+  // Inputs (Mischpult ganz unten)
   const [simZone2, setSimZone2] = useState(90);
   const [simHIIT, setSimHIIT] = useState(1);
   const [simRegen, setSimRegen] = useState(70);
 
-  // Calculations
-  const baseVO2 = 35.0;
-  const z2Points = (simZone2 / 240) * 5.0; // Max +5 VO2-Max
-  const hiitPoints = (simHIIT / 4) * 6.0;  // Max +6 VO2-Max
-  
-  let overtrainingPenalty = 0;
-  if (simHIIT >= 3 && simRegen < 60) {
-    overtrainingPenalty = 4.0;
-  } else if (simHIIT >= 2 && simRegen < 50) {
-    overtrainingPenalty = 2.0;
-  } else if (simHIIT === 4 && simRegen < 75) {
-    overtrainingPenalty = 2.5;
-  }
-  
-  const regenFactor = (simRegen - 30) / 70; // 0 bis 1
-  const calculatedVO2 = Math.min(48.5, Math.max(30.0, baseVO2 + (z2Points + hiitPoints) * (0.3 + 0.7 * regenFactor) - overtrainingPenalty));
-  
-  const bioAgeDiff = (calculatedVO2 - baseVO2) * 0.45; // Bis zu -6 Jahre
-  const healthspanBonus = (calculatedVO2 - baseVO2) * 0.35; // Bis zu +4.7 Jahre
-  
-  let cardMixerStatus = "Gute Balance. Erhöhe Zone-2 oder HIIT für stärkere Langlebigkeits-Effekte.";
-  let cardMixerColor = "#eab308"; // gelb
-  let cardMixerIcon = "bi-shield-shaded";
-  let pulseSpeed = "2s";
-  
-  if (simHIIT >= 3 && simRegen < 70) {
-    cardMixerStatus = "Systemwarnung: Übertraining! Du trainierst zu hart für deine Regeneration. Schontage einlegen!";
-    cardMixerColor = "#ef4444"; // rot
-    cardMixerIcon = "bi-exclamation-triangle-fill";
-    pulseSpeed = "0.4s";
-  } else if (simZone2 >= 120 && simHIIT >= 1 && simRegen >= 75) {
-    cardMixerStatus = "Perfect Flow! Dein Herzschlag-Rhythmus klingt kraftvoll und harmonisch. Maximaler Fortschritt!";
-    cardMixerColor = "#22c55e"; // grün
-    cardMixerIcon = "bi-check-circle-fill";
-    pulseSpeed = "1.2s";
-  } else if (simZone2 < 60 && simHIIT === 0) {
-    cardMixerStatus = "Systemstatus: Träge. Erhöhe Zone-2-Einheiten, um deine zelluläre Akkuladung zu starten.";
-    cardMixerColor = "#64748b"; // grau
-    cardMixerIcon = "bi-info-circle-fill";
-    pulseSpeed = "3s";
-  }
+  // Simulation States (Rennen ganz oben)
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [simWeek, setSimWeek] = useState(0);
+  const [simHistory, setSimHistory] = useState<number[]>([35.0]);
+  const [currentVO2, setCurrentVO2] = useState(35.0);
+  const [simMessage, setSimMessage] = useState('Stelle dein Mischpult unten ein und starte das 12-Wochen-Rennen!');
+  const [simStatusColor, setSimStatusColor] = useState('#64748b'); // Slate
+  const [lisaReport, setLisaReport] = useState<string | null>(null);
 
-  // Bergsteiger active stage
-  const isBaseCamp = calculatedVO2 < 35.0;
-  const isWaldgrenze = calculatedVO2 >= 35.0 && calculatedVO2 < 40.0;
-  const isFelsstufe = calculatedVO2 >= 40.0 && calculatedVO2 < 45.0;
-  const isGipfel = calculatedVO2 >= 45.0;
+  const baseVO2 = 35.0;
+  const simInterval = useRef<NodeJS.Timeout | null>(null);
+
+  // Run week-by-week simulation
+  const startSimulation = () => {
+    if (isSimulating) return;
+
+    // Reset simulation
+    setIsSimulating(true);
+    setSimWeek(0);
+    setSimHistory([baseVO2]);
+    setCurrentVO2(baseVO2);
+    setSimMessage('Woche 0: Starte Trainingszyklus...');
+    setSimStatusColor('#006EA7');
+    setLisaReport(null);
+  };
+
+  useEffect(() => {
+    if (!isSimulating) return;
+
+    const runNextWeek = () => {
+      setSimWeek((prevWeek) => {
+        const nextWeek = prevWeek + 1;
+        if (nextWeek > 12) {
+          setIsSimulating(false);
+          if (simInterval.current) clearInterval(simInterval.current);
+          generateLisaReport();
+          return prevWeek;
+        }
+
+        // Calculate VO2-Max for this specific week
+        setCurrentVO2((prevVO2) => {
+          let weeklyChange = 0;
+          const regenFactor = (simRegen - 30) / 70; // 0 to 1
+
+          // 1. Overtraining checks
+          const isExtremeHIITNoRegen = simHIIT >= 3 && simRegen < 60;
+          const isModerateHIITNoRegen = simHIIT >= 2 && simRegen < 50;
+          const isCriticalSleepDeprived = simRegen < 40;
+          const isNoBaseOnlyHIIT = simZone2 < 45 && simHIIT >= 2;
+
+          if (isCriticalSleepDeprived) {
+            // Constant decline due to sleep deprivation
+            weeklyChange = -0.3;
+            setSimMessage(`Woche ${nextWeek}: Systemischer Schlafmangel! Deine Zellen können sich nicht regenerieren.`);
+            setSimStatusColor('#ef4444');
+          } else if (isExtremeHIITNoRegen && nextWeek > 4) {
+            // Overtraining crash after week 4
+            weeklyChange = -0.5;
+            setSimMessage(`Woche ${nextWeek}: Übertraining! Chronische Entzündung und Muskelkater bremsen dich aus.`);
+            setSimStatusColor('#ef4444');
+          } else if (isModerateHIITNoRegen && nextWeek > 3) {
+            // Moderate overtraining crash after week 3
+            weeklyChange = -0.3;
+            setSimMessage(`Woche ${nextWeek}: Erschöpfung! Dein Körper fordert dringend Ruhetage.`);
+            setSimStatusColor('#f97316');
+          } else if (isNoBaseOnlyHIIT && nextWeek > 5) {
+            // Stalling/Crash due to no base
+            weeklyChange = -0.15;
+            setSimMessage(`Woche ${nextWeek}: Mitochondrien-Kollaps! Dir fehlt die aerobe Basis für dieses HIIT-Volumen.`);
+            setSimStatusColor('#f97316');
+          } else {
+            // 2. Normal adaptations
+            // Zone 2 builds the mitochondrial base (slow and steady)
+            const z2Adaptation = (simZone2 / 240) * 0.4; // Max +0.4 VO2-Max per week
+            
+            // HIIT builds cardiac output (needs base to adapt)
+            let hiitAdaptation = (simHIIT / 4) * 0.5; // Max +0.5 VO2-Max per week
+            
+            // If base is too low, HIIT adaptation is halved after week 4
+            if (simZone2 < 90 && nextWeek > 4) {
+              hiitAdaptation *= 0.5;
+            }
+
+            weeklyChange = (z2Adaptation + hiitAdaptation) * (0.3 + 0.7 * regenFactor);
+            
+            // Output message
+            if (simZone2 >= 120 && simHIIT >= 1 && simRegen >= 75) {
+              setSimMessage(`Woche ${nextWeek}: Perfect Flow! Optimale Balance aus aerober Basis und Intervallen.`);
+              setSimStatusColor('#22c55e');
+            } else if (simHIIT > 0 && simRegen >= 70) {
+              setSimMessage(`Woche ${nextWeek}: Guter Reiz! Dein Herzschlagvolumen passt sich an.`);
+              setSimStatusColor('#4C99C2');
+            } else if (simZone2 > 0 && simHIIT === 0) {
+              setSimMessage(`Woche ${nextWeek}: Grundlagen-Aufbau. Du vermehrst deine Mitochondrien.`);
+              setSimStatusColor('#eab308');
+            } else {
+              setSimMessage(`Woche ${nextWeek}: Kaum Trainingsreize gesetzt. Dein VO2-Max stagniert.`);
+              setSimStatusColor('#64748b');
+            }
+          }
+
+          const nextVO2 = Math.min(48.5, Math.max(30.0, prevVO2 + weeklyChange));
+          setSimHistory((prevHistory) => [...prevHistory, nextVO2]);
+          return nextVO2;
+        });
+
+        return nextWeek;
+      });
+    };
+
+    simInterval.current = setInterval(runNextWeek, 300);
+
+    return () => {
+      if (simInterval.current) clearInterval(simInterval.current);
+    };
+  }, [isSimulating, simZone2, simHIIT, simRegen]);
+
+  // Generate the final analysis report from Lisa AI
+  const generateLisaReport = () => {
+    // Final check values
+    const finalVO2 = currentVO2;
+    const isExtremeHIITNoRegen = simHIIT >= 3 && simRegen < 60;
+    const isNoBaseOnlyHIIT = simZone2 < 45 && simHIIT >= 2;
+    const isCriticalSleepDeprived = simRegen < 40;
+
+    if (isCriticalSleepDeprived) {
+      setLisaReport(
+        "❌ **Rennen abgebrochen: Systemischer Kollaps.**\nDu hast versucht zu trainieren, aber dein Schlaf- und Regenerationsniveau liegt im kritischen Bereich. Ohne Erholung führen Trainingsreize zu Muskelabbau und zellulärem Stress. Erhöhe deine Regeneration auf mindestens 70 %, um Fortschritte zu erzielen."
+      );
+      setSimMessage("Rennen beendet: Systemischer Schlafmangel!");
+      setSimStatusColor('#ef4444');
+    } else if (isExtremeHIITNoRegen) {
+      setLisaReport(
+        "⚠️ **Übertrainings-Crash in Woche 5.**\nDein Plan war zu intensiv für deine Erholungsfähigkeit. HIIT-Intervalle ohne ausreichenden Schlaf führen zu chronisch erhöhten Entzündungswerten (Cortisol) und überlasten dein zentrales Nervensystem. Dein VO2-Max ist nach anfänglichen Gewinnen wieder eingebrochen. *Empfehlung:* Reduziere HIIT auf 1x pro Woche und erhöhe den Schlaf."
+      );
+      setSimMessage("Rennen beendet: Übertraining!");
+      setSimStatusColor('#ef4444');
+    } else if (isNoBaseOnlyHIIT) {
+      setLisaReport(
+        "📉 **Mitochondrien-Kollaps ab Woche 6.**\nDu hast zwar intensive Intervalle gesetzt, aber dir fehlt die aerobe Basis (Zone 2). Ohne Mitochondrien können deine Muskelzellen den bereitgestellten Sauerstoff nicht verwerten. Dein Training verpufft und führt zu schneller Ermüdung. *Empfehlung:* Mindestens 90–120 Minuten lockeres Zone-2-Training pro Woche einbauen."
+      );
+      setSimMessage("Rennen beendet: Fehlende Ausdauerbasis!");
+      setSimStatusColor('#f97316');
+    } else if (simZone2 >= 120 && simHIIT >= 1 && simRegen >= 75) {
+      setLisaReport(
+        "🏆 **Perfect Flow erreicht! Herausragendes Ergebnis.**\nDu hast das wissenschaftlich erprobte Polarized-Training perfekt umgesetzt. 80 % ruhige Ausdauer (Zone 2) gepaart mit 20 % Spitzenintensität (Zone 5) und exzellenter Regeneration. Deine Mitochondrien arbeiten hocheffizient und dein Schlagvolumen hat sich maximiert. Dein Herzalter hat sich signifikant verjüngt!"
+      );
+      setSimMessage("Rennen erfolgreich beendet: Perfect Flow!");
+      setSimStatusColor('#22c55e');
+    } else if (simZone2 > 0 && simHIIT === 0) {
+      setLisaReport(
+        "ℹ️ **Solide Basis, aber kein Spitzen-Reiz.**\nDu hast ein hervorragendes aerobes Fundament gebaut. Deine Mitochondriendichte ist gestiegen, was deine zelluläre Gesundheit schützt. Allerdings fehlt dir der HIIT-Intensitätsreiz, um dein Herzschlagvolumen maximal auszuweiten. *Empfehlung:* Integriere 1x pro Woche ein 4x4-Minuten-Intervalltraining."
+      );
+      setSimMessage("Rennen beendet: Grundlagen aufgebaut.");
+      setSimStatusColor('#eab308');
+    } else if (simZone2 === 0 && simHIIT === 0) {
+      setLisaReport(
+        "💤 **Keine Anpassungen.**\nOhne Trainingsreize baut der Körper ungenutzte Kapazitäten ab. Dein VO2-Max ist über die 12 Wochen leicht gesunken. Langlebigkeit ist ein aktiver Prozess – fange klein an, z. B. mit 45 Minuten zügigem Gehen in Zone 2."
+      );
+      setSimMessage("Rennen beendet: Keine Trainingsreize.");
+      setSimStatusColor('#64748b');
+    } else {
+      setLisaReport(
+        "📈 **Guter Fortschritt.**\nDu hast spürbare Fortschritte erzielt. Dein Herzkreislauf-System ist fitter und dein Langlebigkeits-Score hat sich verbessert. Um das Maximum herauszuholen (Perfect Flow), versuche das Verhältnis von Ausdauer zu HIIT noch feiner abzustimmen."
+      );
+      setSimMessage("Rennen erfolgreich beendet.");
+      setSimStatusColor('#22c55e');
+    }
+  };
+
+  // Live outcomes
+  const bioAgeDiff = (currentVO2 - baseVO2) * 0.45;
+  const healthspanBonus = (currentVO2 - baseVO2) * 0.35;
+
+  // Mountain climb elevations
+  const isBaseCamp = currentVO2 < 35.0;
+  const isWaldgrenze = currentVO2 >= 35.0 && currentVO2 < 40.0;
+  const isFelsstufe = currentVO2 >= 40.0 && currentVO2 < 45.0;
+  const isGipfel = currentVO2 >= 45.0;
 
   return (
     <div className="sim-container">
@@ -118,43 +250,6 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         .sim-back-btn:active {
           transform: translateY(0);
         }
-        @media (max-width: 1366px) {
-          .sim-subtitle {
-            font-size: 1.05rem;
-          }
-        }
-        @media (max-width: 1200px) {
-          .sim-subtitle {
-            font-size: 0.88rem;
-          }
-        }
-        @media (max-width: 1050px) {
-          .sim-subtitle {
-            font-size: 0.76rem;
-          }
-        }
-        @media (max-width: 992px) {
-          .sim-subtitle {
-            white-space: normal;
-            font-size: 1rem;
-            text-overflow: clip;
-            overflow: visible;
-          }
-        }
-        @media (max-width: 576px) {
-          .sim-header-title-row {
-            flex-direction: column-reverse;
-            align-items: flex-start;
-            gap: 1rem;
-          }
-          .sim-back-btn {
-            align-self: flex-start;
-            padding: 0.4rem 0.9rem;
-            font-size: 0.85rem;
-          }
-        }
-
-        /* Card Layout */
         .sim-section-card {
           background: #ffffff;
           border: 1.5px solid #e2e8f0;
@@ -188,7 +283,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         }
       `}} />
 
-      {/* Header (Aligned perfectly with Zellalter-Simulator style) */}
+      {/* Header */}
       <div className="sim-header">
         <div className="sim-header-title-row">
           <h1 className="sim-title">Cardio- & VO2-Max-Simulator</h1>
@@ -208,13 +303,62 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
         {/* I. DAS LANGLEBIGKEITS-RENNEN */}
         <div>
-          <h2 className="sim-sec-title">I. Das Langlebigkeits-Rennen</h2>
-          <p className="sim-sec-desc">
-            Vergleiche deinen Fortschritt mit deinem untrainierten Ausgangszustand.
-          </p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+            <div>
+              <h2 className="sim-sec-title" style={{ margin: 0 }}>I. Das Langlebigkeits-Rennen (Wochen 1–12)</h2>
+              <p className="sim-sec-desc" style={{ margin: '0.2rem 0 0 0' }}>
+                Starte die 12-Wochen-Simulation und sieh zu, wie weit dein Avatar auf der Laufbahn sprintet.
+              </p>
+            </div>
+            <button
+              onClick={startSimulation}
+              disabled={isSimulating}
+              style={{
+                background: isSimulating ? '#cbd5e1' : 'linear-gradient(135deg, #006ea7, #4c99c2)',
+                color: '#ffffff',
+                border: 'none',
+                padding: '12px 24px',
+                borderRadius: '16px',
+                fontWeight: 800,
+                fontSize: '1rem',
+                cursor: isSimulating ? 'default' : 'pointer',
+                boxShadow: isSimulating ? 'none' : '0 4px 15px rgba(0, 110, 167, 0.25)',
+                transition: 'all 0.2s',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px'
+              }}
+            >
+              <i className="bi bi-play-circle-fill" style={{ fontSize: '1.2rem' }}></i>
+              {isSimulating ? `Woche ${simWeek} läuft...` : '12-Wochen-Rennen simulieren'}
+            </button>
+          </div>
+
+          {/* Simulation status banner */}
+          <div 
+            style={{
+              background: `${simStatusColor}08`,
+              border: `1.5px dashed ${simStatusColor}40`,
+              borderRadius: '16px',
+              padding: '1rem 1.5rem',
+              color: simStatusColor,
+              fontWeight: 700,
+              fontSize: '1rem',
+              marginBottom: '2.5rem',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '10px',
+              transition: 'all 0.3s'
+            }}
+          >
+            <i className="bi bi-info-circle-fill" />
+            <span>{simMessage}</span>
+          </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'center' }}>
             <div style={{ paddingRight: '2rem' }}>
+              
+              {/* Dynamic weekly progression track */}
               <div 
                 style={{
                   background: '#f1f5f9',
@@ -241,7 +385,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   />
                 ))}
 
-                {/* Avatar A: Aktuelles Ich */}
+                {/* Avatar A: Aktuelles Ich (static baseline) */}
                 <div 
                   style={{
                     position: 'absolute',
@@ -249,8 +393,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     top: '-32px',
                     display: 'flex',
                     flexDirection: 'column',
-                    alignItems: 'center',
-                    transition: 'all 0.3s ease'
+                    alignItems: 'center'
                   }}
                 >
                   <span style={{ fontSize: '1.8rem', lineHeight: 1 }}>🏃‍♂️</span>
@@ -271,11 +414,11 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   </span>
                 </div>
 
-                {/* Avatar B: Zukünftiges Ich */}
+                {/* Avatar B: Zukünftiges Ich (moves weekly during sim) */}
                 <div 
                   style={{
                     position: 'absolute',
-                    left: `${10 + ((calculatedVO2 - 30) / 20) * 75}%`,
+                    left: `${10 + ((currentVO2 - 30) / 20) * 75}%`,
                     top: '-32px',
                     display: 'flex',
                     flexDirection: 'column',
@@ -283,64 +426,114 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'
                   }}
                 >
-                  <span style={{ fontSize: '1.8rem', lineHeight: 1, filter: 'drop-shadow(0 2px 5px rgba(34, 197, 94, 0.4))' }}>🏃‍♂️⚡</span>
+                  <span style={{ fontSize: '1.8rem', lineHeight: 1, filter: 'drop-shadow(0 2px 5px rgba(34, 197, 94, 0.4))' }}>
+                    {isSimulating ? '🏃‍♂️⚡' : currentVO2 > baseVO2 ? '🏃‍♂️🏆' : '🏃‍♂️'}
+                  </span>
                   <span 
                     style={{
                       fontSize: '0.78rem',
                       fontWeight: 800,
-                      color: '#22c55e',
-                      background: '#f0fdf4',
-                      border: '1px solid #bbf7d0',
+                      color: currentVO2 > baseVO2 ? '#22c55e' : currentVO2 < baseVO2 ? '#ef4444' : '#64748b',
+                      background: currentVO2 > baseVO2 ? '#f0fdf4' : currentVO2 < baseVO2 ? '#fef2f2' : '#f1f5f9',
+                      border: `1px solid ${currentVO2 > baseVO2 ? '#bbf7d0' : currentVO2 < baseVO2 ? '#fecaca' : '#cbd5e1'}`,
                       padding: '2px 6px',
                       borderRadius: '8px',
                       whiteSpace: 'nowrap',
                       marginTop: '2px'
                     }}
                   >
-                    Ziel ({calculatedVO2.toFixed(1)})
+                    Woche {simWeek} ({currentVO2.toFixed(1)})
                   </span>
                 </div>
               </div>
+
+              {/* Mini visual curve of VO2-Max progress */}
+              <div style={{ display: 'flex', gap: '4px', height: '60px', alignItems: 'flex-end', marginTop: '1.5rem', background: '#fafcff', border: '1px solid #e2eef8', borderRadius: '12px', padding: '10px 15px' }}>
+                <div style={{ fontSize: '0.75rem', color: '#94a3b8', width: '50px', alignSelf: 'center', fontWeight: 700 }}>Verlauf:</div>
+                <div style={{ display: 'flex', gap: '6px', flex: 1, height: '100%', alignItems: 'flex-end' }}>
+                  {simHistory.map((val, idx) => {
+                    const pct = ((val - 30) / 20) * 100;
+                    return (
+                      <div 
+                        key={idx}
+                        style={{
+                          flex: 1,
+                          height: `${Math.max(10, pct)}%`,
+                          background: val > baseVO2 ? '#4C99C2' : val < baseVO2 ? '#ef4444' : '#94a3b8',
+                          borderRadius: '3px',
+                          transition: 'all 0.3s'
+                        }}
+                        title={`Woche ${idx}: ${val.toFixed(1)}`}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+
             </div>
 
             {/* Outcomes Box */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-              <div 
-                style={{
-                  background: '#f0fdf4',
-                  border: '1px solid #bbf7d0',
-                  borderRadius: '20px',
-                  padding: '1.5rem',
-                  textAlign: 'center',
-                  boxShadow: '0 4px 12px rgba(34, 197, 94, 0.04)'
-                }}
-              >
-                <div style={{ fontSize: '2rem', fontWeight: 800, color: '#16a34a' }}>
-                  -{bioAgeDiff.toFixed(1)} J.
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+                <div 
+                  style={{
+                    background: currentVO2 >= baseVO2 ? '#f0fdf4' : '#fef2f2',
+                    border: `1px solid ${currentVO2 >= baseVO2 ? '#bbf7d0' : '#fecaca'}`,
+                    borderRadius: '20px',
+                    padding: '1.5rem',
+                    textAlign: 'center',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.01)'
+                  }}
+                >
+                  <div style={{ fontSize: '2rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#16a34a' : '#dc2626' }}>
+                    {currentVO2 >= baseVO2 ? '-' : '+'}{Math.abs(bioAgeDiff).toFixed(1)} J.
+                  </div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: currentVO2 >= baseVO2 ? '#15803d' : '#991b1b', textTransform: 'uppercase', marginTop: '0.3rem' }}>
+                    Herzalter
+                  </div>
                 </div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#15803d', textTransform: 'uppercase', marginTop: '0.3rem' }}>
-                  Herzalter
+
+                <div 
+                  style={{
+                    background: currentVO2 >= baseVO2 ? '#eff6ff' : '#f1f5f9',
+                    border: `1px solid ${currentVO2 >= baseVO2 ? '#bfdbfe' : '#e2e8f0'}`,
+                    borderRadius: '20px',
+                    padding: '1.5rem',
+                    textAlign: 'center',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.01)'
+                  }}
+                >
+                  <div style={{ fontSize: '2rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#2563eb' : '#64748b' }}>
+                    {currentVO2 >= baseVO2 ? '+' : ''}{healthspanBonus.toFixed(1)} J.
+                  </div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: currentVO2 >= baseVO2 ? '#1d4ed8' : '#475569', textTransform: 'uppercase', marginTop: '0.3rem' }}>
+                    Healthspan
+                  </div>
                 </div>
               </div>
 
-              <div 
-                style={{
-                  background: '#eff6ff',
-                  border: '1px solid #bfdbfe',
-                  borderRadius: '20px',
-                  padding: '1.5rem',
-                  textAlign: 'center',
-                  boxShadow: '0 4px 12px rgba(59, 130, 246, 0.04)'
-                }}
-              >
-                <div style={{ fontSize: '2rem', fontWeight: 800, color: '#2563eb' }}>
-                  +{healthspanBonus.toFixed(1)} J.
+              {/* Lisa AI Report placeholder */}
+              {lisaReport && (
+                <div 
+                  style={{
+                    background: '#f8fafc',
+                    border: '1.5px solid #e2e8f0',
+                    borderRadius: '20px',
+                    padding: '1.25rem',
+                    fontSize: '0.9rem',
+                    color: '#334155',
+                    lineHeight: '1.5',
+                    boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.5rem', fontWeight: 800, color: '#0f172a' }}>
+                    <span>🤖 Lisa AI Analyse-Report</span>
+                  </div>
+                  <div style={{ whiteSpace: 'pre-wrap' }}>{lisaReport}</div>
                 </div>
-                <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#1d4ed8', textTransform: 'uppercase', marginTop: '0.3rem' }}>
-                  Healthspan
-                </div>
-              </div>
+              )}
             </div>
+
           </div>
         </div>
 
@@ -370,7 +563,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 <div style={{ display: 'flex', gap: '1rem', marginTop: '1.2rem' }}>
                   <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '0.6rem 1rem', flex: 1, textAlign: 'center' }}>
                     <div style={{ fontSize: '0.78rem', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase' }}>VO2-Max prognose</div>
-                    <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', marginTop: '0.2rem' }}>{calculatedVO2.toFixed(1)}</div>
+                    <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', marginTop: '0.2rem' }}>{currentVO2.toFixed(1)}</div>
                   </div>
                   <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '0.6rem 1rem', flex: 1, textAlign: 'center' }}>
                     <div style={{ fontSize: '0.78rem', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase' }}>Etappen-Status</div>
@@ -395,7 +588,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)',
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '1rem',
+                  gap: '1.1rem',
                   position: 'relative'
                 }}
               >
@@ -583,7 +776,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         <div>
           <h2 className="sim-sec-title">III. Das Cardio-Mischpult</h2>
           <p className="sim-sec-desc">
-            Bewege die Regler, um die perfekte Balance aus Ausdauer, Intensität und Erholung einzustellen.
+            Bewege die Regler, um dein wöchentliches Training zu konfigurieren, bevor du das Rennen oben startest.
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'center' }}>
@@ -604,6 +797,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   max="240"
                   step="15"
                   value={simZone2}
+                  disabled={isSimulating}
                   onChange={(e) => setSimZone2(parseInt(e.target.value))}
                   style={{
                     width: '100%',
@@ -611,7 +805,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     borderRadius: '4px',
                     outline: 'none',
                     accentColor: '#006EA7',
-                    cursor: 'pointer'
+                    cursor: isSimulating ? 'default' : 'pointer',
+                    opacity: isSimulating ? 0.6 : 1
                   }}
                 />
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.3rem' }}>
@@ -635,6 +830,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   max="4"
                   step="1"
                   value={simHIIT}
+                  disabled={isSimulating}
                   onChange={(e) => setSimHIIT(parseInt(e.target.value))}
                   style={{
                     width: '100%',
@@ -642,7 +838,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     borderRadius: '4px',
                     outline: 'none',
                     accentColor: '#006EA7',
-                    cursor: 'pointer'
+                    cursor: isSimulating ? 'default' : 'pointer',
+                    opacity: isSimulating ? 0.6 : 1
                   }}
                 />
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.3rem' }}>
@@ -666,6 +863,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   max="100"
                   step="5"
                   value={simRegen}
+                  disabled={isSimulating}
                   onChange={(e) => setSimRegen(parseInt(e.target.value))}
                   style={{
                     width: '100%',
@@ -673,7 +871,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     borderRadius: '4px',
                     outline: 'none',
                     accentColor: '#006EA7',
-                    cursor: 'pointer'
+                    cursor: isSimulating ? 'default' : 'pointer',
+                    opacity: isSimulating ? 0.6 : 1
                   }}
                 />
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.8rem', color: '#94a3b8', marginTop: '0.3rem' }}>
