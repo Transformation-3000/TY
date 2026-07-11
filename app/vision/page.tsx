@@ -71,7 +71,7 @@ export default function VisionPage() {
             lineHeight: '1.2',
             letterSpacing: '-0.02em'
           }}>
-            Das Leben neu definieren:<br />Mehr gesunde Lebensjahre für alle
+            Unsere Vision:<br />Longevity for all
           </h1>
           <p style={{ 
             fontSize: '1.4rem', 
