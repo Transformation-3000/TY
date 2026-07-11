@@ -77,11 +77,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
   const [selectedField, setSelectedField] = useState(OPTIMIZATION_FIELDS[0]);
   const [selectedStyle, setSelectedStyle] = useState<number>(2); // 1 = Einfach, 2 = Mittel, 3 = Tiefgründig
 
-  // Cardio Simulator States
-  const [isCardioSimActive, setIsCardioSimActive] = useState(false);
-  const [simZone2, setSimZone2] = useState(90);
-  const [simHIIT, setSimHIIT] = useState(1);
-  const [simRegen, setSimRegen] = useState(70);
+
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -104,47 +100,7 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
 
   const filteredWins = QUICK_WINS.filter(win => win.category === selectedField.id && win.maturityRequired <= userMaturity);
 
-  // Cardio Simulator Berechnungen
-  const baseVO2 = 35.0;
-  const z2Points = (simZone2 / 240) * 5.0; // Max +5 VO2-Max
-  const hiitPoints = (simHIIT / 4) * 6.0;  // Max +6 VO2-Max
-  
-  let overtrainingPenalty = 0;
-  if (simHIIT >= 3 && simRegen < 60) {
-    overtrainingPenalty = 4.0;
-  } else if (simHIIT >= 2 && simRegen < 50) {
-    overtrainingPenalty = 2.0;
-  } else if (simHIIT === 4 && simRegen < 75) {
-    overtrainingPenalty = 2.5;
-  }
-  
-  const regenFactor = (simRegen - 30) / 70; // 0 bis 1
-  const calculatedVO2 = Math.min(48.5, Math.max(30.0, baseVO2 + (z2Points + hiitPoints) * (0.3 + 0.7 * regenFactor) - overtrainingPenalty));
-  
-  const bioAgeDiff = (calculatedVO2 - baseVO2) * 0.45; // Bis zu -6 Jahre
-  const healthspanBonus = (calculatedVO2 - baseVO2) * 0.35; // Bis zu +4.7 Jahre
-  
-  let cardMixerStatus = "Gute Balance. Erhöhe Zone-2 oder HIIT für stärkere Langlebigkeits-Effekte.";
-  let cardMixerColor = "#eab308"; // gelb
-  let cardMixerIcon = "bi-shield-shaded";
-  let pulseSpeed = "2s";
-  
-  if (simHIIT >= 3 && simRegen < 70) {
-    cardMixerStatus = "Systemwarnung: Übertraining! Du trainierst zu hart für deine Regeneration. Schontage einlegen!";
-    cardMixerColor = "#ef4444"; // rot
-    cardMixerIcon = "bi-exclamation-triangle-fill";
-    pulseSpeed = "0.4s";
-  } else if (simZone2 >= 120 && simHIIT >= 1 && simRegen >= 75) {
-    cardMixerStatus = "Perfect Flow! Dein Herzschlag-Rhythmus klingt kraftvoll und harmonisch. Maximaler Fortschritt!";
-    cardMixerColor = "#22c55e"; // grün
-    cardMixerIcon = "bi-check-circle-fill";
-    pulseSpeed = "1.2s";
-  } else if (simZone2 < 60 && simHIIT === 0) {
-    cardMixerStatus = "Systemstatus: Träge. Erhöhe Zone-2-Einheiten, um deine zelluläre Akkuladung zu starten.";
-    cardMixerColor = "#64748b"; // grau
-    cardMixerIcon = "bi-info-circle-fill";
-    pulseSpeed = "3s";
-  }
+
 
   return (
     <div className="wachstum-container">
@@ -293,540 +249,63 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
             <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#1e293b', margin: 0 }}>3. VO2-Max & Cardio-Simulator</h2>
           </div>
           
-          {!isCardioSimActive ? (
-            <div 
-              className="sim-card-wide"
-              onClick={() => setIsCardioSimActive(true)}
-              style={{ cursor: 'pointer' }}
-            >
-              <div className="sim-card-wide-img-wrap">
-                <Image 
-                  src="/images/cardio_option_25.jpg" 
-                  alt="VO2-Max & Cardio-Simulator" 
-                  fill
-                  style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
-                />
-                <div className="zone2-card-overlay">
-                  <span className="zone2-pulse-dot"></span>
-                  <span className="zone2-label">ZONE 2</span>
-                </div>
-              </div>
-              <div className="sim-card-wide-content">
-                <div className="sim-card-grid-layout">
-                  <div className="sim-card-left-col">
-                    <h3>Optimiere deine Ausdauer und Mitochondrien</h3>
-                    <p>
-                      Berechne deine individuellen Trainingszonen (Zone-2 für Zellgesundheit, Zone-5 für VO2-Max) und erstelle einen wissenschaftlich präzisen Cardio-Plan.
-                    </p>
-                  </div>
-                  <div className="sim-card-right-col">
-                    <div className="bac-circle-container-mini">
-                      <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
-                        <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
-                        <circle 
-                          cx="50" 
-                          cy="50" 
-                          r="41" 
-                          fill="none" 
-                          stroke="url(#simAgeScoreGrad)" 
-                          strokeWidth="7.5" 
-                          strokeDasharray="257.6" 
-                          strokeDashoffset={257.6 * (1 - 81 / 100)} 
-                          strokeLinecap="round" 
-                          filter="url(#simSoftGlow)"
-                          transform="rotate(-90 50 50)"
-                        />
-                      </svg>
-                      <div className="bac-circle-text-box-mini">
-                        <span className="bac-circle-val-mini">81%</span>
-                        <span className="bac-circle-lab-mini">Fitness</span>
-                      </div>
-                    </div>
-                    <button className="sim-card-blue-button" style={{ background: '#22c55e', boxShadow: '0 4px 12px rgba(34, 197, 94, 0.25)' }} onClick={(e) => {
-                      e.stopPropagation();
-                      setIsCardioSimActive(true);
-                    }}>
-                      Simulator<br />starten
-                    </button>
-                  </div>
-                </div>
+          <div 
+            className="sim-card-wide"
+            onClick={() => onStartCardio?.()}
+          >
+            <div className="sim-card-wide-img-wrap">
+              <Image 
+                src="/images/cardio_option_25.jpg" 
+                alt="VO2-Max & Cardio-Simulator" 
+                fill
+                style={{ objectFit: 'cover', objectPosition: 'center 40%' }}
+              />
+              <div className="zone2-card-overlay">
+                <span className="zone2-pulse-dot"></span>
+                <span className="zone2-label">ZONE 2</span>
               </div>
             </div>
-          ) : (
-            <div 
-              style={{
-                background: '#ffffff',
-                border: '1px solid rgba(0, 110, 167, 0.08)',
-                borderRadius: '24px',
-                padding: '2.5rem',
-                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.02)',
-                display: 'flex',
-                flexDirection: 'column',
-                gap: '2rem'
-              }}
-            >
-              <style dangerouslySetInnerHTML={{__html: `
-                @keyframes heartbeat-sim {
-                  0% { transform: scale(1); }
-                  30% { transform: scale(1.15); }
-                  45% { transform: scale(1.05); }
-                  60% { transform: scale(1.18); }
-                  100% { transform: scale(1); }
-                }
-              `}} />
-
-              {/* Header Row */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-                <div>
-                  <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif' }}>
-                    Interaktiver Cardio- & Langlebigkeits-Simulator
-                  </h3>
-                  <p style={{ fontSize: '0.95rem', color: '#64748b', margin: '0.2rem 0 0 0' }}>
-                    Spiele verschiedene Cardio-Szenarien durch und entdecke deinen Perfect Flow.
+            <div className="sim-card-wide-content">
+              <div className="sim-card-grid-layout">
+                <div className="sim-card-left-col">
+                  <h3>Optimiere deine Ausdauer und Mitochondrien</h3>
+                  <p>
+                    Berechne deine individuellen Trainingszonen (Zone-2 für Zellgesundheit, Zone-5 für VO2-Max) und erstelle einen wissenschaftlich präzisen Cardio-Plan.
                   </p>
                 </div>
-                <div style={{ display: 'flex', gap: '0.75rem' }}>
-                  <button 
-                    onClick={() => {
-                      setSimZone2(90);
-                      setSimHIIT(1);
-                      setSimRegen(70);
-                    }}
-                    style={{
-                      background: '#f1f5f9',
-                      border: 'none',
-                      color: '#475569',
-                      fontWeight: 600,
-                      padding: '8px 16px',
-                      borderRadius: '12px',
-                      cursor: 'pointer',
-                      fontSize: '0.88rem',
-                      transition: 'all 0.2s'
-                    }}
-                  >
-                    Reset
+                <div className="sim-card-right-col">
+                  <div className="bac-circle-container-mini">
+                    <svg className="bac-circle-svg-mini" viewBox="0 0 100 100">
+                      <circle cx="50" cy="50" r="41" fill="none" stroke="#f1f5f9" strokeWidth="7" />
+                      <circle 
+                        cx="50" 
+                        cy="50" 
+                        r="41" 
+                        fill="none" 
+                        stroke="url(#simAgeScoreGrad)" 
+                        strokeWidth="7.5" 
+                        strokeDasharray="257.6" 
+                        strokeDashoffset={257.6 * (1 - 81 / 100)} 
+                        strokeLinecap="round" 
+                        filter="url(#simSoftGlow)"
+                        transform="rotate(-90 50 50)"
+                      />
+                    </svg>
+                    <div className="bac-circle-text-box-mini">
+                      <span className="bac-circle-val-mini">81%</span>
+                      <span className="bac-circle-lab-mini">Fitness</span>
+                    </div>
+                  </div>
+                  <button className="sim-card-blue-button" style={{ background: '#22c55e', boxShadow: '0 4px 12px rgba(34, 197, 94, 0.25)' }} onClick={(e) => {
+                    e.stopPropagation();
+                    onStartCardio?.();
+                  }}>
+                    Simulator<br />starten
                   </button>
-                  <button 
-                    onClick={() => setIsCardioSimActive(false)}
-                    style={{
-                      background: '#eff6ff',
-                      border: 'none',
-                      color: '#006EA7',
-                      fontWeight: 700,
-                      padding: '8px 16px',
-                      borderRadius: '12px',
-                      cursor: 'pointer',
-                      fontSize: '0.88rem',
-                      transition: 'all 0.2s'
-                    }}
-                  >
-                    Simulator schließen
-                  </button>
-                </div>
-              </div>
-
-              <hr style={{ border: 'none', borderTop: '1px solid rgba(0, 110, 167, 0.08)', margin: 0 }} />
-
-              {/* I. DAS CARDIO-MISCHPULT */}
-              <div>
-                <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#1e293b', margin: '0 0 0.5rem 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  I. Das Cardio-Mischpult
-                </h4>
-                <p style={{ fontSize: '0.95rem', color: '#475569', margin: '0 0 1.5rem 0' }}>
-                  Bewege die Regler, um die perfekte Balance aus Ausdauer, Intensität und Erholung einzustellen.
-                </p>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '2.5rem', alignItems: 'center' }}>
-                  {/* Left Column: Sliders */}
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-                    
-                    {/* Slider 1 */}
-                    <div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.95rem' }}>
-                        <span style={{ fontWeight: 700, color: '#334155' }}>
-                          🚴‍♂️ Zone-2-Ausdauer (Grundlage)
-                        </span>
-                        <span style={{ fontWeight: 800, color: '#006EA7' }}>{simZone2} Min. / Woche</span>
-                      </div>
-                      <input 
-                        type="range"
-                        min="0"
-                        max="240"
-                        step="15"
-                        value={simZone2}
-                        onChange={(e) => setSimZone2(parseInt(e.target.value))}
-                        style={{
-                          width: '100%',
-                          height: '6px',
-                          borderRadius: '3px',
-                          outline: 'none',
-                          accentColor: '#006EA7',
-                          cursor: 'pointer'
-                        }}
-                      />
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.2rem' }}>
-                        <span>0m (Träge)</span>
-                        <span>120m (Herzschutz)</span>
-                        <span>240m (Mito-Pro)</span>
-                      </div>
-                    </div>
-
-                    {/* Slider 2 */}
-                    <div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.95rem' }}>
-                        <span style={{ fontWeight: 700, color: '#334155' }}>
-                          ⚡ Zone-5-HIIT (Spitzenleistung)
-                        </span>
-                        <span style={{ fontWeight: 800, color: '#006EA7' }}>{simHIIT}x / Woche</span>
-                      </div>
-                      <input 
-                        type="range"
-                        min="0"
-                        max="4"
-                        step="1"
-                        value={simHIIT}
-                        onChange={(e) => setSimHIIT(parseInt(e.target.value))}
-                        style={{
-                          width: '100%',
-                          height: '6px',
-                          borderRadius: '3px',
-                          outline: 'none',
-                          accentColor: '#006EA7',
-                          cursor: 'pointer'
-                        }}
-                      />
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.2rem' }}>
-                        <span>Kein HIIT</span>
-                        <span>1 Session</span>
-                        <span>4 Sessions (Limit)</span>
-                      </div>
-                    </div>
-
-                    {/* Slider 3 */}
-                    <div>
-                      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontSize: '0.95rem' }}>
-                        <span style={{ fontWeight: 700, color: '#334155' }}>
-                          🛌 Regeneration (Schlaf & Ruhetage)
-                        </span>
-                        <span style={{ fontWeight: 800, color: '#006EA7' }}>{simRegen}% Erholung</span>
-                      </div>
-                      <input 
-                        type="range"
-                        min="30"
-                        max="100"
-                        step="5"
-                        value={simRegen}
-                        onChange={(e) => setSimRegen(parseInt(e.target.value))}
-                        style={{
-                          width: '100%',
-                          height: '6px',
-                          borderRadius: '3px',
-                          outline: 'none',
-                          accentColor: '#006EA7',
-                          cursor: 'pointer'
-                        }}
-                      />
-                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.75rem', color: '#94a3b8', marginTop: '0.2rem' }}>
-                        <span>30% (Schlafmangel)</span>
-                        <span>70% (Gut)</span>
-                        <span>100% (Maximum)</span>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  {/* Right Column: Status & Sound visualizer representation */}
-                  <div 
-                    style={{
-                      background: `${cardMixerColor}08`,
-                      border: `1.5px solid ${cardMixerColor}20`,
-                      borderRadius: '16px',
-                      padding: '1.5rem',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      alignItems: 'center',
-                      gap: '1rem',
-                      textAlign: 'center',
-                      minHeight: '200px',
-                      justifyContent: 'center'
-                    }}
-                  >
-                    <div style={{ position: 'relative', width: '60px', height: '60px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <i 
-                        className={`bi ${cardMixerIcon}`}
-                        style={{
-                          fontSize: '3rem',
-                          color: cardMixerColor,
-                          display: 'inline-block',
-                          animation: `heartbeat-sim ${pulseSpeed} infinite ease-in-out`
-                        }}
-                      />
-                    </div>
-                    <div>
-                      <span 
-                        style={{
-                          background: `${cardMixerColor}18`,
-                          color: cardMixerColor,
-                          padding: '4px 10px',
-                          borderRadius: '20px',
-                          fontSize: '0.78rem',
-                          fontWeight: 800,
-                          textTransform: 'uppercase',
-                          letterSpacing: '0.05em'
-                        }}
-                      >
-                        Mischpult-Status
-                      </span>
-                      <p style={{ fontSize: '0.92rem', color: '#334155', fontWeight: 600, margin: '0.6rem 0 0 0', lineHeight: '1.5' }}>
-                        {cardMixerStatus}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <hr style={{ border: 'none', borderTop: '1px solid rgba(0, 110, 167, 0.08)', margin: 0 }} />
-
-              {/* II. DAS LANGLEBIGKEITS-RENNEN */}
-              <div>
-                <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#1e293b', margin: '0 0 0.5rem 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  II. Das Langlebigkeits-Rennen
-                </h4>
-                <p style={{ fontSize: '0.95rem', color: '#475569', margin: '0 0 2rem 0' }}>
-                  Vergleiche deinen Fortschritt mit deinem untrainierten Ausgangszustand.
-                </p>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '2.5rem', alignItems: 'center' }}>
-                  {/* Left Column: Track */}
-                  <div style={{ paddingRight: '2rem' }}>
-                    <div 
-                      style={{
-                        background: '#f1f5f9',
-                        height: '24px',
-                        borderRadius: '12px',
-                        position: 'relative',
-                        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)',
-                        border: '1px solid #e2e8f0',
-                        marginBottom: '3rem'
-                      }}
-                    >
-                      {/* Grid Marks */}
-                      {[0, 25, 50, 75, 100].map((mark) => (
-                        <span 
-                          key={mark}
-                          style={{
-                            position: 'absolute',
-                            left: `${10 + mark * 0.75}%`,
-                            top: '5px',
-                            width: '2px',
-                            height: '14px',
-                            background: '#cbd5e1'
-                          }}
-                        />
-                      ))}
-
-                      {/* Avatar A: Aktuelles Ich */}
-                      <div 
-                        style={{
-                          position: 'absolute',
-                          left: '10%',
-                          top: '-32px',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          transition: 'all 0.3s ease'
-                        }}
-                      >
-                        <span style={{ fontSize: '1.8rem', lineHeight: 1 }}>🏃‍♂️</span>
-                        <span 
-                          style={{
-                            fontSize: '0.7rem',
-                            fontWeight: 700,
-                            color: '#94a3b8',
-                            background: '#f8fafc',
-                            border: '1px solid #e2e8f0',
-                            padding: '2px 6px',
-                            borderRadius: '8px',
-                            whiteSpace: 'nowrap',
-                            marginTop: '2px'
-                          }}
-                        >
-                          Basis (35.0)
-                        </span>
-                      </div>
-
-                      {/* Avatar B: Zukünftiges Ich */}
-                      <div 
-                        style={{
-                          position: 'absolute',
-                          left: `${10 + ((calculatedVO2 - 30) / 20) * 75}%`,
-                          top: '-32px',
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'center',
-                          transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'
-                        }}
-                      >
-                        <span style={{ fontSize: '1.8rem', lineHeight: 1, filter: 'drop-shadow(0 2px 5px rgba(34, 197, 94, 0.4))' }}>🏃‍♂️⚡</span>
-                        <span 
-                          style={{
-                            fontSize: '0.72rem',
-                            fontWeight: 800,
-                            color: '#22c55e',
-                            background: '#f0fdf4',
-                            border: '1px solid #bbf7d0',
-                            padding: '2px 6px',
-                            borderRadius: '8px',
-                            whiteSpace: 'nowrap',
-                            marginTop: '2px'
-                          }}
-                        >
-                          Ziel ({calculatedVO2.toFixed(1)})
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Right Column: Outcomes Box */}
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-                    <div 
-                      style={{
-                        background: '#f0fdf4',
-                        border: '1px solid #bbf7d0',
-                        borderRadius: '16px',
-                        padding: '1rem',
-                        textAlign: 'center'
-                      }}
-                    >
-                      <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#16a34a' }}>
-                        -{bioAgeDiff.toFixed(1)} J.
-                      </div>
-                      <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#15803d', textTransform: 'uppercase', marginTop: '0.2rem' }}>
-                        Herzalter
-                      </div>
-                    </div>
-
-                    <div 
-                      style={{
-                        background: '#eff6ff',
-                        border: '1px solid #bfdbfe',
-                        borderRadius: '16px',
-                        padding: '1rem',
-                        textAlign: 'center'
-                      }}
-                    >
-                      <div style={{ fontSize: '1.5rem', fontWeight: 800, color: '#2563eb' }}>
-                        +{healthspanBonus.toFixed(1)} J.
-                      </div>
-                      <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#1d4ed8', textTransform: 'uppercase', marginTop: '0.2rem' }}>
-                        Healthspan
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <hr style={{ border: 'none', borderTop: '1px solid rgba(0, 110, 167, 0.08)', margin: 0 }} />
-
-              {/* III. DER VO2-MAX BERGSTEIGER-SIMULATOR */}
-              <div>
-                <h4 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#1e293b', margin: '0 0 0.5rem 0', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                  III. Der VO2-Max Bergsteiger-Simulator
-                </h4>
-                <p style={{ fontSize: '0.95rem', color: '#475569', margin: '0 0 1.5rem 0' }}>
-                  Dein virtueller Aufstieg: In welche Leistungsklasse bringt dich dieses Trainingsszenario?
-                </p>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1rem' }}>
-                  
-                  {/* Category 1: Basis-Camp */}
-                  <div 
-                    style={{
-                      background: calculatedVO2 < 35.0 ? '#f8fafc' : '#ffffff',
-                      border: calculatedVO2 < 35.0 ? '2.5px solid #94a3b8' : '1px solid #e2e8f0',
-                      borderRadius: '16px',
-                      padding: '1.2rem',
-                      textAlign: 'center',
-                      position: 'relative',
-                      boxShadow: calculatedVO2 < 35.0 ? '0 8px 20px rgba(148, 163, 184, 0.15)' : 'none',
-                      transition: 'all 0.3s'
-                    }}
-                  >
-                    {calculatedVO2 < 35.0 && (
-                      <span style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', fontSize: '1.2rem' }}>🧗</span>
-                    )}
-                    <div style={{ fontSize: '1.5rem', margin: '0.2rem 0' }}>⛺</div>
-                    <div style={{ fontWeight: 800, color: '#475569', fontSize: '0.92rem' }}>Basis-Camp</div>
-                    <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '0.2rem' }}>VO2-Max &lt; 35</div>
-                  </div>
-
-                  {/* Category 2: Waldgrenze */}
-                  <div 
-                    style={{
-                      background: (calculatedVO2 >= 35.0 && calculatedVO2 < 40.0) ? '#f0fdf4' : '#ffffff',
-                      border: (calculatedVO2 >= 35.0 && calculatedVO2 < 40.0) ? '2.5px solid #22c55e' : '1px solid #e2e8f0',
-                      borderRadius: '16px',
-                      padding: '1.2rem',
-                      textAlign: 'center',
-                      position: 'relative',
-                      boxShadow: (calculatedVO2 >= 35.0 && calculatedVO2 < 40.0) ? '0 8px 20px rgba(34, 197, 94, 0.15)' : 'none',
-                      transition: 'all 0.3s'
-                    }}
-                  >
-                    {(calculatedVO2 >= 35.0 && calculatedVO2 < 40.0) && (
-                      <span style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', fontSize: '1.2rem' }}>🧗</span>
-                    )}
-                    <div style={{ fontSize: '1.5rem', margin: '0.2rem 0' }}>🌲</div>
-                    <div style={{ fontWeight: 800, color: '#15803d', fontSize: '0.92rem' }}>Waldgrenze</div>
-                    <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '0.2rem' }}>VO2-Max 35–39</div>
-                  </div>
-
-                  {/* Category 3: Felsstufe */}
-                  <div 
-                    style={{
-                      background: (calculatedVO2 >= 40.0 && calculatedVO2 < 45.0) ? '#eff6ff' : '#ffffff',
-                      border: (calculatedVO2 >= 40.0 && calculatedVO2 < 45.0) ? '2.5px solid #3b82f6' : '1px solid #e2e8f0',
-                      borderRadius: '16px',
-                      padding: '1.2rem',
-                      textAlign: 'center',
-                      position: 'relative',
-                      boxShadow: (calculatedVO2 >= 40.0 && calculatedVO2 < 45.0) ? '0 8px 20px rgba(59, 130, 246, 0.15)' : 'none',
-                      transition: 'all 0.3s'
-                    }}
-                  >
-                    {(calculatedVO2 >= 40.0 && calculatedVO2 < 45.0) && (
-                      <span style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', fontSize: '1.2rem' }}>🧗</span>
-                    )}
-                    <div style={{ fontSize: '1.5rem', margin: '0.2rem 0' }}>🧗‍♀️</div>
-                    <div style={{ fontWeight: 800, color: '#1d4ed8', fontSize: '0.92rem' }}>Felsstufe</div>
-                    <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '0.2rem' }}>VO2-Max 40–44</div>
-                  </div>
-
-                  {/* Category 4: Gipfel */}
-                  <div 
-                    style={{
-                      background: calculatedVO2 >= 45.0 ? '#faf5ff' : '#ffffff',
-                      border: calculatedVO2 >= 45.0 ? '2.5px solid #a855f7' : '1px solid #e2e8f0',
-                      borderRadius: '16px',
-                      padding: '1.2rem',
-                      textAlign: 'center',
-                      position: 'relative',
-                      boxShadow: calculatedVO2 >= 45.0 ? '0 8px 20px rgba(168, 85, 247, 0.15)' : 'none',
-                      transition: 'all 0.3s'
-                    }}
-                  >
-                    {calculatedVO2 >= 45.0 && (
-                      <span style={{ position: 'absolute', top: '-12px', left: '50%', transform: 'translateX(-50%)', fontSize: '1.2rem' }}>🧗</span>
-                    )}
-                    <div style={{ fontSize: '1.5rem', margin: '0.2rem 0' }}>🏔️</div>
-                    <div style={{ fontWeight: 800, color: '#7e22ce', fontSize: '0.92rem' }}>Gipfel (Elite)</div>
-                    <div style={{ fontSize: '0.78rem', color: '#94a3b8', marginTop: '0.2rem' }}>VO2-Max &gt;= 45</div>
-                  </div>
-
                 </div>
               </div>
             </div>
-          )}
+          </div>
         </div>
 
         {/* Card 4: Autophagie & Fasten-Timer */}

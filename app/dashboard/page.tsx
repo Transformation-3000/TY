@@ -18,6 +18,7 @@ import Coaching2Page from '@/components/lisa-ai/Coaching2Page';
 import TrueYearsPrinzipienPage from '@/components/true-years/TrueYearsPrinzipienPage';
 import ZellalterCheckPage from '@/components/checks/ZellalterCheckPage';
 import ZellalterSimulationPage from '@/components/checks/ZellalterSimulationPage';
+import CardioSimulationPage from '@/components/checks/CardioSimulationPage';
 import LongevityBalanceCheckPage from '@/components/checks/LongevityBalanceCheckPage';
 import DatenintegrationPage from '@/components/service/DatenintegrationPage';
 import ExpertengespraechPage from '@/components/service/ExpertengespraechPage';
@@ -110,6 +111,7 @@ export default function Dashboard() {
               }} 
               onStartSimulation={() => setActiveMenuItem('zellalter-simulation')}
               onStartChronotyp={() => setActiveMenuItem('chronotyp-planer')}
+              onStartCardio={() => setActiveMenuItem('cardio-simulation')}
             />
           )}
 
@@ -122,6 +124,7 @@ export default function Dashboard() {
               }} 
               onStartSimulation={() => setActiveMenuItem('zellalter-simulation')}
               onStartChronotyp={() => setActiveMenuItem('chronotyp-planer')}
+              onStartCardio={() => setActiveMenuItem('cardio-simulation')}
             />
           )}
 
@@ -180,6 +183,10 @@ export default function Dashboard() {
 
           {activeMenuItem === 'zellalter-simulation' && (
             <ZellalterSimulationPage onBack={() => setActiveMenuItem('quick-wins')} />
+          )}
+
+          {activeMenuItem === 'cardio-simulation' && (
+            <CardioSimulationPage onBack={() => setActiveMenuItem('quick-wins')} />
           )}
 
 
