@@ -223,7 +223,7 @@ export default function VisionPage() {
                 {/* Believe */}
                 <div style={{ marginBottom: 0 }}>
                   <p style={{ fontSize: '1.1rem', color: '#475569', lineHeight: '1.7', margin: 0 }}>
-                    „Ich möchte, dass Menschen jeden Tag spüren: Mein Leben wird besser. Mehr Energie, mehr Klarheit, mehr Frische, mehr Lebensfreude und die Gewissheit, aktiv etwas für die eigene Zukunft zu tun. TrueYears macht aus der hochkomplexern Alterungsforschung konkrete Schritte, die sich einfach in den Alltag integrieren lassen und damit einen klaren Unterschied machen.“
+                    „Ich möchte, dass wir jeden Tag spüren: Mein Leben wird besser. Ich habe mehr Energie, mehr Klarheit, mehr Frische, mehr Lebensfreude – und die Gewissheit, meine Zukunft aktiv mitzugestalten. Ich möchte dazu beitragen, dass wir Älterwerden völlig neu denken: nicht als schleichenden Verlust, sondern als gestaltbare Lebensphase – als ein Meer voller Möglichkeiten. Wir sollen länger das tun können, was unser Leben lebenswert macht: lieben, lernen, gestalten, entdecken und für andere da sein. Denn es geht nicht nur um mehr Jahre im Leben, sondern um mehr Leben in jedem Jahr.“
                   </p>
                 </div>
               </div>
