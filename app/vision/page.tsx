@@ -80,16 +80,7 @@ export default function VisionPage() {
             margin: '0 auto', 
             lineHeight: '1.6' 
           }}>
-            Wir glauben an eine Welt, in der das biologische Alter nicht länger eine unveränderliche Konstante ist, sondern eine aktiv gestaltbare Stellgröße.
-          </p>
-          <p style={{ 
-            fontSize: '1.4rem', 
-            color: '#64748b', 
-            maxWidth: '900px', 
-            margin: '1.5rem auto 0', 
-            lineHeight: '1.6' 
-          }}>
-            Dank atemberaubender Fortschritte in der Alterungsforschung können wir heute unsere Vitalität bis ins hohe Alter sichern. Deshalb bauen wir das globale Betriebssystem für gesundes Altern – eine Plattform, die dich motiviert und komplexes Wissen mühelos in messbare Energie und Lebensfreude transformiert.
+            Wir glauben an eine Welt, in der das biologische Alter nicht länger eine unveränderliche Konstante ist, sondern eine aktiv gestaltbare Stellgröße. Dank atemberaubender Fortschritte in der Alterungsforschung können wir heute unsere Vitalität bis ins hohe Alter sichern. Deshalb bauen wir das globale Betriebssystem für gesundes Altern – eine Plattform, die dich motiviert und komplexes Wissen mühelos in messbare Energie und Lebensfreude transformiert.
           </p>
         </div>
 
