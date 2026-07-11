@@ -424,7 +424,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     alignItems: 'center'
                   }}
                 >
-                  <span style={{ fontSize: '4.8rem', lineHeight: 1 }}>🏃‍♂️</span>
+                  <span style={{ fontSize: '4.8rem', lineHeight: 1, display: 'inline-block', transform: 'scaleX(-1)' }}>🏃‍♂️</span>
                   <span 
                     style={{
                       fontSize: '0.75rem',
@@ -454,7 +454,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'
                   }}
                 >
-                  <span style={{ fontSize: '4.8rem', lineHeight: 1, filter: 'drop-shadow(0 2px 5px rgba(34, 197, 94, 0.4))' }}>
+                  <span style={{ fontSize: '4.8rem', lineHeight: 1, display: 'inline-block', transform: 'scaleX(-1)', filter: 'drop-shadow(0 2px 5px rgba(34, 197, 94, 0.4))' }}>
                     {isSimulating ? '🏃‍♂️⚡' : currentVO2 > baseVO2 ? '🏃‍♂️🏆' : '🏃‍♂️'}
                   </span>
                   <span 
