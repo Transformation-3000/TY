@@ -91,7 +91,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         setSimHistory((prevHistory) => [...prevHistory, nextVO2]);
         return nextVO2;
       });
-    }, 300);
+    }, 850);
 
     return () => clearTimeout(timer);
   }, [isSimulating, simWeek, simZone2, simHIIT, simRegen]);
@@ -474,7 +474,25 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
             {/* Outcomes Box */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
+                <div 
+                  style={{
+                    background: '#faf5ff',
+                    border: '1px solid #e9d5ff',
+                    borderRadius: '20px',
+                    padding: '1.5rem',
+                    textAlign: 'center',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.01)'
+                  }}
+                >
+                  <div style={{ fontSize: '2rem', fontWeight: 800, color: '#7e22ce' }}>
+                    {currentVO2.toFixed(1)}
+                  </div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#6b21a8', textTransform: 'uppercase', marginTop: '0.3rem' }}>
+                    VO2-Max ({currentVO2 >= baseVO2 ? '+' : ''}{(currentVO2 - baseVO2).toFixed(1)})
+                  </div>
+                </div>
+
                 <div 
                   style={{
                     background: currentVO2 >= baseVO2 ? '#f0fdf4' : '#fef2f2',
