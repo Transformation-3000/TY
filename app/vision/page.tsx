@@ -74,7 +74,7 @@ export default function VisionPage() {
             Das Leben neu definieren:<br />Mehr gesunde Lebensjahre für alle
           </h1>
           <p style={{ 
-            fontSize: '1.25rem', 
+            fontSize: '1.4rem', 
             color: '#64748b', 
             maxWidth: '900px', 
             margin: '0 auto', 
@@ -82,6 +82,14 @@ export default function VisionPage() {
           }}>
             Wir glauben an eine Welt, in der das biologische Alter nicht länger eine unveränderliche Konstante ist, sondern eine aktiv gestaltbare Stellgröße.
           </p>
+          <div style={{ maxWidth: '900px', margin: '2rem auto 0', textAlign: 'center' }}>
+            <p style={{ fontSize: '1.15rem', color: '#64748b', lineHeight: '1.7', marginBottom: '1.5rem' }}>
+              Die Alterungsforschung macht atemberaubende Fortschritte. Wir stehen an der Schwelle einer Ära, in der wir nicht nur die Jahre unseres Lebens verlängern, sondern die Vitalität und Strahlkraft innerhalb dieser Jahre sichern können.
+            </p>
+            <p style={{ fontSize: '1.15rem', color: '#64748b', lineHeight: '1.7', margin: 0 }}>
+              Unsere Vision geht über die reine Bereitstellung von Software hinaus: Wir bauen das globale Betriebssystem für gesundes Altern. Ein System, das motiviert, belohnt und fundiertes Wissen mühelos in Freude und Energie transformiert.
+            </p>
+          </div>
         </div>
 
         {/* Pillars Grid */}
@@ -196,8 +204,8 @@ export default function VisionPage() {
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
                   <div style={{
-                    width: '60px',
-                    height: '60px',
+                    width: '90px',
+                    height: '90px',
                     borderRadius: '50%',
                     position: 'relative',
                     overflow: 'hidden'
@@ -210,18 +218,15 @@ export default function VisionPage() {
                     />
                   </div>
                   <div>
-                    <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif' }}>
+                    <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif' }}>
                       Michael Wolan
                     </h3>
-                    <div style={{ fontSize: '0.85rem', color: '#4498ca', fontWeight: 700 }}>CEO & Co-Founder</div>
+                    <div style={{ fontSize: '1.05rem', color: '#4498ca', fontWeight: 700 }}>Co-Founder</div>
                   </div>
                 </div>
 
                 {/* Believe */}
                 <div style={{ marginBottom: 0 }}>
-                  <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#1e293b', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <i className="bi bi-patch-check-fill" style={{ color: '#16a34a' }}></i> Die persönliche Vision
-                  </h4>
                   <p style={{ fontSize: '1.1rem', color: '#475569', lineHeight: '1.7', margin: 0 }}>
                     „Wir stehen an der Schwelle zu einer bahnbrechenden Ära: Alterung ist kein Schicksal mehr, sondern ein gestaltbarer Prozess. Meine Vision für True Years ist es, modernste Wissenschaft und künstliche Intelligenz so einfach nutzbar zu machen, dass jeder Mensch die volle Kontrolle über seine biologische Uhr gewinnt. Wir möchten dir nicht nur Jahre schenken, sondern vitale, gesunde und kraftvolle Lebensjahre voller Energie – datengetrieben, präventiv und perfekt integriert in deinen Alltag. Lass uns das Älterwerden gemeinsam neu definieren.“
                   </p>
@@ -238,8 +243,8 @@ export default function VisionPage() {
               }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
                   <div style={{
-                    width: '60px',
-                    height: '60px',
+                    width: '90px',
+                    height: '90px',
                     borderRadius: '50%',
                     position: 'relative',
                     overflow: 'hidden'
@@ -252,18 +257,15 @@ export default function VisionPage() {
                     />
                   </div>
                   <div>
-                    <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif' }}>
+                    <h3 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif' }}>
                       Daniel Haensch
                     </h3>
-                    <div style={{ fontSize: '0.85rem', color: '#4498ca', fontWeight: 700 }}>CDO & Co-Founder</div>
+                    <div style={{ fontSize: '1.05rem', color: '#4498ca', fontWeight: 700 }}>Co-Founder</div>
                   </div>
                 </div>
 
                 {/* Believe */}
                 <div style={{ marginBottom: 0 }}>
-                  <h4 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#1e293b', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                    <i className="bi bi-patch-check-fill" style={{ color: '#16a34a' }}></i> Die persönliche Vision
-                  </h4>
                   <p style={{ fontSize: '1.1rem', color: '#475569', lineHeight: '1.7', margin: 0 }}>
                     „In meiner ärztlichen Laufbahn habe ich gelernt, dass Menschen keine Ratschläge ins Blaue hinein brauchen, sondern präzise, verlässliche Lösungen für ihre Gesundheit. Meine Vision ist es, die komplexesten biologischen Daten und Wearable-Routinen so elegant zu orchestrieren, dass sie dir als intuitiver, unsichtbarer Alltags-Kompass dienen. Wir bauen eine Plattform, die dir jeden Tag zeigt, was deine Zellen heute brauchen, um in Bestform zu bleiben. Wir machen Langlebigkeit transparent, nachweisbar und vor allem – einfach.“
                   </p>
@@ -276,24 +278,6 @@ export default function VisionPage() {
 
         {/* Detailed Vision Section */}
         <div style={{ padding: '5rem 2rem 5rem', maxWidth: '1200px', margin: '0 auto' }}>
-          <div style={{
-            background: 'white',
-            borderRadius: '24px',
-            padding: '3rem',
-            boxShadow: '0 10px 30px -10px rgba(0,0,0,0.04)',
-            border: '1px solid rgba(0, 110, 167, 0.05)',
-            marginBottom: '4rem'
-          }}>
-            <h2 style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a', margin: '0 0 1.5rem', fontFamily: 'DM Sans, sans-serif' }}>
-              Unser Beitrag zur Langlebigkeits-Revolution
-            </h2>
-            <p style={{ fontSize: '1.05rem', color: '#475569', lineHeight: '1.7', marginBottom: '1.5rem' }}>
-              Die Alterungsforschung macht atemberaubende Fortschritte. Wir stehen an der Schwelle einer Ära, in der wir nicht nur die Jahre unseres Lebens verlängern, sondern die Vitalität und Strahlkraft innerhalb dieser Jahre sichern können.
-            </p>
-            <p style={{ fontSize: '1.05rem', color: '#475569', lineHeight: '1.7', margin: 0 }}>
-              Unsere Vision geht über die reine Bereitstellung von Software hinaus: Wir bauen das globale Betriebssystem für gesundes Altern. Ein System, das motiviert, belohnt und fundiertes Wissen mühelos in Freude und Energie transformiert.
-            </p>
-          </div>
 
           {/* CTA Banner */}
           <div style={{
