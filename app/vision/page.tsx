@@ -96,7 +96,7 @@ export default function VisionPage() {
                 overflow: 'hidden'
               }}>
                 <Image 
-                  src="/images/member_benefits_real_people.png" 
+                  src="/images/vision_praevention_v1.png" 
                   alt="Prävention statt Reaktion" 
                   fill
                   style={{ objectFit: 'cover' }}
@@ -123,7 +123,7 @@ export default function VisionPage() {
                 overflow: 'hidden'
               }}>
                 <Image 
-                  src="/images/checkins_logging_ui.png" 
+                  src="/images/vision_technologie_v1.png" 
                   alt="Intelligente Technologien" 
                   fill
                   style={{ objectFit: 'cover' }}
@@ -150,7 +150,7 @@ export default function VisionPage() {
                 overflow: 'hidden'
               }}>
                 <Image 
-                  src="/images/trends_rejuvenation_chart.png" 
+                  src="/images/vision_wissenschaft_v1.png" 
                   alt="Wissenschaftliche Exzellenz" 
                   fill
                   style={{ objectFit: 'cover' }}
