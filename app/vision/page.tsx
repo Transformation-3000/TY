@@ -124,7 +124,7 @@ export default function VisionPage() {
               }}>
                 <Image 
                   src="/images/checkins_logging_ui.png" 
-                  alt="Intelligente Technologie" 
+                  alt="Intelligente Technologien" 
                   fill
                   style={{ objectFit: 'cover' }}
                 />
@@ -134,7 +134,7 @@ export default function VisionPage() {
                   Fokus 02
                 </div>
                 <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.75rem 0', fontFamily: 'DM Sans, sans-serif' }}>
-                  Intelligente Technologie
+                  Intelligente Technologien
                 </h3>
                 <p style={{ fontSize: '0.95rem', color: '#475569', margin: 0, lineHeight: '1.6' }}>
                   Jeder Körper ist einzigartig. Wir nutzen modernste KI, Labor- und Wearable-Daten, um maßgeschneiderte Langlebigkeits-Protokolle zu erstellen. Unsere Technologie lernt kontinuierlich aus deinen Gewohnheiten und passt Empfehlungen dynamisch an deinen Alltag an.
