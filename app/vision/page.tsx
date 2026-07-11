@@ -223,7 +223,7 @@ export default function VisionPage() {
                 {/* Believe */}
                 <div style={{ marginBottom: 0 }}>
                   <p style={{ fontSize: '1.1rem', color: '#475569', lineHeight: '1.7', margin: 0 }}>
-                    „Ich träume davon, dass TrueYears das Leben von Millionen Menschen jeden Tag ein Stück besser macht – damit wir spüren: Mein Leben wird besser. Ich habe mehr Energie, mehr Klarheit, mehr Frische und mehr Lebensfreude. Ich möchte dazu beitragen, dass wir das Älterwerden völlig neu denken: nicht als Begrenzung, sondern als gestaltbare Lebensphase – als ein Meer voller Möglichkeiten. Wir sollen länger das tun können, was unser Leben lebenswert macht: lieben, lernen, gestalten, entdecken und für andere da sein.“
+                    „Ich träume davon, dass TrueYears das Leben von Millionen Menschen jeden Tag ein Stück besser macht – damit wir spüren: Mein Leben wird besser. Ich habe mehr Energie, mehr Klarheit, mehr Frische und mehr Lebensfreude. Ich möchte dazu beitragen, dass wir das Älterwerden völlig neu denken: nicht als Begrenzung, sondern als gestaltbare Lebensphase – als ein Meer voller Möglichkeiten. Wir sollen länger das tun können, was unser Leben lebenswert macht: lieben, lernen, gestalten, geniessen, entdecken und für andere da sein.“
                   </p>
                 </div>
               </div>
