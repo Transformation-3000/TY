@@ -1300,9 +1300,9 @@ export default function LandingPage() {
                 className="footer-logo-new"
               />
               <p className="footer-description-new">
-                True Years ist die am schnellsten wachsende europäische Plattform für Langlebigkeit. Wir verbinden künstliche Intelligenz und führende Alterungsforschung, um die Lebensqualität von Millionen von Longevity-Befürwortern mess- und spürbar zu steigern.
+                TrueYears ist die am schnellsten wachsende Deep-Tech-Plattform für Langlebigkeit in Europa, die führende Alterungs- und Verhaltensforschung sowie intelligente Technologien und Services zu einer integrierten Lösung aus einer Hand verbindet.
               </p>
-              <div className="footer-socials-new">
+              <div className="footer-socials-new" style={{ marginBottom: '1.5rem' }}>
                 <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="footer-social-icon-new" aria-label="LinkedIn">
                   <i className="bi bi-linkedin" />
                 </a>
@@ -1313,64 +1313,7 @@ export default function LandingPage() {
                   <i className="bi bi-youtube" />
                 </a>
               </div>
-            </div>
-            
-            <div className="footer-col-new">
-              <h4>Features</h4>
-              <Link href="#features"><i className="bi bi-check2-circle" /> Tägliche Check-Ins</Link>
-              <Link href="#features"><i className="bi bi-compass" /> Do it yourself</Link>
-              <Link href="#features"><i className="bi bi-chat-left-dots" /> Personal Trainer</Link>
-              <Link href="#features"><i className="bi bi-journal-text" /> Inspiration & Insights</Link>
-              <Link href="#features"><i className="bi bi-graph-up-arrow" /> Entwicklung & Trends</Link>
-              <Link href="#features"><i className="bi bi-patch-check" /> Member-Vorteile</Link>
-            </div>
-            
-            <div className="footer-col-new">
-              <h4>Mitgliedschaft</h4>
-              <Link href="#konzept"><i className="bi bi-arrow-right-short" /> Wie es funktioniert</Link>
-              <Link href="#features"><i className="bi bi-arrow-right-short" /> Diagnostik & Labortests</Link>
-              <Link href="#erfolgsprinzip"><i className="bi bi-arrow-right-short" /> Preise & Pakete</Link>
-              <Link href="#kundenstimmen"><i className="bi bi-arrow-right-short" /> Erfolgsgeschichten</Link>
-              <span style={{ color: '#94a3b8', fontSize: '1.03rem', fontWeight: 500, display: 'inline-flex', alignItems: 'center', gap: '0.5rem', cursor: 'default' }}>
-                <i className="bi bi-arrow-right-short" style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.85rem' }} /> Wearables & Integration
-              </span>
-            </div>
-            
-            <div className="footer-col-new">
-              <h4>Unternehmen</h4>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginBottom: '1.5rem' }}>
-                {/* Unternehmen Address Row */}
-                <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-                  <div style={{ width: '24px', display: 'flex', justifyContent: 'center', marginTop: '3px' }}>
-                    <i className="bi bi-geo-alt-fill" style={{ color: 'var(--landing-accent)', fontSize: '1.05rem' }} />
-                  </div>
-                  <div style={{ flex: 1, paddingLeft: '10px' }}>
-                    <p className="footer-company-name-new" style={{ margin: '0 0 2px', lineHeight: '1.2' }}>True Years Beyond Age GmbH</p>
-                    <p className="footer-company-name-new" style={{ margin: '0 0 2px', lineHeight: '1.2' }}>Im Mediapark 5</p>
-                    <p className="footer-company-name-new" style={{ margin: '0 0 2px', lineHeight: '1.2' }}>D-50670 Köln</p>
-                    <p className="footer-company-name-new" style={{ margin: 0, lineHeight: '1.2' }}>Germany</p>
-                  </div>
-                </div>
-                
-                {/* Contact Email Row */}
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <div style={{ width: '24px', display: 'flex', justifyContent: 'center' }}>
-                    <i className="bi bi-envelope-fill" style={{ color: 'white', fontSize: '0.98rem' }} />
-                  </div>
-                  <a href="mailto:contact@true-years.com" className="footer-email-link-new" style={{ paddingLeft: '10px' }}>
-                    contact (at) true-years.com
-                  </a>
-                </div>
-              </div>
-              
-              <div className="footer-legal-links-new">
-                <Link href="/impressum">Impressum</Link>
-                <span className="footer-legal-sep-new">|</span>
-                <Link href="/datenschutz">Datenschutz</Link>
-                <span className="footer-legal-sep-new">|</span>
-                <Link href="/image-preview.html">Bildauswahl</Link>
-              </div>
-              <div className="footer-partners-logos-new">
+              <div className="footer-partners-logos-new" style={{ marginTop: '1.5rem' }}>
                 <div className="footer-partner-logo-new dlg-logo">
                   <Image 
                     src="/images/dlg_logo.png" 
@@ -1400,15 +1343,88 @@ export default function LandingPage() {
                 </div>
               </div>
             </div>
+            
+            <div className="footer-col-new">
+              <h4>Features</h4>
+              <Link href="/#features"><i className="bi bi-check2-circle" /> Tägliche Check-Ins</Link>
+              <Link href="/#features"><i className="bi bi-compass" /> Do it yourself</Link>
+              <Link href="/#features"><i className="bi bi-chat-left-dots" /> Personal Trainer</Link>
+              <Link href="/#features"><i className="bi bi-journal-text" /> Inspiration & Insights</Link>
+              <Link href="/#features"><i className="bi bi-graph-up-arrow" /> Entwicklung & Trends</Link>
+              <Link href="/#features"><i className="bi bi-patch-check" /> Member-Vorteile</Link>
+            </div>
+            
+            <div className="footer-col-new">
+              <h4>Mitgliedschaft</h4>
+              <Link href="/#konzept"><i className="bi bi-arrow-right-short" /> Wie es funktioniert</Link>
+              <Link href="/#features"><i className="bi bi-arrow-right-short" /> Diagnostik & Labortests</Link>
+              <Link href="/#erfolgsprinzip"><i className="bi bi-arrow-right-short" /> Preise & Pakete</Link>
+              <Link href="/#kundenstimmen"><i className="bi bi-arrow-right-short" /> Erfolgsgeschichten</Link>
+              <span style={{ color: '#94a3b8', fontSize: '1.03rem', fontWeight: 500, display: 'inline-flex', alignItems: 'center', gap: '0.5rem', cursor: 'default' }}>
+                <i className="bi bi-arrow-right-short" style={{ color: 'rgba(255,255,255,0.2)', fontSize: '0.85rem' }} /> Wearables & Integration
+              </span>
+            </div>
+            
+            <div className="footer-col-new">
+              <h4>Unternehmen</h4>
+              <Link href="/unternehmen" style={{ display: 'flex', alignItems: 'center', gap: 0, paddingLeft: 0 }}>
+                <div style={{ width: '24px', display: 'flex', justifyContent: 'center', marginRight: '10px' }}>
+                  <i className="bi bi-people-fill" style={{ fontSize: '0.98rem', color: 'var(--landing-accent)' }} />
+                </div>
+                Über uns
+              </Link>
+              <Link href="/vision" style={{ display: 'flex', alignItems: 'center', gap: 0, paddingLeft: 0 }}>
+                <div style={{ width: '24px', display: 'flex', justifyContent: 'center', marginRight: '10px' }}>
+                  <i className="bi bi-eye" style={{ fontSize: '0.98rem', color: 'var(--landing-accent)' }} />
+                </div>
+                Unsere Vision
+              </Link>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '0px', marginBottom: '1.5rem' }}>
+                {/* Unternehmen Address Row (Sitz der Gesellschaft) */}
+                <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                  <div style={{ width: '24px', display: 'flex', justifyContent: 'center', marginTop: '3px' }}>
+                    <i className="bi bi-geo-alt-fill" style={{ color: 'var(--landing-accent)', fontSize: '1.05rem' }} />
+                  </div>
+                  <div style={{ flex: 1, paddingLeft: '10px' }}>
+                    <p className="footer-company-name-new" style={{ margin: '0 0 2px', lineHeight: '1.2' }}>True Years Beyond Age GmbH</p>
+                    <p className="footer-company-name-new" style={{ margin: 0, lineHeight: '1.2' }}>Im Mediapark 5, D-50670 Köln</p>
+                  </div>
+                </div>
+                
+                {/* Contact Email Row */}
+                <div style={{ display: 'flex', alignItems: 'center' }}>
+                  <div style={{ width: '24px', display: 'flex', justifyContent: 'center' }}>
+                    <i className="bi bi-envelope-fill" style={{ color: 'var(--landing-accent)', fontSize: '0.98rem' }} />
+                  </div>
+                  <a href="mailto:contact@true-years.com" className="footer-email-link-new" style={{ paddingLeft: '10px' }}>
+                    contact (at) true-years.com
+                  </a>
+                </div>
+                
+                {/* Legal Links (Impressum, Datenschutz, Bildauswahl) under contact email */}
+                <div className="footer-legal-links-new" style={{ paddingLeft: '34px', marginTop: '5px' }}>
+                  <Link href="/impressum">Impressum</Link>
+                  <span className="footer-legal-sep-new">|</span>
+                  <Link href="/datenschutz">Datenschutz</Link>
+                  <span className="footer-legal-sep-new">|</span>
+                  <Link href="/image-preview.html">Bildauswahl</Link>
+                </div>
+              </div>
+            </div>
           </div>
           
           <div className="footer-bottom-new">
-            <p>&copy; 2026 True Years Beyond Age GmbH. Alle Rechte vorbehalten.</p>
-            <div className="footer-bottom-links-new">
-              <span className="footer-security-badge-new">
-                <i className="bi bi-shield-lock-fill" style={{ marginRight: '5px' }} /> DSGVO Konform
-              </span>
-              <span className="footer-badge-clean-new">Made with ♥ in Germany</span>
+            <div className="footer-bottom-container-new" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', width: '100%', gap: '1rem' }}>
+              <p className="footer-copyright-new" style={{ margin: 0 }}>
+                &copy; {new Date().getFullYear()} True Years. Alle Rechte vorbehalten.
+              </p>
+              <div className="footer-bottom-links-new">
+                <span className="footer-security-badge-new">
+                  <i className="bi bi-shield-lock-fill" style={{ marginRight: '5px' }} /> DSGVO Konform
+                </span>
+                <span className="footer-badge-clean-new">Made with <span style={{ color: '#ff4d4d', display: 'inline-block', transform: 'scale(1.15)', margin: '0 2px' }}>♥</span> in Germany</span>
+              </div>
             </div>
           </div>
         </div>
