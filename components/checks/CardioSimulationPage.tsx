@@ -6,105 +6,119 @@ interface CardioSimulationPageProps {
   onBack: () => void;
 }
 
+interface WeekData {
+  vo2: number;
+  msg: string;
+  color: string;
+}
+
 export default function CardioSimulationPage({ onBack }: CardioSimulationPageProps) {
   // Inputs (Mischpult ganz unten)
   const [simZone2, setSimZone2] = useState(90);
   const [simHIIT, setSimHIIT] = useState(1);
   const [simRegen, setSimRegen] = useState(70);
 
-  // Simulation States (Rennen ganz oben)
-  const [isSimulating, setIsSimulating] = useState(false);
+  // Manual & Playback state
   const [simWeek, setSimWeek] = useState(0);
-  const [simHistory, setSimHistory] = useState<number[]>([35.0]);
-  const [currentVO2, setCurrentVO2] = useState(35.0);
-  const [simMessage, setSimMessage] = useState('Stelle dein Mischpult unten ein und starte das 12-Wochen-Rennen!');
-  const [simStatusColor, setSimStatusColor] = useState('#64748b'); // Slate
+  const [isSimulating, setIsSimulating] = useState(false);
   const [lisaReport, setLisaReport] = useState<string | null>(null);
 
   const baseVO2 = 35.0;
 
-  // Run week-by-week simulation cleanly using useEffect
+  // 1. Generate the complete 12-week trajectory reactively based on current Mischpult configurations
+  const getTrajectory = (): WeekData[] => {
+    const data: WeekData[] = [{ vo2: baseVO2, msg: 'Woche 0: Starte Trainingszyklus...', color: '#64748b' }];
+    let current = baseVO2;
+
+    for (let w = 1; w <= 12; w++) {
+      let weeklyChange = 0;
+      const regenFactor = (simRegen - 30) / 70; // 0 to 1
+
+      const isExtremeHIITNoRegen = simHIIT >= 3 && simRegen < 60;
+      const isModerateHIITNoRegen = simHIIT >= 2 && simRegen < 50;
+      const isCriticalSleepDeprived = simRegen < 40;
+      const isNoBaseOnlyHIIT = simZone2 < 45 && simHIIT >= 2;
+
+      let msg = '';
+      let color = '';
+
+      if (isCriticalSleepDeprived) {
+        weeklyChange = -0.3;
+        msg = `Woche ${w}: Systemischer Schlafmangel! Deine Zellen können sich nicht regenerieren.`;
+        color = '#ef4444';
+      } else if (isExtremeHIITNoRegen && w > 4) {
+        weeklyChange = -0.5;
+        msg = `Woche ${w}: Übertraining! Chronische Entzündung und Muskelkater bremsen dich aus.`;
+        color = '#ef4444';
+      } else if (isModerateHIITNoRegen && w > 3) {
+        weeklyChange = -0.3;
+        msg = `Woche ${w}: Erschöpfung! Dein Körper fordert dringend Ruhetage.`;
+        color = '#f97316';
+      } else if (isNoBaseOnlyHIIT && w > 5) {
+        weeklyChange = -0.15;
+        msg = `Woche ${w}: Mitochondrien-Kollaps! Dir fehlt die aerobe Basis.`;
+        color = '#f97316';
+      } else {
+        const z2Adaptation = (simZone2 / 240) * 0.4;
+        let hiitAdaptation = (simHIIT / 4) * 0.5;
+        
+        if (simZone2 < 90 && w > 4) {
+          hiitAdaptation *= 0.5;
+        }
+
+        weeklyChange = (z2Adaptation + hiitAdaptation) * (0.3 + 0.7 * regenFactor);
+        
+        if (simZone2 >= 120 && simHIIT >= 1 && simRegen >= 75) {
+          msg = `Woche ${w}: Perfect Flow! Optimale Balance aus aerober Basis und Intervallen.`;
+          color = '#22c55e';
+        } else if (simHIIT > 0 && simRegen >= 70) {
+          msg = `Woche ${w}: Guter Reiz! Dein Herzschlagvolumen passt sich an.`;
+          color = '#4C99C2';
+        } else if (simZone2 > 0 && simHIIT === 0) {
+          msg = `Woche ${w}: Grundlagen-Aufbau. Du vermehrst deine Mitochondrien.`;
+          color = '#eab308';
+        } else {
+          msg = `Woche ${w}: Kaum Trainingsreize gesetzt. Dein VO2-Max stagniert.`;
+          color = '#64748b';
+        }
+      }
+
+      current = Math.min(48.5, Math.max(30.0, current + weeklyChange));
+      data.push({ vo2: current, msg, color });
+    }
+
+    return data;
+  };
+
+  const trajectory = getTrajectory();
+
+  // Active state derived from trajectory and current week index
+  const currentWeekData = trajectory[simWeek] || trajectory[0];
+  const currentVO2 = currentWeekData.vo2;
+  const simMessage = currentWeekData.msg;
+  const simStatusColor = currentWeekData.color;
+
+  // 2. Playback simulation loop (much slower: 1800ms)
   useEffect(() => {
     if (!isSimulating) return;
 
     if (simWeek >= 12) {
       setIsSimulating(false);
-      generateLisaReport(currentVO2);
+      generateLisaReport(trajectory[12].vo2);
       return;
     }
 
     const timer = setTimeout(() => {
-      const nextWeek = simWeek + 1;
-      setSimWeek(nextWeek);
-
-      setCurrentVO2((prevVO2) => {
-        let weeklyChange = 0;
-        const regenFactor = (simRegen - 30) / 70; // 0 to 1
-
-        const isExtremeHIITNoRegen = simHIIT >= 3 && simRegen < 60;
-        const isModerateHIITNoRegen = simHIIT >= 2 && simRegen < 50;
-        const isCriticalSleepDeprived = simRegen < 40;
-        const isNoBaseOnlyHIIT = simZone2 < 45 && simHIIT >= 2;
-
-        if (isCriticalSleepDeprived) {
-          weeklyChange = -0.3;
-          setSimMessage(`Woche ${nextWeek}: Systemischer Schlafmangel! Deine Zellen können sich nicht regenerieren.`);
-          setSimStatusColor('#ef4444');
-        } else if (isExtremeHIITNoRegen && nextWeek > 4) {
-          weeklyChange = -0.5;
-          setSimMessage(`Woche ${nextWeek}: Übertraining! Chronische Entzündung und Muskelkater bremsen dich aus.`);
-          setSimStatusColor('#ef4444');
-        } else if (isModerateHIITNoRegen && nextWeek > 3) {
-          weeklyChange = -0.3;
-          setSimMessage(`Woche ${nextWeek}: Erschöpfung! Dein Körper fordert dringend Ruhetage.`);
-          setSimStatusColor('#f97316');
-        } else if (isNoBaseOnlyHIIT && nextWeek > 5) {
-          weeklyChange = -0.15;
-          setSimMessage(`Woche ${nextWeek}: Mitochondrien-Kollaps! Dir fehlt die aerobe Basis.`);
-          setSimStatusColor('#f97316');
-        } else {
-          const z2Adaptation = (simZone2 / 240) * 0.4;
-          let hiitAdaptation = (simHIIT / 4) * 0.5;
-          
-          if (simZone2 < 90 && nextWeek > 4) {
-            hiitAdaptation *= 0.5;
-          }
-
-          weeklyChange = (z2Adaptation + hiitAdaptation) * (0.3 + 0.7 * regenFactor);
-          
-          if (simZone2 >= 120 && simHIIT >= 1 && simRegen >= 75) {
-            setSimMessage(`Woche ${nextWeek}: Perfect Flow! Optimale Balance aus aerober Basis und Intervallen.`);
-            setSimStatusColor('#22c55e');
-          } else if (simHIIT > 0 && simRegen >= 70) {
-            setSimMessage(`Woche ${nextWeek}: Guter Reiz! Dein Herzschlagvolumen passt sich an.`);
-            setSimStatusColor('#4C99C2');
-          } else if (simZone2 > 0 && simHIIT === 0) {
-            setSimMessage(`Woche ${nextWeek}: Grundlagen-Aufbau. Du vermehrst deine Mitochondrien.`);
-            setSimStatusColor('#eab308');
-          } else {
-            setSimMessage(`Woche ${nextWeek}: Kaum Trainingsreize gesetzt. Dein VO2-Max stagniert.`);
-            setSimStatusColor('#64748b');
-          }
-        }
-
-        const nextVO2 = Math.min(48.5, Math.max(30.0, prevVO2 + weeklyChange));
-        setSimHistory((prevHistory) => [...prevHistory, nextVO2]);
-        return nextVO2;
-      });
-    }, 850);
+      setSimWeek((prev) => prev + 1);
+    }, 1800); // 1.8 seconds per week (much slower, highly readable)
 
     return () => clearTimeout(timer);
-  }, [isSimulating, simWeek, simZone2, simHIIT, simRegen]);
+  }, [isSimulating, simWeek]);
 
+  // Start automation
   const startSimulation = () => {
-    if (isSimulating) return;
-
-    setSimWeek(0);
-    setSimHistory([baseVO2]);
-    setCurrentVO2(baseVO2);
-    setSimMessage('Woche 0: Starte Trainingszyklus...');
-    setSimStatusColor('#006EA7');
     setLisaReport(null);
+    setSimWeek(0);
     setIsSimulating(true);
   };
 
@@ -118,44 +132,30 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
       setLisaReport(
         "❌ **Rennen abgebrochen: Systemischer Kollaps.**\nDu hast versucht zu trainieren, aber dein Schlaf- und Regenerationsniveau liegt im kritischen Bereich. Ohne Erholung führen Trainingsreize zu Muskelabbau und zellulärem Stress. Erhöhe deine Regeneration auf mindestens 70 %, um Fortschritte zu erzielen."
       );
-      setSimMessage("Rennen beendet: Systemischer Schlafmangel!");
-      setSimStatusColor('#ef4444');
     } else if (isExtremeHIITNoRegen) {
       setLisaReport(
         "⚠️ **Übertrainings-Crash in Woche 5.**\nDein Plan war zu intensiv für deine Erholungsfähigkeit. HIIT-Intervalle ohne ausreichenden Schlaf führen zu chronisch erhöhten Entzündungswerten (Cortisol) und überlasten dein zentrales Nervensystem. Dein VO2-Max ist nach anfänglichen Gewinnen wieder eingebrochen. *Empfehlung:* Reduziere HIIT auf 1x pro Woche und erhöhe den Schlaf."
       );
-      setSimMessage("Rennen beendet: Übertraining!");
-      setSimStatusColor('#ef4444');
     } else if (isNoBaseOnlyHIIT) {
       setLisaReport(
         "📉 **Mitochondrien-Kollaps ab Woche 6.**\nDu hast zwar intensive Intervalle gesetzt, aber dir fehlt die aerobe Basis (Zone 2). Ohne Mitochondrien können deine Muskelzellen den bereitgestellten Sauerstoff nicht verwerten. Dein Training verpufft und führt zu schneller Ermüdung. *Empfehlung:* Mindestens 90–120 Minuten lockeres Zone-2-Training pro Woche einbauen."
       );
-      setSimMessage("Rennen beendet: Fehlende Ausdauerbasis!");
-      setSimStatusColor('#f97316');
     } else if (simZone2 >= 120 && simHIIT >= 1 && simRegen >= 75) {
       setLisaReport(
         "🏆 **Perfect Flow erreicht! Herausragendes Ergebnis.**\nDu hast das wissenschaftlich erprobte Polarized-Training perfekt umgesetzt. 80 % ruhige Ausdauer (Zone 2) gepaart mit 20 % Spitzenintensität (Zone 5) und exzellenter Regeneration. Deine Mitochondrien arbeiten hocheffizient und dein Schlagvolumen hat sich maximiert. Dein Herzalter hat sich signifikant verjüngt!"
       );
-      setSimMessage("Rennen erfolgreich beendet: Perfect Flow!");
-      setSimStatusColor('#22c55e');
     } else if (simZone2 > 0 && simHIIT === 0) {
       setLisaReport(
         "ℹ️ **Solide Basis, aber kein Spitzen-Reiz.**\nDu hast ein hervorragendes aerobes Fundament gebaut. Deine Mitochondriendichte ist gestiegen, was deine zelluläre Gesundheit schützt. Allerdings fehlt dir der HIIT-Intensitätsreiz, um dein Herzschlagvolumen maximal auszuweiten. *Empfehlung:* Integriere 1x pro Woche ein 4x4-Minuten-Intervalltraining."
       );
-      setSimMessage("Rennen beendet: Grundlagen aufgebaut.");
-      setSimStatusColor('#eab308');
     } else if (simZone2 === 0 && simHIIT === 0) {
       setLisaReport(
         "💤 **Keine Anpassungen.**\nOhne Trainingsreize baut der Körper ungenutzte Kapazitäten ab. Dein VO2-Max ist über die 12 Wochen leicht gesunken. Langlebigkeit ist ein aktiver Prozess – fange klein an, z. B. mit 45 Minuten zügigem Gehen in Zone 2."
       );
-      setSimMessage("Rennen beendet: Keine Trainingsreize.");
-      setSimStatusColor('#64748b');
     } else {
       setLisaReport(
         "📈 **Guter Fortschritt.**\nDu hast spürbare Fortschritte erzielt. Dein Herzkreislauf-System ist fitter und dein Langlebigkeits-Score hat sich verbessert. Um das Maximum herauszuholen (Perfect Flow), versuche das Verhältnis von Ausdauer zu HIIT noch feiner abzustimmen."
       );
-      setSimMessage("Rennen erfolgreich beendet.");
-      setSimStatusColor('#22c55e');
     }
   };
 
@@ -281,6 +281,34 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           60% { transform: scale(1.18); }
           100% { transform: scale(1); }
         }
+
+        /* Styling the timeline timeline-slider */
+        .timeline-slider-input {
+          -webkit-appearance: none;
+          width: 100%;
+          height: 12px;
+          border-radius: 10px;
+          background: #e2e8f0;
+          outline: none;
+          cursor: pointer;
+          margin-top: 1.5rem;
+          transition: background 0.15s ease-in-out;
+        }
+        .timeline-slider-input::-webkit-slider-thumb {
+          -webkit-appearance: none;
+          appearance: none;
+          width: 26px;
+          height: 26px;
+          border-radius: 50%;
+          background: #006ea7;
+          border: 3px solid #ffffff;
+          box-shadow: 0 3px 8px rgba(0, 110, 167, 0.35);
+          cursor: pointer;
+          transition: transform 0.1s;
+        }
+        .timeline-slider-input::-webkit-slider-thumb:hover {
+          transform: scale(1.15);
+        }
       `}} />
 
       {/* Header */}
@@ -307,31 +335,49 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             <div>
               <h2 className="sim-sec-title" style={{ margin: 0 }}>I. Das Langlebigkeits-Rennen (Wochen 1–12)</h2>
               <p className="sim-sec-desc" style={{ margin: '0.2rem 0 0 0' }}>
-                Starte die 12-Wochen-Simulation und sieh zu, wie weit dein Avatar auf der Laufbahn sprintet.
+                Drücke auf Start oder schiebe den Wochenregler unten manuell, um die Leistungsentwicklung zu steuern.
               </p>
             </div>
-            <button
-              onClick={startSimulation}
-              disabled={isSimulating}
-              style={{
-                background: isSimulating ? '#cbd5e1' : 'linear-gradient(135deg, #006ea7, #4c99c2)',
-                color: '#ffffff',
-                border: 'none',
-                padding: '12px 24px',
-                borderRadius: '16px',
-                fontWeight: 800,
-                fontSize: '1rem',
-                cursor: isSimulating ? 'default' : 'pointer',
-                boxShadow: isSimulating ? 'none' : '0 4px 15px rgba(0, 110, 167, 0.25)',
-                transition: 'all 0.2s',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px'
-              }}
-            >
-              <i className="bi bi-play-circle-fill" style={{ fontSize: '1.2rem' }}></i>
-              {isSimulating ? `Woche ${simWeek} läuft...` : '12-Wochen-Rennen simulieren'}
-            </button>
+            <div style={{ display: 'flex', gap: '10px' }}>
+              {isSimulating && (
+                <button
+                  onClick={() => setIsSimulating(false)}
+                  style={{
+                    background: '#cbd5e1',
+                    color: '#334155',
+                    border: 'none',
+                    padding: '12px 20px',
+                    borderRadius: '16px',
+                    fontWeight: 800,
+                    fontSize: '1rem',
+                    cursor: 'pointer',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.05)'
+                  }}
+                >
+                  Pause
+                </button>
+              )}
+              <button
+                onClick={startSimulation}
+                style={{
+                  background: 'linear-gradient(135deg, #006ea7, #4c99c2)',
+                  color: '#ffffff',
+                  border: 'none',
+                  padding: '12px 24px',
+                  borderRadius: '16px',
+                  fontWeight: 800,
+                  fontSize: '1rem',
+                  cursor: 'pointer',
+                  boxShadow: '0 4px 15px rgba(0, 110, 167, 0.25)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '8px'
+                }}
+              >
+                <i className="bi bi-play-circle-fill" style={{ fontSize: '1.2rem' }}></i>
+                {isSimulating ? `Simulation läuft (W${simWeek})...` : simWeek > 0 ? 'Simulation neu starten' : '12-Wochen-Rennen simulieren'}
+              </button>
+            </div>
           </div>
 
           {/* Simulation status banner */}
@@ -447,24 +493,59 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 </div>
               </div>
 
-              {/* Mini visual curve of VO2-Max progress */}
-              <div style={{ display: 'flex', gap: '4px', height: '60px', alignItems: 'flex-end', marginTop: '1.5rem', background: '#fafcff', border: '1px solid #e2eef8', borderRadius: '12px', padding: '10px 15px' }}>
-                <div style={{ fontSize: '0.75rem', color: '#94a3b8', width: '50px', alignSelf: 'center', fontWeight: 700 }}>Verlauf:</div>
-                <div style={{ display: 'flex', gap: '6px', flex: 1, height: '100%', alignItems: 'flex-end' }}>
-                  {simHistory.map((val, idx) => {
-                    const pct = ((val - 30) / 20) * 100;
+              {/* Wochen timeline & slider (DRAGGABLE SLIDER) */}
+              <div style={{ marginTop: '1.5rem', background: '#fafcff', border: '1px solid #e2eef8', borderRadius: '20px', padding: '1.5rem' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1e3a5f' }}>Wochen-Zeitleiste (Manuell verschiebbar):</span>
+                  <span style={{ background: '#006ea7', color: '#ffffff', padding: '2px 10px', borderRadius: '12px', fontSize: '0.85rem', fontWeight: 800 }}>Woche {simWeek} / 12</span>
+                </div>
+                
+                {/* Drag range slider */}
+                <input
+                  type="range"
+                  min="0"
+                  max="12"
+                  step="1"
+                  value={simWeek}
+                  onChange={(e) => {
+                    setSimWeek(parseInt(e.target.value));
+                    setIsSimulating(false);
+                    setLisaReport(null);
+                  }}
+                  className="timeline-slider-input"
+                />
+
+                {/* Week Labels under slider */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.8rem', padding: '0 4px' }}>
+                  {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((wk) => {
+                    const isActive = wk === simWeek;
                     return (
-                      <div 
-                        key={idx}
-                        style={{
-                          flex: 1,
-                          height: `${Math.max(10, pct)}%`,
-                          background: val > baseVO2 ? '#4C99C2' : val < baseVO2 ? '#ef4444' : '#94a3b8',
-                          borderRadius: '3px',
-                          transition: 'all 0.3s'
+                      <button
+                        key={wk}
+                        onClick={() => {
+                          setSimWeek(wk);
+                          setIsSimulating(false);
+                          setLisaReport(null);
                         }}
-                        title={`Woche ${idx}: ${val.toFixed(1)}`}
-                      />
+                        style={{
+                          background: isActive ? '#006ea7' : 'transparent',
+                          color: isActive ? '#ffffff' : '#64748b',
+                          border: 'none',
+                          width: '24px',
+                          height: '24px',
+                          borderRadius: '50%',
+                          fontSize: '0.75rem',
+                          fontWeight: 800,
+                          cursor: 'pointer',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          boxShadow: isActive ? '0 2px 6px rgba(0, 110, 167, 0.3)' : 'none',
+                          transition: 'all 0.2s'
+                        }}
+                      >
+                        {wk}
+                      </button>
                     );
                   })}
                 </div>
