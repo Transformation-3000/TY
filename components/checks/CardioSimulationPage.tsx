@@ -297,14 +297,15 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         .timeline-slider-input::-webkit-slider-thumb {
           -webkit-appearance: none;
           appearance: none;
-          width: 26px;
-          height: 26px;
+          width: 40px;
+          height: 40px;
           border-radius: 50%;
           background: #006ea7;
-          border: 3px solid #ffffff;
-          box-shadow: 0 3px 8px rgba(0, 110, 167, 0.35);
+          border: 4px solid #ffffff;
+          box-shadow: 0 4px 10px rgba(0, 110, 167, 0.4);
           cursor: pointer;
           transition: transform 0.1s;
+          margin-top: -14px; /* Align thumb center with track center */
         }
         .timeline-slider-input::-webkit-slider-thumb:hover {
           transform: scale(1.15);
@@ -512,10 +513,10 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           background: isActive ? '#006ea7' : 'transparent',
                           color: isActive ? '#ffffff' : '#64748b',
                           border: 'none',
-                          width: '24px',
-                          height: '24px',
+                          width: '38px',
+                          height: '38px',
                           borderRadius: '50%',
-                          fontSize: '0.75rem',
+                          fontSize: '1.1rem',
                           fontWeight: 800,
                           cursor: 'pointer',
                           display: 'flex',
@@ -584,18 +585,17 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       {/* Tacho Hub (Center Circle) */}
                       <circle cx="110" cy="110" r="48" fill="#ffffff" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.06))" />
                       
-                      {/* Needle */}
+                      {/* Floating Needle (starts outside center circle to not cover text) */}
                       <line 
-                        x1="110" 
-                        y1="110" 
-                        x2={110 + 72 * Math.cos(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 20)) * 270) * Math.PI) / 180)} 
-                        y2={110 + 72 * Math.sin(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 20)) * 270) * Math.PI) / 180)} 
+                        x1={110 + 52 * Math.cos(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 20)) * 270) * Math.PI) / 180)} 
+                        y1={110 + 52 * Math.sin(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 20)) * 270) * Math.PI) / 180)} 
+                        x2={110 + 78 * Math.cos(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 20)) * 270) * Math.PI) / 180)} 
+                        y2={110 + 78 * Math.sin(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 20)) * 270) * Math.PI) / 180)} 
                         stroke="#0f172a" 
-                        strokeWidth="3.5" 
+                        strokeWidth="4" 
                         strokeLinecap="round"
                         style={{ transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)' }}
                       />
-                      <circle cx="110" cy="110" r="6" fill="#0f172a" />
                     </svg>
 
                     {/* Values inside the Center Circle */}
