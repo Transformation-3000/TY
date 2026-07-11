@@ -223,7 +223,7 @@ export default function VisionPage() {
                 {/* Believe */}
                 <div style={{ marginBottom: 0 }}>
                   <p style={{ fontSize: '1.1rem', color: '#475569', lineHeight: '1.7', margin: 0 }}>
-                    „Wir stehen an der Schwelle zu einer bahnbrechenden Ära: Alterung ist kein Schicksal mehr, sondern ein gestaltbarer Prozess. Meine Vision für True Years ist es, modernste Wissenschaft und künstliche Intelligenz so einfach nutzbar zu machen, dass jeder Mensch die volle Kontrolle über seine biologische Uhr gewinnt. Wir möchten dir nicht nur Jahre schenken, sondern vitale, gesunde und kraftvolle Lebensjahre voller Energie – datengetrieben, präventiv und perfekt integriert in deinen Alltag. Lass uns das Älterwerden gemeinsam neu definieren.“
+                    „Ich möchte, dass Menschen jeden Tag spüren: Mein Leben wird besser. Mehr Energie, mehr Klarheit, mehr Frische, mehr Lebensfreude und die Gewissheit, aktiv etwas für die eigene Zukunft zu tun. TrueYears macht aus der hochkomplexern Alterungsforschung konkrete Schritte, die sich einfach in den Alltag integrieren lassen und damit einen klaren Unterschied machen.“
                   </p>
                 </div>
               </div>
