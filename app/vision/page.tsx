@@ -262,7 +262,7 @@ export default function VisionPage() {
                 {/* Believe */}
                 <div style={{ marginBottom: 0 }}>
                   <p style={{ fontSize: '1.1rem', color: '#475569', lineHeight: '1.7', margin: 0 }}>
-                    „In meiner ärztlichen Laufbahn habe ich gelernt, dass Menschen keine Ratschläge ins Blaue hinein brauchen, sondern präzise, verlässliche Lösungen für ihre Gesundheit. Meine Vision ist es, die komplexesten biologischen Daten und Wearable-Routinen so elegant zu orchestrieren, dass sie dir als intuitiver, unsichtbarer Alltags-Kompass dienen. Wir bauen eine Plattform, die dir jeden Tag zeigt, was deine Zellen heute brauchen, um in Bestform zu bleiben. Wir machen Langlebigkeit transparent, nachweisbar und vor allem – einfach.“
+                    „Was wäre, wenn unsere Daten nicht nur erzählen, wo wir stehen, sondern uns jeden Tag zeigen, was als Nächstes zählt? Genau das ist meine Vision für TrueYears: Wir verwandeln komplexe Langlebigkeitsdaten, Wearables und wissenschaftliche Erkenntnisse in einen persönlichen Kompass – verständlich, präzise und direkt umsetzbar. Eine Plattform, die sichtbar macht, was deine Zellen heute brauchen, um langfristig in Bestform zu bleiben. So wird aus Komplexität Klarheit – und Langlebigkeit transparent, messbar und überraschend einfach.“
                   </p>
                 </div>
               </div>
