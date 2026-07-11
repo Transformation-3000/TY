@@ -103,7 +103,7 @@ export default function VisionPage() {
                 />
               </div>
               <div className="new-feature-content-inner" style={{ padding: '2rem' }}>
-                <div style={{ fontSize: '0.85rem', color: '#4498ca', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
+                <div style={{ fontSize: '0.98rem', color: '#4498ca', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
                   Fokus 01
                 </div>
                 <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.75rem 0', fontFamily: 'DM Sans, sans-serif' }}>
@@ -130,7 +130,7 @@ export default function VisionPage() {
                 />
               </div>
               <div className="new-feature-content-inner" style={{ padding: '2rem' }}>
-                <div style={{ fontSize: '0.85rem', color: '#16a34a', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
+                <div style={{ fontSize: '0.98rem', color: '#16a34a', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
                   Fokus 02
                 </div>
                 <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.75rem 0', fontFamily: 'DM Sans, sans-serif' }}>
@@ -157,7 +157,7 @@ export default function VisionPage() {
                 />
               </div>
               <div className="new-feature-content-inner" style={{ padding: '2rem' }}>
-                <div style={{ fontSize: '0.85rem', color: '#db2777', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
+                <div style={{ fontSize: '0.98rem', color: '#db2777', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
                   Fokus 03
                 </div>
                 <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.75rem 0', fontFamily: 'DM Sans, sans-serif' }}>
