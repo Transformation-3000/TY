@@ -333,7 +333,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         <div>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <h2 className="sim-sec-title" style={{ margin: 0 }}>I. Das Langlebigkeits-Rennen (Wochen 1–12)</h2>
+              <h2 className="sim-sec-title" style={{ margin: 0 }}>I. Das Langlebigkeits-Rennen</h2>
               <p className="sim-sec-desc" style={{ margin: '0.2rem 0 0 0' }}>
                 Drücke auf Start oder schiebe den Wochenregler unten manuell, um die Leistungsentwicklung zu steuern.
               </p>
@@ -380,26 +380,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             </div>
           </div>
 
-          {/* Simulation status banner */}
-          <div 
-            style={{
-              background: `${simStatusColor}08`,
-              border: `1.5px dashed ${simStatusColor}40`,
-              borderRadius: '16px',
-              padding: '1rem 1.5rem',
-              color: simStatusColor,
-              fontWeight: 700,
-              fontSize: '1rem',
-              marginBottom: '2.5rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '10px',
-              transition: 'all 0.3s'
-            }}
-          >
-            <i className="bi bi-info-circle-fill" />
-            <span>{simMessage}</span>
-          </div>
+
 
           <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'center' }}>
             <div style={{ paddingRight: '2rem' }}>
@@ -568,8 +549,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 }}
               >
                 <div style={{ textAlign: 'center', borderBottom: '1px solid #e2effa', paddingBottom: '1rem' }}>
-                  <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Kardiopulmonale Leistung</span>
-                  <div style={{ fontSize: '3rem', fontWeight: 800, color: '#006ea7', marginTop: '0.2rem', lineHeight: 1 }}>
+                  <span style={{ fontSize: '1rem', fontWeight: 800, color: '#1e3a5f', textTransform: 'uppercase', letterSpacing: '0.08em' }}>VO2max</span>
+                  <div style={{ fontSize: '3.6rem', fontWeight: 900, color: '#006ea7', marginTop: '0.2rem', lineHeight: 1 }}>
                     {currentVO2.toFixed(1).replace('.', ',')}
                   </div>
                   <div style={{ fontSize: '0.85rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#22c55e' : '#ef4444', marginTop: '0.4rem' }}>
