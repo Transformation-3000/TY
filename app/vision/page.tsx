@@ -76,7 +76,7 @@ export default function VisionPage() {
           <p style={{ 
             fontSize: '1.4rem', 
             color: '#64748b', 
-            maxWidth: '900px', 
+            maxWidth: '1100px', 
             margin: '0 auto', 
             lineHeight: '1.6' 
           }}>
