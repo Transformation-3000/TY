@@ -41,18 +41,17 @@ export default function VisionPage() {
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle navigation"
           >
-            <span className="toggle-line" />
-            <span className="toggle-line" />
-            <span className="toggle-line" />
+            <span className="hamburger"></span>
           </button>
-          <div className="landing-nav-links">
-            <Link href="/#bausteine" onClick={() => setMenuOpen(false)}>Bausteine</Link>
-            <Link href="/#mitgliedschaften" onClick={() => setMenuOpen(false)}>Mitgliedschaften</Link>
-            <Link href="/#wissenschaft" onClick={() => setMenuOpen(false)}>Wissenschaft</Link>
-            <Link href="/#kundenstimmen" onClick={() => setMenuOpen(false)}>Kundenstimmen</Link>
-            <Link href="/login" className="login-btn-new" onClick={() => setMenuOpen(false)}>
-              Login
+          <div className={`landing-nav-links ${menuOpen ? 'landing-nav-links-open' : ''}`}>
+            <Link href="/#features" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Bausteine</Link>
+            <Link href="/#erfolgsprinzip" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Mitgliedschaften</Link>
+            <Link href="/#testphase" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Wissenschaft</Link>
+            <Link href="/#kundenstimmen" className="landing-nav-link" onClick={() => setMenuOpen(false)}>Kundenstimmen</Link>
+            <Link href="/checkout" className="landing-nav-link" onClick={() => setMenuOpen(false)} aria-label="Warenkorb" style={{ display: 'flex', alignItems: 'center' }}>
+              <i className="bi bi-cart3" style={{ fontSize: '1.5rem' }}></i>
             </Link>
+            <Link href="/dashboard" className="btn-cta-small" onClick={() => setMenuOpen(false)}>Login</Link>
           </div>
         </div>
       </nav>
