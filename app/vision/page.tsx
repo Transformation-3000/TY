@@ -183,8 +183,8 @@ export default function VisionPage() {
         {/* Vision 1.0: Gründermotivation */}
         <div style={{ backgroundColor: '#ffffff', padding: '5rem 2rem', borderTop: '1px solid rgba(0, 110, 167, 0.05)', borderBottom: '1px solid rgba(0, 110, 167, 0.05)' }}>
           <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-            <div style={{ textAlign: 'center', marginBottom: '4rem' }}>
-              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem' }}>
+            <div style={{ marginBottom: '4rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem' }}>
                 <span style={{ display: 'inline-block', width: '5px', height: '32px', backgroundColor: '#4498ca', marginRight: '14px', borderRadius: '4px' }}></span>
                 <h2 style={{ fontSize: '2.4rem', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif' }}>
                   Unsere Motivation: <span style={{ fontWeight: 400 }}>Warum wir True Years gegründet haben</span>
