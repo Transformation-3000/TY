@@ -169,6 +169,29 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
   const isFelsstufe = currentVO2 >= 40.0 && currentVO2 < 45.0;
   const isGipfel = currentVO2 >= 45.0;
 
+  // Mischpult-Status ableiten für UI
+  let cardMixerStatus = "Gute Balance. Erhöhe Zone-2 oder HIIT für stärkere Langlebigkeits-Effekte.";
+  let cardMixerColor = "#eab308"; // gelb
+  let cardMixerIcon = "bi-shield-shaded";
+  let pulseSpeed = "2s";
+  
+  if (simHIIT >= 3 && simRegen < 70) {
+    cardMixerStatus = "Systemwarnung: Übertraining! Du trainierst zu hart für deine Regeneration. Schontage einlegen!";
+    cardMixerColor = "#ef4444"; // rot
+    cardMixerIcon = "bi-exclamation-triangle-fill";
+    pulseSpeed = "0.4s";
+  } else if (simZone2 >= 120 && simHIIT >= 1 && simRegen >= 75) {
+    cardMixerStatus = "Perfect Flow! Dein Herzschlag-Rhythmus klingt kraftvoll und harmonisch. Maximaler Fortschritt!";
+    cardMixerColor = "#22c55e"; // grün
+    cardMixerIcon = "bi-check-circle-fill";
+    pulseSpeed = "1.2s";
+  } else if (simZone2 < 60 && simHIIT === 0) {
+    cardMixerStatus = "Systemstatus: Träge. Erhöhe Zone-2-Einheiten, um deine zelluläre Akkuladung zu starten.";
+    cardMixerColor = "#64748b"; // grau
+    cardMixerIcon = "bi-info-circle-fill";
+    pulseSpeed = "3s";
+  }
+
   return (
     <div className="sim-container">
       <style dangerouslySetInnerHTML={{__html: `
