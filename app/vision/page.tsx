@@ -265,7 +265,7 @@ export default function VisionPage() {
                     <i className="bi bi-patch-check-fill" style={{ color: '#16a34a' }}></i> Die persönliche Vision
                   </h4>
                   <p style={{ fontSize: '1.1rem', color: '#475569', lineHeight: '1.7', margin: 0 }}>
-                    „In meiner beruflichen Laufbahn habe ich gelernt, dass Menschen keine Ratschläge ins Blaue hinein brauchen, sondern präzise, verlässliche Lösungen für ihre Gesundheit. Meine Vision ist es, die komplexesten biologischen Daten und Wearable-Routinen so elegant zu orchestrieren, dass sie dir als intuitiver, unsichtbarer Alltags-Kompass dienen. Wir bauen eine Plattform, die dir jeden Tag zeigt, was deine Zellen heute brauchen, um in Bestform zu bleiben. Wir machen Langlebigkeit transparent, nachweisbar und vor allem – einfach.“
+                    „In meiner ärztlichen Laufbahn habe ich gelernt, dass Menschen keine Ratschläge ins Blaue hinein brauchen, sondern präzise, verlässliche Lösungen für ihre Gesundheit. Meine Vision ist es, die komplexesten biologischen Daten und Wearable-Routinen so elegant zu orchestrieren, dass sie dir als intuitiver, unsichtbarer Alltags-Kompass dienen. Wir bauen eine Plattform, die dir jeden Tag zeigt, was deine Zellen heute brauchen, um in Bestform zu bleiben. Wir machen Langlebigkeit transparent, nachweisbar und vor allem – einfach.“
                   </p>
                 </div>
               </div>
