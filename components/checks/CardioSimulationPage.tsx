@@ -572,8 +572,9 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       <defs>
                         <linearGradient id="tachoGrad" x1="0%" y1="100%" x2="100%" y2="0%">
                           <stop offset="0%" stopColor="#ef4444" />
-                          <stop offset="30%" stopColor="#eab308" />
-                          <stop offset="70%" stopColor="#22c55e" />
+                          <stop offset="35%" stopColor="#f97316" />
+                          <stop offset="60%" stopColor="#eab308" />
+                          <stop offset="82%" stopColor="#22c55e" />
                           <stop offset="100%" stopColor="#a855f7" />
                         </linearGradient>
                       </defs>
@@ -595,7 +596,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         strokeWidth="12" 
                         strokeLinecap="round" 
                         strokeDasharray="400"
-                        strokeDashoffset={400 - (Math.min(1, Math.max(0, (currentVO2 - 30) / 20)) * 400)}
+                        strokeDashoffset={400 - (Math.min(1, Math.max(0, (currentVO2 - 30) / 18.5)) * 400)}
                         style={{ transition: 'stroke-dashoffset 0.4s ease-in-out' }}
                       />
 
@@ -604,10 +605,10 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       
                       {/* Floating Needle (starts outside center circle to not cover text) */}
                       <line 
-                        x1={110 + 52 * Math.cos(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 20)) * 270) * Math.PI) / 180)} 
-                        y1={110 + 52 * Math.sin(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 20)) * 270) * Math.PI) / 180)} 
-                        x2={110 + 78 * Math.cos(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 20)) * 270) * Math.PI) / 180)} 
-                        y2={110 + 78 * Math.sin(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 20)) * 270) * Math.PI) / 180)} 
+                        x1={110 + 52 * Math.cos(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 18.5)) * 270) * Math.PI) / 180)} 
+                        y1={110 + 52 * Math.sin(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 18.5)) * 270) * Math.PI) / 180)} 
+                        x2={110 + 78 * Math.cos(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 18.5)) * 270) * Math.PI) / 180)} 
+                        y2={110 + 78 * Math.sin(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 18.5)) * 270) * Math.PI) / 180)} 
                         stroke="#0f172a" 
                         strokeWidth="4" 
                         strokeLinecap="round"
