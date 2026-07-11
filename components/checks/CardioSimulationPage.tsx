@@ -456,7 +456,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       marginTop: '2px'
                     }}
                   >
-                    Basis (35.0)
+                    Basis (35,0)
                   </span>
                 </div>
 
@@ -488,7 +488,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       marginTop: '2px'
                     }}
                   >
-                    Woche {simWeek} ({currentVO2.toFixed(1)})
+                    Woche {simWeek} ({currentVO2.toFixed(1).replace('.', ',')})
                   </span>
                 </div>
               </div>
@@ -553,60 +553,65 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
             </div>
 
-            {/* Outcomes Box */}
+            {/* VO2-Max Analytics Box */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
-                <div 
-                  style={{
-                    background: '#faf5ff',
-                    border: '1px solid #e9d5ff',
-                    borderRadius: '20px',
-                    padding: '1.5rem',
-                    textAlign: 'center',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.01)'
-                  }}
-                >
-                  <div style={{ fontSize: '2rem', fontWeight: 800, color: '#7e22ce' }}>
-                    {currentVO2.toFixed(1)}
+              <div 
+                style={{
+                  background: '#fafcff',
+                  border: '1.5px solid #e2eef8',
+                  borderRadius: '24px',
+                  padding: '1.5rem',
+                  boxShadow: '0 4px 15px rgba(0, 110, 167, 0.02)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1.25rem'
+                }}
+              >
+                <div style={{ textAlign: 'center', borderBottom: '1px solid #e2effa', paddingBottom: '1rem' }}>
+                  <span style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Kardiopulmonale Leistung</span>
+                  <div style={{ fontSize: '3rem', fontWeight: 800, color: '#006ea7', marginTop: '0.2rem', lineHeight: 1 }}>
+                    {currentVO2.toFixed(1).replace('.', ',')}
                   </div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: '#6b21a8', textTransform: 'uppercase', marginTop: '0.3rem' }}>
-                    VO2-Max ({currentVO2 >= baseVO2 ? '+' : ''}{(currentVO2 - baseVO2).toFixed(1)})
-                  </div>
-                </div>
-
-                <div 
-                  style={{
-                    background: currentVO2 >= baseVO2 ? '#f0fdf4' : '#fef2f2',
-                    border: `1px solid ${currentVO2 >= baseVO2 ? '#bbf7d0' : '#fecaca'}`,
-                    borderRadius: '20px',
-                    padding: '1.5rem',
-                    textAlign: 'center',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.01)'
-                  }}
-                >
-                  <div style={{ fontSize: '2rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#16a34a' : '#dc2626' }}>
-                    {currentVO2 >= baseVO2 ? '-' : '+'}{Math.abs(bioAgeDiff).toFixed(1)} J.
-                  </div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: currentVO2 >= baseVO2 ? '#15803d' : '#991b1b', textTransform: 'uppercase', marginTop: '0.3rem' }}>
-                    Herzalter
+                  <div style={{ fontSize: '0.85rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#22c55e' : '#ef4444', marginTop: '0.4rem' }}>
+                    {currentVO2 >= baseVO2 ? '▲' : '▼'} {(currentVO2 - baseVO2).toFixed(1).replace('.', ',')} ml/kg/min (vs. Basis)
                   </div>
                 </div>
 
-                <div 
-                  style={{
-                    background: currentVO2 >= baseVO2 ? '#eff6ff' : '#f1f5f9',
-                    border: `1px solid ${currentVO2 >= baseVO2 ? '#bfdbfe' : '#e2e8f0'}`,
-                    borderRadius: '20px',
-                    padding: '1.5rem',
-                    textAlign: 'center',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.01)'
-                  }}
-                >
-                  <div style={{ fontSize: '2rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#2563eb' : '#64748b' }}>
-                    {currentVO2 >= baseVO2 ? '+' : ''}{healthspanBonus.toFixed(1)} J.
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                  {/* Metric 1: Mitochondria */}
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '0.3rem' }}>
+                      <span>Mitochondriale Kapazität (Zone 2)</span>
+                      <span style={{ color: '#006ea7', fontWeight: 800 }}>{Math.min(100, Math.round((simZone2 / 120) * 100))}%</span>
+                    </div>
+                    <div style={{ background: '#e2e8f0', height: '6px', borderRadius: '3px', overflow: 'hidden' }}>
+                      <div 
+                        style={{ 
+                          background: '#006ea7', 
+                          width: `${Math.min(100, Math.round((simZone2 / 120) * 100))}%`, 
+                          height: '100%',
+                          transition: 'all 0.3s'
+                        }} 
+                      />
+                    </div>
                   </div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 700, color: currentVO2 >= baseVO2 ? '#1d4ed8' : '#475569', textTransform: 'uppercase', marginTop: '0.3rem' }}>
-                    Healthspan
+
+                  {/* Metric 2: Stroke Volume */}
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '0.3rem' }}>
+                      <span>Kardiales Schlagvolumen (HIIT)</span>
+                      <span style={{ color: '#22c55e', fontWeight: 800 }}>+{Math.min(25, simHIIT * 6)}%</span>
+                    </div>
+                    <div style={{ background: '#e2e8f0', height: '6px', borderRadius: '3px', overflow: 'hidden' }}>
+                      <div 
+                        style={{ 
+                          background: '#22c55e', 
+                          width: `${(Math.min(25, simHIIT * 6) / 25) * 100}%`, 
+                          height: '100%',
+                          transition: 'all 0.3s'
+                        }} 
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -662,7 +667,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 <div style={{ display: 'flex', gap: '1rem', marginTop: '1.2rem' }}>
                   <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '0.6rem 1rem', flex: 1, textAlign: 'center' }}>
                     <div style={{ fontSize: '0.78rem', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase' }}>VO2-Max prognose</div>
-                    <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', marginTop: '0.2rem' }}>{currentVO2.toFixed(1)}</div>
+                    <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', marginTop: '0.2rem' }}>{currentVO2.toFixed(1).replace('.', ',')}</div>
                   </div>
                   <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '0.6rem 1rem', flex: 1, textAlign: 'center' }}>
                     <div style={{ fontSize: '0.78rem', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase' }}>Etappen-Status</div>
