@@ -331,14 +331,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
         {/* I. DAS LANGLEBIGKEITS-RENNEN */}
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem', gap: '2rem' }}>
             <div>
               <h2 className="sim-sec-title" style={{ margin: 0 }}>I. Das Langlebigkeits-Rennen</h2>
               <p className="sim-sec-desc" style={{ margin: '0.2rem 0 0 0' }}>
                 Drücke auf Start oder schiebe den Wochenregler unten manuell, um die Leistungsentwicklung zu steuern.
               </p>
             </div>
-            <div style={{ display: 'flex', gap: '10px' }}>
+            <div style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
               {isSimulating && (
                 <button
                   onClick={() => setIsSimulating(false)}
@@ -375,7 +375,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 }}
               >
                 <i className="bi bi-play-circle-fill" style={{ fontSize: '1.2rem' }}></i>
-                {isSimulating ? `Simulation läuft (W${simWeek})...` : simWeek > 0 ? 'Simulation neu starten' : '12-Wochen-Rennen simulieren'}
+                {isSimulating ? `Woche ${simWeek}...` : simWeek > 0 ? 'Simulation neu starten' : '12-Wochen-Simulation'}
               </button>
             </div>
           </div>
@@ -394,7 +394,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   position: 'relative',
                   boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)',
                   border: '1px solid #e2e8f0',
-                  margin: '3rem 0 2.5rem'
+                  margin: '5rem 0 2.5rem'
                 }}
               >
                 {/* Grid Marks */}
@@ -417,13 +417,13 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   style={{
                     position: 'absolute',
                     left: '10%',
-                    top: '-32px',
+                    top: '-65px',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center'
                   }}
                 >
-                  <span style={{ fontSize: '1.8rem', lineHeight: 1 }}>🏃‍♂️</span>
+                  <span style={{ fontSize: '4.8rem', lineHeight: 1 }}>🏃‍♂️</span>
                   <span 
                     style={{
                       fontSize: '0.75rem',
@@ -446,14 +446,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   style={{
                     position: 'absolute',
                     left: `${10 + ((currentVO2 - 30) / 20) * 75}%`,
-                    top: '-32px',
+                    top: '-65px',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'
                   }}
                 >
-                  <span style={{ fontSize: '1.8rem', lineHeight: 1, filter: 'drop-shadow(0 2px 5px rgba(34, 197, 94, 0.4))' }}>
+                  <span style={{ fontSize: '4.8rem', lineHeight: 1, filter: 'drop-shadow(0 2px 5px rgba(34, 197, 94, 0.4))' }}>
                     {isSimulating ? '🏃‍♂️⚡' : currentVO2 > baseVO2 ? '🏃‍♂️🏆' : '🏃‍♂️'}
                   </span>
                   <span 
@@ -549,12 +549,78 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 }}
               >
                 <div style={{ textAlign: 'center', borderBottom: '1px solid #e2effa', paddingBottom: '1rem' }}>
-                  <span style={{ fontSize: '1rem', fontWeight: 800, color: '#1e3a5f', textTransform: 'uppercase', letterSpacing: '0.08em' }}>VO2max</span>
-                  <div style={{ fontSize: '3.6rem', fontWeight: 900, color: '#006ea7', marginTop: '0.2rem', lineHeight: 1 }}>
-                    {currentVO2.toFixed(1).replace('.', ',')}
-                  </div>
-                  <div style={{ fontSize: '0.85rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#22c55e' : '#ef4444', marginTop: '0.4rem' }}>
-                    {currentVO2 >= baseVO2 ? '▲' : '▼'} {(currentVO2 - baseVO2).toFixed(1).replace('.', ',')} ml/kg/min (vs. Basis)
+                  <div style={{ position: 'relative', width: '220px', height: '190px', margin: '0 auto' }}>
+                    <svg width="220" height="190" viewBox="0 0 220 190">
+                      <defs>
+                        <linearGradient id="tachoGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                          <stop offset="0%" stopColor="#ef4444" />
+                          <stop offset="30%" stopColor="#eab308" />
+                          <stop offset="70%" stopColor="#22c55e" />
+                          <stop offset="100%" stopColor="#a855f7" />
+                        </linearGradient>
+                      </defs>
+                      
+                      {/* Background Track Arc */}
+                      <path 
+                        d="M 46 164 A 85 85 0 1 1 174 164" 
+                        fill="none" 
+                        stroke="#e2e8f0" 
+                        strokeWidth="12" 
+                        strokeLinecap="round" 
+                      />
+
+                      {/* Colored Active Arc */}
+                      <path 
+                        d="M 46 164 A 85 85 0 1 1 174 164" 
+                        fill="none" 
+                        stroke="url(#tachoGrad)" 
+                        strokeWidth="12" 
+                        strokeLinecap="round" 
+                        strokeDasharray="400"
+                        strokeDashoffset={400 - (Math.min(1, Math.max(0, (currentVO2 - 30) / 20)) * 400)}
+                        style={{ transition: 'stroke-dashoffset 0.4s ease-in-out' }}
+                      />
+
+                      {/* Tacho Hub (Center Circle) */}
+                      <circle cx="110" cy="110" r="48" fill="#ffffff" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.06))" />
+                      
+                      {/* Needle */}
+                      <line 
+                        x1="110" 
+                        y1="110" 
+                        x2={110 + 72 * Math.cos(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 20)) * 270) * Math.PI) / 180)} 
+                        y2={110 + 72 * Math.sin(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 20)) * 270) * Math.PI) / 180)} 
+                        stroke="#0f172a" 
+                        strokeWidth="3.5" 
+                        strokeLinecap="round"
+                        style={{ transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)' }}
+                      />
+                      <circle cx="110" cy="110" r="6" fill="#0f172a" />
+                    </svg>
+
+                    {/* Values inside the Center Circle */}
+                    <div 
+                      style={{
+                        position: 'absolute',
+                        top: '58%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        textAlign: 'center',
+                        pointerEvents: 'none',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        lineHeight: 1
+                      }}
+                    >
+                      <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1px' }}>VO2max</span>
+                      <div style={{ fontSize: '1.9rem', fontWeight: 900, color: '#0f172a', margin: '1px 0' }}>
+                        {currentVO2.toFixed(1).replace('.', ',')}
+                      </div>
+                      <span style={{ fontSize: '0.72rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#22c55e' : '#ef4444' }}>
+                        {currentVO2 >= baseVO2 ? '▲' : '▼'} {Math.abs(currentVO2 - baseVO2).toFixed(1).replace('.', ',')}
+                      </span>
+                    </div>
                   </div>
                 </div>
 
