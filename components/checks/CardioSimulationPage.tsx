@@ -54,78 +54,125 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     pulseSpeed = "3s";
   }
 
+  // Bergsteiger active stage
+  const isBaseCamp = calculatedVO2 < 35.0;
+  const isWaldgrenze = calculatedVO2 >= 35.0 && calculatedVO2 < 40.0;
+  const isFelsstufe = calculatedVO2 >= 40.0 && calculatedVO2 < 45.0;
+  const isGipfel = calculatedVO2 >= 45.0;
+
   return (
     <div className="sim-container">
       <style dangerouslySetInnerHTML={{__html: `
         .sim-container {
-          padding: 2rem 2.5rem;
+          padding: 2rem;
           max-width: 1200px;
           margin: 0 auto;
-          font-family: 'DM Sans', sans-serif;
+          font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
         .sim-header {
-          margin-bottom: 2.5rem;
+          margin-bottom: 3rem;
         }
-        .sim-title-row {
+        .sim-header-title-row {
           display: flex;
-          align-items: center;
           justify-content: space-between;
+          align-items: center;
           margin-bottom: 0.5rem;
         }
         .sim-title {
-          font-size: 2.2rem;
-          fontWeight: 800;
-          color: #0f172a;
-          margin: 0;
+          font-size: 2.4rem;
+          font-weight: 800;
+          color: #1e3a5f;
+          margin-bottom: 0;
         }
         .sim-subtitle {
-          font-size: 1.1rem;
+          font-size: 1.15rem;
           color: #64748b;
-          margin: 0;
-          max-width: 800px;
-          line-height: 1.6;
+          line-height: 1.55;
+          max-width: 100%;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
         .sim-back-btn {
+          background: transparent;
+          border: 1.5px solid #4498ca;
+          border-radius: 12px;
+          color: #4498ca;
+          font-size: 0.9rem;
+          font-weight: 700;
+          cursor: pointer;
           display: flex;
           align-items: center;
-          gap: 8px;
-          background: #ffffff;
-          border: 1px solid #e2e8f0;
-          padding: 8px 16px;
-          border-radius: 12px;
-          font-weight: 700;
-          color: #475569;
-          cursor: pointer;
-          transition: all 0.2s;
-          font-size: 0.88rem;
-          box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+          gap: 0.5rem;
+          padding: 0.5rem 1.15rem;
+          transition: all 0.2s ease;
+          box-shadow: 0 2px 5px rgba(68, 152, 202, 0.02);
         }
         .sim-back-btn:hover {
-          background: #f8fafc;
-          border-color: #cbd5e1;
-          color: #0f172a;
+          background: #ffffff;
+          border-color: #006ea7;
+          color: #006ea7;
+          transform: translateY(-1px);
+          box-shadow: 0 4px 12px rgba(68, 152, 202, 0.12);
         }
+        .sim-back-btn:active {
+          transform: translateY(0);
+        }
+        @media (max-width: 1366px) {
+          .sim-subtitle {
+            font-size: 1.05rem;
+          }
+        }
+        @media (max-width: 1200px) {
+          .sim-subtitle {
+            font-size: 0.88rem;
+          }
+        }
+        @media (max-width: 1050px) {
+          .sim-subtitle {
+            font-size: 0.76rem;
+          }
+        }
+        @media (max-width: 992px) {
+          .sim-subtitle {
+            white-space: normal;
+            font-size: 1rem;
+            text-overflow: clip;
+            overflow: visible;
+          }
+        }
+        @media (max-width: 576px) {
+          .sim-header-title-row {
+            flex-direction: column-reverse;
+            align-items: flex-start;
+            gap: 1rem;
+          }
+          .sim-back-btn {
+            align-self: flex-start;
+            padding: 0.4rem 0.9rem;
+            font-size: 0.85rem;
+          }
+        }
+
+        /* Card Layout */
         .sim-section-card {
           background: #ffffff;
-          border: 1px solid rgba(0, 110, 167, 0.06);
-          border-radius: 24px;
-          padding: 2.5rem;
-          box-shadow: 0 10px 30px rgba(0,0,0,0.01);
-          margin-bottom: 2.5rem;
+          border: 1.5px solid #e2e8f0;
+          border-radius: 30px;
+          padding: 2.5rem 2rem;
+          box-shadow: 0 10px 35px rgba(0, 0, 0, 0.03);
+          margin-bottom: 2rem;
         }
         .sim-sec-title {
-          font-size: 1.25rem;
+          font-size: 1.4rem;
           font-weight: 800;
-          color: #006EA7;
+          color: #1e3a5f;
           margin: 0 0 0.5rem 0;
-          text-transform: uppercase;
-          letter-spacing: 0.05em;
         }
         .sim-sec-desc {
-          font-size: 1rem;
-          color: #475569;
+          font-size: 0.95rem;
+          color: #64748b;
           margin: 0 0 2rem 0;
-          line-height: 1.5;
         }
         .sim-divider {
           border: none;
@@ -141,9 +188,9 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         }
       `}} />
 
-      {/* Header */}
+      {/* Header (Aligned perfectly with Zellalter-Simulator style) */}
       <div className="sim-header">
-        <div className="sim-title-row">
+        <div className="sim-header-title-row">
           <h1 className="sim-title">Cardio- & VO2-Max-Simulator</h1>
           <button className="sim-back-btn" onClick={onBack}>
             <svg width="6" height="10" viewBox="0 0 6 10" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -163,7 +210,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         <div>
           <h2 className="sim-sec-title">I. Das Langlebigkeits-Rennen</h2>
           <p className="sim-sec-desc">
-            Vergleiche deine simulated Leistung mit deiner untrainierten Langlebigkeits-Basis.
+            Vergleiche deinen Fortschritt mit deinem untrainierten Ausgangszustand.
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'center' }}>
@@ -303,93 +350,228 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         <div>
           <h2 className="sim-sec-title">II. Der VO2-Max Bergsteiger-Simulator</h2>
           <p className="sim-sec-desc">
-            Dein kardiovaskulärer Aufstieg: Welche VO2-Max Klasse erreichst du durch dein Training?
+            Dein kardiovaskulärer Aufstieg auf den Mount Longevitus. Je höher du steigst, desto besser für deine Zellen.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.25rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'center' }}>
             
-            {/* Category 1: Basis-Camp */}
-            <div 
-              style={{
-                background: calculatedVO2 < 35.0 ? '#f8fafc' : '#ffffff',
-                border: calculatedVO2 < 35.0 ? '2.5px solid #94a3b8' : '1px solid #e2e8f0',
-                borderRadius: '20px',
-                padding: '1.5rem',
-                textAlign: 'center',
-                position: 'relative',
-                boxShadow: calculatedVO2 < 35.0 ? '0 8px 20px rgba(148, 163, 184, 0.12)' : 'none',
-                transition: 'all 0.3s'
-              }}
-            >
-              {calculatedVO2 < 35.0 && (
-                <span style={{ position: 'absolute', top: '-14px', left: '50%', transform: 'translateX(-50%)', fontSize: '1.5rem' }}>🧗</span>
-              )}
-              <div style={{ fontSize: '2rem', margin: '0.2rem 0' }}>⛺</div>
-              <div style={{ fontWeight: 800, color: '#475569', fontSize: '1rem' }}>Basis-Camp</div>
-              <div style={{ fontSize: '0.82rem', color: '#94a3b8', marginTop: '0.3rem' }}>VO2-Max &lt; 35</div>
+            {/* Left Column: Stage details */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <div style={{ background: '#fafcff', border: '1.5px solid #e2eef8', borderRadius: '20px', padding: '1.5rem' }}>
+                <h4 style={{ margin: '0 0 0.5rem 0', color: '#1e3a5f', fontSize: '1.1rem', fontWeight: 700 }}>
+                  Aktuelle Kletter-Etappe
+                </h4>
+                <p style={{ margin: 0, fontSize: '0.95rem', color: '#475569', lineHeight: '1.5' }}>
+                  {isBaseCamp && "Du befindest dich im Basis-Camp. Deine aerobe Kapazität hat noch viel Entwicklungspotenzial. Baue zuerst deine Zone-2-Mitochondrienbasis auf."}
+                  {isWaldgrenze && "Du hast die Waldgrenze erreicht! Deine Mitochondriendichte wächst, dein Herz pumpt bereits ökonomischer. Perfekter Startpunkt."}
+                  {isFelsstufe && "Starke Leistung auf der Felsstufe! Du liegst deutlich über dem Durchschnitt. Dein Herzkreislauf-System schützt deine Zellen aktiv."}
+                  {isGipfel && "Peak Health! Du hast den Gipfel des Mount Longevitus bezwungen. Diese aerobe Fitnessklasse schenkt dir maximale vitale Jahre."}
+                </p>
+                <div style={{ display: 'flex', gap: '1rem', marginTop: '1.2rem' }}>
+                  <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '0.6rem 1rem', flex: 1, textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.78rem', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase' }}>VO2-Max prognose</div>
+                    <div style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', marginTop: '0.2rem' }}>{calculatedVO2.toFixed(1)}</div>
+                  </div>
+                  <div style={{ background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '0.6rem 1rem', flex: 1, textAlign: 'center' }}>
+                    <div style={{ fontSize: '0.78rem', color: '#94a3b8', fontWeight: 700, textTransform: 'uppercase' }}>Etappen-Status</div>
+                    <div style={{ fontSize: '1.1rem', fontWeight: 800, color: isGipfel ? '#a855f7' : isFelsstufe ? '#3b82f6' : isWaldgrenze ? '#22c55e' : '#94a3b8', marginTop: '0.3rem' }}>
+                      {isGipfel ? "Peak Elite" : isFelsstufe ? "Athlet" : isWaldgrenze ? "Fortgeschritten" : "Einsteiger"}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            {/* Category 2: Waldgrenze */}
-            <div 
-              style={{
-                background: (calculatedVO2 >= 35.0 && calculatedVO2 < 40.0) ? '#f0fdf4' : '#ffffff',
-                border: (calculatedVO2 >= 35.0 && calculatedVO2 < 40.0) ? '2.5px solid #22c55e' : '1px solid #e2e8f0',
-                borderRadius: '20px',
-                padding: '1.5rem',
-                textAlign: 'center',
-                position: 'relative',
-                boxShadow: (calculatedVO2 >= 35.0 && calculatedVO2 < 40.0) ? '0 8px 20px rgba(34, 197, 94, 0.12)' : 'none',
-                transition: 'all 0.3s'
-              }}
-            >
-              {(calculatedVO2 >= 35.0 && calculatedVO2 < 40.0) && (
-                <span style={{ position: 'absolute', top: '-14px', left: '50%', transform: 'translateX(-50%)', fontSize: '1.5rem' }}>🧗</span>
-              )}
-              <div style={{ fontSize: '2rem', margin: '0.2rem 0' }}>🌲</div>
-              <div style={{ fontWeight: 800, color: '#15803d', fontSize: '1rem' }}>Waldgrenze</div>
-              <div style={{ fontSize: '0.82rem', color: '#94a3b8', marginTop: '0.3rem' }}>VO2-Max 35–39</div>
-            </div>
+            {/* Right Column: Visual Vertical Mountain (Mount Longevitus) */}
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <div 
+                style={{
+                  background: '#f8fafc',
+                  border: '1.5px solid #e2e8f0',
+                  borderRadius: '24px',
+                  padding: '2rem 1.5rem',
+                  width: '100%',
+                  maxWidth: '350px',
+                  boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.02)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem',
+                  position: 'relative'
+                }}
+              >
+                {/* Mountain Name Title inside */}
+                <div style={{ textAlign: 'center', marginBottom: '0.5rem' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.08em' }}>Kletterpfad</span>
+                  <h4 style={{ margin: '0.1rem 0 0 0', color: '#1e3a5f', fontSize: '1.15rem', fontWeight: 800 }}>Mount Longevitus</h4>
+                </div>
 
-            {/* Category 3: Felsstufe */}
-            <div 
-              style={{
-                background: (calculatedVO2 >= 40.0 && calculatedVO2 < 45.0) ? '#eff6ff' : '#ffffff',
-                border: (calculatedVO2 >= 40.0 && calculatedVO2 < 45.0) ? '2.5px solid #3b82f6' : '1px solid #e2e8f0',
-                borderRadius: '20px',
-                padding: '1.5rem',
-                textAlign: 'center',
-                position: 'relative',
-                boxShadow: (calculatedVO2 >= 40.0 && calculatedVO2 < 45.0) ? '0 8px 20px rgba(59, 130, 246, 0.12)' : 'none',
-                transition: 'all 0.3s'
-              }}
-            >
-              {(calculatedVO2 >= 40.0 && calculatedVO2 < 45.0) && (
-                <span style={{ position: 'absolute', top: '-14px', left: '50%', transform: 'translateX(-50%)', fontSize: '1.5rem' }}>🧗</span>
-              )}
-              <div style={{ fontSize: '2rem', margin: '0.2rem 0' }}>🧗‍♀️</div>
-              <div style={{ fontWeight: 800, color: '#1d4ed8', fontSize: '1rem' }}>Felsstufe</div>
-              <div style={{ fontSize: '0.82rem', color: '#94a3b8', marginTop: '0.3rem' }}>VO2-Max 40–44</div>
-            </div>
+                {/* Vertical Trail Path Line */}
+                <div 
+                  style={{
+                    position: 'absolute',
+                    top: '90px',
+                    bottom: '70px',
+                    left: '52px',
+                    width: '3px',
+                    background: 'dashed',
+                    borderLeft: '2px dashed #cbd5e1',
+                    zIndex: 1
+                  }}
+                />
 
-            {/* Category 4: Gipfel */}
-            <div 
-              style={{
-                background: calculatedVO2 >= 45.0 ? '#faf5ff' : '#ffffff',
-                border: calculatedVO2 >= 45.0 ? '2.5px solid #a855f7' : '1px solid #e2e8f0',
-                borderRadius: '20px',
-                padding: '1.5rem',
-                textAlign: 'center',
-                position: 'relative',
-                boxShadow: calculatedVO2 >= 45.0 ? '0 8px 20px rgba(168, 85, 247, 0.12)' : 'none',
-                transition: 'all 0.3s'
-              }}
-            >
-              {calculatedVO2 >= 45.0 && (
-                <span style={{ position: 'absolute', top: '-14px', left: '50%', transform: 'translateX(-50%)', fontSize: '1.5rem' }}>🧗</span>
-              )}
-              <div style={{ fontSize: '2rem', margin: '0.2rem 0' }}>🏔️</div>
-              <div style={{ fontWeight: 800, color: '#7e22ce', fontSize: '1rem' }}>Gipfel (Elite)</div>
-              <div style={{ fontSize: '0.82rem', color: '#94a3b8', marginTop: '0.3rem' }}>VO2-Max &gt;= 45</div>
+                {/* Level 4: Gipfel */}
+                <div 
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    position: 'relative',
+                    zIndex: 2,
+                    opacity: isGipfel ? 1 : 0.45,
+                    transform: isGipfel ? 'scale(1.03)' : 'scale(1)',
+                    transition: 'all 0.3s'
+                  }}
+                >
+                  <div 
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      background: isGipfel ? '#faf5ff' : '#ffffff',
+                      border: isGipfel ? '2px solid #a855f7' : '1px solid #cbd5e1',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1rem',
+                      boxShadow: isGipfel ? '0 0 10px rgba(168,85,247,0.2)' : 'none'
+                    }}
+                  >
+                    🏔️
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 800, color: '#7e22ce', fontSize: '0.9rem' }}>Gipfel (Elite)</div>
+                    <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>VO2-Max &gt;= 45</div>
+                  </div>
+                  {isGipfel && (
+                    <span style={{ marginLeft: 'auto', fontSize: '1.5rem', animation: 'heartbeat-sim 2s infinite ease-in-out' }}>🧗</span>
+                  )}
+                </div>
+
+                {/* Level 3: Felsstufe */}
+                <div 
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    position: 'relative',
+                    zIndex: 2,
+                    opacity: isFelsstufe ? 1 : 0.45,
+                    transform: isFelsstufe ? 'scale(1.03)' : 'scale(1)',
+                    transition: 'all 0.3s'
+                  }}
+                >
+                  <div 
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      background: isFelsstufe ? '#eff6ff' : '#ffffff',
+                      border: isFelsstufe ? '2px solid #3b82f6' : '1px solid #cbd5e1',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1rem',
+                      boxShadow: isFelsstufe ? '0 0 10px rgba(59,130,246,0.2)' : 'none'
+                    }}
+                  >
+                    🧗‍♀️
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 800, color: '#1d4ed8', fontSize: '0.9rem' }}>Felsstufe (Athlet)</div>
+                    <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>VO2-Max 40–44</div>
+                  </div>
+                  {isFelsstufe && (
+                    <span style={{ marginLeft: 'auto', fontSize: '1.5rem', animation: 'heartbeat-sim 2s infinite ease-in-out' }}>🧗</span>
+                  )}
+                </div>
+
+                {/* Level 2: Waldgrenze */}
+                <div 
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    position: 'relative',
+                    zIndex: 2,
+                    opacity: isWaldgrenze ? 1 : 0.45,
+                    transform: isWaldgrenze ? 'scale(1.03)' : 'scale(1)',
+                    transition: 'all 0.3s'
+                  }}
+                >
+                  <div 
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      background: isWaldgrenze ? '#f0fdf4' : '#ffffff',
+                      border: isWaldgrenze ? '2px solid #22c55e' : '1px solid #cbd5e1',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1rem',
+                      boxShadow: isWaldgrenze ? '0 0 10px rgba(34,197,94,0.2)' : 'none'
+                    }}
+                  >
+                    🌲
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 800, color: '#15803d', fontSize: '0.9rem' }}>Waldgrenze (Fortgeschritten)</div>
+                    <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>VO2-Max 35–39</div>
+                  </div>
+                  {isWaldgrenze && (
+                    <span style={{ marginLeft: 'auto', fontSize: '1.5rem', animation: 'heartbeat-sim 2s infinite ease-in-out' }}>🧗</span>
+                  )}
+                </div>
+
+                {/* Level 1: Basis-Camp */}
+                <div 
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '1rem',
+                    position: 'relative',
+                    zIndex: 2,
+                    opacity: isBaseCamp ? 1 : 0.45,
+                    transform: isBaseCamp ? 'scale(1.03)' : 'scale(1)',
+                    transition: 'all 0.3s'
+                  }}
+                >
+                  <div 
+                    style={{
+                      width: '32px',
+                      height: '32px',
+                      borderRadius: '50%',
+                      background: isBaseCamp ? '#f8fafc' : '#ffffff',
+                      border: isBaseCamp ? '2px solid #94a3b8' : '1px solid #cbd5e1',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '1rem',
+                      boxShadow: isBaseCamp ? '0 0 10px rgba(148,163,184,0.2)' : 'none'
+                    }}
+                  >
+                    ⛺
+                  </div>
+                  <div>
+                    <div style={{ fontWeight: 800, color: '#475569', fontSize: '0.9rem' }}>Basis-Camp (Einsteiger)</div>
+                    <div style={{ fontSize: '0.72rem', color: '#94a3b8' }}>VO2-Max &lt; 35</div>
+                  </div>
+                  {isBaseCamp && (
+                    <span style={{ marginLeft: 'auto', fontSize: '1.5rem', animation: 'heartbeat-sim 2s infinite ease-in-out' }}>🧗</span>
+                  )}
+                </div>
+
+              </div>
             </div>
 
           </div>
