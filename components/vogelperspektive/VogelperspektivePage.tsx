@@ -41,7 +41,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   const [currentDate, setCurrentDate] = useState('');
   const [greeting, setGreeting] = useState('Guten Tag');
   const [userName, setUserName] = useState('Monique');
-  const [profileImage, setProfileImage] = useState('/images/selfie_monique_v3.png');
+  const [profileImage, setProfileImage] = useState('/images/image.png');
   const [selectedPlan, setSelectedPlan] = useState<string>('Premium');
 
   useEffect(() => {
@@ -266,11 +266,11 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       effectColor: '#3b82f6',
       effectIcon: 'bi-lightning-fill',
       diamonds: 3,
-      image: '/images/photo_breath_v2.png',
+      image: '/images/photo_breath_face.png',
       bg: 'linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%)',
       border: '1.5px solid #e2e8f0',
       isFavored: false,
-      photo: '/images/photo_breath.png'
+      photo: '/images/photo_breath_face.png'
     },
     {
       id: 'beeren',
@@ -282,11 +282,11 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       effectColor: '#ec4899',
       effectIcon: 'bi-shield-fill-check',
       diamonds: 2,
-      image: '/images/ritual_beeren.png',
+      image: '/images/photo_berries_clean.png',
       bg: 'linear-gradient(135deg, #fdf2f8 0%, #ffffff 100%)',
       border: '1.5px solid #e2e8f0',
       isFavored: false,
-      photo: '/images/ritual_beeren.png'
+      photo: '/images/photo_berries_clean.png'
     }
   ]);
 
@@ -3172,7 +3172,7 @@ return (
                         )}
 
                         {/* Image on top */}
-                        <div style={{ width: '100%', height: '150px', position: 'relative', flexShrink: 0, background: isBeeren ? '#f8fafc' : undefined, display: isBeeren ? 'flex' : undefined, alignItems: isBeeren ? 'center' : undefined, justifyContent: isBeeren ? 'center' : undefined }}>
+                        <div style={{ width: '100%', height: '150px', position: 'relative', flexShrink: 0, background: isBeeren ? '#ffffff' : undefined, display: isBeeren ? 'flex' : undefined, alignItems: isBeeren ? 'center' : undefined, justifyContent: isBeeren ? 'center' : undefined }}>
                           {isBeeren ? (
                             <div style={{ width: '100%', height: '100%', position: 'relative', transform: 'scale(0.8)' }}>
                               <Image 
