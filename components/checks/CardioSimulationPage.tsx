@@ -325,12 +325,12 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           width: 100%;
         }
         .tacho-circle-btn {
-          width: 52px;
-          height: 52px;
+          width: 78px;
+          height: 78px;
           border-radius: 50%;
           background: #ffffff;
           border: 1.5px solid #cbd5e1;
-          font-size: 1.4rem;
+          font-size: 2.1rem;
           cursor: pointer;
           transition: all 0.2s ease;
           display: flex;
@@ -748,7 +748,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', textAlign: 'center' }}>
                       VO2max Hebel
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '6px', width: '100%' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 12px', width: '100%' }}>
                       <div className="tacho-btn-container">
                         <button 
                           className={`tacho-circle-btn ${activeFactors.includes('zone2') ? 'active' : ''}`}
@@ -756,8 +756,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         >
                           🏃‍♂️
                         </button>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1px', marginTop: '6px', whiteSpace: 'nowrap' }}>
-                          <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#334155' }}>Zone 2</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
+                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>Zone 2</span>
                           <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
                             <i className="bi bi-info-circle tacho-info-icon" />
                             <span className="tacho-tooltip">
@@ -774,8 +774,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         >
                           ⚡
                         </button>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1px', marginTop: '6px', whiteSpace: 'nowrap' }}>
-                          <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#334155' }}>HIIT</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
+                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>HIIT</span>
                           <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
                             <i className="bi bi-info-circle tacho-info-icon" />
                             <span className="tacho-tooltip">
@@ -792,8 +792,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         >
                           🛌
                         </button>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1px', marginTop: '6px', whiteSpace: 'nowrap' }}>
-                          <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#334155' }}>Erholung</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
+                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>Erholung</span>
                           <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
                             <i className="bi bi-info-circle tacho-info-icon" />
                             <span className="tacho-tooltip">
@@ -810,8 +810,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         >
                           ⚖️
                         </button>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '1px', marginTop: '6px', whiteSpace: 'nowrap' }}>
-                          <span style={{ fontSize: '0.72rem', fontWeight: 800, color: '#334155' }}>Gewicht</span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
+                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>Gewicht</span>
                           <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
                             <i className="bi bi-info-circle tacho-info-icon" />
                             <span className="tacho-tooltip">
