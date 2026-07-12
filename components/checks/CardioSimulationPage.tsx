@@ -892,7 +892,6 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         </div>
                       );
                     })()}
-                    </div>
                   </div>
                 </div>
               </div>
