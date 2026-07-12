@@ -92,7 +92,7 @@ export default function WelcomeSection({
   const [tempSelectedId, setTempSelectedId] = useState<string>('whoop');
   const [pairingId, setPairingId] = useState<string | null>(null);
   const [pairingTimeoutId, setPairingTimeoutId] = useState<any>(null);
-  const [profileImage, setProfileImage] = useState('/images/selfie_monique.png');
+  const [profileImage, setProfileImage] = useState('/images/selfie_monique_v2.png');
   const [selectedPlan, setSelectedPlan] = useState<string>('Premium');
 
   useEffect(() => {
