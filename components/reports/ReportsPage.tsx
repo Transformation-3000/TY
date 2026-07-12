@@ -30,6 +30,28 @@ interface MonthlyReport {
 
 const monthlyReports: MonthlyReport[] = [
   {
+    id: 'jun-2026',
+    month: 'Juni',
+    year: 2026,
+    title: 'Monatsreport Juni 2026',
+    summary: 'Herausragende Fortschritte im Juni. Dein VO2max-Simulator zeigt direkte Wirkung und die Schlafqualität lag konstant über 92%.',
+    healthScore: 83,
+    previousScore: 78,
+    keyMetrics: {
+      sleep: { value: 7.8, unit: 'h', trend: 'up' },
+      steps: { value: 9850, unit: 'Ø', trend: 'up' },
+      hrv: { value: 72, unit: 'ms', trend: 'up' },
+      stress: { value: 24, unit: '%', trend: 'down' },
+    },
+    nextBestActions: [
+      { id: 1, priority: 'high', category: 'Ernährung', title: 'Beeren-Detox-Snack etablieren', description: 'Beeren-Detox-Snack (Alternative 5) 3x pro Woche einplanen', icon: 'bi-shield-fill-check' },
+      { id: 2, priority: 'high', category: 'Schlaf', title: 'Regenerative Atemübungen beibehalten', description: '5-10 Min. 4-7-8 Übung täglich', icon: 'bi-wind' },
+      { id: 3, priority: 'medium', category: 'Bewegung', title: 'Zone-2 Ausdauer festigen', description: 'Mindestens 90 Minuten pro Woche trainieren', icon: 'bi-lightning' },
+    ],
+    highlights: ['Schlafqualität +7%', '9.850 Schritte/Tag im Schnitt', 'VO2max-Fitness gesteigert'],
+    blockers: ['Erholungstage selten voll eingehalten', 'Gelegentlich späte Mahlzeiten'],
+  },
+  {
     id: 'jan-2026',
     month: 'Januar',
     year: 2026,

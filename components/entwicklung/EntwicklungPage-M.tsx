@@ -884,6 +884,34 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
 
     return [
       {
+        monthName: 'Juni',
+        year: 2026,
+        score: 83,
+        diff: '+5',
+        isPos: true,
+        summary: 'Im Juni hast du hervorragende Fortschritte erzielt. Dein biologisches Alter zeigt eine stetige Verjüngung. Durch die Erhöhung deines wöchentlichen Zone 2-Trainings konntest du deine kardiovaskuläre Fitness (VO2max) weiter verbessern. Deine Schlafqualität lag im Schnitt bei über 92%. Für den Juli solltest du dich darauf konzentrieren, die Beeren-Detox-Routine beizubehalten und deine Proteinzufuhr konstant hochzuhalten.',
+        pillars: [
+          { name: 'Schlaf & Erholung', score: 85, change: '+7%', status: 'Exzellent', desc: 'Hervorragende Schlafqualität durch kühles Zimmer und Dunkelheit.' },
+          { name: 'Kraft & Ausdauer', score: 88, change: '+4%', status: 'Exzellent', desc: 'Du hast dein wöchentliches Ausdauer- und Kraftprogramm voll durchgezogen.' },
+          { name: 'Zellerneuerung & Wachstum', score: 83, change: '+2%', status: 'Gut', desc: 'Beeren-Detox-Snack und Autophagie-Phasen wurden vorbildlich eingehalten.' },
+          { name: 'Immunbalance & Entlastung', score: 70, change: '+8%', status: 'Gut', desc: 'Deutlich mehr alkoholfreie Tage und konsequentes Fasten.' },
+          { name: 'Selbstfürsorge & Soziale Bindungen', score: 76, change: '+3%', status: 'Gut', desc: 'Gute Stressbewältigung und regelmäßiger Kontakt mit Familie & Freunden.' },
+          { name: 'Mentale Resilienz', score: 65, change: '+8%', status: 'Gut', desc: 'Deine regelmäßigen 4-7-8 Atemübungen zeigen deutliche Entlastungseffekte.' },
+        ],
+        biomarkers: [
+          { label: 'HRV', val: '72 ms', change: '+4 ms (Besser)', status: 'better' },
+          { label: 'Schlafqualität', val: '93%', change: '+2% (Besser)', status: 'better' },
+          { label: 'Ruhepuls', val: '55 bpm', change: '-2 bpm (Besser)', status: 'better' },
+          { label: 'Schritte', val: '9.850 / Tag', change: '+430 (Besser)', status: 'better' },
+        ],
+        achievements: dynamicAchievements,
+        nextMonthFokus: [
+          'Beeren-Detox-Snack (Alternative 5) 3x pro Woche einplanen',
+          'Regelmäßige 4-7-8 Atemübung zur Entspannung nutzen',
+          'Zielgewicht halten und Muskelmasse weiter festigen'
+        ]
+      },
+      {
         monthName: 'Mai',
         year: 2026,
         score: 78,
