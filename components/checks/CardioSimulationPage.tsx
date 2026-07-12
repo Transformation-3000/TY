@@ -771,19 +771,19 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
                       <div className="tacho-btn-container">
                         <button className="tacho-factor-btn">
-                          🛌 3. Faktor
+                          🛌 Regeneration
                         </button>
                         <span className="tacho-tooltip">
-                          <strong>Regeneration & Superkompensation:</strong> Erlaubt Muskeln und Herz, sich in Ruhephasen an Trainingsreize anzupassen.
+                          <strong>Regeneration:</strong> Ausreichend Schlaf und Trainingspausen erlauben es Herz und Muskeln, sich an gesetzte Reize anzupassen.
                         </span>
                       </div>
 
                       <div className="tacho-btn-container">
                         <button className="tacho-factor-btn">
-                          💤 4. Faktor
+                          ⚖️ Körpergewicht
                         </button>
                         <span className="tacho-tooltip">
-                          <strong>Schlafqualität & Zellaufbau:</strong> Fördert nächtliche Wachstumshormone und die kardiovaskuläre Erholung für optimale Leistungsfähigkeit.
+                          <strong>Körpergewicht:</strong> Da die VO2max relativ zum Gewicht gemessen wird (ml/kg/min), steigert Fettabbau den Wert direkt.
                         </span>
                       </div>
                     </div>
