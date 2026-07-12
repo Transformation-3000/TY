@@ -39,6 +39,15 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     let current = baseVO2;
 
     for (let w = 1; w <= 12; w++) {
+      if (activeFactors.length === 0) {
+        data.push({ 
+          vo2: baseVO2, 
+          msg: `Woche ${w}: Keine Hebel aktiviert. Schalte einen VO2max-Hebel ein, um deine Entwicklung zu starten.`, 
+          color: '#64748b' 
+        });
+        continue;
+      }
+
       let weeklyChange = 0;
       const regenFactor = (simRegen - 30) / 70; // 0 to 1
 
