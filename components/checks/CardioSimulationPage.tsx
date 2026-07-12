@@ -975,24 +975,36 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         content = (
                           <span>
                             <strong>Mitochondriale Kapazität:</strong> Verbessert die Sauerstoffverarbeitung in den Muskelzellen und bildet das aerobe Fundament.
+                            <div style={{ marginTop: '5px', color: '#006ea7', fontWeight: 600 }}>
+                              📝 Beispiel: 3x pro Woche 45 Min. lockeres Laufen oder Radfahren bei moderatem Puls.
+                            </div>
                           </span>
                         );
                       } else if (activeKey === 'hiit') {
                         content = (
                           <span>
                             <strong>Kardiales Schlagvolumen:</strong> Vergrößert das Herzminutenvolumen, sodass pro Herzschlag mehr sauerstoffreiches Blut gepumpt wird.
+                            <div style={{ marginTop: '5px', color: '#006ea7', fontWeight: 600 }}>
+                              📝 Beispiel: 4x4 Min. Intervalle bei 90% maximaler Herzfrequenz mit je 3 Min. Pause.
+                            </div>
                           </span>
                         );
                       } else if (activeKey === 'regen') {
                         content = (
                           <span>
                             <strong>Regeneration:</strong> Ausreichend Schlaf und Trainingspausen erlauben es Herz und Muskeln, sich an gesetzte Reize anzupassen.
+                            <div style={{ marginTop: '5px', color: '#006ea7', fontWeight: 600 }}>
+                              📝 Beispiel: Konsequent 7,5 - 8 Std. Schlaf pro Nacht und 1-2 komplette Ruhetage pro Woche.
+                            </div>
                           </span>
                         );
                       } else if (activeKey === 'weight') {
                         content = (
                           <span>
                             <strong>Gewichtsreduktion:</strong> Da die relative VO2max pro Kilogramm Körpergewicht gemessen wird (ml/kg/min), erhöht Fettabbau deinen Wert rechnerisch sofort, da weniger Masse versorgt werden muss.
+                            <div style={{ marginTop: '5px', color: '#006ea7', fontWeight: 600 }}>
+                              📝 Beispiel: Ein tägliches Kaloriendefizit von 300-500 kcal, um ca. 3 kg Fett abzubauen.
+                            </div>
                           </span>
                         );
                       }
@@ -1008,7 +1020,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                             fontSize: '0.78rem',
                             lineHeight: '1.4',
                             color: '#334155',
-                            minHeight: '62px',
+                            minHeight: '85px',
                             display: 'flex',
                             alignItems: 'center'
                           }}
