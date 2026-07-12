@@ -747,14 +747,25 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     </div>
                   </div>
                 </div>
+              </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  
-                  {/* VO2-Max Boosting Factors (4 Buttons) */}
-                  <div>
-                    <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', textAlign: 'center' }}>
-                      VO2max Hebel
-                    </div>
+              {/* VO2-Max Hebel Card (Eigener Kasten) */}
+              <div 
+                style={{
+                  background: '#fafcff',
+                  border: '1.5px solid #e2eef8',
+                  borderRadius: '24px',
+                  padding: '1.5rem',
+                  boxShadow: '0 4px 15px rgba(0, 110, 167, 0.02)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '1rem'
+                }}
+              >
+                <div>
+                  <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', textAlign: 'center' }}>
+                    VO2max Hebel
+                  </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '4px' }}>
                       <div className="tacho-btn-container">
                         <button 
@@ -894,7 +905,6 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     })()}
                   </div>
                 </div>
-              </div>
 
 
             </div>
