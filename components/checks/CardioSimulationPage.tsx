@@ -493,7 +493,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   position: 'relative',
                   boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)',
                   border: '1px solid #e2e8f0',
-                  margin: '-7.5rem 0 1rem'
+                  margin: '-10.5rem 0 1rem'
                 }}
               >
                 {/* Grid Marks */}
