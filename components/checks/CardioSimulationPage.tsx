@@ -1095,7 +1095,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       } else if (activeKey === 'regen') {
                         content = (
                           <div style={{ width: '100%' }}>
-                            <strong>Regeneration:</strong> Ausreichend Schlaf und Trainingspausen erlauben es Herz und Muskeln, sich an gesetzte Reize anzupassen.
+                            <strong>Erholung:</strong> Ausreichend Schlaf und Trainingspausen erlauben es Herz und Muskeln, sich an gesetzte Reize anzupassen.
                             
                             {/* Interactive Sleep Fields */}
                             <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', background: '#f0f9ff', padding: '6px 12px', borderRadius: '10px', border: '1px solid #bae6fd', width: 'fit-content' }}>
