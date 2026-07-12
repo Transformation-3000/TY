@@ -4,7 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import LongevityJourney7LevelsPage from '@/components/longevity/LongevityJourney7LevelsPage';
 import OnboardingHebelPage from './OnboardingHebelPage';
 
-type SubTab = 'hebel' | 'bioage' | 'trend' | 'goals' | 'reports' | 'journey';
+type SubTab = 'hebel' | 'bioage' | 'trend' | 'goals' | 'reports' | 'journey' | 'onboarding' | 'ergebnisse';
 type TrendPeriod = '3m' | '6m' | '12m';
 
 interface ActivityItem {
@@ -1064,10 +1064,20 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           { id: 'trend', label: 'Trend' },
           { id: 'journey', label: 'Journey' },
           { id: 'hebel', label: 'Advanced' },
+          { id: 'onboarding', label: 'Onboarding' },
+          { id: 'ergebnisse', label: 'Ergebnisse' },
         ].map(tab => (
           <button
             key={tab.id}
             onClick={() => {
+              if (tab.id === 'onboarding') {
+                window.location.href = '/onboarding';
+                return;
+              }
+              if (tab.id === 'ergebnisse') {
+                window.location.href = '/onboarding/ergebnisse';
+                return;
+              }
               if (tab.id === 'journey' && selectedPlan === 'Starter') return;
               setActiveTab(tab.id as SubTab);
             }}

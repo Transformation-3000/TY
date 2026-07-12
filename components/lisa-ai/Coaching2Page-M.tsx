@@ -925,7 +925,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                     </div>
                   ) : (
                     <div className="v-sel">
-                      <div className="cgrid" style={{gridTemplateColumns: '1fr 1fr', maxWidth: '680px', margin: '0 auto'}}>
+                      <div className="cgrid" style={{maxWidth: '680px', margin: '0 auto'}}>
                         {(['lisa-jung','lisa-alt','tom-jung','tom-alt'] as CoachVariant[])
                           .filter(v => coachGender === 'female' ? v.startsWith('lisa') : v.startsWith('tom'))
                           .map(v => {
@@ -1624,7 +1624,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .smod-next{display:inline-flex;padding:.75rem 2rem;border:none;border-radius:14px;background:linear-gradient(135deg,#4498ca,#2c6a8c);color:#fff;font-size:1rem;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(68,152,202,.3);transition:all .3s;margin-top:0.5rem}
         .smod-next:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(68,152,202,.4)}
  
-        .cgrid{display:grid;grid-template-columns:repeat(4, 1fr);gap:1rem}
+        .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
         .ccard{display:flex;flex-direction:column;align-items:center;gap:0.5rem;padding:1.25rem 1rem;border-radius:24px;border:2px solid rgba(68,152,202,.45);background:rgba(248,252,255,.9);cursor:pointer;transition:all .25s;position:relative}
         .ccard:hover{border-color:#4498ca;background:#fff;box-shadow:0 8px 24px rgba(0,60,120,.06);transform:translateY(-2px)}
         .ccard.sel{border-color:#4498ca;background:rgba(68,152,202,.04);box-shadow:0 4px 20px rgba(68,152,202,.12)}
@@ -2026,9 +2026,9 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
           .gcard{padding:2rem 2rem}
           .gcard-ico{font-size:4rem}
           .gcard-lbl{font-size:1.1rem}
-          .cgrid{grid-template-columns:1fr 1fr;gap:1rem}
+          .cgrid{grid-template-columns:1fr;gap:1.25rem}
           .dgrid{grid-template-columns:1fr;gap:1rem}
-          .ccard-img :global(img){width:80px!important;height:80px!important}
+          .ccard-img :global(img){width:160px!important;height:160px!important}
           .ccard-name{font-size:.95rem}
           .ccard-desc{font-size:.8rem}
           .ccard-voice{font-size:.8rem;padding:.4rem .7rem}
@@ -2052,9 +2052,9 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
           .wgreeting{font-size:1.05rem}
           .wstatus{flex-direction:column;gap:.4rem;align-items:center}
           .smod-cnt{padding:1rem}
-          .cgrid{grid-template-columns:1fr 1fr;gap:.5rem}
-          .ccard{padding:.85rem .65rem;border-radius:14px}
-          .ccard-img :global(img){width:52px!important;height:52px!important}
+          .cgrid{grid-template-columns:1fr;gap:1rem}
+          .ccard{padding:1.25rem 1rem;border-radius:18px}
+          .ccard-img :global(img){width:104px!important;height:104px!important}
           .pf-wrap{width:200px}
           .pf-labels{height:200px}
           .stop{padding:.5rem .75rem}
