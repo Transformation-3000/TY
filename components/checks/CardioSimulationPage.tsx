@@ -463,7 +463,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 <div 
                   style={{
                     position: 'absolute',
-                    left: `${10 + ((currentVO2 - 30) / 20) * 75}%`,
+                    left: `${10 + (simWeek / 12) * 75}%`,
                     top: '-65px',
                     display: 'flex',
                     flexDirection: 'column',
