@@ -2018,10 +2018,10 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
           .wv-btns{flex-direction:column;width:100%;max-width:280px}
           .wv-btn{width:100%}
           .smod{align-items:flex-end}
-          .smod-in{width:100%;max-width:100%;max-height:92vh;border-radius:20px 20px 0 0;animation:smodSlide .3s ease both}
+          .smod-in{width:100%;max-width:100%;max-height:92vh;border-radius:20px 20px 0 0;animation:smodSlide .3s ease both;display:flex!important;flex-direction:column!important;overflow:hidden!important}
           @keyframes smodSlide{from{transform:translateY(100%)}to{transform:translateY(0)}}
           .smod-t{font-size:1.15rem}
-          .smod-cnt{padding-bottom:5.5rem!important}
+          .smod-cnt{padding-bottom:5.5rem!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important}
           .ggrid{flex-direction:column;gap:1rem;margin:1rem 0}
           .gcard{padding:2rem 2rem}
           .gcard-ico{font-size:4rem}

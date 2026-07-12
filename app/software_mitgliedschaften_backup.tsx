@@ -3,8 +3,8 @@ import Link from 'next/link';
 
 export default function SoftwareMitgliedschaftenSection({ router }: { router: any }) {
   return (
-    {/* Mitgliedschaften Section */}
     <section id="erfolgsprinzip" className="pricing-section">
+      {/* Mitgliedschaften Section */}
       <div className="section-header">
         <h2>Wähle dein Mitgliedschaftsmodell</h2>
         <p>Finde die passende Mitgliedschaft für deine persönliche Longevity-Journey.</p>

@@ -1356,7 +1356,7 @@ export default function LandingPage() {
                 <li><i className="bi bi-list-check"></i> <span>Alle 5 Leistungen abrufbar</span></li>
                 <li><i className="bi bi-lock-fill"></i> <span>Eingeschränkte Funktionen</span></li>
                 <li><i className="bi bi-display"></i> <span>Monatliche Live-Calls</span></li>
-                <li><i className="bi bi-route"></i> <span>Personalisierte Reise</span></li>
+                <li><i className="bi bi-signpost-split"></i> <span>Personalisierte Reise</span></li>
               </ul>
               <div className="cycle-card-footer">
                 <Link href="/checkout?plan=basic" className="btn-pricing-mini">
