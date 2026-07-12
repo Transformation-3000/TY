@@ -24,6 +24,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
   const [lisaReport, setLisaReport] = useState<string | null>(null);
   const [activeFactors, setActiveFactors] = useState<string[]>([]);
   const [hoveredFactor, setHoveredFactor] = useState<string | null>(null);
+  const [userWeight, setUserWeight] = useState<number>(80);
 
   const toggleFactor = (factor: string) => {
     setActiveFactors(prev => 
@@ -1000,12 +1001,46 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         );
                       } else if (activeKey === 'weight') {
                         content = (
-                          <span>
+                          <div style={{ width: '100%' }}>
                             <strong>Gewichtsreduktion:</strong> Da die relative VO2max pro Kilogramm Körpergewicht gemessen wird (ml/kg/min), erhöht Fettabbau deinen Wert rechnerisch sofort, da weniger Masse versorgt werden muss.
-                            <div style={{ marginTop: '5px', color: '#006ea7', fontWeight: 600 }}>
-                              📝 Rechenbeispiel: Jemand wiegt 80 kg mit einer VO2max von 35 ml/kg/min. Durch ein gesundes Kaloriendefizit verliert die Person über 12 Wochen 4 kg Körpergewicht (auf 76 kg). Da die absolute Sauerstoffaufnahme nun durch weniger Gewicht geteilt werden muss, steigt die relative VO2max rein rechnerisch sofort von 35,0 auf 36,8 ml/kg/min an.
+                            
+                            {/* Interactive Weight Field */}
+                            <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '8px', background: '#f0f9ff', padding: '6px 12px', borderRadius: '10px', border: '1px solid #bae6fd', width: 'fit-content' }}>
+                              <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>⚖️ Dein Gewicht:</span>
+                              <input 
+                                type="number" 
+                                value={userWeight || ''} 
+                                onChange={(e) => {
+                                  const val = Number(e.target.value);
+                                  setUserWeight(val);
+                                }}
+                                style={{ 
+                                  width: '60px', 
+                                  padding: '2px 6px', 
+                                  border: '1.5px solid #0284c7', 
+                                  borderRadius: '6px', 
+                                  textAlign: 'center', 
+                                  fontWeight: 800, 
+                                  color: '#0f172a',
+                                  background: '#ffffff',
+                                  fontSize: '0.78rem'
+                                }} 
+                              />
+                              <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>kg</span>
                             </div>
-                          </span>
+
+                            {/* Dynamic Mathematical Example */}
+                            {(() => {
+                              const wVal = userWeight > 4 ? userWeight : 80;
+                              const newW = wVal - 4;
+                              const newVO2Val = ((35.0 * wVal) / newW).toFixed(1).replace('.', ',');
+                              return (
+                                <div style={{ marginTop: '8px', color: '#006ea7', fontWeight: 600 }}>
+                                  📝 Rechenbeispiel: Du wiegst {wVal} kg bei einer VO2max von 35,0 ml/kg/min. Verlierst du über 12 Wochen 4 kg Körpergewicht (auf {newW} kg), steigt deine relative VO2max rein rechnerisch sofort von 35,0 auf {newVO2Val} ml/kg/min an!
+                                </div>
+                              );
+                            })()}
+                          </div>
                         );
                       }
 
@@ -1020,7 +1055,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                             fontSize: '0.78rem',
                             lineHeight: '1.4',
                             color: '#334155',
-                            minHeight: '115px',
+                            minHeight: '155px',
                             display: 'flex',
                             alignItems: 'center'
                           }}
