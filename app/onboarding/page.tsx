@@ -176,6 +176,8 @@ export default function OnboardingPage() {
     }
   }, []);
 
+  const currentQuestion = SELECTED_ONBOARDING_FLOW[currentIdx];
+
   useEffect(() => {
     if (hasLoaded && typeof window !== 'undefined') {
       localStorage.setItem('ty_onboarding_answers', JSON.stringify(selectedAnswers));
@@ -208,8 +210,6 @@ export default function OnboardingPage() {
       }));
     }
   }, [currentIdx, currentQuestion, hasLoaded]);
-
-  const currentQuestion = SELECTED_ONBOARDING_FLOW[currentIdx];
   
   // Calculate progress relative to the current category
   const categoryQuestions = SELECTED_ONBOARDING_FLOW.filter(q => q.category === currentQuestion.category);
