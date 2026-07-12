@@ -158,6 +158,30 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
     }
   }, []);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (view === 'session') {
+        document.body.style.overflow = 'hidden';
+        document.body.style.height = '100%';
+        document.documentElement.style.overflow = 'hidden';
+        document.documentElement.style.height = '100%';
+      } else {
+        document.body.style.overflow = '';
+        document.body.style.height = '';
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.height = '';
+      }
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        document.body.style.overflow = '';
+        document.body.style.height = '';
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.height = '';
+      }
+    };
+  }, [view]);
+
   const [setupStep, setSetupStep] = useState<SetupStep>('coach');
   const [dataVisualType, setDataVisualType] = useState('emotional');
   const [coachGender, setCoachGender] = useState<'female' | 'male' | null>(null);
@@ -646,12 +670,6 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
   return (
     <div className="cr">
-      <style jsx global>{`
-        html, body {
-          overflow: hidden !important;
-          height: 100% !important;
-        }
-      `}</style>
       <div className="cr-bg"><div className="cr-g" /><div className="cr-d" /></div>
       <div className="cr-in">
 
