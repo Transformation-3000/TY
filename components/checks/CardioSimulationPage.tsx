@@ -310,6 +310,67 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         .timeline-slider-input::-webkit-slider-thumb:hover {
           transform: scale(1.15);
         }
+        .tacho-btn-container {
+          position: relative;
+          display: inline-block;
+          width: 100%;
+        }
+        .tacho-factor-btn {
+          width: 100%;
+          background: #ffffff;
+          border: 1.5px solid #cbd5e1;
+          border-radius: 12px;
+          padding: 8px 12px;
+          font-size: 0.82rem;
+          font-weight: 800;
+          color: #334155;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          text-align: center;
+        }
+        .tacho-factor-btn:hover {
+          background: #f8fafc;
+          border-color: #006ea7;
+          color: #006ea7;
+          box-shadow: 0 4px 10px rgba(0, 110, 167, 0.05);
+        }
+        .tacho-tooltip {
+          visibility: hidden;
+          width: 210px;
+          background-color: rgba(15, 23, 42, 0.95);
+          backdrop-filter: blur(4px);
+          color: #fff;
+          text-align: left;
+          border-radius: 10px;
+          padding: 10px 12px;
+          position: absolute;
+          z-index: 99;
+          bottom: 125%;
+          left: 50%;
+          transform: translateX(-50%);
+          opacity: 0;
+          transition: opacity 0.2s ease, transform 0.2s ease;
+          font-size: 0.75rem;
+          line-height: 1.35;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+          pointer-events: none;
+          white-space: normal;
+        }
+        .tacho-tooltip::after {
+          content: "";
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          margin-left: -5px;
+          border-width: 5px;
+          border-style: solid;
+          border-color: rgba(15, 23, 42, 0.95) transparent transparent transparent;
+        }
+        .tacho-btn-container:hover .tacho-tooltip {
+          visibility: visible;
+          opacity: 1;
+          transform: translateX(-50%) translateY(-2px);
+        }
       `}} />
 
       {/* Header */}
@@ -459,7 +520,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 <div 
                   style={{
                     position: 'absolute',
-                    left: `${(simWeek / 12) * 90}%`,
+                    left: `${(simWeek / 12) * 81}%`,
                     top: '-65px',
                     display: 'flex',
                     flexDirection: 'column',
@@ -489,9 +550,9 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               </div>
 
               {/* Wochen timeline & slider (DRAGGABLE SLIDER) */}
-              <div style={{ marginTop: '1.5rem', background: '#fafcff', border: '1px solid #e2eef8', borderRadius: '20px', padding: '1.5rem' }}>
+              <div style={{ marginTop: '1.5rem', background: '#fafcff', border: '1px solid #e2eef8', borderRadius: '20px', padding: '1.5rem', width: '90%' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                  <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1e3a5f' }}>Wochen-Zeitleiste:</span>
+                  <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1e3a5f' }}>Wochen-Zeitleiste</span>
                   <span style={{ background: '#006ea7', color: '#ffffff', padding: '2px 10px', borderRadius: '12px', fontSize: '0.85rem', fontWeight: 800 }}>Woche {simWeek} / 12</span>
                 </div>
                 
@@ -679,6 +740,52 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           transition: 'all 0.3s'
                         }} 
                       />
+                    </div>
+                  </div>
+
+                  <hr style={{ border: 'none', borderTop: '1px solid #e2effa', margin: '0.2rem 0' }} />
+                  
+                  {/* VO2-Max Boosting Factors (4 Buttons) */}
+                  <div>
+                    <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', textAlign: 'center' }}>
+                      VO2max steigern durch:
+                    </div>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
+                      <div className="tacho-btn-container">
+                        <button className="tacho-factor-btn">
+                          🏃‍♂️ Zone 2-Training
+                        </button>
+                        <span className="tacho-tooltip">
+                          <strong>Mitochondriale Kapazität:</strong> Verbessert die Sauerstoffverarbeitung in den Muskelzellen und bildet das aerobe Fundament.
+                        </span>
+                      </div>
+
+                      <div className="tacho-btn-container">
+                        <button className="tacho-factor-btn">
+                          ⚡ HIT-Training
+                        </button>
+                        <span className="tacho-tooltip">
+                          <strong>Kardiales Schlagvolumen:</strong> Vergrößert das Herzminutenvolumen, sodass pro Herzschlag mehr sauerstoffreiches Blut gepumpt wird.
+                        </span>
+                      </div>
+
+                      <div className="tacho-btn-container">
+                        <button className="tacho-factor-btn">
+                          🛌 3. Faktor
+                        </button>
+                        <span className="tacho-tooltip">
+                          <strong>Regeneration & Superkompensation:</strong> Erlaubt Muskeln und Herz, sich in Ruhephasen an Trainingsreize anzupassen.
+                        </span>
+                      </div>
+
+                      <div className="tacho-btn-container">
+                        <button className="tacho-factor-btn">
+                          💤 4. Faktor
+                        </button>
+                        <span className="tacho-tooltip">
+                          <strong>Schlafqualität & Zellaufbau:</strong> Fördert nächtliche Wachstumshormone und die kardiovaskuläre Erholung für optimale Leistungsfähigkeit.
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
