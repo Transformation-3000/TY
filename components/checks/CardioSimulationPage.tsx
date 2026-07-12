@@ -1003,7 +1003,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           <span>
                             <strong>Gewichtsreduktion:</strong> Da die relative VO2max pro Kilogramm Körpergewicht gemessen wird (ml/kg/min), erhöht Fettabbau deinen Wert rechnerisch sofort, da weniger Masse versorgt werden muss.
                             <div style={{ marginTop: '5px', color: '#006ea7', fontWeight: 600 }}>
-                              📝 Beispiel: Ein tägliches Kaloriendefizit von 300-500 kcal, um ca. 3 kg Fett abzubauen.
+                              📝 Rechenbeispiel: Jemand wiegt 80 kg mit einer VO2max von 35 ml/kg/min. Durch ein gesundes Kaloriendefizit verliert die Person über 12 Wochen 4 kg Körpergewicht (auf 76 kg). Da die absolute Sauerstoffaufnahme nun durch weniger Gewicht geteilt werden muss, steigt die relative VO2max rein rechnerisch sofort von 35,0 auf 36,8 ml/kg/min an.
                             </div>
                           </span>
                         );
@@ -1020,7 +1020,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                             fontSize: '0.78rem',
                             lineHeight: '1.4',
                             color: '#334155',
-                            minHeight: '85px',
+                            minHeight: '115px',
                             display: 'flex',
                             alignItems: 'center'
                           }}
