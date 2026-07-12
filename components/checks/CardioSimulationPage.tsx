@@ -508,12 +508,32 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
            }
          }
 
-         .tacho-wrapper {
-           position: relative;
-           max-width: 330px;
-           width: 100%;
-           margin: 0 auto;
-         }
+          .sim-avatar-box {
+            position: absolute;
+            top: -65px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+          .sim-avatar-emoji {
+            font-size: 4.8rem;
+            line-height: 1;
+          }
+          @media (max-width: 576px) {
+            .sim-avatar-box {
+              top: -45px;
+            }
+            .sim-avatar-emoji {
+              font-size: 2.8rem;
+            }
+          }
+
+          .tacho-wrapper {
+            position: relative;
+            max-width: 330px;
+            width: 100%;
+            margin: 0 auto;
+          }
 
          .sim-week-btn-row {
            display: flex;
@@ -649,66 +669,44 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 ))}
 
                 {/* Avatar A: Aktuelles Ich (static baseline) */}
-                <div 
-                  style={{
-                    position: 'absolute',
-                    left: '0%',
-                    top: '-65px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center'
-                  }}
-                >
-                  <span style={{ fontSize: '4.8rem', lineHeight: 1, display: 'inline-block', transform: 'scaleX(-1)' }}>🏃‍♂️</span>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', background: '#f8fafc', border: '1px solid #e2e8f0', padding: '2px 6px', borderRadius: '8px', whiteSpace: 'nowrap', marginTop: '2px' }}>
-                    Basis 35
-                  </span>
-                </div>
+                 <div className="sim-avatar-box" style={{ left: '0%' }}>
+                   <span className="sim-avatar-emoji" style={{ display: 'inline-block', transform: 'scaleX(-1)' }}>🏃‍♂️</span>
+                   <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', background: '#f8fafc', border: '1px solid #e2e8f0', padding: '2px 6px', borderRadius: '8px', whiteSpace: 'nowrap', marginTop: '2px' }}>
+                     Basis 35
+                   </span>
+                 </div>
 
-                {/* Finish Line Trophy (Target at the far right end) */}
-                <div 
-                  style={{
-                    position: 'absolute',
-                    left: '90%',
-                    top: '-65px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center'
-                  }}
-                >
-                  <span style={{ fontSize: '4.8rem', lineHeight: 1 }}>🏆</span>
-                  <span 
-                    style={{
-                      fontSize: '0.75rem',
-                      fontWeight: 700,
-                      color: '#a855f7',
-                      background: '#faf5ff',
-                      border: '1px solid #e2e8f0',
-                      padding: '2px 6px',
-                      borderRadius: '8px',
-                      whiteSpace: 'nowrap',
-                      marginTop: '2px'
-                    }}
-                  >
-                    Ziel (48,5)
-                  </span>
-                </div>
+                 {/* Finish Line Trophy (Target at the far right end) */}
+                 <div className="sim-avatar-box" style={{ left: '90%' }}>
+                   <span className="sim-avatar-emoji">🏆</span>
+                   <span 
+                     style={{
+                       fontSize: '0.75rem',
+                       fontWeight: 700,
+                       color: '#a855f7',
+                       background: '#faf5ff',
+                       border: '1px solid #e2e8f0',
+                       padding: '2px 6px',
+                       borderRadius: '8px',
+                       whiteSpace: 'nowrap',
+                       marginTop: '2px'
+                     }}
+                   >
+                     Ziel (48,5)
+                   </span>
+                 </div>
 
                 {/* Avatar B: Zukünftiges Ich (moves weekly during sim) */}
-                <div 
-                  style={{
-                    position: 'absolute',
-                    left: `${(simWeek / 12) * 90}%`,
-                    top: '-65px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'
-                  }}
-                >
-                  <span style={{ fontSize: '4.8rem', lineHeight: 1, display: 'inline-block', transform: 'scaleX(-1)', filter: 'drop-shadow(0 2px 5px rgba(34, 197, 94, 0.4))' }}>
-                    🏃‍♂️
-                  </span>
+                 <div 
+                   className="sim-avatar-box"
+                   style={{
+                     left: `${(simWeek / 12) * 90}%`,
+                     transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'
+                   }}
+                 >
+                   <span className="sim-avatar-emoji" style={{ display: 'inline-block', transform: 'scaleX(-1)', filter: 'drop-shadow(0 2px 5px rgba(34, 197, 94, 0.4))' }}>
+                     🏃‍♂️
+                   </span>
                   <span 
                     style={{
                       fontSize: '0.78rem',
@@ -1350,7 +1348,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             Dein kardiovaskulärer Aufstieg auf den Mount Longevitus. Je höher du steigst, desto besser für deine Zellen.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'center' }}>
+          <div className="sim-grid" style={{ alignItems: 'center' }}>
             
             {/* Left Column: Stage details */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
@@ -1583,7 +1581,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             Bewege die Regler, um dein wöchentliches Training zu konfigurieren, bevor du das Rennen oben startest.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'center' }}>
+          <div className="sim-grid" style={{ alignItems: 'center' }}>
             {/* Sliders */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               
