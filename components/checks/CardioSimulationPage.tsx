@@ -351,6 +351,9 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           box-shadow: 0 4px 15px rgba(0, 110, 167, 0.25);
           transform: translateY(-2px);
         }
+        .tacho-circle-btn.active span {
+          filter: brightness(0) invert(1);
+        }
         .tacho-info-icon-wrapper {
           position: relative;
           display: inline-flex;
@@ -754,7 +757,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           className={`tacho-circle-btn ${activeFactors.includes('zone2') ? 'active' : ''}`}
                           onClick={() => toggleFactor('zone2')}
                         >
-                          🏃‍♂️
+                          <span>🏃‍♂️</span>
                         </button>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
                           <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>Zone 2</span>
@@ -772,7 +775,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           className={`tacho-circle-btn ${activeFactors.includes('hiit') ? 'active' : ''}`}
                           onClick={() => toggleFactor('hiit')}
                         >
-                          ⚡
+                          <span>⚡</span>
                         </button>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
                           <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>HIIT</span>
@@ -790,7 +793,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           className={`tacho-circle-btn ${activeFactors.includes('regen') ? 'active' : ''}`}
                           onClick={() => toggleFactor('regen')}
                         >
-                          🛌
+                          <span>🛌</span>
                         </button>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
                           <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>Erholung</span>
@@ -808,7 +811,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           className={`tacho-circle-btn ${activeFactors.includes('weight' ) ? 'active' : ''}`}
                           onClick={() => toggleFactor('weight')}
                         >
-                          ⚖️
+                          <span>⚖️</span>
                         </button>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
                           <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>Gewicht</span>
