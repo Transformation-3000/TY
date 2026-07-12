@@ -508,7 +508,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   position: 'relative',
                   boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)',
                   border: '1px solid #e2e8f0',
-                  margin: '-10.5rem 0 1rem'
+                  margin: '1.5rem 0 1.5rem'
                 }}
               >
                 {/* Grid Marks */}
@@ -607,7 +607,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               </div>
 
               {/* Wochen timeline & slider (DRAGGABLE SLIDER) */}
-              <div style={{ marginTop: '0.4rem', background: '#fafcff', border: '1px solid #e2eef8', borderRadius: '20px', padding: '1.5rem 0px 1.5rem 1.5rem', width: '102%' }}>
+              <div style={{ marginTop: '1.5rem', background: '#fafcff', border: '1px solid #e2eef8', borderRadius: '20px', padding: '1.5rem 0px 1.5rem 1.5rem', width: '102%' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1e3a5f' }}>Wochen-Zeitleiste</span>
                   <span style={{ background: '#006ea7', color: '#ffffff', padding: '2px 10px', borderRadius: '12px', fontSize: '0.85rem', fontWeight: 800 }}>Woche {simWeek} / 12</span>
