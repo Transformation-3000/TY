@@ -752,8 +752,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               {/* VO2-Max Hebel Card (Eigener Kasten) */}
               <div 
                 style={{
-                  background: '#fafcff',
-                  border: '1.5px solid #e2eef8',
+                  background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
+                  border: '1.5px solid #bae6fd',
                   borderRadius: '24px',
                   padding: '1.5rem',
                   boxShadow: '0 4px 15px rgba(0, 110, 167, 0.02)',
