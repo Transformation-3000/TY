@@ -564,54 +564,60 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               >
                 <div style={{ textAlign: 'center', borderBottom: '1px solid #e2effa', paddingBottom: '1rem' }}>
                   <div style={{ position: 'relative', width: '220px', height: '190px', margin: '0 auto' }}>
-                    <svg width="220" height="190" viewBox="0 0 220 190">
-                      <defs>
-                        <linearGradient id="tachoGrad" x1="0%" y1="100%" x2="100%" y2="0%">
-                          <stop offset="0%" stopColor="#ef4444" />
-                          <stop offset="30%" stopColor="#f97316" />
-                          <stop offset="52%" stopColor="#f97316" />
-                          <stop offset="70%" stopColor="#eab308" />
-                          <stop offset="86%" stopColor="#22c55e" />
-                          <stop offset="100%" stopColor="#a855f7" />
-                        </linearGradient>
-                      </defs>
-                      
-                      {/* Background Track Arc */}
-                      <path 
-                        d="M 46 164 A 85 85 0 1 1 174 164" 
-                        fill="none" 
-                        stroke="#e2e8f0" 
-                        strokeWidth="12" 
-                        strokeLinecap="round" 
-                      />
+                    {(() => {
+                      const needleAngle = Math.min(405, Math.max(135, 200 + (currentVO2 - 35.0) * 13.68));
+                      const activeArcPct = (needleAngle - 135) / 270;
+                      return (
+                        <svg width="220" height="190" viewBox="0 0 220 190">
+                          <defs>
+                            <linearGradient id="tachoGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+                              <stop offset="0%" stopColor="#ef4444" />
+                              <stop offset="30%" stopColor="#f97316" />
+                              <stop offset="52%" stopColor="#f97316" />
+                              <stop offset="70%" stopColor="#eab308" />
+                              <stop offset="86%" stopColor="#22c55e" />
+                              <stop offset="100%" stopColor="#a855f7" />
+                            </linearGradient>
+                          </defs>
+                          
+                          {/* Background Track Arc */}
+                          <path 
+                            d="M 46 164 A 85 85 0 1 1 174 164" 
+                            fill="none" 
+                            stroke="#e2e8f0" 
+                            strokeWidth="12" 
+                            strokeLinecap="round" 
+                          />
 
-                      {/* Colored Active Arc */}
-                      <path 
-                        d="M 46 164 A 85 85 0 1 1 174 164" 
-                        fill="none" 
-                        stroke="url(#tachoGrad)" 
-                        strokeWidth="12" 
-                        strokeLinecap="round" 
-                        strokeDasharray="400"
-                        strokeDashoffset={400 - (Math.min(1, Math.max(0, (currentVO2 - 30) / 14.5)) * 400)}
-                        style={{ transition: 'stroke-dashoffset 0.4s ease-in-out' }}
-                      />
+                          {/* Colored Active Arc */}
+                          <path 
+                            d="M 46 164 A 85 85 0 1 1 174 164" 
+                            fill="none" 
+                            stroke="url(#tachoGrad)" 
+                            strokeWidth="12" 
+                            strokeLinecap="round" 
+                            strokeDasharray="400"
+                            strokeDashoffset={400 - (activeArcPct * 400)}
+                            style={{ transition: 'stroke-dashoffset 0.4s ease-in-out' }}
+                          />
 
-                      {/* Tacho Hub (Center Circle) */}
-                      <circle cx="110" cy="110" r="48" fill="#ffffff" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.06))" />
-                      
-                      {/* Floating Needle (starts outside center circle to not cover text) */}
-                      <line 
-                        x1={110 + 52 * Math.cos(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 14.5)) * 270) * Math.PI) / 180)} 
-                        y1={110 + 52 * Math.sin(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 14.5)) * 270) * Math.PI) / 180)} 
-                        x2={110 + 78 * Math.cos(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 14.5)) * 270) * Math.PI) / 180)} 
-                        y2={110 + 78 * Math.sin(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 14.5)) * 270) * Math.PI) / 180)} 
-                        stroke="#0f172a" 
-                        strokeWidth="4" 
-                        strokeLinecap="round"
-                        style={{ transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)' }}
-                      />
-                    </svg>
+                          {/* Tacho Hub (Center Circle) */}
+                          <circle cx="110" cy="110" r="48" fill="#ffffff" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.06))" />
+                          
+                          {/* Floating Needle (starts outside center circle to not cover text) */}
+                          <line 
+                            x1={110 + 52 * Math.cos((needleAngle * Math.PI) / 180)} 
+                            y1={110 + 52 * Math.sin((needleAngle * Math.PI) / 180)} 
+                            x2={110 + 78 * Math.cos((needleAngle * Math.PI) / 180)} 
+                            y2={110 + 78 * Math.sin((needleAngle * Math.PI) / 180)} 
+                            stroke="#0f172a" 
+                            strokeWidth="4" 
+                            strokeLinecap="round"
+                            style={{ transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)' }}
+                          />
+                        </svg>
+                      );
+                    })()}
 
                     {/* Values inside the Center Circle */}
                     <div 
