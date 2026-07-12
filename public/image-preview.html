@@ -126,7 +126,7 @@
   </div>
 
   <h2>👤 Dr. Monique Weber - Profilbild-Auswahl (Die echte Monique)</h2>
-  <div class="grid">
+  <div class="grid" id="profile-grid">
     <div class="card">
       <div class="img-wrap"><img src="/images/photo_breath_face.png" alt="Monique 1"></div>
       <div class="content">
@@ -699,6 +699,45 @@
       </div>
     </div>
   </div>
-
+  <script>
+    fetch('/uploaded-profile-images.json')
+      .then(response => response.json())
+      .then(images => {
+        const grid = document.getElementById('profile-grid');
+        if (grid && Array.isArray(images)) {
+          images.forEach((src, idx) => {
+            const card = document.createElement('div');
+            card.className = 'card';
+            
+            const imgWrap = document.createElement('div');
+            imgWrap.className = 'img-wrap';
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = `Hochgeladenes Bild ${idx + 1}`;
+            imgWrap.appendChild(img);
+            
+            const content = document.createElement('div');
+            content.className = 'content';
+            
+            const title = document.createElement('div');
+            title.className = 'option-title';
+            title.textContent = `Upload Option ${images.length - idx}`;
+            
+            const desc = document.createElement('div');
+            desc.className = 'option-desc';
+            desc.textContent = 'Selbst hochgeladenes Profilbild (1:1 Kopie aus HEUTE).';
+            
+            content.appendChild(title);
+            content.appendChild(desc);
+            card.appendChild(imgWrap);
+            card.appendChild(content);
+            
+            // Insert at the beginning of the grid
+            grid.insertBefore(card, grid.firstChild);
+          });
+        }
+      })
+      .catch(err => console.log('No uploaded profile images yet or fetch failed'));
+  </script>
 </body>
 </html>

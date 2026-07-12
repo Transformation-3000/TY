@@ -93,13 +93,24 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (event) => {
+      reader.onload = async (event) => {
         const result = event.target?.result as string;
         if (result) {
           setProfileImage(result);
           localStorage.setItem('ty_profile_image', result);
           // Event to sync header avatar
           window.dispatchEvent(new Event('ty_profile_image_changed'));
+
+          // Send to API to save on disk and list in image-preview
+          try {
+            await fetch('/api/upload-profile-image', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ imageData: result, fileName: file.name })
+            });
+          } catch (err) {
+            console.error('Failed to upload image to server:', err);
+          }
         }
       };
       reader.readAsDataURL(file);
