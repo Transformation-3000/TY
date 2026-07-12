@@ -1091,7 +1091,7 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                       }
                     }}
                   >
-                    {setupStep === 'data' ? 'Speichern & starten' : 'Weiter'}
+                    {setupStep === 'data' ? 'Speichern' : 'Weiter'}
                   </button>
                 </div>
               )}
