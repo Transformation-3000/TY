@@ -59,8 +59,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         msg = `Woche ${w}: Mitochondrien-Kollaps! Dir fehlt die aerobe Basis.`;
         color = '#f97316';
       } else {
-        const z2Adaptation = (simZone2 / 240) * 0.65;
-        let hiitAdaptation = (simHIIT / 4) * 0.75;
+        const z2Adaptation = (simZone2 / 240) * 1.0;
+        let hiitAdaptation = (simHIIT / 4) * 1.1;
         
         if (simZone2 < 90 && w > 4) {
           hiitAdaptation *= 0.5;
@@ -565,7 +565,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 <div style={{ textAlign: 'center', borderBottom: '1px solid #e2effa', paddingBottom: '1rem' }}>
                   <div style={{ position: 'relative', width: '220px', height: '190px', margin: '0 auto' }}>
                     {(() => {
-                      const needleAngle = Math.min(405, Math.max(135, 200 + (currentVO2 - 35.0) * 30.23));
+                      const needleAngle = Math.min(405, Math.max(135, 200 + (currentVO2 - 35.0) * 17.57));
                       const activeArcPct = (needleAngle - 135) / 270;
                       return (
                         <svg width="220" height="190" viewBox="0 0 220 190">
