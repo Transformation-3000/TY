@@ -27,6 +27,12 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
   const [userWeight, setUserWeight] = useState<number>(80);
   const [targetWeight, setTargetWeight] = useState<number>(76);
   const [selectedInfoFactor, setSelectedInfoFactor] = useState<string>('zone2');
+  const [currentZone2, setCurrentZone2] = useState<number>(45);
+  const [targetZone2, setTargetZone2] = useState<number>(150);
+  const [currentHIIT, setCurrentHIIT] = useState<number>(0);
+  const [targetHIIT, setTargetHIIT] = useState<number>(2);
+  const [currentSleep, setCurrentSleep] = useState<number>(6.0);
+  const [targetSleep, setTargetSleep] = useState<number>(8.0);
 
   const toggleFactor = (factor: string) => {
     setActiveFactors(prev => 
@@ -952,31 +958,155 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       
                       if (activeKey === 'zone2') {
                         content = (
-                          <span>
+                          <div style={{ width: '100%' }}>
                             <strong>Mitochondriale Kapazität:</strong> Verbessert die Sauerstoffverarbeitung in den Muskelzellen und bildet das aerobe Fundament.
-                            <div style={{ marginTop: '5px', color: '#006ea7', fontWeight: 600 }}>
-                              📝 Beispiel: 3x pro Woche 45 Min. lockeres Laufen oder Radfahren bei moderatem Puls.
+                            
+                            {/* Interactive Zone 2 Fields */}
+                            <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', background: '#f0f9ff', padding: '6px 12px', borderRadius: '10px', border: '1px solid #bae6fd', width: 'fit-content' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>🏃‍♂️ Aktuell:</span>
+                                <input 
+                                  type="number" 
+                                  value={currentZone2 || ''} 
+                                  onChange={(e) => setCurrentZone2(Number(e.target.value))}
+                                  style={{ width: '52px', padding: '2px 4px', border: '1.5px solid #0284c7', borderRadius: '6px', textAlign: 'center', fontWeight: 800, color: '#0f172a', background: '#ffffff', fontSize: '0.78rem' }} 
+                                />
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>Min/Woche</span>
+                              </div>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>🎯 Ziel:</span>
+                                <input 
+                                  type="number" 
+                                  value={targetZone2 || ''} 
+                                  onChange={(e) => setTargetZone2(Number(e.target.value))}
+                                  style={{ width: '52px', padding: '2px 4px', border: '1.5px solid #0284c7', borderRadius: '6px', textAlign: 'center', fontWeight: 800, color: '#0f172a', background: '#ffffff', fontSize: '0.78rem' }} 
+                                />
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>Min/Woche</span>
+                              </div>
                             </div>
-                          </span>
+
+                            {/* Dynamic Mathematical Example */}
+                            {(() => {
+                              const curZ2 = currentZone2 >= 0 ? currentZone2 : 0;
+                              const tarZ2 = targetZone2 >= 0 ? targetZone2 : 0;
+                              const diff = tarZ2 - curZ2;
+                              if (diff <= 0) {
+                                return (
+                                  <div style={{ marginTop: '8px', color: '#64748b', fontWeight: 600 }}>
+                                    💡 Tipp: Gib ein Zone 2-Ziel ein, das über deinem aktuellen Wert liegt, um den VO2max-Effekt zu berechnen.
+                                  </div>
+                                );
+                              }
+                              const bonus = (diff * 0.01).toFixed(1).replace('.', ',');
+                              return (
+                                <div style={{ marginTop: '8px', color: '#006ea7', fontWeight: 600 }}>
+                                  📝 Rechenbeispiel: Du erhöhst dein wöchentliches Zone 2-Training von {curZ2} auf {tarZ2} Minuten (+{diff} Min. Zuwachs). Deine relative VO2max steigt am Ende von Woche 12 rein rechnerisch um ca. **+{bonus}** Punkte!
+                                </div>
+                              );
+                            })()}
+                          </div>
                         );
                       } else if (activeKey === 'hiit') {
                         content = (
-                          <span>
+                          <div style={{ width: '100%' }}>
                             <strong>Kardiales Schlagvolumen:</strong> Vergrößert das Herzminutenvolumen, sodass pro Herzschlag mehr sauerstoffreiches Blut gepumpt wird.
-                            <div style={{ marginTop: '5px', color: '#006ea7', fontWeight: 600 }}>
-                              📝 Beispiel: 4x4 Min. Intervalle bei 90% maximaler Herzfrequenz mit je 3 Min. Pause.
+                            
+                            {/* Interactive HIIT Fields */}
+                            <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', background: '#f0f9ff', padding: '6px 12px', borderRadius: '10px', border: '1px solid #bae6fd', width: 'fit-content' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>⚡ Aktuell:</span>
+                                <input 
+                                  type="number" 
+                                  value={currentHIIT === 0 ? 0 : (currentHIIT || '')} 
+                                  onChange={(e) => setCurrentHIIT(Number(e.target.value))}
+                                  style={{ width: '52px', padding: '2px 4px', border: '1.5px solid #0284c7', borderRadius: '6px', textAlign: 'center', fontWeight: 800, color: '#0f172a', background: '#ffffff', fontSize: '0.78rem' }} 
+                                />
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>Einheiten/Woche</span>
+                              </div>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>🎯 Ziel:</span>
+                                <input 
+                                  type="number" 
+                                  value={targetHIIT || ''} 
+                                  onChange={(e) => setTargetHIIT(Number(e.target.value))}
+                                  style={{ width: '52px', padding: '2px 4px', border: '1.5px solid #0284c7', borderRadius: '6px', textAlign: 'center', fontWeight: 800, color: '#0f172a', background: '#ffffff', fontSize: '0.78rem' }} 
+                                />
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>Einheiten/Woche</span>
+                              </div>
                             </div>
-                          </span>
+
+                            {/* Dynamic Mathematical Example */}
+                            {(() => {
+                              const curH = currentHIIT >= 0 ? currentHIIT : 0;
+                              const tarH = targetHIIT >= 0 ? targetHIIT : 0;
+                              const diff = tarH - curH;
+                              if (diff <= 0) {
+                                return (
+                                  <div style={{ marginTop: '8px', color: '#64748b', fontWeight: 600 }}>
+                                    💡 Tipp: Gib ein HIIT-Ziel ein, das über deinem aktuellen Wert liegt, um den VO2max-Effekt zu berechnen.
+                                  </div>
+                                );
+                              }
+                              const bonus = (diff * 1.0).toFixed(1).replace('.', ',');
+                              return (
+                                <div style={{ marginTop: '8px', color: '#006ea7', fontWeight: 600 }}>
+                                  📝 Rechenbeispiel: Du steigerst dein HIIT-Training von {curH} auf {tarH} Einheiten pro Woche (+{diff} Einheiten). Dein maximales Schlagvolumen wächst, was deine VO2max rein rechnerisch um ca. **+{bonus}** Punkte verbessert!
+                                </div>
+                              );
+                            })()}
+                          </div>
                         );
                       } else if (activeKey === 'regen') {
                         content = (
-                          <span>
+                          <div style={{ width: '100%' }}>
                             <strong>Regeneration:</strong> Ausreichend Schlaf und Trainingspausen erlauben es Herz und Muskeln, sich an gesetzte Reize anzupassen.
-                            <div style={{ marginTop: '5px', color: '#006ea7', fontWeight: 600 }}>
-                              📝 Beispiel: Konsequent 7,5 - 8 Std. Schlaf pro Nacht und 1-2 komplette Ruhetage pro Woche.
+                            
+                            {/* Interactive Sleep Fields */}
+                            <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', background: '#f0f9ff', padding: '6px 12px', borderRadius: '10px', border: '1px solid #bae6fd', width: 'fit-content' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>🛌 Aktuell:</span>
+                                <input 
+                                  type="number" 
+                                  step="0.5"
+                                  value={currentSleep || ''} 
+                                  onChange={(e) => setCurrentSleep(Number(e.target.value))}
+                                  style={{ width: '52px', padding: '2px 4px', border: '1.5px solid #0284c7', borderRadius: '6px', textAlign: 'center', fontWeight: 800, color: '#0f172a', background: '#ffffff', fontSize: '0.78rem' }} 
+                                />
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>Std. Schlaf/Nacht</span>
+                              </div>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>🎯 Ziel:</span>
+                                <input 
+                                  type="number" 
+                                  step="0.5"
+                                  value={targetSleep || ''} 
+                                  onChange={(e) => setTargetSleep(Number(e.target.value))}
+                                  style={{ width: '52px', padding: '2px 4px', border: '1.5px solid #0284c7', borderRadius: '6px', textAlign: 'center', fontWeight: 800, color: '#0f172a', background: '#ffffff', fontSize: '0.78rem' }} 
+                                />
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>Std. Schlaf/Nacht</span>
+                              </div>
                             </div>
-                          </span>
-                        );
+
+                            {/* Dynamic Mathematical Example */}
+                            {(() => {
+                              const curS = currentSleep > 0 ? currentSleep : 6.0;
+                              const tarS = targetSleep > 0 ? targetSleep : 8.0;
+                              const diff = tarS - curS;
+                              if (diff <= 0) {
+                                return (
+                                  <div style={{ marginTop: '8px', color: '#64748b', fontWeight: 600 }}>
+                                    💡 Tipp: Gib ein Schlafziel ein, das über deinem aktuellen Wert liegt, um den VO2max-Effekt zu berechnen.
+                                  </div>
+                                );
+                              }
+                              const bonus = (diff * 0.4).toFixed(1).replace('.', ',');
+                              return (
+                                <div style={{ marginTop: '8px', color: '#006ea7', fontWeight: 600 }}>
+                                  📝 Rechenbeispiel: Du optimierst deinen Schlaf von {curS.toFixed(1).replace('.', ',')} auf {tarS.toFixed(1).replace('.', ',')} Std. pro Nacht (+{diff.toFixed(1).replace('.', ',')} Std. mehr Regeneration). Deine VO2max steigt rein rechnerisch um ca. **+{bonus}** Punkte!
+                                </div>
+                              );
+                            })()}
+                          </div>
                       } else if (activeKey === 'weight') {
                         content = (
                           <div style={{ width: '100%' }}>
