@@ -3946,13 +3946,16 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           }
         }
 
-        @media (max-width: 576px) {
-          .modal-overlay {
-            padding: 0.75rem;
-          }
+        @media (max-width: 992px) {
           .bac-stats-grid {
             grid-template-columns: 1fr;
             gap: 0.75rem;
+          }
+        }
+
+        @media (max-width: 576px) {
+          .modal-overlay {
+            padding: 0.75rem;
           }
           .opt-modal-grid {
             grid-template-columns: 1fr;
