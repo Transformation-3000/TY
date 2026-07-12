@@ -572,9 +572,10 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       <defs>
                         <linearGradient id="tachoGrad" x1="0%" y1="100%" x2="100%" y2="0%">
                           <stop offset="0%" stopColor="#ef4444" />
-                          <stop offset="35%" stopColor="#f97316" />
-                          <stop offset="60%" stopColor="#eab308" />
-                          <stop offset="82%" stopColor="#22c55e" />
+                          <stop offset="30%" stopColor="#f97316" />
+                          <stop offset="52%" stopColor="#f97316" />
+                          <stop offset="70%" stopColor="#eab308" />
+                          <stop offset="86%" stopColor="#22c55e" />
                           <stop offset="100%" stopColor="#a855f7" />
                         </linearGradient>
                       </defs>
