@@ -664,6 +664,64 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 </div>
               </div>
 
+              {/* VO2max Reference Values Table */}
+              <div 
+                style={{ 
+                  marginTop: '1.25rem', 
+                  background: '#ffffff', 
+                  border: '1.5px solid #e2e8f0', 
+                  borderRadius: '20px', 
+                  padding: '1.25rem', 
+                  width: '102%',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.02)'
+                }}
+              >
+                <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#1e3a5f', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
+                  📊 <span>VO2max Altersreferenzwerte (Normalbereiche)</span>
+                </div>
+                <div style={{ overflowX: 'auto' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.76rem', textAlign: 'left' }}>
+                    <thead>
+                      <tr style={{ borderBottom: '1.5px solid #cbd5e1', color: '#64748b', fontWeight: 700 }}>
+                        <th style={{ padding: '6px 4px' }}>Alter</th>
+                        <th style={{ padding: '6px 4px' }}>Frauen (Schnitt)</th>
+                        <th style={{ padding: '6px 4px' }}>Männer (Schnitt)</th>
+                        <th style={{ padding: '6px 4px' }}>Fitness-Niveau</th>
+                      </tr>
+                    </thead>
+                    <tbody style={{ color: '#334155' }}>
+                      {[
+                        { age: '20–24', w: '37–41', m: '44–48', level: 'Gut / Athletisch' },
+                        { age: '25–29', w: '35–39', m: '42–46', level: 'Gut / Durchschnitt' },
+                        { age: '30–34', w: '34–38', m: '40–45', level: 'Durchschnitt' },
+                        { age: '35–39', w: '33–37', m: '39–43', level: 'Durchschnitt' },
+                        { age: '40–44', w: '32–35', m: '37–41', level: 'Durchschnitt' },
+                        { age: '45–49', w: '31–34', m: '35–39', level: 'Mäßig / Normal' },
+                        { age: '50–54', w: '29–32', m: '34–38', level: 'Mäßig / Normal' },
+                        { age: '55–59', w: '27–30', m: '32–35', level: 'Mäßig' },
+                        { age: '60–64', w: '25–28', m: '30–33', level: 'Einsteiger' },
+                        { age: '65–69', w: '23–26', m: '28–31', level: 'Einsteiger' },
+                        { age: '70+', w: '< 23', m: '< 26', level: 'Basis-Camp' }
+                      ].map((row, idx) => (
+                        <tr 
+                          key={idx} 
+                          style={{ 
+                            borderBottom: '1px solid #f1f5f9', 
+                            background: idx % 2 === 0 ? '#f8fafc' : 'transparent',
+                            transition: 'background 0.15s ease' 
+                          }}
+                        >
+                          <td style={{ padding: '5px 4px', fontWeight: 700, color: '#1e3a5f' }}>{row.age}</td>
+                          <td style={{ padding: '5px 4px' }}>{row.w} ml/kg/min</td>
+                          <td style={{ padding: '5px 4px' }}>{row.m} ml/kg/min</td>
+                          <td style={{ padding: '5px 4px', fontWeight: 600, color: '#4c99c2' }}>{row.level}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
             </div>
 
             {/* VO2-Max Analytics Box */}
