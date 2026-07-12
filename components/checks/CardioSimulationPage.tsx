@@ -369,14 +369,10 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   fontWeight: 800,
                   fontSize: '1rem',
                   cursor: 'pointer',
-                  boxShadow: '0 4px 15px rgba(0, 110, 167, 0.25)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px'
+                  boxShadow: '0 4px 15px rgba(0, 110, 167, 0.25)'
                 }}
               >
-                <i className="bi bi-play-circle-fill" style={{ fontSize: '1.2rem' }}></i>
-                {isSimulating ? `Woche ${simWeek}...` : simWeek > 0 ? 'Simulation neu starten' : '12-Wochen-Simulation'}
+                {isSimulating ? `Woche ${simWeek}...` : 'Simulation starten'}
               </button>
             </div>
           </div>
