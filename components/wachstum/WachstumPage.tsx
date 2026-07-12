@@ -1335,6 +1335,12 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
           .wachstum-container {
             padding: 1rem 1rem 1rem 1rem;
           }
+          .segmented-control {
+            flex-direction: column;
+            border-radius: 20px;
+            padding: 0.75rem;
+            gap: 0.75rem;
+          }
         }
 
         @media (max-width: 768px) {
