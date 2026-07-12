@@ -496,8 +496,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
 
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'center' }}>
-            <div style={{ paddingRight: '2rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'start' }}>
+            <div style={{ paddingRight: '2rem', paddingTop: '5.5rem' }}>
               
               {/* Dynamic weekly progression track */}
               <div 
