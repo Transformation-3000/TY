@@ -187,7 +187,7 @@ export default function VisionPage() {
               </div>
               <blockquote style={{ 
                 fontSize: '1.3rem', 
-                fontStyle: 'italic',
+                fontStyle: 'normal',
                 color: '#1e3a5f', 
                 lineHeight: '1.65', 
                 margin: '1.5rem 0 0 0',
