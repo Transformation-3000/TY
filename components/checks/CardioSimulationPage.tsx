@@ -723,7 +723,6 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                             strokeLinecap="round" 
                             strokeDasharray="400"
                             strokeDashoffset={400 - (activeArcPct * 400)}
-                            filter="url(#neonGlow)"
                             style={{ transition: 'stroke-dashoffset 0.4s ease-in-out' }}
                           />
 
