@@ -932,7 +932,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       } else if (activeKey === 'weight') {
                         content = (
                           <span>
-                            <strong>Körpergewicht:</strong> Da die VO2max relativ zum Gewicht gemessen wird (ml/kg/min), steigert Fettabbau den Wert direkt.
+                            <strong>Gewichtsreduktion:</strong> Da die relative VO2max pro Kilogramm Körpergewicht gemessen wird (ml/kg/min), erhöht Fettabbau deinen Wert rechnerisch sofort, da weniger Masse versorgt werden muss.
                           </span>
                         );
                       }
