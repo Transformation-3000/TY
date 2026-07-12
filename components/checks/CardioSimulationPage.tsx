@@ -748,7 +748,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   {/* VO2-Max Boosting Factors (4 Buttons) */}
                   <div>
                     <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', textAlign: 'center' }}>
-                      VO2max steigern durch:
+                      VO2max Hebel
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                       <div className="tacho-btn-container">
