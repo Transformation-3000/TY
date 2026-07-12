@@ -22,6 +22,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
   const [simWeek, setSimWeek] = useState(0);
   const [isSimulating, setIsSimulating] = useState(false);
   const [lisaReport, setLisaReport] = useState<string | null>(null);
+  const [activeFactor, setActiveFactor] = useState<string | null>(null);
 
   const baseVO2 = 35.0;
 
@@ -320,19 +321,50 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           background: #ffffff;
           border: 1.5px solid #cbd5e1;
           border-radius: 12px;
-          padding: 8px 12px;
+          padding: 8px 10px 8px 12px;
           font-size: 0.82rem;
           font-weight: 800;
           color: #334155;
           cursor: pointer;
           transition: all 0.2s ease;
-          text-align: center;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 6px;
         }
         .tacho-factor-btn:hover {
           background: #f8fafc;
           border-color: #006ea7;
           color: #006ea7;
           box-shadow: 0 4px 10px rgba(0, 110, 167, 0.05);
+        }
+        .tacho-factor-btn.active {
+          background: #006ea7 !important;
+          border-color: #006ea7 !important;
+          color: #ffffff !important;
+          box-shadow: 0 4px 12px rgba(0, 110, 167, 0.25);
+        }
+        .tacho-factor-btn.active .tacho-info-icon {
+          color: #ffffff !important;
+        }
+        .tacho-info-icon-wrapper {
+          position: relative;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          cursor: help;
+          padding: 4px;
+        }
+        .tacho-info-icon {
+          color: #94a3b8;
+          font-size: 0.85rem;
+          transition: color 0.2s ease;
+        }
+        .tacho-info-icon-wrapper:hover .tacho-info-icon {
+          color: #006ea7;
+        }
+        .tacho-factor-btn.active .tacho-info-icon-wrapper:hover .tacho-info-icon {
+          color: #e2f1ff;
         }
         .tacho-tooltip {
           visibility: hidden;
@@ -345,7 +377,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           padding: 10px 12px;
           position: absolute;
           z-index: 99;
-          bottom: 125%;
+          bottom: 135%;
           left: 50%;
           transform: translateX(-50%);
           opacity: 0;
@@ -355,6 +387,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           box-shadow: 0 5px 15px rgba(0,0,0,0.15);
           pointer-events: none;
           white-space: normal;
+          font-weight: normal;
         }
         .tacho-tooltip::after {
           content: "";
@@ -366,7 +399,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           border-style: solid;
           border-color: rgba(15, 23, 42, 0.95) transparent transparent transparent;
         }
-        .tacho-btn-container:hover .tacho-tooltip {
+        .tacho-info-icon-wrapper:hover .tacho-tooltip {
           visibility: visible;
           opacity: 1;
           transform: translateX(-50%) translateY(-2px);
@@ -752,39 +785,63 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     </div>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                       <div className="tacho-btn-container">
-                        <button className="tacho-factor-btn">
-                          🏃‍♂️ Zone 2-Training
+                        <button 
+                          className={`tacho-factor-btn ${activeFactor === 'zone2' ? 'active' : ''}`}
+                          onClick={() => setActiveFactor(activeFactor === 'zone2' ? null : 'zone2')}
+                        >
+                          <span>🏃‍♂️ Zone 2-Training</span>
+                          <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
+                            <i className="bi bi-info-circle tacho-info-icon" />
+                            <span className="tacho-tooltip">
+                              <strong>Mitochondriale Kapazität:</strong> Verbessert die Sauerstoffverarbeitung in den Muskelzellen und bildet das aerobe Fundament.
+                            </span>
+                          </span>
                         </button>
-                        <span className="tacho-tooltip">
-                          <strong>Mitochondriale Kapazität:</strong> Verbessert die Sauerstoffverarbeitung in den Muskelzellen und bildet das aerobe Fundament.
-                        </span>
                       </div>
 
                       <div className="tacho-btn-container">
-                        <button className="tacho-factor-btn">
-                          ⚡ HIT-Training
+                        <button 
+                          className={`tacho-factor-btn ${activeFactor === 'hiit' ? 'active' : ''}`}
+                          onClick={() => setActiveFactor(activeFactor === 'hiit' ? null : 'hiit')}
+                        >
+                          <span>⚡ HIT-Training</span>
+                          <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
+                            <i className="bi bi-info-circle tacho-info-icon" />
+                            <span className="tacho-tooltip">
+                              <strong>Kardiales Schlagvolumen:</strong> Vergrößert das Herzminutenvolumen, sodass pro Herzschlag mehr sauerstoffreiches Blut gepumpt wird.
+                            </span>
+                          </span>
                         </button>
-                        <span className="tacho-tooltip">
-                          <strong>Kardiales Schlagvolumen:</strong> Vergrößert das Herzminutenvolumen, sodass pro Herzschlag mehr sauerstoffreiches Blut gepumpt wird.
-                        </span>
                       </div>
 
                       <div className="tacho-btn-container">
-                        <button className="tacho-factor-btn">
-                          🛌 Regeneration
+                        <button 
+                          className={`tacho-factor-btn ${activeFactor === 'regen' ? 'active' : ''}`}
+                          onClick={() => setActiveFactor(activeFactor === 'regen' ? null : 'regen')}
+                        >
+                          <span>🛌 Regeneration</span>
+                          <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
+                            <i className="bi bi-info-circle tacho-info-icon" />
+                            <span className="tacho-tooltip">
+                              <strong>Regeneration:</strong> Ausreichend Schlaf und Trainingspausen erlauben es Herz und Muskeln, sich an gesetzte Reize anzupassen.
+                            </span>
+                          </span>
                         </button>
-                        <span className="tacho-tooltip">
-                          <strong>Regeneration:</strong> Ausreichend Schlaf und Trainingspausen erlauben es Herz und Muskeln, sich an gesetzte Reize anzupassen.
-                        </span>
                       </div>
 
                       <div className="tacho-btn-container">
-                        <button className="tacho-factor-btn">
-                          ⚖️ Körpergewicht
+                        <button 
+                          className={`tacho-factor-btn ${activeFactor === 'weight' ? 'active' : ''}`}
+                          onClick={() => setActiveFactor(activeFactor === 'weight' ? null : 'weight')}
+                        >
+                          <span>⚖️ Körpergewicht</span>
+                          <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
+                            <i className="bi bi-info-circle tacho-info-icon" />
+                            <span className="tacho-tooltip">
+                              <strong>Körpergewicht:</strong> Da die VO2max relativ zum Gewicht gemessen wird (ml/kg/min), steigert Fettabbau den Wert direkt.
+                            </span>
+                          </span>
                         </button>
-                        <span className="tacho-tooltip">
-                          <strong>Körpergewicht:</strong> Da die VO2max relativ zum Gewicht gemessen wird (ml/kg/min), steigert Fettabbau den Wert direkt.
-                        </span>
                       </div>
                     </div>
                   </div>
