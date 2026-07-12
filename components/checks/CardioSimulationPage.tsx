@@ -321,7 +321,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           position: relative;
           display: flex;
           flex-direction: column;
-          alignItems: center;
+          align-items: center;
           width: 100%;
         }
         .tacho-circle-btn {
