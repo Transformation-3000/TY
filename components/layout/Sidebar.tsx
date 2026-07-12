@@ -46,22 +46,6 @@ export default function Sidebar({ activeItem, onItemClick }: { activeItem?: stri
             </button>
           );
         })}
-        <button
-          className="sb-onboarding-btn"
-          onClick={() => window.location.href = '/onboarding'}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: 'calc(100% - 2rem)', cursor: 'pointer' }}
-        >
-          <i className="bi bi-card-checklist" style={{ fontSize: '1.25rem' }}></i>
-          <span>Onboarding</span>
-        </button>
-        <button
-          className="sb-results-btn"
-          onClick={() => window.location.href = '/onboarding/ergebnisse'}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px', width: 'calc(100% - 2rem)', cursor: 'pointer' }}
-        >
-          <i className="bi bi-clipboard-data-fill" style={{ fontSize: '1.25rem' }}></i>
-          <span>Ergebnisse</span>
-        </button>
       </nav>
 
       <style jsx>{`

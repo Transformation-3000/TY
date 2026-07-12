@@ -1491,6 +1491,16 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
           box-shadow: 0 4px 12px rgba(56, 189, 248, 0.15);
         }
 
+        @media (max-width: 768px) {
+          .sim-container {
+            padding: 1rem;
+          }
+          .sim-card {
+            padding: 1.75rem 1.25rem;
+            border-radius: 20px;
+          }
+        }
+
         @media (max-width: 576px) {
           .sim-container {
             padding: 1rem 0.5rem;

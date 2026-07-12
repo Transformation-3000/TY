@@ -312,17 +312,32 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
     }
   ]);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedFav = localStorage.getItem('ty_selected_focus_field');
+      if (savedFav) {
+        setNbaItems(prev => prev.map(item => ({
+          ...item,
+          isFavored: item.id === savedFav,
+          border: item.id === savedFav 
+            ? (item.id === 'waldbaden' ? '2.5px solid #73c480' : item.id === 'breath' ? '2.5px solid #3b82f6' : '2.5px solid #ec4899')
+            : '1.5px solid #e2e8f0'
+        })));
+      }
+    }
+  }, []);
+
   const handleNbaClick = (id: string) => {
-    setNbaItems(prev => {
-      const updated = prev.map(item => ({
-        ...item,
-        isFavored: item.id === id,
-        border: item.id === id 
-          ? (item.id === 'waldbaden' ? '2.5px solid #73c480' : item.id === 'breath' ? '2.5px solid #3b82f6' : '2.5px solid #ec4899')
-          : '1.5px solid #e2e8f0'
-      }));
-      return [...updated].sort((a, b) => (a.isFavored ? -1 : b.isFavored ? 1 : 0));
-    });
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('ty_selected_focus_field', id);
+    }
+    setNbaItems(prev => prev.map(item => ({
+      ...item,
+      isFavored: item.id === id,
+      border: item.id === id 
+        ? (item.id === 'waldbaden' ? '2.5px solid #73c480' : item.id === 'breath' ? '2.5px solid #3b82f6' : '2.5px solid #ec4899')
+        : '1.5px solid #e2e8f0'
+    })));
   };
   const [isRecording, setIsRecording] = useState(false);
   const [jungbrunnenSubView, setJungbrunnenSubView] = useState<'none' | 'oracle' | 'alchemist' | 'selection'>('none');
@@ -1787,15 +1802,22 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
             </div>
           </div>
           <div className="focus-main-content">
-            <div className="focus-header-img-container">
-              <Image src={nbaItems[0].photo} fill alt={nbaItems[0].title} style={{ objectFit: 'cover', objectPosition: 'center 35%', borderRadius: '18px' }} />
-            </div>
-            <div className="focus-text-container-new">
-              <h3 className="focus-title-new">{nbaItems[0].title}</h3>
-              <p className="focus-desc-new">
-                {nbaItems[0].desc}
-              </p>
-            </div>
+            {(() => {
+              const favoredNba = nbaItems.find(item => item.isFavored) || nbaItems[0];
+              return (
+                <>
+                  <div className="focus-header-img-container">
+                    <Image src={favoredNba.photo} fill alt={favoredNba.title} style={{ objectFit: 'cover', objectPosition: 'center 35%', borderRadius: '18px' }} />
+                  </div>
+                  <div className="focus-text-container-new">
+                    <h3 className="focus-title-new">{favoredNba.title}</h3>
+                    <p className="focus-desc-new">
+                      {favoredNba.desc}
+                    </p>
+                  </div>
+                </>
+              );
+            })()}
             
             <button className="focus-action-plan-btn-small" onClick={() => setActiveModal('nba')}>
               <i className="bi bi-rocket-takeoff-fill"></i>

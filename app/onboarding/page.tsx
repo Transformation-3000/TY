@@ -134,18 +134,55 @@ export default function OnboardingPage() {
   const [currentIdx, setCurrentIdx] = useState<number>(0);
   const [selectedAnswers, setSelectedAnswers] = useState<Record<number, string | string[]>>({});
   const [finished, setFinished] = useState<boolean>(false);
+  const [hasLoaded, setHasLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('ty_onboarding_answers');
+      if (saved) {
+        try {
+          setSelectedAnswers(JSON.parse(saved));
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      const savedFinished = localStorage.getItem('ty_onboarding_finished');
+      if (savedFinished) {
+        try {
+          setFinished(JSON.parse(savedFinished));
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      const savedIdx = localStorage.getItem('ty_onboarding_current_idx');
+      if (savedIdx) {
+        try {
+          setCurrentIdx(JSON.parse(savedIdx));
+        } catch (e) {
+          console.error(e);
+        }
+      }
+      setHasLoaded(true);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (hasLoaded && typeof window !== 'undefined') {
       localStorage.setItem('ty_onboarding_answers', JSON.stringify(selectedAnswers));
     }
-  }, [selectedAnswers]);
+  }, [selectedAnswers, hasLoaded]);
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (hasLoaded && typeof window !== 'undefined') {
       localStorage.setItem('ty_onboarding_finished', JSON.stringify(finished));
     }
-  }, [finished]);
+  }, [finished, hasLoaded]);
+
+  useEffect(() => {
+    if (hasLoaded && typeof window !== 'undefined') {
+      localStorage.setItem('ty_onboarding_current_idx', JSON.stringify(currentIdx));
+    }
+  }, [currentIdx, hasLoaded]);
 
   const currentQuestion = SELECTED_ONBOARDING_FLOW[currentIdx];
   

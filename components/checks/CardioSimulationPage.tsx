@@ -431,11 +431,82 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           border-style: solid;
           border-color: transparent transparent rgba(15, 23, 42, 0.95) transparent;
         }
-        .tacho-info-icon-wrapper:hover .tacho-tooltip {
-          visibility: visible;
-          opacity: 1;
-          transform: translateX(-50%) translateY(2px);
-        }
+         .tacho-info-icon-wrapper:hover .tacho-tooltip {
+           visibility: visible;
+           opacity: 1;
+           transform: translateX(-50%) translateY(2px);
+         }
+
+         .sim-grid {
+           display: grid;
+           grid-template-columns: 1.2fr 0.8fr;
+           gap: 3rem;
+           align-items: start;
+         }
+         .sim-left-col {
+           padding-right: 2rem;
+           padding-top: 5.5rem;
+         }
+         .sim-right-col {
+           display: flex;
+           flex-direction: column;
+           gap: 1rem;
+         }
+         .sim-slider-card {
+           margin-top: 1.5rem;
+           background: #fafcff;
+           border: 1px solid #e2eef8;
+           border-radius: 20px;
+           padding: 1.5rem;
+         }
+         .sim-ref-table-card {
+           margin-top: 1.25rem;
+           background: #ffffff;
+           border: 1.5px solid #e2e8f0;
+           border-radius: 20px;
+           padding: 1.25rem;
+           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+         }
+
+         @media (max-width: 992px) {
+           .sim-grid {
+             grid-template-columns: 1fr;
+             gap: 2rem;
+           }
+           .sim-left-col {
+             padding-right: 0;
+             padding-top: 1rem;
+           }
+         }
+         @media (max-width: 768px) {
+           .sim-container {
+             padding: 1rem;
+           }
+           .sim-section-card {
+             padding: 1.75rem 1.25rem;
+             border-radius: 20px;
+           }
+           .sim-title {
+             font-size: 1.8rem;
+           }
+         }
+         @media (max-width: 576px) {
+           .sim-container {
+             padding: 1rem 0.5rem;
+           }
+           .sim-section-card {
+             padding: 1.5rem 1rem;
+             border-radius: 20px;
+           }
+           .sim-header-title-row {
+             flex-direction: column-reverse;
+             align-items: flex-start;
+             gap: 1rem;
+           }
+           .sim-back-btn {
+             align-self: flex-start;
+           }
+         }
       `}} />
 
       {/* Header */}
@@ -505,8 +576,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
 
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '3rem', alignItems: 'start' }}>
-            <div style={{ paddingRight: '2rem', paddingTop: '5.5rem' }}>
+          <div className="sim-grid">
+            <div className="sim-left-col">
               
               {/* Dynamic weekly progression track */}
               <div 
@@ -616,7 +687,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               </div>
 
               {/* Wochen timeline & slider (DRAGGABLE SLIDER) */}
-              <div style={{ marginTop: '1.5rem', background: '#fafcff', border: '1px solid #e2eef8', borderRadius: '20px', padding: '1.5rem 0px 1.5rem 1.5rem', width: '102%' }}>
+              <div className="sim-slider-card">
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#1e3a5f' }}>Wochen-Zeitleiste</span>
                   <span style={{ background: '#006ea7', color: '#ffffff', padding: '2px 10px', borderRadius: '12px', fontSize: '0.85rem', fontWeight: 800 }}>Woche {simWeek} / 12</span>
@@ -674,17 +745,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               </div>
 
               {/* VO2max Reference Values Table */}
-              <div 
-                style={{ 
-                  marginTop: '1.25rem', 
-                  background: '#ffffff', 
-                  border: '1.5px solid #e2e8f0', 
-                  borderRadius: '20px', 
-                  padding: '1.25rem', 
-                  width: '102%',
-                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.02)'
-                }}
-              >
+              <div className="sim-ref-table-card">
                 <div style={{ fontSize: '0.85rem', fontWeight: 800, color: '#1e3a5f', marginBottom: '0.75rem', display: 'flex', alignItems: 'center', gap: '6px' }}>
                   📊 <span>VO2max Altersreferenzwerte (Normalbereiche)</span>
                 </div>
@@ -734,7 +795,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             </div>
 
             {/* VO2-Max Analytics Box */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div className="sim-right-col">
               <div 
                 style={{
                   background: '#fafcff',
