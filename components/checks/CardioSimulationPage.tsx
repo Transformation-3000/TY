@@ -1000,7 +1000,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                               const bonus = (diff * 0.01).toFixed(1).replace('.', ',');
                               return (
                                 <div style={{ marginTop: '8px', color: '#006ea7', fontWeight: 600 }}>
-                                  📝 Rechenbeispiel: Du erhöhst dein wöchentliches Zone 2-Training von {curZ2} auf {tarZ2} Minuten (+{diff} Min. Zuwachs). Deine relative VO2max steigt am Ende von Woche 12 rein rechnerisch um ca. **+{bonus}** Punkte!
+                                  <strong>Rechenbeispiel:</strong> Du erhöhst dein wöchentliches Zone 2-Training von {curZ2} auf {tarZ2} Minuten (+{diff} Min. Zuwachs). Deine relative VO2max steigt am Ende von Woche 12 rein rechnerisch um ca. **+{bonus}** Punkte!
                                 </div>
                               );
                             })()}
@@ -1050,7 +1050,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                               const bonus = (diff * 1.0).toFixed(1).replace('.', ',');
                               return (
                                 <div style={{ marginTop: '8px', color: '#006ea7', fontWeight: 600 }}>
-                                  📝 Rechenbeispiel: Du steigerst dein HIIT-Training von {curH} auf {tarH} Einheiten pro Woche (+{diff} Einheiten). Dein maximales Schlagvolumen wächst, was deine VO2max rein rechnerisch um ca. **+{bonus}** Punkte verbessert!
+                                  <strong>Rechenbeispiel:</strong> Du steigerst dein HIIT-Training von {curH} auf {tarH} Einheiten pro Woche (+{diff} Einheiten). Dein maximales Schlagvolumen wächst, was deine VO2max rein rechnerisch um ca. **+{bonus}** Punkte verbessert!
                                 </div>
                               );
                             })()}
@@ -1102,7 +1102,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                               const bonus = (diff * 0.4).toFixed(1).replace('.', ',');
                               return (
                                 <div style={{ marginTop: '8px', color: '#006ea7', fontWeight: 600 }}>
-                                  📝 Rechenbeispiel: Du optimierst deinen Schlaf von {curS.toFixed(1).replace('.', ',')} auf {tarS.toFixed(1).replace('.', ',')} Std. pro Nacht (+{diff.toFixed(1).replace('.', ',')} Std. mehr Regeneration). Deine VO2max steigt rein rechnerisch um ca. **+{bonus}** Punkte!
+                                  <strong>Rechenbeispiel:</strong> Du optimierst deinen Schlaf von {curS.toFixed(1).replace('.', ',')} auf {tarS.toFixed(1).replace('.', ',')} Std. pro Nacht (+{diff.toFixed(1).replace('.', ',')} Std. mehr Regeneration). Deine VO2max steigt rein rechnerisch um ca. **+{bonus}** Punkte!
                                 </div>
                               );
                             })()}
@@ -1181,7 +1181,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                               const newVO2Val = ((35.0 * curW) / targetW).toFixed(1).replace('.', ',');
                               return (
                                 <div style={{ marginTop: '8px', color: '#006ea7', fontWeight: 600 }}>
-                                  📝 Rechenbeispiel: Du reduzierst dein Gewicht von {curW} kg auf {targetW} kg ({weightLoss} kg Verlust). Deine relative VO2max steigt dadurch rein rechnerisch sofort von 35,0 auf {newVO2Val} ml/kg/min an!
+                                  <strong>Rechenbeispiel:</strong> Du reduzierst dein Gewicht von {curW} kg auf {targetW} kg ({weightLoss} kg Verlust). Deine relative VO2max steigt dadurch rein rechnerisch sofort von 35,0 auf {newVO2Val} ml/kg/min an!
                                 </div>
                               );
                             })()}
