@@ -666,12 +666,12 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 }}
               >
                 <div style={{ textAlign: 'center', borderBottom: '1px solid #e2effa', paddingBottom: '1rem' }}>
-                  <div style={{ position: 'relative', width: '220px', height: '190px', margin: '0 auto' }}>
+                  <div style={{ position: 'relative', width: '330px', height: '285px', margin: '0 auto' }}>
                     {(() => {
                       const needleAngle = Math.min(405, Math.max(135, 200 + (currentVO2 - 35.0) * 17.57));
                       const activeArcPct = (needleAngle - 135) / 270;
                       return (
-                        <svg width="220" height="190" viewBox="0 0 220 190">
+                        <svg width="330" height="285" viewBox="0 0 220 190">
                           <defs>
                             <linearGradient id="tachoGrad" x1="0%" y1="100%" x2="100%" y2="0%">
                               <stop offset="0%" stopColor="#ef4444" />
@@ -737,11 +737,11 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         lineHeight: 1
                       }}
                     >
-                      <span style={{ fontSize: '0.75rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '1px' }}>VO2max</span>
-                      <div style={{ fontSize: '1.9rem', fontWeight: 900, color: '#0f172a', margin: '1px 0' }}>
+                      <span style={{ fontSize: '1.0rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '2px' }}>VO2max</span>
+                      <div style={{ fontSize: '2.85rem', fontWeight: 900, color: '#0f172a', margin: '2px 0' }}>
                         {currentVO2.toFixed(1).replace('.', ',')}
                       </div>
-                      <span style={{ fontSize: '0.72rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#22c55e' : '#ef4444' }}>
+                      <span style={{ fontSize: '1.05rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#22c55e' : '#ef4444' }}>
                         {currentVO2 >= baseVO2 ? '▲' : '▼'} {Math.abs(currentVO2 - baseVO2).toFixed(1).replace('.', ',')}
                       </span>
                     </div>
