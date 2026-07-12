@@ -3944,6 +3944,10 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
             grid-template-columns: 1fr;
             gap: 1rem;
           }
+          .bac-stats-grid {
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+          }
         }
 
         @media (max-width: 992px) {
