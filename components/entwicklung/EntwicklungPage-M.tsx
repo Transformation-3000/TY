@@ -1969,18 +1969,22 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
 
               <div className="rep-grid-custom">
                 {mockReportsData.map((m, idx) => {
-                  let bgClass = "bg-blue";
-                  let strokeClass = "stroke-blue";
+                  let bgClass = "bg-orange";
+                  let strokeClass = "stroke-orange";
                   let barHeights = ['8px', '8px', '16px', '12px', '18px', '10px', '14px', '22px'];
 
                   if (idx === 1) {
-                    bgClass = "bg-dark";
-                    strokeClass = "stroke-dark";
+                    bgClass = "bg-blue";
+                    strokeClass = "stroke-blue";
                     barHeights = ['14px', '8px', '16px', '14px', '14px', '14px', '22px', '16px'];
                   } else if (idx === 2) {
+                    bgClass = "bg-dark";
+                    strokeClass = "stroke-dark";
+                    barHeights = ['12px', '8px', '14px', '14px', '18px', '14px', '20px', '16px'];
+                  } else if (idx === 3) {
                     bgClass = "bg-green";
                     strokeClass = "stroke-green";
-                    barHeights = ['12px', '8px', '14px', '14px', '18px', '14px', '20px', '16px'];
+                    barHeights = ['10px', '14px', '8px', '16px', '12px', '18px', '14px', '20px'];
                   }
 
                   return (
@@ -2967,6 +2971,9 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         .rep-card-top.bg-green {
           background: #50b848;
         }
+        .rep-card-top.bg-orange {
+          background: #e18d2d;
+        }
         .rep-top-header {
           display: flex;
           justify-content: space-between;
@@ -3081,6 +3088,9 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
         }
         .rep-circle-fg.stroke-green {
           stroke: #50b848;
+        }
+        .rep-circle-fg.stroke-orange {
+          stroke: #e18d2d;
         }
         .rep-circle-text {
           position: absolute;

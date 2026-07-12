@@ -49,6 +49,19 @@ interface WachstumPageProps {
 
 export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimulation, onStartAutophagy, onStartChronotyp, onStartCardio, onStartGlucose, onStartVagus, onStartKitchen, onStartBudget, onStartStress, onStartToxins }: WachstumPageProps) {
   const [selectedPlan, setSelectedPlan] = useState<string>('Premium');
+  const [bioAge, setBioAge] = useState<number>(42.5);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedBio = localStorage.getItem('ty_onboarding_bio_age');
+      if (savedBio) {
+        const val = parseFloat(savedBio);
+        if (!isNaN(val)) {
+          setBioAge(val);
+        }
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -158,14 +171,14 @@ export default function WachstumPage({ onNavigate, onStartLisaDaily, onStartSimu
                         stroke="url(#simAgeScoreGrad)" 
                         strokeWidth="7.5" 
                         strokeDasharray="257.6" 
-                        strokeDashoffset={257.6 * (1 - 42.5 / 111)} 
+                        strokeDashoffset={257.6 * (1 - bioAge / 111)} 
                         strokeLinecap="round" 
                         filter="url(#simSoftGlow)"
                         transform="rotate(-90 50 50)"
                       />
                     </svg>
                     <div className="bac-circle-text-box-mini">
-                      <span className="bac-circle-val-mini">42,5</span>
+                      <span className="bac-circle-val-mini">{bioAge.toFixed(1).replace('.', ',')}</span>
                       <span className="bac-circle-lab-mini">Jahre</span>
                     </div>
                   </div>

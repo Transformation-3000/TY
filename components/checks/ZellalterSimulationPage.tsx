@@ -20,6 +20,29 @@ export default function ZellalterSimulationPage({ onBack }: ZellalterSimulationP
   const [ageDifference, setAgeDifference] = useState(-4.2);
   const [agingRate, setAgingRate] = useState(0.84);
 
+  const [baselineBioAge, setBaselineBioAge] = useState(42.5);
+  const [calendarAge, setCalendarAge] = useState(46.7);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedBio = localStorage.getItem('ty_onboarding_bio_age');
+      if (savedBio) {
+        const val = parseFloat(savedBio);
+        if (!isNaN(val)) {
+          setBaselineBioAge(val);
+          setBiologicalAge(val);
+        }
+      }
+      const savedCal = localStorage.getItem('ty_onboarding_calendar_age');
+      if (savedCal) {
+        const val = parseFloat(savedCal);
+        if (!isNaN(val)) {
+          setCalendarAge(val);
+        }
+      }
+    }
+  }, []);
+
   useEffect(() => {
     // 1. Sleep delta
     // 1: +2.5, 2: +0.8, 3: -1.8, 4: -1.4, 5: +0.5
@@ -77,16 +100,16 @@ export default function ZellalterSimulationPage({ onBack }: ZellalterSimulationP
     const baseOffset = -3.7;
     const currentDeltaFromBaseline = totalDelta - baseOffset;
     
-    const computedBioAge = Math.max(18, 42.5 + currentDeltaFromBaseline);
-    const computedDifference = computedBioAge - 46.7;
+    const computedBioAge = Math.max(18, baselineBioAge + currentDeltaFromBaseline);
+    const computedDifference = computedBioAge - calendarAge;
     
     setBiologicalAge(parseFloat(computedBioAge.toFixed(1)));
     setAgeDifference(parseFloat(computedDifference.toFixed(1)));
     
     // Aging rate: normally 0.75x to 1.3x, multiplier of 1.72 matches 15.5% slow down at -4.2 difference
-    const rate = 1.0 + (computedDifference / 46.7) * 1.72;
+    const rate = 1.0 + (computedDifference / calendarAge) * 1.72;
     setAgingRate(parseFloat(Math.max(0.65, Math.min(1.45, rate)).toFixed(2)));
-  }, [sleepScore, exerciseScore, nutritionScore, stressScore, toxinsScore]);
+  }, [sleepScore, exerciseScore, nutritionScore, stressScore, toxinsScore, baselineBioAge, calendarAge]);
 
   // Color mapping based on results
   const isGood = ageDifference < 0;

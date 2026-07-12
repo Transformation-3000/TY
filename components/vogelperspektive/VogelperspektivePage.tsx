@@ -77,8 +77,10 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         setUserName(savedName);
       }
       const savedImage = localStorage.getItem('ty_profile_image');
-      if (savedImage) {
+      if (savedImage && savedImage !== '/images/image.png' && savedImage !== 'image.png') {
         setProfileImage(savedImage);
+      } else if (savedImage) {
+        localStorage.removeItem('ty_profile_image');
       }
     }
   }, []);

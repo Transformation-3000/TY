@@ -123,14 +123,18 @@ export default function WelcomeSection({
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const savedImage = localStorage.getItem('ty_profile_image');
-      if (savedImage) {
+      if (savedImage && savedImage !== '/images/image.png' && savedImage !== 'image.png') {
         setProfileImage(savedImage);
+      } else if (savedImage) {
+        localStorage.removeItem('ty_profile_image');
       }
 
       const handleImageChange = () => {
         const updatedImage = localStorage.getItem('ty_profile_image');
-        if (updatedImage) {
+        if (updatedImage && updatedImage !== '/images/image.png' && updatedImage !== 'image.png') {
           setProfileImage(updatedImage);
+        } else {
+          setProfileImage('/images/uploaded_1783891244196_Monique_1.png');
         }
       };
 
