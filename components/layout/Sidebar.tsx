@@ -26,7 +26,8 @@ export default function Sidebar({ activeItem, onItemClick }: { activeItem?: stri
     <div className="sidebar-navigation">
       <nav className="sb-nav">
         {mainNavItems.map((item) => {
-          const isActive = currentActiveItem === item.id;
+          const isActive = currentActiveItem === item.id || 
+                           (item.id === 'quick-wins' && currentActiveItem === 'cardio-simulation');
           return (
             <button
               key={item.id}
