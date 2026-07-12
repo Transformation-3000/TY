@@ -596,7 +596,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         strokeWidth="12" 
                         strokeLinecap="round" 
                         strokeDasharray="400"
-                        strokeDashoffset={400 - (Math.min(1, Math.max(0, (currentVO2 - 30) / 18.5)) * 400)}
+                        strokeDashoffset={400 - (Math.min(1, Math.max(0, (currentVO2 - 30) / 14.5)) * 400)}
                         style={{ transition: 'stroke-dashoffset 0.4s ease-in-out' }}
                       />
 
@@ -605,10 +605,10 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       
                       {/* Floating Needle (starts outside center circle to not cover text) */}
                       <line 
-                        x1={110 + 52 * Math.cos(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 18.5)) * 270) * Math.PI) / 180)} 
-                        y1={110 + 52 * Math.sin(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 18.5)) * 270) * Math.PI) / 180)} 
-                        x2={110 + 78 * Math.cos(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 18.5)) * 270) * Math.PI) / 180)} 
-                        y2={110 + 78 * Math.sin(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 18.5)) * 270) * Math.PI) / 180)} 
+                        x1={110 + 52 * Math.cos(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 14.5)) * 270) * Math.PI) / 180)} 
+                        y1={110 + 52 * Math.sin(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 14.5)) * 270) * Math.PI) / 180)} 
+                        x2={110 + 78 * Math.cos(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 14.5)) * 270) * Math.PI) / 180)} 
+                        y2={110 + 78 * Math.sin(((135 + Math.min(1, Math.max(0, (currentVO2 - 30) / 14.5)) * 270) * Math.PI) / 180)} 
                         stroke="#0f172a" 
                         strokeWidth="4" 
                         strokeLinecap="round"
