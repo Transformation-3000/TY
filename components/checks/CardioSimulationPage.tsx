@@ -795,7 +795,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       <div style={{ fontSize: '2.85rem', fontWeight: 900, color: '#ffffff', margin: '2px 0', textShadow: '0 0 10px rgba(255,255,255,0.4)' }}>
                         {currentVO2.toFixed(1).replace('.', ',')}
                       </div>
-                      <span style={{ fontSize: '1.05rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#4ade80' : '#f87171', textShadow: `0 0 8px ${currentVO2 >= baseVO2 ? 'rgba(74,222,128,0.4)' : 'rgba(248,113,113,0.4)'}` }}>
+                      <span style={{ marginTop: '10px', fontSize: '1.05rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#4ade80' : '#f87171', textShadow: `0 0 8px ${currentVO2 >= baseVO2 ? 'rgba(74,222,128,0.4)' : 'rgba(248,113,113,0.4)'}` }}>
                         {currentVO2 >= baseVO2 ? '▲' : '▼'} {Math.abs(currentVO2 - baseVO2).toFixed(1).replace('.', ',')}
                       </span>
                     </div>
