@@ -896,26 +896,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 </div>
               </div>
 
-              {/* Lisa AI Report placeholder */}
-              {lisaReport && (
-                <div 
-                  style={{
-                    background: '#f8fafc',
-                    border: '1.5px solid #e2e8f0',
-                    borderRadius: '20px',
-                    padding: '1.25rem',
-                    fontSize: '0.9rem',
-                    color: '#334155',
-                    lineHeight: '1.5',
-                    boxShadow: '0 4px 15px rgba(0,0,0,0.02)'
-                  }}
-                >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '0.5rem', fontWeight: 800, color: '#0f172a' }}>
-                    <span>🤖 Lisa AI Analyse-Report</span>
-                  </div>
-                  <div style={{ whiteSpace: 'pre-wrap' }}>{lisaReport}</div>
-                </div>
-              )}
+
             </div>
 
           </div>
