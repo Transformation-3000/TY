@@ -8697,6 +8697,7 @@ i[class*="bi-"] {
   }
 
   .sidebar-overlay {
+    display: none;
     position: fixed;
     inset: 0;
     top: 90px;
