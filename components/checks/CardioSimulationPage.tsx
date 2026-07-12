@@ -780,7 +780,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     <div 
                       style={{
                         position: 'absolute',
-                        top: '58%',
+                        top: '60%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
                         textAlign: 'center',
