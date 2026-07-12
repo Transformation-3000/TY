@@ -900,7 +900,17 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         <div 
                           style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', transition: 'color 0.2s' }}
                         >
-                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'zone2' ? '#0284c7' : '#334155' }}>Zone 2</span>
+                          <span style={{ 
+                            fontSize: '0.8rem', 
+                            fontWeight: 800, 
+                            color: selectedInfoFactor === 'zone2' ? '#0284c7' : '#64748b',
+                            background: selectedInfoFactor === 'zone2' ? 'rgba(2, 132, 199, 0.08)' : 'transparent',
+                            padding: '4px 10px',
+                            borderRadius: '8px',
+                            transition: 'all 0.2s'
+                          }}>
+                            Zone 2
+                          </span>
                         </div>
                       </div>
 
@@ -914,7 +924,17 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         <div 
                           style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', transition: 'color 0.2s' }}
                         >
-                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'hiit' ? '#0284c7' : '#334155' }}>HIIT</span>
+                          <span style={{ 
+                            fontSize: '0.8rem', 
+                            fontWeight: 800, 
+                            color: selectedInfoFactor === 'hiit' ? '#0284c7' : '#64748b',
+                            background: selectedInfoFactor === 'hiit' ? 'rgba(2, 132, 199, 0.08)' : 'transparent',
+                            padding: '4px 10px',
+                            borderRadius: '8px',
+                            transition: 'all 0.2s'
+                          }}>
+                            HIIT
+                          </span>
                         </div>
                       </div>
 
@@ -928,7 +948,17 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         <div 
                           style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', transition: 'color 0.2s' }}
                         >
-                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'regen' ? '#0284c7' : '#334155' }}>Erholung</span>
+                          <span style={{ 
+                            fontSize: '0.8rem', 
+                            fontWeight: 800, 
+                            color: selectedInfoFactor === 'regen' ? '#0284c7' : '#64748b',
+                            background: selectedInfoFactor === 'regen' ? 'rgba(2, 132, 199, 0.08)' : 'transparent',
+                            padding: '4px 10px',
+                            borderRadius: '8px',
+                            transition: 'all 0.2s'
+                          }}>
+                            Erholung
+                          </span>
                         </div>
                       </div>
 
@@ -942,7 +972,17 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         <div 
                           style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', transition: 'color 0.2s' }}
                         >
-                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'weight' ? '#0284c7' : '#334155' }}>Gewicht</span>
+                          <span style={{ 
+                            fontSize: '0.8rem', 
+                            fontWeight: 800, 
+                            color: selectedInfoFactor === 'weight' ? '#0284c7' : '#64748b',
+                            background: selectedInfoFactor === 'weight' ? 'rgba(2, 132, 199, 0.08)' : 'transparent',
+                            padding: '4px 10px',
+                            borderRadius: '8px',
+                            transition: 'all 0.2s'
+                          }}>
+                            Gewicht
+                          </span>
                         </div>
                       </div>
                     </div>
