@@ -681,40 +681,80 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                               <stop offset="86%" stopColor="#22c55e" />
                               <stop offset="100%" stopColor="#a855f7" />
                             </linearGradient>
+                            <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+                              <feGaussianBlur stdDeviation="3.5" result="blur" />
+                              <feMerge>
+                                <feMergeNode in="blur" />
+                                <feMergeNode in="SourceGraphic" />
+                              </feMerge>
+                            </filter>
+                            <radialGradient id="hubGrad" cx="50%" cy="50%" r="50%">
+                              <stop offset="0%" stopColor="#1e293b" />
+                              <stop offset="80%" stopColor="#0f172a" />
+                              <stop offset="100%" stopColor="#020617" />
+                            </radialGradient>
                           </defs>
                           
                           {/* Background Track Arc */}
                           <path 
                             d="M 46 164 A 85 85 0 1 1 174 164" 
                             fill="none" 
-                            stroke="#e2e8f0" 
-                            strokeWidth="12" 
+                            stroke="#cbd5e1" 
+                            strokeWidth="10" 
                             strokeLinecap="round" 
+                            opacity="0.3"
                           />
 
-                          {/* Colored Active Arc */}
+                          {/* Colored Active Arc with Glow */}
                           <path 
                             d="M 46 164 A 85 85 0 1 1 174 164" 
                             fill="none" 
                             stroke="url(#tachoGrad)" 
-                            strokeWidth="12" 
+                            strokeWidth="11" 
                             strokeLinecap="round" 
                             strokeDasharray="400"
                             strokeDashoffset={400 - (activeArcPct * 400)}
+                            filter="url(#neonGlow)"
                             style={{ transition: 'stroke-dashoffset 0.4s ease-in-out' }}
                           />
 
-                          {/* Tacho Hub (Center Circle) */}
-                          <circle cx="110" cy="110" r="48" fill="#ffffff" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.06))" />
+                          {/* Futuristic Cyber-Grid Tick Marks */}
+                          <path 
+                            d="M 46 164 A 85 85 0 1 1 174 164" 
+                            fill="none" 
+                            stroke="#ffffff" 
+                            strokeWidth="3" 
+                            strokeDasharray="2, 6" 
+                            opacity="0.4"
+                          />
+
+                          {/* Tacho Hub (Dark Glass Center Circle) */}
+                          <circle cx="110" cy="110" r="48" fill="url(#hubGrad)" stroke="#334155" strokeWidth="2" />
                           
-                          {/* Floating Needle (starts outside center circle to not cover text) */}
+                          {/* Glowing inner cyan laser ring */}
+                          <circle cx="110" cy="110" r="44" fill="none" stroke="#00f2fe" strokeWidth="1.5" filter="url(#neonGlow)" opacity="0.8" />
+                          
+                          {/* Futuristic Laser Needle - Glow Outer Layer */}
                           <line 
-                            x1={110 + 52 * Math.cos((needleAngle * Math.PI) / 180)} 
-                            y1={110 + 52 * Math.sin((needleAngle * Math.PI) / 180)} 
-                            x2={110 + 78 * Math.cos((needleAngle * Math.PI) / 180)} 
-                            y2={110 + 78 * Math.sin((needleAngle * Math.PI) / 180)} 
-                            stroke="#0f172a" 
-                            strokeWidth="4" 
+                            x1={110 + 48 * Math.cos((needleAngle * Math.PI) / 180)} 
+                            y1={110 + 48 * Math.sin((needleAngle * Math.PI) / 180)} 
+                            x2={110 + 82 * Math.cos((needleAngle * Math.PI) / 180)} 
+                            y2={110 + 82 * Math.sin((needleAngle * Math.PI) / 180)} 
+                            stroke="#00f2fe" 
+                            strokeWidth="6" 
+                            strokeLinecap="round"
+                            filter="url(#neonGlow)"
+                            opacity="0.85"
+                            style={{ transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)' }}
+                          />
+                          {/* Futuristic Laser Needle - Bright White Core */}
+                          <line 
+                            x1={110 + 48 * Math.cos((needleAngle * Math.PI) / 180)} 
+                            y1={110 + 48 * Math.sin((needleAngle * Math.PI) / 180)} 
+                            x2={110 + 82 * Math.cos((needleAngle * Math.PI) / 180)} 
+                            y2={110 + 82 * Math.sin((needleAngle * Math.PI) / 180)} 
+                            stroke="#ffffff" 
+                            strokeWidth="2.5" 
                             strokeLinecap="round"
                             style={{ transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)' }}
                           />
@@ -737,11 +777,11 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         lineHeight: 1
                       }}
                     >
-                      <span style={{ fontSize: '1.0rem', fontWeight: 800, color: '#64748b', textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '2px' }}>VO2max</span>
-                      <div style={{ fontSize: '2.85rem', fontWeight: 900, color: '#0f172a', margin: '2px 0' }}>
+                      <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '2px', textShadow: '0 0 5px rgba(56,189,248,0.4)' }}>VO2max</span>
+                      <div style={{ fontSize: '2.85rem', fontWeight: 900, color: '#ffffff', margin: '2px 0', textShadow: '0 0 10px rgba(255,255,255,0.4)' }}>
                         {currentVO2.toFixed(1).replace('.', ',')}
                       </div>
-                      <span style={{ fontSize: '1.05rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#22c55e' : '#ef4444' }}>
+                      <span style={{ fontSize: '1.05rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#4ade80' : '#f87171', textShadow: `0 0 8px ${currentVO2 >= baseVO2 ? 'rgba(74,222,128,0.4)' : 'rgba(248,113,113,0.4)'}` }}>
                         {currentVO2 >= baseVO2 ? '▲' : '▼'} {Math.abs(currentVO2 - baseVO2).toFixed(1).replace('.', ',')}
                       </span>
                     </div>
