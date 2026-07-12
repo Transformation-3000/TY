@@ -23,6 +23,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
   const [isSimulating, setIsSimulating] = useState(false);
   const [lisaReport, setLisaReport] = useState<string | null>(null);
   const [activeFactors, setActiveFactors] = useState<string[]>([]);
+  const [hoveredFactor, setHoveredFactor] = useState<string | null>(null);
 
   const toggleFactor = (factor: string) => {
     setActiveFactors(prev => 
@@ -761,11 +762,13 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         </button>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
                           <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>Zone 2</span>
-                          <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
+                          <span 
+                            className="tacho-info-icon-wrapper" 
+                            onClick={(e) => e.stopPropagation()}
+                            onMouseEnter={() => setHoveredFactor('zone2')}
+                            onMouseLeave={() => setHoveredFactor(null)}
+                          >
                             <i className="bi bi-info-circle tacho-info-icon" />
-                            <span className="tacho-tooltip">
-                              <strong>Mitochondriale Kapazität:</strong> Verbessert die Sauerstoffverarbeitung in den Muskelzellen und bildet das aerobe Fundament.
-                            </span>
                           </span>
                         </div>
                       </div>
@@ -779,11 +782,13 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         </button>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
                           <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>HIIT</span>
-                          <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
+                          <span 
+                            className="tacho-info-icon-wrapper" 
+                            onClick={(e) => e.stopPropagation()}
+                            onMouseEnter={() => setHoveredFactor('hiit')}
+                            onMouseLeave={() => setHoveredFactor(null)}
+                          >
                             <i className="bi bi-info-circle tacho-info-icon" />
-                            <span className="tacho-tooltip">
-                              <strong>Kardiales Schlagvolumen:</strong> Vergrößert das Herzminutenvolumen, sodass pro Herzschlag mehr sauerstoffreiches Blut gepumpt wird.
-                            </span>
                           </span>
                         </div>
                       </div>
@@ -797,11 +802,13 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         </button>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
                           <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>Erholung</span>
-                          <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
+                          <span 
+                            className="tacho-info-icon-wrapper" 
+                            onClick={(e) => e.stopPropagation()}
+                            onMouseEnter={() => setHoveredFactor('regen')}
+                            onMouseLeave={() => setHoveredFactor(null)}
+                          >
                             <i className="bi bi-info-circle tacho-info-icon" />
-                            <span className="tacho-tooltip">
-                              <strong>Regeneration:</strong> Ausreichend Schlaf und Trainingspausen erlauben es Herz und Muskeln, sich an gesetzte Reize anzupassen.
-                            </span>
                           </span>
                         </div>
                       </div>
@@ -815,14 +822,73 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         </button>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
                           <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>Gewicht</span>
-                          <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
+                          <span 
+                            className="tacho-info-icon-wrapper" 
+                            onClick={(e) => e.stopPropagation()}
+                            onMouseEnter={() => setHoveredFactor('weight')}
+                            onMouseLeave={() => setHoveredFactor(null)}
+                          >
                             <i className="bi bi-info-circle tacho-info-icon" />
-                            <span className="tacho-tooltip">
-                              <strong>Körpergewicht:</strong> Da die VO2max relativ zum Gewicht gemessen wird (ml/kg/min), steigert Fettabbau den Wert direkt.
-                            </span>
                           </span>
                         </div>
                       </div>
+                    </div>
+
+                    {/* Dynamic Tooltip Info Box (Kasten unterhalb der Buttons) */}
+                    {(() => {
+                      const activeKey = hoveredFactor || (activeFactors.length > 0 ? activeFactors[activeFactors.length - 1] : null);
+                      let content = (
+                        <span style={{ color: '#94a3b8', fontStyle: 'italic' }}>
+                          💡 Tipp: Fahre über das (i)-Symbol eines Hebels oder wähle ihn aus, um Details anzuzeigen.
+                        </span>
+                      );
+                      
+                      if (activeKey === 'zone2') {
+                        content = (
+                          <span>
+                            <strong>Mitochondriale Kapazität:</strong> Verbessert die Sauerstoffverarbeitung in den Muskelzellen und bildet das aerobe Fundament.
+                          </span>
+                        );
+                      } else if (activeKey === 'hiit') {
+                        content = (
+                          <span>
+                            <strong>Kardiales Schlagvolumen:</strong> Vergrößert das Herzminutenvolumen, sodass pro Herzschlag mehr sauerstoffreiches Blut gepumpt wird.
+                          </span>
+                        );
+                      } else if (activeKey === 'regen') {
+                        content = (
+                          <span>
+                            <strong>Regeneration:</strong> Ausreichend Schlaf und Trainingspausen erlauben es Herz und Muskeln, sich an gesetzte Reize anzupassen.
+                          </span>
+                        );
+                      } else if (activeKey === 'weight') {
+                        content = (
+                          <span>
+                            <strong>Körpergewicht:</strong> Da die VO2max relativ zum Gewicht gemessen wird (ml/kg/min), steigert Fettabbau den Wert direkt.
+                          </span>
+                        );
+                      }
+
+                      return (
+                        <div 
+                          style={{
+                            marginTop: '1rem',
+                            background: '#fafcff',
+                            border: '1.5px solid #e2eef8',
+                            borderRadius: '16px',
+                            padding: '0.8rem 1rem',
+                            fontSize: '0.78rem',
+                            lineHeight: '1.4',
+                            color: '#334155',
+                            minHeight: '62px',
+                            display: 'flex',
+                            alignItems: 'center'
+                          }}
+                        >
+                          {content}
+                        </div>
+                      );
+                    })()}
                     </div>
                   </div>
                 </div>
