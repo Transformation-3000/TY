@@ -249,7 +249,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       effect: '+1.2 Vitalitäts-Gewinn',
       effectColor: '#16a34a',
       effectIcon: 'bi-heart-pulse-fill',
-      diamonds: 40,
+      diamonds: 4,
       image: '/images/photo_walk.png',
       bg: 'linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%)',
       border: '2.5px solid #73c480',
@@ -265,7 +265,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       effect: 'Sofort-Effekt',
       effectColor: '#3b82f6',
       effectIcon: 'bi-lightning-fill',
-      diamonds: 25,
+      diamonds: 3,
       image: '/images/photo_breath_v2.png',
       bg: 'linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%)',
       border: '1.5px solid #e2e8f0',
@@ -281,7 +281,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       effect: 'Antioxidativer Zellschutz',
       effectColor: '#ec4899',
       effectIcon: 'bi-shield-fill-check',
-      diamonds: 15,
+      diamonds: 2,
       image: '/images/ritual_beeren.png',
       bg: 'linear-gradient(135deg, #fdf2f8 0%, #ffffff 100%)',
       border: '1.5px solid #e2e8f0',
@@ -2271,7 +2271,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         <div className="modal-overlay" onClick={() => { setActiveModal(null); setIsRecording(false); }}>
           <div 
             className={`modal-content ${activeModal === 'activity' || activeModal === 'diamonds' || activeModal === 'jungbrunnen-selection' || activeModal === 'nba' ? 'large-modal' : ''}`} 
-            style={activeModal === 'nba' ? { maxWidth: '760px' } : undefined}
+            style={activeModal === 'nba' ? { maxWidth: '1380px' } : undefined}
             onClick={e => e.stopPropagation()}
           >
             <button className="modal-close-btn" onClick={() => { setActiveModal(null); setIsRecording(false); }}><i className="bi bi-x-lg"></i></button>
@@ -3120,13 +3120,10 @@ return (
                   </div>
                   <div>
                     <h3 className="modal-title" style={{ margin: 0, fontSize: '1.6rem', fontWeight: 800, color: '#1e293b' }}>Deine Fokusfelder für diese Woche</h3>
-                    <p style={{ margin: '4px 0 0', color: '#64748b', fontSize: '1.05rem' }}>
-                      Auf Basis deiner Vitalitätsdaten und des wöchentlichen Coachings mit Lisa AI.
-                    </p>
                   </div>
                 </div>
 
-                <div className="nba-cards-container" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                <div className="nba-cards-container" style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem', marginTop: '0.5rem' }}>
                   {nbaItems.map((item, index) => {
                     const isWaldbaden = item.id === 'waldbaden';
                     const isBreath = item.id === 'breath';
@@ -3140,6 +3137,7 @@ return (
                         onClick={() => handleNbaClick(item.id)}
                         style={{
                           display: 'flex',
+                          flexDirection: 'column',
                           background: item.isFavored ? (isWaldbaden ? 'linear-gradient(135deg, #f0fdf4 0%, #ffffff 100%)' : isBreath ? 'linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%)' : 'linear-gradient(135deg, #fdf2f8 0%, #ffffff 100%)') : '#ffffff',
                           border: item.border,
                           borderRadius: '24px',
@@ -3147,7 +3145,8 @@ return (
                           position: 'relative',
                           boxShadow: item.isFavored ? `0 10px 25px rgba(0,0,0,0.06)` : '0 4px 12px rgba(0,0,0,0.02)',
                           cursor: 'pointer',
-                          transition: 'transform 0.2s ease, box-shadow 0.2s ease'
+                          transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                          height: '100%'
                         }}
                       >
                         {/* Badge */}
@@ -3158,21 +3157,22 @@ return (
                             right: '12px',
                             background: itemColor,
                             color: '#fff',
-                            fontSize: '0.88rem',
+                            fontSize: '0.8rem',
                             fontWeight: 800,
                             padding: '4px 10px',
                             borderRadius: '50px',
                             display: 'flex',
                             alignItems: 'center',
                             gap: '4px',
-                            boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
+                            boxShadow: '0 2px 6px rgba(0,0,0,0.1)',
+                            zIndex: 10
                           }}>
                             <i className="bi bi-star-fill"></i> Favorisiert
                           </div>
                         )}
 
-                        {/* Image */}
-                        <div style={{ width: '150px', position: 'relative', minHeight: '140px', flexShrink: 0, background: isBeeren ? '#f8fafc' : undefined, display: isBeeren ? 'flex' : undefined, alignItems: isBeeren ? 'center' : undefined, justifyContent: isBeeren ? 'center' : undefined }}>
+                        {/* Image on top */}
+                        <div style={{ width: '100%', height: '150px', position: 'relative', flexShrink: 0, background: isBeeren ? '#f8fafc' : undefined, display: isBeeren ? 'flex' : undefined, alignItems: isBeeren ? 'center' : undefined, justifyContent: isBeeren ? 'center' : undefined }}>
                           {isBeeren ? (
                             <div style={{ width: '100%', height: '100%', position: 'relative', transform: 'scale(0.8)' }}>
                               <Image 
@@ -3192,17 +3192,31 @@ return (
                           )}
                         </div>
 
-                        {/* Content */}
-                        <div style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', justifyContent: 'center', flex: 1 }}>
-                          <span style={{ fontSize: '0.88rem', color: itemColor, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Rank #{index + 1} • {item.category}</span>
-                          <strong style={{ fontSize: '1.38rem', color: '#1e293b', marginTop: '2px' }}>{item.title}</strong>
-                          <p style={{ fontSize: '0.98rem', color: '#64748b', margin: '6px 0 10px 0', lineHeight: 1.45 }}>
+                        {/* Content below */}
+                        <div style={{ padding: '1.15rem', display: 'flex', flexDirection: 'column', flex: 1, minHeight: '210px' }}>
+                          <span style={{ fontSize: '0.78rem', color: itemColor, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Rank #{index + 1} • {item.category}</span>
+                          <strong style={{ fontSize: '1.15rem', color: '#1e293b', marginTop: '2px', lineHeight: 1.3 }}>{item.title}</strong>
+                          
+                          {/* Description restricted to max 3 lines */}
+                          <p style={{ 
+                            fontSize: '0.88rem', 
+                            color: '#64748b', 
+                            margin: '6px 0 10px 0', 
+                            lineHeight: 1.45,
+                            display: '-webkit-box',
+                            WebkitLineClamp: 3,
+                            WebkitBoxOrient: 'vertical',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            flex: 1
+                          }}>
                             {item.desc}
                           </p>
-                          <div style={{ display: 'flex', gap: '20px', fontSize: '0.92rem', fontWeight: 700, color: '#475569', alignItems: 'center' }}>
+                          
+                          {/* Single-row footer: only time and diamonds */}
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: 'auto', fontSize: '0.88rem', fontWeight: 700, color: '#475569' }}>
                             <span><i className="bi bi-clock"></i> {item.duration}</span>
-                            <span style={{ color: itemColor }}><i className={`bi ${item.effectIcon}`}></i> {item.effect}</span>
-                            <span style={{ color: '#0891b2', display: 'inline-flex', alignItems: 'center', gap: '3px' }}><i className="bi bi-gem"></i> +{item.diamonds} Diamanten</span>
+                            <span style={{ color: '#006ea7', display: 'inline-flex', alignItems: 'center', gap: '3px' }}><i className="bi bi-gem"></i> +{item.diamonds}</span>
                           </div>
                         </div>
                       </div>
