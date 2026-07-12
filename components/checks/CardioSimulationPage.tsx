@@ -25,6 +25,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
   const [activeFactors, setActiveFactors] = useState<string[]>([]);
   const [hoveredFactor, setHoveredFactor] = useState<string | null>(null);
   const [userWeight, setUserWeight] = useState<number>(80);
+  const [targetWeight, setTargetWeight] = useState<number>(76);
 
   const toggleFactor = (factor: string) => {
     setActiveFactors(prev => 
@@ -1004,39 +1005,75 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           <div style={{ width: '100%' }}>
                             <strong>Gewichtsreduktion:</strong> Da die relative VO2max pro Kilogramm Körpergewicht gemessen wird (ml/kg/min), erhöht Fettabbau deinen Wert rechnerisch sofort, da weniger Masse versorgt werden muss.
                             
-                            {/* Interactive Weight Field */}
-                            <div style={{ marginTop: '8px', display: 'flex', alignItems: 'center', gap: '8px', background: '#f0f9ff', padding: '6px 12px', borderRadius: '10px', border: '1px solid #bae6fd', width: 'fit-content' }}>
-                              <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>⚖️ Dein Gewicht:</span>
-                              <input 
-                                type="number" 
-                                value={userWeight || ''} 
-                                onChange={(e) => {
-                                  const val = Number(e.target.value);
-                                  setUserWeight(val);
-                                }}
-                                style={{ 
-                                  width: '60px', 
-                                  padding: '2px 6px', 
-                                  border: '1.5px solid #0284c7', 
-                                  borderRadius: '6px', 
-                                  textAlign: 'center', 
-                                  fontWeight: 800, 
-                                  color: '#0f172a',
-                                  background: '#ffffff',
-                                  fontSize: '0.78rem'
-                                }} 
-                              />
-                              <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>kg</span>
+                            {/* Interactive Weight Fields (Current & Target) */}
+                            <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', background: '#f0f9ff', padding: '6px 12px', borderRadius: '10px', border: '1px solid #bae6fd', width: 'fit-content' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>⚖️ Aktuell:</span>
+                                <input 
+                                  type="number" 
+                                  value={userWeight || ''} 
+                                  onChange={(e) => {
+                                    const val = Number(e.target.value);
+                                    setUserWeight(val);
+                                  }}
+                                  style={{ 
+                                    width: '52px', 
+                                    padding: '2px 4px', 
+                                    border: '1.5px solid #0284c7', 
+                                    borderRadius: '6px', 
+                                    textAlign: 'center', 
+                                    fontWeight: 800, 
+                                    color: '#0f172a',
+                                    background: '#ffffff',
+                                    fontSize: '0.78rem'
+                                  }} 
+                                />
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>kg</span>
+                              </div>
+                              
+                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>🎯 Ziel:</span>
+                                <input 
+                                  type="number" 
+                                  value={targetWeight || ''} 
+                                  onChange={(e) => {
+                                    const val = Number(e.target.value);
+                                    setTargetWeight(val);
+                                  }}
+                                  style={{ 
+                                    width: '52px', 
+                                    padding: '2px 4px', 
+                                    border: '1.5px solid #0284c7', 
+                                    borderRadius: '6px', 
+                                    textAlign: 'center', 
+                                    fontWeight: 800, 
+                                    color: '#0f172a',
+                                    background: '#ffffff',
+                                    fontSize: '0.78rem'
+                                  }} 
+                                />
+                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>kg</span>
+                              </div>
                             </div>
 
                             {/* Dynamic Mathematical Example */}
                             {(() => {
-                              const wVal = userWeight > 4 ? userWeight : 80;
-                              const newW = wVal - 4;
-                              const newVO2Val = ((35.0 * wVal) / newW).toFixed(1).replace('.', ',');
+                              const curW = userWeight > 10 ? userWeight : 80;
+                              const targetW = targetWeight > 10 ? targetWeight : 76;
+                              const weightLoss = curW - targetW;
+                              
+                              if (weightLoss <= 0) {
+                                return (
+                                  <div style={{ marginTop: '8px', color: '#64748b', fontWeight: 600 }}>
+                                    💡 Tipp: Gib ein Zielgewicht ein, das unter deinem aktuellen Gewicht liegt, um den VO2max-Effekt zu berechnen.
+                                  </div>
+                                );
+                              }
+                              
+                              const newVO2Val = ((35.0 * curW) / targetW).toFixed(1).replace('.', ',');
                               return (
                                 <div style={{ marginTop: '8px', color: '#006ea7', fontWeight: 600 }}>
-                                  📝 Rechenbeispiel: Du wiegst {wVal} kg bei einer VO2max von 35,0 ml/kg/min. Verlierst du über 12 Wochen 4 kg Körpergewicht (auf {newW} kg), steigt deine relative VO2max rein rechnerisch sofort von 35,0 auf {newVO2Val} ml/kg/min an!
+                                  📝 Rechenbeispiel: Du reduzierst dein Gewicht von {curW} kg auf {targetW} kg ({weightLoss} kg Verlust). Deine relative VO2max steigt dadurch rein rechnerisch sofort von 35,0 auf {newVO2Val} ml/kg/min an!
                                 </div>
                               );
                             })()}
