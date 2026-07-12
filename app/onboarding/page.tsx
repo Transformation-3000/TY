@@ -136,6 +136,8 @@ export default function OnboardingPage() {
   const [finished, setFinished] = useState<boolean>(false);
   const [hasLoaded, setHasLoaded] = useState<boolean>(false);
 
+  const [categoryLastIdx, setCategoryLastIdx] = useState<Record<string, number>>({});
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('ty_onboarding_answers');
@@ -162,6 +164,14 @@ export default function OnboardingPage() {
           console.error(e);
         }
       }
+      const savedCategoryLastIdx = localStorage.getItem('ty_onboarding_category_last_idx');
+      if (savedCategoryLastIdx) {
+        try {
+          setCategoryLastIdx(JSON.parse(savedCategoryLastIdx));
+        } catch (e) {
+          console.error(e);
+        }
+      }
       setHasLoaded(true);
     }
   }, []);
@@ -183,6 +193,21 @@ export default function OnboardingPage() {
       localStorage.setItem('ty_onboarding_current_idx', JSON.stringify(currentIdx));
     }
   }, [currentIdx, hasLoaded]);
+
+  useEffect(() => {
+    if (hasLoaded && typeof window !== 'undefined') {
+      localStorage.setItem('ty_onboarding_category_last_idx', JSON.stringify(categoryLastIdx));
+    }
+  }, [categoryLastIdx, hasLoaded]);
+
+  useEffect(() => {
+    if (hasLoaded && currentQuestion) {
+      setCategoryLastIdx(prev => ({
+        ...prev,
+        [currentQuestion.category]: currentIdx
+      }));
+    }
+  }, [currentIdx, currentQuestion, hasLoaded]);
 
   const currentQuestion = SELECTED_ONBOARDING_FLOW[currentIdx];
   
@@ -223,9 +248,14 @@ export default function OnboardingPage() {
   };
 
   const handleRubricJump = (rubricId: string) => {
-    const targetIdx = SELECTED_ONBOARDING_FLOW.findIndex(q => q.category === rubricId);
-    if (targetIdx !== -1) {
-      setCurrentIdx(targetIdx);
+    const savedIdx = categoryLastIdx[rubricId];
+    if (savedIdx !== undefined) {
+      setCurrentIdx(savedIdx);
+    } else {
+      const targetIdx = SELECTED_ONBOARDING_FLOW.findIndex(q => q.category === rubricId);
+      if (targetIdx !== -1) {
+        setCurrentIdx(targetIdx);
+      }
     }
   };
 
