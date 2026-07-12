@@ -122,15 +122,13 @@ export default function WelcomeSection({
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedImage = localStorage.getItem('ty_profile_image');
+      const savedImage = localStorage.getItem('ty_profile_image_v2');
       if (savedImage && savedImage !== '/images/image.png' && savedImage !== 'image.png') {
         setProfileImage(savedImage);
-      } else if (savedImage) {
-        localStorage.removeItem('ty_profile_image');
       }
 
       const handleImageChange = () => {
-        const updatedImage = localStorage.getItem('ty_profile_image');
+        const updatedImage = localStorage.getItem('ty_profile_image_v2');
         if (updatedImage && updatedImage !== '/images/image.png' && updatedImage !== 'image.png') {
           setProfileImage(updatedImage);
         } else {
@@ -138,9 +136,9 @@ export default function WelcomeSection({
         }
       };
 
-      window.addEventListener('ty_profile_image_changed', handleImageChange);
+      window.addEventListener('ty_profile_image_v2_changed', handleImageChange);
       return () => {
-        window.removeEventListener('ty_profile_image_changed', handleImageChange);
+        window.removeEventListener('ty_profile_image_v2_changed', handleImageChange);
       };
     }
   }, []);

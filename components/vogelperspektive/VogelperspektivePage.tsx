@@ -76,11 +76,9 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       if (savedName) {
         setUserName(savedName);
       }
-      const savedImage = localStorage.getItem('ty_profile_image');
+      const savedImage = localStorage.getItem('ty_profile_image_v2');
       if (savedImage && savedImage !== '/images/image.png' && savedImage !== 'image.png') {
         setProfileImage(savedImage);
-      } else if (savedImage) {
-        localStorage.removeItem('ty_profile_image');
       }
     }
   }, []);
@@ -99,9 +97,9 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         const result = event.target?.result as string;
         if (result) {
           setProfileImage(result);
-          localStorage.setItem('ty_profile_image', result);
+          localStorage.setItem('ty_profile_image_v2', result);
           // Event to sync header avatar
-          window.dispatchEvent(new Event('ty_profile_image_changed'));
+          window.dispatchEvent(new Event('ty_profile_image_v2_changed'));
 
           // Backup in localStorage list for instant rendering in image-preview on same browser
           try {

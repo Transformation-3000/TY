@@ -41,7 +41,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   const [currentDate, setCurrentDate] = useState('');
   const [greeting, setGreeting] = useState('Guten Tag');
   const [userName, setUserName] = useState('Monique');
-  const [profileImage, setProfileImage] = useState('/images/selfie_monique_v3.png');
+  const [profileImage, setProfileImage] = useState('/images/uploaded_1783891244196_Monique_1.png');
   const [selectedPlan, setSelectedPlan] = useState<string>('Premium');
 
   useEffect(() => {
@@ -76,8 +76,8 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       if (savedName) {
         setUserName(savedName);
       }
-      const savedImage = localStorage.getItem('ty_profile_image');
-      if (savedImage) {
+      const savedImage = localStorage.getItem('ty_profile_image_v2');
+      if (savedImage && savedImage !== '/images/image.png' && savedImage !== 'image.png') {
         setProfileImage(savedImage);
       }
     }
@@ -97,9 +97,9 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
         const result = event.target?.result as string;
         if (result) {
           setProfileImage(result);
-          localStorage.setItem('ty_profile_image', result);
+          localStorage.setItem('ty_profile_image_v2', result);
           // Event to sync header avatar
-          window.dispatchEvent(new Event('ty_profile_image_changed'));
+          window.dispatchEvent(new Event('ty_profile_image_v2_changed'));
         }
       };
       reader.readAsDataURL(file);

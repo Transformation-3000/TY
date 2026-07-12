@@ -92,7 +92,7 @@ export default function WelcomeSection({
   const [tempSelectedId, setTempSelectedId] = useState<string>('whoop');
   const [pairingId, setPairingId] = useState<string | null>(null);
   const [pairingTimeoutId, setPairingTimeoutId] = useState<any>(null);
-  const [profileImage, setProfileImage] = useState('/images/selfie_monique_v3.png');
+  const [profileImage, setProfileImage] = useState('/images/uploaded_1783891244196_Monique_1.png');
   const [selectedPlan, setSelectedPlan] = useState<string>('Premium');
 
   useEffect(() => {
@@ -122,21 +122,23 @@ export default function WelcomeSection({
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      const savedImage = localStorage.getItem('ty_profile_image');
-      if (savedImage) {
+      const savedImage = localStorage.getItem('ty_profile_image_v2');
+      if (savedImage && savedImage !== '/images/image.png' && savedImage !== 'image.png') {
         setProfileImage(savedImage);
       }
 
       const handleImageChange = () => {
-        const updatedImage = localStorage.getItem('ty_profile_image');
-        if (updatedImage) {
+        const updatedImage = localStorage.getItem('ty_profile_image_v2');
+        if (updatedImage && updatedImage !== '/images/image.png' && updatedImage !== 'image.png') {
           setProfileImage(updatedImage);
+        } else {
+          setProfileImage('/images/uploaded_1783891244196_Monique_1.png');
         }
       };
 
-      window.addEventListener('ty_profile_image_changed', handleImageChange);
+      window.addEventListener('ty_profile_image_v2_changed', handleImageChange);
       return () => {
-        window.removeEventListener('ty_profile_image_changed', handleImageChange);
+        window.removeEventListener('ty_profile_image_v2_changed', handleImageChange);
       };
     }
   }, []);
