@@ -100,8 +100,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         }
       }
 
-      // Hebel-Effekt: Jeder aktivierte Hebel bringt am Ende der 12 Wochen +3 Punkte (+0,25 pro Woche)
-      weeklyChange += activeFactors.length * 0.25;
+      // Hebel-Effekt: Realistische Zuwächse je nach Hebel (HIIT: +2,0 | Zone 2: +1,5 | Gewicht: +1,2 | Erholung: +0,8)
+      let factorBonus = 0;
+      if (activeFactors.includes('zone2')) factorBonus += 1.5 / 12;
+      if (activeFactors.includes('hiit')) factorBonus += 2.0 / 12;
+      if (activeFactors.includes('regen')) factorBonus += 0.8 / 12;
+      if (activeFactors.includes('weight')) factorBonus += 1.2 / 12;
+
+      weeklyChange += factorBonus;
 
       current = Math.min(48.5, Math.max(30.0, current + weeklyChange));
       data.push({ vo2: current, msg, color });
