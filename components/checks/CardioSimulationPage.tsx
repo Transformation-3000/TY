@@ -565,7 +565,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 <div style={{ textAlign: 'center', borderBottom: '1px solid #e2effa', paddingBottom: '1rem' }}>
                   <div style={{ position: 'relative', width: '220px', height: '190px', margin: '0 auto' }}>
                     {(() => {
-                      const needleAngle = Math.min(405, Math.max(135, 200 + (currentVO2 - 35.0) * 13.68));
+                      const needleAngle = Math.min(405, Math.max(135, 200 + (currentVO2 - 35.0) * 30.23));
                       const activeArcPct = (needleAngle - 135) / 270;
                       return (
                         <svg width="220" height="190" viewBox="0 0 220 190">
