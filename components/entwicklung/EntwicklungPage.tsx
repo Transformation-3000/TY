@@ -1988,8 +1988,8 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
                     strokeClass = "stroke-blue";
                     barHeights = ['14px', '8px', '16px', '14px', '14px', '14px', '22px', '16px'];
                   } else if (idx === 2) {
-                    bgClass = "bg-dark";
-                    strokeClass = "stroke-dark";
+                    bgClass = "bg-purple";
+                    strokeClass = "stroke-purple";
                     barHeights = ['12px', '8px', '14px', '14px', '18px', '14px', '20px', '16px'];
                   } else if (idx === 3) {
                     bgClass = "bg-green";
@@ -2972,17 +2972,76 @@ export default function EntwicklungPage({ onStartSimulation, onNavigate }: Entwi
           justify-content: space-between;
           height: 190px;
         }
-        .rep-card-top.bg-blue {
-          background: #4498ca;
-        }
-        .rep-card-top.bg-dark {
-          background: #1c2b38;
-        }
-        .rep-card-top.bg-green {
-          background: #50b848;
-        }
         .rep-card-top.bg-orange {
-          background: #e18d2d;
+          background: #ffeeda !important;
+          color: #c05e1a !important;
+        }
+        .rep-card-top.bg-orange .rep-meta,
+        .rep-card-top.bg-orange .rep-meta i,
+        .rep-card-top.bg-orange .rep-month-year h3,
+        .rep-card-top.bg-orange .rep-month-year span {
+          color: #c05e1a !important;
+          opacity: 1 !important;
+        }
+        .rep-card-top.bg-orange .rep-bar {
+          background: rgba(192, 94, 26, 0.25) !important;
+        }
+        .rep-card-custom:hover .rep-card-top.bg-orange .rep-bar {
+          background: rgba(192, 94, 26, 0.45) !important;
+        }
+
+        .rep-card-top.bg-blue {
+          background: #e0f2fe !important;
+          color: #0369a1 !important;
+        }
+        .rep-card-top.bg-blue .rep-meta,
+        .rep-card-top.bg-blue .rep-meta i,
+        .rep-card-top.bg-blue .rep-month-year h3,
+        .rep-card-top.bg-blue .rep-month-year span {
+          color: #0369a1 !important;
+          opacity: 1 !important;
+        }
+        .rep-card-top.bg-blue .rep-bar {
+          background: rgba(3, 105, 161, 0.25) !important;
+        }
+        .rep-card-custom:hover .rep-card-top.bg-blue .rep-bar {
+          background: rgba(3, 105, 161, 0.45) !important;
+        }
+
+        .rep-card-top.bg-purple {
+          background: #f3e8ff !important;
+          color: #6d28d9 !important;
+        }
+        .rep-card-top.bg-purple .rep-meta,
+        .rep-card-top.bg-purple .rep-meta i,
+        .rep-card-top.bg-purple .rep-month-year h3,
+        .rep-card-top.bg-purple .rep-month-year span {
+          color: #6d28d9 !important;
+          opacity: 1 !important;
+        }
+        .rep-card-top.bg-purple .rep-bar {
+          background: rgba(109, 40, 217, 0.25) !important;
+        }
+        .rep-card-custom:hover .rep-card-top.bg-purple .rep-bar {
+          background: rgba(109, 40, 217, 0.45) !important;
+        }
+
+        .rep-card-top.bg-green {
+          background: #e6f7ed !important;
+          color: #15803d !important;
+        }
+        .rep-card-top.bg-green .rep-meta,
+        .rep-card-top.bg-green .rep-meta i,
+        .rep-card-top.bg-green .rep-month-year h3,
+        .rep-card-top.bg-green .rep-month-year span {
+          color: #15803d !important;
+          opacity: 1 !important;
+        }
+        .rep-card-top.bg-green .rep-bar {
+          background: rgba(21, 128, 61, 0.25) !important;
+        }
+        .rep-card-custom:hover .rep-card-top.bg-green .rep-bar {
+          background: rgba(21, 128, 61, 0.45) !important;
         }
         .rep-top-header {
           display: flex;
