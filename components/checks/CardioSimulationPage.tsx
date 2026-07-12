@@ -994,8 +994,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       
                       if (activeKey === 'zone2') {
                         content = (
-                          <div style={{ width: '100%' }}>
-                            <strong>Mitochondriale Kapazität:</strong> Verbessert die Sauerstoffverarbeitung in den Muskelzellen und bildet das aerobe Fundament.
+                           <div style={{ width: '100%' }}>
+                            <strong>Zone 2:</strong> Verbessert die Sauerstoffverarbeitung in den Muskelzellen und bildet das aerobe Fundament.
                             
                             {/* Interactive Zone 2 Fields */}
                             <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', background: '#f0f9ff', padding: '6px 12px', borderRadius: '10px', border: '1px solid #bae6fd', width: 'fit-content' }}>
@@ -1045,7 +1045,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       } else if (activeKey === 'hiit') {
                         content = (
                           <div style={{ width: '100%' }}>
-                            <strong>Kardiales Schlagvolumen:</strong> Vergrößert das Herzminutenvolumen, sodass pro Herzschlag mehr sauerstoffreiches Blut gepumpt wird.
+                            <strong>HIIT:</strong> Vergrößert das Herzminutenvolumen, sodass pro Herzschlag mehr sauerstoffreiches Blut gepumpt wird.
                             
                             {/* Interactive HIIT Fields */}
                             <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', background: '#f0f9ff', padding: '6px 12px', borderRadius: '10px', border: '1px solid #bae6fd', width: 'fit-content' }}>
