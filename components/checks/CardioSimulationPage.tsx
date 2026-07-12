@@ -656,7 +656,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               <div 
                 style={{
                   background: '#fafcff',
-                  border: '1.5px solid #e2eef8',
+                  border: '1.5px solid #cbd5e1',
                   borderRadius: '24px',
                   padding: '1.5rem',
                   boxShadow: '0 4px 15px rgba(0, 110, 167, 0.02)',
