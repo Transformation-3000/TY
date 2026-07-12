@@ -416,7 +416,7 @@ export default function LandingPage() {
       stars: 5,
       headline: "Energie am Nachmittag verdoppelt",
       text: "Seit ich TrueYears nutze, habe ich meine Energie am Nachmittag verdoppelt. Früher hatte ich nach dem Mittagessen immer ein extremes Tief, aber durch die gezielten Anpassungen meiner Morgenroutine schlafe ich tiefer und starte mit vollem Fokus in den Tag. Die Insights sind für mich absolut lebensverändernd!",
-      img: "/images/selfie_monique_v2.png",
+      img: "/images/selfie_monique_v3.png",
       badge: "-4,2 Jahre biologisches Alter"
     },
     {

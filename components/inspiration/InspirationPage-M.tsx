@@ -310,7 +310,7 @@ const reels: Reel[] = [
     title: 'Zirkadiane Hauterneuerung: Die nächtliche Reparatur-Kaskade',
     teaser: 'Warum deine Hautbarriere ab 23:00 Uhr auf Regeneration schaltet und wie du den zellulären Turnover maximierst.',
     fullText: 'Die Haut besitzt ihre eigene zirkadiane Uhr. Während des Tages schützt sie sich vor UV-Schäden. Ab ca. 23:00 Uhr verdoppelt sich der zelluläre Erneuerungsprozess (Mitose) und die Durchblutung steigt an. Gleichzeitig ist die Hautbarriere durchlässiger für Wirkstoffe. Langlebigkeits-Schönheitstipp: Trage Retinoide oder Peptide erst nach Sonnenuntergang auf. Kombiniere dies mit einer Rotlichttherapie (660nm) am Abend zur Aktivierung der Kollagen-Synthese und Linderung von Entzündungen.',
-    author: 'Dr. Monique Weber', role: 'Dermatologin & Altersforscherin', readTime: '3 Min', image: '/images/female_circadian_skin.png', tag: 'HAUTERNEUERUNG', tagColor: '#ec4899', saved: false, authorImage: '/images/selfie_monique_v2.png',
+    author: 'Dr. Monique Weber', role: 'Dermatologin & Altersforscherin', readTime: '3 Min', image: '/images/female_circadian_skin.png', tag: 'HAUTERNEUERUNG', tagColor: '#ec4899', saved: false, authorImage: '/images/selfie_monique_v3.png',
   },
 ];
 
