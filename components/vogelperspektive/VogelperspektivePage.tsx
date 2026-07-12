@@ -304,11 +304,11 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
       effectColor: '#ec4899',
       effectIcon: 'bi-shield-fill-check',
       diamonds: 2,
-      image: '/images/photo_berries_clean.png',
+      image: '/images/berries_option_5.png',
       bg: 'linear-gradient(135deg, #fdf2f8 0%, #ffffff 100%)',
       border: '1.5px solid #e2e8f0',
       isFavored: false,
-      photo: '/images/photo_berries_clean.png'
+      photo: '/images/berries_option_5.png'
     }
   ]);
 
