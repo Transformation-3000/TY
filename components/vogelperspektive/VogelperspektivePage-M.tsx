@@ -41,7 +41,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   const [currentDate, setCurrentDate] = useState('');
   const [greeting, setGreeting] = useState('Guten Tag');
   const [userName, setUserName] = useState('Monique');
-  const [profileImage, setProfileImage] = useState('/images/woman_53_blonde.png');
+  const [profileImage, setProfileImage] = useState('/images/selfie_monique.png');
   const [selectedPlan, setSelectedPlan] = useState<string>('Premium');
 
   useEffect(() => {
@@ -679,17 +679,17 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
     };
     
     const activityName = activityMapping[cardId];
-    if (activityName && !selectedActivities.includes(activityName)) {
-      const newSelected = [...selectedActivities, activityName];
-      updateSelectedActivities(newSelected);
+    if (activityName) {
+      if (!selectedActivities.includes(activityName)) {
+        const newSelected = [...selectedActivities, activityName];
+        updateSelectedActivities(newSelected);
+      }
       
-      // Write timestamp
+      // Write/Update timestamp (always bring to top)
       const savedTs = localStorage.getItem('ty-activity-timestamps');
       const timestamps = savedTs ? JSON.parse(savedTs) : {};
-      if (!timestamps[activityName]) {
-        timestamps[activityName] = Date.now();
-        localStorage.setItem('ty-activity-timestamps', JSON.stringify(timestamps));
-      }
+      timestamps[activityName] = Date.now();
+      localStorage.setItem('ty-activity-timestamps', JSON.stringify(timestamps));
     }
   };
 
@@ -2331,13 +2331,11 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                         localStorage.setItem('ty-activity-counts', JSON.stringify(nextCounts));
                         window.dispatchEvent(new Event('ty-counts-sync'));
 
-                        // 4. Remove timestamp
+                        // 4. Write/Update timestamp (instead of deleting)
                         const savedTs = localStorage.getItem('ty-activity-timestamps');
-                        if (savedTs) {
-                          const timestamps = JSON.parse(savedTs);
-                          delete timestamps[quickSelected];
-                          localStorage.setItem('ty-activity-timestamps', JSON.stringify(timestamps));
-                        }
+                        const timestamps = savedTs ? JSON.parse(savedTs) : {};
+                        timestamps[quickSelected] = Date.now();
+                        localStorage.setItem('ty-activity-timestamps', JSON.stringify(timestamps));
 
                         if (!selectedActivities.includes(quickSelected)) {
                           updateSelectedActivities([...selectedActivities, quickSelected]);
@@ -2468,10 +2466,24 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
                                                 window.dispatchEvent(new Event('ty-counts-sync'));
 
                                                 if (nextCount === 0) {
-                                                  updateSelectedActivities(selectedActivities.filter(a => a !== act.name));
-                                                } else if (!isSelected) {
-                                                  updateSelectedActivities([...selectedActivities, act.name]);
-                                                }
+                                                   updateSelectedActivities(selectedActivities.filter(a => a !== act.name));
+                                                   // Remove timestamp
+                                                   const savedTs = localStorage.getItem('ty-activity-timestamps');
+                                                   if (savedTs) {
+                                                     const timestamps = JSON.parse(savedTs);
+                                                     delete timestamps[act.name];
+                                                     localStorage.setItem('ty-activity-timestamps', JSON.stringify(timestamps));
+                                                   }
+                                                 } else {
+                                                   if (!isSelected) {
+                                                     updateSelectedActivities([...selectedActivities, act.name]);
+                                                   }
+                                                   // Write/Update timestamp
+                                                   const savedTs = localStorage.getItem('ty-activity-timestamps');
+                                                   const timestamps = savedTs ? JSON.parse(savedTs) : {};
+                                                   timestamps[act.name] = Date.now();
+                                                   localStorage.setItem('ty-activity-timestamps', JSON.stringify(timestamps));
+                                                 }
                                               }}
                                             >
                                               {isSelected && (activityCounts[act.name] || 1) > 1 ? (
