@@ -76,8 +76,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         msg = `Woche ${w}: Mitochondrien-Kollaps! Dir fehlt die aerobe Basis.`;
         color = '#f97316';
       } else {
-        const z2Adaptation = (simZone2 / 240) * 1.0;
-        let hiitAdaptation = (simHIIT / 4) * 1.1;
+        const z2Adaptation = (simZone2 / 240) * 0.3;
+        let hiitAdaptation = (simHIIT / 4) * 0.4;
         
         if (simZone2 < 90 && w > 4) {
           hiitAdaptation *= 0.5;
