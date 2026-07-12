@@ -65,7 +65,7 @@ function LoginForm() {
   return (
     <div className="login-page">
       <div className="login-card">
-        <h1>TrueYears Longevity TEST</h1>
+        <h1>TrueYears Longevity</h1>
         
         <p className="login-subtitle">Projekt-Zugang freischalten</p>
         
