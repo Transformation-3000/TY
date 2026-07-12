@@ -378,7 +378,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           padding: 10px 12px;
           position: absolute;
           z-index: 99;
-          bottom: 135%;
+          top: 135%;
           left: 50%;
           transform: translateX(-50%);
           opacity: 0;
@@ -393,17 +393,17 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         .tacho-tooltip::after {
           content: "";
           position: absolute;
-          top: 100%;
+          bottom: 100%;
           left: 50%;
           margin-left: -5px;
           border-width: 5px;
           border-style: solid;
-          border-color: rgba(15, 23, 42, 0.95) transparent transparent transparent;
+          border-color: transparent transparent rgba(15, 23, 42, 0.95) transparent;
         }
         .tacho-info-icon-wrapper:hover .tacho-tooltip {
           visibility: visible;
           opacity: 1;
-          transform: translateX(-50%) translateY(-2px);
+          transform: translateX(-50%) translateY(2px);
         }
       `}} />
 
@@ -518,7 +518,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 >
                   <span style={{ fontSize: '4.8rem', lineHeight: 1, display: 'inline-block', transform: 'scaleX(-1)' }}>🏃‍♂️</span>
                   <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', background: '#f8fafc', border: '1px solid #e2e8f0', padding: '2px 6px', borderRadius: '8px', whiteSpace: 'nowrap', marginTop: '2px' }}>
-                    Basis (35,0)
+                    Basis 35
                   </span>
                 </div>
 
