@@ -788,14 +788,16 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '5px',
                         lineHeight: 1
                       }}
                     >
-                      <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: '2px', textShadow: '0 0 5px rgba(56,189,248,0.4)' }}>VO2max</span>
-                      <div style={{ fontSize: '2.85rem', fontWeight: 900, color: '#ffffff', margin: '2px 0', textShadow: '0 0 10px rgba(255,255,255,0.4)' }}>
+                      <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.1em', textShadow: '0 0 5px rgba(56,189,248,0.4)' }}>VO2max</span>
+                      <div style={{ fontSize: '2.85rem', fontWeight: 900, color: '#ffffff', margin: 0, padding: 0, textShadow: '0 0 10px rgba(255,255,255,0.4)' }}>
                         {currentVO2.toFixed(1).replace('.', ',')}
                       </div>
-                      <span style={{ marginTop: '3px', fontSize: '1.05rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#4ade80' : '#f87171', textShadow: `0 0 8px ${currentVO2 >= baseVO2 ? 'rgba(74,222,128,0.4)' : 'rgba(248,113,113,0.4)'}` }}>
+                      <span style={{ fontSize: '1.05rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#4ade80' : '#f87171', textShadow: `0 0 8px ${currentVO2 >= baseVO2 ? 'rgba(74,222,128,0.4)' : 'rgba(248,113,113,0.4)'}` }}>
                         {currentVO2 >= baseVO2 ? '▲' : '▼'} {Math.abs(currentVO2 - baseVO2).toFixed(1).replace('.', ',')}
                       </span>
                     </div>
