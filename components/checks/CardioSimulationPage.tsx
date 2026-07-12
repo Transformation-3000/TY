@@ -22,7 +22,13 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
   const [simWeek, setSimWeek] = useState(0);
   const [isSimulating, setIsSimulating] = useState(false);
   const [lisaReport, setLisaReport] = useState<string | null>(null);
-  const [activeFactor, setActiveFactor] = useState<string | null>(null);
+  const [activeFactors, setActiveFactors] = useState<string[]>([]);
+
+  const toggleFactor = (factor: string) => {
+    setActiveFactors(prev => 
+      prev.includes(factor) ? prev.filter(f => f !== factor) : [...prev, factor]
+    );
+  };
 
   const baseVO2 = 35.0;
 
@@ -740,43 +746,6 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 </div>
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  {/* Metric 1: Mitochondria */}
-                  <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '0.3rem' }}>
-                      <span>Mitochondriale Kapazität (Zone 2)</span>
-                      <span style={{ color: '#006ea7', fontWeight: 800 }}>{Math.min(100, Math.round((simZone2 / 120) * 100))}%</span>
-                    </div>
-                    <div style={{ background: '#e2e8f0', height: '6px', borderRadius: '3px', overflow: 'hidden' }}>
-                      <div 
-                        style={{ 
-                          background: '#006ea7', 
-                          width: `${Math.min(100, Math.round((simZone2 / 120) * 100))}%`, 
-                          height: '100%',
-                          transition: 'all 0.3s'
-                        }} 
-                      />
-                    </div>
-                  </div>
-
-                  {/* Metric 2: Stroke Volume */}
-                  <div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', fontWeight: 700, color: '#334155', marginBottom: '0.3rem' }}>
-                      <span>Kardiales Schlagvolumen (HIIT)</span>
-                      <span style={{ color: '#22c55e', fontWeight: 800 }}>+{Math.min(25, simHIIT * 6)}%</span>
-                    </div>
-                    <div style={{ background: '#e2e8f0', height: '6px', borderRadius: '3px', overflow: 'hidden' }}>
-                      <div 
-                        style={{ 
-                          background: '#22c55e', 
-                          width: `${(Math.min(25, simHIIT * 6) / 25) * 100}%`, 
-                          height: '100%',
-                          transition: 'all 0.3s'
-                        }} 
-                      />
-                    </div>
-                  </div>
-
-                  <hr style={{ border: 'none', borderTop: '1px solid #e2effa', margin: '0.2rem 0' }} />
                   
                   {/* VO2-Max Boosting Factors (4 Buttons) */}
                   <div>
@@ -786,8 +755,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>
                       <div className="tacho-btn-container">
                         <button 
-                          className={`tacho-factor-btn ${activeFactor === 'zone2' ? 'active' : ''}`}
-                          onClick={() => setActiveFactor(activeFactor === 'zone2' ? null : 'zone2')}
+                          className={`tacho-factor-btn ${activeFactors.includes('zone2') ? 'active' : ''}`}
+                          onClick={() => toggleFactor('zone2')}
                         >
                           <span>🏃‍♂️ Zone 2-Training</span>
                           <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
@@ -801,8 +770,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
                       <div className="tacho-btn-container">
                         <button 
-                          className={`tacho-factor-btn ${activeFactor === 'hiit' ? 'active' : ''}`}
-                          onClick={() => setActiveFactor(activeFactor === 'hiit' ? null : 'hiit')}
+                          className={`tacho-factor-btn ${activeFactors.includes('hiit') ? 'active' : ''}`}
+                          onClick={() => toggleFactor('hiit')}
                         >
                           <span>⚡ HIT-Training</span>
                           <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
@@ -816,8 +785,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
                       <div className="tacho-btn-container">
                         <button 
-                          className={`tacho-factor-btn ${activeFactor === 'regen' ? 'active' : ''}`}
-                          onClick={() => setActiveFactor(activeFactor === 'regen' ? null : 'regen')}
+                          className={`tacho-factor-btn ${activeFactors.includes('regen') ? 'active' : ''}`}
+                          onClick={() => toggleFactor('regen')}
                         >
                           <span>🛌 Regeneration</span>
                           <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
@@ -831,8 +800,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
                       <div className="tacho-btn-container">
                         <button 
-                          className={`tacho-factor-btn ${activeFactor === 'weight' ? 'active' : ''}`}
-                          onClick={() => setActiveFactor(activeFactor === 'weight' ? null : 'weight')}
+                          className={`tacho-factor-btn ${activeFactors.includes('weight' ) ? 'active' : ''}`}
+                          onClick={() => toggleFactor('weight')}
                         >
                           <span>⚖️ Körpergewicht</span>
                           <span className="tacho-info-icon-wrapper" onClick={(e) => e.stopPropagation()}>
