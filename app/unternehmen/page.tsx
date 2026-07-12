@@ -304,14 +304,34 @@ export default function UnternehmenPublicPage() {
                   <i className="bi bi-youtube" />
                 </a>
               </div>
-              <div className="footer-partner-logo-new dlg-logo" style={{ marginTop: '1rem' }}>
-                <Image 
-                  src="/images/dlg_logo.png" 
-                  alt="Deutsche Longevity Gesellschaft" 
-                  width={150} 
-                  height={45} 
-                  style={{ objectFit: 'contain' }}
-                />
+              <div className="footer-partners-logos-new" style={{ marginTop: '1.5rem' }}>
+                <div className="footer-partner-logo-new dlg-logo">
+                  <Image 
+                    src="/images/dlg_logo.png" 
+                    alt="Deutsche Longevity Gesellschaft" 
+                    width={150} 
+                    height={45} 
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
+                <div className="footer-partner-logo-new lifespin-logo">
+                  <Image 
+                    src="/images/lifespin_logo.png" 
+                    alt="Lifespin" 
+                    width={120} 
+                    height={38} 
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
+                <div className="footer-partner-logo-new tuv-logo">
+                  <Image 
+                    src="/images/tuv_logo.png" 
+                    alt="TÜV Rheinland" 
+                    width={75} 
+                    height={53} 
+                    style={{ objectFit: 'contain' }}
+                  />
+                </div>
               </div>
             </div>
             
@@ -338,10 +358,20 @@ export default function UnternehmenPublicPage() {
             
             <div className="footer-col-new">
               <h4>Unternehmen</h4>
-              <Link href="/unternehmen"><i className="bi bi-arrow-right-short" /> Über uns</Link>
-              <Link href="/vision"><i className="bi bi-arrow-right-short" /> Unsere Vision</Link>
+              <Link href="/unternehmen" style={{ display: 'flex', alignItems: 'center', gap: 0, paddingLeft: 0 }}>
+                <div style={{ width: '24px', display: 'flex', justifyContent: 'center', marginRight: '10px' }}>
+                  <i className="bi bi-people-fill" style={{ fontSize: '0.98rem', color: 'var(--landing-accent)' }} />
+                </div>
+                Über uns
+              </Link>
+              <Link href="/vision" style={{ display: 'flex', alignItems: 'center', gap: 0, paddingLeft: 0 }}>
+                <div style={{ width: '24px', display: 'flex', justifyContent: 'center', marginRight: '10px' }}>
+                  <i className="bi bi-eye" style={{ fontSize: '0.98rem', color: 'var(--landing-accent)' }} />
+                </div>
+                Unsere Vision
+              </Link>
               
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '15px', marginBottom: '1.5rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', marginTop: '0px', marginBottom: '1.5rem' }}>
                 {/* Unternehmen Address Row (Sitz der Gesellschaft) */}
                 <div style={{ display: 'flex', alignItems: 'flex-start' }}>
                   <div style={{ width: '24px', display: 'flex', justifyContent: 'center', marginTop: '3px' }}>
@@ -349,32 +379,22 @@ export default function UnternehmenPublicPage() {
                   </div>
                   <div style={{ flex: 1, paddingLeft: '10px' }}>
                     <p className="footer-company-name-new" style={{ margin: '0 0 2px', lineHeight: '1.2' }}>True Years Beyond Age GmbH</p>
-                    <p className="footer-company-name-new" style={{ margin: '0 0 2px', lineHeight: '1.2' }}>Im Mediapark 5</p>
-                    <p className="footer-company-name-new" style={{ margin: '0 0 2px', lineHeight: '1.2' }}>D-50670 Köln</p>
-                    <p className="footer-company-name-new" style={{ margin: 0, lineHeight: '1.2' }}>Germany</p>
+                    <p className="footer-company-name-new" style={{ margin: 0, lineHeight: '1.2' }}>Im Mediapark 5, D-50670 Köln</p>
                   </div>
                 </div>
                 
                 {/* Contact Email Row */}
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <div style={{ width: '24px', display: 'flex', justifyContent: 'center' }}>
-                    <i className="bi bi-envelope-fill" style={{ color: 'white', fontSize: '0.98rem' }} />
+                    <i className="bi bi-envelope-fill" style={{ color: 'var(--landing-accent)', fontSize: '0.98rem' }} />
                   </div>
                   <a href="mailto:contact@true-years.com" className="footer-email-link-new" style={{ paddingLeft: '10px' }}>
                     contact (at) true-years.com
                   </a>
                 </div>
-              </div>
-              
-              </div>
-            </div>
-            
-            <div className="footer-bottom-new">
-              <div className="footer-bottom-container-new" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', width: '100%', gap: '1rem' }}>
-                <p className="footer-copyright-new" style={{ margin: 0 }}>
-                  &copy; {new Date().getFullYear()} True Years. Alle Rechte vorbehalten.
-                </p>
-                <div className="footer-legal-links-new" style={{ margin: 0 }}>
+                
+                {/* Legal Links (Impressum, Datenschutz, Bildauswahl) under contact email */}
+                <div className="footer-legal-links-new" style={{ paddingLeft: '34px', marginTop: '5px' }}>
                   <Link href="/impressum">Impressum</Link>
                   <span className="footer-legal-sep-new">|</span>
                   <Link href="/datenschutz">Datenschutz</Link>
@@ -383,6 +403,21 @@ export default function UnternehmenPublicPage() {
                 </div>
               </div>
             </div>
+          </div>
+          
+          <div className="footer-bottom-new">
+            <div className="footer-bottom-container-new" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', width: '100%', gap: '1rem' }}>
+              <p className="footer-copyright-new" style={{ margin: 0 }}>
+                &copy; {new Date().getFullYear()} True Years. Alle Rechte vorbehalten.
+              </p>
+              <div className="footer-bottom-links-new">
+                <span className="footer-security-badge-new">
+                  <i className="bi bi-shield-lock-fill" style={{ marginRight: '5px' }} /> DSGVO Konform
+                </span>
+                <span className="footer-badge-clean-new">Made with <span style={{ color: '#ff4d4d', display: 'inline-block', transform: 'scale(1.15)', margin: '0 2px' }}>♥</span> in Germany</span>
+              </div>
+            </div>
+          </div>
         </div>
       </footer>
 

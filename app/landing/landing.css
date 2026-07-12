@@ -170,7 +170,7 @@ section[id] {
 }
 
 .hero-content-fullscreen h1 {
-  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  font-size: clamp(1.8rem, 4vw, 3.35rem);
   line-height: 1.1;
   font-weight: 800;
   margin-bottom: 2rem;
@@ -240,7 +240,7 @@ section[id] {
 }
 
 .section-header h2 {
-  font-size: 3.5rem;
+  font-size: 3.1rem;
   color: var(--landing-dark);
   margin-bottom: 1.5rem;
   font-weight: 800;
@@ -3573,6 +3573,7 @@ section[id] {
   text-align: center;
 }
 
+
 .neural-network-svg line {
   stroke-dasharray: 2, 3;
   animation: synapseFlow 6s linear infinite;
@@ -3585,4 +3586,465 @@ section[id] {
   to {
     stroke-dashoffset: 0;
   }
+}
+
+/* --- LONGEVITY CYCLE SECTION --- */
+.longevity-cycle-section {
+  padding: 80px 5%;
+  background: radial-gradient(circle at bottom, #ffffff 0%, #f0f7ff 100%);
+  position: relative;
+  overflow: hidden;
+  border-top: 1px solid rgba(0, 110, 167, 0.05);
+}
+
+.cycle-container {
+  max-width: 1200px;
+  margin: 1rem auto 0;
+  position: relative;
+  height: 660px;
+}
+
+.cycle-loop-wrapper {
+  position: absolute;
+  top: 28%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 440px;
+  height: 440px;
+  max-width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+}
+
+.cycle-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 10px 25px rgba(0, 110, 167, 0.15));
+}
+
+/* Rotates the dashed circle guide */
+.rotating-ring {
+  transform-origin: center;
+  animation: rotate-ring-ani 35s linear infinite;
+}
+
+@keyframes rotate-ring-ani {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Light beam animation running along the circle path */
+.cycle-flow-line {
+  stroke-dasharray: 120 948; /* Circumference of circle with R=170 is ~1068px */
+  animation: flow-beam 8s linear infinite;
+}
+
+@keyframes flow-beam {
+  0% {
+    stroke-dashoffset: 1068;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Pulsing effect for the nodes */
+.pulse-node {
+  transform-origin: center;
+  animation: pulse-node-ani 3s ease-in-out infinite alternate;
+}
+
+@keyframes pulse-node-ani {
+  0% {
+    transform: scale(0.95);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+.loop-center-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  box-shadow: 0 10px 25px rgba(0, 110, 167, 0.15);
+  border: 1px solid rgba(0, 110, 167, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  padding: 1rem;
+}
+
+.signet-crop-container {
+  width: 92px;
+  height: 80px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.signet-crop-image {
+  position: absolute;
+  left: -2px; /* Offset to center the round double loop signet icon */
+  top: 50%;
+  transform: translateY(-50%);
+  height: 80px;
+  width: 240px; /* 3x width to handle aspect ratio */
+  max-width: none !important;
+  object-fit: cover;
+  object-position: left center;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.loop-center-badge:hover .signet-crop-image {
+  transform: translateY(-50%) scale(1.1);
+}
+
+.cycle-cards-grid {
+  display: block;
+  position: static;
+}
+
+.cycle-card {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 110, 167, 0.08);
+  border-radius: 16px;
+  padding: 0.85rem 1.15rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+  transition: all 0.4s ease;
+  position: absolute;
+  width: 300px;
+  z-index: 5;
+}
+
+.starter-card {
+  top: 28%;
+  left: 40px;
+  transform: translateY(-50%);
+  border: 1.5px solid #93c5fd !important;
+  background: rgba(224, 242, 254, 0.35) !important;
+}
+
+.premium-card {
+  top: 28%;
+  right: 40px;
+  transform: translateY(-50%);
+  background: rgba(241, 248, 235, 0.45) !important;
+}
+
+.platin-card {
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1.5px solid #cbd5e1 !important;
+  background: rgba(241, 245, 249, 0.45) !important;
+}
+
+.starter-card.highlighted {
+  border: 2.5px solid #006ea7 !important;
+  box-shadow: 0 15px 30px rgba(0, 110, 167, 0.12);
+}
+
+.premium-card.highlighted {
+  border: 2.5px solid #7fd049 !important;
+  box-shadow: 0 15px 30px rgba(127, 208, 73, 0.15);
+}
+
+.platin-card.highlighted {
+  border: 2.5px solid #64748b !important;
+  box-shadow: 0 15px 30px rgba(100, 116, 139, 0.12);
+}
+
+.starter-card:hover {
+  transform: translateY(calc(-50% - 8px));
+  box-shadow: 0 15px 35px rgba(0, 110, 167, 0.12);
+  z-index: 20;
+  background: #ffffff !important;
+}
+
+.premium-card:hover {
+  transform: translateY(calc(-50% - 8px));
+  box-shadow: 0 15px 35px rgba(0, 110, 167, 0.12);
+  z-index: 20;
+  background: #ffffff !important;
+}
+
+.platin-card:hover {
+  transform: translateX(-50%) translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 110, 167, 0.12);
+  z-index: 20;
+  background: #ffffff !important;
+}
+
+.cycle-card-header {
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(0, 110, 167, 0.08);
+  padding-bottom: 0.75rem;
+}
+
+.cycle-card .plan-badge {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: white;
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  margin-bottom: 0.75rem;
+}
+
+.starter-card .plan-badge {
+  background: #006ea7;
+}
+
+.premium-card .plan-badge {
+  background: var(--landing-dark);
+}
+
+.platin-card .plan-badge {
+  background: #7fd049;
+}
+
+.cycle-card h3 {
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--landing-dark);
+  margin: 0 0 0.25rem 0;
+}
+
+.cycle-price {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: var(--landing-dark);
+  margin: 0.25rem 0 0.5rem 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.cycle-period {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.cycle-card .plan-intro {
+  font-size: 0.98rem;
+  color: #334155;
+  margin: 0;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+.cycle-features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.cycle-features-list li {
+  font-size: 0.9rem;
+  color: var(--landing-text);
+  line-height: 1.3;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.cycle-features-list li i {
+  font-size: 1.05rem;
+  color: var(--landing-accent);
+  margin-top: 1px;
+}
+
+.premium-card .cycle-features-list li i {
+  color: var(--landing-dark);
+}
+
+.platin-card .cycle-features-list li i {
+  color: #7fd049;
+}
+
+@media (max-width: 1024px) {
+  .cycle-container {
+    height: auto;
+    margin-top: 2rem;
+  }
+  .infinity-loop-wrapper {
+    position: relative;
+    top: auto;
+    left: auto;
+    transform: none;
+    margin: 0 auto 2.5rem;
+    width: 100%;
+    max-width: 400px;
+  }
+  .cycle-cards-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  .cycle-card {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    max-width: 450px;
+    transform: none !important;
+  }
+  .cycle-card.highlighted {
+    transform: none !important;
+  }
+  .cycle-card:hover {
+    transform: translateY(-8px) !important;
+  }
+}
+
+.cycle-main-title {
+  font-size: 3.10rem !important;
+}
+
+@media (max-width: 768px) {
+  .cycle-main-title {
+    white-space: normal !important;
+    font-size: 1.8rem !important;
+  }
+}
+
+.cycle-plan-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0 12px;
+  border-radius: 9999px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0;
+  line-height: 1;
+  height: 24px;
+  box-sizing: border-box;
+  user-select: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+}
+
+.pill-starter {
+  background: #e0f2fe;
+  border: 1.5px solid #93c5fd;
+  color: #006ea7;
+}
+
+.pill-premium {
+  background: linear-gradient(135deg, #7fd049 0%, #6ab23c 100%);
+  color: white;
+  box-shadow: 0 6px 15px rgba(127, 208, 73, 0.25);
+}
+
+.pill-platin {
+  background: linear-gradient(135deg, #94a3b8 0%, #64748b 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 4px 10px rgba(100, 116, 139, 0.15);
+}
+
+/* Active node pulse glow */
+.pulse-node.active-node circle {
+  stroke-width: 4px;
+}
+
+.cycle-card-header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.2rem;
+}
+
+.btn-pricing-mini {
+  font-size: 0.72rem;
+  font-weight: 800;
+  padding: 0.35rem 0.85rem;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+  height: 28px;
+  box-sizing: border-box;
+  
+  /* Grey styling by default */
+  border: 1.5px solid #cbd5e1;
+  color: #64748b;
+  background: transparent;
+}
+
+.btn-pricing-mini:hover {
+  background: #004b75 !important;
+  border-color: #004b75 !important;
+  color: white !important;
+  box-shadow: 0 4px 10px rgba(0, 75, 117, 0.2);
+}
+
+.cycle-card-footer {
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 0.8rem;
+  width: 100%;
+}
+
+.mehr-erfahren-link {
+  color: #006ea7;
+  cursor: pointer;
+  font-weight: 500;
+  margin-left: 4px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none !important;
+}
+
+.mehr-erfahren-link:hover {
+  color: #004b75;
+  text-decoration: underline !important;
+}
+
+.offer-grid-card {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.offer-grid-card:hover {
+  transform: translateY(-5px) !important;
+  border-color: rgba(0, 110, 167, 0.25) !important;
+  box-shadow: 0 12px 24px rgba(0, 110, 167, 0.08) !important;
+}
+
+.offer-grid-card div:first-child {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.offer-grid-card:hover div:first-child {
+  transform: scale(1.15) !important;
 }

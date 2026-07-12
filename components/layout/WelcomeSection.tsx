@@ -267,12 +267,12 @@ export default function WelcomeSection({
           <div className="header-area contract-area" onClick={handlePlanCycle} style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
             <span style={{ 
               background: selectedPlan === 'Platin' 
-                ? 'linear-gradient(135deg, #f8fafc 0%, #f1f5f9 30%, #e2e8f0 70%, #cbd5e1 100%)' 
+                ? 'linear-gradient(135deg, #94a3b8 0%, #64748b 100%)' 
                 : selectedPlan === 'Starter' 
                   ? 'linear-gradient(135deg, #eff6ff 0%, #dbeafe 50%, #bfdbfe 100%)' 
                   : 'linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%)', 
               color: selectedPlan === 'Platin' 
-                ? '#334155' 
+                ? '#ffffff' 
                 : selectedPlan === 'Starter' 
                   ? '#1e3a8a' 
                   : '#ffffff', 
@@ -283,13 +283,13 @@ export default function WelcomeSection({
               letterSpacing: '0.05em', 
               textTransform: 'uppercase',
               boxShadow: selectedPlan === 'Platin' 
-                ? '0 2px 8px rgba(148, 163, 184, 0.2)' 
+                ? '0 4px 10px rgba(100, 116, 139, 0.15)' 
                 : selectedPlan === 'Starter' 
                   ? '0 2px 8px rgba(59, 130, 246, 0.12)' 
                   : '0 2px 8px rgba(16, 185, 129, 0.22)',
               userSelect: 'none',
               border: selectedPlan === 'Platin' 
-                ? '1px solid #94a3b8' 
+                ? 'none' 
                 : selectedPlan === 'Starter' 
                   ? '1px solid #93c5fd' 
                   : 'none',

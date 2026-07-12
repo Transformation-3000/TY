@@ -73,6 +73,14 @@ export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [showVideoModal, setShowVideoModal] = useState(false);
+  const [activeCyclePlan, setActiveCyclePlan] = useState<'starter' | 'premium' | 'platin'>('premium');
+  const [showOfferModal, setShowOfferModal] = useState(false);
+
+  const currentCycleColor = {
+    starter: '#006ea7',
+    premium: '#7fd049',
+    platin: '#8a99ad'
+  }[activeCyclePlan];
 
   // Interactive Video Player State
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
@@ -1042,103 +1050,377 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
-      {/* Mitgliedschaften Section */}
-      <section id="erfolgsprinzip" className="pricing-section">
-        <div className="section-header">
-          <h2>Wähle dein Modell</h2>
-          <p>Finde die passende Mitgliedschaft für deine persönliche Longevity-Journey.</p>
+
+      {/* 2.5 Longevity Cycle Section */}
+      <section className="longevity-cycle-section">
+        <div className="section-header" style={{ maxWidth: '100%', width: '100%', marginBottom: '1rem' }}>
+          <h2 className="cycle-main-title" style={{ whiteSpace: 'nowrap' }}>Wähle dein Mitgliedschaftsmodell</h2>
+          <p style={{ maxWidth: '1080px', margin: '0 auto', lineHeight: '1.6' }}>
+            True Years ist keine gewöhnliche App oder reine Software-Plattform. Als ganzheitlicher Longevity Solution Provider verbinden wir führende Wissenschaft, intelligente Datenanalyse, Wearables, Labordiagnostik, personalisierte Services und 360-Grad-Begleitung zu einem integrierten System - individuell auf dich abgestimmt und aus einer Hand.{' '}
+            <span 
+              onClick={() => setShowOfferModal(true)} 
+              className="mehr-erfahren-link"
+            >
+              → Mehr erfahren
+            </span>
+          </p>
         </div>
 
-        <div className="pricing-grid">
-          {/* Starter Plan */}
-          <div 
-            className="pricing-card" 
-            onClick={() => router.push('/checkout?plan=basic')}
-            style={{ cursor: 'pointer' }}
-          >
-            <div className="pricing-header">
-              <h3>Starter</h3>
-            </div>
-            <div className="price-box">
-              <span className="price">29,90 €</span>
-              <span className="price-period">/ Monat</span>
-            </div>
-            <ul className="pricing-features">
-              <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
-              <li><i className="bi bi-check-circle-fill"></i> Persönliche Dashboards</li>
-              <li><i className="bi bi-check-circle-fill"></i> Do it yourself (Basic)</li>
-              <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Basic)</li>
-              <li><i className="bi bi-check-circle-fill"></i> Longevity Insights</li>
-              <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
-            </ul>
-            <Link href="/checkout?plan=basic" className="btn-pricing btn-outline">
-              Mitgliedschaft starten
-            </Link>
-          </div>
+        {showOfferModal && (
+          <div className="video-modal-overlay" style={{ zIndex: 10000 }} onClick={() => setShowOfferModal(false)}>
+            <div 
+              className="video-modal-container" 
+              style={{ 
+                maxWidth: '1020px', 
+                width: '95%',
+                padding: '1.5rem', 
+                background: '#ffffff', 
+                borderRadius: '24px', 
+                color: '#334155',
+                boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.3)',
+                position: 'relative',
+                maxHeight: '95vh',
+                overflow: 'hidden',
+                border: '1.5px solid rgba(0, 110, 167, 0.1)'
+              }} 
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button 
+                onClick={() => setShowOfferModal(false)}
+                style={{
+                  position: 'absolute',
+                  top: '1rem',
+                  right: '1rem',
+                  background: 'none',
+                  border: 'none',
+                  fontSize: '1.5rem',
+                  cursor: 'pointer',
+                  color: '#64748b',
+                  transition: 'color 0.2s'
+                }}
+                aria-label="Schließen"
+              >
+                <i className="bi bi-x-lg"></i>
+              </button>
 
-          {/* Premium Plan */}
-          <div 
-            className="pricing-card premium-plan" 
-            onClick={() => router.push('/checkout?plan=premium')}
-            style={{ cursor: 'pointer' }}
-          >
-            <div className="pricing-badge">Beliebt</div>
-            <div className="pricing-header">
-              <h3>Premium</h3>
-            </div>
-            <div className="price-box">
-              <span className="price">49,90 €</span>
-              <span className="price-period">/ Monat</span>
-            </div>
-            <ul className="pricing-features">
-              <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
-              <li><i className="bi bi-check-circle-fill"></i> Persönliche Dashboards</li>
-              <li><i className="bi bi-check-circle-fill"></i> Do it yourself (Pro)</li>
-              <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
-              <li><i className="bi bi-check-circle-fill"></i> Longevity Insights</li>
-              <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
-              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
-              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> BioAge-Optimizer</li>
-              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
-            </ul>
-            <Link href="/checkout?plan=premium" className="btn-pricing btn-filled">
-              Mitgliedschaft starten
-            </Link>
-          </div>
+              <div style={{ marginBottom: '1.25rem', textAlign: 'center' }}>
+                <h3 style={{ 
+                  fontSize: '1.6rem', 
+                  fontWeight: '800', 
+                  color: '#006ea7', 
+                  marginBottom: '0.25rem',
+                  letterSpacing: '-0.02em'
+                }}>
+                  Wie du unsere Deep-Tech-Plattform für dich nutzen kannst
+                </h3>
+                <div style={{ 
+                  width: '60px', 
+                  height: '4px', 
+                  background: 'linear-gradient(90deg, #006ea7, #7fd049)', 
+                  margin: '0 auto', 
+                  borderRadius: '2px' 
+                }}></div>
+              </div>
 
-          {/* Platin Plan */}
-          <div 
-            className="pricing-card platin-plan" 
-            onClick={() => router.push('/checkout?plan=platin')}
-            style={{ cursor: 'pointer' }}
-          >
-            <div className="pricing-header">
-              <h3>Platin</h3>
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: 'repeat(3, 1fr)', 
+                gap: '0.65rem',
+                margin: '0 auto'
+              }}>
+                {[
+                  {
+                    text: "Personalisierte Standortbestimmung und Zielsetzung",
+                    emoji: "🎯",
+                    color: "rgba(0, 110, 167, 0.08)"
+                  },
+                  {
+                    text: "Activity Tracking und Longevity Analytics",
+                    emoji: "🏃",
+                    color: "rgba(13, 148, 136, 0.08)"
+                  },
+                  {
+                    text: "Intelligente personalisierte Empfehlungen aus >35.000 Studien Alterungsforschung",
+                    emoji: "🧬",
+                    color: "rgba(124, 58, 237, 0.08)"
+                  },
+                  {
+                    text: "Verhaltenspsychologie zum Aufbau von nachhaltigen Routinen",
+                    emoji: "🧘",
+                    color: "rgba(217, 119, 6, 0.08)"
+                  },
+                  {
+                    text: <span>Personal Trainings mit<br />Tom AI & Lisa AI</span>,
+                    emoji: "👥",
+                    color: "rgba(37, 99, 235, 0.08)"
+                  },
+                  {
+                    text: "Konfigurierbare Informationstiefe und Trainer",
+                    emoji: "🛠️",
+                    color: "rgba(79, 70, 229, 0.08)"
+                  },
+                  {
+                    text: "Integration von Wearables und externe BioAge-Reports",
+                    emoji: "⌚",
+                    color: "rgba(22, 163, 74, 0.08)"
+                  },
+                  {
+                    text: "Laufendes Fortschrittsmonitoring",
+                    emoji: "🚀",
+                    color: "rgba(219, 39, 119, 0.08)"
+                  },
+                  {
+                    text: "Orchestration aller Leistungen unter einem Dach",
+                    emoji: "📲",
+                    color: "rgba(51, 65, 85, 0.08)"
+                  }
+                ].map((item, idx) => (
+                  <div 
+                    key={idx}
+                    className="offer-grid-card"
+                    style={{
+                      background: 'linear-gradient(135deg, #ffffff 0%, #f8fafc 100%)',
+                      border: '1.5px solid rgba(0, 110, 167, 0.08)',
+                      borderRadius: '16px',
+                      padding: '1.2rem 0.9rem 0.9rem 0.9rem',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      textAlign: 'center',
+                      gap: '0.65rem',
+                      boxShadow: '0 6px 15px rgba(0, 110, 167, 0.03)',
+                      position: 'relative',
+                      minHeight: '120px'
+                    }}
+                  >
+                    <div style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '0.45rem',
+                      marginBottom: '0.2rem',
+                      height: '44px'
+                    }}>
+                      <span style={{
+                        fontSize: '1.5rem',
+                        fontWeight: '400',
+                        color: 'rgba(0, 110, 167, 0.55)',
+                        letterSpacing: '0.05em'
+                      }}>
+                        {String(idx + 1).padStart(2, '0')}.
+                      </span>
+                      {idx === 4 ? (
+                        <div style={{ display: 'inline-flex', alignItems: 'center', position: 'relative', width: '70px', height: '42px', marginLeft: '4px' }}>
+                          <img 
+                            src="/images/tom_jung.png" 
+                            alt="Tom AI" 
+                            style={{ width: '42px', height: '42px', borderRadius: '50%', border: '1.5px solid white', position: 'absolute', left: '0px', zIndex: 1, boxShadow: '0 2px 6px rgba(0,0,0,0.15)', transform: 'scale(1.25)', objectFit: 'cover' }}
+                          />
+                          <img 
+                            src="/images/lisa.png" 
+                            alt="Lisa AI" 
+                            style={{ width: '42px', height: '42px', borderRadius: '50%', border: '1.5px solid white', position: 'absolute', right: '0px', zIndex: 2, boxShadow: '0 2px 6px rgba(0,0,0,0.15)' }}
+                          />
+                        </div>
+                      ) : (
+                        <span style={{ fontSize: '1.85rem' }}>
+                          {item.emoji}
+                        </span>
+                      )}
+                    </div>
+                    <div style={{ 
+                      fontSize: '0.92rem', 
+                      lineHeight: '1.35', 
+                      color: '#1e293b', 
+                      fontWeight: '400',
+                      maxWidth: '220px',
+                      margin: '0 auto'
+                    }}>
+                      {item.text}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className="price-box">
-              <span className="price">89,90 €</span>
-              <span className="price-period">/ Monat</span>
-            </div>
-            <ul className="pricing-features">
-              <li><i className="bi bi-check-circle-fill"></i> Tägliche Check-Ins</li>
-              <li><i className="bi bi-check-circle-fill"></i> Persönliche Dashboards</li>
-              <li><i className="bi bi-check-circle-fill"></i> Do it yourself (Pro)</li>
-              <li><i className="bi bi-check-circle-fill"></i> Longevity Trainer (Pro)</li>
-              <li><i className="bi bi-check-circle-fill"></i> Longevity Insights</li>
-              <li><i className="bi bi-check-circle-fill"></i> Monatliche Live-Calls</li>
-              <li><i className="bi bi-check-circle-fill"></i> Wearable-Integration</li>
-              <li><i className="bi bi-check-circle-fill"></i> BioAge-Optimizer</li>
-              <li><i className="bi bi-check-circle-fill"></i> Feel-Good-Area</li>
-              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Biomarker-Tracking mit Lab-Analysen</li>
-              <li className="highlighted-feature"><i className="bi bi-check-circle-fill"></i> Jährliches 1:1-Expertengespräch</li>
-            </ul>
-            <Link href="/checkout?plan=platin" className="btn-pricing btn-accent">
-              Mitgliedschaft starten
-            </Link>
           </div>
-        </div>
-
+        )}
         
+        <div className="cycle-container">
+          {/* The Cycle Circle Visual */}
+          <div className="cycle-loop-wrapper">
+            <svg className="cycle-svg" viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                {/* Gradients */}
+                {/* Gradients for Three-Sector Loop */}
+                <linearGradient id="top-arc-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#006ea7" />
+                  <stop offset="30%" stopColor="#006ea7" />
+                  <stop offset="70%" stopColor="#7fd049" />
+                  <stop offset="100%" stopColor="#7fd049" />
+                </linearGradient>
+                <linearGradient id="br-arc-gradient" x1="100%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stopColor="#7fd049" />
+                  <stop offset="30%" stopColor="#7fd049" />
+                  <stop offset="70%" stopColor="#cbd5e1" />
+                  <stop offset="100%" stopColor="#cbd5e1" />
+                </linearGradient>
+                <linearGradient id="bl-arc-gradient" x1="100%" y1="100%" x2="0%" y2="0%">
+                  <stop offset="0%" stopColor="#cbd5e1" />
+                  <stop offset="30%" stopColor="#cbd5e1" />
+                  <stop offset="70%" stopColor="#006ea7" />
+                  <stop offset="100%" stopColor="#006ea7" />
+                </linearGradient>
+                <linearGradient id="beam-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#ffffff" stopOpacity="0" />
+                  <stop offset="50%" stopColor="#ffffff" stopOpacity="0.8" />
+                  <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
+                </linearGradient>
+                {/* Node glows */}
+                <radialGradient id="starter-glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#006ea7" stopOpacity="0.4" />
+                  <stop offset="100%" stopColor="#006ea7" stopOpacity="0" />
+                </radialGradient>
+                <radialGradient id="premium-glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#7fd049" stopOpacity="0.4" />
+                  <stop offset="100%" stopColor="#7fd049" stopOpacity="0" />
+                </radialGradient>
+                <radialGradient id="platin-glow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="#64748b" stopOpacity="0.4" />
+                  <stop offset="100%" stopColor="#64748b" stopOpacity="0" />
+                </radialGradient>
+              </defs>
+              
+              {/* Outer slowly rotating dashed border in current active color */}
+              <circle cx="250" cy="250" r="190" stroke={currentCycleColor} strokeWidth="2.5" strokeDasharray="8 12" fill="none" opacity="0.45" className="rotating-ring" style={{ transition: 'stroke 0.6s ease' }} />
+              
+              {/* Perfect Solid circular cycle line split into three sectors */}
+              <path d="M 80,250 A 170,170 0 0,1 420,250" stroke="url(#top-arc-gradient)" strokeWidth="6" fill="none" />
+              <path d="M 420,250 A 170,170 0 0,1 250,420" stroke="url(#br-arc-gradient)" strokeWidth="6" fill="none" />
+              <path d="M 250,420 A 170,170 0 0,1 80,250" stroke="url(#bl-arc-gradient)" strokeWidth="6" fill="none" />
+              
+              {/* Flowing animated light beam */}
+              <circle cx="250" cy="250" r="170" stroke="url(#beam-gradient)" strokeWidth="8" fill="none" className="cycle-flow-line" strokeLinecap="round" />
+              
+              {/* Starter Node (Left) */}
+              <g className={`pulse-node ${activeCyclePlan === 'starter' ? 'active-node' : ''}`} onClick={() => setActiveCyclePlan('starter')} style={{ cursor: 'pointer' }}>
+                <circle cx="80" cy="250" r="38" fill="url(#starter-glow)" />
+                <circle cx="80" cy="250" r="26" fill="#e0f2fe" stroke="#93c5fd" strokeWidth="2.5" />
+                <text x="80" y="250" dy="0.05em" fill="#006ea7" fontSize="25" fontWeight="900" textAnchor="middle" dominantBaseline="central">1</text>
+              </g>
+              
+              {/* Premium Node (Right) */}
+              <g className={`pulse-node ${activeCyclePlan === 'premium' ? 'active-node' : ''}`} style={{ animationDelay: '1s', cursor: 'pointer' }} onClick={() => setActiveCyclePlan('premium')}>
+                <circle cx="420" cy="250" r="38" fill="url(#premium-glow)" />
+                <circle cx="420" cy="250" r="26" fill="#7fd049" stroke="white" strokeWidth="2.5" />
+                <text x="420" y="250" dy="0.05em" fill="white" fontSize="25" fontWeight="900" textAnchor="middle" dominantBaseline="central">2</text>
+              </g>
+              
+              {/* Platin Node (Bottom Center) */}
+              <g className={`pulse-node ${activeCyclePlan === 'platin' ? 'active-node' : ''}`} style={{ animationDelay: '2s', cursor: 'pointer' }} onClick={() => setActiveCyclePlan('platin')}>
+                <circle cx="250" cy="420" r="38" fill="url(#platin-glow)" />
+                <circle cx="250" cy="420" r="26" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="2.5" />
+                <text x="250" y="420" dy="0.05em" fill="#334155" fontSize="25" fontWeight="900" textAnchor="middle" dominantBaseline="central">3</text>
+              </g>
+            </svg>
+            <div className="loop-center-badge">
+              <div className="signet-crop-container">
+                <Image 
+                  src="/images/logoneu.png" 
+                  alt="True Years Signet" 
+                  width={300} 
+                  height={100} 
+                  className="signet-crop-image"
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* The Three Cards */}
+          <div className="cycle-cards-grid">
+            <div 
+              className={`cycle-card starter-card ${activeCyclePlan === 'starter' ? 'highlighted' : ''}`}
+              onClick={() => setActiveCyclePlan('starter')}
+              style={{ cursor: 'pointer' }}
+            >
+              <div className="cycle-card-header">
+                <div className="cycle-card-header-top">
+                  <div className="cycle-price" style={{ margin: 0 }}>29,90 €<span className="cycle-period">/ Monat</span></div>
+                  <div className="cycle-plan-pill pill-starter">STARTER</div>
+                </div>
+                <div className="plan-intro" style={{ marginTop: '0.4rem' }}>
+                  <strong>Einstiegsmodell</strong>
+                </div>
+              </div>
+              <ul className="cycle-features-list">
+                <li><i className="bi bi-list-check"></i> <span>Alle 5 Leistungen abrufbar</span></li>
+                <li><i className="bi bi-lock-fill"></i> <span>Eingeschränkte Funktionen</span></li>
+                <li><i className="bi bi-display"></i> <span>Monatliche Live-Calls</span></li>
+                <li><i className="bi bi-route"></i> <span>Personalisierte Reise</span></li>
+              </ul>
+              <div className="cycle-card-footer">
+                <Link href="/checkout?plan=basic" className="btn-pricing-mini">
+                  auswählen
+                </Link>
+              </div>
+            </div>
+
+            <div 
+              className={`cycle-card premium-card ${activeCyclePlan === 'premium' ? 'highlighted' : ''}`}
+              onClick={() => setActiveCyclePlan('premium')}
+              style={{ cursor: 'pointer' }}
+            >
+              <div className="cycle-card-header">
+                <div className="cycle-card-header-top">
+                  <div className="cycle-price" style={{ margin: 0 }}>49,90 €<span className="cycle-period">/ Monat</span></div>
+                  <div className="cycle-plan-pill pill-premium">PREMIUM</div>
+                </div>
+                <div className="plan-intro" style={{ marginTop: '0.4rem' }}>
+                  <strong>Professional-Modell</strong>
+                </div>
+              </div>
+              <ul className="cycle-features-list">
+                <li><i className="bi bi-check-circle-fill"></i> <span>Alle Starter-Leistungen nutzbar</span></li>
+                <li><i className="bi bi-smartwatch"></i> <span>+ Wearable-Integration</span></li>
+                <li><i className="bi bi-cpu"></i> <span>+ BioAge Optimizer</span></li>
+                <li><i className="bi bi-heart-fill"></i> <span>+ Feel-Good-Area</span></li>
+                <li><i className="bi bi-rocket-takeoff"></i> <span>+ Zugriff auf neue Beta-Features</span></li>
+              </ul>
+              <div className="cycle-card-footer">
+                <Link href="/checkout?plan=premium" className="btn-pricing-mini">
+                  auswählen
+                </Link>
+              </div>
+            </div>
+
+            <div 
+              className={`cycle-card platin-card ${activeCyclePlan === 'platin' ? 'highlighted' : ''}`}
+              onClick={() => setActiveCyclePlan('platin')}
+              style={{ cursor: 'pointer' }}
+            >
+              <div className="cycle-card-header">
+                <div className="cycle-card-header-top">
+                  <div className="cycle-price" style={{ margin: 0 }}>89,90 €<span className="cycle-period">/ Monat</span></div>
+                  <div className="cycle-plan-pill pill-platin">PLATIN</div>
+                </div>
+                <div className="plan-intro" style={{ marginTop: '0.4rem' }}>
+                  <strong>Concierge-Modell</strong>
+                </div>
+              </div>
+              <ul className="cycle-features-list">
+                <li><i className="bi bi-gem"></i> <span>Alle Premium-Leistungen nutzbar</span></li>
+                <li><i className="bi bi-droplet-half"></i> <span>+ Labordiagnostik (3x jährlich)</span></li>
+                <li><i className="bi bi-chat-square-text-fill"></i> <span>+ Expertengespräch (1x jährlich)</span></li>
+                <li><i className="bi bi-person-fill-check"></i> <span>+ Persönlicher Ansprechpartner</span></li>
+              </ul>
+              <div className="cycle-card-footer">
+                <Link href="/checkout?plan=platin" className="btn-pricing-mini">
+                  auswählen
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
       {/* 3. Testphase Section (Final CTA) */}
