@@ -571,7 +571,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   }}
                 >
                   <span style={{ fontSize: '4.8rem', lineHeight: 1, display: 'inline-block', transform: 'scaleX(-1)', filter: 'drop-shadow(0 2px 5px rgba(34, 197, 94, 0.4))' }}>
-                    {isSimulating ? '🏃‍♂️⚡' : '🏃‍♂️'}
+                    🏃‍♂️
                   </span>
                   <span 
                     style={{
