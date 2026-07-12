@@ -1107,6 +1107,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                               );
                             })()}
                           </div>
+                        );
                       } else if (activeKey === 'weight') {
                         content = (
                           <div style={{ width: '100%' }}>
