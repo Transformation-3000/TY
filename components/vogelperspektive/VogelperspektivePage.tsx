@@ -3194,24 +3194,13 @@ return (
                         )}
 
                         {/* Image on top */}
-                        <div style={{ width: '100%', height: '150px', position: 'relative', flexShrink: 0, background: isBeeren ? '#ffffff' : undefined, display: isBeeren ? 'flex' : undefined, alignItems: isBeeren ? 'center' : undefined, justifyContent: isBeeren ? 'center' : undefined }}>
-                          {isBeeren ? (
-                            <div style={{ width: '100%', height: '100%', position: 'relative', transform: 'scale(0.8)' }}>
-                              <Image 
-                                src={item.image} 
-                                fill 
-                                alt={item.title} 
-                                style={{ objectFit: 'contain' }} 
-                              />
-                            </div>
-                          ) : (
-                            <Image 
-                              src={item.image} 
-                              fill 
-                              alt={item.title} 
-                              style={{ objectFit: 'cover' }} 
-                            />
-                          )}
+                        <div style={{ width: '100%', height: '150px', position: 'relative', flexShrink: 0 }}>
+                          <Image 
+                            src={item.image} 
+                            fill 
+                            alt={item.title} 
+                            style={{ objectFit: 'cover' }} 
+                          />
                         </div>
 
                         {/* Content below */}
