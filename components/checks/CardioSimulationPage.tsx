@@ -404,7 +404,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     key={mark}
                     style={{
                       position: 'absolute',
-                      left: `${10 + mark * 0.75}%`,
+                      left: `${mark * 0.9}%`,
                       top: '5px',
                       width: '2px',
                       height: '14px',
@@ -417,7 +417,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 <div 
                   style={{
                     position: 'absolute',
-                    left: '10%',
+                    left: '0%',
                     top: '-65px',
                     display: 'flex',
                     flexDirection: 'column',
@@ -434,7 +434,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 <div 
                   style={{
                     position: 'absolute',
-                    left: '85%',
+                    left: '90%',
                     top: '-65px',
                     display: 'flex',
                     flexDirection: 'column',
@@ -463,7 +463,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 <div 
                   style={{
                     position: 'absolute',
-                    left: `${10 + (simWeek / 12) * 75}%`,
+                    left: `${(simWeek / 12) * 90}%`,
                     top: '-65px',
                     display: 'flex',
                     flexDirection: 'column',
