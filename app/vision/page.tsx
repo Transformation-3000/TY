@@ -185,9 +185,21 @@ export default function VisionPage() {
                   Unsere Motivation: <span style={{ fontWeight: 800 }}>Warum wir True Years gegründet haben</span>
                 </h2>
               </div>
-              <p style={{ fontSize: '1.25rem', color: '#475569', lineHeight: '1.6', margin: '1.5rem 0 0 0' }}>
-                Wir haben uns gefragt – warum gibt es weltweit keine wissenschaftlich orientierte Longevity-Plattform, die alles für mich Relevante einfach zusammenführt und mich dabei an die Hand nimmt? Da wir keine gefunden haben, haben wir uns entschlossen selber eine zu bauen :-)
-              </p>
+              <blockquote style={{ 
+                fontSize: '1.3rem', 
+                fontStyle: 'italic',
+                color: '#1e3a5f', 
+                lineHeight: '1.65', 
+                margin: '1.5rem 0 0 0',
+                padding: '1.5rem 2rem',
+                background: 'linear-gradient(135deg, #f0f9ff, #e0f2fe)',
+                borderLeft: '5px solid #4498ca',
+                borderRadius: '0 16px 16px 0',
+                fontWeight: 500,
+                boxShadow: '0 4px 15px rgba(0, 110, 167, 0.02)'
+              }}>
+                „Wir haben uns gefragt – warum gibt es weltweit keine wissenschaftlich orientierte Longevity-Plattform, die alles für mich Relevante einfach zusammenführt und mich dabei an die Hand nimmt? Da wir keine gefunden haben, haben wir uns entschlossen selber eine zu bauen :-)“
+              </blockquote>
             </div>
 
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }}>
