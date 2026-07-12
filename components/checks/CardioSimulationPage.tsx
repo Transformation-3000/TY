@@ -898,10 +898,9 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           <span>🏃‍♂️</span>
                         </button>
                         <div 
-                          onClick={() => { toggleFactor('zone2'); setSelectedInfoFactor('zone2'); }}
-                          style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'color 0.2s' }}
+                          style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', transition: 'color 0.2s' }}
                         >
-                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'zone2' ? '#0284c7' : '#334155', textDecoration: selectedInfoFactor === 'zone2' ? 'underline' : 'none' }}>Zone 2</span>
+                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'zone2' ? '#0284c7' : '#334155' }}>Zone 2</span>
                         </div>
                       </div>
 
@@ -913,10 +912,9 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           <span>⚡</span>
                         </button>
                         <div 
-                          onClick={() => { toggleFactor('hiit'); setSelectedInfoFactor('hiit'); }}
-                          style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'color 0.2s' }}
+                          style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', transition: 'color 0.2s' }}
                         >
-                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'hiit' ? '#0284c7' : '#334155', textDecoration: selectedInfoFactor === 'hiit' ? 'underline' : 'none' }}>HIIT</span>
+                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'hiit' ? '#0284c7' : '#334155' }}>HIIT</span>
                         </div>
                       </div>
 
@@ -928,10 +926,9 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           <span>🛌</span>
                         </button>
                         <div 
-                          onClick={() => { toggleFactor('regen'); setSelectedInfoFactor('regen'); }}
-                          style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'color 0.2s' }}
+                          style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', transition: 'color 0.2s' }}
                         >
-                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'regen' ? '#0284c7' : '#334155', textDecoration: selectedInfoFactor === 'regen' ? 'underline' : 'none' }}>Erholung</span>
+                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'regen' ? '#0284c7' : '#334155' }}>Erholung</span>
                         </div>
                       </div>
 
@@ -943,10 +940,9 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           <span>⚖️</span>
                         </button>
                         <div 
-                          onClick={() => { toggleFactor('weight'); setSelectedInfoFactor('weight'); }}
-                          style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'color 0.2s' }}
+                          style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', transition: 'color 0.2s' }}
                         >
-                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'weight' ? '#0284c7' : '#334155', textDecoration: selectedInfoFactor === 'weight' ? 'underline' : 'none' }}>Gewicht</span>
+                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'weight' ? '#0284c7' : '#334155' }}>Gewicht</span>
                         </div>
                       </div>
                     </div>
