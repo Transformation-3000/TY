@@ -507,6 +507,47 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
              align-self: flex-start;
            }
          }
+
+         .tacho-wrapper {
+           position: relative;
+           max-width: 330px;
+           width: 100%;
+           margin: 0 auto;
+         }
+
+         .sim-week-btn-row {
+           display: flex;
+           justify-content: space-between;
+           margin-top: 0.8rem;
+           padding: 0 4px;
+         }
+         .sim-week-btn {
+           background: transparent;
+           border: none;
+           width: 32px;
+           height: 32px;
+           border-radius: 50%;
+           font-size: 0.95rem;
+           font-weight: 800;
+           cursor: pointer;
+           display: flex;
+           align-items: center;
+           justify-content: center;
+           transition: all 0.2s;
+           color: #64748b;
+         }
+         .sim-week-btn.active {
+           background: #006ea7 !important;
+           color: #ffffff !important;
+           box-shadow: 0 2px 6px rgba(0, 110, 167, 0.3) !important;
+         }
+         @media (max-width: 576px) {
+           .sim-week-btn {
+             width: 22px;
+             height: 22px;
+             font-size: 0.75rem;
+           }
+         }
       `}} />
 
       {/* Header */}
@@ -709,7 +750,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 />
 
                 {/* Week Labels under slider */}
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.8rem', padding: '0 0px 0 4px' }}>
+                 <div className="sim-week-btn-row">
                   {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((wk) => {
                     const isActive = wk === simWeek;
                     return (
@@ -720,22 +761,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           setIsSimulating(false);
                           setLisaReport(null);
                         }}
-                        style={{
-                          background: isActive ? '#006ea7' : 'transparent',
-                          color: isActive ? '#ffffff' : '#64748b',
-                          border: 'none',
-                          width: '38px',
-                          height: '38px',
-                          borderRadius: '50%',
-                          fontSize: '1.1rem',
-                          fontWeight: 800,
-                          cursor: 'pointer',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          boxShadow: isActive ? '0 2px 6px rgba(0, 110, 167, 0.3)' : 'none',
-                          transition: 'all 0.2s'
-                        }}
+                        className={`sim-week-btn ${isActive ? 'active' : ''}`}
                       >
                         {wk}
                       </button>
@@ -809,12 +835,12 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 }}
               >
                 <div style={{ textAlign: 'center', borderBottom: '1px solid #e2effa', paddingBottom: '1rem' }}>
-                  <div style={{ position: 'relative', width: '330px', height: '285px', margin: '0 auto' }}>
+                  <div className="tacho-wrapper">
                     {(() => {
                       const needleAngle = Math.min(405, Math.max(135, 200 + (currentVO2 - 35.0) * 17.57));
                       const activeArcPct = (needleAngle - 135) / 270;
                       return (
-                        <svg width="330" height="285" viewBox="0 0 220 190">
+                        <svg width="100%" height="100%" viewBox="0 0 220 190" style={{ display: 'block' }}>
                           <defs>
                             <linearGradient id="tachoGrad" x1="0%" y1="100%" x2="100%" y2="0%">
                               <stop offset="0%" stopColor="#ef4444" />
@@ -908,7 +934,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     <div 
                       style={{
                         position: 'absolute',
-                        top: '60%',
+                        top: '55%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
                         textAlign: 'center',
@@ -917,15 +943,15 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         flexDirection: 'column',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        gap: '5px',
+                        gap: '2px',
                         lineHeight: 1
                       }}
                     >
-                      <span style={{ fontSize: '0.9rem', fontWeight: 800, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.1em', textShadow: '0 0 5px rgba(56,189,248,0.4)' }}>VO2max</span>
-                      <div style={{ fontSize: '2.85rem', fontWeight: 900, color: '#ffffff', margin: 0, padding: 0, textShadow: '0 0 10px rgba(255,255,255,0.4)' }}>
+                      <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>VO2max</span>
+                      <div style={{ fontSize: '2rem', fontWeight: 900, color: '#ffffff', margin: 0, padding: 0 }}>
                         {currentVO2.toFixed(1).replace('.', ',')}
                       </div>
-                      <span style={{ fontSize: '1.05rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#4ade80' : '#f87171', textShadow: `0 0 8px ${currentVO2 >= baseVO2 ? 'rgba(74,222,128,0.4)' : 'rgba(248,113,113,0.4)'}` }}>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#4ade80' : '#f87171' }}>
                         {currentVO2 >= baseVO2 ? '▲' : '▼'} {Math.abs(currentVO2 - baseVO2).toFixed(1).replace('.', ',')}
                       </span>
                     </div>
