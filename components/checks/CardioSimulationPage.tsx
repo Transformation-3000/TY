@@ -893,12 +893,12 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       <div className="tacho-btn-container">
                         <button 
                           className={`tacho-circle-btn ${activeFactors.includes('zone2') ? 'active' : ''}`}
-                          onClick={() => toggleFactor('zone2')}
+                          onClick={() => { toggleFactor('zone2'); setSelectedInfoFactor('zone2'); }}
                         >
                           <span>🏃‍♂️</span>
                         </button>
                         <div 
-                          onClick={() => setSelectedInfoFactor('zone2')}
+                          onClick={() => { toggleFactor('zone2'); setSelectedInfoFactor('zone2'); }}
                           style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'color 0.2s' }}
                         >
                           <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'zone2' ? '#0284c7' : '#334155', textDecoration: selectedInfoFactor === 'zone2' ? 'underline' : 'none' }}>Zone 2</span>
@@ -908,12 +908,12 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       <div className="tacho-btn-container">
                         <button 
                           className={`tacho-circle-btn ${activeFactors.includes('hiit') ? 'active' : ''}`}
-                          onClick={() => toggleFactor('hiit')}
+                          onClick={() => { toggleFactor('hiit'); setSelectedInfoFactor('hiit'); }}
                         >
                           <span>⚡</span>
                         </button>
                         <div 
-                          onClick={() => setSelectedInfoFactor('hiit')}
+                          onClick={() => { toggleFactor('hiit'); setSelectedInfoFactor('hiit'); }}
                           style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'color 0.2s' }}
                         >
                           <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'hiit' ? '#0284c7' : '#334155', textDecoration: selectedInfoFactor === 'hiit' ? 'underline' : 'none' }}>HIIT</span>
@@ -923,12 +923,12 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       <div className="tacho-btn-container">
                         <button 
                           className={`tacho-circle-btn ${activeFactors.includes('regen') ? 'active' : ''}`}
-                          onClick={() => toggleFactor('regen')}
+                          onClick={() => { toggleFactor('regen'); setSelectedInfoFactor('regen'); }}
                         >
                           <span>🛌</span>
                         </button>
                         <div 
-                          onClick={() => setSelectedInfoFactor('regen')}
+                          onClick={() => { toggleFactor('regen'); setSelectedInfoFactor('regen'); }}
                           style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'color 0.2s' }}
                         >
                           <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'regen' ? '#0284c7' : '#334155', textDecoration: selectedInfoFactor === 'regen' ? 'underline' : 'none' }}>Erholung</span>
@@ -938,12 +938,12 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       <div className="tacho-btn-container">
                         <button 
                           className={`tacho-circle-btn ${activeFactors.includes('weight' ) ? 'active' : ''}`}
-                          onClick={() => toggleFactor('weight')}
+                          onClick={() => { toggleFactor('weight'); setSelectedInfoFactor('weight'); }}
                         >
                           <span>⚖️</span>
                         </button>
                         <div 
-                          onClick={() => setSelectedInfoFactor('weight')}
+                          onClick={() => { toggleFactor('weight'); setSelectedInfoFactor('weight'); }}
                           style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'color 0.2s' }}
                         >
                           <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'weight' ? '#0284c7' : '#334155', textDecoration: selectedInfoFactor === 'weight' ? 'underline' : 'none' }}>Gewicht</span>
