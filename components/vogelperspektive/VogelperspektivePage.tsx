@@ -101,6 +101,17 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
           // Event to sync header avatar
           window.dispatchEvent(new Event('ty_profile_image_changed'));
 
+          // Backup in localStorage list for instant rendering in image-preview on same browser
+          try {
+            const localList = JSON.parse(localStorage.getItem('ty_uploaded_profile_images') || '[]');
+            if (!localList.includes(result)) {
+              localList.unshift(result);
+              localStorage.setItem('ty_uploaded_profile_images', JSON.stringify(localList));
+            }
+          } catch (e) {
+            console.error('Failed to save image to localStorage list:', e);
+          }
+
           // Send to API to save on disk and list in image-preview
           try {
             await fetch('/api/upload-profile-image', {

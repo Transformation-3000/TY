@@ -700,44 +700,67 @@
     </div>
   </div>
   <script>
+    const grid = document.getElementById('profile-grid');
+    const renderedSrcs = new Set();
+
+    function renderCard(src, label) {
+      if (!grid || renderedSrcs.has(src)) return;
+      renderedSrcs.add(src);
+
+      const card = document.createElement('div');
+      card.className = 'card';
+      
+      const imgWrap = document.createElement('div');
+      imgWrap.className = 'img-wrap';
+      const img = document.createElement('img');
+      img.src = src;
+      img.alt = label;
+      imgWrap.appendChild(img);
+      
+      const content = document.createElement('div');
+      content.className = 'content';
+      
+      const title = document.createElement('div');
+      title.className = 'option-title';
+      title.textContent = label;
+      
+      const desc = document.createElement('div');
+      desc.className = 'option-desc';
+      desc.textContent = 'Selbst hochgeladenes Profilbild (1:1 Kopie aus HEUTE).';
+      
+      content.appendChild(title);
+      content.appendChild(desc);
+      card.appendChild(imgWrap);
+      card.appendChild(content);
+      
+      // Insert at the very beginning of the grid
+      grid.insertBefore(card, grid.firstChild);
+    }
+
+    // 1. Load from localStorage (client-side backup)
+    try {
+      const localImages = JSON.parse(localStorage.getItem('ty_uploaded_profile_images') || '[]');
+      if (Array.isArray(localImages)) {
+        // Reverse to insert oldest first so that grid.insertBefore makes the newest appear at the top
+        localImages.slice().reverse().forEach((src, idx) => {
+          renderCard(src, `Upload Option (Lokal) ${localImages.length - idx}`);
+        });
+      }
+    } catch (e) {
+      console.error('Failed to load local uploads:', e);
+    }
+
+    // 2. Load from server JSON file
     fetch('/uploaded-profile-images.json')
       .then(response => response.json())
       .then(images => {
-        const grid = document.getElementById('profile-grid');
-        if (grid && Array.isArray(images)) {
-          images.forEach((src, idx) => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            
-            const imgWrap = document.createElement('div');
-            imgWrap.className = 'img-wrap';
-            const img = document.createElement('img');
-            img.src = src;
-            img.alt = `Hochgeladenes Bild ${idx + 1}`;
-            imgWrap.appendChild(img);
-            
-            const content = document.createElement('div');
-            content.className = 'content';
-            
-            const title = document.createElement('div');
-            title.className = 'option-title';
-            title.textContent = `Upload Option ${images.length - idx}`;
-            
-            const desc = document.createElement('div');
-            desc.className = 'option-desc';
-            desc.textContent = 'Selbst hochgeladenes Profilbild (1:1 Kopie aus HEUTE).';
-            
-            content.appendChild(title);
-            content.appendChild(desc);
-            card.appendChild(imgWrap);
-            card.appendChild(content);
-            
-            // Insert at the beginning of the grid
-            grid.insertBefore(card, grid.firstChild);
+        if (Array.isArray(images)) {
+          images.slice().reverse().forEach((src, idx) => {
+            renderCard(src, `Upload Option ${images.length - idx}`);
           });
         }
       })
-      .catch(err => console.log('No uploaded profile images yet or fetch failed'));
+      .catch(err => console.log('No uploaded profile images on server or fetch failed'));
   </script>
 </body>
 </html>
