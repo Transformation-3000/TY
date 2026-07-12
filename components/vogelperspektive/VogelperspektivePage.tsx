@@ -41,7 +41,7 @@ export default function VogelperspektivePage({ onNavigate }: VogelperspektivePag
   const [currentDate, setCurrentDate] = useState('');
   const [greeting, setGreeting] = useState('Guten Tag');
   const [userName, setUserName] = useState('Monique');
-  const [profileImage, setProfileImage] = useState('/images/image.png');
+  const [profileImage, setProfileImage] = useState('/images/uploaded_1783891244196_Monique_1.png');
   const [selectedPlan, setSelectedPlan] = useState<string>('Premium');
 
   useEffect(() => {
