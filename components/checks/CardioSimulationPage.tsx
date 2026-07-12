@@ -437,7 +437,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem', gap: '2rem' }}>
             <div>
               <h2 className="sim-sec-title" style={{ margin: 0 }}>I. Das Langlebigkeits-Rennen</h2>
-              <p className="sim-sec-desc" style={{ margin: '0.2rem 0 0 0' }}>
+              <p className="sim-sec-desc" style={{ margin: '0.2rem 0 0 0', fontSize: '1.15rem' }}>
                 Drücke auf Start oder schiebe den Wochenregler, um die Leistungsentwicklung zu steuern.
               </p>
             </div>
