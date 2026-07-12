@@ -886,8 +886,11 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 }}
               >
                 <div>
-                  <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', textAlign: 'center' }}>
+                  <div style={{ fontSize: '0.97rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.5rem', textAlign: 'center' }}>
                     VO2max Hebel
+                  </div>
+                  <div style={{ fontSize: '0.85rem', color: '#64748b', textAlign: 'center', marginBottom: '1.25rem', lineHeight: 1.45, fontWeight: 500 }}>
+                    Klicke 1-4 VO2max Hebel unterhalb des Tachos an, die du durchführen kannst und drücke auf Start oder schiebe den Wochenregler, um die Leistungsentwicklung zu steuern.
                   </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '4px' }}>
                       <div className="tacho-btn-container">
