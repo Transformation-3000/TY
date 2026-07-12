@@ -748,7 +748,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     <div style={{ fontSize: '0.78rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '0.75rem', textAlign: 'center' }}>
                       VO2max Hebel
                     </div>
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px 12px', width: '100%' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '4px' }}>
                       <div className="tacho-btn-container">
                         <button 
                           className={`tacho-circle-btn ${activeFactors.includes('zone2') ? 'active' : ''}`}
