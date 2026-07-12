@@ -26,6 +26,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
   const [hoveredFactor, setHoveredFactor] = useState<string | null>(null);
   const [userWeight, setUserWeight] = useState<number>(80);
   const [targetWeight, setTargetWeight] = useState<number>(76);
+  const [selectedInfoFactor, setSelectedInfoFactor] = useState<string>('zone2');
 
   const toggleFactor = (factor: string) => {
     setActiveFactors(prev => 
@@ -890,16 +891,11 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         >
                           <span>🏃‍♂️</span>
                         </button>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
-                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>Zone 2</span>
-                          <span 
-                            className="tacho-info-icon-wrapper" 
-                            onClick={(e) => e.stopPropagation()}
-                            onMouseEnter={() => setHoveredFactor('zone2')}
-                            onMouseLeave={() => setHoveredFactor(null)}
-                          >
-                            <i className="bi bi-info-circle tacho-info-icon" />
-                          </span>
+                        <div 
+                          onClick={() => setSelectedInfoFactor('zone2')}
+                          style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'color 0.2s' }}
+                        >
+                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'zone2' ? '#0284c7' : '#334155', textDecoration: selectedInfoFactor === 'zone2' ? 'underline' : 'none' }}>Zone 2</span>
                         </div>
                       </div>
 
@@ -910,16 +906,11 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         >
                           <span>⚡</span>
                         </button>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
-                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>HIIT</span>
-                          <span 
-                            className="tacho-info-icon-wrapper" 
-                            onClick={(e) => e.stopPropagation()}
-                            onMouseEnter={() => setHoveredFactor('hiit')}
-                            onMouseLeave={() => setHoveredFactor(null)}
-                          >
-                            <i className="bi bi-info-circle tacho-info-icon" />
-                          </span>
+                        <div 
+                          onClick={() => setSelectedInfoFactor('hiit')}
+                          style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'color 0.2s' }}
+                        >
+                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'hiit' ? '#0284c7' : '#334155', textDecoration: selectedInfoFactor === 'hiit' ? 'underline' : 'none' }}>HIIT</span>
                         </div>
                       </div>
 
@@ -930,16 +921,11 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         >
                           <span>🛌</span>
                         </button>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
-                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>Erholung</span>
-                          <span 
-                            className="tacho-info-icon-wrapper" 
-                            onClick={(e) => e.stopPropagation()}
-                            onMouseEnter={() => setHoveredFactor('regen')}
-                            onMouseLeave={() => setHoveredFactor(null)}
-                          >
-                            <i className="bi bi-info-circle tacho-info-icon" />
-                          </span>
+                        <div 
+                          onClick={() => setSelectedInfoFactor('regen')}
+                          style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'color 0.2s' }}
+                        >
+                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'regen' ? '#0284c7' : '#334155', textDecoration: selectedInfoFactor === 'regen' ? 'underline' : 'none' }}>Erholung</span>
                         </div>
                       </div>
 
@@ -950,28 +936,19 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         >
                           <span>⚖️</span>
                         </button>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap' }}>
-                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#334155' }}>Gewicht</span>
-                          <span 
-                            className="tacho-info-icon-wrapper" 
-                            onClick={(e) => e.stopPropagation()}
-                            onMouseEnter={() => setHoveredFactor('weight')}
-                            onMouseLeave={() => setHoveredFactor(null)}
-                          >
-                            <i className="bi bi-info-circle tacho-info-icon" />
-                          </span>
+                        <div 
+                          onClick={() => setSelectedInfoFactor('weight')}
+                          style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', cursor: 'pointer', transition: 'color 0.2s' }}
+                        >
+                          <span style={{ fontSize: '0.8rem', fontWeight: 800, color: selectedInfoFactor === 'weight' ? '#0284c7' : '#334155', textDecoration: selectedInfoFactor === 'weight' ? 'underline' : 'none' }}>Gewicht</span>
                         </div>
                       </div>
                     </div>
 
                     {/* Dynamic Tooltip Info Box (Kasten unterhalb der Buttons) */}
                     {(() => {
-                      const activeKey = hoveredFactor || (activeFactors.length > 0 ? activeFactors[activeFactors.length - 1] : null);
-                      let content = (
-                        <span style={{ color: '#94a3b8', fontStyle: 'italic' }}>
-                          💡 Tipp: Fahre über das (i)-Symbol eines Hebels oder wähle ihn aus, um Details anzuzeigen.
-                        </span>
-                      );
+                      const activeKey = selectedInfoFactor;
+                      let content = null;
                       
                       if (activeKey === 'zone2') {
                         content = (
