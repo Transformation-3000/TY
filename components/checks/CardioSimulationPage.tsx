@@ -91,6 +91,9 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         }
       }
 
+      // Hebel-Effekt: Jeder aktivierte Hebel bringt am Ende der 12 Wochen +3 Punkte (+0,25 pro Woche)
+      weeklyChange += activeFactors.length * 0.25;
+
       current = Math.min(48.5, Math.max(30.0, current + weeklyChange));
       data.push({ vo2: current, msg, color });
     }
