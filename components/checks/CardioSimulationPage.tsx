@@ -714,13 +714,22 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
            color: #ffffff !important;
            box-shadow: 0 2px 6px rgba(0, 110, 167, 0.3) !important;
          }
-         @media (max-width: 576px) {
-           .sim-week-btn {
-             width: 22px;
-             height: 22px;
-             font-size: 0.75rem;
-           }
-         }
+          @media (max-width: 576px) {
+            .sim-week-btn {
+              width: 22px;
+              height: 22px;
+              font-size: 0.75rem;
+            }
+            .tacho-circle-btn {
+              width: 58px !important;
+              height: 58px !important;
+              font-size: 1.55rem !important;
+            }
+            .tacho-btn-container span {
+              font-size: 0.7rem !important;
+              padding: 2px 4px !important;
+            }
+          }
       `}} />
 
       {/* Header */}
