@@ -708,6 +708,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
            justify-content: center;
            transition: all 0.2s;
            color: #64748b;
+           flex-shrink: 0;
          }
          .sim-week-btn.active {
            background: #006ea7 !important;
@@ -715,10 +716,21 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
            box-shadow: 0 2px 6px rgba(0, 110, 167, 0.3) !important;
          }
           @media (max-width: 576px) {
+            .sim-week-btn-row {
+              overflow-x: auto !important;
+              scrollbar-width: none !important;
+              -webkit-overflow-scrolling: touch !important;
+              justify-content: flex-start !important;
+              gap: 8px !important;
+              padding: 4px 0 !important;
+            }
+            .sim-week-btn-row::-webkit-scrollbar {
+              display: none !important;
+            }
             .sim-week-btn {
-              width: 22px;
-              height: 22px;
-              font-size: 0.75rem;
+              width: 28px !important;
+              height: 28px !important;
+              font-size: 0.85rem !important;
             }
             .tacho-circle-btn {
               width: 58px !important;
