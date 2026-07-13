@@ -433,12 +433,12 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
            transform: translateX(-50%) translateY(2px);
          }
 
-         .sim-grid {
-           display: grid;
-           grid-template-columns: 1.2fr 0.8fr;
-           gap: 3rem;
-           align-items: start;
-         }
+           .sim-grid {
+             display: grid;
+             grid-template-columns: 1fr 1fr;
+             gap: 2.5rem;
+             align-items: flex-start;
+           }
          .sim-left-col {
            padding-right: 2rem;
            padding-top: 5.5rem;
