@@ -430,10 +430,12 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
     addUserMsg(text);
     if (phase === 'verstehen') {
       setPhase('fokus');
-      await addCoachMsg('Das bestätigt, was ich in deinen Daten sehe. Deine Schlafqualität leidet, und das zieht sich durch Energie und Stressresistenz. Lass uns darauf fokussieren, was du abends noch ändern kannst. Was passiert bei dir in der letzten Stunde vor dem Schlafen?', undefined, 1500);
+      const customReply = `Das bestätigt, was ich in deinen Daten sehe. Dass du sagst „${text}“ passt genau dazu, dass deine Schlafqualität leidet und sich das durch deine Energie und Stressresistenz zieht. Lass uns darauf fokussieren, was du abends noch ändern kannst. Was passiert bei dir in der letzten Stunde vor dem Schlafen?`;
+      await addCoachMsg(customReply, undefined, 1500);
     } else if (phase === 'fokus') {
       setPhase('empfehlung');
-      await addCoachMsg('Das passt genau zu deinem HRV-Verlauf – die Erholungsphasen starten bei dir erst spät in der Nacht. Bildschirmzeit hält dein Nervensystem im Sympathikus-Modus. Ich habe auf Basis deiner Daten einen konkreten Plan erarbeitet:', 'action-plan', 1600);
+      const customReply = `Dass du abends „${text}“ machst, passt genau zu deinem HRV-Verlauf – die Erholungsphasen starten bei dir erst sehr spät in der Nacht. Bildschirmzeit und späte Aktivitäten halten dein Nervensystem im Sympathikus-Modus. Ich habe auf Basis deiner Daten einen konkreten Plan erarbeitet:`;
+      await addCoachMsg(customReply, 'action-plan', 1600);
     } else if (phase === 'daily-topic-detail') {
       setPhase('daily-lifestyle-insight');
       setDailyStep(1);
