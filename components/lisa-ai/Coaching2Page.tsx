@@ -1830,7 +1830,9 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .crow.coach .wdp,
         .crow.coach .wdr,
         .crow.coach .wclo,
-        .crow.coach .wap{grid-column:2;grid-row:2;margin-top:.6rem}
+        .crow.coach .wap,
+        .crow.coach .wcm,
+        .crow.coach .wsy{grid-column:2;grid-row:2;margin-top:.6rem}
         .crow.user{align-self:flex-end;flex-direction:row-reverse}.crow.system{align-self:flex-start;max-width:95%;margin:.5rem auto}
         @keyframes mi{from{opacity:0;transform:translateY(12px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
         .cav{width:50px;height:50px;flex-shrink:0;border-radius:50%;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1.5px solid rgba(255,255,255,.12)}
