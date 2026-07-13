@@ -492,11 +492,12 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
            .sim-title {
              font-size: 1.8rem;
            }
-           .sim-header-row {
-              flex-direction: column;
-              align-items: stretch;
-              gap: 1rem;
-            }
+            .sim-header-row {
+               flex-direction: column;
+               align-items: stretch;
+               gap: 1rem;
+               margin-bottom: 2.75rem !important;
+             }
          }
          @media (max-width: 576px) {
            .sim-container {
@@ -803,9 +804,9 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.76rem', textAlign: 'left' }}>
                     <thead>
                       <tr style={{ borderBottom: '1.5px solid #cbd5e1', color: '#64748b', fontWeight: 700 }}>
-                        <th style={{ padding: '6px 4px' }}>Alter</th>
-                        <th style={{ padding: '6px 4px' }}>Frauen (Schnitt)</th>
-                        <th style={{ padding: '6px 4px' }}>Männer (Schnitt)</th>
+                        <th style={{ padding: '6px 4px', minWidth: '95px' }}>Alter</th>
+                        <th style={{ padding: '6px 2px', width: '20%' }}>Frauen (Schnitt)</th>
+                        <th style={{ padding: '6px 2px', width: '20%' }}>Männer (Schnitt)</th>
                         <th style={{ padding: '6px 4px' }}>Fitness-Niveau</th>
                       </tr>
                     </thead>
@@ -832,8 +833,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           }}
                         >
                           <td style={{ padding: '5px 4px', fontWeight: 700, color: '#1e3a5f' }}>{row.age}</td>
-                          <td style={{ padding: '5px 4px' }}>{row.w} ml/kg/min</td>
-                          <td style={{ padding: '5px 4px' }}>{row.m} ml/kg/min</td>
+                          <td style={{ padding: '5px 2px' }}>{row.w} ml/kg/min</td>
+                          <td style={{ padding: '5px 2px' }}>{row.m} ml/kg/min</td>
                           <td style={{ padding: '5px 4px', fontWeight: 600, color: '#4c99c2' }}>{row.level}</td>
                         </tr>
                       ))}
