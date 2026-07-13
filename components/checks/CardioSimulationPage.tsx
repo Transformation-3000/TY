@@ -568,6 +568,11 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             .sim-ref-table-card td {
               padding: 4px 6px !important;
             }
+            .sim-hebel-detail-card {
+              width: 100% !important;
+              align-self: stretch !important;
+              max-width: 100% !important;
+            }
           }
 
           /* Dynamic Hebel Detail Card Styles */
@@ -1249,7 +1254,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setCurrentZone2(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Min/Woche</span>
+                                  <span className="sim-hebel-unit">Min./<br/>Woche</span>
                                 </div>
                               </div>
                               <div className="sim-hebel-input-box">
@@ -1261,7 +1266,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setTargetZone2(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Min/Woche</span>
+                                  <span className="sim-hebel-unit">Min./<br/>Woche</span>
                                 </div>
                               </div>
                             </div>
@@ -1315,7 +1320,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setCurrentHIIT(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Einheiten/Woche</span>
+                                  <span className="sim-hebel-unit">Einheiten/<br/>Woche</span>
                                 </div>
                               </div>
                               <div className="sim-hebel-input-box">
@@ -1327,7 +1332,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setTargetHIIT(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Einheiten/Woche</span>
+                                  <span className="sim-hebel-unit">Einheiten/<br/>Woche</span>
                                 </div>
                               </div>
                             </div>
@@ -1382,7 +1387,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setCurrentSleep(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Std. Schlaf/Nacht</span>
+                                  <span className="sim-hebel-unit">Std. Schlaf/<br/>Nacht</span>
                                 </div>
                               </div>
                               <div className="sim-hebel-input-box">
@@ -1395,7 +1400,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setTargetSleep(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Std. Schlaf/Nacht</span>
+                                  <span className="sim-hebel-unit">Std. Schlaf/<br/>Nacht</span>
                                 </div>
                               </div>
                             </div>
