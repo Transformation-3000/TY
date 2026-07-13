@@ -620,7 +620,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             display: flex;
             flex-direction: column;
             gap: 0.25rem;
-            max-width: 130px;
+            max-width: 118px;
             width: 100%;
             box-sizing: border-box;
           }
@@ -637,7 +637,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             gap: 0.5rem;
           }
           .sim-hebel-number-input {
-            width: 68px;
+            width: 62px;
             height: 34px;
             border: 1.5px solid #cbd5e1;
             border-radius: 8px;
@@ -665,7 +665,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             font-size: 0.85rem;
             line-height: 1.5;
             color: #0369a1;
-            font-weight: 600;
+            font-weight: 500;
             display: flex;
             align-items: flex-start;
             gap: 0.75rem;
@@ -678,15 +678,15 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           }
           .sim-hebel-prognosis-highlight {
             color: #006ea7;
-            font-weight: 800;
+            font-weight: 700;
           }
 
-          .tacho-wrapper {
-            position: relative;
-            max-width: 330px;
-            width: 100%;
-            margin: 0 auto;
-          }
+           .tacho-wrapper {
+             position: relative;
+             max-width: 360px;
+             width: 100%;
+             margin: 0 auto;
+           }
 
          .sim-week-btn-row {
            display: flex;
@@ -1086,7 +1086,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     <div 
                       style={{
                         position: 'absolute',
-                        top: '55%',
+                        top: '57.89%',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
                         textAlign: 'center',
@@ -1099,11 +1099,11 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         lineHeight: 1
                       }}
                     >
-                      <span style={{ fontSize: '0.8rem', fontWeight: 800, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>VO2max</span>
-                      <div style={{ fontSize: '2rem', fontWeight: 900, color: '#ffffff', margin: 0, padding: 0 }}>
+                      <span style={{ fontSize: '0.88rem', fontWeight: 800, color: '#38bdf8', textTransform: 'uppercase', letterSpacing: '0.1em' }}>VO2max</span>
+                      <div style={{ fontSize: '2.2rem', fontWeight: 900, color: '#ffffff', margin: 0, padding: 0 }}>
                         {currentVO2.toFixed(1).replace('.', ',')}
                       </div>
-                      <span style={{ fontSize: '0.85rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#4ade80' : '#f87171' }}>
+                      <span style={{ fontSize: '0.94rem', fontWeight: 800, color: currentVO2 >= baseVO2 ? '#4ade80' : '#f87171', marginTop: '5px' }}>
                         {currentVO2 >= baseVO2 ? '▲' : '▼'} {Math.abs(currentVO2 - baseVO2).toFixed(1).replace('.', ',')}
                       </span>
                     </div>
@@ -1125,7 +1125,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 }}
               >
                 <div>
-                  <div style={{ fontSize: '0.97rem', fontWeight: 800, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1.25rem', textAlign: 'center' }}>
+                  <div style={{ fontSize: '1.22rem', fontWeight: 800, color: '#0f172a', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1.25rem', textAlign: 'center' }}>
                     VO2max Hebel
                   </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '4px' }}>
@@ -1235,7 +1235,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         content = (
                           <>
                             <div className="sim-hebel-info-header">
-                              <div className="sim-hebel-title">🏃‍♂️ Zone-2-Ausdauer (Grundlage)</div>
+                              <div className="sim-hebel-title">🏃‍♂️ Zone 2</div>
                               <div className="sim-hebel-desc">
                                 Verbessert die Sauerstoffverarbeitung in den Muskelzellen und bildet das aerobe Fundament.
                               </div>
@@ -1298,7 +1298,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         content = (
                           <>
                             <div className="sim-hebel-info-header">
-                              <div className="sim-hebel-title">⚡ Zone-5-HIIT (Spitzenleistung)</div>
+                              <div className="sim-hebel-title">⚡ HIT</div>
                               <div className="sim-hebel-desc">
                                 Vergrößert das Herzminutenvolumen, sodass pro Herzschlag mehr sauerstoffreiches Blut gepumpt wird.
                               </div>
@@ -1314,7 +1314,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setCurrentHIIT(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Einheiten/<br/>Woche</span>
+                                  <span className="sim-hebel-unit">Units/<br/>Woche</span>
                                 </div>
                               </div>
                               <div className="sim-hebel-input-box">
@@ -1326,7 +1326,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setTargetHIIT(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Einheiten/<br/>Woche</span>
+                                  <span className="sim-hebel-unit">Units/<br/>Woche</span>
                                 </div>
                               </div>
                             </div>
@@ -1350,7 +1350,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                 <div className="sim-hebel-prognosis-box">
                                   <i className="bi bi-graph-up-arrow sim-hebel-prognosis-icon"></i>
                                   <div>
-                                    Du steigerst dein HIIT-Training um <span className="sim-hebel-prognosis-highlight">+{diff} Einheiten/Woche</span> – Deine relative VO2max steigt rechnerisch um ca. <span className="sim-hebel-prognosis-highlight">+{bonus} Punkte</span>!
+                                    Du steigerst dein HIIT-Training um <span className="sim-hebel-prognosis-highlight">+{diff} Units/Woche</span> – Deine relative VO2max steigt rechnerisch um ca. <span className="sim-hebel-prognosis-highlight">+{bonus} Punkte</span>!
                                   </div>
                                 </div>
                               );
@@ -1361,7 +1361,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         content = (
                           <>
                             <div className="sim-hebel-info-header">
-                              <div className="sim-hebel-title">🛌 Erholung & Schlaf</div>
+                              <div className="sim-hebel-title">🛌 Erholung</div>
                               <div className="sim-hebel-desc">
                                 Ausreichend Schlaf und Trainingspausen erlauben es Herz und Muskeln, sich an gesetzte Reize anzupassen.
                               </div>
@@ -1426,7 +1426,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         content = (
                           <>
                             <div className="sim-hebel-info-header">
-                              <div className="sim-hebel-title">⚖️ Gewichtsreduktion</div>
+                              <div className="sim-hebel-title">⚖️ Gewicht</div>
                               <div className="sim-hebel-desc">
                                 Da die relative VO2max pro Kilogramm Körpergewicht gemessen wird, erhöht Fettabbau deinen Wert rechnerisch sofort.
                               </div>
