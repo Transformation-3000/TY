@@ -610,7 +610,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             display: flex;
             gap: 1rem;
             width: 100%;
-            justify-content: flex-start;
+            justify-content: space-between;
           }
           .sim-hebel-input-box {
             background: #fafcff;
@@ -620,7 +620,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             display: flex;
             flex-direction: column;
             gap: 0.25rem;
-            max-width: 118px;
+            max-width: 145px;
             width: 100%;
             box-sizing: border-box;
           }
@@ -1206,7 +1206,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           className={`tacho-circle-btn ${activeFactors.includes('weight' ) ? 'active' : ''}`}
                           onClick={() => { toggleFactor('weight'); setSelectedInfoFactor('weight'); }}
                         >
-                          <span>⚖️</span>
+                          <span>🏋️</span>
                         </button>
                         <div 
                           style={{ display: 'flex', alignItems: 'center', gap: '2px', marginTop: '6px', whiteSpace: 'nowrap', transition: 'color 0.2s' }}
@@ -1378,7 +1378,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setCurrentSleep(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Std. Schlaf/<br/>Nacht</span>
+                                  <span className="sim-hebel-unit">Std./<br/>Nacht</span>
                                 </div>
                               </div>
                               <div className="sim-hebel-input-box">
@@ -1391,7 +1391,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setTargetSleep(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Std. Schlaf/<br/>Nacht</span>
+                                  <span className="sim-hebel-unit">Std./<br/>Nacht</span>
                                 </div>
                               </div>
                             </div>
@@ -1426,7 +1426,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         content = (
                           <>
                             <div className="sim-hebel-info-header">
-                              <div className="sim-hebel-title">⚖️ Gewicht</div>
+                              <div className="sim-hebel-title">🏋️ Gewicht</div>
                               <div className="sim-hebel-desc">
                                 Da die relative VO2max pro Kilogramm Körpergewicht gemessen wird, erhöht Fettabbau deinen Wert rechnerisch sofort.
                               </div>
