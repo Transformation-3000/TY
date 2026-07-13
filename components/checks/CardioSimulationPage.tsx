@@ -1251,7 +1251,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setCurrentZone2(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Min./<br/>Woche</span>
+                                  <span className="sim-hebel-unit">Min. /<br/>Woche</span>
                                 </div>
                               </div>
                               <div className="sim-hebel-input-box">
@@ -1263,7 +1263,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setTargetZone2(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Min./<br/>Woche</span>
+                                  <span className="sim-hebel-unit">Min. /<br/>Woche</span>
                                 </div>
                               </div>
                             </div>
@@ -1314,7 +1314,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setCurrentHIIT(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Units/<br/>Woche</span>
+                                  <span className="sim-hebel-unit">Units /<br/>Woche</span>
                                 </div>
                               </div>
                               <div className="sim-hebel-input-box">
@@ -1326,7 +1326,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setTargetHIIT(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Units/<br/>Woche</span>
+                                  <span className="sim-hebel-unit">Units /<br/>Woche</span>
                                 </div>
                               </div>
                             </div>
@@ -1378,7 +1378,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setCurrentSleep(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Std./<br/>Nacht</span>
+                                  <span className="sim-hebel-unit">Std. /<br/>Nacht</span>
                                 </div>
                               </div>
                               <div className="sim-hebel-input-box">
@@ -1391,7 +1391,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                     onChange={(e) => setTargetSleep(Number(e.target.value))}
                                     className="sim-hebel-number-input"
                                   />
-                                  <span className="sim-hebel-unit">Std./<br/>Nacht</span>
+                                  <span className="sim-hebel-unit">Std. /<br/>Nacht</span>
                                 </div>
                               </div>
                             </div>
