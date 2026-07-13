@@ -582,6 +582,9 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             flex-direction: column;
             gap: 1.25rem;
             width: 100%;
+            max-width: 100%;
+            box-sizing: border-box;
+            align-self: stretch !important;
             text-align: left;
           }
           .sim-hebel-info-header {
