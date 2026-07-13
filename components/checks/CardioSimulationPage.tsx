@@ -433,12 +433,12 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
            transform: translateX(-50%) translateY(2px);
          }
 
-           .sim-grid {
-             display: grid;
-             grid-template-columns: 1fr 1fr;
-             gap: 2.5rem;
-             align-items: flex-start;
-           }
+         .sim-grid {
+           display: grid;
+           grid-template-columns: 1.2fr 0.8fr;
+           gap: 2.5rem;
+           align-items: flex-start;
+         }
          .sim-left-col {
            padding-right: 2rem;
            padding-top: 5.5rem;
@@ -581,10 +581,9 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             display: flex;
             flex-direction: column;
             gap: 1.25rem;
-            width: 100%;
+            width: 330px;
             max-width: 100%;
             box-sizing: border-box;
-            align-self: stretch !important;
             text-align: left;
           }
           .sim-hebel-info-header {
@@ -1286,7 +1285,10 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                 <div className="sim-hebel-prognosis-box">
                                   <i className="bi bi-graph-up-arrow sim-hebel-prognosis-icon"></i>
                                   <div>
-                                    Du erhöhst dein wöchentliches Training um <span className="sim-hebel-prognosis-highlight">+{diff} Min.</span> – Deine relative VO2max steigt am Ende von Woche 12 rechnerisch um ca. <span className="sim-hebel-prognosis-highlight">+{bonus} Punkte</span>!
+                                    Du erhöhst dein wöchentliches Training<br />
+                                    um <span className="sim-hebel-prognosis-highlight">+{diff} Min.</span> – Deine relative VO2max<br />
+                                    steigt am Ende von Woche 12<br />
+                                    rechnerisch um ca. <span className="sim-hebel-prognosis-highlight">+{bonus} Punkte</span>!
                                   </div>
                                 </div>
                               );
@@ -1349,7 +1351,10 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                 <div className="sim-hebel-prognosis-box">
                                   <i className="bi bi-graph-up-arrow sim-hebel-prognosis-icon"></i>
                                   <div>
-                                    Du steigerst dein HIIT-Training um <span className="sim-hebel-prognosis-highlight">+{diff} Einheiten/Woche</span> – Deine relative VO2max steigt rechnerisch um ca. <span className="sim-hebel-prognosis-highlight">+{bonus} Punkte</span>!
+                                    Du steigerst dein HIIT-Training um<br />
+                                    <span className="sim-hebel-prognosis-highlight">+{diff} Einheiten/Woche</span> – Deine relative<br />
+                                    VO2max steigt rechnerisch<br />
+                                    um ca. <span className="sim-hebel-prognosis-highlight">+{bonus} Punkte</span>!
                                   </div>
                                 </div>
                               );
@@ -1414,7 +1419,10 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                 <div className="sim-hebel-prognosis-box">
                                   <i className="bi bi-graph-up-arrow sim-hebel-prognosis-icon"></i>
                                   <div>
-                                    Du erhöhst deinen Schlaf um <span className="sim-hebel-prognosis-highlight">+{diff.toFixed(1).replace('.', ',')} Std.</span> pro Nacht – Deine VO2max steigt rechnerisch um ca. <span className="sim-hebel-prognosis-highlight">+{bonus} Punkte</span>!
+                                    Du erhöhst deinen Schlaf um<br />
+                                    <span className="sim-hebel-prognosis-highlight">+{diff.toFixed(1).replace('.', ',')} Std.</span> pro Nacht – Deine VO2max<br />
+                                    steigt rechnerisch<br />
+                                    um ca. <span className="sim-hebel-prognosis-highlight">+{bonus} Punkte</span>!
                                   </div>
                                 </div>
                               );
@@ -1477,7 +1485,9 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                                 <div className="sim-hebel-prognosis-box">
                                   <i className="bi bi-graph-up-arrow sim-hebel-prognosis-icon"></i>
                                   <div>
-                                    Durch die Reduktion um <span className="sim-hebel-prognosis-highlight">-{weightLoss} kg</span> steigt deine relative VO2max rechnerisch sofort auf <span className="sim-hebel-prognosis-highlight">{newVO2Val} ml/kg/min</span>!
+                                    Durch die Reduktion um <span className="sim-hebel-prognosis-highlight">-{weightLoss} kg</span><br />
+                                    steigt deine relative VO2max<br />
+                                    rechnerisch sofort auf <span className="sim-hebel-prognosis-highlight">{newVO2Val} ml/kg/min</span>!
                                   </div>
                                 </div>
                               );
