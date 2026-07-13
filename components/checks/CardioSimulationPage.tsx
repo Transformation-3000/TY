@@ -526,15 +526,15 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           }
           .sim-base-camp {
             left: 0%;
-            transform: translateX(-50%);
+            transform: translateX(0%);
           }
           .sim-target-trophy {
             left: 100%;
-            transform: translateX(-50%);
+            transform: translateX(-100%);
           }
           .sim-runner-avatar {
             left: calc(var(--sim-progress) * 100%);
-            transform: translateX(-50%);
+            transform: translateX(calc(-1 * var(--sim-progress) * 100%));
           }
           .sim-progression-track {
             margin: 0.25rem 48px 1.5rem 48px;
@@ -547,11 +547,26 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             .sim-avatar-box {
               top: -45px;
             }
+            .sim-target-trophy {
+              left: 100%;
+              transform: translateX(-100%);
+            }
+            .sim-runner-avatar {
+              left: calc(var(--sim-progress) * 100%);
+              transform: translateX(calc(-1 * var(--sim-progress) * 100%));
+            }
             .sim-progression-track {
               margin: 0.25rem 36px 1.5rem 36px !important;
             }
             .sim-avatar-emoji {
               font-size: 2.8rem;
+            }
+            .sim-ref-table-card table {
+              font-size: 0.64rem !important;
+            }
+            .sim-ref-table-card th, 
+            .sim-ref-table-card td {
+              padding: 4px 6px !important;
             }
           }
 
