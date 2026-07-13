@@ -537,7 +537,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             transform: translateX(-50%);
           }
           .sim-progression-track {
-            margin: 0.25rem 48px 1.5rem 24px;
+            margin: 0.25rem 48px 1.5rem 48px;
           }
           .sim-avatar-emoji {
             font-size: 4.8rem;
@@ -548,7 +548,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               top: -45px;
             }
             .sim-progression-track {
-              margin: 0.25rem 36px 1.5rem 16px !important;
+              margin: 0.25rem 36px 1.5rem 36px !important;
             }
             .sim-avatar-emoji {
               font-size: 2.8rem;
@@ -621,7 +621,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             <div>
               <h2 className="sim-sec-title" style={{ margin: 0 }}>I. Das Langlebigkeits-Rennen</h2>
               <p className="sim-sec-desc" style={{ margin: '0.2rem 0 0 0', fontSize: '1.15rem' }}>
-                Klicke 1-4 VO2max Hebel unterhalb des Tachos an, die du durchführen kannst und drücke auf Start oder schiebe den Wochenregler, um die Leistungsentwicklung zu steuern.
+                Klicke rechts unterhalb des Tachos bis zu 4 VO2max Hebel an und drücke auf Start oder schiebe den Wochenregler, um die Leistungsentwicklung zu steuern.
               </p>
             </div>
             <div style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
@@ -803,11 +803,11 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 <div style={{ overflowX: 'auto' }}>
                   <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.76rem', textAlign: 'left' }}>
                     <thead>
-                      <tr style={{ borderBottom: '1.5px solid #cbd5e1', color: '#64748b', fontWeight: 700 }}>
-                        <th style={{ padding: '6px 4px', minWidth: '95px' }}>Alter</th>
-                        <th style={{ padding: '6px 2px', width: '20%' }}>Frauen (Schnitt)</th>
-                        <th style={{ padding: '6px 2px', width: '20%' }}>Männer (Schnitt)</th>
-                        <th style={{ padding: '6px 4px' }}>Fitness-Niveau</th>
+                      <tr style={{ borderBottom: '1.5px solid #cbd5e1', color: '#64748b', fontWeight: 700, whiteSpace: 'nowrap' }}>
+                        <th style={{ padding: '6px 8px' }}>Alter</th>
+                        <th style={{ padding: '6px 8px' }}>Frauen (Schnitt)</th>
+                        <th style={{ padding: '6px 8px' }}>Männer (Schnitt)</th>
+                        <th style={{ padding: '6px 8px' }}>Fitness-Niveau</th>
                       </tr>
                     </thead>
                     <tbody style={{ color: '#334155' }}>
@@ -829,13 +829,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           style={{ 
                             borderBottom: '1px solid #f1f5f9', 
                             background: idx % 2 === 0 ? '#f8fafc' : 'transparent',
-                            transition: 'background 0.15s ease' 
+                            transition: 'background 0.15s ease',
+                            whiteSpace: 'nowrap'
                           }}
                         >
-                          <td style={{ padding: '5px 4px', fontWeight: 700, color: '#1e3a5f' }}>{row.age}</td>
-                          <td style={{ padding: '5px 2px' }}>{row.w} ml/kg/min</td>
-                          <td style={{ padding: '5px 2px' }}>{row.m} ml/kg/min</td>
-                          <td style={{ padding: '5px 4px', fontWeight: 600, color: '#4c99c2' }}>{row.level}</td>
+                          <td style={{ padding: '6px 8px', fontWeight: 700, color: '#1e3a5f' }}>{row.age}</td>
+                          <td style={{ padding: '6px 8px' }}>{row.w} ml/kg/min</td>
+                          <td style={{ padding: '6px 8px' }}>{row.m} ml/kg/min</td>
+                          <td style={{ padding: '6px 8px', fontWeight: 600, color: '#4c99c2' }}>{row.level}</td>
                         </tr>
                       ))}
                     </tbody>
