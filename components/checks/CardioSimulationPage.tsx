@@ -570,6 +570,113 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             }
           }
 
+          /* Dynamic Hebel Detail Card Styles */
+          .sim-hebel-detail-card {
+            margin-top: 1rem;
+            background: #ffffff;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 10px 30px rgba(68, 152, 202, 0.04);
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            width: 100%;
+            text-align: left;
+          }
+          .sim-hebel-info-header {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+          }
+          .sim-hebel-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #1e3a5f;
+          }
+          .sim-hebel-desc {
+            font-size: 0.88rem;
+            color: #64748b;
+            line-height: 1.45;
+          }
+          .sim-hebel-input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            width: 100%;
+          }
+          @media (max-width: 576px) {
+            .sim-hebel-input-grid {
+              grid-template-columns: 1fr;
+              gap: 0.75rem;
+            }
+          }
+          .sim-hebel-input-box {
+            background: #fafcff;
+            border: 1px solid #e2eef8;
+            border-radius: 14px;
+            padding: 0.75rem 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+          }
+          .sim-hebel-input-label {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #64748b;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+          }
+          .sim-hebel-input-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+          }
+          .sim-hebel-number-input {
+            width: 68px;
+            height: 34px;
+            border: 1.5px solid #cbd5e1;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 800;
+            font-size: 0.9rem;
+            color: #0f172a;
+            outline: none;
+            transition: border-color 0.2s;
+            background: #ffffff;
+          }
+          .sim-hebel-number-input:focus {
+            border-color: #006ea7;
+          }
+          .sim-hebel-unit {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: #475569;
+          }
+          .sim-hebel-prognosis-box {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+            border: 1.5px solid #bae6fd;
+            border-radius: 14px;
+            padding: 1rem 1.25rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #0369a1;
+            font-weight: 600;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+          }
+          .sim-hebel-prognosis-icon {
+            font-size: 1.15rem;
+            color: #0284c7;
+            flex-shrink: 0;
+            margin-top: 1px;
+          }
+          .sim-hebel-prognosis-highlight {
+            color: #006ea7;
+            font-weight: 800;
+          }
+
           .tacho-wrapper {
             position: relative;
             max-width: 330px;
@@ -1122,253 +1229,262 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       
                       if (activeKey === 'zone2') {
                         content = (
-                           <div style={{ width: '100%' }}>
-                            <strong>Zone 2:</strong> Verbessert die Sauerstoffverarbeitung in den Muskelzellen und bildet das aerobe Fundament.
-                            
-                            {/* Interactive Zone 2 Fields */}
-                            <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', background: '#f0f9ff', padding: '6px 12px', borderRadius: '10px', border: '1px solid #bae6fd', width: 'fit-content' }}>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>🏃‍♂️ Aktuell:</span>
-                                <input 
-                                  type="number" 
-                                  value={currentZone2 || ''} 
-                                  onChange={(e) => setCurrentZone2(Number(e.target.value))}
-                                  style={{ width: '52px', padding: '2px 4px', border: '1.5px solid #0284c7', borderRadius: '6px', textAlign: 'center', fontWeight: 800, color: '#0f172a', background: '#ffffff', fontSize: '0.78rem' }} 
-                                />
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>Min/Woche</span>
+                          <>
+                            <div className="sim-hebel-info-header">
+                              <div className="sim-hebel-title">🏃‍♂️ Zone-2-Ausdauer (Grundlage)</div>
+                              <div className="sim-hebel-desc">
+                                Verbessert die Sauerstoffverarbeitung in den Muskelzellen und bildet das aerobe Fundament.
                               </div>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>🎯 Ziel:</span>
-                                <input 
-                                  type="number" 
-                                  value={targetZone2 || ''} 
-                                  onChange={(e) => setTargetZone2(Number(e.target.value))}
-                                  style={{ width: '52px', padding: '2px 4px', border: '1.5px solid #0284c7', borderRadius: '6px', textAlign: 'center', fontWeight: 800, color: '#0f172a', background: '#ffffff', fontSize: '0.78rem' }} 
-                                />
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>Min/Woche</span>
+                            </div>
+                            
+                            <div className="sim-hebel-input-grid">
+                              <div className="sim-hebel-input-box">
+                                <span className="sim-hebel-input-label">Aktuell</span>
+                                <div className="sim-hebel-input-row">
+                                  <input 
+                                    type="number" 
+                                    value={currentZone2 || ''} 
+                                    onChange={(e) => setCurrentZone2(Number(e.target.value))}
+                                    className="sim-hebel-number-input"
+                                  />
+                                  <span className="sim-hebel-unit">Min/Woche</span>
+                                </div>
+                              </div>
+                              <div className="sim-hebel-input-box">
+                                <span className="sim-hebel-input-label">Ziel</span>
+                                <div className="sim-hebel-input-row">
+                                  <input 
+                                    type="number" 
+                                    value={targetZone2 || ''} 
+                                    onChange={(e) => setTargetZone2(Number(e.target.value))}
+                                    className="sim-hebel-number-input"
+                                  />
+                                  <span className="sim-hebel-unit">Min/Woche</span>
+                                </div>
                               </div>
                             </div>
 
-                            {/* Dynamic Mathematical Example */}
                             {(() => {
                               const curZ2 = currentZone2 >= 0 ? currentZone2 : 0;
                               const tarZ2 = targetZone2 >= 0 ? targetZone2 : 0;
                               const diff = tarZ2 - curZ2;
                               if (diff <= 0) {
                                 return (
-                                  <div style={{ marginTop: '8px', color: '#64748b', fontWeight: 600 }}>
-                                    💡 Tipp: Gib ein Zone 2-Ziel ein, das über deinem aktuellen Wert liegt, um den VO2max-Effekt zu berechnen.
+                                  <div className="sim-hebel-prognosis-box" style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: '#64748b' }}>
+                                    <i className="bi bi-info-circle sim-hebel-prognosis-icon" style={{ color: '#94a3b8' }}></i>
+                                    <div>
+                                      Gib ein Zone 2-Ziel ein, das über deinem aktuellen Wert liegt, um den VO2max-Effekt zu berechnen.
+                                    </div>
                                   </div>
                                 );
                               }
                               const bonus = (diff * 0.01).toFixed(1).replace('.', ',');
                               return (
-                                <div style={{ marginTop: '8px', color: '#006ea7', fontWeight: 600 }}>
-                                  <strong>Rechenbeispiel:</strong> Du erhöhst dein wöchentliches Zone 2-Training von {curZ2} auf {tarZ2} Minuten (+{diff} Min. Zuwachs). Deine relative VO2max steigt am Ende von Woche 12 rein rechnerisch um ca. **+{bonus}** Punkte!
+                                <div className="sim-hebel-prognosis-box">
+                                  <i className="bi bi-graph-up-arrow sim-hebel-prognosis-icon"></i>
+                                  <div>
+                                    Du erhöhst dein wöchentliches Training um <span className="sim-hebel-prognosis-highlight">+{diff} Min.</span> – Deine relative VO2max steigt am Ende von Woche 12 rechnerisch um ca. <span className="sim-hebel-prognosis-highlight">+{bonus} Punkte</span>!
+                                  </div>
                                 </div>
                               );
                             })()}
-                          </div>
+                          </>
                         );
                       } else if (activeKey === 'hiit') {
                         content = (
-                          <div style={{ width: '100%' }}>
-                            <strong>HIIT:</strong> Vergrößert das Herzminutenvolumen, sodass pro Herzschlag mehr sauerstoffreiches Blut gepumpt wird.
-                            
-                            {/* Interactive HIIT Fields */}
-                            <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', background: '#f0f9ff', padding: '6px 12px', borderRadius: '10px', border: '1px solid #bae6fd', width: 'fit-content' }}>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>⚡ Aktuell:</span>
-                                <input 
-                                  type="number" 
-                                  value={currentHIIT === 0 ? 0 : (currentHIIT || '')} 
-                                  onChange={(e) => setCurrentHIIT(Number(e.target.value))}
-                                  style={{ width: '52px', padding: '2px 4px', border: '1.5px solid #0284c7', borderRadius: '6px', textAlign: 'center', fontWeight: 800, color: '#0f172a', background: '#ffffff', fontSize: '0.78rem' }} 
-                                />
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>Einheiten/Woche</span>
+                          <>
+                            <div className="sim-hebel-info-header">
+                              <div className="sim-hebel-title">⚡ Zone-5-HIIT (Spitzenleistung)</div>
+                              <div className="sim-hebel-desc">
+                                Vergrößert das Herzminutenvolumen, sodass pro Herzschlag mehr sauerstoffreiches Blut gepumpt wird.
                               </div>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>🎯 Ziel:</span>
-                                <input 
-                                  type="number" 
-                                  value={targetHIIT || ''} 
-                                  onChange={(e) => setTargetHIIT(Number(e.target.value))}
-                                  style={{ width: '52px', padding: '2px 4px', border: '1.5px solid #0284c7', borderRadius: '6px', textAlign: 'center', fontWeight: 800, color: '#0f172a', background: '#ffffff', fontSize: '0.78rem' }} 
-                                />
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>Einheiten/Woche</span>
+                            </div>
+                            
+                            <div className="sim-hebel-input-grid">
+                              <div className="sim-hebel-input-box">
+                                <span className="sim-hebel-input-label">Aktuell</span>
+                                <div className="sim-hebel-input-row">
+                                  <input 
+                                    type="number" 
+                                    value={currentHIIT === 0 ? 0 : (currentHIIT || '')} 
+                                    onChange={(e) => setCurrentHIIT(Number(e.target.value))}
+                                    className="sim-hebel-number-input"
+                                  />
+                                  <span className="sim-hebel-unit">Einheiten/Woche</span>
+                                </div>
+                              </div>
+                              <div className="sim-hebel-input-box">
+                                <span className="sim-hebel-input-label">Ziel</span>
+                                <div className="sim-hebel-input-row">
+                                  <input 
+                                    type="number" 
+                                    value={targetHIIT || ''} 
+                                    onChange={(e) => setTargetHIIT(Number(e.target.value))}
+                                    className="sim-hebel-number-input"
+                                  />
+                                  <span className="sim-hebel-unit">Einheiten/Woche</span>
+                                </div>
                               </div>
                             </div>
 
-                            {/* Dynamic Mathematical Example */}
                             {(() => {
                               const curH = currentHIIT >= 0 ? currentHIIT : 0;
                               const tarH = targetHIIT >= 0 ? targetHIIT : 0;
                               const diff = tarH - curH;
                               if (diff <= 0) {
                                 return (
-                                  <div style={{ marginTop: '8px', color: '#64748b', fontWeight: 600 }}>
-                                    💡 Tipp: Gib ein HIIT-Ziel ein, das über deinem aktuellen Wert liegt, um den VO2max-Effekt zu berechnen.
+                                  <div className="sim-hebel-prognosis-box" style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: '#64748b' }}>
+                                    <i className="bi bi-info-circle sim-hebel-prognosis-icon" style={{ color: '#94a3b8' }}></i>
+                                    <div>
+                                      Gib ein HIIT-Ziel ein, das über deinem aktuellen Wert liegt, um den VO2max-Effekt zu berechnen.
+                                    </div>
                                   </div>
                                 );
                               }
                               const bonus = (diff * 1.0).toFixed(1).replace('.', ',');
                               return (
-                                <div style={{ marginTop: '8px', color: '#006ea7', fontWeight: 600 }}>
-                                  <strong>Rechenbeispiel:</strong> Du steigerst dein HIIT-Training von {curH} auf {tarH} Einheiten pro Woche (+{diff} Einheiten). Dein maximales Schlagvolumen wächst, was deine VO2max rein rechnerisch um ca. **+{bonus}** Punkte verbessert!
+                                <div className="sim-hebel-prognosis-box">
+                                  <i className="bi bi-graph-up-arrow sim-hebel-prognosis-icon"></i>
+                                  <div>
+                                    Du steigerst dein HIIT-Training um <span className="sim-hebel-prognosis-highlight">+{diff} Einheiten/Woche</span> – Deine relative VO2max steigt rechnerisch um ca. <span className="sim-hebel-prognosis-highlight">+{bonus} Punkte</span>!
+                                  </div>
                                 </div>
                               );
                             })()}
-                          </div>
+                          </>
                         );
                       } else if (activeKey === 'regen') {
                         content = (
-                          <div style={{ width: '100%' }}>
-                            <strong>Erholung:</strong> Ausreichend Schlaf und Trainingspausen erlauben es Herz und Muskeln, sich an gesetzte Reize anzupassen.
-                            
-                            {/* Interactive Sleep Fields */}
-                            <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', background: '#f0f9ff', padding: '6px 12px', borderRadius: '10px', border: '1px solid #bae6fd', width: 'fit-content' }}>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>🛌 Aktuell:</span>
-                                <input 
-                                  type="number" 
-                                  step="0.5"
-                                  value={currentSleep || ''} 
-                                  onChange={(e) => setCurrentSleep(Number(e.target.value))}
-                                  style={{ width: '52px', padding: '2px 4px', border: '1.5px solid #0284c7', borderRadius: '6px', textAlign: 'center', fontWeight: 800, color: '#0f172a', background: '#ffffff', fontSize: '0.78rem' }} 
-                                />
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>Std. Schlaf/Nacht</span>
+                          <>
+                            <div className="sim-hebel-info-header">
+                              <div className="sim-hebel-title">🛌 Erholung & Schlaf</div>
+                              <div className="sim-hebel-desc">
+                                Ausreichend Schlaf und Trainingspausen erlauben es Herz und Muskeln, sich an gesetzte Reize anzupassen.
                               </div>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>🎯 Ziel:</span>
-                                <input 
-                                  type="number" 
-                                  step="0.5"
-                                  value={targetSleep || ''} 
-                                  onChange={(e) => setTargetSleep(Number(e.target.value))}
-                                  style={{ width: '52px', padding: '2px 4px', border: '1.5px solid #0284c7', borderRadius: '6px', textAlign: 'center', fontWeight: 800, color: '#0f172a', background: '#ffffff', fontSize: '0.78rem' }} 
-                                />
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>Std. Schlaf/Nacht</span>
+                            </div>
+                            
+                            <div className="sim-hebel-input-grid">
+                              <div className="sim-hebel-input-box">
+                                <span className="sim-hebel-input-label">Aktuell</span>
+                                <div className="sim-hebel-input-row">
+                                  <input 
+                                    type="number" 
+                                    step="0.5"
+                                    value={currentSleep || ''} 
+                                    onChange={(e) => setCurrentSleep(Number(e.target.value))}
+                                    className="sim-hebel-number-input"
+                                  />
+                                  <span className="sim-hebel-unit">Std. Schlaf/Nacht</span>
+                                </div>
+                              </div>
+                              <div className="sim-hebel-input-box">
+                                <span className="sim-hebel-input-label">Ziel</span>
+                                <div className="sim-hebel-input-row">
+                                  <input 
+                                    type="number" 
+                                    step="0.5"
+                                    value={targetSleep || ''} 
+                                    onChange={(e) => setTargetSleep(Number(e.target.value))}
+                                    className="sim-hebel-number-input"
+                                  />
+                                  <span className="sim-hebel-unit">Std. Schlaf/Nacht</span>
+                                </div>
                               </div>
                             </div>
 
-                            {/* Dynamic Mathematical Example */}
                             {(() => {
                               const curS = currentSleep > 0 ? currentSleep : 6.0;
                               const tarS = targetSleep > 0 ? targetSleep : 8.0;
                               const diff = tarS - curS;
                               if (diff <= 0) {
                                 return (
-                                  <div style={{ marginTop: '8px', color: '#64748b', fontWeight: 600 }}>
-                                    💡 Tipp: Gib ein Schlafziel ein, das über deinem aktuellen Wert liegt, um den VO2max-Effekt zu berechnen.
+                                  <div className="sim-hebel-prognosis-box" style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: '#64748b' }}>
+                                    <i className="bi bi-info-circle sim-hebel-prognosis-icon" style={{ color: '#94a3b8' }}></i>
+                                    <div>
+                                      Gib ein Schlafziel ein, das über deinem aktuellen Wert liegt, um den VO2max-Effekt zu berechnen.
+                                    </div>
                                   </div>
                                 );
                               }
                               const bonus = (diff * 0.4).toFixed(1).replace('.', ',');
                               return (
-                                <div style={{ marginTop: '8px', color: '#006ea7', fontWeight: 600 }}>
-                                  <strong>Rechenbeispiel:</strong> Du optimierst deinen Schlaf von {curS.toFixed(1).replace('.', ',')} auf {tarS.toFixed(1).replace('.', ',')} Std. pro Nacht (+{diff.toFixed(1).replace('.', ',')} Std. mehr Regeneration). Deine VO2max steigt rein rechnerisch um ca. **+{bonus}** Punkte!
+                                <div className="sim-hebel-prognosis-box">
+                                  <i className="bi bi-graph-up-arrow sim-hebel-prognosis-icon"></i>
+                                  <div>
+                                    Du erhöhst deinen Schlaf um <span className="sim-hebel-prognosis-highlight">+{diff.toFixed(1).replace('.', ',')} Std.</span> pro Nacht – Deine VO2max steigt rechnerisch um ca. <span className="sim-hebel-prognosis-highlight">+{bonus} Punkte</span>!
+                                  </div>
                                 </div>
                               );
                             })()}
-                          </div>
+                          </>
                         );
                       } else if (activeKey === 'weight') {
                         content = (
-                          <div style={{ width: '100%' }}>
-                            <strong>Gewichtsreduktion:</strong> Da die relative VO2max pro Kilogramm Körpergewicht gemessen wird (ml/kg/min), erhöht Fettabbau deinen Wert rechnerisch sofort, da weniger Masse versorgt werden muss.
-                            
-                            {/* Interactive Weight Fields (Current & Target) */}
-                            <div style={{ marginTop: '8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px', background: '#f0f9ff', padding: '6px 12px', borderRadius: '10px', border: '1px solid #bae6fd', width: 'fit-content' }}>
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>⚖️ Aktuell:</span>
-                                <input 
-                                  type="number" 
-                                  value={userWeight || ''} 
-                                  onChange={(e) => {
-                                    const val = Number(e.target.value);
-                                    setUserWeight(val);
-                                  }}
-                                  style={{ 
-                                    width: '52px', 
-                                    padding: '2px 4px', 
-                                    border: '1.5px solid #0284c7', 
-                                    borderRadius: '6px', 
-                                    textAlign: 'center', 
-                                    fontWeight: 800, 
-                                    color: '#0f172a',
-                                    background: '#ffffff',
-                                    fontSize: '0.78rem'
-                                  }} 
-                                />
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>kg</span>
+                          <>
+                            <div className="sim-hebel-info-header">
+                              <div className="sim-hebel-title">⚖️ Gewichtsreduktion</div>
+                              <div className="sim-hebel-desc">
+                                Da die relative VO2max pro Kilogramm Körpergewicht gemessen wird, erhöht Fettabbau deinen Wert rechnerisch sofort.
                               </div>
-                              
-                              <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>🎯 Ziel:</span>
-                                <input 
-                                  type="number" 
-                                  value={targetWeight || ''} 
-                                  onChange={(e) => {
-                                    const val = Number(e.target.value);
-                                    setTargetWeight(val);
-                                  }}
-                                  style={{ 
-                                    width: '52px', 
-                                    padding: '2px 4px', 
-                                    border: '1.5px solid #0284c7', 
-                                    borderRadius: '6px', 
-                                    textAlign: 'center', 
-                                    fontWeight: 800, 
-                                    color: '#0f172a',
-                                    background: '#ffffff',
-                                    fontSize: '0.78rem'
-                                  }} 
-                                />
-                                <span style={{ fontWeight: 800, color: '#0369a1', fontSize: '0.78rem' }}>kg</span>
+                            </div>
+                            
+                            <div className="sim-hebel-input-grid">
+                              <div className="sim-hebel-input-box">
+                                <span className="sim-hebel-input-label">Aktuell</span>
+                                <div className="sim-hebel-input-row">
+                                  <input 
+                                    type="number" 
+                                    value={userWeight || ''} 
+                                    onChange={(e) => setUserWeight(Number(e.target.value))}
+                                    className="sim-hebel-number-input"
+                                  />
+                                  <span className="sim-hebel-unit">kg</span>
+                                </div>
+                              </div>
+                              <div className="sim-hebel-input-box">
+                                <span className="sim-hebel-input-label">Ziel</span>
+                                <div className="sim-hebel-input-row">
+                                  <input 
+                                    type="number" 
+                                    value={targetWeight || ''} 
+                                    onChange={(e) => setTargetWeight(Number(e.target.value))}
+                                    className="sim-hebel-number-input"
+                                  />
+                                  <span className="sim-hebel-unit">kg</span>
+                                </div>
                               </div>
                             </div>
 
-                            {/* Dynamic Mathematical Example */}
                             {(() => {
                               const curW = userWeight > 10 ? userWeight : 80;
                               const targetW = targetWeight > 10 ? targetWeight : 76;
                               const weightLoss = curW - targetW;
-                              
                               if (weightLoss <= 0) {
                                 return (
-                                  <div style={{ marginTop: '8px', color: '#64748b', fontWeight: 600 }}>
-                                    💡 Tipp: Gib ein Zielgewicht ein, das unter deinem aktuellen Gewicht liegt, um den VO2max-Effekt zu berechnen.
+                                  <div className="sim-hebel-prognosis-box" style={{ background: '#f8fafc', border: '1px solid #e2e8f0', color: '#64748b' }}>
+                                    <i className="bi bi-info-circle sim-hebel-prognosis-icon" style={{ color: '#94a3b8' }}></i>
+                                    <div>
+                                      Gib ein Zielgewicht ein, das unter deinem aktuellen Gewicht liegt, um den VO2max-Effekt zu berechnen.
+                                    </div>
                                   </div>
                                 );
                               }
-                              
                               const newVO2Val = ((35.0 * curW) / targetW).toFixed(1).replace('.', ',');
                               return (
-                                <div style={{ marginTop: '8px', color: '#006ea7', fontWeight: 600 }}>
-                                  <strong>Rechenbeispiel:</strong> Du reduzierst dein Gewicht von {curW} kg auf {targetW} kg ({weightLoss} kg Verlust). Deine relative VO2max steigt dadurch rein rechnerisch sofort von 35,0 auf {newVO2Val} ml/kg/min an!
+                                <div className="sim-hebel-prognosis-box">
+                                  <i className="bi bi-graph-up-arrow sim-hebel-prognosis-icon"></i>
+                                  <div>
+                                    Durch die Reduktion um <span className="sim-hebel-prognosis-highlight">-{weightLoss} kg</span> steigt deine relative VO2max rechnerisch sofort auf <span className="sim-hebel-prognosis-highlight">{newVO2Val} ml/kg/min</span>!
+                                  </div>
                                 </div>
                               );
                             })()}
-                          </div>
+                          </>
                         );
                       }
 
                       return (
-                        <div 
-                          style={{
-                            marginTop: '1rem',
-                            background: '#fafcff',
-                            border: '1.5px solid #e2eef8',
-                            borderRadius: '16px',
-                            padding: '0.8rem 1rem',
-                            fontSize: '0.78rem',
-                            lineHeight: '1.4',
-                            color: '#334155',
-                            minHeight: '155px',
-                            display: 'flex',
-                            alignItems: 'center'
-                          }}
-                        >
+                        <div className="sim-hebel-detail-card">
                           {content}
                         </div>
                       );
