@@ -467,6 +467,13 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
            padding: 1.25rem;
            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
          }
+         .sim-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            gap: 2rem;
+          }
 
          @media (max-width: 992px) {
            .sim-grid {
@@ -489,13 +496,18 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
            .sim-title {
              font-size: 1.8rem;
            }
+           .sim-header-row {
+              flex-direction: column;
+              align-items: stretch;
+              gap: 1rem;
+            }
          }
          @media (max-width: 576px) {
            .sim-container {
-             padding: 1rem 0.5rem;
+             padding: 1rem;
            }
            .sim-section-card {
-             padding: 1.5rem 1rem;
+             padding: 1.75rem 1.25rem;
              border-radius: 20px;
            }
            .sim-header-title-row {
@@ -590,7 +602,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
         {/* I. DAS LANGLEBIGKEITS-RENNEN */}
         <div>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem', gap: '2rem' }}>
+          <div className="sim-header-row">
             <div>
               <h2 className="sim-sec-title" style={{ margin: 0 }}>I. Das Langlebigkeits-Rennen</h2>
               <p className="sim-sec-desc" style={{ margin: '0.2rem 0 0 0', fontSize: '1.15rem' }}>

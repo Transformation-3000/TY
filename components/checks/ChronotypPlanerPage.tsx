@@ -1503,7 +1503,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
 
         @media (max-width: 576px) {
           .sim-container {
-            padding: 1rem 0.5rem;
+            padding: 1rem;
           }
           
           .sim-header-title-row {
@@ -1521,7 +1521,7 @@ export default function ChronotypPlanerPage({ onBack }: ChronotypPlanerPageProps
           }
           
           .sim-card {
-            padding: 1.5rem 1rem;
+            padding: 1.75rem 1.25rem;
             border-radius: 20px;
           }
           
