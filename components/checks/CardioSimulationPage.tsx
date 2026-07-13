@@ -255,10 +255,6 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           font-size: 1.15rem;
           color: #64748b;
           line-height: 1.55;
-          max-width: 100%;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
         }
         .sim-back-btn {
           background: transparent;
@@ -529,15 +525,18 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           }
           .sim-base-camp {
             left: 0%;
-            transform: translateX(0%);
+            transform: translateX(-50%);
           }
           .sim-target-trophy {
-            left: 90%;
-            transform: translateX(-100%);
+            left: 100%;
+            transform: translateX(-50%);
           }
           .sim-runner-avatar {
-            left: calc(var(--sim-progress) * 90%);
-            transform: translateX(calc(-1 * var(--sim-progress) * 100%));
+            left: calc(var(--sim-progress) * 100%);
+            transform: translateX(-50%);
+          }
+          .sim-progression-track {
+            margin: 0.25rem 48px 1.5rem 24px;
           }
           .sim-avatar-emoji {
             font-size: 4.8rem;
@@ -547,13 +546,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             .sim-avatar-box {
               top: -45px;
             }
-            .sim-target-trophy {
-              left: 80%;
-              transform: translateX(-100%);
-            }
-            .sim-runner-avatar {
-              left: calc(var(--sim-progress) * 80%);
-              transform: translateX(calc(-1 * var(--sim-progress) * 100%));
+            .sim-progression-track {
+              margin: 0.25rem 36px 1.5rem 16px !important;
             }
             .sim-avatar-emoji {
               font-size: 2.8rem;
@@ -674,6 +668,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               
               {/* Dynamic weekly progression track */}
               <div 
+                className="sim-progression-track"
                 style={{
                   background: '#f1f5f9',
                   height: '24px',
@@ -681,7 +676,6 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   position: 'relative',
                   boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)',
                   border: '1px solid #e2e8f0',
-                  margin: '0.25rem 0 1.5rem',
                   ['--sim-progress' as any]: simWeek / 12
                 }}
               >
@@ -692,7 +686,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     key={mark}
                     style={{
                       position: 'absolute',
-                      left: `${mark * 0.9}%`,
+                      left: `${mark}%`,
                       top: '5px',
                       width: '2px',
                       height: '14px',
