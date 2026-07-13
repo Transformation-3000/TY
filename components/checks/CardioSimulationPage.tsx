@@ -527,6 +527,18 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             flex-direction: column;
             align-items: center;
           }
+          .sim-base-camp {
+            left: 0%;
+            transform: translateX(0%);
+          }
+          .sim-target-trophy {
+            left: 90%;
+            transform: translateX(-100%);
+          }
+          .sim-runner-avatar {
+            left: calc(var(--sim-progress) * 90%);
+            transform: translateX(calc(-1 * var(--sim-progress) * 100%));
+          }
           .sim-avatar-emoji {
             font-size: 4.8rem;
             line-height: 1;
@@ -534,6 +546,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           @media (max-width: 576px) {
             .sim-avatar-box {
               top: -45px;
+            }
+            .sim-target-trophy {
+              left: 80%;
+              transform: translateX(-100%);
+            }
+            .sim-runner-avatar {
+              left: calc(var(--sim-progress) * 80%);
+              transform: translateX(calc(-1 * var(--sim-progress) * 100%));
             }
             .sim-avatar-emoji {
               font-size: 2.8rem;
@@ -661,7 +681,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   position: 'relative',
                   boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)',
                   border: '1px solid #e2e8f0',
-                  margin: '0.25rem 0 1.5rem'
+                  margin: '0.25rem 0 1.5rem',
+                  ['--sim-progress' as any]: simWeek / 12
                 }}
               >
                 {/* Grid Marks */}
@@ -681,7 +702,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 ))}
 
                 {/* Avatar A: Aktuelles Ich (static baseline) */}
-                 <div className="sim-avatar-box" style={{ left: '0%' }}>
+                 <div className="sim-avatar-box sim-base-camp">
                    <span className="sim-avatar-emoji" style={{ display: 'inline-block', transform: 'scaleX(-1)' }}>🏃‍♂️</span>
                    <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#94a3b8', background: '#f8fafc', border: '1px solid #e2e8f0', padding: '2px 6px', borderRadius: '8px', whiteSpace: 'nowrap', marginTop: '2px' }}>
                      Basis 35
@@ -689,7 +710,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                  </div>
 
                  {/* Finish Line Trophy (Target at the far right end) */}
-                 <div className="sim-avatar-box" style={{ left: '90%' }}>
+                 <div className="sim-avatar-box sim-target-trophy">
                    <span className="sim-avatar-emoji">🏆</span>
                    <span 
                      style={{
@@ -710,9 +731,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
                 {/* Avatar B: Zukünftiges Ich (moves weekly during sim) */}
                  <div 
-                   className="sim-avatar-box"
+                   className="sim-avatar-box sim-runner-avatar"
                    style={{
-                     left: `${(simWeek / 12) * 90}%`,
                      transition: 'all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1)'
                    }}
                  >
