@@ -1733,20 +1733,19 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             Triff im Aufstiegsverlauf 6 wichtige Alltagsentscheidungen und beobachte live, wie sich jede Wahl positiv oder negativ auf deine VO2max-Kurve und deine Position am Berg auswirkt.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1.2fr', gap: '1.5rem', alignItems: 'stretch' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr 1fr', gap: '1.5rem', alignItems: 'stretch' }}>
             
             {/* SPALTE LINKS: DEINE ENTSCHEIDUNGSZENTRALE */}
             <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.8rem' }}>
-                <span style={{ background: '#eff6ff', color: '#1d4ed8', padding: '4px 12px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>Links</span>
-                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Deine Entscheidungszentrale</h3>
+                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Entscheidungszentrale</h3>
               </div>
 
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '180px' }}>
                 {decisionB ? (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-                    <div style={{ display: 'inline-block', alignSelf: 'flex-start', background: '#f3e8ff', color: '#7e22ce', padding: '2px 8px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 800 }}>
-                      WOCHE {decisionB.week}
+                    <div style={{ display: 'inline-block', alignSelf: 'flex-start', background: '#f3e8ff', color: '#7e22ce', padding: '6px 14px', borderRadius: '10px', fontSize: '1.1rem', fontWeight: 900, letterSpacing: '0.05em' }}>
+                      WOCHE {decisionB.week} / 12
                     </div>
                     <div style={{ color: '#1e3a5f', fontWeight: 700, fontSize: '0.95rem', lineHeight: '1.5' }}>
                       {decisionB.title}
@@ -1786,7 +1785,10 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 ) : (
                   <div style={{ textAlign: 'center', padding: '2rem' }}>
                     {isSimulatingB ? (
-                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.2rem' }}>
+                        <div style={{ display: 'inline-block', background: '#f3e8ff', color: '#7e22ce', padding: '8px 16px', borderRadius: '12px', fontSize: '1.2rem', fontWeight: 900 }}>
+                          WOCHE {simWeekB} / 12
+                        </div>
                         <div className="spinner-border text-primary" role="status" style={{ width: '2rem', height: '2rem' }}>
                           <span className="visually-hidden">Loading...</span>
                         </div>
@@ -1823,62 +1825,74 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               </div>
             </div>
 
-            {/* SPALTE MITTE: DEIN AUFSTIEG */}
+            {/* SPALTE MITTE: AUFSTIEG */}
             <div style={{ background: '#f8fafc', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', position: 'relative' }}>
               <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.8rem', textAlign: 'center' }}>
-                <span style={{ background: '#f1f5f9', color: '#475569', padding: '4px 12px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>Mitte</span>
-                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Dein Aufstieg</h3>
+                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Aufstieg</h3>
               </div>
 
               {/* Graphic Mountain area */}
               <div style={{ 
                 flex: 1, 
                 position: 'relative', 
-                background: 'linear-gradient(to top, #334155, #64748b, #cbd5e1, #eff6ff)', 
                 borderRadius: '20px', 
                 overflow: 'hidden',
                 minHeight: '350px',
                 boxShadow: 'inset 0 4px 12px rgba(0,0,0,0.1)'
               }}>
-                {/* Visual mountain peak vector outline overlay */}
-                <div style={{
-                  position: 'absolute',
-                  bottom: 0,
-                  left: 0,
-                  right: 0,
-                  top: 0,
-                  background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%)',
-                  zIndex: 1
-                }} />
-
-                {/* Dotted climbing trail from bottom center-left to top center-right */}
-                <div style={{
-                  position: 'absolute',
-                  top: '40px',
-                  bottom: '40px',
-                  left: '40%',
-                  width: '3px',
-                  borderLeft: '3px dotted rgba(255,255,255,0.6)',
-                  zIndex: 2,
-                  transform: 'rotate(12deg)'
-                }} />
+                <svg width="100%" height="100%" viewBox="0 0 300 400" preserveAspectRatio="none" style={{ display: 'block' }}>
+                  <defs>
+                    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#bae6fd" />
+                      <stop offset="60%" stopColor="#7dd3fc" />
+                      <stop offset="100%" stopColor="#38bdf8" />
+                    </linearGradient>
+                    <linearGradient id="mountainLeft" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#cbd5e1" />
+                      <stop offset="30%" stopColor="#94a3b8" />
+                      <stop offset="70%" stopColor="#334155" />
+                      <stop offset="100%" stopColor="#14532d" />
+                    </linearGradient>
+                    <linearGradient id="mountainRight" x1="0%" y1="0%" x2="0%" y2="100%">
+                      <stop offset="0%" stopColor="#e2e8f0" />
+                      <stop offset="30%" stopColor="#cbd5e1" />
+                      <stop offset="70%" stopColor="#475569" />
+                      <stop offset="100%" stopColor="#166534" />
+                    </linearGradient>
+                  </defs>
+                  <rect width="300" height="400" fill="url(#skyGrad)" />
+                  <path d="M 0 400 L 90 220 L 180 400 Z" fill="#0369a1" opacity="0.35" />
+                  <path d="M 120 400 L 210 200 L 300 400 Z" fill="#0369a1" opacity="0.45" />
+                  <path d="M 30 400 L 150 60 L 270 400 Z" fill="url(#mountainRight)" />
+                  <path d="M 30 400 L 150 60 L 150 400 Z" fill="url(#mountainLeft)" opacity="0.7" />
+                  <path d="M 120 150 L 150 60 L 180 150 L 165 130 L 150 145 L 135 130 Z" fill="#ffffff" />
+                  <path d="M 120 150 L 150 60 L 150 145 L 135 130 Z" fill="#cbd5e1" />
+                  {/* Green grass hills at the bottom */}
+                  <path d="M -20 400 L 100 370 Q 150 355 200 370 L 320 400 Z" fill="#22c55e" opacity="0.95" />
+                  <path d="M -20 420 L 70 380 Q 150 365 240 380 L 320 420 Z" fill="#15803d" />
+                  <path d="M 60 370 Q 110 290 170 200 T 150 70" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="3" strokeDasharray="6,6" />
+                  <line x1="10" y1="70" x2="290" y2="70" stroke="rgba(168,85,247,0.3)" strokeWidth="1" strokeDasharray="4,4" />
+                  <line x1="10" y1="200" x2="290" y2="200" stroke="rgba(59,130,246,0.3)" strokeWidth="1" strokeDasharray="4,4" />
+                  <line x1="10" y1="290" x2="290" y2="290" stroke="rgba(34,197,94,0.3)" strokeWidth="1" strokeDasharray="4,4" />
+                  <line x1="10" y1="370" x2="290" y2="370" stroke="rgba(148,163,184,0.3)" strokeWidth="1" strokeDasharray="4,4" />
+                </svg>
 
                 {/* Peak Label */}
-                <div style={{ position: 'absolute', top: '15px', right: '15px', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(5px)', padding: '2px 8px', borderRadius: '8px', color: '#fff', fontSize: '0.7rem', fontWeight: 800, border: '1px solid rgba(255,255,255,0.2)', zIndex: 3 }}>
+                <div style={{ position: 'absolute', top: '15px', right: '15px', background: 'rgba(255,255,255,0.12)', backdropFilter: 'blur(5px)', padding: '2px 8px', borderRadius: '8px', color: '#fff', fontSize: '0.7rem', fontWeight: 800, border: '1px solid rgba(255,255,255,0.15)', zIndex: 3 }}>
                   🏔️ Mount Longevitus
                 </div>
 
                 {/* Height Stage Markers on the mountain side */}
-                <div style={{ position: 'absolute', top: '15%', left: '10px', color: 'rgba(255,255,255,0.9)', fontSize: '0.75rem', fontWeight: 800, zIndex: 3 }}>
+                <div style={{ position: 'absolute', top: '13%', left: '10px', color: '#d8b4fe', fontSize: '0.7rem', fontWeight: 800, zIndex: 3, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                   🏁 Gipfel (VO2max 45+)
                 </div>
-                <div style={{ position: 'absolute', top: '40%', left: '10px', color: 'rgba(255,255,255,0.75)', fontSize: '0.75rem', fontWeight: 800, zIndex: 3 }}>
+                <div style={{ position: 'absolute', top: '46%', left: '10px', color: '#93c5fd', fontSize: '0.7rem', fontWeight: 800, zIndex: 3, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                   🧗‍♂️ Felsstufe (40-44)
                 </div>
-                <div style={{ position: 'absolute', top: '65%', left: '10px', color: 'rgba(255,255,255,0.75)', fontSize: '0.75rem', fontWeight: 800, zIndex: 3 }}>
+                <div style={{ position: 'absolute', top: '69%', left: '10px', color: '#86efac', fontSize: '0.7rem', fontWeight: 800, zIndex: 3, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                   🌲 Waldgrenze (35-39)
                 </div>
-                <div style={{ position: 'absolute', top: '90%', left: '10px', color: 'rgba(255,255,255,0.6)', fontSize: '0.75rem', fontWeight: 800, zIndex: 3 }}>
+                <div style={{ position: 'absolute', top: '89%', left: '10px', color: '#cbd5e1', fontSize: '0.7rem', fontWeight: 800, zIndex: 3, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                   ⛺ Basis-Camp (&lt;35)
                 </div>
 
@@ -1886,18 +1900,44 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 {(() => {
                   const minVo2 = 30.0;
                   const maxVo2 = 48.5;
-                  const ratio = Math.min(1, Math.max(0, (vo2B - minVo2) / (maxVo2 - minVo2)));
-                  const bottomPercent = 10 + ratio * 75;
-                  const leftPercent = 25 + ratio * 35;
+                  const t = Math.min(1, Math.max(0, (vo2B - minVo2) / (maxVo2 - minVo2)));
                   
+                  // Winding path interpolation matching the SVG path Q/T curves:
+                  let x = 60;
+                  let y = 370;
+                  
+                  if (t < 0.5) {
+                    const localT = t / 0.5;
+                    const x1 = 60 + (110 - 60) * localT;
+                    const y1 = 370 + (290 - 370) * localT;
+                    const x2 = 110 + (170 - 110) * localT;
+                    const y2 = 290 + (200 - 290) * localT;
+                    x = x1 + (x2 - x1) * localT;
+                    y = y1 + (y2 - y1) * localT;
+                  } else {
+                    const localT = (t - 0.5) / 0.5;
+                    const cx = 230;
+                    const cy = 110;
+                    const x1 = 170 + (cx - 170) * localT;
+                    const y1 = 200 + (cy - 200) * localT;
+                    const x2 = cx + (150 - cx) * localT;
+                    const y2 = cy + (70 - cy) * localT;
+                    x = x1 + (x2 - x1) * localT;
+                    y = y1 + (y2 - y1) * localT;
+                  }
+
+                  // Translate svg viewBox coords (300 x 400) to percentage
+                  const leftPercent = (x / 300) * 100;
+                  const topPercent = (y / 400) * 100;
+
                   return (
                     <div 
                       style={{
                         position: 'absolute',
-                        bottom: `${bottomPercent}%`,
+                        top: `${topPercent}%`,
                         left: `${leftPercent}%`,
                         zIndex: 10,
-                        transform: 'translate(-50%, 50%)',
+                        transform: 'translate(-50%, -80%)',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
@@ -1905,22 +1945,23 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       }}
                     >
                       <span style={{ 
-                        fontSize: '2rem', 
-                        filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))',
+                        fontSize: '2.2rem', 
+                        filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.5))',
                         animation: isSimulatingB && !decisionB ? 'heartbeat-sim 1.5s infinite ease-in-out' : 'none'
                       }}>
                         🧗
                       </span>
                       <div style={{ 
-                        background: '#1e293b', 
+                        background: 'rgba(30, 41, 59, 0.85)', 
+                        backdropFilter: 'blur(5px)',
                         color: '#fff', 
                         padding: '2px 8px', 
                         borderRadius: '10px', 
-                        fontSize: '0.7rem', 
+                        fontSize: '0.65rem', 
                         fontWeight: 800, 
                         marginTop: '4px',
                         whiteSpace: 'nowrap',
-                        boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
+                        boxShadow: '0 2px 10px rgba(0,0,0,0.3)',
                         border: '1px solid rgba(255,255,255,0.1)'
                       }}>
                         Woche {simWeekB}: {vo2B.toFixed(1)} ml
@@ -1934,8 +1975,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             {/* SPALTE RECHTS: VO2-MAX ENTWICKLUNG */}
             <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
               <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.8rem' }}>
-                <span style={{ background: '#faf5ff', color: '#7e22ce', padding: '4px 12px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>Rechts</span>
-                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>VO2-max Entwicklung</h3>
+                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Entwicklung VO2max</h3>
               </div>
 
               {/* Huge current value display */}
