@@ -2131,16 +2131,17 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         transition: 'all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1)'
                       }}
                     >
-                      <img 
-                        src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f9d7/512.webp" 
-                        alt="🧗"
-                        style={{ 
-                          width: '80px', 
-                          height: '80px', 
-                          filter: 'drop-shadow(0 6px 8px rgba(0,0,0,0.5))',
-                          animation: isSimulatingB && !decisionB ? 'heartbeat-sim 1.5s infinite ease-in-out' : 'none'
-                        }}
-                      />
+                      <span style={{ 
+                        fontSize: '4.4rem', 
+                        filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.95)) drop-shadow(0 4px 6px rgba(0,0,0,0.4))',
+                        animation: isSimulatingB && !decisionB ? 'heartbeat-sim 1.5s infinite ease-in-out' : 'none',
+                        background: 'transparent',
+                        backgroundColor: 'transparent',
+                        display: 'inline-block',
+                        lineHeight: '1'
+                      }}>
+                        🧗
+                      </span>
                       <div style={{ 
                         background: 'rgba(30, 41, 59, 0.85)', 
                         backdropFilter: 'blur(5px)',
