@@ -86,14 +86,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         options: [
           {
             key: 'A',
-            text: '🏃‍♂️ Aufstehen & 45 Min. Zone-2-Lauf machen',
+            text: 'Aufstehen & 45 Min. Zone-2-Lauf machen',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.6)),
             logText: 'Woche 2: Aufgestanden & trainiert (+0,6 VO2max).',
             type: 'good'
           },
           {
             key: 'B',
-            text: '📱 Liegenbleiben & Social Media checken',
+            text: 'Liegenbleiben & Social Media checken',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
             logText: 'Woche 2: Liegengeblieben & Social Media gecheckt (-0,1 VO2max).',
             type: 'bad'
@@ -110,14 +110,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         options: [
           {
             key: 'A',
-            text: '🚲 Mit dem Rad fahren oder zu Fuss gehen',
+            text: 'Mit dem Rad fahren oder zu Fuss gehen',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
             logText: 'Woche 4: Mit dem Rad gefahren oder zu Fuss gegangen (+0,5 VO2max).',
             type: 'good'
           },
           {
             key: 'B',
-            text: '🚗 Mit dem Auto fahren',
+            text: 'Mit dem Auto fahren',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
             logText: 'Woche 4: Mit dem Auto gefahren & im Stau gestanden (-0,2 VO2max).',
             type: 'bad'
@@ -134,14 +134,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         options: [
           {
             key: 'A',
-            text: '💧 Alkoholfreies Bier / Wasser nehmen',
+            text: 'Alkoholfreies Bier / Wasser nehmen',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.6)),
             logText: 'Woche 6: Alkoholfrei geblieben (+0,6 VO2max durch Top-Regeneration).',
             type: 'good'
           },
           {
             key: 'B',
-            text: '🍻 Alkohol trinken',
+            text: 'Alkohol trinken',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.4)),
             logText: 'Woche 6: Alkohol getrunken (-0,4 VO2max, Regeneration gestört).',
             type: 'bad'
@@ -158,14 +158,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         options: [
           {
             key: 'A',
-            text: '🛌 Fernseher aus, Schlaf priorisieren',
+            text: 'Fernseher aus, Schlaf priorisieren',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
             logText: 'Woche 8: Schlaf priorisiert (+0,7 VO2max durch Zellreparatur).',
             type: 'good'
           },
           {
             key: 'B',
-            text: '🍿 Serienfolge streamen (Netflix)',
+            text: 'Serienfolge streamen (Netflix)',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.3)),
             logText: 'Woche 8: Serie gestreamt (-0,3 VO2max durch Schlafmangel).',
             type: 'bad'
@@ -182,14 +182,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         options: [
           {
             key: 'A',
-            text: '🚶‍♂️ 20 Min. zügiger Power-Walk um den Block',
+            text: '20 Min. zügiger Power-Walk um den Block',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
             logText: 'Woche 10: Power-Walk gemacht (+0,5 VO2max).',
             type: 'good'
           },
           {
             key: 'B',
-            text: '🍩 Espresso & Donut am Schreibtisch',
+            text: 'Espresso & Donut am Schreibtisch',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
             logText: 'Woche 10: Zucker-Crash erlitten (-0,2 VO2max).',
             type: 'bad'
@@ -206,14 +206,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         options: [
           {
             key: 'A',
-            text: '🥾 Bergwanderung mit Freunden unternehmen',
+            text: 'Bergwanderung mit Freunden unternehmen',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
             logText: 'Woche 12: Bergwandern gewesen (+0,7 VO2max).',
             type: 'good'
           },
           {
             key: 'B',
-            text: '🎮 Den ganzen Tag auf der Couch zocken',
+            text: 'Den ganzen Tag auf der Couch zocken',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
             logText: 'Woche 12: Tag auf der Couch verbracht (-0,1 VO2max).',
             type: 'bad'
@@ -1754,7 +1754,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '180px' }}>
                 {decisionB ? (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-                    <div style={{ display: 'inline-block', alignSelf: 'flex-start', background: '#f3e8ff', color: '#7e22ce', padding: '6px 14px', borderRadius: '10px', fontSize: '1.1rem', fontWeight: 900, letterSpacing: '0.05em' }}>
+                    <div style={{ display: 'inline-block', alignSelf: 'flex-start', background: '#f3e8ff', color: '#7e22ce', padding: '10px 18px', borderRadius: '12px', fontSize: '1.6rem', fontWeight: 900, letterSpacing: '0.05em' }}>
                       WOCHE {decisionB.week} / 12
                     </div>
                     <div style={{ color: '#1e3a5f', fontWeight: 700, fontSize: '0.95rem', lineHeight: '1.5' }}>
@@ -1800,7 +1800,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   <div style={{ textAlign: 'center', padding: '2rem' }}>
                     {isSimulatingB ? (
                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.2rem' }}>
-                        <div style={{ display: 'inline-block', background: '#f3e8ff', color: '#7e22ce', padding: '8px 16px', borderRadius: '12px', fontSize: '1.2rem', fontWeight: 900 }}>
+                        <div style={{ display: 'inline-block', background: '#f3e8ff', color: '#7e22ce', padding: '10px 20px', borderRadius: '12px', fontSize: '1.6rem', fontWeight: 900 }}>
                           WOCHE {simWeekB} / 12
                         </div>
                         <div className="spinner-border text-primary" role="status" style={{ width: '2rem', height: '2rem' }}>
