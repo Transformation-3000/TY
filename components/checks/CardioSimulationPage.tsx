@@ -38,10 +38,11 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
   const [simWeekB, setSimWeekB] = useState(0);
   const [isSimulatingB, setIsSimulatingB] = useState(false);
   const [vo2B, setVo2B] = useState(35.0);
+  const [lastChangeB, setLastChangeB] = useState<number | null>(null);
   const [decisionB, setDecisionB] = useState<{
     week: number;
     title: string;
-    options: { key: string; text: string; effect: () => void; logText: string; type: 'good' | 'bad' }[];
+    options: { key: string; text: string; change: number; effect: () => void; logText: string; type: 'good' | 'bad' }[];
   } | null>(null);
   const [historyB, setHistoryB] = useState<{ week: number; type: 'good' | 'bad' | 'neutral'; text: string }[]>([]);
 
@@ -49,12 +50,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     setSimWeekB(0);
     setVo2B(35.0);
     setDecisionB(null);
+    setLastChangeB(null);
     setHistoryB([{ week: 0, type: 'neutral', text: 'Start des Aufstiegs am Mount Longevitus bei VO2max 35,0' }]);
     setIsSimulatingB(true);
   };
 
-  const handleDecisionChoice = (effect: () => void, logText: string, type: 'good' | 'bad', week: number) => {
+  const handleDecisionChoice = (effect: () => void, logText: string, type: 'good' | 'bad', week: number, changeVal: number) => {
     effect();
+    setLastChangeB(changeVal);
     setHistoryB((prev) => {
       if (prev.some((h) => h.week === week)) {
         return prev;
@@ -87,6 +90,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           {
             key: 'A',
             text: 'Vollkorn-Müsli mit Beeren',
+            change: 0.4,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.4)),
             logText: 'Woche 1: Vollkorn-Müsli gewählt (+0,4)',
             type: 'good'
@@ -94,6 +98,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           {
             key: 'B',
             text: 'Croissant mit Nutella',
+            change: -0.1,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
             logText: 'Woche 1: Croissant gewählt (-0,1)',
             type: 'bad'
@@ -110,17 +115,19 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         options: [
           {
             key: 'A',
-            text: 'Aufstehen & 45 Min. Zone-2-Lauf machen',
-            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'Woche 2: Aufgestanden & trainiert (+0,5)',
-            type: 'good'
-          },
-          {
-            key: 'B',
             text: 'Liegenbleiben & Social Media checken',
+            change: -0.15,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.15)),
             logText: 'Woche 2: Liegengeblieben & Social Media gecheckt (-0,15)',
             type: 'bad'
+          },
+          {
+            key: 'B',
+            text: 'Aufstehen & 45 Min. Zone-2-Lauf machen',
+            change: 0.5,
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
+            logText: 'Woche 2: Aufgestanden & trainiert (+0,5)',
+            type: 'good'
           }
         ]
       });
@@ -135,6 +142,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           {
             key: 'A',
             text: 'Ausreichend Wasser trinken',
+            change: 0.3,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.3)),
             logText: 'Woche 3: Wasser getrunken (+0,3)',
             type: 'good'
@@ -142,6 +150,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           {
             key: 'B',
             text: 'Softdrinks trinken',
+            change: -0.15,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.15)),
             logText: 'Woche 3: Softdrinks getrunken (-0,15)',
             type: 'bad'
@@ -158,17 +167,19 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         options: [
           {
             key: 'A',
-            text: 'Mit dem Rad fahren oder zu Fuss gehen',
-            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'Woche 4: Mit dem Rad gefahren oder zu Fuss gegangen (+0,5)',
-            type: 'good'
-          },
-          {
-            key: 'B',
             text: 'Mit dem Auto fahren',
+            change: -0.2,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
             logText: 'Woche 4: Mit dem Auto gefahren & im Stau gestanden (-0,2)',
             type: 'bad'
+          },
+          {
+            key: 'B',
+            text: 'Mit dem Rad fahren oder zu Fuss gehen',
+            change: 0.5,
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
+            logText: 'Woche 4: Mit dem Rad gefahren oder zu Fuss gegangen (+0,5)',
+            type: 'good'
           }
         ]
       });
@@ -183,6 +194,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           {
             key: 'A',
             text: 'Salat mit Hähnchenbrust/Tofu wählen',
+            change: 0.4,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.4)),
             logText: 'Woche 5: Salat gewählt (+0,4)',
             type: 'good'
@@ -190,6 +202,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           {
             key: 'B',
             text: 'Fast Food Burger bestellen',
+            change: -0.2,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
             logText: 'Woche 5: Fast Food gegessen (-0,2)',
             type: 'bad'
@@ -206,17 +219,19 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         options: [
           {
             key: 'A',
-            text: 'Alkoholfreies Bier / Wasser nehmen',
-            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.6)),
-            logText: 'Woche 6: Alkoholfrei geblieben (+0,6 durch Top-Regeneration)',
-            type: 'good'
-          },
-          {
-            key: 'B',
             text: 'Alkohol trinken',
+            change: -0.4,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.4)),
             logText: 'Woche 6: Alkohol getrunken (-0,4, Regeneration gestört)',
             type: 'bad'
+          },
+          {
+            key: 'B',
+            text: 'Alkoholfreies Bier / Wasser nehmen',
+            change: 0.6,
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.6)),
+            logText: 'Woche 6: Alkoholfrei geblieben (+0,6 durch Top-Regeneration)',
+            type: 'good'
           }
         ]
       });
@@ -231,6 +246,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           {
             key: 'A',
             text: 'Atemübung & Entspannung machen',
+            change: 0.35,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.35)),
             logText: 'Woche 7: Atemübung gemacht (+0,35)',
             type: 'good'
@@ -238,6 +254,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           {
             key: 'B',
             text: 'Snacks & Süßigkeiten essen',
+            change: -0.15,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.15)),
             logText: 'Woche 7: Frust-Snacks gegessen (-0,15)',
             type: 'bad'
@@ -254,17 +271,19 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         options: [
           {
             key: 'A',
-            text: 'Fernseher aus, Schlaf priorisieren',
-            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
-            logText: 'Woche 8: Schlaf priorisiert (+0,7 durch Zellreparatur)',
-            type: 'good'
-          },
-          {
-            key: 'B',
             text: 'Serienfolge streamen (Netflix)',
+            change: -0.3,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.3)),
             logText: 'Woche 8: Serie gestreamt (-0,3 durch Schlafmangel)',
             type: 'bad'
+          },
+          {
+            key: 'B',
+            text: 'Fernseher aus, Schlaf priorisieren',
+            change: 0.7,
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
+            logText: 'Woche 8: Schlaf priorisiert (+0,7 durch Zellreparatur)',
+            type: 'good'
           }
         ]
       });
@@ -279,6 +298,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           {
             key: 'A',
             text: 'Spaziergang machen',
+            change: 0.3,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.3)),
             logText: 'Woche 9: Spaziergang gemacht (+0,3)',
             type: 'good'
@@ -286,6 +306,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           {
             key: 'B',
             text: 'Nur im Bett liegen und fernsehen',
+            change: -0.1,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
             logText: 'Woche 9: Den Tag inaktiv verbracht (-0,1)',
             type: 'bad'
@@ -302,17 +323,19 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         options: [
           {
             key: 'A',
-            text: '20 Min. zügiger Power-Walk um den Block',
-            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'Woche 10: Power-Walk gemacht (+0,5)',
-            type: 'good'
-          },
-          {
-            key: 'B',
             text: 'Espresso & Donut am Schreibtisch',
+            change: -0.2,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
             logText: 'Woche 10: Zucker-Crash erlitten (-0,2)',
             type: 'bad'
+          },
+          {
+            key: 'B',
+            text: '20 Min. zügiger Power-Walk um den Block',
+            change: 0.5,
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
+            logText: 'Woche 10: Power-Walk gemacht (+0,5)',
+            type: 'good'
           }
         ]
       });
@@ -327,6 +350,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           {
             key: 'A',
             text: 'Regen trotzen und laufen gehen',
+            change: 0.5,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
             logText: 'Woche 11: Im Regen gelaufen (+0,5)',
             type: 'good'
@@ -334,6 +358,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           {
             key: 'B',
             text: 'Training ausfallen lassen / verschieben',
+            change: -0.25,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.25)),
             logText: 'Woche 11: Training ausfallen lassen (-0,25)',
             type: 'bad'
@@ -350,17 +375,19 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         options: [
           {
             key: 'A',
-            text: 'Bergwanderung mit Freunden unternehmen',
-            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
-            logText: 'Woche 12: Bergwandern gewesen (+0,7)',
-            type: 'good'
-          },
-          {
-            key: 'B',
             text: 'Den ganzen Tag auf der Couch zocken',
+            change: -0.1,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
             logText: 'Woche 12: Tag auf der Couch verbracht (-0,1)',
             type: 'bad'
+          },
+          {
+            key: 'B',
+            text: 'Bergwanderung mit Freunden unternehmen',
+            change: 0.7,
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
+            logText: 'Woche 12: Bergwandern gewesen (+0,7)',
+            type: 'good'
           }
         ]
       });
@@ -1905,7 +1932,17 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '0.8rem', marginTop: '0.2rem' }}>
                 {decisionB ? (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-                    <div style={{ display: 'inline-block', alignSelf: 'flex-start', background: '#f3e8ff', color: '#7e22ce', padding: '10px 18px', borderRadius: '12px', fontSize: '1.4rem', fontWeight: 900, letterSpacing: '0.05em' }}>
+                    <div style={{ 
+                      display: 'inline-block', 
+                      alignSelf: 'flex-start', 
+                      background: decisionB.week === 12 ? '#dcfce7' : '#f3e8ff', 
+                      color: decisionB.week === 12 ? '#166534' : '#7e22ce', 
+                      padding: '10px 18px', 
+                      borderRadius: '12px', 
+                      fontSize: '1.4rem', 
+                      fontWeight: 900, 
+                      letterSpacing: '0.05em' 
+                    }}>
                       WOCHE {decisionB.week} / 12
                     </div>
                     <div style={{ color: '#1e3a5f', fontWeight: 700, fontSize: '0.95rem', lineHeight: '1.5' }}>
@@ -1915,10 +1952,10 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       {decisionB.options.map((opt) => (
                         <button
                           key={opt.key}
-                          onClick={() => handleDecisionChoice(opt.effect, opt.logText, opt.type, decisionB.week)}
+                          onClick={() => handleDecisionChoice(opt.effect, opt.logText, opt.type, decisionB.week, opt.change)}
                           style={{
                             background: '#ffffff',
-                            border: '2px solid #e2e8f0',
+                            border: decisionB.week === 12 ? '2px solid #bbf7d0' : '2px solid #e2e8f0',
                             borderRadius: '12px',
                             padding: '12px 16px',
                             fontSize: '0.85rem',
@@ -1929,15 +1966,15 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                             transition: 'all 0.2s ease'
                           }}
                           onMouseOver={(e) => {
-                            e.currentTarget.style.border = '2px solid #7e22ce';
-                            e.currentTarget.style.background = '#fdfaff';
+                            e.currentTarget.style.border = decisionB.week === 12 ? '2px solid #22c55e' : '2px solid #7e22ce';
+                            e.currentTarget.style.background = decisionB.week === 12 ? '#f0fdf4' : '#fdfaff';
                           }}
                           onMouseOut={(e) => {
-                            e.currentTarget.style.border = '2px solid #e2e8f0';
+                            e.currentTarget.style.border = decisionB.week === 12 ? '2px solid #bbf7d0' : '2px solid #e2e8f0';
                             e.currentTarget.style.background = '#ffffff';
                           }}
                         >
-                          <strong style={{ fontWeight: 800, color: '#7e22ce', marginRight: '6px' }}>
+                          <strong style={{ fontWeight: 800, color: decisionB.week === 12 ? '#166534' : '#7e22ce', marginRight: '6px' }}>
                             {opt.key === 'A' ? 'Antwort 1:' : 'Antwort 2:'}
                           </strong>
                           <span style={{ fontWeight: 500 }}>
@@ -2137,6 +2174,23 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   {vo2B.toFixed(1).replace('.', ',')}
                   <span style={{ fontSize: '1rem', fontWeight: 600, color: '#64748b', marginLeft: '4px' }}>ml/kg/min</span>
                 </div>
+                {lastChangeB !== null && (
+                  <div style={{
+                    fontSize: '1rem',
+                    fontWeight: 700,
+                    color: lastChangeB >= 0 ? '#166534' : '#dc2626',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    marginTop: '0.2rem',
+                    background: lastChangeB >= 0 ? '#f0fdf4' : '#fef2f2',
+                    padding: '4px 12px',
+                    borderRadius: '8px',
+                    border: lastChangeB >= 0 ? '1px solid #bbf7d0' : '1px solid #fca5a5'
+                  }}>
+                    {lastChangeB >= 0 ? '▲ +' : '▼ '}{lastChangeB.toFixed(2).replace('.', ',')}
+                  </div>
+                )}
               </div>
 
               {/* Log area with red/green conditional styling */}
