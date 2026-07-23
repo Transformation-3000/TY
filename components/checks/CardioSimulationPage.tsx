@@ -2019,7 +2019,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     ) : (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', alignItems: 'center' }}>
                         <span style={{ width: '100%', fontSize: '1.2rem', color: '#334155', fontWeight: 500, textAlign: 'center', lineHeight: '1.4' }}>
-                          Bereit für den Aufstieg? Starte deine Erfahrung und triff verschiedene Lifestyle-Entscheidungen.
+                          Bereit für den Aufstieg? Triff deine Lifestyle-Entscheidungen.
                         </span>
                         <button
                           onClick={startSimulationB}
@@ -2155,7 +2155,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       }}
                     >
                       <img 
-                        src="/images/climber_fluent_no_rock.svg"
+                        src="/images/climber_fluent.svg"
                         alt="Climber"
                         style={{ 
                           width: '90px', 
