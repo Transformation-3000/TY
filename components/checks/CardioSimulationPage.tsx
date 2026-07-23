@@ -97,22 +97,22 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     if (nextWeek === 1) {
       setDecisionB({
         week: 1,
-        title: '🥦 Frühstücks-Wahl: Vollkorn-Müsli mit Beeren oder Croissant mit Nutella?',
+        title: '🏃‍♂️ Zone 2 Fundament: Absolvierst du dein wöchentliches Grundlagentraining strikt an der aeroben Schwelle (unter 2,0 mmol/l Laktat) oder trainierst du unbewusst im grauen Bereich (Zone 3)?',
         options: [
           {
             key: 'A',
-            text: 'Vollkorn-Müsli mit Beeren',
+            text: 'Striktes Zone-2-Training zur Verbesserung der mitochondrialen Dichte',
             change: 0.4,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.4)),
-            logText: 'W1: Vollkorn-Müsli gewählt (+0,4)',
+            logText: 'W1: Zone 2 priorisiert (+0,4)',
             type: 'good'
           },
           {
             key: 'B',
-            text: 'Croissant mit Nutella',
+            text: 'Unstrukturiertes Training im grauen Bereich (Zone 3) mit hoher Ermüdung',
             change: -0.1,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
-            logText: 'W1: Croissant gewählt (-0,1)',
+            logText: 'W1: Grauzonen-Training gewählt (-0,1)',
             type: 'bad'
           }
         ]
@@ -123,22 +123,22 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     if (nextWeek === 2) {
       setDecisionB({
         week: 2,
-        title: '⏰ Dein Wecker klingelt um 6:00 Uhr für dein geplantes Lauftraining. Was tust du?',
+        title: '⚡ HIIT-Protokoll: Setzt du auf das wissenschaftlich validierte 4x4-Minuten-Protokoll nach Helgerud/Hoff bei 90-95% HFmax oder machst du kurze Sprints ohne ausreichende VO2max-Auslastung?',
         options: [
           {
             key: 'A',
-            text: 'Liegenbleiben & Social Media checken',
+            text: 'Kurze 30-Sekunden-Sprints (erhöht primär anaerobe Kapazität, kaum VO2max-Reiz)',
             change: -0.15,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.15)),
-            logText: 'W2: Liegengeblieben & Social Media gecheckt (-0,15)',
+            logText: 'W2: Anaerobe Sprints gewählt (-0,15)',
             type: 'bad'
           },
           {
             key: 'B',
-            text: 'Aufstehen & 45 Min. Zone-2-Lauf machen',
+            text: '4x4-Minuten-Intervalle zur maximalen Auslastung des Schlagvolumens des Herzens',
             change: 0.5,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'W2: Aufgestanden & trainiert (+0,5)',
+            logText: 'W2: 4x4-HIIT durchgeführt (+0,5)',
             type: 'good'
           }
         ]
@@ -149,22 +149,22 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     if (nextWeek === 3) {
       setDecisionB({
         week: 3,
-        title: '💧 Trinken im Büro: Ausreichend Wasser oder zuckerhaltige Softdrinks?',
+        title: '🥦 Glykogen-Management: Nutzt du gezieltes Train-Low (niedrige Kohlenhydratspeicher) bei langen aeroben Einheiten zur mitochondrialen Biogenese oder trainierst du immer voll beladen?',
         options: [
           {
             key: 'A',
-            text: 'Ausreichend Wasser trinken',
+            text: 'Gezielte Kohlenhydrat-Periodisierung zur Maximierung der AMPK-Aktivierung',
             change: 0.3,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.3)),
-            logText: 'W3: Wasser getrunken (+0,3)',
+            logText: 'W3: Train-Low periodisiert (+0,3)',
             type: 'good'
           },
           {
             key: 'B',
-            text: 'Softdrinks trinken',
+            text: 'Permanente Zufuhr von schnellen Zuckern vor jeder aeroben Einheit',
             change: -0.15,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.15)),
-            logText: 'W3: Softdrinks getrunken (-0,15)',
+            logText: 'W3: Ständige Kohlenhydratzufuhr (-0,15)',
             type: 'bad'
           }
         ]
@@ -175,22 +175,22 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     if (nextWeek === 4) {
       setDecisionB({
         week: 4,
-        title: '🚴‍♂️ Der Arbeitsweg steht an. Draußen ist es bewölkt, aber trocken. Deine Wahl?',
+        title: '📈 HRV-Steuerung: Dein Wearable zeigt eine signifikant erniedrigte Herzratenvariabilität (HRV) und erhöhten Ruhepuls. Ignorierst du die Daten für deinen Trainingsplan oder passt du die Intensität an?',
         options: [
           {
             key: 'A',
-            text: 'Mit dem Auto fahren',
+            text: 'Geplantes hochintensives Intervalltraining trotz starker Ermüdungssignale durchziehen',
             change: -0.2,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
-            logText: 'W4: Mit dem Auto gefahren & im Stau gestanden (-0,2)',
+            logText: 'W4: Übertraining riskiert (-0,2)',
             type: 'bad'
           },
           {
             key: 'B',
-            text: 'Mit dem Rad fahren oder zu Fuss gehen',
+            text: 'Intensität reduzieren und eine aktive Regenerationseinheit einlegen',
             change: 0.5,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'W4: Mit dem Rad gefahren oder zu Fuss gegangen (+0,5)',
+            logText: 'W4: HRV-geführt regeneriert (+0,5)',
             type: 'good'
           }
         ]
@@ -201,22 +201,22 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     if (nextWeek === 5) {
       setDecisionB({
         week: 5,
-        title: '🥗 Mittagessen: Großer Salat mit Hähnchenbrust/Tofu oder Fast Food Burger?',
+        title: '🫁 Atemeffizienz: Trainierst du deine Atemmuskulatur (z. B. mit einem inspiratorischen Atemtrainer) zur Reduktion des respiratorischen Metabo-Reflexes oder vernachlässigst du diesen Faktor?',
         options: [
           {
             key: 'A',
-            text: 'Salat mit Hähnchenbrust/Tofu wählen',
+            text: 'Tägliches inspiratorisches Atemmuskeltraining (RMT) zur Verzögerung der Erschöpfung',
             change: 0.4,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.4)),
-            logText: 'W5: Salat gewählt (+0,4)',
+            logText: 'W5: Atemmuskeln trainiert (+0,4)',
             type: 'good'
           },
           {
             key: 'B',
-            text: 'Fast Food Burger bestellen',
+            text: 'Atemmuskeltraining ignorieren und rein auf die Beinkraft setzen',
             change: -0.2,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
-            logText: 'W5: Fast Food gegessen (-0,2)',
+            logText: 'W5: RMT vernachlässigt (-0,2)',
             type: 'bad'
           }
         ]
@@ -227,22 +227,22 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     if (nextWeek === 6) {
       setDecisionB({
         week: 6,
-        title: '🍺 Geburtstagseinladung! Ein Freund reicht dir ein kaltes Bier. Deine Wahl?',
+        title: '🩸 Eisenhaushalt & Sauerstofftransport: Dein Ferritinwert liegt im unteren Grenzbereich. Optimierst du deine Eisenaufnahme zur Unterstützung des Hämoglobin-Transports oder ignorierst du den Wert?',
         options: [
           {
             key: 'A',
-            text: 'Alkohol trinken',
+            text: 'Ignorieren des Eisenspiegels (schränkt Sauerstofftransportkapazität stark ein)',
             change: -0.4,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.4)),
-            logText: 'W6: Alkohol getrunken (-0,4, Regeneration gestört)',
+            logText: 'W6: Eisenmangel ignoriert (-0,4)',
             type: 'bad'
           },
           {
             key: 'B',
-            text: 'Alkoholfreies Bier / Wasser nehmen',
+            text: 'Ernährung mit biologisch hochverfügbarem Eisen & Vitamin C optimieren',
             change: 0.6,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.6)),
-            logText: 'W6: Alkoholfrei geblieben (+0,6 durch Top-Regeneration)',
+            logText: 'W6: Eisenwerte optimiert (+0,6)',
             type: 'good'
           }
         ]
@@ -253,22 +253,22 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     if (nextWeek === 7) {
       setDecisionB({
         week: 7,
-        title: '🧘‍♂️ Stressiger Arbeitstag: 15 Min. Atemübung/Meditation oder Frust-Snacking?',
+        title: '🛌 Schlafarchitektur: Priorisierst du deine Tiefschlafphasen durch strenge Schlafhygiene (kein Blaulicht, kühles Zimmer) zur maximalen Freisetzung von Wachstumshormonen (HGH) oder schläfst du unregelmäßig?',
         options: [
           {
             key: 'A',
-            text: 'Atemübung & Entspannung machen',
+            text: 'Konsequente Schlafhygiene zur Förderung der nächtlichen Muskel- und Gefäßreparatur',
             change: 0.35,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.35)),
-            logText: 'W7: Atemübung gemacht (+0,35)',
+            logText: 'W7: Tiefschlaf optimiert (+0,35)',
             type: 'good'
           },
           {
             key: 'B',
-            text: 'Snacks & Süßigkeiten essen',
+            text: 'Unregelmäßiger Schlaf und spätes Essen (stört die kardiovaskuläre Erholung)',
             change: -0.15,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.15)),
-            logText: 'W7: Frust-Snacks gegessen (-0,15)',
+            logText: 'W7: Schlaf gestört (-0,15)',
             type: 'bad'
           }
         ]
@@ -279,22 +279,22 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     if (nextWeek === 8) {
       setDecisionB({
         week: 8,
-        title: '📺 Es ist 22:30 Uhr. Schlafen gehen oder die neue Serienfolge streamen?',
+        title: '🥤 Stickstoffmonoxid-Booster: Nutzt du vor intensiven Einheiten rote Beete Saft oder Nitrat-Supplemente zur Reduktion des Sauerstoffbedarfs bei submaximaler Belastung?',
         options: [
           {
             key: 'A',
-            text: 'Serienfolge streamen (Netflix)',
+            text: 'Verzicht auf optimierende Supplemente und Konsum saurer Lebensmittel (reduziert NO-Bioverfügbarkeit)',
             change: -0.3,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.3)),
-            logText: 'W8: Serie gestreamt (-0,3 durch Schlafmangel)',
+            logText: 'W8: NO-Biosynthese vernachlässigt (-0,3)',
             type: 'bad'
           },
           {
             key: 'B',
-            text: 'Fernseher aus, Schlaf priorisieren',
+            text: 'Nitratreiche Supplementierung zur Steigerung der mitochondrialen Effizienz',
             change: 0.7,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
-            logText: 'W8: Schlaf priorisiert (+0,7 durch Zellreparatur)',
+            logText: 'W8: Nitrat zugeführt (+0,7)',
             type: 'good'
           }
         ]
@@ -305,22 +305,22 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     if (nextWeek === 9) {
       setDecisionB({
         week: 9,
-        title: '🚶‍♂️ Regenerationstag: Spaziergang oder den ganzen Tag entspannen?',
+        title: '❄️ Regenerationstag: Nutzt du Eisbäder direkt nach dem HIIT-Training (hemmt Anpassungsreize) oder wartest du 24 Stunden, um die mitochondriale Biogenese nicht zu blockieren?',
         options: [
           {
             key: 'A',
-            text: 'Spaziergang machen',
+            text: 'Eisbäder am Regenerationstag (mind. 24h nach dem Training) oder aktive Erholung',
             change: 0.3,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.3)),
-            logText: 'W9: Spaziergang gemacht (+0,3)',
+            logText: 'W9: Sinnvoll gekühlt (+0,3)',
             type: 'good'
           },
           {
             key: 'B',
-            text: 'Den ganzen Tag entspannen / im Bett liegen',
+            text: 'Eisbad unmittelbar nach der HIIT-Einheit (unterdrückt Entzündungs- und Anpassungsreize)',
             change: -0.1,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
-            logText: 'W9: Den Tag inaktiv verbracht (-0,1)',
+            logText: 'W9: Anpassungsreiz blockiert (-0,1)',
             type: 'bad'
           }
         ]
@@ -331,22 +331,22 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     if (nextWeek === 10) {
       setDecisionB({
         week: 10,
-        title: '☕ Das Nachmittags-Tief im Büro schlägt zu. Wie lädst du deine Akkus auf?',
+        title: '🚴 Trittfrequenz & Ökonomie: Trainierst du gezielt deine neuromuskuläre Effizienz durch Frequenzvariationen (z. B. hohe Trittfrequenz beim Radfahren / Schrittfrequenz beim Laufen) zur Schonung der Glykogenspeicher?',
         options: [
           {
             key: 'A',
-            text: 'Espresso & Donut am Schreibtisch',
+            text: 'Ignorieren der Frequenz (führt zu ineffizientem Krafteinsatz und Muskelermüdung)',
             change: -0.2,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
-            logText: 'W10: Zucker-Crash erlitten (-0,2)',
+            logText: 'W10: Frequenz ignorierte (-0,2)',
             type: 'bad'
           },
           {
             key: 'B',
-            text: '20 Min. zügiger Power-Walk um den Block',
+            text: 'Gezieltes Ökonomietraining zur Senkung des Sauerstoffbedarfs bei gleicher Leistung',
             change: 0.5,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'W10: Power-Walk gemacht (+0,5)',
+            logText: 'W10: Frequenz optimiert (+0,5)',
             type: 'good'
           }
         ]
@@ -357,22 +357,22 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     if (nextWeek === 11) {
       setDecisionB({
         week: 11,
-        title: '☔ Regen am Lauftag: Trotzdem laufen gehen oder Training verschieben?',
+        title: '🔥 Plasmavolumen-Expansion: Nutzt du gezieltes Hitzetraining (z. B. Saunagänge direkt nach dem Training) zur Erhöhung des Blutplasmavolumens oder verzichtest du darauf?',
         options: [
           {
             key: 'A',
-            text: 'Regen trotzen und laufen gehen',
+            text: 'Post-Workout Saunagänge zur Initiierung einer Plasma-Volumen-Expansion',
             change: 0.5,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'W11: Im Regen gelaufen (+0,5)',
+            logText: 'W11: Plasmavolumen erhöht (+0,5)',
             type: 'good'
           },
           {
             key: 'B',
-            text: 'Training ausfallen lassen / verschieben',
+            text: 'Sofortige aggressive Abkühlung und Verzicht auf thermische Reize',
             change: -0.25,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.25)),
-            logText: 'W11: Training ausfallen lassen (-0,25)',
+            logText: 'W11: Thermische Reize ungenutzt (-0,25)',
             type: 'bad'
           }
         ]
@@ -383,22 +383,22 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     if (nextWeek === 12) {
       setDecisionB({
         week: 12,
-        title: '🏔️ Das Wochenende ist da. Wie gestaltest du deinen Sonntag?',
+        title: '🏔️ Tapering-Phase: Wie gestaltest du die letzte Woche vor deiner VO2max-Leistungsdiagnostik, um deine maximale aerobe Kapazität abzurufen?',
         options: [
           {
             key: 'A',
-            text: 'Den ganzen Tag auf der Couch zocken',
+            text: 'Bis zum Vortag mit maximalem Volumen weitertrainieren (führt zu akuter Ermüdung am Testtag)',
             change: -0.1,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
-            logText: 'W12: Tag auf der Couch verbracht (-0,1)',
+            logText: 'W12: Falsches Tapering gewählt (-0,1)',
             type: 'bad'
           },
           {
             key: 'B',
-            text: 'Bergwanderung mit Freunden unternehmen',
+            text: 'Trainingsvolumen um 50% reduzieren, aber die Intensität in kurzen Intervallen hochhalten',
             change: 0.7,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
-            logText: 'W12: Bergwandern gewesen (+0,7)',
+            logText: 'W12: Richtiges Tapering gewählt (+0,7)',
             type: 'good'
           }
         ]
