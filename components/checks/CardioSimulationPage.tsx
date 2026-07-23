@@ -1810,8 +1810,21 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       </div>
                     ) : (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-                        <span style={{ fontSize: '0.9rem', color: '#64748b' }}>
-                          Bereit für den Aufstieg? Starte das Abenteuer und triff deine Entscheidungen.
+                        <img 
+                          src="/images/mountain_preview.png" 
+                          alt="Mount Longevitus Preview" 
+                          style={{
+                            width: '100%',
+                            height: '140px',
+                            objectFit: 'cover',
+                            borderRadius: '12px',
+                            border: '1px solid #e2e8f0',
+                            boxShadow: '0 4px 10px rgba(0,0,0,0.05)',
+                            transform: 'scale(1.0)'
+                          }}
+                        />
+                        <span style={{ fontSize: '0.9rem', color: '#64748b', textAlign: 'center' }}>
+                          Bereit für den Aufstieg? Starte deine Erfahrung und triff verschiedene Lifestyle-Entscheidungen.
                         </span>
                         <button
                           onClick={startSimulationB}
@@ -1852,43 +1865,17 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 borderRadius: '20px', 
                 overflow: 'hidden',
                 minHeight: '350px',
-                boxShadow: 'inset 0 4px 12px rgba(0,0,0,0.1)'
+                boxShadow: 'inset 0 4px 12px rgba(0,0,0,0.15)',
+                backgroundImage: "url('/images/photorealistic_mountain.png')",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
               }}>
-                <svg width="100%" height="100%" viewBox="0 0 300 400" preserveAspectRatio="none" style={{ display: 'block' }}>
-                  <defs>
-                    <linearGradient id="skyGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stopColor="#bae6fd" />
-                      <stop offset="60%" stopColor="#7dd3fc" />
-                      <stop offset="100%" stopColor="#38bdf8" />
-                    </linearGradient>
-                    <linearGradient id="mountainLeft" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stopColor="#cbd5e1" />
-                      <stop offset="30%" stopColor="#94a3b8" />
-                      <stop offset="70%" stopColor="#334155" />
-                      <stop offset="100%" stopColor="#14532d" />
-                    </linearGradient>
-                    <linearGradient id="mountainRight" x1="0%" y1="0%" x2="0%" y2="100%">
-                      <stop offset="0%" stopColor="#e2e8f0" />
-                      <stop offset="30%" stopColor="#cbd5e1" />
-                      <stop offset="70%" stopColor="#475569" />
-                      <stop offset="100%" stopColor="#166534" />
-                    </linearGradient>
-                  </defs>
-                  <rect width="300" height="400" fill="url(#skyGrad)" />
-                  <path d="M 0 400 L 90 220 L 180 400 Z" fill="#0369a1" opacity="0.35" />
-                  <path d="M 120 400 L 210 200 L 300 400 Z" fill="#0369a1" opacity="0.45" />
-                  <path d="M 30 400 L 150 60 L 270 400 Z" fill="url(#mountainRight)" />
-                  <path d="M 30 400 L 150 60 L 150 400 Z" fill="url(#mountainLeft)" opacity="0.7" />
-                  <path d="M 120 150 L 150 60 L 180 150 L 165 130 L 150 145 L 135 130 Z" fill="#ffffff" />
-                  <path d="M 120 150 L 150 60 L 150 145 L 135 130 Z" fill="#cbd5e1" />
-                  {/* Green grass hills at the bottom */}
-                  <path d="M -20 400 L 100 370 Q 150 355 200 370 L 320 400 Z" fill="#22c55e" opacity="0.95" />
-                  <path d="M -20 420 L 70 380 Q 150 365 240 380 L 320 420 Z" fill="#15803d" />
-                  <path d="M 60 370 Q 110 290 170 200 T 150 70" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="3" strokeDasharray="6,6" />
-                  <line x1="10" y1="70" x2="290" y2="70" stroke="rgba(168,85,247,0.3)" strokeWidth="1" strokeDasharray="4,4" />
-                  <line x1="10" y1="200" x2="290" y2="200" stroke="rgba(59,130,246,0.3)" strokeWidth="1" strokeDasharray="4,4" />
-                  <line x1="10" y1="290" x2="290" y2="290" stroke="rgba(34,197,94,0.3)" strokeWidth="1" strokeDasharray="4,4" />
-                  <line x1="10" y1="370" x2="290" y2="370" stroke="rgba(148,163,184,0.3)" strokeWidth="1" strokeDasharray="4,4" />
+                <svg width="100%" height="100%" viewBox="0 0 300 400" preserveAspectRatio="none" style={{ display: 'block', background: 'transparent' }}>
+                  <path d="M 60 370 Q 110 290 170 200 T 150 70" fill="none" stroke="#a855f7" strokeWidth="4" strokeDasharray="6,6" style={{ filter: 'drop-shadow(0px 2px 5px rgba(0,0,0,0.9))' }} />
+                  <line x1="10" y1="70" x2="290" y2="70" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" strokeDasharray="4,4" style={{ filter: 'drop-shadow(0px 1px 3px rgba(0,0,0,0.9))' }} />
+                  <line x1="10" y1="200" x2="290" y2="200" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" strokeDasharray="4,4" style={{ filter: 'drop-shadow(0px 1px 3px rgba(0,0,0,0.9))' }} />
+                  <line x1="10" y1="290" x2="290" y2="290" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" strokeDasharray="4,4" style={{ filter: 'drop-shadow(0px 1px 3px rgba(0,0,0,0.9))' }} />
+                  <line x1="10" y1="370" x2="290" y2="370" stroke="rgba(255,255,255,0.7)" strokeWidth="1.5" strokeDasharray="4,4" style={{ filter: 'drop-shadow(0px 1px 3px rgba(0,0,0,0.9))' }} />
                 </svg>
 
                 {/* Peak Label */}
