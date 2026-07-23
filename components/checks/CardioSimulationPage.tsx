@@ -51,7 +51,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     setVo2B(35.0);
     setDecisionB(null);
     setLastChangeB(null);
-    setHistoryB([{ week: 0, type: 'neutral', text: 'Start des Aufstiegs am Mount Longevitus bei VO2max 35,0' }]);
+    setHistoryB([{ week: 0, type: 'neutral', text: 'W0: Start bei VO2max 35,0' }]);
     setIsSimulatingB(true);
   };
 
@@ -92,7 +92,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Vollkorn-Müsli mit Beeren',
             change: 0.4,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.4)),
-            logText: 'Woche 1: Vollkorn-Müsli gewählt (+0,4)',
+            logText: 'W1: Vollkorn-Müsli gewählt (+0,4)',
             type: 'good'
           },
           {
@@ -100,7 +100,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Croissant mit Nutella',
             change: -0.1,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
-            logText: 'Woche 1: Croissant gewählt (-0,1)',
+            logText: 'W1: Croissant gewählt (-0,1)',
             type: 'bad'
           }
         ]
@@ -118,7 +118,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Liegenbleiben & Social Media checken',
             change: -0.15,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.15)),
-            logText: 'Woche 2: Liegengeblieben & Social Media gecheckt (-0,15)',
+            logText: 'W2: Liegengeblieben & Social Media gecheckt (-0,15)',
             type: 'bad'
           },
           {
@@ -126,7 +126,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Aufstehen & 45 Min. Zone-2-Lauf machen',
             change: 0.5,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'Woche 2: Aufgestanden & trainiert (+0,5)',
+            logText: 'W2: Aufgestanden & trainiert (+0,5)',
             type: 'good'
           }
         ]
@@ -144,7 +144,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Ausreichend Wasser trinken',
             change: 0.3,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.3)),
-            logText: 'Woche 3: Wasser getrunken (+0,3)',
+            logText: 'W3: Wasser getrunken (+0,3)',
             type: 'good'
           },
           {
@@ -152,7 +152,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Softdrinks trinken',
             change: -0.15,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.15)),
-            logText: 'Woche 3: Softdrinks getrunken (-0,15)',
+            logText: 'W3: Softdrinks getrunken (-0,15)',
             type: 'bad'
           }
         ]
@@ -170,7 +170,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Mit dem Auto fahren',
             change: -0.2,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
-            logText: 'Woche 4: Mit dem Auto gefahren & im Stau gestanden (-0,2)',
+            logText: 'W4: Mit dem Auto gefahren & im Stau gestanden (-0,2)',
             type: 'bad'
           },
           {
@@ -178,7 +178,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Mit dem Rad fahren oder zu Fuss gehen',
             change: 0.5,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'Woche 4: Mit dem Rad gefahren oder zu Fuss gegangen (+0,5)',
+            logText: 'W4: Mit dem Rad gefahren oder zu Fuss gegangen (+0,5)',
             type: 'good'
           }
         ]
@@ -196,7 +196,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Salat mit Hähnchenbrust/Tofu wählen',
             change: 0.4,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.4)),
-            logText: 'Woche 5: Salat gewählt (+0,4)',
+            logText: 'W5: Salat gewählt (+0,4)',
             type: 'good'
           },
           {
@@ -204,7 +204,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Fast Food Burger bestellen',
             change: -0.2,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
-            logText: 'Woche 5: Fast Food gegessen (-0,2)',
+            logText: 'W5: Fast Food gegessen (-0,2)',
             type: 'bad'
           }
         ]
@@ -222,7 +222,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Alkohol trinken',
             change: -0.4,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.4)),
-            logText: 'Woche 6: Alkohol getrunken (-0,4, Regeneration gestört)',
+            logText: 'W6: Alkohol getrunken (-0,4, Regeneration gestört)',
             type: 'bad'
           },
           {
@@ -230,7 +230,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Alkoholfreies Bier / Wasser nehmen',
             change: 0.6,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.6)),
-            logText: 'Woche 6: Alkoholfrei geblieben (+0,6 durch Top-Regeneration)',
+            logText: 'W6: Alkoholfrei geblieben (+0,6 durch Top-Regeneration)',
             type: 'good'
           }
         ]
@@ -248,7 +248,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Atemübung & Entspannung machen',
             change: 0.35,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.35)),
-            logText: 'Woche 7: Atemübung gemacht (+0,35)',
+            logText: 'W7: Atemübung gemacht (+0,35)',
             type: 'good'
           },
           {
@@ -256,7 +256,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Snacks & Süßigkeiten essen',
             change: -0.15,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.15)),
-            logText: 'Woche 7: Frust-Snacks gegessen (-0,15)',
+            logText: 'W7: Frust-Snacks gegessen (-0,15)',
             type: 'bad'
           }
         ]
@@ -274,7 +274,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Serienfolge streamen (Netflix)',
             change: -0.3,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.3)),
-            logText: 'Woche 8: Serie gestreamt (-0,3 durch Schlafmangel)',
+            logText: 'W8: Serie gestreamt (-0,3 durch Schlafmangel)',
             type: 'bad'
           },
           {
@@ -282,7 +282,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Fernseher aus, Schlaf priorisieren',
             change: 0.7,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
-            logText: 'Woche 8: Schlaf priorisiert (+0,7 durch Zellreparatur)',
+            logText: 'W8: Schlaf priorisiert (+0,7 durch Zellreparatur)',
             type: 'good'
           }
         ]
@@ -300,7 +300,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Spaziergang machen',
             change: 0.3,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.3)),
-            logText: 'Woche 9: Spaziergang gemacht (+0,3)',
+            logText: 'W9: Spaziergang gemacht (+0,3)',
             type: 'good'
           },
           {
@@ -308,7 +308,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Nur im Bett liegen und fernsehen',
             change: -0.1,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
-            logText: 'Woche 9: Den Tag inaktiv verbracht (-0,1)',
+            logText: 'W9: Den Tag inaktiv verbracht (-0,1)',
             type: 'bad'
           }
         ]
@@ -326,7 +326,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Espresso & Donut am Schreibtisch',
             change: -0.2,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
-            logText: 'Woche 10: Zucker-Crash erlitten (-0,2)',
+            logText: 'W10: Zucker-Crash erlitten (-0,2)',
             type: 'bad'
           },
           {
@@ -334,7 +334,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: '20 Min. zügiger Power-Walk um den Block',
             change: 0.5,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'Woche 10: Power-Walk gemacht (+0,5)',
+            logText: 'W10: Power-Walk gemacht (+0,5)',
             type: 'good'
           }
         ]
@@ -352,7 +352,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Regen trotzen und laufen gehen',
             change: 0.5,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'Woche 11: Im Regen gelaufen (+0,5)',
+            logText: 'W11: Im Regen gelaufen (+0,5)',
             type: 'good'
           },
           {
@@ -360,7 +360,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Training ausfallen lassen / verschieben',
             change: -0.25,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.25)),
-            logText: 'Woche 11: Training ausfallen lassen (-0,25)',
+            logText: 'W11: Training ausfallen lassen (-0,25)',
             type: 'bad'
           }
         ]
@@ -378,7 +378,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Den ganzen Tag auf der Couch zocken',
             change: -0.1,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
-            logText: 'Woche 12: Tag auf der Couch verbracht (-0,1)',
+            logText: 'W12: Tag auf der Couch verbracht (-0,1)',
             type: 'bad'
           },
           {
@@ -386,7 +386,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             text: 'Bergwanderung mit Freunden unternehmen',
             change: 0.7,
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
-            logText: 'Woche 12: Bergwandern gewesen (+0,7)',
+            logText: 'W12: Bergwandern gewesen (+0,7)',
             type: 'good'
           }
         ]
@@ -2163,7 +2163,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             </div>
 
             {/* SPALTE RECHTS: VO2-MAX ENTWICKLUNG */}
-            <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', minWidth: 0 }}>
+            <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem 0.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', minWidth: 0 }}>
               <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.8rem' }}>
                 <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Entwicklung VO2max</h3>
               </div>
@@ -2236,7 +2236,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           color, 
                           background: bg, 
                           border, 
-                          padding: '6px 10px', 
+                          padding: '6px 6px', 
                           borderRadius: '8px',
                           fontSize: '0.78rem',
                           fontWeight: 600,
