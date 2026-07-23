@@ -52,12 +52,14 @@ const phaseLabels: Record<SessionPhase, string> = {
   'fokus': 'Fokus setzen', 'empfehlung': 'Empfehlung', 'commitment': 'Commitment',
   'syncing': 'Wird übertragen', 'closing': 'Abschluss',
   'daily-topic-detail': 'Detail-Check', 'daily-lifestyle-insight': 'Lifestyle-Check',
+  'quarterly-flow': 'Quarterly-Check-in',
 };
 const phaseProgress: Record<SessionPhase, number> = {
   'entry': 5, 'checkin-energy': 10, 'checkin-stress': 18, 'checkin-focus': 25,
   'data-pull': 35, 'verstehen': 48, 'fokus': 60, 'empfehlung': 75,
   'commitment': 85, 'syncing': 95, 'closing': 100,
   'daily-topic-detail': 50, 'daily-lifestyle-insight': 80,
+  'quarterly-flow': 50,
 };
 const dataLabels = [
   { icon: '🏃', label: 'Bewegung', loading: 'Sportdaten werden geladen...', val: '8.420', unit: 'Schritte/Tag', sub: '↑ 14% vs. Vorwoche', trend: 'good', pct: 78,

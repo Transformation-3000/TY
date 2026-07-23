@@ -19,7 +19,7 @@ interface ChatMsg {
 }
 
 const coachVariants: Record<CoachVariant, { name: string; image: string; desc: string; voice: string; greeting: string; video?: string }> = {
-  'lisa-jung': { name: 'Lisa AI, 25 Jahre', image: '/images/lisa.png', desc: 'Jung, modern & empathisch', voice: 'nova', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.', video: '/videos/lisa-jung-animiert.mp4' },
+  'lisa-jung': { name: 'Lisa AI, 25 Jahre', image: '/images/lisa.png', desc: 'Jung, modern & empathisch', voice: 'nova', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.', video: '/videos/lisa-avatar.mp4' },
   'lisa-alt': { name: 'Lisa AI, 50 Jahre', image: '/images/lisa_alt.png', desc: 'Erfahren, weise & warmherzig', voice: 'shimmer', greeting: 'Hallo, ich bin Lisa – dein persönlicher Coach.', video: '/videos/Lisa erfahren animiert.mp4' },
   'tom-jung': { name: 'Tom AI, 25 Jahre', image: '/images/tom_jung.png', desc: 'Dynamisch, motivierend & direkt', voice: 'echo', greeting: 'Hallo, ich bin Tom – dein persönlicher Coach.', video: '/videos/Tom Jung animiert.mp4' },
   'tom-alt': { name: 'Tom AI, 50 Jahre', image: '/images/tom_alt.png', desc: 'Gelassen, strukturiert & erfahren', voice: 'onyx', greeting: 'Hallo, ich bin Tom – dein persönlicher Coach.', video: '/videos/Tom erfahren animiert.mp4' },
@@ -52,12 +52,14 @@ const phaseLabels: Record<SessionPhase, string> = {
   'fokus': 'Fokus setzen', 'empfehlung': 'Empfehlung', 'commitment': 'Commitment',
   'syncing': 'Wird übertragen', 'closing': 'Abschluss',
   'daily-topic-detail': 'Detail-Check', 'daily-lifestyle-insight': 'Lifestyle-Check',
+  'quarterly-flow': 'Quarterly-Check-in',
 };
 const phaseProgress: Record<SessionPhase, number> = {
   'entry': 5, 'checkin-energy': 10, 'checkin-stress': 18, 'checkin-focus': 25,
   'data-pull': 35, 'verstehen': 48, 'fokus': 60, 'empfehlung': 75,
   'commitment': 85, 'syncing': 95, 'closing': 100,
   'daily-topic-detail': 50, 'daily-lifestyle-insight': 80,
+  'quarterly-flow': 50,
 };
 const dataLabels = [
   { icon: '🏃', label: 'Bewegung', loading: 'Sportdaten werden geladen...', val: '8.420', unit: 'Schritte/Tag', sub: '↑ 14% vs. Vorwoche', trend: 'good', pct: 78,
@@ -157,6 +159,30 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
       }
     }
   }, []);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (view === 'session') {
+        document.body.style.overflow = 'hidden';
+        document.body.style.height = '100%';
+        document.documentElement.style.overflow = 'hidden';
+        document.documentElement.style.height = '100%';
+      } else {
+        document.body.style.overflow = '';
+        document.body.style.height = '';
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.height = '';
+      }
+    }
+    return () => {
+      if (typeof window !== 'undefined') {
+        document.body.style.overflow = '';
+        document.body.style.height = '';
+        document.documentElement.style.overflow = '';
+        document.documentElement.style.height = '';
+      }
+    };
+  }, [view]);
 
   const [setupStep, setSetupStep] = useState<SetupStep>('coach');
   const [dataVisualType, setDataVisualType] = useState('emotional');
@@ -457,102 +483,126 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
       }
     } else if (phase === 'verstehen') {
       setPhase('fokus');
-      await addCoachMsg('Das bestätigt, was ich in deinen Daten sehe. Deine Schlafqualität leidet, und das zieht sich durch Energie und Stressresistenz. Lass uns darauf fokussieren, was du abends noch ändern kannst. Was passiert bei dir in der letzten Stunde vor dem Schlafen?', undefined, 1500);
+      const customReply = `Das bestätigt, was ich in deinen Daten sehe. Dass du sagst „${text}“ passt genau dazu, dass deine Schlafqualität leidet und sich das durch deine Energie und Stressresistenz zieht. Lass uns darauf fokussieren, was du abends noch ändern kannst. Was passiert bei dir in der letzten Stunde vor dem Schlafen?`;
+      await addCoachMsg(customReply, undefined, 1500);
     } else if (phase === 'fokus') {
       setPhase('empfehlung');
-      await addCoachMsg('Das passt genau zu deinem HRV-Verlauf – die Erholungsphasen starten bei dir erst spät in der Nacht. Bildschirmzeit hält dein Nervensystem im Sympathikus-Modus. Ich habe auf Basis deiner Daten einen konkreten Plan erarbeitet:', 'action-plan', 1600);
+      const customReply = `Dass du abends „${text}“ machst, passt genau zu deinem HRV-Verlauf – die Erholungsphasen starten bei dir erst sehr spät in der Nacht. Bildschirmzeit und späte Aktivitäten halten dein Nervensystem im Sympathikus-Modus. Ich habe auf Basis deiner Daten einen konkreten Plan erarbeitet:`;
+      await addCoachMsg(customReply, 'action-plan', 1600);
     } else if (phase === 'daily-topic-detail') {
       setPhase('daily-lifestyle-insight');
       setDailyStep(1);
       if (entryChoice === 'Was bewegt dich gerade?') {
-        if (text.includes('Stress')) {
+        const lowerText = text.toLowerCase();
+        if (lowerText.includes('stress')) {
           await addCoachMsg('Es tut mir leid zu hören, dass es gerade intensiv ist. Stress gehört dazu, aber wir können ihn steuern. Was ist gerade der Haupttreiber für deinen Stress – Zeitdruck, ein bestimmtes Projekt oder das Gefühl, nicht abschalten zu können?', undefined, 1200);
-        } else if (text.includes('reflektieren')) {
+        } else if (lowerText.includes('reflektieren') || lowerText.includes('reflexion')) {
           await addCoachMsg('Das ist wunderbar! Auch an guten Tagen lohnt sich eine Reflexion, um Positives zu festigen. Wenn du auf die letzten 24 Stunden blickst: Was hat besonders gut funktioniert, oder was hat dir Energie gegeben?', undefined, 1200);
-        } else if (text.includes('sortieren')) {
+        } else if (lowerText.includes('sortieren')) {
           await addCoachMsg('Gerne. Nimm dir kurz einen Moment, um es einzugrenzen: In welchem Lebensbereich liegt dieses Thema heute? Ist es ein berufliches Projekt, eine tägliche Gewohnheit/Routine oder etwas ganz Persönliches?', undefined, 1200);
         } else {
-          await addCoachMsg('Nimm dir kurz einen Moment, um es einzugrenzen: In welchem Lebensbereich liegt dieses Thema heute? Ist es ein berufliches Projekt, eine tägliche Gewohnheit/Routine oder etwas ganz Persönliches?', undefined, 1200);
+          const customReply = `Verstehe. Dass dich das Thema „${text}“ heute beschäftigt, zeigt, wie präsent es ist. Nimm dir kurz einen Moment, um es einzugrenzen: In welchem Lebensbereich liegt dieses Thema heute? Ist es ein berufliches Projekt, eine tägliche Gewohnheit/Routine oder etwas ganz Persönliches?`;
+          await addCoachMsg(customReply, undefined, 1200);
         }
       } else if (entryChoice === 'Tages-Highlight') {
-        await addCoachMsg('Das klingt nach einer echten Bereicherung! Soziale Verbindung gibt uns unglaublich viel Energie. Nimmst du dir im Alltag öfter Zeit für solche bewussten Kontakte, oder war das heute eher spontan?', undefined, 1200);
+        const customReply = `Das klingt nach einer echten Bereicherung! Soziale Verbindung und „${text}“ geben uns unglaublich viel Energie. Nimmst du dir im Alltag öfter Zeit für solche bewussten Kontakte, oder war das heute eher spontan?`;
+        await addCoachMsg(customReply, undefined, 1200);
       } else if (entryChoice === 'Tages-Fokus') {
-        await addCoachMsg('Das erfordert volle Konzentration. Wie kannst du heute dafür sorgen, dass du während der Arbeit fokussiert bleibst und Ablenkungen minimierst?', undefined, 1200);
+        const customReply = `„${text}“ erfordert in der Tat volle Konzentration. Wie kannst du heute dafür sorgen, dass du während der Arbeit fokussiert bleibst und Ablenkungen minimierst?`;
+        await addCoachMsg(customReply, undefined, 1200);
       } else if (entryChoice === 'Dankbarkeit') {
-        await addCoachMsg('Gesundheit ist das wertvollste Gut, das wir oft als selbstverständlich ansehen. Welcher kleine Habit hilft dir heute, deinem Körper etwas Gutes zu tun und diese Gesundheit aktiv zu unterstützen?', undefined, 1200);
+        const customReply = `Dass du dankbar bist für „${text}“ ist eine sehr schöne Reflexion. Gesundheit und Wohlbefinden sind das wertvollste Gut. Welcher kleine Habit hilft dir heute, deinem Körper etwas Gutes zu tun und diese Gesundheit aktiv zu unterstützen?`;
+        await addCoachMsg(customReply, undefined, 1200);
       }
     } else if (phase === 'daily-lifestyle-insight') {
-      const hasStress = messages.some(m => m.from === 'user' && m.text.includes('Stress'));
-      const hasReflexion = messages.some(m => m.from === 'user' && m.text.includes('reflektieren'));
-      const hasSortieren = messages.some(m => m.from === 'user' && m.text.includes('sortieren'));
+      const hasStress = messages.some(m => m.from === 'user' && m.text.toLowerCase().includes('stress'));
+      const hasReflexion = messages.some(m => m.from === 'user' && (m.text.toLowerCase().includes('reflektieren') || m.text.toLowerCase().includes('reflexion')));
+      const hasSortieren = messages.some(m => m.from === 'user' && m.text.toLowerCase().includes('sortieren')) || (!hasStress && !hasReflexion);
       
       if (entryChoice === 'Was bewegt dich gerade?') {
         if (hasSortieren) {
           if (dailyStep === 1) {
             setDailyStep(2);
-            await addCoachMsg('Verstehe. Berufliche Themen und Lebensgewohnheiten können mental viel Raum einnehmen. Oft hilft es schon, sie einmal auszusprechen. Was ist für dich gerade die größte Herausforderung oder der wichtigste nächste Schritt dabei?', undefined, 1200);
+            const customReply = `Verstehe. Berufliche Themen und Lebensgewohnheiten bezüglich „${text}“ können mental viel Raum einnehmen. Oft hilft es schon, sie einmal auszusprechen. Was ist für dich gerade die größte Herausforderung oder der wichtigste nächste Schritt dabei?`;
+            await addCoachMsg(customReply, undefined, 1200);
           } else if (dailyStep === 2) {
             setDailyStep(3);
-            await addCoachMsg('Ein sehr klarer Fokus. Um heute Abend einen gesunden Abstand dazu zu gewinnen: Wie schaffst du dir nachher einen bewussten Kontrastpunkt, um richtig abzuschalten?', undefined, 1200);
+            const customReply = `„${text}“ ist ein sehr klarer Fokus. Um heute Abend einen gesunden Abstand dazu zu gewinnen: Wie schaffst du dir nachher einen bewussten Kontrastpunkt, um richtig abzuschalten?`;
+            await addCoachMsg(customReply, undefined, 1200);
           } else if (dailyStep === 3) {
             setPhase('closing');
-            await addCoachMsg('Ein wunderbarer Plan. Lass die Gedanken nachher bewusst ruhen und nimm dir diesen Moment ganz für dich. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
+            const customReply = `„${text}“ klingt nach einem wunderbaren Plan. Lass die Gedanken nachher bewusst ruhen und nimm dir diesen Moment ganz für dich. Du machst das großartig! Wir hören uns morgen wieder.`;
+            await addCoachMsg(customReply, 'closing', 1200);
           }
         } else if (hasStress) {
           if (dailyStep === 1) {
             setDailyStep(2);
-            await addCoachMsg('Das fühlt sich oft sehr erdrückend an. Lass uns für heute Druck rausnehmen: Was wäre eine Sache, die du heute bewusst weglassen oder vereinfachen kannst, um dein Nervensystem etwas zu entlasten?', undefined, 1200);
+            const customReply = `Dass du sagst „${text}“ fühlt sich oft sehr erdrückend an. Lass uns für heute Druck rausnehmen: Was wäre eine Sache, die du heute bewusst weglassen oder vereinfachen kannst, um dein Nervensystem etwas zu entlasten?`;
+            await addCoachMsg(customReply, undefined, 1200);
           } else if (dailyStep === 2) {
             setDailyStep(3);
-            await addCoachMsg('Ein sehr wertvoller Schritt. Und wie stellst du heute Abend sicher, dass dieser Stress nicht mit ins Bett wandert? Welches Abendritual hilft dir am besten zum Entspannen?', undefined, 1200);
+            const customReply = `„${text}“ ist ein sehr wertvoller Schritt. Und wie stellst du heute Abend sicher, dass dieser Stress nicht mit ins Bett wandert? Welches Abendritual hilft dir am besten zum Entspannen?`;
+            await addCoachMsg(customReply, undefined, 1200);
           } else if (dailyStep === 3) {
             setDailyStep(4);
-            await addCoachMsg('Ein starker Anker. Achte heute Abend gut auf deine Grenzen und gönn dir die Ruhe. Du machst das großartig! Gibt es noch etwas über das du gerne sprechen möchtest?', undefined, 1200);
+            const customReply = `„${text}“ ist ein starker Anker. Achte heute Abend gut auf deine Grenzen und gönn dir die Ruhe. Du machst das großartig! Gibt es noch etwas über das du gerne sprechen möchtest?`;
+            await addCoachMsg(customReply, undefined, 1200);
           } else if (dailyStep === 4) {
-            if (text.includes('Ja')) {
+            if (text.toLowerCase().includes('ja') || text.trim().length > 3) {
               setDailyStep(5);
-              await addCoachMsg('Was bewegt dich heute noch? Magst du mir etwas mehr darüber mitteilen?', undefined, 1200);
+              const customReply = `Was bewegt dich heute noch bei „${text}“? Magst du mir etwas mehr darüber mitteilen?`;
+              await addCoachMsg(customReply, undefined, 1200);
             } else {
               setPhase('closing');
               await addCoachMsg('Alles klar. Ich wünsche dir noch einen schönen Tag. Wir hören uns wenn du möchtest gerne morgen wieder 😊', 'closing', 1200);
             }
           } else if (dailyStep === 5) {
             setPhase('closing');
-            await addCoachMsg('Danke, dass du das mit mir geteilt hast. Achte heute Abend gut auf deine Grenzen und gönn dir die Ruhe. Du machst das großartig! Wir hören uns wenn du möchtest gerne morgen wieder 😊', 'closing', 1200);
+            const customReply = `Danke, dass du das mit mir geteilt hast. Bezüglich „${text}“: Achte heute Abend gut auf deine Grenzen und gönn dir die Ruhe. Du machst das großartig! Wir hören uns wenn du möchtest gerne morgen wieder 😊`;
+            await addCoachMsg(customReply, 'closing', 1200);
           }
         } else if (hasReflexion) {
           if (dailyStep === 1) {
             setDailyStep(2);
-            await addCoachMsg('Schön, das bewusst wahrzunehmen! Diese positiven Momente laden unsere mentalen Batterien auf. Wie kannst du diese gute Energie nutzen, um dir heute Abend etwas Gutes zu tun und deine Schlafroutine besonders entspannt zu gestalten?', undefined, 1200);
+            const customReply = `Schön, das bewusst wahrzunehmen! Dass du sagst „${text}“ lädt unsere mentalen Batterien auf. Wie kannst du diese gute Energie nutzen, um dir heute Abend etwas Gutes to tun und deine Schlafroutine besonders entspannt zu gestalten?`;
+            await addCoachMsg(customReply, undefined, 1200);
           } else if (dailyStep === 2) {
             setPhase('closing');
-            await addCoachMsg('Hervorragend. Nimm diese positive Energie und den guten Rhythmus mit in die Nacht. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
+            const customReply = `Hervorragend. „${text}“ ist ein super Weg, um den Rhythmus mit in die Nacht zu nehmen. Du machst das großartig! Wir hören uns morgen wieder.`;
+            await addCoachMsg(customReply, 'closing', 1200);
           }
         }
       } else if (entryChoice === 'Tages-Highlight') {
         if (dailyStep === 1) {
           setDailyStep(2);
-          await addCoachMsg('Sehr schön. Um diesen guten Tag positiv ausklingen zu lassen: Wie möchtest du den Abend heute gestalten? Gibt es eine Gewohnheit, auf die du dich heute besonders freust?', undefined, 1200);
+          const customReply = `Sehr schön. Dass du sagst „${text}“ ist ein guter Ausgangspunkt für den Abend. Wie möchtest du den Abend heute gestalten? Gibt es eine Gewohnheit, auf die du dich heute besonders freust?`;
+          await addCoachMsg(customReply, undefined, 1200);
         } else if (dailyStep === 2) {
           setPhase('closing');
-          await addCoachMsg('Genieße diesen wohlverdienten Abend und nimm dieses positive Gefühl mit in den Schlaf. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
+          const customReply = `„${text}“ klingt super. Genieße diesen wohlverdienten Abend und nimm dieses positive Gefühl mit in den Schlaf. Du machst das großartig! Wir hören uns morgen wieder.`;
+          await addCoachMsg(customReply, 'closing', 1200);
         }
       } else if (entryChoice === 'Tages-Fokus') {
         if (dailyStep === 1) {
           setDailyStep(2);
-          await addCoachMsg('Hervorragende Strategie. Um nach diesem fokussierten Tag den Übergang in den Feierabend zu schaffen: Welches Ritual hilft dir heute Abend, die Arbeit gedanklich komplett abzuschließen?', undefined, 1200);
+          const customReply = `Hervorragende Strategie. „${text}“ hilft dir, den Übergang in den Feierabend zu schaffen. Welches Ritual hilft dir heute Abend, die Arbeit gedanklich komplett abzuschließen?`;
+          await addCoachMsg(customReply, undefined, 1200);
         } else if (dailyStep === 2) {
           setPhase('closing');
-          await addCoachMsg('Ein sehr gesundes Ritual. Zieh deinen Fokus heute durch und gönn dir danach das bewusste Abschalten. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
+          const customReply = `„${text}“ ist ein sehr gesundes Ritual. Zieh deinen Fokus heute durch und gönn dir danach das bewusste Abschalten. Du machst das großartig! Wir hören uns morgen wieder.`;
+          await addCoachMsg(customReply, 'closing', 1200);
         }
       } else if (entryChoice === 'Dankbarkeit') {
         if (dailyStep === 1) {
           setDailyStep(2);
-          await addCoachMsg('Klingt nach einer perfekten Fürsorge für deinen Körper. Wie möchtest du heute Abend für die nötige Regeneration sorgen, um deine Energie für morgen aufzuladen?', undefined, 1200);
+          const customReply = `Klingt nach einer perfekten Fürsorge für deinen Körper bezüglich „${text}“. Wie möchtest du heute Abend für die nötige Regeneration sorgen, um deine Energie für morgen aufzuladen?`;
+          await addCoachMsg(customReply, undefined, 1200);
         } else if (dailyStep === 2) {
           setPhase('closing');
-          await addCoachMsg('Wunderbar. Schenke deinem Körper die Erholung, die er verdient. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
+          const customReply = `Wunderbar. Schenke deinem Körper die Erholung, die er verdient mit „${text}“. Du machst das großartig! Wir hören uns morgen wieder.`;
+          await addCoachMsg(customReply, 'closing', 1200);
         }
+      }
     }
   };
 
@@ -745,12 +795,6 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
 
   return (
     <div className="cr">
-      <style jsx global>{`
-        html, body {
-          overflow: hidden !important;
-          height: 100% !important;
-        }
-      `}</style>
       <div className="cr-bg"><div className="cr-g" /><div className="cr-d" /></div>
       <div className="cr-in">
 
@@ -2332,7 +2376,9 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
         .crow.coach .wdp,
         .crow.coach .wdr,
         .crow.coach .wclo,
-        .crow.coach .wap{grid-column:2;grid-row:2;margin-top:.6rem}
+        .crow.coach .wap,
+        .crow.coach .wcm,
+        .crow.coach .wsy{grid-column:2;grid-row:2;margin-top:.6rem}
         .crow.user{align-self:flex-end;flex-direction:row-reverse}.crow.system{align-self:flex-start;max-width:95%;margin:.5rem auto}
         @keyframes mi{from{opacity:0;transform:translateY(12px) scale(0.98)}to{opacity:1;transform:translateY(0) scale(1)}}
         .cav{width:50px;height:50px;flex-shrink:0;border-radius:50%;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.4);border:1.5px solid rgba(255,255,255,.12)}
@@ -2538,10 +2584,10 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
           .wv-btns{flex-direction:column;width:100%;max-width:280px}
           .wv-btn{width:100%}
           .smod{align-items:flex-end}
-          .smod-in{width:100%;max-width:100%;max-height:92vh;border-radius:20px 20px 0 0;animation:smodSlide .3s ease both}
+          .smod-in{width:100%;max-width:100%;max-height:92vh;border-radius:20px 20px 0 0;animation:smodSlide .3s ease both;display:flex!important;flex-direction:column!important;overflow:hidden!important}
           @keyframes smodSlide{from{transform:translateY(100%)}to{transform:translateY(0)}}
           .smod-t{font-size:1.15rem}
-          .smod-cnt{padding-bottom:5.5rem!important}
+          .smod-cnt{padding-bottom:5.5rem!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch!important}
           .ggrid{flex-direction:column;gap:1rem;margin:1rem 0}
           .gcard{padding:2rem 2rem}
           .gcard-ico{font-size:4rem}
