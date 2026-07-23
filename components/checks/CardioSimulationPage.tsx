@@ -1869,7 +1869,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr 1fr', gap: '1.5rem', alignItems: 'stretch' }}>
             
             {/* SPALTE LINKS: DEINE ENTSCHEIDUNGSZENTRALE */}
-            <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', minWidth: 0 }}>
               <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.8rem' }}>
                 <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Entscheidungszentrale</h3>
               </div>
@@ -2126,7 +2126,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             </div>
 
             {/* SPALTE RECHTS: VO2-MAX ENTWICKLUNG */}
-            <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+            <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', minWidth: 0 }}>
               <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.8rem' }}>
                 <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Entwicklung VO2max</h3>
               </div>
