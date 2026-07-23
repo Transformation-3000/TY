@@ -305,7 +305,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     if (nextWeek === 9) {
       setDecisionB({
         week: 9,
-        title: 'Spaziergang am Regenerationstag oder den ganzen Tag im Bett liegen?',
+        title: '🚶‍♂️ Regenerationstag: Spaziergang oder den ganzen Tag entspannen?',
         options: [
           {
             key: 'A',
@@ -317,7 +317,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           },
           {
             key: 'B',
-            text: 'Nur im Bett liegen und fernsehen',
+            text: 'Den ganzen Tag entspannen / im Bett liegen',
             change: -0.1,
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
             logText: 'W9: Den Tag inaktiv verbracht (-0,1)',
@@ -1954,8 +1954,19 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     }}>
                       WOCHE {decisionB.week} / 12
                     </div>
-                    <div style={{ color: '#1e3a5f', fontWeight: 700, fontSize: '0.95rem', lineHeight: '1.5' }}>
-                      {decisionB.title}
+                     <div style={{ color: '#1e3a5f', fontSize: '0.95rem', lineHeight: '1.5' }}>
+                      {(() => {
+                        const parts = decisionB.title.split(':');
+                        if (parts.length > 1) {
+                          return (
+                            <>
+                              <strong style={{ fontWeight: 800 }}>{parts[0]}:</strong>
+                              <span style={{ fontWeight: 500 }}>{parts.slice(1).join(':')}</span>
+                            </>
+                          );
+                        }
+                        return <span style={{ fontWeight: 700 }}>{decisionB.title}</span>;
+                      })()}
                     </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
                       {decisionB.options.map((opt) => (
