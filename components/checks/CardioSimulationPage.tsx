@@ -2070,16 +2070,16 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 </div>
 
                 {/* Height Stage Markers on the mountain side */}
-                <div style={{ position: 'absolute', top: '13%', left: '10px', color: '#d8b4fe', fontSize: '0.7rem', fontWeight: 800, zIndex: 3, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                <div style={{ position: 'absolute', top: '13%', left: '10px', color: '#d8b4fe', fontSize: '0.9rem', fontWeight: 800, zIndex: 3, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                   🏁 Gipfel (VO2max 45+)
                 </div>
-                <div style={{ position: 'absolute', top: '46%', left: '10px', color: '#93c5fd', fontSize: '0.7rem', fontWeight: 800, zIndex: 3, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                <div style={{ position: 'absolute', top: '46%', left: '10px', color: '#93c5fd', fontSize: '0.9rem', fontWeight: 800, zIndex: 3, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                   🧗‍♂️ Felsstufe (40-44)
                 </div>
-                <div style={{ position: 'absolute', top: '69%', left: '10px', color: '#86efac', fontSize: '0.7rem', fontWeight: 800, zIndex: 3, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                <div style={{ position: 'absolute', top: '69%', left: '10px', color: '#86efac', fontSize: '0.9rem', fontWeight: 800, zIndex: 3, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                   🌲 Waldgrenze (35-39)
                 </div>
-                <div style={{ position: 'absolute', top: '89%', left: '10px', color: '#cbd5e1', fontSize: '0.7rem', fontWeight: 800, zIndex: 3, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
+                <div style={{ position: 'absolute', top: '89%', left: '10px', color: '#cbd5e1', fontSize: '0.9rem', fontWeight: 800, zIndex: 3, textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>
                   ⛺ Basis-Camp (&lt;35)
                 </div>
 
@@ -2124,7 +2124,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         top: `${topPercent}%`,
                         left: `${leftPercent}%`,
                         zIndex: 10,
-                        transform: 'translate(-50%, -80%)',
+                        transform: 'translate(-50%, -50%)',
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
