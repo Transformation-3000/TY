@@ -2170,25 +2170,30 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
               {/* Huge current value display */}
               <div style={{ background: '#fdfaff', border: '2px solid #7e22ce', borderRadius: '16px', padding: '1rem', textAlign: 'center' }}>
-                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#0f172a', margin: '0.2rem 0' }}>
+                <div style={{ fontSize: '3.2rem', fontWeight: 900, color: '#0f172a', margin: '0.2rem 0' }}>
                   {vo2B.toFixed(1).replace('.', ',')}
-                  <span style={{ fontSize: '1rem', fontWeight: 600, color: '#64748b', marginLeft: '4px' }}>ml/kg/min</span>
+                  <span style={{ fontSize: '1.1rem', fontWeight: 600, color: '#64748b', marginLeft: '4px' }}>ml/kg/min</span>
                 </div>
                 {simWeekB === 12 ? (
                   <div style={{
-                    fontSize: '1.1rem',
+                    fontSize: '1.05rem',
                     fontWeight: 800,
-                    color: (vo2B - 35.0) >= 0 ? '#166534' : '#dc2626',
+                    color: '#ffffff',
                     display: 'inline-flex',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     gap: '4px',
-                    marginTop: '0.4rem',
-                    background: (vo2B - 35.0) >= 0 ? '#f0fdf4' : '#fef2f2',
-                    padding: '6px 14px',
+                    marginTop: '0.6rem',
+                    background: (vo2B - 35.0) >= 0 ? 'linear-gradient(135deg, #059669, #10b981)' : 'linear-gradient(135deg, #dc2626, #f87171)',
+                    padding: '6px 12px',
                     borderRadius: '10px',
-                    border: (vo2B - 35.0) >= 0 ? '1.5px solid #bbf7d0' : '1.5px solid #fca5a5'
+                    boxShadow: (vo2B - 35.0) >= 0 ? '0 4px 14px rgba(16, 185, 129, 0.4)' : '0 4px 14px rgba(220, 38, 38, 0.4)',
+                    border: 'none',
+                    letterSpacing: '0.01em',
+                    textShadow: '0 1px 2px rgba(0,0,0,0.1)',
+                    whiteSpace: 'nowrap'
                   }}>
-                    Ergebnis: {(vo2B - 35.0) >= 0 ? '+' : ''}{(vo2B - 35.0).toFixed(1).replace('.', ',')}
+                    Finales Ergebnis: {(vo2B - 35.0) >= 0 ? '+' : ''}{(vo2B - 35.0).toFixed(1).replace('.', ',')}
                   </div>
                 ) : (
                   lastChangeB !== null && (
