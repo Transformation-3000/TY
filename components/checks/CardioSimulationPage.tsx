@@ -39,11 +39,23 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
   const [isSimulatingB, setIsSimulatingB] = useState(false);
   const [vo2B, setVo2B] = useState(35.0);
   const [lastChangeB, setLastChangeB] = useState<number | null>(null);
-  const [decisionB, setDecisionB] = useState<{
+  const [decisionB, setRawDecisionB] = useState<{
     week: number;
     title: string;
     options: { key: string; text: string; change: number; effect: () => void; logText: string; type: 'good' | 'bad' }[];
   } | null>(null);
+
+  const setDecisionB = (val: typeof decisionB) => {
+    if (val) {
+      // Shuffle options and re-assign key 'A' and 'B'
+      const shuffledOptions = [...val.options].sort(() => Math.random() - 0.5);
+      shuffledOptions[0] = { ...shuffledOptions[0], key: 'A' };
+      shuffledOptions[1] = { ...shuffledOptions[1], key: 'B' };
+      setRawDecisionB({ ...val, options: shuffledOptions });
+    } else {
+      setRawDecisionB(null);
+    }
+  };
   const [historyB, setHistoryB] = useState<{ week: number; type: 'good' | 'bad' | 'neutral'; text: string }[]>([]);
 
   const startSimulationB = () => {
