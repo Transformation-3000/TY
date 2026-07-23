@@ -559,9 +559,9 @@ export default function LandingPage() {
         <div className="hero-content-fullscreen">
           <h1>Dein Weg zu mehr Lebensqualität</h1>
           <p>
-            TrueYears ist dein persönlicher Longevity-Begleiter. Hier bringst du deine 
+            TrueYears ist dein persönlicher, empathischer Longevity-Begleiter. Hier bringst du deine 
             biologische Daten, Aktivitäten und wissenschaftlich fundierte Routinen in einer 
-            Lösungen zusammen: einfach, motivierend, wirksam.
+            Lösung zusammen: einfach, motivierend und wirksam.
           </p>
           <div className="hero-btns">
             <Link href="/dashboard" className="btn-primary-large">LOGIN</Link>
