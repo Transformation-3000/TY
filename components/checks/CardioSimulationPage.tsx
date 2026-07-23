@@ -34,85 +34,33 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
   const [currentSleep, setCurrentSleep] = useState<number>(6.0);
   const [targetSleep, setTargetSleep] = useState<number>(8.0);
 
-  // Simulation A States (Weather Events)
-  const [simWeekA, setSimWeekA] = useState(0);
-  const [isSimulatingA, setIsSimulatingA] = useState(false);
-  const [vo2A, setVo2A] = useState(35.0);
-  const [eventA, setEventA] = useState<string | null>(null);
-  const [historyA, setHistoryA] = useState<string[]>([]);
-
-  // Simulation B States (Decisions)
+  // Simulation B States (Decisions on Mount Longevitus)
   const [simWeekB, setSimWeekB] = useState(0);
   const [isSimulatingB, setIsSimulatingB] = useState(false);
   const [vo2B, setVo2B] = useState(35.0);
   const [decisionB, setDecisionB] = useState<{
     week: number;
     title: string;
-    options: { text: string; effect: () => void; log: string }[];
+    options: { key: string; text: string; effect: () => void; logText: string; type: 'good' | 'bad' }[];
   } | null>(null);
-  const [historyB, setHistoryB] = useState<string[]>([]);
-
-  const startSimulationA = () => {
-    setSimWeekA(0);
-    setVo2A(35.0);
-    setEventA(null);
-    setHistoryA(['Start des Aufstiegs am Mount Lontevitus bei VO2max 35,0']);
-    setIsSimulatingA(true);
-  };
-
-  useEffect(() => {
-    if (!isSimulatingA) return;
-
-    if (simWeekA >= 12) {
-      setIsSimulatingA(false);
-      return;
-    }
-
-    const timer = setTimeout(() => {
-      const nextWeek = simWeekA + 1;
-      setSimWeekA(nextWeek);
-
-      let change = 0.5 + Math.random() * 0.3;
-      let weatherMsg = '';
-
-      if (nextWeek === 3) {
-        change = -0.4;
-        weatherMsg = '🌨️ Höhensturm am Mount Lontevitus! (-0,4 VO2max)';
-      } else if (nextWeek === 6) {
-        change = -0.3;
-        weatherMsg = '🪨 Steinschlag bremst Aufstieg! (-0,3 VO2max)';
-      } else if (nextWeek === 9) {
-        change = 0.8;
-        weatherMsg = '☀️ Perfektes Kletterwetter! (+0,8 VO2max)';
-      }
-
-      setVo2A((prev) => {
-        const newVal = Math.min(48.5, Math.max(30.0, prev + change));
-        const progressLog = `Woche ${nextWeek}: VO2max ${newVal.toFixed(1)} ${weatherMsg ? `(${weatherMsg})` : ''}`;
-        setHistoryA((prevHist) => [progressLog, ...prevHist]);
-        if (weatherMsg) setEventA(weatherMsg);
-        else setEventA(null);
-        return newVal;
-      });
-
-    }, 1500);
-
-    return () => clearTimeout(timer);
-  }, [isSimulatingA, simWeekA]);
+  const [historyB, setHistoryB] = useState<{ week: number; type: 'good' | 'bad' | 'neutral'; text: string }[]>([]);
 
   const startSimulationB = () => {
     setSimWeekB(0);
     setVo2B(35.0);
     setDecisionB(null);
-    setHistoryB(['Start des Aufstiegs am Mount Lontevitus bei VO2max 35,0']);
+    setHistoryB([{ week: 0, type: 'neutral', text: 'Start des Aufstiegs am Mount Longevitus bei VO2max 35,0' }]);
     setIsSimulatingB(true);
   };
 
-  const handleDecisionChoice = (effect: () => void, log: string) => {
+  const handleDecisionChoice = (effect: () => void, logText: string, type: 'good' | 'bad', week: number) => {
     effect();
-    setHistoryB((prev) => [log, ...prev]);
+    setHistoryB((prev) => [
+      { week, type, text: logText },
+      ...prev
+    ]);
     setDecisionB(null);
-    setSimWeekB((prev) => prev + 1);
+    setSimWeekB(week);
   };
 
   useEffect(() => {
@@ -124,21 +72,50 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     }
 
     const nextWeek = simWeekB + 1;
-    
-    if (nextWeek === 3) {
+
+    // Check for decision points
+    if (nextWeek === 2) {
       setDecisionB({
-        week: 3,
-        title: '⏰ Dein Wecker klingelt um 6:00 Uhr für das geplante Zone-2-Training. Was tust du?',
+        week: 2,
+        title: '⏰ Dein Wecker klingelt um 6:00 Uhr für dein geplantes Lauftraining. Was tust du?',
         options: [
           {
-            text: '🏃‍♂️ Aufstehen & trainieren',
-            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.8)),
-            log: 'Woche 3: Aufgestanden & trainiert (+0,8 VO2max).'
+            key: 'A',
+            text: '🏃‍♂️ Option A: Aufstehen & 45 Min. Zone-2-Lauf machen',
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.6)),
+            logText: 'Woche 2: Option A gewählt! Aufgestanden & trainiert (+0,6 VO2max).',
+            type: 'good'
           },
           {
-            text: '😴 Liegenbleiben & schlafen',
+            key: 'B',
+            text: '📱 Option B: Liegenbleiben & Social Media checken',
+            effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
+            logText: 'Woche 2: Option B gewählt! Liegengeblieben & Social Media gecheckt (-0,1 VO2max).',
+            type: 'bad'
+          }
+        ]
+      });
+      return;
+    }
+
+    if (nextWeek === 4) {
+      setDecisionB({
+        week: 4,
+        title: '🚴‍♂️ Der Arbeitsweg steht an. Draußen ist es bewölkt, aber trocken. Deine Wahl?',
+        options: [
+          {
+            key: 'A',
+            text: '🚲 Option A: Mit dem Fahrrad fahren',
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
+            logText: 'Woche 4: Option A gewählt! Mit dem Fahrrad gefahren (+0,5 VO2max).',
+            type: 'good'
+          },
+          {
+            key: 'B',
+            text: '🚗 Option B: Mit dem Auto fahren',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
-            log: 'Woche 3: Liegengeblieben (-0,2 VO2max).'
+            logText: 'Woche 4: Option B gewählt! Mit dem Auto gefahren & im Stau gestanden (-0,2 VO2max).',
+            type: 'bad'
           }
         ]
       });
@@ -151,34 +128,90 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         title: '🍺 Geburtstagseinladung! Ein Freund reicht dir ein kaltes Bier. Deine Wahl?',
         options: [
           {
-            text: '💧 Alkoholfreies Bier / Wasser nehmen',
+            key: 'A',
+            text: '💧 Option A: Alkoholfreies Bier / Wasser nehmen',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.6)),
-            log: 'Woche 6: Wasser getrunken (+0,6 VO2max durch Top-Regeneration).'
+            logText: 'Woche 6: Option A gewählt! Alkoholfrei geblieben (+0,6 VO2max durch Top-Regeneration).',
+            type: 'good'
           },
           {
-            text: '🍻 Alkohol trinken',
+            key: 'B',
+            text: '🍻 Option B: Alkohol trinken',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.4)),
-            log: 'Woche 6: Alkohol getrunken (-0,4 VO2max, Schlafqualität gesunken).'
+            logText: 'Woche 6: Option B gewählt! Alkohol getrunken (-0,4 VO2max, Regeneration gestört).',
+            type: 'bad'
           }
         ]
       });
       return;
     }
 
-    if (nextWeek === 9) {
+    if (nextWeek === 8) {
       setDecisionB({
-        week: 9,
+        week: 8,
         title: '📺 Es ist 22:30 Uhr. Schlafen gehen oder die neue Serienfolge streamen?',
         options: [
           {
-            text: '🛌 Fernseher aus, schlafen gehen',
+            key: 'A',
+            text: '🛌 Option A: Fernseher aus, Schlaf priorisieren',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
-            log: 'Woche 9: Schlaf priorisiert (+0,7 VO2max durch Zellreparatur).'
+            logText: 'Woche 8: Option A gewählt! Schlaf priorisiert (+0,7 VO2max durch Zellreparatur).',
+            type: 'good'
           },
           {
-            text: '🍿 Serienfolge streamen (Netflix)',
+            key: 'B',
+            text: '🍿 Option B: Serienfolge streamen (Netflix)',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.3)),
-            log: 'Woche 9: Serie gestreamt (-0,3 VO2max durch Schlafmangel).'
+            logText: 'Woche 8: Option B gewählt! Serie gestreamt (-0,3 VO2max durch Schlafmangel).',
+            type: 'bad'
+          }
+        ]
+      });
+      return;
+    }
+
+    if (nextWeek === 10) {
+      setDecisionB({
+        week: 10,
+        title: '☕ Das Nachmittags-Tief im Büro schlägt zu. Wie lädst du deine Akkus auf?',
+        options: [
+          {
+            key: 'A',
+            text: '🚶‍♂️ Option A: 20 Min. zügiger Power-Walk um den Block',
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
+            logText: 'Woche 10: Option A gewählt! Power-Walk gemacht (+0,5 VO2max).',
+            type: 'good'
+          },
+          {
+            key: 'B',
+            text: '🍩 Option B: Espresso & Donut am Schreibtisch',
+            effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
+            logText: 'Woche 10: Option B gewählt! Zucker-Crash erlitten (-0,2 VO2max).',
+            type: 'bad'
+          }
+        ]
+      });
+      return;
+    }
+
+    if (nextWeek === 12) {
+      setDecisionB({
+        week: 12,
+        title: '🏔️ Das Wochenende ist da. Wie gestaltest du deinen Sonntag?',
+        options: [
+          {
+            key: 'A',
+            text: '🥾 Option A: Bergwanderung mit Freunden unternehmen',
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
+            logText: 'Woche 12: Option A gewählt! Bergwandern gewesen (+0,7 VO2max).',
+            type: 'good'
+          },
+          {
+            key: 'B',
+            text: '🎮 Option B: Den ganzen Tag auf der Couch zocken',
+            effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
+            logText: 'Woche 12: Option B gewählt! Tag auf der Couch verbracht (-0,1 VO2max).',
+            type: 'bad'
           }
         ]
       });
@@ -187,11 +220,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
     const timer = setTimeout(() => {
       setSimWeekB(nextWeek);
-      let change = 0.5 + Math.random() * 0.3;
+      let change = 0.3 + Math.random() * 0.2; // standard baseline adaptation
 
       setVo2B((prev) => {
         const newVal = Math.min(48.5, Math.max(30.0, prev + change));
-        setHistoryB((prevHist) => [`Woche ${nextWeek}: VO2max ${newVal.toFixed(1)}`, ...prevHist]);
+        setHistoryB((prevHist) => [
+          { week: nextWeek, type: 'neutral', text: `Woche ${nextWeek}: Grundlagen-Training (+${change.toFixed(2)} VO2max)` },
+          ...prevHist
+        ]);
         return newVal;
       });
     }, 1500);
@@ -1690,262 +1726,275 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
         <hr className="sim-divider" />
 
-        {/* II. ZWEI BERGSTEIGER-SIMULATIONEN IM VERGLEICH */}
+        {/* II. LEBENSSTIL-ENTSCHEIDUNGEN AM MOUNT LONGEVITUS */}
         <div>
-          <h2 className="sim-sec-title">II. Die Bergsteiger-Konzepte im Vergleich (Mount Lontevitus)</h2>
+          <h2 className="sim-sec-title">II. Lebensstil-Entscheidungen am Mount Longevitus</h2>
           <p className="sim-sec-desc">
-            Teste beide spielerischen Ideen direkt untereinander aus, um zu entscheiden, welches Kletter-Erlebnis besser zu TrueYears passt.
+            Triff im Aufstiegsverlauf 6 wichtige Alltagsentscheidungen und beobachte live, wie sich jede Wahl positiv oder negativ auf deine VO2max-Kurve und deine Position am Berg auswirkt.
           </p>
 
-          {/* KONZEPT 1: WETTER- & HINDERNIS-EVENTS */}
-          <div style={{ background: '#f8fafc', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', marginBottom: '2.5rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <div>
-                <span style={{ background: '#eff6ff', color: '#1d4ed8', padding: '4px 12px', borderRadius: '12px', fontSize: '0.8rem', fontWeight: 800 }}>KONZEPT 1</span>
-                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.25rem', fontWeight: 800 }}>Mount Lontevitus mit Wetter- & Hindernis-Events</h3>
-              </div>
-              <button
-                onClick={startSimulationA}
-                disabled={isSimulatingA}
-                style={{
-                  background: isSimulatingA ? '#cbd5e1' : 'linear-gradient(135deg, #006ea7, #4c99c2)',
-                  color: '#ffffff',
-                  border: 'none',
-                  padding: '10px 20px',
-                  borderRadius: '12px',
-                  fontWeight: 800,
-                  fontSize: '0.9rem',
-                  cursor: isSimulatingA ? 'default' : 'pointer'
-                }}
-              >
-                {isSimulatingA ? `Klettert (Woche ${simWeekA})...` : 'Aufstieg starten'}
-              </button>
-            </div>
-
-            <div className="sim-grid" style={{ gridTemplateColumns: '1fr 300px 1fr', gap: '1.5rem', alignItems: 'stretch' }}>
-              {/* Col 1: Status & Events */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '1.5rem' }}>
-                <h4 style={{ margin: 0, color: '#1e3a5f', fontSize: '1rem', fontWeight: 700 }}>Status & Wetterberichte</h4>
-                
-                <div style={{ display: 'flex', gap: '1rem' }}>
-                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '0.5rem', flex: 1, textAlign: 'center' }}>
-                    <div style={{ fontSize: '0.7rem', color: '#94a3b8', fontWeight: 700 }}>VO2-MAX</div>
-                    <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>{vo2A.toFixed(1)}</div>
-                  </div>
-                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '0.5rem', flex: 1, textAlign: 'center' }}>
-                    <div style={{ fontSize: '0.7rem', color: '#94a3b8', fontWeight: 700 }}>WOCHE</div>
-                    <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>{simWeekA}/12</div>
-                  </div>
-                </div>
-
-                <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100px', background: eventA ? '#fef2f2' : '#f0fdf4', border: eventA ? '1px dashed #fca5a5' : '1px dashed #bbf7d0', borderRadius: '12px', padding: '1rem' }}>
-                  {eventA ? (
-                    <div style={{ textAlign: 'center', color: '#991b1b', fontWeight: 700, fontSize: '0.9rem' }}>{eventA}</div>
-                  ) : (
-                    <div style={{ textAlign: 'center', color: '#166534', fontSize: '0.9rem' }}>☀️ Kletterbedingungen sind aktuell stabil. Kein Event gemeldet.</div>
-                  )}
-                </div>
+          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr 1.2fr', gap: '1.5rem', alignItems: 'stretch' }}>
+            
+            {/* SPALTE LINKS: DEINE ENTSCHEIDUNGSZENTRALE */}
+            <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.8rem' }}>
+                <span style={{ background: '#eff6ff', color: '#1d4ed8', padding: '4px 12px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>Links</span>
+                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Deine Entscheidungszentrale</h3>
               </div>
 
-              {/* Col 2: The Mountain Visual (Mount Lontevitus) */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '1.5rem', position: 'relative' }}>
-                <div style={{ textAlign: 'center' }}>
-                  <h4 style={{ margin: 0, color: '#1e3a5f', fontSize: '1rem', fontWeight: 800 }}>Mount Lontevitus A</h4>
-                </div>
-
-                <div style={{ position: 'absolute', top: '75px', bottom: '40px', left: '42px', width: '2px', borderLeft: '2px dashed #cbd5e1', zIndex: 1 }} />
-
-                {/* Level 4: Gipfel */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', position: 'relative', zIndex: 2, opacity: vo2A >= 45.0 ? 1 : 0.4, transition: 'all 0.3s' }}>
-                  <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: vo2A >= 45.0 ? '#faf5ff' : '#ffffff', border: vo2A >= 45.0 ? '2px solid #a855f7' : '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>🏔️</div>
-                  <div>
-                    <div style={{ fontWeight: 800, color: '#7e22ce', fontSize: '0.8rem' }}>Gipfel (Elite)</div>
-                    <div style={{ fontSize: '0.65rem', color: '#94a3b8' }}>VO2-Max &gt;= 45</div>
-                  </div>
-                  {vo2A >= 45.0 && <span style={{ marginLeft: 'auto', fontSize: '1.2rem' }}>🧗</span>}
-                </div>
-
-                {/* Level 3: Felsstufe */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', position: 'relative', zIndex: 2, opacity: (vo2A >= 40.0 && vo2A < 45.0) ? 1 : vo2A >= 45.0 ? 0.8 : 0.4, transition: 'all 0.3s' }}>
-                  <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: (vo2A >= 40.0 && vo2A < 45.0) ? '#eff6ff' : '#ffffff', border: (vo2A >= 40.0 && vo2A < 45.0) ? '2px solid #3b82f6' : '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>🧗‍♀️</div>
-                  <div>
-                    <div style={{ fontWeight: 800, color: '#1d4ed8', fontSize: '0.8rem' }}>Felsstufe (Athlet)</div>
-                    <div style={{ fontSize: '0.65rem', color: '#94a3b8' }}>VO2-Max 40–44</div>
-                  </div>
-                  {(vo2A >= 40.0 && vo2A < 45.0) && <span style={{ marginLeft: 'auto', fontSize: '1.2rem' }}>🧗</span>}
-                </div>
-
-                {/* Level 2: Waldgrenze */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', position: 'relative', zIndex: 2, opacity: (vo2A >= 35.0 && vo2A < 40.0) ? 1 : vo2A >= 40.0 ? 0.8 : 0.4, transition: 'all 0.3s' }}>
-                  <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: (vo2A >= 35.0 && vo2A < 40.0) ? '#f0fdf4' : '#ffffff', border: (vo2A >= 35.0 && vo2A < 40.0) ? '2px solid #22c55e' : '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>🌲</div>
-                  <div>
-                    <div style={{ fontWeight: 800, color: '#15803d', fontSize: '0.8rem' }}>Waldgrenze (Fortgeschritten)</div>
-                    <div style={{ fontSize: '0.65rem', color: '#94a3b8' }}>VO2-Max 35–39</div>
-                  </div>
-                  {(vo2A >= 35.0 && vo2A < 40.0) && <span style={{ marginLeft: 'auto', fontSize: '1.2rem' }}>🧗</span>}
-                </div>
-
-                {/* Level 1: Basis-Camp */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', position: 'relative', zIndex: 2, opacity: vo2A < 35.0 ? 1 : 0.4, transition: 'all 0.3s' }}>
-                  <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: vo2A < 35.0 ? '#f8fafc' : '#ffffff', border: vo2A < 35.0 ? '2px solid #94a3b8' : '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>⛺</div>
-                  <div>
-                    <div style={{ fontWeight: 800, color: '#475569', fontSize: '0.8rem' }}>Basis-Camp (Einsteiger)</div>
-                    <div style={{ fontSize: '0.65rem', color: '#94a3b8' }}>VO2-Max &lt; 35</div>
-                  </div>
-                  {vo2A < 35.0 && <span style={{ marginLeft: 'auto', fontSize: '1.2rem' }}>🧗</span>}
-                </div>
-              </div>
-
-              {/* Col 3: Progression Logs */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '1.5rem', maxHeight: '250px', overflowY: 'auto' }}>
-                <h4 style={{ margin: 0, color: '#1e3a5f', fontSize: '1rem', fontWeight: 700, position: 'sticky', top: 0, background: '#fff', paddingBottom: '0.5rem' }}>Protokoll</h4>
-                <div style={{ fontSize: '0.8rem', color: '#475569', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                  {historyA.map((h, i) => (
-                    <div key={i} style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.3rem' }}>{h}</div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-
-
-          {/* KONZEPT 2: LEBENSSTIL-ENTSCHEIDUNGEN */}
-          <div style={{ background: '#faf5ff', border: '1.5px solid #f3e8ff', borderRadius: '24px', padding: '2rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-              <div>
-                <span style={{ background: '#f3e8ff', color: '#7e22ce', padding: '4px 12px', borderRadius: '12px', fontSize: '0.8rem', fontWeight: 800 }}>KONZEPT 2</span>
-                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.25rem', fontWeight: 800 }}>Mount Lontevitus mit Lebensstil-Entscheidungen</h3>
-              </div>
-              <button
-                onClick={startSimulationB}
-                disabled={isSimulatingB}
-                style={{
-                  background: isSimulatingB ? '#cbd5e1' : 'linear-gradient(135deg, #7e22ce, #a855f7)',
-                  color: '#ffffff',
-                  border: 'none',
-                  padding: '10px 20px',
-                  borderRadius: '12px',
-                  fontWeight: 800,
-                  fontSize: '0.9rem',
-                  cursor: isSimulatingB ? 'default' : 'pointer'
-                }}
-              >
-                {isSimulatingB ? `Klettert (Woche ${simWeekB})...` : 'Aufstieg starten'}
-              </button>
-            </div>
-
-            <div className="sim-grid" style={{ gridTemplateColumns: '1fr 300px 1fr', gap: '1.5rem', alignItems: 'stretch' }}>
-              {/* Col 1: Status & Decisions */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '1.5rem' }}>
-                <h4 style={{ margin: 0, color: '#1e3a5f', fontSize: '1rem', fontWeight: 700 }}>Entscheidungs-Zentrale</h4>
-                
-                <div style={{ display: 'flex', gap: '1rem' }}>
-                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '0.5rem', flex: 1, textAlign: 'center' }}>
-                    <div style={{ fontSize: '0.7rem', color: '#94a3b8', fontWeight: 700 }}>VO2-MAX</div>
-                    <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>{vo2B.toFixed(1)}</div>
-                  </div>
-                  <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '0.5rem', flex: 1, textAlign: 'center' }}>
-                    <div style={{ fontSize: '0.7rem', color: '#94a3b8', fontWeight: 700 }}>WOCHE</div>
-                    <div style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>{simWeekB}/12</div>
-                  </div>
-                </div>
-
-                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '120px', background: decisionB ? '#faf5ff' : '#f8fafc', border: decisionB ? '1px solid #e9d5ff' : '1px dashed #e2e8f0', borderRadius: '12px', padding: '1rem' }}>
-                  {decisionB ? (
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '180px' }}>
+                {decisionB ? (
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
+                    <div style={{ display: 'inline-block', alignSelf: 'flex-start', background: '#f3e8ff', color: '#7e22ce', padding: '2px 8px', borderRadius: '6px', fontSize: '0.75rem', fontWeight: 800 }}>
+                      WOCHE {decisionB.week}
+                    </div>
+                    <div style={{ color: '#1e3a5f', fontWeight: 700, fontSize: '0.95rem', lineHeight: '1.5' }}>
+                      {decisionB.title}
+                    </div>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
-                      <div style={{ color: '#581c87', fontWeight: 700, fontSize: '0.85rem', lineHeight: '1.4' }}>{decisionB.title}</div>
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                        {decisionB.options.map((opt, idx) => (
-                          <button
-                            key={idx}
-                            onClick={() => handleDecisionChoice(opt.effect, opt.log)}
-                            style={{
-                              background: '#7e22ce',
-                              color: '#fff',
-                              border: 'none',
-                              padding: '8px 12px',
-                              borderRadius: '8px',
-                              fontSize: '0.75rem',
-                              fontWeight: 700,
-                              cursor: 'pointer',
-                              textAlign: 'left',
-                              transition: 'opacity 0.2s'
-                            }}
-                            onMouseOver={(e) => (e.currentTarget.style.opacity = '0.9')}
-                            onMouseOut={(e) => (e.currentTarget.style.opacity = '1')}
-                          >
-                            {opt.text}
-                          </button>
-                        ))}
+                      {decisionB.options.map((opt) => (
+                        <button
+                          key={opt.key}
+                          onClick={() => handleDecisionChoice(opt.effect, opt.logText, opt.type, decisionB.week)}
+                          style={{
+                            background: '#ffffff',
+                            border: '2px solid #e2e8f0',
+                            borderRadius: '12px',
+                            padding: '12px 16px',
+                            fontSize: '0.85rem',
+                            fontWeight: 700,
+                            color: '#334155',
+                            cursor: 'pointer',
+                            textAlign: 'left',
+                            boxShadow: '0 2px 4px rgba(0,0,0,0.01)',
+                            transition: 'all 0.2s ease'
+                          }}
+                          onMouseOver={(e) => {
+                            e.currentTarget.style.border = '2px solid #7e22ce';
+                            e.currentTarget.style.background = '#fdfaff';
+                          }}
+                          onMouseOut={(e) => {
+                            e.currentTarget.style.border = '2px solid #e2e8f0';
+                            e.currentTarget.style.background = '#ffffff';
+                          }}
+                        >
+                          {opt.text}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div style={{ textAlign: 'center', padding: '2rem' }}>
+                    {isSimulatingB ? (
+                      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
+                        <div className="spinner-border text-primary" role="status" style={{ width: '2rem', height: '2rem' }}>
+                          <span className="visually-hidden">Loading...</span>
+                        </div>
+                        <span style={{ fontSize: '0.9rem', color: '#64748b', fontWeight: 600 }}>Kletterer steigt auf... Bitte warten.</span>
+                      </div>
+                    ) : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+                        <span style={{ fontSize: '0.9rem', color: '#64748b' }}>
+                          Bereit für den Aufstieg? Starte das Abenteuer und triff deine Entscheidungen.
+                        </span>
+                        <button
+                          onClick={startSimulationB}
+                          style={{
+                            background: 'linear-gradient(135deg, #7e22ce, #a855f7)',
+                            color: '#ffffff',
+                            border: 'none',
+                            padding: '12px 24px',
+                            borderRadius: '16px',
+                            fontWeight: 800,
+                            fontSize: '1rem',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 15px rgba(126, 34, 206, 0.25)',
+                            transition: 'transform 0.2s'
+                          }}
+                          onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.03)')}
+                          onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
+                        >
+                          {simWeekB === 12 ? 'Erneut starten' : 'Aufstieg starten'}
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* SPALTE MITTE: DEIN AUFSTIEG */}
+            <div style={{ background: '#f8fafc', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', position: 'relative' }}>
+              <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.8rem', textAlign: 'center' }}>
+                <span style={{ background: '#f1f5f9', color: '#475569', padding: '4px 12px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>Mitte</span>
+                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Dein Aufstieg</h3>
+              </div>
+
+              {/* Graphic Mountain area */}
+              <div style={{ 
+                flex: 1, 
+                position: 'relative', 
+                background: 'linear-gradient(to top, #334155, #64748b, #cbd5e1, #eff6ff)', 
+                borderRadius: '20px', 
+                overflow: 'hidden',
+                minHeight: '350px',
+                boxShadow: 'inset 0 4px 12px rgba(0,0,0,0.1)'
+              }}>
+                {/* Visual mountain peak vector outline overlay */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  top: 0,
+                  background: 'linear-gradient(135deg, rgba(255,255,255,0.05) 0%, transparent 100%)',
+                  zIndex: 1
+                }} />
+
+                {/* Dotted climbing trail from bottom center-left to top center-right */}
+                <div style={{
+                  position: 'absolute',
+                  top: '40px',
+                  bottom: '40px',
+                  left: '40%',
+                  width: '3px',
+                  borderLeft: '3px dotted rgba(255,255,255,0.6)',
+                  zIndex: 2,
+                  transform: 'rotate(12deg)'
+                }} />
+
+                {/* Peak Label */}
+                <div style={{ position: 'absolute', top: '15px', right: '15px', background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(5px)', padding: '2px 8px', borderRadius: '8px', color: '#fff', fontSize: '0.7rem', fontWeight: 800, border: '1px solid rgba(255,255,255,0.2)', zIndex: 3 }}>
+                  🏔️ Mount Longevitus
+                </div>
+
+                {/* Height Stage Markers on the mountain side */}
+                <div style={{ position: 'absolute', top: '15%', left: '10px', color: 'rgba(255,255,255,0.9)', fontSize: '0.75rem', fontWeight: 800, zIndex: 3 }}>
+                  🏁 Gipfel (VO2max 45+)
+                </div>
+                <div style={{ position: 'absolute', top: '40%', left: '10px', color: 'rgba(255,255,255,0.75)', fontSize: '0.75rem', fontWeight: 800, zIndex: 3 }}>
+                  🧗‍♂️ Felsstufe (40-44)
+                </div>
+                <div style={{ position: 'absolute', top: '65%', left: '10px', color: 'rgba(255,255,255,0.75)', fontSize: '0.75rem', fontWeight: 800, zIndex: 3 }}>
+                  🌲 Waldgrenze (35-39)
+                </div>
+                <div style={{ position: 'absolute', top: '90%', left: '10px', color: 'rgba(255,255,255,0.6)', fontSize: '0.75rem', fontWeight: 800, zIndex: 3 }}>
+                  ⛺ Basis-Camp (&lt;35)
+                </div>
+
+                {/* Climber Position Indicator */}
+                {(() => {
+                  const minVo2 = 30.0;
+                  const maxVo2 = 48.5;
+                  const ratio = Math.min(1, Math.max(0, (vo2B - minVo2) / (maxVo2 - minVo2)));
+                  const bottomPercent = 10 + ratio * 75;
+                  const leftPercent = 25 + ratio * 35;
+                  
+                  return (
+                    <div 
+                      style={{
+                        position: 'absolute',
+                        bottom: `${bottomPercent}%`,
+                        left: `${leftPercent}%`,
+                        zIndex: 10,
+                        transform: 'translate(-50%, 50%)',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        transition: 'all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1)'
+                      }}
+                    >
+                      <span style={{ 
+                        fontSize: '2rem', 
+                        filter: 'drop-shadow(0 4px 6px rgba(0,0,0,0.3))',
+                        animation: isSimulatingB && !decisionB ? 'heartbeat-sim 1.5s infinite ease-in-out' : 'none'
+                      }}>
+                        🧗
+                      </span>
+                      <div style={{ 
+                        background: '#1e293b', 
+                        color: '#fff', 
+                        padding: '2px 8px', 
+                        borderRadius: '10px', 
+                        fontSize: '0.7rem', 
+                        fontWeight: 800, 
+                        marginTop: '4px',
+                        whiteSpace: 'nowrap',
+                        boxShadow: '0 2px 10px rgba(0,0,0,0.2)',
+                        border: '1px solid rgba(255,255,255,0.1)'
+                      }}>
+                        Woche {simWeekB}: {vo2B.toFixed(1)} ml
                       </div>
                     </div>
-                  ) : (
-                    <div style={{ textAlign: 'center', color: '#94a3b8', fontSize: '0.85rem' }}>
-                      {isSimulatingB ? 'Kletterer steigt auf... Bitte warten, bis eine Entscheidung ansteht.' : 'Aufstieg starten, um Entscheidungen freizuschalten.'}
-                    </div>
-                  )}
+                  );
+                })()}
+              </div>
+            </div>
+
+            {/* SPALTE RECHTS: VO2-MAX ENTWICKLUNG */}
+            <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+              <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.8rem' }}>
+                <span style={{ background: '#faf5ff', color: '#7e22ce', padding: '4px 12px', borderRadius: '12px', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase' }}>Rechts</span>
+                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>VO2-max Entwicklung</h3>
+              </div>
+
+              {/* Huge current value display */}
+              <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1rem', textAlign: 'center' }}>
+                <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Prognostizierte VO2-max</span>
+                <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#0f172a', margin: '0.2rem 0' }}>
+                  {vo2B.toFixed(1).replace('.', ',')}
+                  <span style={{ fontSize: '1rem', fontWeight: 600, color: '#64748b', marginLeft: '4px' }}>ml/kg/min</span>
                 </div>
               </div>
 
-              {/* Col 2: The Mountain Visual (Mount Lontevitus) */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '1.5rem', position: 'relative' }}>
-                <div style={{ textAlign: 'center' }}>
-                  <h4 style={{ margin: 0, color: '#1e3a5f', fontSize: '1rem', fontWeight: 800 }}>Mount Lontevitus B</h4>
-                </div>
+              {/* Log area with red/green conditional styling */}
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.8rem', maxHeight: '250px', overflowY: 'auto' }}>
+                <div style={{ fontSize: '0.8rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                  {historyB.map((log, idx) => {
+                    let color = '#475569';
+                    let bg = 'transparent';
+                    let border = 'none';
+                    let padding = '0';
+                    let radius = '0';
+                    
+                    if (log.type === 'good') {
+                      color = '#166534';
+                      bg = '#f0fdf4';
+                      border = '1px solid #bbf7d0';
+                      padding = '8px 12px';
+                      radius = '10px';
+                    } else if (log.type === 'bad') {
+                      color = '#991b1b';
+                      bg = '#fef2f2';
+                      border = '1px solid #fca5a5';
+                      padding = '8px 12px';
+                      radius = '10px';
+                    }
 
-                <div style={{ position: 'absolute', top: '75px', bottom: '40px', left: '42px', width: '2px', borderLeft: '2px dashed #cbd5e1', zIndex: 1 }} />
-
-                {/* Level 4: Gipfel */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', position: 'relative', zIndex: 2, opacity: vo2B >= 45.0 ? 1 : 0.4, transition: 'all 0.3s' }}>
-                  <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: vo2B >= 45.0 ? '#faf5ff' : '#ffffff', border: vo2B >= 45.0 ? '2px solid #a855f7' : '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>🏔️</div>
-                  <div>
-                    <div style={{ fontWeight: 800, color: '#7e22ce', fontSize: '0.8rem' }}>Gipfel (Elite)</div>
-                    <div style={{ fontSize: '0.65rem', color: '#94a3b8' }}>VO2-Max &gt;= 45</div>
-                  </div>
-                  {vo2B >= 45.0 && <span style={{ marginLeft: 'auto', fontSize: '1.2rem' }}>🧗</span>}
-                </div>
-
-                {/* Level 3: Felsstufe */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', position: 'relative', zIndex: 2, opacity: (vo2B >= 40.0 && vo2B < 45.0) ? 1 : vo2B >= 45.0 ? 0.8 : 0.4, transition: 'all 0.3s' }}>
-                  <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: (vo2B >= 40.0 && vo2B < 45.0) ? '#eff6ff' : '#ffffff', border: (vo2B >= 40.0 && vo2B < 45.0) ? '2px solid #3b82f6' : '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>🧗‍♀️</div>
-                  <div>
-                    <div style={{ fontWeight: 800, color: '#1d4ed8', fontSize: '0.8rem' }}>Felsstufe (Athlet)</div>
-                    <div style={{ fontSize: '0.65rem', color: '#94a3b8' }}>VO2-Max 40–44</div>
-                  </div>
-                  {(vo2B >= 40.0 && vo2B < 45.0) && <span style={{ marginLeft: 'auto', fontSize: '1.2rem' }}>🧗</span>}
-                </div>
-
-                {/* Level 2: Waldgrenze */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', position: 'relative', zIndex: 2, opacity: (vo2B >= 35.0 && vo2B < 40.0) ? 1 : vo2B >= 40.0 ? 0.8 : 0.4, transition: 'all 0.3s' }}>
-                  <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: (vo2B >= 35.0 && vo2B < 40.0) ? '#f0fdf4' : '#ffffff', border: (vo2B >= 35.0 && vo2B < 40.0) ? '2px solid #22c55e' : '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>🌲</div>
-                  <div>
-                    <div style={{ fontWeight: 800, color: '#15803d', fontSize: '0.8rem' }}>Waldgrenze (Fortgeschritten)</div>
-                    <div style={{ fontSize: '0.65rem', color: '#94a3b8' }}>VO2-Max 35–39</div>
-                  </div>
-                  {(vo2B >= 35.0 && vo2B < 40.0) && <span style={{ marginLeft: 'auto', fontSize: '1.2rem' }}>🧗</span>}
-                </div>
-
-                {/* Level 1: Basis-Camp */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', position: 'relative', zIndex: 2, opacity: vo2B < 35.0 ? 1 : 0.4, transition: 'all 0.3s' }}>
-                  <div style={{ width: '26px', height: '26px', borderRadius: '50%', background: vo2B < 35.0 ? '#f8fafc' : '#ffffff', border: vo2B < 35.0 ? '2px solid #94a3b8' : '1px solid #cbd5e1', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '0.8rem' }}>⛺</div>
-                  <div>
-                    <div style={{ fontWeight: 800, color: '#475569', fontSize: '0.8rem' }}>Basis-Camp (Einsteiger)</div>
-                    <div style={{ fontSize: '0.65rem', color: '#94a3b8' }}>VO2-Max &lt; 35</div>
-                  </div>
-                  {vo2B < 35.0 && <span style={{ marginLeft: 'auto', fontSize: '1.2rem' }}>🧗</span>}
-                </div>
-              </div>
-
-              {/* Col 3: Progression Logs */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '20px', padding: '1.5rem', maxHeight: '250px', overflowY: 'auto' }}>
-                <h4 style={{ margin: 0, color: '#1e3a5f', fontSize: '1rem', fontWeight: 700, position: 'sticky', top: 0, background: '#fff', paddingBottom: '0.5rem' }}>Entscheidungs-Log</h4>
-                <div style={{ fontSize: '0.8rem', color: '#475569', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
-                  {historyB.map((h, i) => (
-                    <div key={i} style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.3rem' }}>{h}</div>
-                  ))}
+                    return (
+                      <div 
+                        key={idx} 
+                        style={{ 
+                          color, 
+                          background: bg, 
+                          border, 
+                          padding, 
+                          borderRadius: radius,
+                          fontSize: '0.8rem',
+                          fontWeight: log.type !== 'neutral' ? 600 : 500,
+                          lineHeight: '1.4'
+                        }}
+                      >
+                        {log.type === 'good' && '✅ '}
+                        {log.type === 'bad' && '❌ '}
+                        {log.text}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
+
           </div>
         </div>
 
