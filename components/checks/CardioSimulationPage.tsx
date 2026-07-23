@@ -1825,7 +1825,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                     </div>
                   </div>
                 ) : (
-                  <div style={{ textAlign: 'center', padding: '2rem' }}>
+                  <div style={{ textAlign: 'center', padding: '2rem 0.5rem' }}>
                     {isSimulatingB ? (
                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.2rem' }}>
                         <div style={{ display: 'inline-block', background: '#f3e8ff', color: '#7e22ce', padding: '10px 20px', borderRadius: '12px', fontSize: '1.6rem', fontWeight: 900 }}>
@@ -1838,7 +1838,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       </div>
                     ) : (
                       <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', alignItems: 'center' }}>
-                        <span style={{ fontSize: '1.2rem', color: '#334155', fontWeight: 700, textAlign: 'center', lineHeight: '1.4' }}>
+                        <span style={{ width: '100%', fontSize: '1.4rem', color: '#334155', fontWeight: 500, textAlign: 'center', lineHeight: '1.4' }}>
                           Bereit für den Aufstieg? Starte deine Erfahrung und triff verschiedene Lifestyle-Entscheidungen.
                         </span>
                         <button
