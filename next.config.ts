@@ -8,6 +8,7 @@ const withPWA = require('next-pwa')({
 });
 
 const nextConfig: NextConfig = {
+  outputFileTracingRoot: process.cwd(),
   turbopack: {},
   images: {
     remotePatterns: [
