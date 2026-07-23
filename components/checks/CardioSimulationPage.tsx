@@ -2154,17 +2154,35 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         transition: 'all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1)'
                       }}
                     >
-                      <span style={{ 
-                        fontSize: '4.4rem', 
-                        filter: 'drop-shadow(0 0 10px rgba(255,255,255,0.95)) drop-shadow(0 4px 6px rgba(0,0,0,0.4))',
-                        animation: isSimulatingB && !decisionB ? 'heartbeat-sim 1.5s infinite ease-in-out' : 'none',
-                        background: 'transparent',
-                        backgroundColor: 'transparent',
-                        display: 'inline-block',
-                        lineHeight: '1'
-                      }}>
-                        🧗
-                      </span>
+                      <svg 
+                        width="80" 
+                        height="80" 
+                        viewBox="0 0 100 100" 
+                        style={{
+                          filter: 'drop-shadow(0 0 12px #ffffff) drop-shadow(0 0 6px #ffffff) drop-shadow(0 4px 6px rgba(0,0,0,0.4))',
+                          animation: isSimulatingB && !decisionB ? 'heartbeat-sim 1.5s infinite ease-in-out' : 'none'
+                        }}
+                      >
+                        {/* Kopf & Helm */}
+                        <circle cx="50" cy="22" r="9" fill="#eab308" />
+                        <circle cx="50" cy="24" r="7" fill="#fed7aa" />
+                        {/* T-Shirt (orange) */}
+                        <path d="M 42 32 L 58 32 L 60 55 L 40 55 Z" fill="#f97316" />
+                        {/* Hose (blau) */}
+                        <path d="M 40 55 L 60 55 L 58 68 L 42 68 Z" fill="#2563eb" />
+                        {/* Linker Arm greift hoch */}
+                        <path d="M 42 35 L 30 20 L 26 8" stroke="#fed7aa" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                        <path d="M 42 35 L 30 20 L 26 8" stroke="#f97316" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" fill="none" strokeDasharray="15 30" />
+                        {/* Rechter Arm greift hoch */}
+                        <path d="M 58 35 L 70 24 L 74 12" stroke="#fed7aa" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                        <path d="M 58 35 L 70 24 L 74 12" stroke="#f97316" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" fill="none" strokeDasharray="15 30" />
+                        {/* Linkes Bein */}
+                        <path d="M 42 68 L 28 76 L 34 90" stroke="#2563eb" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                        {/* Rechtes Bein */}
+                        <path d="M 58 68 L 70 78 L 66 92" stroke="#2563eb" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                        {/* Klettergurt */}
+                        <rect x="39" y="53" width="22" height="5" rx="2" fill="#475569" />
+                      </svg>
                       <div style={{ 
                         background: 'rgba(30, 41, 59, 0.85)', 
                         backdropFilter: 'blur(5px)',
