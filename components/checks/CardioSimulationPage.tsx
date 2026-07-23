@@ -1902,7 +1902,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               </div>
 
               {(() => {
-                const minVo2 = 30.0;
+                const minVo2 = 35.0;
                 const maxVo2 = 48.5;
                 const t = Math.min(1, Math.max(0, (vo2B - minVo2) / (maxVo2 - minVo2)));
                 const positionPercent = 100 - (t * 100);
@@ -2085,7 +2085,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
                 {/* Climber Position Indicator */}
                 {(() => {
-                  const minVo2 = 30.0;
+                  const minVo2 = 35.0;
                   const maxVo2 = 48.5;
                   const t = Math.min(1, Math.max(0, (vo2B - minVo2) / (maxVo2 - minVo2)));
                   
@@ -2131,28 +2131,16 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         transition: 'all 0.8s cubic-bezier(0.25, 0.8, 0.25, 1)'
                       }}
                     >
-                      <svg 
-                        width="70" 
-                        height="70" 
-                        viewBox="0 0 100 100" 
-                        style={{
+                      <img 
+                        src="https://fonts.gstatic.com/s/e/notoemoji/latest/1f9d7/512.webp" 
+                        alt="🧗"
+                        style={{ 
+                          width: '80px', 
+                          height: '80px', 
                           filter: 'drop-shadow(0 6px 8px rgba(0,0,0,0.5))',
                           animation: isSimulatingB && !decisionB ? 'heartbeat-sim 1.5s infinite ease-in-out' : 'none'
                         }}
-                      >
-                        {/* Kopf */}
-                        <circle cx="50" cy="22" r="9" fill="#7e22ce" />
-                        {/* Körper */}
-                        <path d="M 45 32 Q 50 30 55 32 L 57 58 Q 50 60 43 58 Z" fill="#7e22ce" />
-                        {/* Linker Arm greift nach oben */}
-                        <path d="M 45 35 L 32 20 L 28 8" stroke="#7e22ce" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                        {/* Rechter Arm greift nach oben */}
-                        <path d="M 55 35 L 68 22 L 72 10" stroke="#7e22ce" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                        {/* Linkes Bein angewinkelt */}
-                        <path d="M 44 58 L 32 68 L 36 82" stroke="#7e22ce" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                        {/* Rechtes Bein stößt ab */}
-                        <path d="M 56 58 L 68 72 L 64 86" stroke="#7e22ce" strokeWidth="6" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-                      </svg>
+                      />
                       <div style={{ 
                         background: 'rgba(30, 41, 59, 0.85)', 
                         backdropFilter: 'blur(5px)',
