@@ -55,10 +55,15 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
   const handleDecisionChoice = (effect: () => void, logText: string, type: 'good' | 'bad', week: number) => {
     effect();
-    setHistoryB((prev) => [
-      { week, type, text: logText },
-      ...prev
-    ]);
+    setHistoryB((prev) => {
+      if (prev.some((h) => h.week === week)) {
+        return prev;
+      }
+      return [
+        { week, type, text: logText },
+        ...prev
+      ];
+    });
     setDecisionB(null);
     setSimWeekB(week);
   };
@@ -224,10 +229,15 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
       setVo2B((prev) => {
         const newVal = Math.min(48.5, Math.max(30.0, prev + change));
-        setHistoryB((prevHist) => [
-          { week: nextWeek, type: 'neutral', text: `Woche ${nextWeek}: Grundlagen-Training (+${change.toFixed(2)} VO2max)` },
-          ...prevHist
-        ]);
+        setHistoryB((prevHist) => {
+          if (prevHist.some((h) => h.week === nextWeek)) {
+            return prevHist;
+          }
+          return [
+            { week: nextWeek, type: 'neutral', text: `Woche ${nextWeek}: Grundlagen-Training (+${change.toFixed(2)} VO2max)` },
+            ...prevHist
+          ];
+        });
         return newVal;
       });
     }, 1500);
@@ -967,7 +977,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         <div>
           <div className="sim-header-row">
             <div>
-              <h2 className="sim-sec-title" style={{ margin: 0 }}>I. Das Langlebigkeits-Rennen</h2>
+              <h2 className="sim-sec-title" style={{ margin: 0 }}>I. Langlebigkeits-Rennen</h2>
               <p className="sim-sec-desc" style={{ margin: '0.2rem 0 0 0', fontSize: '1.15rem' }}>
                 Klicke rechts unterhalb des Tachos bis zu 4 VO2max Hebel an und drücke auf Start oder schiebe den Wochenregler, um die Leistungsentwicklung zu steuern.
               </p>
@@ -1816,7 +1826,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           onMouseOver={(e) => (e.currentTarget.style.transform = 'scale(1.03)')}
                           onMouseOut={(e) => (e.currentTarget.style.transform = 'scale(1)')}
                         >
-                          {simWeekB === 12 ? 'Erneut starten' : 'Aufstieg starten'}
+                          {simWeekB === 12 ? 'Erneut starten' : 'Simulation starten'}
                         </button>
                       </div>
                     )}
@@ -1980,7 +1990,6 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
               {/* Huge current value display */}
               <div style={{ background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: '16px', padding: '1rem', textAlign: 'center' }}>
-                <span style={{ fontSize: '0.75rem', color: '#94a3b8', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Prognostizierte VO2-max</span>
                 <div style={{ fontSize: '2.5rem', fontWeight: 900, color: '#0f172a', margin: '0.2rem 0' }}>
                   {vo2B.toFixed(1).replace('.', ',')}
                   <span style={{ fontSize: '1rem', fontWeight: 600, color: '#64748b', marginLeft: '4px' }}>ml/kg/min</span>
