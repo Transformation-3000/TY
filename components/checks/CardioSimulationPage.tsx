@@ -1751,6 +1751,34 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Entscheidungszentrale</h3>
               </div>
 
+              {(() => {
+                let objectPositionB = 'center 100%';
+                if (simWeekB >= 10) {
+                  objectPositionB = 'center 0%';
+                } else if (simWeekB >= 7) {
+                  objectPositionB = 'center 35%';
+                } else if (simWeekB >= 4) {
+                  objectPositionB = 'center 65%';
+                }
+                return (
+                  <img 
+                    src="/images/photorealistic_mountain.png" 
+                    alt="Mount Longevitus Preview" 
+                    style={{
+                      width: '100%',
+                      height: '140px',
+                      objectFit: 'cover',
+                      objectPosition: objectPositionB,
+                      borderRadius: '12px',
+                      border: '1px solid #e2e8f0',
+                      boxShadow: '0 4px 10px rgba(0,0,0,0.05)',
+                      transform: 'scale(1.0)',
+                      transition: 'object-position 0.8s ease'
+                    }}
+                  />
+                );
+              })()}
+
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', minHeight: '180px' }}>
                 {decisionB ? (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
@@ -1809,21 +1837,8 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                         <span style={{ fontSize: '0.9rem', color: '#64748b', fontWeight: 600 }}>Kletterer steigt auf... Bitte warten.</span>
                       </div>
                     ) : (
-                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
-                        <img 
-                          src="/images/mountain_preview.png" 
-                          alt="Mount Longevitus Preview" 
-                          style={{
-                            width: '100%',
-                            height: '140px',
-                            objectFit: 'cover',
-                            borderRadius: '12px',
-                            border: '1px solid #e2e8f0',
-                            boxShadow: '0 4px 10px rgba(0,0,0,0.05)',
-                            transform: 'scale(1.0)'
-                          }}
-                        />
-                        <span style={{ fontSize: '0.9rem', color: '#64748b', textAlign: 'center' }}>
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem', alignItems: 'center' }}>
+                        <span style={{ fontSize: '1.2rem', color: '#334155', fontWeight: 700, textAlign: 'center', lineHeight: '1.4' }}>
                           Bereit für den Aufstieg? Starte deine Erfahrung und triff verschiedene Lifestyle-Entscheidungen.
                         </span>
                         <button
