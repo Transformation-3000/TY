@@ -79,6 +79,30 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
     const nextWeek = simWeekB + 1;
 
     // Check for decision points
+    if (nextWeek === 1) {
+      setDecisionB({
+        week: 1,
+        title: '🥦 Frühstücks-Wahl: Vollkorn-Müsli mit Beeren oder Croissant mit Nutella?',
+        options: [
+          {
+            key: 'A',
+            text: 'Vollkorn-Müsli mit Beeren',
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.4)),
+            logText: 'Woche 1: Vollkorn-Müsli gewählt (+0,4 VO2max)',
+            type: 'good'
+          },
+          {
+            key: 'B',
+            text: 'Croissant mit Nutella',
+            effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
+            logText: 'Woche 1: Croissant gewählt (-0,1 VO2max)',
+            type: 'bad'
+          }
+        ]
+      });
+      return;
+    }
+
     if (nextWeek === 2) {
       setDecisionB({
         week: 2,
@@ -87,15 +111,39 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           {
             key: 'A',
             text: 'Aufstehen & 45 Min. Zone-2-Lauf machen',
-            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.6)),
-            logText: 'Woche 2: Aufgestanden & trainiert (+0,6 VO2max).',
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
+            logText: 'Woche 2: Aufgestanden & trainiert (+0,5 VO2max)',
             type: 'good'
           },
           {
             key: 'B',
             text: 'Liegenbleiben & Social Media checken',
-            effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
-            logText: 'Woche 2: Liegengeblieben & Social Media gecheckt (-0,1 VO2max).',
+            effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.15)),
+            logText: 'Woche 2: Liegengeblieben & Social Media gecheckt (-0,15 VO2max)',
+            type: 'bad'
+          }
+        ]
+      });
+      return;
+    }
+
+    if (nextWeek === 3) {
+      setDecisionB({
+        week: 3,
+        title: '💧 Trinken im Büro: Ausreichend Wasser oder zuckerhaltige Softdrinks?',
+        options: [
+          {
+            key: 'A',
+            text: 'Ausreichend Wasser trinken',
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.3)),
+            logText: 'Woche 3: Wasser getrunken (+0,3 VO2max)',
+            type: 'good'
+          },
+          {
+            key: 'B',
+            text: 'Softdrinks trinken',
+            effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.15)),
+            logText: 'Woche 3: Softdrinks getrunken (-0,15 VO2max)',
             type: 'bad'
           }
         ]
@@ -112,14 +160,38 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             key: 'A',
             text: 'Mit dem Rad fahren oder zu Fuss gehen',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'Woche 4: Mit dem Rad gefahren oder zu Fuss gegangen (+0,5 VO2max).',
+            logText: 'Woche 4: Mit dem Rad gefahren oder zu Fuss gegangen (+0,5 VO2max)',
             type: 'good'
           },
           {
             key: 'B',
             text: 'Mit dem Auto fahren',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
-            logText: 'Woche 4: Mit dem Auto gefahren & im Stau gestanden (-0,2 VO2max).',
+            logText: 'Woche 4: Mit dem Auto gefahren & im Stau gestanden (-0,2 VO2max)',
+            type: 'bad'
+          }
+        ]
+      });
+      return;
+    }
+
+    if (nextWeek === 5) {
+      setDecisionB({
+        week: 5,
+        title: '🥗 Mittagessen: Großer Salat mit Hähnchenbrust/Tofu oder Fast Food Burger?',
+        options: [
+          {
+            key: 'A',
+            text: 'Salat mit Hähnchenbrust/Tofu wählen',
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.4)),
+            logText: 'Woche 5: Salat gewählt (+0,4 VO2max)',
+            type: 'good'
+          },
+          {
+            key: 'B',
+            text: 'Fast Food Burger bestellen',
+            effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
+            logText: 'Woche 5: Fast Food gegessen (-0,2 VO2max)',
             type: 'bad'
           }
         ]
@@ -136,14 +208,38 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             key: 'A',
             text: 'Alkoholfreies Bier / Wasser nehmen',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.6)),
-            logText: 'Woche 6: Alkoholfrei geblieben (+0,6 VO2max durch Top-Regeneration).',
+            logText: 'Woche 6: Alkoholfrei geblieben (+0,6 VO2max durch Top-Regeneration)',
             type: 'good'
           },
           {
             key: 'B',
             text: 'Alkohol trinken',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.4)),
-            logText: 'Woche 6: Alkohol getrunken (-0,4 VO2max, Regeneration gestört).',
+            logText: 'Woche 6: Alkohol getrunken (-0,4 VO2max, Regeneration gestört)',
+            type: 'bad'
+          }
+        ]
+      });
+      return;
+    }
+
+    if (nextWeek === 7) {
+      setDecisionB({
+        week: 7,
+        title: '🧘‍♂️ Stressiger Arbeitstag: 15 Min. Atemübung/Meditation oder Frust-Snacking?',
+        options: [
+          {
+            key: 'A',
+            text: 'Atemübung & Entspannung machen',
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.35)),
+            logText: 'Woche 7: Atemübung gemacht (+0,35 VO2max)',
+            type: 'good'
+          },
+          {
+            key: 'B',
+            text: 'Snacks & Süßigkeiten essen',
+            effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.15)),
+            logText: 'Woche 7: Frust-Snacks gegessen (-0,15 VO2max)',
             type: 'bad'
           }
         ]
@@ -160,14 +256,38 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             key: 'A',
             text: 'Fernseher aus, Schlaf priorisieren',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
-            logText: 'Woche 8: Schlaf priorisiert (+0,7 VO2max durch Zellreparatur).',
+            logText: 'Woche 8: Schlaf priorisiert (+0,7 VO2max durch Zellreparatur)',
             type: 'good'
           },
           {
             key: 'B',
             text: 'Serienfolge streamen (Netflix)',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.3)),
-            logText: 'Woche 8: Serie gestreamt (-0,3 VO2max durch Schlafmangel).',
+            logText: 'Woche 8: Serie gestreamt (-0,3 VO2max durch Schlafmangel)',
+            type: 'bad'
+          }
+        ]
+      });
+      return;
+    }
+
+    if (nextWeek === 9) {
+      setDecisionB({
+        week: 9,
+        title: 'Spaziergang am Regenerationstag oder den ganzen Tag im Bett liegen?',
+        options: [
+          {
+            key: 'A',
+            text: 'Spaziergang machen',
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.3)),
+            logText: 'Woche 9: Spaziergang gemacht (+0,3 VO2max)',
+            type: 'good'
+          },
+          {
+            key: 'B',
+            text: 'Nur im Bett liegen und fernsehen',
+            effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
+            logText: 'Woche 9: Den Tag inaktiv verbracht (-0,1 VO2max)',
             type: 'bad'
           }
         ]
@@ -184,14 +304,38 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             key: 'A',
             text: '20 Min. zügiger Power-Walk um den Block',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'Woche 10: Power-Walk gemacht (+0,5 VO2max).',
+            logText: 'Woche 10: Power-Walk gemacht (+0,5 VO2max)',
             type: 'good'
           },
           {
             key: 'B',
             text: 'Espresso & Donut am Schreibtisch',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
-            logText: 'Woche 10: Zucker-Crash erlitten (-0,2 VO2max).',
+            logText: 'Woche 10: Zucker-Crash erlitten (-0,2 VO2max)',
+            type: 'bad'
+          }
+        ]
+      });
+      return;
+    }
+
+    if (nextWeek === 11) {
+      setDecisionB({
+        week: 11,
+        title: '☔ Regen am Lauftag: Trotzdem laufen gehen oder Training verschieben?',
+        options: [
+          {
+            key: 'A',
+            text: 'Regen trotzen und laufen gehen',
+            effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
+            logText: 'Woche 11: Im Regen gelaufen (+0,5 VO2max)',
+            type: 'good'
+          },
+          {
+            key: 'B',
+            text: 'Training ausfallen lassen / verschieben',
+            effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.25)),
+            logText: 'Woche 11: Training ausfallen lassen (-0,25 VO2max)',
             type: 'bad'
           }
         ]
@@ -208,41 +352,20 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             key: 'A',
             text: 'Bergwanderung mit Freunden unternehmen',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
-            logText: 'Woche 12: Bergwandern gewesen (+0,7 VO2max).',
+            logText: 'Woche 12: Bergwandern gewesen (+0,7 VO2max)',
             type: 'good'
           },
           {
             key: 'B',
             text: 'Den ganzen Tag auf der Couch zocken',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
-            logText: 'Woche 12: Tag auf der Couch verbracht (-0,1 VO2max).',
+            logText: 'Woche 12: Tag auf der Couch verbracht (-0,1 VO2max)',
             type: 'bad'
           }
         ]
       });
       return;
     }
-
-    const timer = setTimeout(() => {
-      setSimWeekB(nextWeek);
-      let change = 0.3 + Math.random() * 0.2; // standard baseline adaptation
-
-      setVo2B((prev) => {
-        const newVal = Math.min(48.5, Math.max(30.0, prev + change));
-        setHistoryB((prevHist) => {
-          if (prevHist.some((h) => h.week === nextWeek)) {
-            return prevHist;
-          }
-          return [
-            { week: nextWeek, type: 'neutral', text: `Woche ${nextWeek}: Grundlagen-Training (+${change.toFixed(2)} VO2max)` },
-            ...prevHist
-          ];
-        });
-        return newVal;
-      });
-    }, 1500);
-
-    return () => clearTimeout(timer);
   }, [isSimulatingB, simWeekB, decisionB]);
 
   const toggleFactor = (factor: string) => {
@@ -2003,27 +2126,21 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               </div>
 
               {/* Log area with red/green conditional styling */}
-              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.8rem', maxHeight: '250px', overflowY: 'auto' }}>
-                <div style={{ fontSize: '0.8rem', display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '0.6rem', maxHeight: '350px', overflowY: 'auto' }}>
+                <div style={{ fontSize: '0.8rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                   {historyB.map((log, idx) => {
                     let color = '#475569';
-                    let bg = 'transparent';
-                    let border = 'none';
-                    let padding = '0';
-                    let radius = '0';
+                    let bg = '#f8fafc';
+                    let border = '1px solid #e2e8f0';
                     
                     if (log.type === 'good') {
                       color = '#166534';
                       bg = '#f0fdf4';
                       border = '1px solid #bbf7d0';
-                      padding = '8px 12px';
-                      radius = '10px';
                     } else if (log.type === 'bad') {
                       color = '#991b1b';
                       bg = '#fef2f2';
                       border = '1px solid #fca5a5';
-                      padding = '8px 12px';
-                      radius = '10px';
                     }
 
                     return (
@@ -2033,12 +2150,16 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                           color, 
                           background: bg, 
                           border, 
-                          padding, 
-                          borderRadius: radius,
-                          fontSize: '0.8rem',
-                          fontWeight: log.type !== 'neutral' ? 600 : 500,
-                          lineHeight: '1.4'
+                          padding: '6px 10px', 
+                          borderRadius: '8px',
+                          fontSize: '0.78rem',
+                          fontWeight: 600,
+                          lineHeight: '1.2',
+                          whiteSpace: 'nowrap',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis'
                         }}
+                        title={log.text}
                       >
                         {log.type === 'good' && '✅ '}
                         {log.type === 'bad' && '❌ '}
