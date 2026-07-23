@@ -1855,7 +1855,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             {/* SPALTE MITTE: AUFSTIEG */}
             <div style={{ background: '#f8fafc', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', position: 'relative' }}>
               <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.8rem', textAlign: 'center' }}>
-                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Aufstieg</h3>
+                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Aufstieg Mount Longevitus</h3>
               </div>
 
               {/* Graphic Mountain area */}
