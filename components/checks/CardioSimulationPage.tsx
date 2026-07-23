@@ -1905,7 +1905,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
               <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', gap: '0.8rem', marginTop: '0.2rem' }}>
                 {decisionB ? (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '1.2rem' }}>
-                    <div style={{ display: 'inline-block', alignSelf: 'flex-start', background: '#f3e8ff', color: '#7e22ce', padding: '10px 18px', borderRadius: '12px', fontSize: '1.6rem', fontWeight: 900, letterSpacing: '0.05em' }}>
+                    <div style={{ display: 'inline-block', alignSelf: 'flex-start', background: '#f3e8ff', color: '#7e22ce', padding: '10px 18px', borderRadius: '12px', fontSize: '1.4rem', fontWeight: 900, letterSpacing: '0.05em' }}>
                       WOCHE {decisionB.week} / 12
                     </div>
                     <div style={{ color: '#1e3a5f', fontWeight: 700, fontSize: '0.95rem', lineHeight: '1.5' }}>
@@ -1951,7 +1951,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   <div style={{ textAlign: 'center', padding: '2rem 0px' }}>
                     {isSimulatingB ? (
                       <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1.2rem' }}>
-                        <div style={{ display: 'inline-block', background: '#f3e8ff', color: '#7e22ce', padding: '10px 20px', borderRadius: '12px', fontSize: '1.6rem', fontWeight: 900 }}>
+                        <div style={{ display: 'inline-block', background: '#f3e8ff', color: '#7e22ce', padding: '10px 20px', borderRadius: '12px', fontSize: '1.4rem', fontWeight: 900 }}>
                           WOCHE {simWeekB} / 12
                         </div>
                         <div className="spinner-border text-primary" role="status" style={{ width: '2rem', height: '2rem' }}>
