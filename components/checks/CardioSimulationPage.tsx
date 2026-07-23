@@ -88,14 +88,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             key: 'A',
             text: '🏃‍♂️ Aufstehen & 45 Min. Zone-2-Lauf machen',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.6)),
-            logText: 'Woche 2: Antwort 1 gewählt! Aufgestanden & trainiert (+0,6 VO2max).',
+            logText: 'Woche 2: Aufgestanden & trainiert (+0,6 VO2max).',
             type: 'good'
           },
           {
             key: 'B',
             text: '📱 Liegenbleiben & Social Media checken',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
-            logText: 'Woche 2: Antwort 2 gewählt! Liegengeblieben & Social Media gecheckt (-0,1 VO2max).',
+            logText: 'Woche 2: Liegengeblieben & Social Media gecheckt (-0,1 VO2max).',
             type: 'bad'
           }
         ]
@@ -112,14 +112,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             key: 'A',
             text: '🚲 Mit dem Rad fahren oder zu Fuss gehen',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'Woche 4: Antwort 1 gewählt! Rad gefahren / zu Fuß gegangen (+0,5 VO2max).',
+            logText: 'Woche 4: Mit dem Rad gefahren oder zu Fuss gegangen (+0,5 VO2max).',
             type: 'good'
           },
           {
             key: 'B',
             text: '🚗 Mit dem Auto fahren',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
-            logText: 'Woche 4: Antwort 2 gewählt! Mit dem Auto gefahren & im Stau gestanden (-0,2 VO2max).',
+            logText: 'Woche 4: Mit dem Auto gefahren & im Stau gestanden (-0,2 VO2max).',
             type: 'bad'
           }
         ]
@@ -136,14 +136,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             key: 'A',
             text: '💧 Alkoholfreies Bier / Wasser nehmen',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.6)),
-            logText: 'Woche 6: Antwort 1 gewählt! Alkoholfrei geblieben (+0,6 VO2max durch Top-Regeneration).',
+            logText: 'Woche 6: Alkoholfrei geblieben (+0,6 VO2max durch Top-Regeneration).',
             type: 'good'
           },
           {
             key: 'B',
             text: '🍻 Alkohol trinken',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.4)),
-            logText: 'Woche 6: Antwort 2 gewählt! Alkohol getrunken (-0,4 VO2max, Regeneration gestört).',
+            logText: 'Woche 6: Alkohol getrunken (-0,4 VO2max, Regeneration gestört).',
             type: 'bad'
           }
         ]
@@ -160,14 +160,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             key: 'A',
             text: '🛌 Fernseher aus, Schlaf priorisieren',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
-            logText: 'Woche 8: Antwort 1 gewählt! Schlaf priorisiert (+0,7 VO2max durch Zellreparatur).',
+            logText: 'Woche 8: Schlaf priorisiert (+0,7 VO2max durch Zellreparatur).',
             type: 'good'
           },
           {
             key: 'B',
             text: '🍿 Serienfolge streamen (Netflix)',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.3)),
-            logText: 'Woche 8: Antwort 2 gewählt! Serie gestreamt (-0,3 VO2max durch Schlafmangel).',
+            logText: 'Woche 8: Serie gestreamt (-0,3 VO2max durch Schlafmangel).',
             type: 'bad'
           }
         ]
@@ -184,14 +184,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             key: 'A',
             text: '🚶‍♂️ 20 Min. zügiger Power-Walk um den Block',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.5)),
-            logText: 'Woche 10: Antwort 1 gewählt! Power-Walk gemacht (+0,5 VO2max).',
+            logText: 'Woche 10: Power-Walk gemacht (+0,5 VO2max).',
             type: 'good'
           },
           {
             key: 'B',
             text: '🍩 Espresso & Donut am Schreibtisch',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.2)),
-            logText: 'Woche 10: Antwort 2 gewählt! Zucker-Crash erlitten (-0,2 VO2max).',
+            logText: 'Woche 10: Zucker-Crash erlitten (-0,2 VO2max).',
             type: 'bad'
           }
         ]
@@ -208,14 +208,14 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             key: 'A',
             text: '🥾 Bergwanderung mit Freunden unternehmen',
             effect: () => setVo2B((prev) => Math.min(48.5, prev + 0.7)),
-            logText: 'Woche 12: Antwort 1 gewählt! Bergwandern gewesen (+0,7 VO2max).',
+            logText: 'Woche 12: Bergwandern gewesen (+0,7 VO2max).',
             type: 'good'
           },
           {
             key: 'B',
             text: '🎮 Den ganzen Tag auf der Couch zocken',
             effect: () => setVo2B((prev) => Math.max(30.0, prev - 0.1)),
-            logText: 'Woche 12: Antwort 2 gewählt! Tag auf der Couch verbracht (-0,1 VO2max).',
+            logText: 'Woche 12: Tag auf der Couch verbracht (-0,1 VO2max).',
             type: 'bad'
           }
         ]
