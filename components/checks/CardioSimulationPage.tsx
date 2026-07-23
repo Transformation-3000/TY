@@ -2174,22 +2174,40 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   {vo2B.toFixed(1).replace('.', ',')}
                   <span style={{ fontSize: '1rem', fontWeight: 600, color: '#64748b', marginLeft: '4px' }}>ml/kg/min</span>
                 </div>
-                {lastChangeB !== null && (
+                {simWeekB === 12 ? (
                   <div style={{
-                    fontSize: '1rem',
-                    fontWeight: 700,
-                    color: lastChangeB >= 0 ? '#166534' : '#dc2626',
+                    fontSize: '1.1rem',
+                    fontWeight: 800,
+                    color: (vo2B - 35.0) >= 0 ? '#166534' : '#dc2626',
                     display: 'inline-flex',
                     alignItems: 'center',
                     gap: '4px',
-                    marginTop: '0.2rem',
-                    background: lastChangeB >= 0 ? '#f0fdf4' : '#fef2f2',
-                    padding: '4px 12px',
-                    borderRadius: '8px',
-                    border: lastChangeB >= 0 ? '1px solid #bbf7d0' : '1px solid #fca5a5'
+                    marginTop: '0.4rem',
+                    background: (vo2B - 35.0) >= 0 ? '#f0fdf4' : '#fef2f2',
+                    padding: '6px 14px',
+                    borderRadius: '10px',
+                    border: (vo2B - 35.0) >= 0 ? '1.5px solid #bbf7d0' : '1.5px solid #fca5a5'
                   }}>
-                    {lastChangeB >= 0 ? '▲ +' : '▼ '}{lastChangeB.toFixed(2).replace('.', ',')}
+                    Ergebnis: {(vo2B - 35.0) >= 0 ? '+' : ''}{(vo2B - 35.0).toFixed(1).replace('.', ',')}
                   </div>
+                ) : (
+                  lastChangeB !== null && (
+                    <div style={{
+                      fontSize: '1rem',
+                      fontWeight: 700,
+                      color: lastChangeB >= 0 ? '#166534' : '#dc2626',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      marginTop: '0.2rem',
+                      background: lastChangeB >= 0 ? '#f0fdf4' : '#fef2f2',
+                      padding: '4px 12px',
+                      borderRadius: '8px',
+                      border: lastChangeB >= 0 ? '1px solid #bbf7d0' : '1px solid #fca5a5'
+                    }}>
+                      {lastChangeB >= 0 ? '▲ +' : '▼ '}{lastChangeB.toFixed(2).replace('.', ',')}
+                    </div>
+                  )
                 )}
               </div>
 
