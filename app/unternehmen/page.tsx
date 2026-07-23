@@ -45,7 +45,7 @@ const management: TeamMember[] = [
   {
     name: 'Prof. Dr. Wolfgang Pree',
     role: 'CTO',
-    quote: '„Unsere Deep-Tech-Architektur übersetzt wissenschaftliche Tiefe und komplexe Wechselwirkungen in präzise, alltagstaugliche Empfehlungen.“',
+    quote: '„Unsere Deep-Tech-Architektur übersetzt wissenschaftliche Tiefe und komplexe Wechselwirkungen in alltagstaugliche Empfehlungen.“',
     avatarColor: 'linear-gradient(135deg, #ec4899 0%, #be185d 100%)',
     image: '/images/wolfgang_pree_v2.jpg',
     imagePosition: 'center 10%'

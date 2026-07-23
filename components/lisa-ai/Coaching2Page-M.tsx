@@ -6,7 +6,7 @@ import Image from 'next/image';
 type CoachVariant = 'lisa-jung' | 'lisa-alt' | 'tom-jung' | 'tom-alt';
 type FormatTab = 'text' | 'voice';
 type SessionType = 'daily' | 'weekly' | 'quarterly';
-type SessionPhase = 'entry' | 'checkin-energy' | 'checkin-stress' | 'checkin-focus' | 'data-pull' | 'verstehen' | 'fokus' | 'empfehlung' | 'commitment' | 'syncing' | 'closing' | 'daily-topic-detail' | 'daily-lifestyle-insight';
+type SessionPhase = 'entry' | 'checkin-energy' | 'checkin-stress' | 'checkin-focus' | 'data-pull' | 'verstehen' | 'fokus' | 'empfehlung' | 'commitment' | 'syncing' | 'closing' | 'daily-topic-detail' | 'daily-lifestyle-insight' | 'quarterly-flow';
 type ViewMode = 'welcome' | 'setup' | 'preparing' | 'session';
 type SetupStep = 'coach' | 'personality' | 'data';
 
@@ -14,7 +14,7 @@ interface ChatMsg {
   id: number;
   from: 'coach' | 'user' | 'system';
   text: string;
-  widget?: 'entry-options' | 'energy' | 'stress' | 'focus' | 'data-pull' | 'data-result' | 'action-plan' | 'commitment' | 'system-sync' | 'closing';
+  widget?: 'entry-options' | 'energy' | 'stress' | 'focus' | 'data-pull' | 'data-result' | 'action-plan' | 'commitment' | 'system-sync' | 'closing' | 'q-summary' | 'q-fields-select' | 'q-fields-rate' | 'q-satisfaction' | 'q-goals' | 'q-summary-card' | 'q-confidence';
   answered?: boolean;
 }
 
@@ -188,6 +188,18 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
   const [historySearch, setHistorySearch] = useState('');
   const [selectedSessionId, setSelectedSessionId] = useState<number | null>(null);
 
+  // Quarterly flow states
+  const [quarterlyStep, setQuarterlyStep] = useState(0);
+  const [qSelectedFields, setQSelectedFields] = useState<string[]>([]);
+  const [qRatings, setQRatings] = useState<Record<string, number>>({});
+  const [qSatisfactionProgress, setQSatisfactionProgress] = useState(5);
+  const [qSatisfactionResults, setQSatisfactionResults] = useState(5);
+  const [qMainGoal, setQMainGoal] = useState('');
+  const [qSubGoal, setQSubGoal] = useState('');
+  const [qRoutine, setQRoutine] = useState('');
+  const [qMeasure, setQMeasure] = useState('');
+  const [qConfidence, setQConfidence] = useState(8);
+
   const getFormattedCurrentDate = () => {
     const days = ['Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag'];
     const now = new Date();
@@ -357,7 +369,11 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
       setDailyStep(0);
       setIsAnimating(true);
       setTimeout(() => { setView('session'); setIsAnimating(false); }, 50);
-      await addCoachMsg(`Hallo ${userName}! Schön, dass du dir Zeit für dich nimmst. Was möchtest du heute machen?`, 'entry-options', 1200);
+      if (type === 'quarterly') {
+        await addCoachMsg(`Hallo ${userName}! Heute schauen wir gemeinsam auf deine letzten drei Monate: Was hat sich verbessert, womit bist du zufrieden und was soll im nächsten Quartal im Mittelpunkt stehen?`, 'entry-options', 1200);
+      } else {
+        await addCoachMsg(`Hallo ${userName}! Schön, dass du dir Zeit für dich nimmst. Was möchtest du heute machen?`, 'entry-options', 1200);
+      }
     }, 4500);
   };
 
@@ -368,7 +384,31 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
     }
   }, [autoStartSession, clearAutoStart]);
 
-  const handleEntryChoice = async (ch: string) => { setEntryChoice(ch); markAnswered(); addUserMsg(ch); setPhase('checkin-energy'); await addCoachMsg('Bevor wir starten – wie ist deine <strong>Energie</strong> heute?', 'energy', 900); };
+  const handleEntryChoice = async (ch: string) => {
+    setEntryChoice(ch);
+    markAnswered();
+    addUserMsg(ch);
+    if (sessionType === 'quarterly') {
+      setPhase('quarterly-flow');
+      setQuarterlyStep(1);
+      
+      let startMsg = '';
+      if (ch === 'Meine Fortschritte') {
+        startMsg = `Lass uns mit deinen Fortschritten der letzten 3 Monate starten. Hier ist eine Übersicht deiner Aktivitäten und etablierten Routinen:`;
+      } else if (ch === 'Meine Ergebnisse') {
+        startMsg = `Lass uns mit deinen Ergebnissen der letzten 3 Monate starten. Hier ist eine Übersicht deiner gesundheitlichen Vitalwerte und Biomarker:`;
+      } else {
+        startMsg = `Lass uns mit einer kurzen Bestandsaufnahme deiner aktuellen Routinen und Lebensgewohnheiten starten:`;
+      }
+
+      await addCoachMsg(startMsg, undefined, 800);
+      await addCoachMsg('', 'q-summary', 1000);
+      await addCoachMsg('Um tiefer einzusteigen, wähle bitte bis zu 3 Optimierungsfelder aus, die wir uns genauer anschauen wollen:', 'q-fields-select', 1600);
+    } else {
+      setPhase('checkin-energy');
+      await addCoachMsg('Bevor wir starten – wie ist deine <strong>Energie</strong> heute?', 'energy', 900);
+    }
+  };
   const handleEnergy = async (v: number) => { setEnergy(v); markAnswered(); addUserMsg(`Energie: ${v}/5`); setPhase('checkin-stress'); await addCoachMsg('Und wie hoch ist dein <strong>Stress</strong> gerade?', 'stress', 700); };
   const handleStress = async (v: number) => {
     setStress(v);
@@ -404,7 +444,18 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
   };
   const handleUserReply = async (text: string) => {
     addUserMsg(text);
-    if (phase === 'verstehen') {
+    if (phase === 'quarterly-flow') {
+      if (quarterlyStep === 2) {
+        setQuarterlyStep(3);
+        await addCoachMsg('Wie zufrieden bist du insgesamt mit deinem persönlichen Fortschritt und den erreichten Ergebnissen in diesen 3 Monaten? Bewerte dies bitte auf einer Skala von 1 (sehr unzufrieden) bis 10 (vollkommen zufrieden):', 'q-satisfaction', 800);
+      } else if (quarterlyStep === 4) {
+        setQuarterlyStep(5);
+        await addCoachMsg('Passen deine bisherigen Ziele noch zu deinen persönlichen Prioritäten und dem Leben, das du führen möchtest? Gibt es veränderte Bedürfnisse oder neue Ziele, die wir berücksichtigen sollten?', undefined, 800);
+      } else if (quarterlyStep === 5) {
+        setQuarterlyStep(6);
+        await addCoachMsg('Lass uns den Fokus für das nächste Quartal festlegen. Definiere bitte dein Hauptziel, passende Routinen und messbare Ergebnisse:', 'q-goals', 800);
+      }
+    } else if (phase === 'verstehen') {
       setPhase('fokus');
       await addCoachMsg('Das bestätigt, was ich in deinen Daten sehe. Deine Schlafqualität leidet, und das zieht sich durch Energie und Stressresistenz. Lass uns darauf fokussieren, was du abends noch ändern kannst. Was passiert bei dir in der letzten Stunde vor dem Schlafen?', undefined, 1500);
     } else if (phase === 'fokus') {
@@ -502,8 +553,56 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
           setPhase('closing');
           await addCoachMsg('Wunderbar. Schenke deinem Körper die Erholung, die er verdient. Du machst das großartig! Wir hören uns morgen wieder.', 'closing', 1200);
         }
-      }
     }
+  };
+
+  const handleQFieldsSelect = async (fields: string[]) => {
+    setQSelectedFields(fields);
+    markAnswered();
+    addUserMsg(`Ausgewählte Bereiche: ${fields.join(', ')}`);
+    setQuarterlyStep(2);
+    await addCoachMsg('Schätzen wir die Veränderungen in den ausgewählten Bereichen ein. Bewerte bitte deinen Fortschritt in jedem Bereich auf einer Skala von 1 (kein Fortschritt) bis 5 (sehr großer Fortschritt):', 'q-fields-rate', 900);
+  };
+  const handleQFieldsRate = async (ratings: Record<string, number>) => {
+    setQRatings(ratings);
+    markAnswered();
+    addUserMsg('Bereichsfortschritte bewertet.');
+    setQuarterlyStep(2);
+    await addCoachMsg('Was war deine stärkste wahrgenommene Veränderung im Alltag?', undefined, 800);
+  };
+  const handleQSatisfaction = async (progress: number, results: number) => {
+    setQSatisfactionProgress(progress);
+    setQSatisfactionResults(results);
+    markAnswered();
+    addUserMsg(`Fortschritt: ${progress}/10, Ergebnisse: ${results}/10`);
+    
+    const avg = (progress + results) / 2;
+    setQuarterlyStep(4);
+    if (avg >= 8) {
+      await addCoachMsg('Großartig! Du hast eine sehr hohe Zufriedenheit. Was hat in den letzten Monaten besonders gut gewirkt und was möchtest du beibehalten?', undefined, 900);
+    } else if (avg >= 5) {
+      await addCoachMsg('Du bist teilweise zufrieden. Was hat gefehlt, damit du wirklich zufrieden bist?', undefined, 900);
+    } else {
+      await addCoachMsg('Deine Zufriedenheit ist aktuell gering. Lass uns die Ursachen klären: Liegt es an der Umsetzung, den konkreten Maßnahmen, der Zielhöhe, dem Alltag, deinem Umfeld oder haben sich deine Prioritäten verschoben?', undefined, 900);
+    }
+  };
+  const handleQGoalsSubmit = async (mainGoal: string, subGoal: string, routine: string, measure: string) => {
+    setQMainGoal(mainGoal);
+    setQSubGoal(subGoal);
+    setQRoutine(routine);
+    setQMeasure(measure);
+    markAnswered();
+    addUserMsg(`Hauptziel: ${mainGoal}, Routine: ${routine}`);
+    setQuarterlyStep(7);
+    await addCoachMsg('Hier ist die Zusammenfassung deiner Erkenntnisse und Entscheidungen für das nächste Quartal:', 'q-summary-card', 900);
+    await addCoachMsg('Zum Abschluss: Wie zuversichtlich fühlst du dich auf einer Skala von 1 bis 10 für das nächste Quartal?', 'q-confidence', 1800);
+  };
+  const handleQConfidenceSubmit = async (conf: number) => {
+    setQConfidence(conf);
+    markAnswered();
+    addUserMsg(`Zuversicht: ${conf}/10`);
+    setPhase('closing');
+    await addCoachMsg('Hervorragend! Dein Plan ist gespeichert und die Erinnerungen sind eingerichtet. Du machst das großartig! Hab ein fantastisches neues Quartal! 😊', 'closing', 1000);
   };
   const handleShowCommitment = async () => { markAnswered(); setPhase('commitment'); await addCoachMsg('Wie klingt das für dich?', 'commitment', 500); };
   const handleCommitment = async (ch: 'accept' | 'adjust' | 'decline') => {
@@ -1280,25 +1379,25 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                           </>
                         ) : (
                           <>
-                            <button className="wcd wcd-blue" onClick={() => handleEntryChoice('Letzte Session fortsetzen')}>
-                              <div className="wcd-icon" style={{ background: 'rgba(96,165,250,0.1)', borderColor: 'rgba(96,165,250,0.2)' }}>
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8" /><polyline points="21 3 21 8 16 8" /></svg>
-                              </div>
-                              <div className="wcd-body"><strong>Letzte Session fortsetzen</strong><span>Schlafrhythmus stabilisieren</span></div>
-                              <svg className="wcd-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                            </button>
-                            <button className="wcd wcd-purple" onClick={() => handleEntryChoice('Akutes Thema besprechen')}>
-                              <div className="wcd-icon" style={{ background: 'rgba(192,132,252,0.1)', borderColor: 'rgba(192,132,252,0.2)' }}>
-                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c084fc" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
-                              </div>
-                              <div className="wcd-body"><strong>Akutes Thema besprechen</strong><span>Was dich gerade bewegt</span></div>
-                              <svg className="wcd-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-                            </button>
-                            <button className="wcd wcd-green" onClick={() => handleEntryChoice('Neues Thema beginnen')}>
+                            <button className="wcd wcd-green" onClick={() => handleEntryChoice('Meine Fortschritte')}>
                               <div className="wcd-icon" style={{ background: 'rgba(52,211,153,0.1)', borderColor: 'rgba(52,211,153,0.2)' }}>
                                 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34d399" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="20" x2="18" y2="10" /><line x1="12" y1="20" x2="12" y2="4" /><line x1="6" y1="20" x2="6" y2="14" /></svg>
                               </div>
-                              <div className="wcd-body"><strong>Neues Thema beginnen</strong><span>Wähle aus 6 Optimierungsfeldern aus</span></div>
+                              <div className="wcd-body"><strong>1. Meine Fortschritte</strong><span>Was hat sich in den letzten drei Monaten verbessert?</span></div>
+                              <svg className="wcd-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                            </button>
+                            <button className="wcd wcd-amber" onClick={() => handleEntryChoice('Meine Ergebnisse')}>
+                              <div className="wcd-icon" style={{ background: 'rgba(251,191,36,0.1)', borderColor: 'rgba(251,191,36,0.2)' }}>
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#fbbf24" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" /></svg>
+                              </div>
+                              <div className="wcd-body"><strong>2. Meine Ergebnisse</strong><span>Haben die Veränderungen das gebracht, was ich mir gewünscht habe?</span></div>
+                              <svg className="wcd-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                            </button>
+                            <button className="wcd wcd-purple" onClick={() => handleEntryChoice('Mein nächstes Quartal')}>
+                              <div className="wcd-icon" style={{ background: 'rgba(192,132,252,0.1)', borderColor: 'rgba(192,132,252,0.2)' }}>
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#c084fc" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2" /><line x1="16" y1="2" x2="16" y2="6" /><line x1="8" y1="2" x2="8" y2="6" /><line x1="3" y1="10" x2="21" y2="10" /></svg>
+                              </div>
+                              <div className="wcd-body"><strong>3. Mein nächstes Quartal</strong><span>Was möchte ich beibehalten, verändern oder neu beginnen?</span></div>
                               <svg className="wcd-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                             </button>
                           </>
@@ -1422,7 +1521,428 @@ export default function Coaching2Page({ onOpenAvatar, autoStartSession, clearAut
                       </div>
                     )}
 
-                    {msg.widget==='closing'&&(<div className="wclo">{sessionType !== 'daily' && (<div className="cloi"><span>Nächster Check-in: <strong>Morgen, 20:00 Uhr</strong></span></div>)}<button type="button" className="clob" onClick={handleEndSession}>Session beenden</button></div>)}
+                    {msg.widget === 'q-summary' && (
+                      <div className="w-100 p-3 rounded-4 mb-2 text-white" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                        <h6 className="mb-3 text-info fw-bold">📊 Quartals-Übersicht (letzte 3 Monate)</h6>
+                        <div className="row g-2">
+                          <div className="col-6 col-md-3">
+                            <div className="p-2 rounded bg-dark bg-opacity-25 border border-secondary text-center">
+                              <span style={{ fontSize: '1.5rem' }}>😴</span>
+                              <div className="text-secondary small mt-1">Schlaf Ø</div>
+                              <strong className="text-white d-block">6h 45m</strong>
+                              <span className="text-success small">↑ 4% Qualität</span>
+                            </div>
+                          </div>
+                          <div className="col-6 col-md-3">
+                            <div className="p-2 rounded bg-dark bg-opacity-25 border border-secondary text-center">
+                              <span style={{ fontSize: '1.5rem' }}>🏃</span>
+                              <div className="text-secondary small mt-1">Schritte Ø</div>
+                              <strong className="text-white d-block">8.120</strong>
+                              <span className="text-success small">↑ 12% vs. Q1</span>
+                            </div>
+                          </div>
+                          <div className="col-6 col-md-3">
+                            <div className="p-2 rounded bg-dark bg-opacity-25 border border-secondary text-center">
+                              <span style={{ fontSize: '1.5rem' }}>❤️</span>
+                              <div className="text-secondary small mt-1">HRV Trend</div>
+                              <strong className="text-white d-block">48 ms</strong>
+                              <span className="text-success small">↑ Stabil</span>
+                            </div>
+                          </div>
+                          <div className="col-6 col-md-3">
+                            <div className="p-2 rounded bg-dark bg-opacity-25 border border-secondary text-center">
+                              <span style={{ fontSize: '1.5rem' }}>🩸</span>
+                              <div className="text-secondary small mt-1">Zellalter (TY)</div>
+                              <strong className="text-white d-block">-1.8 Jahre</strong>
+                              <span className="text-info small">Hervorragend</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {msg.widget === 'q-fields-select' && !msg.answered && (
+                      <div className="wpills" style={{ width: '100%' }}>
+                        {focusTopics.map((t) => {
+                          const isSelected = qSelectedFields.includes(t.label);
+                          return (
+                            <button
+                              key={t.id}
+                              className="plbtn"
+                              style={{
+                                background: isSelected ? 'rgba(0,210,255,0.15)' : 'rgba(255,255,255,0.03)',
+                                borderColor: isSelected ? 'rgba(0,210,255,0.4)' : 'rgba(255,255,255,0.08)',
+                                display: 'flex',
+                                width: '100%',
+                                alignItems: 'center',
+                                textAlign: 'left',
+                                gap: '12px'
+                              }}
+                              onClick={() => {
+                                if (isSelected) {
+                                  setQSelectedFields(prev => prev.filter(x => x !== t.label));
+                                } else {
+                                  if (qSelectedFields.length < 3) {
+                                    setQSelectedFields(prev => [...prev, t.label]);
+                                  }
+                                }
+                              }}
+                            >
+                              <span className="plbtn-icon" style={{ background: isSelected ? 'rgba(0,210,255,0.1)' : 'rgba(255,255,255,0.05)' }}>{t.icon}</span>
+                              <div className="plbtn-body">
+                                <span className="plbtn-lbl">{t.label}</span>
+                              </div>
+                              {isSelected && <span style={{ color: '#00d2ff', fontSize: '1.1rem', marginLeft: 'auto', fontWeight: 'bold' }}>✓</span>}
+                            </button>
+                          );
+                        })}
+                        <button
+                          className="clob"
+                          style={{
+                            marginTop: '10px',
+                            background: qSelectedFields.length === 0 ? 'rgba(255,255,255,0.1)' : 'linear-gradient(135deg, #00d2ff, #0072ff)',
+                            color: qSelectedFields.length === 0 ? '#888' : '#fff',
+                            cursor: qSelectedFields.length === 0 ? 'not-allowed' : 'pointer',
+                            width: '100%',
+                            padding: '12px',
+                            borderRadius: '16px',
+                            border: 'none',
+                            fontWeight: '600'
+                          }}
+                          disabled={qSelectedFields.length === 0}
+                          onClick={() => handleQFieldsSelect(qSelectedFields)}
+                        >
+                          Bereiche bestätigen ({qSelectedFields.length}/3)
+                        </button>
+                      </div>
+                    )}
+
+                    {msg.widget === 'q-fields-rate' && !msg.answered && (
+                      <div className="wpills" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', padding: '15px', width: '100%' }}>
+                        {qSelectedFields.map(field => {
+                          const currentRating = qRatings[field] || 3;
+                          return (
+                            <div key={field} className="mb-3" style={{ width: '100%', textAlign: 'left' }}>
+                              <div style={{ fontSize: '0.9rem', fontWeight: '500', marginBottom: '8px', color: '#f8fafc' }}>{field}</div>
+                              <div style={{ display: 'flex', gap: '8px', marginBottom: '10px' }}>
+                                {[1, 2, 3, 4, 5].map(n => (
+                                  <button
+                                    key={n}
+                                    type="button"
+                                    style={{
+                                      width: '36px',
+                                      height: '36px',
+                                      borderRadius: '50%',
+                                      border: '1px solid rgba(255,255,255,0.1)',
+                                      background: currentRating === n ? '#34d399' : 'rgba(255,255,255,0.05)',
+                                      color: currentRating === n ? '#000' : '#fff',
+                                      fontWeight: '600',
+                                      cursor: 'pointer',
+                                      display: 'flex',
+                                      alignItems: 'center',
+                                      justifyContent: 'center'
+                                    }}
+                                    onClick={() => setQRatings(prev => ({ ...prev, [field]: n }))}
+                                  >
+                                    {n}
+                                  </button>
+                                ))}
+                              </div>
+                            </div>
+                          );
+                        })}
+                        <button
+                          className="clob"
+                          style={{
+                            background: 'linear-gradient(135deg, #34d399, #059669)',
+                            color: '#fff',
+                            width: '100%',
+                            padding: '12px',
+                            borderRadius: '16px',
+                            border: 'none',
+                            fontWeight: '600',
+                            marginTop: '10px',
+                            cursor: 'pointer'
+                          }}
+                          onClick={() => handleQFieldsRate(qRatings)}
+                        >
+                          Bewertungen abgeben
+                        </button>
+                      </div>
+                    )}
+
+                    {msg.widget === 'q-satisfaction' && !msg.answered && (
+                      <div className="wpills" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', padding: '15px', width: '100%' }}>
+                        <div className="mb-3" style={{ width: '100%', textAlign: 'left' }}>
+                          <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '8px' }}>Zufriedenheit mit persönlichem Fortschritt: <strong style={{ color: '#00d2ff' }}>{qSatisfactionProgress}/10</strong></div>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
+                              <button
+                                key={n}
+                                type="button"
+                                style={{
+                                  width: '30px',
+                                  height: '30px',
+                                  borderRadius: '8px',
+                                  border: '1px solid rgba(255,255,255,0.1)',
+                                  background: qSatisfactionProgress === n ? '#00d2ff' : 'rgba(255,255,255,0.05)',
+                                  color: qSatisfactionProgress === n ? '#000' : '#fff',
+                                  fontSize: '0.8rem',
+                                  fontWeight: '600',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center'
+                                }}
+                                onClick={() => setQSatisfactionProgress(n)}
+                              >
+                                {n}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="mb-3" style={{ width: '100%', textAlign: 'left' }}>
+                          <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '8px' }}>Zufriedenheit mit erreichten Ergebnissen: <strong style={{ color: '#00d2ff' }}>{qSatisfactionResults}/10</strong></div>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
+                              <button
+                                key={n}
+                                type="button"
+                                style={{
+                                  width: '30px',
+                                  height: '30px',
+                                  borderRadius: '8px',
+                                  border: '1px solid rgba(255,255,255,0.1)',
+                                  background: qSatisfactionResults === n ? '#00d2ff' : 'rgba(255,255,255,0.05)',
+                                  color: qSatisfactionResults === n ? '#000' : '#fff',
+                                  fontSize: '0.8rem',
+                                  fontWeight: '600',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center'
+                                }}
+                                onClick={() => setQSatisfactionResults(n)}
+                              >
+                                {n}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+
+                        <button
+                          className="clob"
+                          style={{
+                            background: 'linear-gradient(135deg, #00d2ff, #0072ff)',
+                            color: '#fff',
+                            width: '100%',
+                            padding: '12px',
+                            borderRadius: '16px',
+                            border: 'none',
+                            fontWeight: '600',
+                            marginTop: '10px',
+                            cursor: 'pointer'
+                          }}
+                          onClick={() => handleQSatisfaction(qSatisfactionProgress, qSatisfactionResults)}
+                        >
+                          Zufriedenheit absenden
+                        </button>
+                      </div>
+                    )}
+
+                    {msg.widget === 'q-goals' && !msg.answered && (
+                      <div className="wpills" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', padding: '15px', width: '100%' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '100%', textAlign: 'left' }}>
+                          <div>
+                            <label style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '4px', display: 'block' }}>Hauptziel für das nächste Quartal:</label>
+                            <input
+                              type="text"
+                              placeholder="z.B. Schlafqualität stabilisieren"
+                              value={qMainGoal}
+                              onChange={e => setQMainGoal(e.target.value)}
+                              style={{
+                                width: '100%',
+                                padding: '10px 14px',
+                                borderRadius: '12px',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                background: 'rgba(0,0,0,0.2)',
+                                color: '#fff',
+                                fontSize: '0.85rem',
+                                outline: 'none'
+                              }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '4px', display: 'block' }}>Ergänzendes Ziel (optional):</label>
+                            <input
+                              type="text"
+                              placeholder="z.B. 10.000 Schritte täglich"
+                              value={qSubGoal}
+                              onChange={e => setQSubGoal(e.target.value)}
+                              style={{
+                                width: '100%',
+                                padding: '10px 14px',
+                                borderRadius: '12px',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                background: 'rgba(0,0,0,0.2)',
+                                color: '#fff',
+                                fontSize: '0.85rem',
+                                outline: 'none'
+                              }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '4px', display: 'block' }}>Passende Routine:</label>
+                            <input
+                              type="text"
+                              placeholder="z.B. 15 Min. Atemübung vor dem Schlaf"
+                              value={qRoutine}
+                              onChange={e => setQRoutine(e.target.value)}
+                              style={{
+                                width: '100%',
+                                padding: '10px 14px',
+                                borderRadius: '12px',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                background: 'rgba(0,0,0,0.2)',
+                                color: '#fff',
+                                fontSize: '0.85rem',
+                                outline: 'none'
+                              }}
+                            />
+                          </div>
+                          <div>
+                            <label style={{ fontSize: '0.8rem', color: '#94a3b8', marginBottom: '4px', display: 'block' }}>Messbares Ergebnis / Erfolgskriterium:</label>
+                            <input
+                              type="text"
+                              placeholder="z.B. Schlafscore Ø > 80% auf dem Oura Ring"
+                              value={qMeasure}
+                              onChange={e => setQMeasure(e.target.value)}
+                              style={{
+                                width: '100%',
+                                padding: '10px 14px',
+                                borderRadius: '12px',
+                                border: '1px solid rgba(255,255,255,0.1)',
+                                background: 'rgba(0,0,0,0.2)',
+                                color: '#fff',
+                                fontSize: '0.85rem',
+                                outline: 'none'
+                              }}
+                            />
+                          </div>
+                        </div>
+                        <button
+                          className="clob"
+                          style={{
+                            background: (!qMainGoal || !qRoutine || !qMeasure) ? 'rgba(255,255,255,0.1)' : 'linear-gradient(135deg, #00d2ff, #0072ff)',
+                            color: (!qMainGoal || !qRoutine || !qMeasure) ? '#888' : '#fff',
+                            width: '100%',
+                            padding: '12px',
+                            borderRadius: '16px',
+                            border: 'none',
+                            fontWeight: '600',
+                            marginTop: '15px',
+                            cursor: (!qMainGoal || !qRoutine || !qMeasure) ? 'not-allowed' : 'pointer'
+                          }}
+                          disabled={!qMainGoal || !qRoutine || !qMeasure}
+                          onClick={() => handleQGoalsSubmit(qMainGoal, qSubGoal, qRoutine, qMeasure)}
+                        >
+                          Ziele festlegen
+                        </button>
+                      </div>
+                    )}
+
+                    {msg.widget === 'q-summary-card' && (
+                      <div className="w-100 p-3 rounded-4 mb-2 text-white text-start" style={{ background: 'rgba(255,255,255,0.05)', backdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                        <h6 className="mb-3 text-info fw-bold" style={{ textAlign: 'left' }}>📝 Zusammenfassung deines Quarterly Check-ins</h6>
+                        <div className="small">
+                          <div className="mb-2">
+                            <strong>Fokus-Bereiche:</strong> {qSelectedFields.join(', ')}
+                          </div>
+                          <div className="mb-2">
+                            <strong>Fortschritt-Bewertung:</strong>
+                            <ul className="ps-3 mb-0">
+                              {Object.entries(qRatings).map(([f, r]) => (
+                                <li key={f}>{f}: {r}/5</li>
+                              ))}
+                            </ul>
+                          </div>
+                          <div className="mb-2">
+                            <strong>Zufriedenheit:</strong> Fortschritt {qSatisfactionProgress}/10, Ergebnisse {qSatisfactionResults}/10
+                          </div>
+                          <hr className="my-2 border-secondary" style={{ opacity: 0.2 }} />
+                          <div className="mb-2">
+                            <strong>Hauptziel für Q3:</strong> <span className="text-warning">{qMainGoal}</span>
+                          </div>
+                          {qSubGoal && (
+                            <div className="mb-2">
+                              <strong>Ergänzendes Ziel:</strong> {qSubGoal}
+                            </div>
+                          )}
+                          <div className="mb-2">
+                            <strong>Geplante Routine:</strong> {qRoutine}
+                          </div>
+                          <div className="mb-2">
+                            <strong>Messbar an:</strong> {qMeasure}
+                          </div>
+                          <div className="mt-3 p-2 bg-dark bg-opacity-25 border border-info rounded text-center small text-info">
+                            📅 Nächster Quarterly Check-in: <strong>in 3 Monaten</strong>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
+                    {msg.widget === 'q-confidence' && !msg.answered && (
+                      <div className="wpills" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', padding: '15px', width: '100%' }}>
+                        <div className="mb-3" style={{ width: '100%', textAlign: 'left' }}>
+                          <div style={{ fontSize: '0.85rem', color: '#94a3b8', marginBottom: '8px' }}>Deine Zuversicht für das nächste Quartal: <strong style={{ color: '#00d2ff' }}>{qConfidence}/10</strong></div>
+                          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
+                              <button
+                                key={n}
+                                type="button"
+                                style={{
+                                  width: '30px',
+                                  height: '30px',
+                                  borderRadius: '8px',
+                                  border: '1px solid rgba(255,255,255,0.1)',
+                                  background: qConfidence === n ? '#00d2ff' : 'rgba(255,255,255,0.05)',
+                                  color: qConfidence === n ? '#000' : '#fff',
+                                  fontSize: '0.8rem',
+                                  fontWeight: '600',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  justifyContent: 'center'
+                                }}
+                                onClick={() => setQConfidence(n)}
+                              >
+                                {n}
+                              </button>
+                            ))}
+                          </div>
+                        </div>
+                        <button
+                          className="clob"
+                          style={{
+                            background: 'linear-gradient(135deg, #00d2ff, #0072ff)',
+                            color: '#fff',
+                            width: '100%',
+                            padding: '12px',
+                            borderRadius: '16px',
+                            border: 'none',
+                            fontWeight: '600',
+                            marginTop: '10px',
+                            cursor: 'pointer'
+                          }}
+                          onClick={() => handleQConfidenceSubmit(qConfidence)}
+                        >
+                          Check-in abschließen
+                        </button>
+                      </div>
+                    )}
+
+                    {msg.widget==='closing'&&(<div className="wclo">{sessionType !== 'daily' && (<div className="cloi"><span>Nächster Check-in: <strong>in 3 Monaten</strong></span></div>)}<button type="button" className="clob" onClick={handleEndSession}>Session beenden</button></div>)}
                   </div>
                 </div>
               ))}
