@@ -1150,7 +1150,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
           </button>
         </div>
         <p className="sim-subtitle">
-          Verstehe spielerisch, wie sich deine wöchentlichen Trainings- und Erholungseinheiten direkt auf deine Langlebigkeit auswirken.
+          VO2max ist ein absoluter Top-Hebel für Langlebigkeit. Je höher deine VO2max ist, desto länger lebst du. Erfahre hier spielerisch, wie du sie beeinflussen und welche Entscheidungen du treffen kannst, um diese Kennzahl wirksam zu steigern.
         </p>
       </div>
 
