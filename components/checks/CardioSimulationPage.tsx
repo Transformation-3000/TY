@@ -714,6 +714,13 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
         .timeline-slider-input::-webkit-slider-thumb:hover {
           transform: scale(1.15);
         }
+        .tacho-btns-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          gap: 4px;
+        }
         .tacho-btn-container {
           position: relative;
           display: flex;
@@ -1113,6 +1120,20 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             .tacho-btn-container span {
               font-size: 0.7rem !important;
               padding: 2px 4px !important;
+            }
+            .tacho-btns-row {
+              display: grid !important;
+              grid-template-columns: 1fr 1fr !important;
+              gap: 16px 8px !important;
+              justify-items: center !important;
+            }
+            .sim-hebel-input-grid {
+              flex-direction: column !important;
+              align-items: center !important;
+              gap: 0.75rem !important;
+            }
+            .sim-hebel-input-box {
+              max-width: 100% !important;
             }
           }
       `}} />
@@ -1522,7 +1543,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                   <div style={{ fontSize: '1.22rem', fontWeight: 800, color: '#0f172a', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '1.25rem', textAlign: 'center' }}>
                     VO2max Hebel
                   </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '4px' }}>
+                    <div className="tacho-btns-row">
                       <div className="tacho-btn-container">
                         <button 
                           className={`tacho-circle-btn ${activeFactors.includes('zone2') ? 'active' : ''}`}
