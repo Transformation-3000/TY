@@ -1091,11 +1091,11 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
            flex-shrink: 0;
          }
          .sim-week-btn.active {
-           background: #006ea7 !important;
-           color: #ffffff !important;
-           box-shadow: 0 2px 6px rgba(0, 110, 167, 0.3) !important;
-         }
-          @media (max-width: 576px) {
+            background: #006ea7 !important;
+            color: #ffffff !important;
+            box-shadow: 0 2px 6px rgba(0, 110, 167, 0.3) !important;
+          }
+          @media (max-width: 768px) {
             .sim-week-btn-row {
               overflow-x: auto !important;
               scrollbar-width: none !important;
