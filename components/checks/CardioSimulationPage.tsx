@@ -1900,18 +1900,17 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
 
         {/* II. LEBENSSTIL-ENTSCHEIDUNGEN AM MOUNT LONGEVITUS */}
         <div>
-          <h2 className="sim-sec-title">II. Lebensstil-Entscheidungen am Mount Longevitus</h2>
-          <p className="sim-sec-desc">
-            Triff im Aufstiegsverlauf 6 wichtige Alltagsentscheidungen und beobachte live, wie sich jede Wahl positiv oder negativ auf deine VO2max-Kurve und deine Position am Berg auswirkt.
+          <h2 className="sim-sec-title">II. VO2-Trainings-Entscheidungen 3-Monats-Plan</h2>
+          <p className="sim-sec-desc" style={{ fontSize: '1.15rem' }}>
+            Triff im Aufstiegsverlauf 12 wichtige Alltagsentscheidungen und beobachte live, wie sich jede Wahl positiv oder negativ auf deine VO2max-Kurve und deine Position am Berg auswirkt.
           </p>
 
           <div className="mount-longev-grid">
             
             {/* SPALTE LINKS: DEINE ENTSCHEIDUNGSZENTRALE */}
-            <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', minWidth: 0 }}>
-              <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.8rem' }}>
-                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Entscheidungszentrale</h3>
-              </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <h3 style={{ margin: '0 0 0 0.5rem', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Entscheidungszentrale</h3>
+              <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', minWidth: 0, flex: 1 }}>
 
               {(() => {
                 const minVo2 = 35.0;
@@ -2060,12 +2059,12 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 )}
               </div>
             </div>
+            </div> {/* Ende SPALTE LINKS Wrapper */}
 
             {/* SPALTE MITTE: AUFSTIEG */}
-            <div style={{ background: '#f8fafc', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', position: 'relative' }}>
-              <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.8rem', textAlign: 'center' }}>
-                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Aufstieg Mount Longevitus</h3>
-              </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <h3 style={{ margin: '0 0 0 0.5rem', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Aufstieg Mount Longevitus</h3>
+              <div style={{ background: '#f8fafc', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', position: 'relative', flex: 1 }}>
 
               {/* Graphic Mountain area */}
               <div style={{ 
@@ -2187,12 +2186,12 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                 })()}
               </div>
             </div>
+            </div> {/* Ende SPALTE MITTE Wrapper */}
 
             {/* SPALTE RECHTS: VO2-MAX ENTWICKLUNG */}
-            <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem 0.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', minWidth: 0 }}>
-              <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '0.8rem' }}>
-                <h3 style={{ margin: '0.3rem 0 0 0', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Entwicklung VO2max</h3>
-              </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+              <h3 style={{ margin: '0 0 0 0.5rem', color: '#1e3a5f', fontSize: '1.2rem', fontWeight: 800 }}>Entwicklung VO2max</h3>
+              <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem 0.5rem', display: 'flex', flexDirection: 'column', gap: '1.5rem', minWidth: 0, flex: 1 }}>
 
               {/* Huge current value display */}
               <div style={{ background: '#fdfaff', border: '2px solid #7e22ce', borderRadius: '16px', padding: '1rem', textAlign: 'center' }}>
@@ -2284,9 +2283,10 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
                       </div>
                     );
                   })}
-                </div>
               </div>
             </div>
+            </div>
+            </div> {/* Ende SPALTE RECHTS Wrapper */}
 
           </div>
         </div>
