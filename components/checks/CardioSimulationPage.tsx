@@ -1905,7 +1905,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             Triff im Aufstiegsverlauf 6 wichtige Alltagsentscheidungen und beobachte live, wie sich jede Wahl positiv oder negativ auf deine VO2max-Kurve und deine Position am Berg auswirkt.
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.5fr 1fr', gap: '1.5rem', alignItems: 'stretch' }}>
+          <div className="mount-longev-grid">
             
             {/* SPALTE LINKS: DEINE ENTSCHEIDUNGSZENTRALE */}
             <div style={{ background: '#fcfdff', border: '1.5px solid #e2e8f0', borderRadius: '24px', padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem', minWidth: 0 }}>

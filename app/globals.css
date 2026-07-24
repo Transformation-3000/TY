@@ -9429,3 +9429,18 @@ i[class*="bi-"] {
 .theme-playful .card-actions {
   margin-top: 0.75rem !important;
 }
+
+/* Cardio Simulation Page - Mobile Responsiveness */
+.mount-longev-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+}
+
+@media (max-width: 1024px) {
+  .mount-longev-grid {
+    grid-template-columns: 1fr !important;
+    gap: 2rem !important;
+  }
+}
