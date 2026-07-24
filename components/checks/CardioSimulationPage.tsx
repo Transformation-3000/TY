@@ -1162,7 +1162,7 @@ export default function CardioSimulationPage({ onBack }: CardioSimulationPagePro
             <div>
               <h2 className="sim-sec-title" style={{ margin: 0 }}>I. Langlebigkeits-Rennen</h2>
               <p className="sim-sec-desc" style={{ margin: '0.2rem 0 0 0', fontSize: '1.15rem' }}>
-                Klicke rechts unterhalb des Tachos bis zu 4 VO2max Hebel an und drücke auf Start oder schiebe den Wochenregler, um die Leistungsentwicklung zu steuern.
+                Aktiviere deine VO2max-Hebel: Je mehr der 4 Booster unterhalb des Tachos du einschaltest, desto größer ist dein Erfolg. Drücke danach auf Start, um deinen Langlebigkeits-Effekt zu sehen.
               </p>
             </div>
             <div style={{ display: 'flex', gap: '10px', flexShrink: 0 }}>
