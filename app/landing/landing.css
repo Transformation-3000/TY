@@ -393,7 +393,7 @@ section[id] {
 }
 
 .slide-id-3 .hero-slide-right {
-  right: calc(5% + 20px) !important;
+  right: calc(5% + 10px) !important;
 }
 
 .slide-img-3 img {
