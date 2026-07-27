@@ -83,8 +83,8 @@ const heroSlides = [
   },
   { 
     id: 2, 
-    image: '/images/hero_option_2.png', 
-    alt: 'Youthful Vitality',
+    image: '/images/hero_woman_stretching_16x9.png', 
+    alt: 'Youthful Vitality Stretching',
     title: 'Vitalität, die du spürst.\nAusstrahlung, die man sieht.',
     description: 'Jugendliche Frische, ein gutes Körpergefühl, sichtbare Vitalität und das Gefühl, die eigene Entwicklung aktiv beeinflussen zu können.',
     bullets: [
