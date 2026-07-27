@@ -69,9 +69,27 @@ const connections: [number, number][] = (() => {
 })();
 
 const heroSlides = [
-  { id: 1, image: '/images/longevity_hero_clinic.png', alt: 'Longevity Clinic' },
-  { id: 2, image: '/images/hero_option_2.png', alt: 'Longevity Performance' },
-  { id: 3, image: '/images/hero_option_3.png', alt: 'Longevity Vitality' },
+  { 
+    id: 1, 
+    image: '/images/longevity_hero_clinic.png', 
+    alt: 'Longevity Clinic',
+    title: 'Dein Weg zu mehr Lebensqualität',
+    description: 'TrueYears ist dein persönlicher, empathischer Longevity-Begleiter. Hier bringst du deine biologische Daten, Aktivitäten und wissenschaftlich fundierte Routinen in einer Lösung zusammen: einfach, motivierend und wirksam.'
+  },
+  { 
+    id: 2, 
+    image: '/images/hero_option_2.png', 
+    alt: 'Longevity Performance',
+    title: 'Maximale Leistung & Energie im Alltag',
+    description: 'Optimiere deine körperliche und mentale Performance mit maßgeschneiderten KI-Trainings, Schlaf-Analytics und wissenschaftlich fundierten Routinen.'
+  },
+  { 
+    id: 3, 
+    image: '/images/hero_option_3.png', 
+    alt: 'Longevity Vitality',
+    title: 'Zelluläre Verjüngung & Prävention',
+    description: 'Verlangsame dein biologisches Alter und erhalte deine volle Vitalität bis ins hohe Alter mit gezielter Diagnostik und evidenzbasierten Biohacks.'
+  },
 ];
 
 export default function LandingPage() {
@@ -607,16 +625,19 @@ export default function LandingPage() {
         </div>
 
         <div className="hero-content-fullscreen">
-          <h1>Dein Weg zu mehr Lebensqualität</h1>
-          <p>
-            TrueYears ist dein persönlicher, empathischer Longevity-Begleiter. Hier bringst du deine 
-            biologische Daten, Aktivitäten und wissenschaftlich fundierte Routinen in einer 
-            Lösung zusammen: einfach, motivierend und wirksam.
-          </p>
-          <div className="hero-btns">
-            <Link href="/dashboard" className="btn-primary-large">LOGIN</Link>
-            <Link href="#konzept" className="btn-secondary-large">KONZEPT ENTDECKEN</Link>
-          </div>
+          {heroSlides.map((slide, index) => (
+            <div 
+              key={slide.id}
+              className={`hero-text-slide ${index === currentHeroSlide ? 'active' : ''}`}
+            >
+              <h1>{slide.title}</h1>
+              <p>{slide.description}</p>
+              <div className="hero-btns">
+                <Link href="/dashboard" className="btn-primary-large">LOGIN</Link>
+                <Link href="#konzept" className="btn-secondary-large">KONZEPT ENTDECKEN</Link>
+              </div>
+            </div>
+          ))}
         </div>
       </header>
 
