@@ -431,17 +431,7 @@ section[id] {
   }
 
   .hero-slide-left .hero-btns {
-    justify-content: center !important;
-    margin-bottom: 1.5rem;
-  }
-
-  .btn-secondary-large,
-  .btn-primary-large {
-    padding: 0.9rem 1.8rem !important;
-    font-size: 0.95rem !important;
-    width: 100%;
-    max-width: 320px;
-    text-align: center;
+    display: none !important;
   }
 
   .hero-slide-right {
@@ -450,18 +440,25 @@ section[id] {
   }
 
   .hero-bullets-card {
-    max-width: 100% !important;
+    max-width: 340px !important;
+    margin: 0 auto !important;
+  }
+
+  .hero-bullets-list {
+    gap: 0.6rem !important;
   }
 
   .hero-bullet-item {
-    padding: 0.85rem 1rem !important;
-    font-size: 0.95rem !important;
-    gap: 0.8rem !important;
+    padding: 0.6rem 0.85rem !important;
+    font-size: 0.85rem !important;
+    line-height: 1.35 !important;
+    gap: 0.65rem !important;
+    border-radius: 12px !important;
   }
 
   .hero-bullet-icon {
-    width: 40px !important;
-    height: 40px !important;
+    width: 32px !important;
+    height: 32px !important;
   }
 
   .hero-slider-arrow.prev {
