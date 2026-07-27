@@ -676,8 +676,8 @@ export default function LandingPage() {
                                   <Image 
                                     src={bulletIcon} 
                                     alt="3D Icon" 
-                                    width={36} 
-                                    height={36} 
+                                    width={48} 
+                                    height={48} 
                                     style={{ objectFit: 'contain' }}
                                   />
                                 ) : (
