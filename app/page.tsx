@@ -76,9 +76,9 @@ const heroSlides = [
     title: 'Bleibe auf deinem besten Niveau',
     description: 'Die neue Generation persönlicher Begleitung, die Wissenschaft und intelligente Datenauswertung verbindet – für Impulse, die dein Leben spürbar leistungsfähiger machen.',
     bullets: [
-      { text: 'Stärke die Faktoren, die dich dauerhaft leistungsfähig halten', icon: 'bi-lightning-charge-fill' },
-      { text: 'Reduziere die Auswirkungen anhaltend hoher Belastung', icon: 'bi-shield-check' },
-      { text: 'Erlebe Fortschritte bei Energie, Konzentration & Resilienz', icon: 'bi-graph-up-arrow' }
+      { text: 'Stärke die Faktoren, die dich dauerhaft leistungsfähig halten', icon: '/images/icon_kraft_3d.png' },
+      { text: 'Reduziere die Auswirkungen anhaltend hoher Belastung', icon: '/images/icon_immun_3d.png' },
+      { text: 'Erlebe Fortschritte bei Energie, Konzentration & Resilienz', icon: '/images/icon_mindset_3d.png' }
     ]
   },
   { 
@@ -88,9 +88,9 @@ const heroSlides = [
     title: 'Jugendliche Frische & Sichtbare Vitalität',
     description: 'Verlangsame den Alterungsprozess von Haut und Körper mit wissenschaftlich fundierten Routinen, Hormon-Balance und gezielter Zellpflege.',
     bullets: [
-      { text: 'Sichtbare Frische für Haut, Gewicht und Ausstrahlung', icon: 'bi-sparkles' },
-      { text: 'Effektive Routinen bei hormonellen Veränderungen', icon: 'bi-heart-pulse-fill' },
-      { text: 'Spürbar mehr Wohlbefinden im eigenen Körper', icon: 'bi-emoji-smile-fill' }
+      { text: 'Sichtbare Frische für Haut, Gewicht und Ausstrahlung', icon: '/images/icon_zell_3d.png' },
+      { text: 'Effektive Routinen bei hormonellen Veränderungen', icon: '/images/icon_sozial_3d.png' },
+      { text: 'Spürbar mehr Wohlbefinden im eigenen Körper', icon: '/images/icon_einfach_3d.png' }
     ]
   },
   { 
@@ -100,9 +100,9 @@ const heroSlides = [
     title: 'Gewinne die Kontrolle über deine Gesundheit zurück',
     description: 'Überwinde Dysbalancen und chronische Anspannung durch evidenzbasierte Diagnostik und deine persönliche Longevity-Begleitung.',
     bullets: [
-      { text: 'Gezielte Reduktion von spürbaren Beschwerden & Dysbalancen', icon: 'bi-crosshair' },
-      { text: 'Mehr Kontrolle durch transparente Labor- & Vitaldaten', icon: 'bi-clipboard-data-fill' },
-      { text: 'Persönliche Begleitung für nachhaltige Lebensstil-Anpassungen', icon: 'bi-person-badge-fill' }
+      { text: 'Gezielte Reduktion von spürbaren Beschwerden & Dysbalancen', icon: '/images/icon_tief_3d.png' },
+      { text: 'Mehr Kontrolle durch transparente Labor- & Vitaldaten', icon: '/images/icon_schlaf_3d.png' },
+      { text: 'Persönliche Begleitung für nachhaltige Lebensstil-Anpassungen', icon: '/images/icon_mittel_3d.png' }
     ]
   },
 ];
