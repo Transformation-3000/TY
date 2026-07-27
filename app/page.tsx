@@ -95,7 +95,7 @@ const heroSlides = [
   },
   { 
     id: 3, 
-    image: '/images/longevity_hero_clinic.png', 
+    image: '/images/slider3_meditation_balance.jpg', 
     alt: 'Bring deinen Körper in Balance',
     title: 'Bring deinen Körper in Balance',
     description: 'Ein neuer Blick auf deine Situation, ganzheitliche Handlungsmöglichkeiten und die Zuversicht, deinen Weg spürbar verbessern zu können.',
