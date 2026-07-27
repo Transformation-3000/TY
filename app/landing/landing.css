@@ -137,7 +137,7 @@ section[id] {
 
 .hero-slide img {
   object-fit: cover;
-  object-position: center 50px;
+  object-position: center 25px;
 }
 
 .hero-fullscreen-overlay {
