@@ -342,6 +342,12 @@ section[id] {
 /* Slider 2 Specific Customizations */
 .slide-id-2 .hero-slide-left {
   transform: translateY(40px);
+  max-width: 520px !important;
+}
+
+.slide-id-2 .hero-slide-headline,
+.slide-id-2 h1 {
+  text-shadow: 0 4px 25px rgba(0, 0, 0, 0.85), 0 2px 6px rgba(0, 0, 0, 0.9) !important;
 }
 
 .slide-id-2 .hero-btns {
@@ -352,6 +358,10 @@ section[id] {
 
 .slide-id-2 .hero-bullets-card {
   max-width: 372px;
+}
+
+.slide-img-2 img {
+  object-position: 68% center !important;
 }
 
 /* Slider 3 Specific Customizations */
