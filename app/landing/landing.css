@@ -381,6 +381,10 @@ section[id] {
 }
 
 /* Slider 3 Specific Customizations */
+.slide-id-3 .hero-slide-left {
+  transform: translateY(25px);
+}
+
 .slide-id-3 .hero-btns {
   justify-content: flex-start !important;
   margin-left: 0 !important;
