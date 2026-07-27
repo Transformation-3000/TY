@@ -368,7 +368,7 @@ section[id] {
 }
 
 .slide-id-2 .hero-bullets-card {
-  max-width: 372px;
+  max-width: 450px !important;
 }
 
 .slide-id-2 .hero-slide-right {
