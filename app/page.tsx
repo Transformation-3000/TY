@@ -97,8 +97,8 @@ const heroSlides = [
     id: 3, 
     image: '/images/slider3_clean_meditation.jpg', 
     alt: 'Bring deinen Körper in Balance',
-    title: 'Bring deinen Körper in Balance',
-    description: 'Ein neuer Blick auf deine Situation, ganzheitliche Handlungsmöglichkeiten und die Zuversicht, deinen Weg spürbar verbessern zu können.',
+    title: 'Bring deinen Körper\nin Balance',
+    description: 'Ein neuer Blick auf deine Situation,\nganzheitliche Handlungsmöglichkeiten\nund deinen Weg spürbar zu verbessern.',
     bullets: [
       { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/slider3_icon1_vital_scanner.svg' },
       { text: 'Setze dort an, wo Veränderungen am meisten bewirken', icon: '/images/slider3_icon2_impact_target.svg' },
@@ -668,7 +668,14 @@ export default function LandingPage() {
                       </React.Fragment>
                     ))}
                   </h1>
-                  <p>{slide.description}</p>
+                  <p className="hero-slide-desc">
+                    {slide.description.split('\n').map((line: string, i: number) => (
+                      <React.Fragment key={i}>
+                        {i > 0 && <br />}
+                        {line}
+                      </React.Fragment>
+                    ))}
+                  </p>
                   <div className="hero-btns">
                     <a 
                       href="#features" 
