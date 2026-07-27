@@ -86,7 +86,7 @@ const heroSlides = [
     image: '/images/hero_woman_rooftop_v2.png', 
     alt: 'Youthful Vitality Rooftop v2',
     title: 'Vitalität, die du\nspürst. Ausstrahlung,\ndie man sieht.',
-    description: 'Jugendliche Frische, ein gutes Körpergefühl, sichtbare Vitalität und das Gefühl, die eigene Entwicklung aktiv beeinflussen zu können.',
+    description: 'Jugendliche Frische, ein gutes Körpergefühl, sichtbare Vitalität und eigene Entwicklung aktiv beeinflussen.',
     bullets: [
       { text: 'Erkenne, was deine Vitalität und Ausstrahlung beeinflusst', icon: '/images/slider2_icon1_sparkles.svg' },
       { text: 'Nutze wissenschaftliche Erkenntnisse, um dein biologisches Alter zu senken', icon: '/images/slider2_icon2_dna_rejuvenation.svg' },
