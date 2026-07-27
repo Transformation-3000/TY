@@ -395,7 +395,7 @@ section[id] {
 
   .hero-slide img {
     object-fit: cover !important;
-    object-position: 50% -50px !important; /* Kopf mobil 50px höher */
+    object-position: 70% -50px !important;
     transform: none !important;
     width: 100% !important;
     height: 100% !important;
