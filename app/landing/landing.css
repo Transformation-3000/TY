@@ -354,6 +354,22 @@ section[id] {
   max-width: 372px;
 }
 
+/* Slider 3 Specific Customizations */
+.slide-id-3 .hero-btns {
+  justify-content: flex-start !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
+.slide-id-3 .hero-slide-headline,
+.slide-id-3 h1 {
+  white-space: nowrap !important;
+}
+
+.slide-img-3 img {
+  object-position: center -100px !important;
+}
+
 .hero-bullets-list {
   list-style: none;
   padding: 0;

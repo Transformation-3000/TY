@@ -598,7 +598,7 @@ export default function LandingPage() {
           {heroSlides.map((slide, index) => (
             <div 
               key={slide.id}
-              className={`hero-slide ${index === currentHeroSlide ? 'active' : ''}`}
+              className={`hero-slide slide-img-${slide.id} ${index === currentHeroSlide ? 'active' : ''}`}
             >
               <Image 
                 src={slide.image} 
