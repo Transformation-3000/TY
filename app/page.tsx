@@ -102,7 +102,7 @@ const heroSlides = [
     bullets: [
       { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/slider3_icon1_vital_scanner.svg' },
       { text: 'Setze dort an, wo Veränderungen am meisten bewirken', icon: '/images/slider3_icon2_impact_target.svg' },
-      { text: 'Verbessere deine Lebensqualität nachhaltig', icon: '/images/slider3_icon3_life_quality.svg' }
+      { text: 'Erlebe Schritt für Schritt spürbare Verbesserungen', icon: '/images/slider3_icon3_life_quality.svg' }
     ]
   },
 ];
@@ -684,12 +684,10 @@ export default function LandingPage() {
                             <li key={bIdx} className="hero-bullet-item">
                               <span className="hero-bullet-icon">
                                 {bulletIcon && (bulletIcon.startsWith('/') || bulletIcon.includes('.')) ? (
-                                  <Image 
+                                  <img 
                                     src={bulletIcon} 
                                     alt="3D Icon" 
-                                    width={48} 
-                                    height={48} 
-                                    style={{ objectFit: 'contain' }}
+                                    style={{ width: '48px', height: '48px', objectFit: 'contain', display: 'block' }}
                                   />
                                 ) : (
                                   <i className={`bi ${bulletIcon}`}></i>
