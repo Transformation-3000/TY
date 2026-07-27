@@ -339,6 +339,11 @@ section[id] {
   max-width: 414px;
 }
 
+/* Slider 1 Specific Customizations */
+.slide-id-1 .hero-slide-desc {
+  font-size: 1.02rem !important; /* -2pt */
+}
+
 /* Slider 2 Specific Customizations */
 .slide-id-2 .hero-slide-left {
   transform: translateY(40px);
