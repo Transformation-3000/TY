@@ -95,16 +95,16 @@ export default function BildauswahlPage() {
               </div>
             </div>
 
-            {/* Slider 3 Bisherig */}
+            {/* Slider 3 Live Image */}
             <div style={{ background: 'rgba(30, 41, 59, 0.8)', border: '1px solid rgba(56, 189, 248, 0.4)', borderRadius: '16px', overflow: 'hidden' }}>
               <div style={{ position: 'relative', width: '100%', height: '200px' }}>
-                <Image src="/images/hero_option_3.png" alt="Bisheriger Slider 3" fill style={{ objectFit: 'cover' }} />
-                <span style={{ position: 'absolute', top: '10px', left: '10px', background: '#38bdf8', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', padding: '0.3rem 0.7rem', borderRadius: '6px' }}>SLIDER 3 (BISHER)</span>
+                <Image src="/images/longevity_hero_clinic.png" alt="Slider 3 Live" fill style={{ objectFit: 'cover' }} />
+                <span style={{ position: 'absolute', top: '10px', left: '10px', background: '#38bdf8', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', padding: '0.3rem 0.7rem', borderRadius: '6px' }}>SLIDER 3 (AKTUELL LIVE)</span>
               </div>
               <div style={{ padding: '1.2rem' }}>
                 <h4 style={{ margin: '0 0 0.3rem 0', color: '#ffffff', fontSize: '1.1rem', fontWeight: 700 }}>Bring deinen Körper in Balance</h4>
-                <p style={{ margin: '0 0 0.8rem 0', color: '#94a3b8', fontSize: '0.88rem' }}>Ursprüngliches Motiv für Slider 3 (Longevity Lounge)</p>
-                <code style={{ fontSize: '0.78rem', color: '#38bdf8', background: 'rgba(0,0,0,0.4)', padding: '0.3rem 0.6rem', borderRadius: '6px', display: 'inline-block' }}>/images/hero_option_3.png</code>
+                <p style={{ margin: '0 0 0.8rem 0', color: '#94a3b8', fontSize: '0.88rem' }}>Arzt in Alpine Longevity Suite mit digitalem Display & Bergsee</p>
+                <code style={{ fontSize: '0.78rem', color: '#38bdf8', background: 'rgba(0,0,0,0.4)', padding: '0.3rem 0.6rem', borderRadius: '6px', display: 'inline-block' }}>/images/longevity_hero_clinic.png</code>
               </div>
             </div>
           </div>
