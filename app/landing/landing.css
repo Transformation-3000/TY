@@ -166,19 +166,22 @@ section[id] {
 }
 
 .hero-indicator-dot {
-  width: 28px;
-  height: 6px;
-  border-radius: 10px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
   background: rgba(255, 255, 255, 0.35);
-  border: none;
+  border: 2px solid transparent;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-indicator-dot.active {
-  background: linear-gradient(90deg, #7FD049 0%, #38bdf8 100%);
-  width: 52px;
-  box-shadow: 0 0 14px rgba(127, 208, 73, 0.8);
+  background: #ffffff;
+  width: 16px;
+  height: 16px;
+  border: 3px solid #7FD049;
+  box-shadow: 0 0 16px #7FD049, 0 0 8px rgba(255, 255, 255, 0.9);
+  transform: scale(1.15);
 }
 
 .hero-slider-arrow {
