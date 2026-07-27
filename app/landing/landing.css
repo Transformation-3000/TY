@@ -344,6 +344,12 @@ section[id] {
   transform: translateY(40px);
 }
 
+.slide-id-2 .hero-btns {
+  justify-content: flex-start !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+}
+
 .slide-id-2 .hero-bullets-card {
   max-width: 372px;
 }
