@@ -279,13 +279,13 @@ section[id] {
 }
 
 .hero-slide-left p {
-  font-size: clamp(1.35rem, 2.2vw, 1.62rem);
+  font-size: clamp(1.5rem, 2.4vw, 1.75rem);
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.95);
   margin-bottom: 2rem;
   text-shadow: 0 2px 10px rgba(0,0,0,0.4);
   text-align: left;
-  max-width: 680px;
+  max-width: 720px;
 }
 
 .hero-slide-left .hero-btns {
