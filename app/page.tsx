@@ -102,7 +102,7 @@ const heroSlides = [
     bullets: [
       { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/slider3_icon1_vital_scanner.svg' },
       { text: 'Setze dort an, wo Veränderungen am meisten bewirken', icon: '/images/slider3_icon2_impact_target.svg' },
-      { text: 'Entwickle neue Hoffnung auf mehr Lebensqualität', icon: '/images/slider3_icon3_hope_rise.svg' }
+      { text: 'Verbessere deine Lebensqualität nachhaltig', icon: '/images/slider3_icon3_hope_rise.svg' }
     ]
   },
 ];
