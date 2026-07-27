@@ -262,7 +262,7 @@ section[id] {
   font-size: clamp(2.0rem, 3.3vw, 3.35rem);
   line-height: 1.15;
   font-weight: 800;
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.4rem;
   color: #ffffff;
   text-shadow: 0 4px 20px rgba(0,0,0,0.5);
   text-align: left;
