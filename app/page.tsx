@@ -96,13 +96,13 @@ const heroSlides = [
   { 
     id: 3, 
     image: '/images/longevity_hero_clinic.png', 
-    alt: 'Balance Rebuilder',
-    title: 'Gewinne die Kontrolle über deine Gesundheit zurück',
-    description: 'Überwinde Dysbalancen und chronische Anspannung durch evidenzbasierte Diagnostik und deine persönliche Longevity-Begleitung.',
+    alt: 'Bring deinen Körper in Balance',
+    title: 'Bring deinen Körper in Balance',
+    description: 'Ein neuer Blick auf deine Situation, ganzheitliche Handlungsmöglichkeiten und die Zuversicht, deinen Weg spürbar verbessern zu können.',
     bullets: [
-      { text: 'Gezielte Reduktion von spürbaren Beschwerden & Dysbalancen', icon: '/images/icon_tief_3d.png' },
-      { text: 'Mehr Kontrolle durch transparente Labor- & Vitaldaten', icon: '/images/icon_schlaf_3d.png' },
-      { text: 'Persönliche Begleitung für nachhaltige Lebensstil-Anpassungen', icon: '/images/icon_mittel_3d.png' }
+      { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/hero_icon_performance_3d_v2.png' },
+      { text: 'Setze dort an, wo Veränderungen am meisten bewirken', icon: '/images/icon_mittel_3d.png' },
+      { text: 'Entwickle neue Hoffnung auf mehr Lebensqualität', icon: '/images/hero_icon_resilience_3d_v2.png' }
     ]
   },
 ];
