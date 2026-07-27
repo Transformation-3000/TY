@@ -73,7 +73,7 @@ const heroSlides = [
     id: 1, 
     image: '/images/longevity_hero_clinic.png', 
     alt: 'Longevity Clinic',
-    title: 'Bleib auf deinem besten Niveau',
+    title: 'Bleibe auf deinem besten Niveau',
     description: 'Eine neue Generation persönlicher Begleitung, die Wissenschaft und intelligente Datenauswertung verbindet – für Impulse, die dein Leben spürbar besser machen.',
     bullets: [
       'Stärke die Faktoren, die dich dauerhaft leistungsfähig halten',
