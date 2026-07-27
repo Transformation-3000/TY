@@ -643,7 +643,7 @@ export default function LandingPage() {
                 <div className="hero-slide-left">
                   <p>{slide.description}</p>
                   <div className="hero-btns">
-                    <Link href="#konzept" className="btn-secondary-large">KONZEPT ENTDECKEN</Link>
+                    <Link href="#features" className="btn-secondary-large">KONZEPT ENTDECKEN</Link>
                   </div>
                 </div>
 
