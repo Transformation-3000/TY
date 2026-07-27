@@ -68,13 +68,28 @@ const connections: [number, number][] = (() => {
   return list;
 })();
 
+const heroSlides = [
+  { id: 1, image: '/images/longevity_hero_clinic.png', alt: 'Longevity Clinic' },
+  { id: 2, image: '/images/hero_option_2.png', alt: 'Longevity Performance' },
+  { id: 3, image: '/images/hero_option_3.png', alt: 'Longevity Vitality' },
+];
+
 export default function LandingPage() {
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
+  const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [activeCyclePlan, setActiveCyclePlan] = useState<'starter' | 'premium' | 'platin'>('premium');
   const [showOfferModal, setShowOfferModal] = useState(false);
+
+  // Auto-slide hero background every 6 seconds
+  useEffect(() => {
+    const heroTimer = setInterval(() => {
+      setCurrentHeroSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 6000);
+    return () => clearInterval(heroTimer);
+  }, []);
 
   const currentCycleColor = {
     starter: '#006ea7',
@@ -546,16 +561,51 @@ export default function LandingPage() {
       {/* Hero Section */}
       <header className="hero">
         <div className="hero-fullscreen-bg">
-          <Image 
-            src="/images/longevity_hero_clinic.png" 
-            alt="Longevity Clinic" 
-            fill
-            style={{ objectFit: 'cover' }}
-            priority
-          />
+          {heroSlides.map((slide, index) => (
+            <div 
+              key={slide.id}
+              className={`hero-slide ${index === currentHeroSlide ? 'active' : ''}`}
+            >
+              <Image 
+                src={slide.image} 
+                alt={slide.alt} 
+                fill
+                style={{ objectFit: 'cover' }}
+                priority={index === 0}
+              />
+            </div>
+          ))}
         </div>
         <div className="hero-fullscreen-overlay" />
         
+        {/* Navigation Arrows */}
+        <button 
+          className="hero-slider-arrow prev" 
+          onClick={() => setCurrentHeroSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1))}
+          aria-label="Vorheriges Bild"
+        >
+          <i className="bi bi-chevron-left"></i>
+        </button>
+        <button 
+          className="hero-slider-arrow next" 
+          onClick={() => setCurrentHeroSlide((prev) => (prev + 1) % heroSlides.length)}
+          aria-label="Nächstes Bild"
+        >
+          <i className="bi bi-chevron-right"></i>
+        </button>
+
+        {/* Indicators */}
+        <div className="hero-slider-indicators">
+          {heroSlides.map((_, index) => (
+            <button
+              key={index}
+              className={`hero-indicator-dot ${index === currentHeroSlide ? 'active' : ''}`}
+              onClick={() => setCurrentHeroSlide(index)}
+              aria-label={`Slide ${index + 1}`}
+            />
+          ))}
+        </div>
+
         <div className="hero-content-fullscreen">
           <h1>Dein Weg zu mehr Lebensqualität</h1>
           <p>
