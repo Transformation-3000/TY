@@ -350,6 +350,10 @@ section[id] {
   text-shadow: 0 4px 25px rgba(0, 0, 0, 0.85), 0 2px 6px rgba(0, 0, 0, 0.9) !important;
 }
 
+.slide-id-2 .hero-slide-desc {
+  font-size: 1.02rem !important; /* -2pt */
+}
+
 .slide-id-2 .hero-btns {
   justify-content: flex-start !important;
   margin-left: 0 !important;
