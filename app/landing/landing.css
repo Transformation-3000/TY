@@ -394,9 +394,9 @@ section[id] {
   }
 
   .hero-slide img {
-    object-fit: cover !important;
-    object-position: 70% -50px !important;
-    transform: none !important;
+    object-fit: contain !important;
+    object-position: center top !important;
+    transform: scale(1.28) translateY(-15px) !important;
     width: 100% !important;
     height: 100% !important;
   }
