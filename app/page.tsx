@@ -618,14 +618,18 @@ export default function LandingPage() {
           onClick={() => setCurrentHeroSlide((prev) => (prev === 0 ? heroSlides.length - 1 : prev - 1))}
           aria-label="Vorheriges Bild"
         >
-          <i className="bi bi-chevron-left"></i>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
         </button>
         <button 
           className="hero-slider-arrow next" 
           onClick={() => setCurrentHeroSlide((prev) => (prev + 1) % heroSlides.length)}
           aria-label="Nächstes Bild"
         >
-          <i className="bi bi-chevron-right"></i>
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
         </button>
 
         {/* Indicators */}
