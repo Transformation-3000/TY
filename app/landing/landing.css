@@ -391,7 +391,7 @@ section[id] {
 }
 
 .slide-img-3 img {
-  object-position: center -300px !important;
+  object-position: center center !important;
 }
 
 .hero-bullets-list {
