@@ -73,7 +73,7 @@ const heroSlides = [
     id: 1, 
     image: '/images/hero_man_balcony_16x9.png', 
     alt: 'Alpine Longevity Retreat Man 16:9',
-    title: 'Bleibe auf deinem besten Niveau',
+    title: 'Bleibe auf deinem\nbesten Niveau.',
     description: 'Die neue Generation persönlicher Begleitung, die Wissenschaft und intelligente Datenauswertung verbindet – für Impulse, die dein Leben spürbar leistungsfähiger machen.',
     bullets: [
       { text: 'Stärke die Faktoren, die dich dauerhaft leistungsfähig halten', icon: '/images/hero_icon_performance_3d_v2.png' },
