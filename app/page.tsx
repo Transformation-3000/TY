@@ -95,7 +95,7 @@ const heroSlides = [
   },
   { 
     id: 3, 
-    image: '/images/hero_option_3.png', 
+    image: '/images/longevity_hero_clinic.png', 
     alt: 'Balance Rebuilder',
     title: 'Gewinne die Kontrolle über deine Gesundheit zurück',
     description: 'Überwinde Dysbalancen und chronische Anspannung durch evidenzbasierte Diagnostik und deine persönliche Longevity-Begleitung.',
