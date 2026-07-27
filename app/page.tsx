@@ -113,6 +113,14 @@ export default function LandingPage() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
 
+  // Auto-slide hero background every 12 seconds
+  useEffect(() => {
+    const heroTimer = setInterval(() => {
+      setCurrentHeroSlide((prev) => (prev + 1) % heroSlides.length);
+    }, 12000);
+    return () => clearInterval(heroTimer);
+  }, []);
+
   const scrollToSection = (id: string, e?: React.MouseEvent) => {
     if (e) e.preventDefault();
     const el = document.getElementById(id);
