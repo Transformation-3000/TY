@@ -85,12 +85,12 @@ const heroSlides = [
     id: 2, 
     image: '/images/hero_option_2.png', 
     alt: 'Youthful Vitality',
-    title: 'Jugendliche Frische & Sichtbare Vitalität',
-    description: 'Verlangsame den Alterungsprozess von Haut und Körper mit wissenschaftlich fundierten Routinen, Hormon-Balance und gezielter Zellpflege.',
+    title: 'Vitalität, die du spürst. Ausstrahlung, die man sieht.',
+    description: 'Jugendliche Frische, ein gutes Körpergefühl, sichtbare Vitalität und das Gefühl, die eigene Entwicklung aktiv beeinflussen zu können.',
     bullets: [
-      { text: 'Sichtbare Frische für Haut, Gewicht und Ausstrahlung', icon: '/images/icon_zell_3d.png' },
-      { text: 'Effektive Routinen bei hormonellen Veränderungen', icon: '/images/icon_sozial_3d.png' },
-      { text: 'Spürbar mehr Wohlbefinden im eigenen Körper', icon: '/images/icon_einfach_3d.png' }
+      { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/hero_icon_performance_3d_v2.png' },
+      { text: 'Nutze wissenschaftliche Erkenntnisse, um dein biologisches Alter zu senken', icon: '/images/hero_icon_defense_3d_v2.png' },
+      { text: 'Erlebe Fortschritte, die du spürst und sehen kannst', icon: '/images/hero_icon_resilience_3d_v2.png' }
     ]
   },
   { 
