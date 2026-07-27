@@ -52,6 +52,70 @@ export default function BildauswahlPage() {
           </Link>
         </div>
 
+        {/* Dedicated CTA Button Text Proposals */}
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(127, 208, 73, 0.2) 0%, rgba(0, 110, 167, 0.25) 100%)',
+          border: '2px solid #7FD049',
+          borderRadius: '20px',
+          padding: '2rem',
+          marginBottom: '3rem'
+        }}>
+          <h2 style={{ fontSize: '1.7rem', fontWeight: 800, color: '#7FD049', marginTop: 0, marginBottom: '0.5rem' }}>
+            🚀 Passende CTA-Button Vorschläge für Slider 2 & Slider 3
+          </h2>
+          <p style={{ color: '#cbd5e1', fontSize: '1.05rem', marginBottom: '1.5rem' }}>
+            Hier sind maßgeschneiderte Button-Text-Alternativen, die perfekt zu den Aussagen von Slider 2 und Slider 3 passen:
+          </p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+            {/* Slider 2 */}
+            <div style={{ background: 'rgba(15, 23, 42, 0.85)', border: '1px solid rgba(127, 208, 73, 0.4)', borderRadius: '16px', padding: '1.4rem' }}>
+              <h4 style={{ margin: '0 0 0.3rem 0', fontSize: '1.1rem', color: '#7FD049' }}>✨ Slider 2: „Vitalität & Ausstrahlung“</h4>
+              <p style={{ margin: '0 0 1rem 0', fontSize: '0.85rem', color: '#94a3b8' }}>Thema: Jugendliche Frische, Wohlbefinden & Bio-Age</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                <div style={{ background: 'rgba(127, 208, 73, 0.15)', border: '1px solid #7FD049', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#7FD049', fontSize: '0.9rem' }}>
+                  1. VITALITÄT STEIGERN ⭐ (Empfohlen)
+                </div>
+                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
+                  2. JUGENDLICHE FRISCHE ENTDECKEN
+                </div>
+                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
+                  3. MEINE VITALITÄT AKTIVIEREN
+                </div>
+                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
+                  4. BIOLOGISCHES ALTER VERJÜNGEN
+                </div>
+                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
+                  5. AUSSTRAHLUNG OPTIMIEREN
+                </div>
+              </div>
+            </div>
+
+            {/* Slider 3 */}
+            <div style={{ background: 'rgba(15, 23, 42, 0.85)', border: '1px solid rgba(0, 110, 167, 0.5)', borderRadius: '16px', padding: '1.4rem' }}>
+              <h4 style={{ margin: '0 0 0.3rem 0', fontSize: '1.1rem', color: '#38bdf8' }}>🧘 Slider 3: „Körper in Balance“</h4>
+              <p style={{ margin: '0 0 1rem 0', fontSize: '0.85rem', color: '#94a3b8' }}>Thema: Ganzheitliche Balance, Hoffnung & Lebensqualität</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                <div style={{ background: 'rgba(56, 189, 248, 0.15)', border: '1px solid #38bdf8', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#38bdf8', fontSize: '0.9rem' }}>
+                  1. KÖRPER IN BALANCE BRINGEN ⭐ (Empfohlen)
+                </div>
+                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
+                  2. BALANCE JETZT STARTEN
+                </div>
+                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
+                  3. MEINEN WEG VERBESSERN
+                </div>
+                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
+                  4. LEBENSQUALITÄT STEIGERN
+                </div>
+                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
+                  5. DEINEN BALANCE-CHECK STARTEN
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* 5 Neue Sunlit Longevity Hero Images */}
         <div style={{
           background: 'linear-gradient(135deg, rgba(0, 110, 167, 0.25) 0%, rgba(127, 208, 73, 0.15) 100%)',
