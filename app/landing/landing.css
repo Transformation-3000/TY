@@ -378,14 +378,24 @@ section[id] {
 @media (max-width: 992px) {
   .hero {
     height: auto !important;
-    min-height: 100vh;
-    padding-top: 100px;
-    padding-bottom: 90px;
+    min-height: auto !important;
+    padding-top: 90px !important;
+    padding-bottom: 50px !important; /* Bild mobil 50px unterhalb der Elemente aufhören lassen */
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .hero-fullscreen-bg,
+  .hero-slide {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
   }
 
   .hero-slide img {
     object-fit: cover !important;
-    object-position: 50% 0px !important;
+    object-position: 50% -50px !important; /* Kopf mobil 50px höher */
     transform: none !important;
     width: 100% !important;
     height: 100% !important;
@@ -393,8 +403,10 @@ section[id] {
   
   .hero-content-fullscreen {
     min-height: auto !important;
-    padding: 0 1rem;
+    padding: 0 1rem 70px 1rem !important;
     display: block !important;
+    position: relative !important;
+    z-index: 10 !important;
   }
   
   .hero-text-slide {
@@ -414,7 +426,7 @@ section[id] {
 
   .hero-slide-grid {
     grid-template-columns: 1fr !important;
-    gap: 1.5rem !important;
+    gap: 1.2rem !important;
     align-items: center;
   }
 
@@ -434,7 +446,7 @@ section[id] {
     text-align: center !important;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 1.5rem !important;
+    margin-bottom: 1.2rem !important;
     max-width: 100% !important;
   }
 
@@ -469,21 +481,27 @@ section[id] {
     height: 32px !important;
   }
 
-  .hero-slider-arrow.prev {
-    left: 0.5rem !important;
-    width: 44px !important;
-    height: 44px !important;
-  }
-  
-  .hero-slider-arrow.next {
-    right: 0.5rem !important;
+  /* Pfeile links/rechts zentriert unterhalb der 3 icon-Texte */
+  .hero-slider-arrow {
+    position: absolute !important;
+    top: auto !important;
+    bottom: 10px !important;
+    transform: none !important;
+    z-index: 60 !important;
     width: 44px !important;
     height: 44px !important;
   }
 
+  .hero-slider-arrow.prev {
+    left: calc(50% - 55px) !important;
+  }
+  
+  .hero-slider-arrow.next {
+    right: calc(50% - 55px) !important;
+  }
+
   .hero-slider-indicators {
-    bottom: 1.2rem !important;
-    padding: 0.5rem 1rem !important;
+    display: none !important;
   }
 }
 
