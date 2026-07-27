@@ -76,11 +76,11 @@ export default function BildauswahlPage() {
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
                 <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(127, 208, 73, 0.3)', borderLeft: '4px solid #7FD049', borderRadius: '12px', padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
                   <div style={{ width: '48px', height: '48px', position: 'relative', flexShrink: 0 }}>
-                    <Image src="/images/slider2_icon1_body_pulse.svg" alt="3D Icon" fill style={{ objectFit: 'contain' }} />
+                    <Image src="/images/slider2_icon1_sparkles.svg" alt="3D Icon" fill style={{ objectFit: 'contain' }} />
                   </div>
                   <div>
                     <span style={{ fontSize: '0.9rem', color: '#ffffff', fontWeight: 600, display: 'block', marginBottom: '0.2rem' }}>Verstehe besser, was dein Körper aktuell braucht</span>
-                    <code style={{ fontSize: '0.75rem', color: '#7FD049' }}>slider2_icon1_body_pulse.svg</code>
+                    <code style={{ fontSize: '0.75rem', color: '#7FD049' }}>slider2_icon1_sparkles.svg</code>
                   </div>
                 </div>
 
