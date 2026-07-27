@@ -319,6 +319,11 @@ section[id] {
   transform: translateY(85px);
 }
 
+.slide-id-1 .hero-slide-right {
+  top: calc(50% + 50px);
+  transform: translateY(-50%);
+}
+
 .slide-id-1 .hero-btns {
   justify-content: flex-start !important;
   margin-left: 0 !important;
