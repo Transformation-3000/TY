@@ -665,14 +665,19 @@ export default function LandingPage() {
                   <div className="hero-slide-right">
                     <div className="hero-bullets-card">
                       <ul className="hero-bullets-list">
-                        {slide.bullets.map((bullet, bIdx) => (
-                          <li key={bIdx} className="hero-bullet-item">
-                            <span className="hero-bullet-icon">
-                              <i className={`bi ${bullet.icon}`}></i>
-                            </span>
-                            <span>{bullet.text}</span>
-                          </li>
-                        ))}
+                        {slide.bullets.map((bullet: any, bIdx) => {
+                          const isObj = typeof bullet === 'object' && bullet !== null;
+                          const bulletText = isObj ? bullet.text : String(bullet);
+                          const bulletIcon = isObj ? bullet.icon : 'bi-check-lg';
+                          return (
+                            <li key={bIdx} className="hero-bullet-item">
+                              <span className="hero-bullet-icon">
+                                <i className={`bi ${bulletIcon}`}></i>
+                              </span>
+                              <span>{bulletText}</span>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   </div>
