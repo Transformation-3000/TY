@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <defs>
+    <!-- Background Outer Glow -->
+    <filter id="bgGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+    <!-- Inner High Sparkle Glow -->
+    <filter id="innerGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="3" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Cyan to Green Glass Gradient -->
+    <linearGradient id="glassGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.9" />
+      <stop offset="50%" stop-color="#006ea7" stop-opacity="0.75" />
+      <stop offset="100%" stop-color="#7FD049" stop-opacity="0.95" />
+    </linearGradient>
+
+    <!-- Gold-Green Sunburst Accent -->
+    <linearGradient id="vitalityGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#7FD049" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+
+    <!-- Metallic Rim Highlight -->
+    <linearGradient id="rimGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" />
+      <stop offset="50%" stop-color="#38bdf8" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#7FD049" stop-opacity="0.9" />
+    </linearGradient>
+  </defs>
+
+  <!-- Ambient Glow Aura -->
+  <circle cx="50" cy="50" r="38" fill="none" stroke="#38bdf8" stroke-width="6" opacity="0.2" filter="url(#bgGlow)" />
+  <circle cx="50" cy="50" r="32" fill="none" stroke="#7FD049" stroke-width="4" opacity="0.3" filter="url(#bgGlow)" />
+
+  <!-- Outer Glass Ring Platform -->
+  <circle cx="50" cy="50" r="36" fill="url(#glassGrad)" fill-opacity="0.3" stroke="url(#rimGrad)" stroke-width="2.5" />
+
+  <!-- Ascending Vitality Lotus / Growing Quality-of-Life Crest -->
+  <path d="M 50 22 C 32 38, 26 62, 50 78 C 74 62, 68 38, 50 22 Z" fill="url(#vitalityGrad)" fill-opacity="0.25" stroke="url(#rimGrad)" stroke-width="1.8" filter="url(#innerGlow)" />
+
+  <!-- Inner Ascending Flame Leaf -->
+  <path d="M 50 28 C 38 42, 34 60, 50 72 C 66 60, 62 42, 50 28 Z" fill="url(#glassGrad)" stroke="#ffffff" stroke-width="1.5" />
+
+  <!-- Rising Diamond Vitality Core -->
+  <polygon points="50,36 58,50 50,64 42,50" fill="#ffffff" opacity="0.95" filter="url(#innerGlow)" />
+  <polygon points="50,40 55,50 50,60 45,50" fill="#7FD049" opacity="0.9" />
+
+  <!-- Sparkle Stars -->
+  <path d="M 50 14 Q 50 20 44 20 Q 50 20 50 26 Q 50 20 56 20 Q 50 20 50 14 Z" fill="#ffffff" opacity="0.95" filter="url(#innerGlow)" />
+  <path d="M 72 26 Q 72 30 68 30 Q 72 30 72 34 Q 72 30 76 30 Q 72 30 72 26 Z" fill="#7FD049" opacity="0.9" filter="url(#innerGlow)" />
+  <path d="M 28 70 Q 28 74 24 74 Q 28 74 28 78 Q 28 74 32 74 Q 28 74 28 70 Z" fill="#38bdf8" opacity="0.9" filter="url(#innerGlow)" />
+
+  <!-- Dynamic Base Arc Highlight -->
+  <path d="M 22 58 A 32 32 0 0 0 78 58" fill="none" stroke="#7FD049" stroke-width="3.5" stroke-linecap="round" filter="url(#innerGlow)" />
+</svg>
