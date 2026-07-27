@@ -52,7 +52,7 @@ export default function BildauswahlPage() {
           </Link>
         </div>
 
-        {/* Original / Bisherige 3 Hero Slider Bilder */}
+        {/* Aktuelle 3 Hero Slider Bilder */}
         <div style={{
           background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 41, 59, 0.9) 100%)',
           border: '2px solid #38bdf8',
@@ -62,48 +62,48 @@ export default function BildauswahlPage() {
           boxShadow: '0 10px 30px rgba(0,0,0,0.5)'
         }}>
           <h2 style={{ fontSize: '1.8rem', fontWeight: 800, color: '#38bdf8', marginTop: 0, marginBottom: '0.4rem' }}>
-            🖼️ Die 3 bisherigen / ursprünglichen Slider-Bilder
+            🖼️ Die aktuellen Bilder aller 3 Hero-Slider auf der Startseite
           </h2>
           <p style={{ color: '#cbd5e1', fontSize: '1.05rem', marginBottom: '1.8rem' }}>
-            Hier siehst du die 3 originalen Slider-Bilder aus dem Prototypen:
+            Hier siehst du die 3 Bilder, die aktuell live auf der Startseite laufen:
           </p>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.8rem' }}>
-            {/* Slider 1 Bisherig */}
+            {/* Slider 1 */}
             <div style={{ background: 'rgba(30, 41, 59, 0.8)', border: '1px solid rgba(56, 189, 248, 0.4)', borderRadius: '16px', overflow: 'hidden' }}>
-              <div style={{ position: 'relative', width: '100%', height: '200px' }}>
-                <Image src="/images/hero_option_1.png" alt="Bisheriger Slider 1" fill style={{ objectFit: 'cover' }} />
-                <span style={{ position: 'absolute', top: '10px', left: '10px', background: '#38bdf8', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', padding: '0.3rem 0.7rem', borderRadius: '6px' }}>SLIDER 1 (BISHER)</span>
+              <div style={{ position: 'relative', width: '100%', height: '220px' }}>
+                <Image src="/images/hero_option_1_1920x1080.png" alt="Slider 1 Live" fill style={{ objectFit: 'cover' }} />
+                <span style={{ position: 'absolute', top: '10px', left: '10px', background: '#38bdf8', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', padding: '0.3rem 0.7rem', borderRadius: '6px' }}>SLIDER 1 (LIVE)</span>
               </div>
               <div style={{ padding: '1.2rem' }}>
                 <h4 style={{ margin: '0 0 0.3rem 0', color: '#ffffff', fontSize: '1.1rem', fontWeight: 700 }}>Bleibe auf deinem besten Niveau</h4>
-                <p style={{ margin: '0 0 0.8rem 0', color: '#94a3b8', fontSize: '0.88rem' }}>Ursprüngliches Motiv für Slider 1 (Mann auf Terrasse)</p>
-                <code style={{ fontSize: '0.78rem', color: '#38bdf8', background: 'rgba(0,0,0,0.4)', padding: '0.3rem 0.6rem', borderRadius: '6px', display: 'inline-block' }}>/images/hero_option_1.png</code>
+                <p style={{ margin: '0 0 0.8rem 0', color: '#94a3b8', fontSize: '0.88rem' }}>Mann auf Balkon/Terrasse mit Panorama über Park & Skyline (16:9)</p>
+                <code style={{ fontSize: '0.78rem', color: '#38bdf8', background: 'rgba(0,0,0,0.4)', padding: '0.3rem 0.6rem', borderRadius: '6px', display: 'inline-block' }}>/images/hero_option_1_1920x1080.png</code>
               </div>
             </div>
 
-            {/* Slider 2 Bisherig */}
+            {/* Slider 2 */}
             <div style={{ background: 'rgba(30, 41, 59, 0.8)', border: '1px solid rgba(127, 208, 73, 0.5)', borderRadius: '16px', overflow: 'hidden' }}>
-              <div style={{ position: 'relative', width: '100%', height: '200px' }}>
-                <Image src="/images/hero_option_2.png" alt="Bisheriger Slider 2" fill style={{ objectFit: 'cover' }} />
-                <span style={{ position: 'absolute', top: '10px', left: '10px', background: '#7FD049', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', padding: '0.3rem 0.7rem', borderRadius: '6px' }}>SLIDER 2 (BISHER)</span>
+              <div style={{ position: 'relative', width: '100%', height: '220px' }}>
+                <Image src="/images/hero_woman_rooftop_v2.png" alt="Slider 2 Live" fill style={{ objectFit: 'cover' }} />
+                <span style={{ position: 'absolute', top: '10px', left: '10px', background: '#7FD049', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', padding: '0.3rem 0.7rem', borderRadius: '6px' }}>SLIDER 2 (LIVE)</span>
               </div>
               <div style={{ padding: '1.2rem' }}>
-                <h4 style={{ margin: '0 0 0.3rem 0', color: '#ffffff', fontSize: '1.1rem', fontWeight: 700 }}>Vitalität & Ausstrahlung</h4>
-                <p style={{ margin: '0 0 0.8rem 0', color: '#94a3b8', fontSize: '0.88rem' }}>Ursprüngliches Motiv für Slider 2 (Frau auf Rooftop)</p>
-                <code style={{ fontSize: '0.78rem', color: '#7FD049', background: 'rgba(0,0,0,0.4)', padding: '0.3rem 0.6rem', borderRadius: '6px', display: 'inline-block' }}>/images/hero_option_2.png</code>
+                <h4 style={{ margin: '0 0 0.3rem 0', color: '#ffffff', fontSize: '1.1rem', fontWeight: 700 }}>Vitalität, die du spürst. Ausstrahlung, die man sieht.</h4>
+                <p style={{ margin: '0 0 0.8rem 0', color: '#94a3b8', fontSize: '0.88rem' }}>Frau beim Dehnen auf Rooftop Balkon mit Skyline & Sonne (16:9)</p>
+                <code style={{ fontSize: '0.78rem', color: '#7FD049', background: 'rgba(0,0,0,0.4)', padding: '0.3rem 0.6rem', borderRadius: '6px', display: 'inline-block' }}>/images/hero_woman_rooftop_v2.png</code>
               </div>
             </div>
 
-            {/* Slider 3 Live Image */}
+            {/* Slider 3 */}
             <div style={{ background: 'rgba(30, 41, 59, 0.8)', border: '1px solid rgba(56, 189, 248, 0.4)', borderRadius: '16px', overflow: 'hidden' }}>
-              <div style={{ position: 'relative', width: '100%', height: '200px' }}>
+              <div style={{ position: 'relative', width: '100%', height: '220px' }}>
                 <Image src="/images/longevity_hero_clinic.png" alt="Slider 3 Live" fill style={{ objectFit: 'cover' }} />
-                <span style={{ position: 'absolute', top: '10px', left: '10px', background: '#38bdf8', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', padding: '0.3rem 0.7rem', borderRadius: '6px' }}>SLIDER 3 (AKTUELL LIVE)</span>
+                <span style={{ position: 'absolute', top: '10px', left: '10px', background: '#38bdf8', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', padding: '0.3rem 0.7rem', borderRadius: '6px' }}>SLIDER 3 (LIVE)</span>
               </div>
               <div style={{ padding: '1.2rem' }}>
                 <h4 style={{ margin: '0 0 0.3rem 0', color: '#ffffff', fontSize: '1.1rem', fontWeight: 700 }}>Bring deinen Körper in Balance</h4>
-                <p style={{ margin: '0 0 0.8rem 0', color: '#94a3b8', fontSize: '0.88rem' }}>Arzt in Alpine Longevity Suite mit digitalem Display & Bergsee</p>
+                <p style={{ margin: '0 0 0.8rem 0', color: '#94a3b8', fontSize: '0.88rem' }}>Arzt & Frau in Longevity Suite vor digitalem Display & Bergsee (16:9)</p>
                 <code style={{ fontSize: '0.78rem', color: '#38bdf8', background: 'rgba(0,0,0,0.4)', padding: '0.3rem 0.6rem', borderRadius: '6px', display: 'inline-block' }}>/images/longevity_hero_clinic.png</code>
               </div>
             </div>
