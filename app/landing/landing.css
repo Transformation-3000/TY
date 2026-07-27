@@ -382,6 +382,12 @@ section[id] {
     padding-top: 100px;
     padding-bottom: 90px;
   }
+
+  .hero-slide img {
+    object-fit: cover !important;
+    object-position: 68% 0px !important;
+    transform: scale(0.9) translateY(-15px) !important;
+  }
   
   .hero-content-fullscreen {
     min-height: auto !important;
