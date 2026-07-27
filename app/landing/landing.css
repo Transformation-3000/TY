@@ -395,6 +395,17 @@ section[id] {
   right: 5% !important;
 }
 
+.slide-id-3 .hero-bullet-item {
+  border-left: 4px solid #38bdf8 !important;
+  border-color: rgba(56, 189, 248, 0.3) !important;
+}
+
+.slide-id-3 .hero-bullet-item:hover {
+  border-left-color: #38bdf8 !important;
+  border-color: rgba(56, 189, 248, 0.6) !important;
+  box-shadow: 0 14px 35px rgba(56, 189, 248, 0.35) !important;
+}
+
 .slide-img-3 img {
   object-position: center center !important;
 }
