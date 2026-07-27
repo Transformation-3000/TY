@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TrueYears - Hero Bildkatalog</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background-color: #0f172a;
+      color: #f8fafc;
+      margin: 0;
+      padding: 2rem;
+    }
+    h1 {
+      color: #38bdf8;
+      font-size: 2.2rem;
+      margin-bottom: 0.5rem;
+    }
+    p {
+      color: #94a3b8;
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+      gap: 2rem;
+    }
+    .card {
+      background: #1e293b;
+      border: 2px solid #334155;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+    .card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+    .card-body {
+      padding: 1.2rem;
+    }
+    .card-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #7FD049;
+      margin: 0 0 0.4rem 0;
+    }
+    .card-desc {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      margin: 0 0 0.8rem 0;
+    }
+    code {
+      background: #0f172a;
+      color: #38bdf8;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      display: inline-block;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🖼️ TrueYears - Alle Hero-Bilder im Überblick</h1>
+  <p>Klicke auf ein Bild oder öffne diesen Katalog im Browser unter <b>http://localhost:3000/katalog.html</b></p>
+
+  <div class="grid">
+
+    <!-- Bild 1 -->
+    <div class="card">
+      <img src="/images/hero_option_1_1920x1080.png" alt="Mann auf Balkon">
+      <div class="card-body">
+        <div class="card-title">1️⃣ Mann auf Balkon / Terrasse</div>
+        <div class="card-desc">Aktuelles Slider 1 Hauptbild (16:9 mit Blick über Park & Skyline)</div>
+        <code>/images/hero_option_1_1920x1080.png</code>
+      </div>
+    </div>
+
+    <!-- Bild 2 -->
+    <div class="card">
+      <img src="/images/hero_emotional.jpg" alt="Emotionale Natur-Szene">
+      <div class="card-body">
+        <div class="card-title">2️⃣ Emotionale Natur-Szene (Paar)</div>
+        <div class="card-desc">Ursprüngliches Hauptbild der ersten Prototyp-Versionen im Sonnenlicht</div>
+        <code>/images/hero_emotional.jpg</code>
+      </div>
+    </div>
+
+    <!-- Bild 3 -->
+    <div class="card">
+      <img src="/images/hero_woman_rooftop_v2.png" alt="Frau auf Rooftop">
+      <div class="card-body">
+        <div class="card-title">3️⃣ Frau beim Dehnen auf Rooftop</div>
+        <div class="card-desc">Aktuelles Slider 2 Hauptbild (16:9 mit Balkon, Skyline & blauen Himmel)</div>
+        <code>/images/hero_woman_rooftop_v2.png</code>
+      </div>
+    </div>
+
+    <!-- Bild 4 -->
+    <div class="card">
+      <img src="/images/longevity_hero_clinic.png" alt="Arzt in Longevity Suite">
+      <div class="card-body">
+        <div class="card-title">4️⃣ Arzt in Longevity Suite (Bergsee)</div>
+        <div class="card-desc">Aktuelles Slider 3 Hauptbild (Arzt vor digitalem Display & Bergsee)</div>
+        <code>/images/longevity_hero_clinic.png</code>
+      </div>
+    </div>
+
+    <!-- Bild 5 -->
+    <div class="card">
+      <img src="/images/hero_option_3.png" alt="Longevity Lounge">
+      <div class="card-body">
+        <div class="card-title">5️⃣ Longevity Lounge Motiv</div>
+        <div class="card-desc">Bisheriges Lounge-Motiv für den 3. Slider</div>
+        <code>/images/hero_option_3.png</code>
+      </div>
+    </div>
+
+    <!-- Bild 6 -->
+    <div class="card">
+      <img src="/images/hero_longevity_new_1.png" alt="Alpine Longevity Retreat">
+      <div class="card-body">
+        <div class="card-title">6️⃣ Alpine Longevity Retreat Suite</div>
+        <div class="card-desc">High-Tech Suite in den Alpen unter blauem Himmel</div>
+        <code>/images/hero_longevity_new_1.png</code>
+      </div>
+    </div>
+
+    <!-- Bild 7 -->
+    <div class="card">
+      <img src="/images/hero_longevity_new_2.png" alt="Bio-Jogging am Meer">
+      <div class="card-body">
+        <div class="card-title">7️⃣ Bio-Jogging am Küstenweg</div>
+        <div class="card-desc">Vitales Paar beim Joggen unter blauem Himmel & Natur</div>
+        <code>/images/hero_longevity_new_2.png</code>
+      </div>
+    </div>
+
+    <!-- Bild 8 -->
+    <div class="card">
+      <img src="/images/hero_longevity_new_5.png" alt="Glas-Pavillon am See">
+      <div class="card-body">
+        <div class="card-title">8️⃣ Glas-Pavillon am Bergsee</div>
+        <div class="card-desc">Moderner Glas-Pavillon an klarem Bergsee im grünen Wald</div>
+        <code>/images/hero_longevity_new_5.png</code>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
