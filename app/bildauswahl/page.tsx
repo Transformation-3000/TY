@@ -71,8 +71,8 @@ export default function BildauswahlPage() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.8rem' }}>
             {/* Slider 1 */}
             <div style={{ background: 'rgba(30, 41, 59, 0.8)', border: '1px solid rgba(56, 189, 248, 0.4)', borderRadius: '16px', overflow: 'hidden' }}>
-              <div style={{ position: 'relative', width: '100%', height: '220px' }}>
-                <Image src="/images/hero_option_1_1920x1080.png" alt="Slider 1 Live" fill style={{ objectFit: 'cover' }} />
+              <div style={{ position: 'relative', width: '100%' }}>
+                <img src="/images/hero_option_1_1920x1080.png" alt="Slider 1 Live" style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} />
                 <span style={{ position: 'absolute', top: '10px', left: '10px', background: '#38bdf8', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', padding: '0.3rem 0.7rem', borderRadius: '6px' }}>SLIDER 1 (LIVE)</span>
               </div>
               <div style={{ padding: '1.2rem' }}>
@@ -84,8 +84,8 @@ export default function BildauswahlPage() {
 
             {/* Slider 2 */}
             <div style={{ background: 'rgba(30, 41, 59, 0.8)', border: '1px solid rgba(127, 208, 73, 0.5)', borderRadius: '16px', overflow: 'hidden' }}>
-              <div style={{ position: 'relative', width: '100%', height: '220px' }}>
-                <Image src="/images/hero_woman_rooftop_v2.png" alt="Slider 2 Live" fill style={{ objectFit: 'cover' }} />
+              <div style={{ position: 'relative', width: '100%' }}>
+                <img src="/images/hero_woman_rooftop_v2.png" alt="Slider 2 Live" style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} />
                 <span style={{ position: 'absolute', top: '10px', left: '10px', background: '#7FD049', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', padding: '0.3rem 0.7rem', borderRadius: '6px' }}>SLIDER 2 (LIVE)</span>
               </div>
               <div style={{ padding: '1.2rem' }}>
@@ -97,8 +97,8 @@ export default function BildauswahlPage() {
 
             {/* Slider 3 */}
             <div style={{ background: 'rgba(30, 41, 59, 0.8)', border: '1px solid rgba(56, 189, 248, 0.4)', borderRadius: '16px', overflow: 'hidden' }}>
-              <div style={{ position: 'relative', width: '100%', height: '220px' }}>
-                <Image src="/images/longevity_hero_clinic.png" alt="Slider 3 Live" fill style={{ objectFit: 'cover' }} />
+              <div style={{ position: 'relative', width: '100%' }}>
+                <img src="/images/longevity_hero_clinic.png" alt="Slider 3 Live" style={{ width: '100%', height: '220px', objectFit: 'cover', display: 'block' }} />
                 <span style={{ position: 'absolute', top: '10px', left: '10px', background: '#38bdf8', color: '#0f172a', fontWeight: 800, fontSize: '0.8rem', padding: '0.3rem 0.7rem', borderRadius: '6px' }}>SLIDER 3 (LIVE)</span>
               </div>
               <div style={{ padding: '1.2rem' }}>
