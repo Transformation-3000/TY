@@ -325,7 +325,7 @@ section[id] {
   font-size: 1.18rem;
   line-height: 1.4;
   font-weight: 600;
-  background: rgba(15, 23, 42, 0.35);
+  background: rgba(15, 23, 42, 0.25);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -338,7 +338,7 @@ section[id] {
 
 .hero-bullet-item:hover {
   transform: translateX(6px) translateY(-2px);
-  background: rgba(15, 23, 42, 0.55);
+  background: rgba(15, 23, 42, 0.45);
   border-color: rgba(127, 208, 73, 0.5);
   border-left-color: #7FD049;
   box-shadow: 0 14px 35px rgba(0, 110, 167, 0.3);
