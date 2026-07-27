@@ -112,6 +112,14 @@ export default function LandingPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [currentHeroSlide, setCurrentHeroSlide] = useState(0);
+
+  const scrollToSection = (id: string, e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
   const [showVideoModal, setShowVideoModal] = useState(false);
   const [activeCyclePlan, setActiveCyclePlan] = useState<'starter' | 'premium' | 'platin'>('premium');
   const [showOfferModal, setShowOfferModal] = useState(false);
@@ -643,7 +651,13 @@ export default function LandingPage() {
                 <div className="hero-slide-left">
                   <p>{slide.description}</p>
                   <div className="hero-btns">
-                    <Link href="#features" className="btn-secondary-large">KONZEPT ENTDECKEN</Link>
+                    <a 
+                      href="#features" 
+                      className="btn-secondary-large"
+                      onClick={(e) => scrollToSection('features', e)}
+                    >
+                      KONZEPT ENTDECKEN
+                    </a>
                   </div>
                 </div>
 
