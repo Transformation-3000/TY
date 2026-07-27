@@ -316,7 +316,7 @@ section[id] {
   flex-direction: column;
   justify-content: center;
   align-self: center;
-  transform: translateY(110px);
+  transform: translateY(85px);
 }
 
 .slide-id-1 .hero-btns {

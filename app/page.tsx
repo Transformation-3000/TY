@@ -650,16 +650,16 @@ export default function LandingPage() {
               key={slide.id}
               className={`hero-text-slide slide-id-${slide.id} ${index === currentHeroSlide ? 'active' : ''}`}
             >
-              <h1 className="hero-slide-headline">
-                {slide.title.split('\n').map((line: string, i: number) => (
-                  <React.Fragment key={i}>
-                    {i > 0 && <br />}
-                    {line}
-                  </React.Fragment>
-                ))}
-              </h1>
               <div className="hero-slide-grid">
                 <div className="hero-slide-left">
+                  <h1 className="hero-slide-headline">
+                    {slide.title.split('\n').map((line: string, i: number) => (
+                      <React.Fragment key={i}>
+                        {i > 0 && <br />}
+                        {line}
+                      </React.Fragment>
+                    ))}
+                  </h1>
                   <p>{slide.description}</p>
                   <div className="hero-btns">
                     <a 
