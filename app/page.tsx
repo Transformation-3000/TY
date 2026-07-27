@@ -648,7 +648,7 @@ export default function LandingPage() {
           {heroSlides.map((slide, index) => (
             <div 
               key={slide.id}
-              className={`hero-text-slide ${index === currentHeroSlide ? 'active' : ''}`}
+              className={`hero-text-slide slide-id-${slide.id} ${index === currentHeroSlide ? 'active' : ''}`}
             >
               <h1 className="hero-slide-headline">
                 {slide.title.split('\n').map((line: string, i: number) => (
