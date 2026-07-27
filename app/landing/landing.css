@@ -362,6 +362,7 @@ section[id] {
 
 .slide-id-2 .hero-slide-right {
   right: 30px !important;
+  top: calc(50% + 30px) !important;
 }
 
 .slide-img-2 img {
