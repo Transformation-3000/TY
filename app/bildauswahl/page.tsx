@@ -99,6 +99,89 @@ export default function BildauswahlPage() {
           </div>
         </div>
 
+        {/* Dedicated Slider 2 Icon Set Proposals */}
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(127, 208, 73, 0.15) 0%, rgba(0, 110, 167, 0.25) 100%)',
+          border: '2px solid #7FD049',
+          borderRadius: '20px',
+          padding: '2rem',
+          marginBottom: '3rem'
+        }}>
+          <h2 style={{ fontSize: '1.7rem', fontWeight: 800, color: '#7FD049', marginTop: 0, marginBottom: '0.5rem' }}>
+            ✨ Neue 3D-Icon Vorschläge für Slider 2 („Vitalität, die du spürst. Ausstrahlung, die man sieht.“)
+          </h2>
+          <p style={{ color: '#cbd5e1', fontSize: '1.05rem', marginBottom: '1.8rem' }}>
+            Hier sind 4 perfekt abgestimmte 3D-Icon-Kombinationen für den 2. Hero-Slider:
+          </p>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(270px, 1fr))', gap: '1.5rem' }}>
+            {[
+              {
+                setName: 'Set A: Energy & Bio-Cell (Empfohlen)',
+                tag: 'Sportlich & Zellulär',
+                b1: { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/hero_icon_performance_3d_v2.png' },
+                b2: { text: 'Nutze wissenschaftliche Erkenntnisse, um dein biologisches Alter zu senken', icon: '/images/icon_zell_3d.png' },
+                b3: { text: 'Erlebe Fortschritte, die du spürst und sehen kannst', icon: '/images/hero_icon_resilience_3d_v2.png' }
+              },
+              {
+                setName: 'Set B: Biological Age Clock',
+                tag: 'Wissenschaft & Bio-Clock',
+                b1: { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/inspiration_insights_3d.png' },
+                b2: { text: 'Nutze wissenschaftliche Erkenntnisse, um dein biologisches Alter zu senken', icon: '/images/clock_3d.png' },
+                b3: { text: 'Erlebe Fortschritte, die du spürst und sehen kannst', icon: '/images/icon_kraft_3d.png' }
+              },
+              {
+                setName: 'Set C: Defense & Mindset',
+                tag: 'Schutz & Ausstrahlung',
+                b1: { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/icon_einfach_3d.png' },
+                b2: { text: 'Nutze wissenschaftliche Erkenntnisse, um dein biologisches Alter zu senken', icon: '/images/hero_icon_defense_3d_v2.png' },
+                b3: { text: 'Erlebe Fortschritte, die du spürst und sehen kannst', icon: '/images/icon_mindset_3d.png' }
+              },
+              {
+                setName: 'Set D: Regeneration & Glow',
+                tag: 'Tiefen-Erholung & Glow',
+                b1: { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/icon_schlaf_3d.png' },
+                b2: { text: 'Nutze wissenschaftliche Erkenntnisse, um dein biologisches Alter zu senken', icon: '/images/icon_tief_3d.png' },
+                b3: { text: 'Erlebe Fortschritte, die du spürst und sehen kannst', icon: '/images/icon_sozial_3d.png' }
+              }
+            ].map((set, sIdx) => (
+              <div key={sIdx} style={{
+                background: 'rgba(15, 23, 42, 0.85)',
+                border: '1px solid rgba(127, 208, 73, 0.4)',
+                borderRadius: '16px',
+                padding: '1.4rem',
+                boxShadow: '0 10px 25px rgba(0,0,0,0.4)'
+              }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                  <h4 style={{ margin: 0, fontSize: '1.05rem', color: '#ffffff', fontWeight: 700 }}>{set.setName}</h4>
+                  <span style={{ fontSize: '0.75rem', background: 'rgba(127, 208, 73, 0.2)', color: '#7FD049', padding: '0.2rem 0.5rem', borderRadius: '6px' }}>
+                    {set.tag}
+                  </span>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                  {[set.b1, set.b2, set.b3].map((b, bIdx) => (
+                    <div key={bIdx} style={{
+                      background: 'rgba(30, 41, 59, 0.6)',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      borderRadius: '10px',
+                      padding: '0.6rem 0.8rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.8rem'
+                    }}>
+                      <div style={{ width: '36px', height: '36px', position: 'relative', flexShrink: 0 }}>
+                        <Image src={b.icon} alt="Icon" fill style={{ objectFit: 'contain' }} />
+                      </div>
+                      <span style={{ fontSize: '0.82rem', color: '#e2e8f0', lineHeight: 1.3 }}>{b.text}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Current Context Banner */}
         <div style={{
           background: 'rgba(255, 255, 255, 0.05)',
