@@ -71,8 +71,8 @@ const connections: [number, number][] = (() => {
 const heroSlides = [
   { 
     id: 1, 
-    image: '/images/hero_option_1_1920x1080.png', 
-    alt: 'Alpine Longevity Retreat 1920x1080',
+    image: '/images/longevity_hero_clinic.png', 
+    alt: 'Alpine Longevity Retreat',
     title: 'Bleibe auf deinem besten Niveau',
     description: 'Die neue Generation persönlicher Begleitung, die Wissenschaft und intelligente Datenauswertung verbindet – für Impulse, die dein Leben spürbar leistungsfähiger machen.',
     bullets: [
