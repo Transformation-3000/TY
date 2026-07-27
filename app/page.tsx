@@ -650,8 +650,7 @@ export default function LandingPage() {
                   <h1>{slide.title}</h1>
                   <p>{slide.description}</p>
                   <div className="hero-btns">
-                    <Link href="/dashboard" className="btn-primary-large">LOGIN</Link>
-                    <Link href="#konzept" className="btn-secondary-large">KONZEPT ENTDECKEN</Link>
+                    <Link href="#konzept" className="btn-primary-large">KONZEPT ENTDECKEN</Link>
                   </div>
                 </div>
 
