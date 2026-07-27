@@ -347,7 +347,7 @@ section[id] {
 }
 
 .slide-id-1 .hero-slide-right {
-  right: calc(5% + 10px) !important;
+  right: 5% !important;
 }
 
 /* Slider 2 Specific Customizations */
