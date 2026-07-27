@@ -83,8 +83,8 @@ const heroSlides = [
   },
   { 
     id: 2, 
-    image: '/images/hero_woman_rooftop_16x9.png', 
-    alt: 'Youthful Vitality Rooftop',
+    image: '/images/hero_woman_rooftop_v2.png', 
+    alt: 'Youthful Vitality Rooftop v2',
     title: 'Vitalität, die du spürst.\nAusstrahlung, die man sieht.',
     description: 'Jugendliche Frische, ein gutes Körpergefühl, sichtbare Vitalität und das Gefühl, die eigene Entwicklung aktiv beeinflussen zu können.',
     bullets: [
