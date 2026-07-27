@@ -76,9 +76,9 @@ const heroSlides = [
     title: 'Bleibe auf deinem besten Niveau',
     description: 'Die neue Generation persönlicher Begleitung, die Wissenschaft und intelligente Datenauswertung verbindet – für Impulse, die dein Leben spürbar leistungsfähiger machen.',
     bullets: [
-      'Stärke die Faktoren, die dich dauerhaft leistungsfähig halten',
-      'Reduziere die Auswirkungen anhaltend hoher Belastung',
-      'Erlebe Fortschritte bei Energie, Konzentration & Resilienz'
+      { text: 'Stärke die Faktoren, die dich dauerhaft leistungsfähig halten', icon: 'bi-lightning-charge-fill' },
+      { text: 'Reduziere die Auswirkungen anhaltend hoher Belastung', icon: 'bi-shield-check' },
+      { text: 'Erlebe Fortschritte bei Energie, Konzentration & Resilienz', icon: 'bi-graph-up-arrow' }
     ]
   },
   { 
@@ -88,9 +88,9 @@ const heroSlides = [
     title: 'Jugendliche Frische & Sichtbare Vitalität',
     description: 'Verlangsame den Alterungsprozess von Haut und Körper mit wissenschaftlich fundierten Routinen, Hormon-Balance und gezielter Zellpflege.',
     bullets: [
-      'Sichtbare Frische für Haut, Gewicht und Ausstrahlung',
-      'Effektive Routinen bei hormonellen Veränderungen',
-      'Spürbar mehr Wohlbefinden im eigenen Körper'
+      { text: 'Sichtbare Frische für Haut, Gewicht und Ausstrahlung', icon: 'bi-sparkles' },
+      { text: 'Effektive Routinen bei hormonellen Veränderungen', icon: 'bi-heart-pulse-fill' },
+      { text: 'Spürbar mehr Wohlbefinden im eigenen Körper', icon: 'bi-emoji-smile-fill' }
     ]
   },
   { 
@@ -100,9 +100,9 @@ const heroSlides = [
     title: 'Gewinne die Kontrolle über deine Gesundheit zurück',
     description: 'Überwinde Dysbalancen und chronische Anspannung durch evidenzbasierte Diagnostik und deine persönliche Longevity-Begleitung.',
     bullets: [
-      'Gezielte Reduktion von spürbaren Beschwerden & Dysbalancen',
-      'Mehr Kontrolle durch transparente Labor- & Vitaldaten',
-      'Persönliche Begleitung für nachhaltige Lebensstil-Anpassungen'
+      { text: 'Gezielte Reduktion von spürbaren Beschwerden & Dysbalancen', icon: 'bi-crosshair' },
+      { text: 'Mehr Kontrolle durch transparente Labor- & Vitaldaten', icon: 'bi-clipboard-data-fill' },
+      { text: 'Persönliche Begleitung für nachhaltige Lebensstil-Anpassungen', icon: 'bi-person-badge-fill' }
     ]
   },
 ];
@@ -668,9 +668,9 @@ export default function LandingPage() {
                         {slide.bullets.map((bullet, bIdx) => (
                           <li key={bIdx} className="hero-bullet-item">
                             <span className="hero-bullet-icon">
-                              <i className="bi bi-check-lg"></i>
+                              <i className={`bi ${bullet.icon}`}></i>
                             </span>
-                            <span>{bullet}</span>
+                            <span>{bullet.text}</span>
                           </li>
                         ))}
                       </ul>
