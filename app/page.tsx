@@ -73,22 +73,37 @@ const heroSlides = [
     id: 1, 
     image: '/images/longevity_hero_clinic.png', 
     alt: 'Longevity Clinic',
-    title: 'Dein Weg zu mehr Lebensqualität',
-    description: 'TrueYears ist dein persönlicher, empathischer Longevity-Begleiter. Hier bringst du deine biologische Daten, Aktivitäten und wissenschaftlich fundierte Routinen in einer Lösung zusammen: einfach, motivierend und wirksam.'
+    title: 'Bleib auf deinem besten Niveau',
+    description: 'Eine neue Generation persönlicher Begleitung, die Wissenschaft und intelligente Datenauswertung verbindet – für Impulse, die dein Leben spürbar besser machen.',
+    bullets: [
+      'Stärke die Faktoren, die dich dauerhaft leistungsfähig halten',
+      'Reduziere die Auswirkungen anhaltend hoher Belastung',
+      'Erlebe Fortschritte bei Energie, Konzentration & Resilienz'
+    ]
   },
   { 
     id: 2, 
     image: '/images/hero_option_2.png', 
-    alt: 'Longevity Performance',
-    title: 'Maximale Leistung & Energie im Alltag',
-    description: 'Optimiere deine körperliche und mentale Performance mit maßgeschneiderten KI-Trainings, Schlaf-Analytics und wissenschaftlich fundierten Routinen.'
+    alt: 'Youthful Vitality',
+    title: 'Jugendliche Frische & Sichtbare Vitalität',
+    description: 'Verlangsame den Alterungsprozess von Haut und Körper mit wissenschaftlich fundierten Routinen, Hormon-Balance und gezielter Zellpflege.',
+    bullets: [
+      'Sichtbare Frische für Haut, Gewicht und Ausstrahlung',
+      'Effektive Routinen bei hormonellen Veränderungen',
+      'Spürbar mehr Wohlbefinden im eigenen Körper'
+    ]
   },
   { 
     id: 3, 
     image: '/images/hero_option_3.png', 
-    alt: 'Longevity Vitality',
-    title: 'Zelluläre Verjüngung & Prävention',
-    description: 'Verlangsame dein biologisches Alter und erhalte deine volle Vitalität bis ins hohe Alter mit gezielter Diagnostik und evidenzbasierten Biohacks.'
+    alt: 'Balance Rebuilder',
+    title: 'Gewinne die Kontrolle über deine Gesundheit zurück',
+    description: 'Überwinde Dysbalancen und chronische Anspannung durch evidenzbasierte Diagnostik und deine persönliche Longevity-Begleitung.',
+    bullets: [
+      'Gezielte Reduktion von spürbaren Beschwerden & Dysbalancen',
+      'Mehr Kontrolle durch transparente Labor- & Vitaldaten',
+      'Persönliche Begleitung für nachhaltige Lebensstil-Anpassungen'
+    ]
   },
 ];
 
@@ -630,11 +645,32 @@ export default function LandingPage() {
               key={slide.id}
               className={`hero-text-slide ${index === currentHeroSlide ? 'active' : ''}`}
             >
-              <h1>{slide.title}</h1>
-              <p>{slide.description}</p>
-              <div className="hero-btns">
-                <Link href="/dashboard" className="btn-primary-large">LOGIN</Link>
-                <Link href="#konzept" className="btn-secondary-large">KONZEPT ENTDECKEN</Link>
+              <div className="hero-slide-grid">
+                <div className="hero-slide-left">
+                  <h1>{slide.title}</h1>
+                  <p>{slide.description}</p>
+                  <div className="hero-btns">
+                    <Link href="/dashboard" className="btn-primary-large">LOGIN</Link>
+                    <Link href="#konzept" className="btn-secondary-large">KONZEPT ENTDECKEN</Link>
+                  </div>
+                </div>
+
+                {slide.bullets && slide.bullets.length > 0 && (
+                  <div className="hero-slide-right">
+                    <div className="hero-bullets-card">
+                      <ul className="hero-bullets-list">
+                        {slide.bullets.map((bullet, bIdx) => (
+                          <li key={bIdx} className="hero-bullet-item">
+                            <span className="hero-bullet-icon">
+                              <i className="bi bi-check-lg"></i>
+                            </span>
+                            <span>{bullet}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           ))}
