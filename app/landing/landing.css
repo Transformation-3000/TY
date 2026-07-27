@@ -300,6 +300,10 @@ section[id] {
   max-width: 740px;
 }
 
+.hero-slide-left {
+  transform: translateY(40px);
+}
+
 .hero-slide-left .hero-btns {
   justify-content: flex-start;
 }
