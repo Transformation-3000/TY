@@ -166,22 +166,22 @@ section[id] {
 }
 
 .hero-indicator-dot {
-  width: 14px;
-  height: 14px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
-  border: 2px solid transparent;
+  background: rgba(255, 255, 255, 0.4);
+  border: 2px solid rgba(255, 255, 255, 0.7);
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .hero-indicator-dot.active {
-  background: #ffffff;
-  width: 16px;
-  height: 16px;
-  border: 3px solid #7FD049;
-  box-shadow: 0 0 16px #7FD049, 0 0 8px rgba(255, 255, 255, 0.9);
-  transform: scale(1.15);
+  background: #7FD049;
+  width: 24px;
+  height: 24px;
+  border: 3px solid #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  transform: scale(1.1);
 }
 
 .hero-slider-arrow {
