@@ -638,9 +638,9 @@ export default function LandingPage() {
               key={slide.id}
               className={`hero-text-slide ${index === currentHeroSlide ? 'active' : ''}`}
             >
+              <h1 className="hero-slide-headline">{slide.title}</h1>
               <div className="hero-slide-grid">
                 <div className="hero-slide-left">
-                  <h1>{slide.title}</h1>
                   <p>{slide.description}</p>
                   <div className="hero-btns">
                     <Link href="#konzept" className="btn-secondary-large">KONZEPT ENTDECKEN</Link>
