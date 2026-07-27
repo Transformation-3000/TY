@@ -660,7 +660,7 @@ export default function LandingPage() {
                       className="btn-secondary-large"
                       onClick={(e) => scrollToSection('features', e)}
                     >
-                      KONZEPT ENTDECKEN
+                      PROGRAMM ENTDECKEN
                     </a>
                   </div>
                 </div>
