@@ -407,9 +407,9 @@ section[id] {
 @media (max-width: 992px) {
   .hero {
     height: auto !important;
-    min-height: auto !important;
+    min-height: 100vh !important;
     padding-top: 90px !important;
-    padding-bottom: 50px !important; /* Bild mobil 50px unterhalb der Elemente aufhören lassen */
+    padding-bottom: 50px !important;
     position: relative !important;
     overflow: hidden !important;
   }
@@ -423,9 +423,9 @@ section[id] {
   }
 
   .hero-slide img {
-    object-fit: contain !important;
-    object-position: center top !important;
-    transform: scale(1.28) translateY(-15px) !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+    transform: none !important;
     width: 100% !important;
     height: 100% !important;
   }
