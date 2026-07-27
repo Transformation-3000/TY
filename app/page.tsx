@@ -85,7 +85,7 @@ const heroSlides = [
     id: 2, 
     image: '/images/hero_option_2.png', 
     alt: 'Youthful Vitality',
-    title: 'Vitalität, die du spürst. Ausstrahlung, die man sieht.',
+    title: 'Vitalität, die du spürst.\nAusstrahlung, die man sieht.',
     description: 'Jugendliche Frische, ein gutes Körpergefühl, sichtbare Vitalität und das Gefühl, die eigene Entwicklung aktiv beeinflussen zu können.',
     bullets: [
       { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/hero_icon_performance_3d_v2.png' },
@@ -650,7 +650,14 @@ export default function LandingPage() {
               key={slide.id}
               className={`hero-text-slide ${index === currentHeroSlide ? 'active' : ''}`}
             >
-              <h1 className="hero-slide-headline">{slide.title}</h1>
+              <h1 className="hero-slide-headline">
+                {slide.title.split('\n').map((line: string, i: number) => (
+                  <React.Fragment key={i}>
+                    {i > 0 && <br />}
+                    {line}
+                  </React.Fragment>
+                ))}
+              </h1>
               <div className="hero-slide-grid">
                 <div className="hero-slide-left">
                   <p>{slide.description}</p>
