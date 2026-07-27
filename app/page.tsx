@@ -101,11 +101,11 @@ export default function LandingPage() {
   const [activeCyclePlan, setActiveCyclePlan] = useState<'starter' | 'premium' | 'platin'>('premium');
   const [showOfferModal, setShowOfferModal] = useState(false);
 
-  // Auto-slide hero background every 7 seconds
+  // Auto-slide hero background every 9 seconds
   useEffect(() => {
     const heroTimer = setInterval(() => {
       setCurrentHeroSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 7000);
+    }, 9000);
     return () => clearInterval(heroTimer);
   }, []);
 
