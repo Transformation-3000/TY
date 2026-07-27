@@ -116,13 +116,6 @@ export default function LandingPage() {
   const [activeCyclePlan, setActiveCyclePlan] = useState<'starter' | 'premium' | 'platin'>('premium');
   const [showOfferModal, setShowOfferModal] = useState(false);
 
-  // Auto-slide hero background every 20 seconds
-  useEffect(() => {
-    const heroTimer = setInterval(() => {
-      setCurrentHeroSlide((prev) => (prev + 1) % heroSlides.length);
-    }, 20000);
-    return () => clearInterval(heroTimer);
-  }, []);
 
   const currentCycleColor = {
     starter: '#006ea7',
