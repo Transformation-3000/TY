@@ -88,9 +88,9 @@ const heroSlides = [
     title: 'Vitalität, die du spürst.\nAusstrahlung, die man sieht.',
     description: 'Jugendliche Frische, ein gutes Körpergefühl, sichtbare Vitalität und das Gefühl, die eigene Entwicklung aktiv beeinflussen zu können.',
     bullets: [
-      { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/hero_icon_performance_3d_v2.png' },
-      { text: 'Nutze wissenschaftliche Erkenntnisse, um dein biologisches Alter zu senken', icon: '/images/hero_icon_defense_3d_v2.png' },
-      { text: 'Erlebe Fortschritte, die du spürst und sehen kannst', icon: '/images/hero_icon_resilience_3d_v2.png' }
+      { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/slider2_icon1_body_pulse.svg' },
+      { text: 'Nutze wissenschaftliche Erkenntnisse, um dein biologisches Alter zu senken', icon: '/images/slider2_icon2_dna_rejuvenation.svg' },
+      { text: 'Erlebe Fortschritte, die du spürst und sehen kannst', icon: '/images/slider2_icon3_radiant_glow.svg' }
     ]
   },
   { 
@@ -100,9 +100,9 @@ const heroSlides = [
     title: 'Bring deinen Körper in Balance',
     description: 'Ein neuer Blick auf deine Situation, ganzheitliche Handlungsmöglichkeiten und die Zuversicht, deinen Weg spürbar verbessern zu können.',
     bullets: [
-      { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/hero_icon_performance_3d_v2.png' },
-      { text: 'Setze dort an, wo Veränderungen am meisten bewirken', icon: '/images/icon_mittel_3d.png' },
-      { text: 'Entwickle neue Hoffnung auf mehr Lebensqualität', icon: '/images/hero_icon_resilience_3d_v2.png' }
+      { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/slider3_icon1_vital_scanner.svg' },
+      { text: 'Setze dort an, wo Veränderungen am meisten bewirken', icon: '/images/slider3_icon2_impact_target.svg' },
+      { text: 'Entwickle neue Hoffnung auf mehr Lebensqualität', icon: '/images/slider3_icon3_hope_rise.svg' }
     ]
   },
 ];

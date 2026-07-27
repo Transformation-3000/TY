@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <radialGradient id="glow2_3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9eff5c" stop-opacity="0.9"/>
+      <stop offset="60%" stop-color="#7FD049" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#7FD049" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="petalGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#7FD049" stop-opacity="0.5"/>
+      <stop offset="60%" stop-color="#9eff5c" stop-opacity="0.9"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+    <filter id="shadow2_3">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#7FD049" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Sunburst Glow -->
+  <circle cx="60" cy="60" r="46" fill="url(#glow2_3)"/>
+
+  <!-- Sun Rays -->
+  <g stroke="#9eff5c" stroke-width="2" stroke-linecap="round" opacity="0.7">
+    <line x1="60" y1="16" x2="60" y2="24"/>
+    <line x1="60" y1="96" x2="60" y2="104"/>
+    <line x1="16" y1="60" x2="24" y2="60"/>
+    <line x1="96" y1="60" x2="104" y2="60"/>
+    <line x1="29" y1="29" x2="35" y2="35"/>
+    <line x1="85" y1="85" x2="91" y2="91"/>
+    <line x1="29" y1="91" x2="35" y2="85"/>
+    <line x1="85" y1="35" x2="91" y2="29"/>
+  </g>
+
+  <!-- 3D Lotus Petals -->
+  <path d="M60 28 C45 45 45 65 60 82 C75 65 75 45 60 28 Z" fill="url(#petalGrad)" stroke="#ffffff" stroke-width="1.5" filter="url(#shadow2_3)"/>
+  <path d="M60 40 C38 48 34 68 52 80 C62 70 64 52 60 40 Z" fill="url(#petalGrad)" stroke="#ffffff" stroke-width="1.2" opacity="0.85"/>
+  <path d="M60 40 C82 48 86 68 68 80 C58 70 56 52 60 40 Z" fill="url(#petalGrad)" stroke="#ffffff" stroke-width="1.2" opacity="0.85"/>
+
+  <!-- Center Diamond Crystal -->
+  <polygon points="60,48 68,60 60,72 52,60" fill="#ffffff" stroke="#9eff5c" stroke-width="1.5"/>
+</svg>

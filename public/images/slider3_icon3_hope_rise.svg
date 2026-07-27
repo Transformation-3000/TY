@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <radialGradient id="glow3_3" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9eff5c" stop-opacity="0.9"/>
+      <stop offset="70%" stop-color="#38bdf8" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#7FD049" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="hopeGrad" x1="0%" y1="100%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#006EA7"/>
+      <stop offset="50%" stop-color="#7FD049"/>
+      <stop offset="100%" stop-color="#ffffff"/>
+    </linearGradient>
+    <filter id="shadow3_3">
+      <feDropShadow dx="0" dy="5" stdDeviation="6" flood-color="#38bdf8" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+
+  <circle cx="60" cy="60" r="45" fill="url(#glow3_3)"/>
+
+  <!-- Rising Arch Wings -->
+  <path d="M24 70 C36 40 50 30 60 55 C70 30 84 40 96 70 C76 80 44 80 24 70 Z" fill="url(#hopeGrad)" stroke="#ffffff" stroke-width="1.8" filter="url(#shadow3_3)"/>
+
+  <!-- Central Rising Sun / Hope Core -->
+  <circle cx="60" cy="42" r="14" fill="#9eff5c" stroke="#ffffff" stroke-width="2"/>
+  <circle cx="60" cy="42" r="7" fill="#ffffff"/>
+
+  <!-- Horizon Base Line -->
+  <line x1="26" y1="78" x2="94" y2="78" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+</svg>

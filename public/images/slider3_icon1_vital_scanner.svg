@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <radialGradient id="glow3_1" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#9eff5c" stop-opacity="0.9"/>
+      <stop offset="70%" stop-color="#7FD049" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#7FD049" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="ringGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="50%" stop-color="#9eff5c"/>
+      <stop offset="100%" stop-color="#38bdf8"/>
+    </linearGradient>
+    <filter id="shadow3_1">
+      <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#7FD049" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <circle cx="60" cy="60" r="44" fill="url(#glow3_1)"/>
+
+  <!-- Concentric Scan Rings -->
+  <circle cx="60" cy="60" r="38" fill="none" stroke="url(#ringGrad)" stroke-width="2.5" stroke-dasharray="8 4" filter="url(#shadow3_1)"/>
+  <circle cx="60" cy="60" r="28" fill="none" stroke="#ffffff" stroke-width="2"/>
+
+  <!-- Central Glass Core -->
+  <circle cx="60" cy="60" r="18" fill="rgba(15, 23, 42, 0.7)" stroke="#9eff5c" stroke-width="2"/>
+  <circle cx="60" cy="60" r="10" fill="#9eff5c"/>
+  <circle cx="57" cy="57" r="4" fill="#ffffff"/>
+
+  <!-- Crosshair Nodes -->
+  <circle cx="60" cy="22" r="3" fill="#ffffff"/>
+  <circle cx="60" cy="98" r="3" fill="#ffffff"/>
+  <circle cx="22" cy="60" r="3" fill="#ffffff"/>
+  <circle cx="98" cy="60" r="3" fill="#ffffff"/>
+</svg>

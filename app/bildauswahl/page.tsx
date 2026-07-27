@@ -52,7 +52,7 @@ export default function BildauswahlPage() {
           </Link>
         </div>
 
-        {/* Dedicated CTA Button Text Proposals */}
+        {/* Dedicated Brand-New 3D Icons for Slider 2 and Slider 3 */}
         <div style={{
           background: 'linear-gradient(135deg, rgba(127, 208, 73, 0.2) 0%, rgba(0, 110, 167, 0.25) 100%)',
           border: '2px solid #7FD049',
@@ -61,55 +61,85 @@ export default function BildauswahlPage() {
           marginBottom: '3rem'
         }}>
           <h2 style={{ fontSize: '1.7rem', fontWeight: 800, color: '#7FD049', marginTop: 0, marginBottom: '0.5rem' }}>
-            🚀 Passende CTA-Button Vorschläge für Slider 2 & Slider 3
+            🎨 6 Brandneue 3D-Glassmorphism Icons für Slider 2 & Slider 3 (Transparenter Hintergrund)
           </h2>
-          <p style={{ color: '#cbd5e1', fontSize: '1.05rem', marginBottom: '1.5rem' }}>
-            Hier sind maßgeschneiderte Button-Text-Alternativen, die perfekt zu den Aussagen von Slider 2 und Slider 3 passen:
+          <p style={{ color: '#cbd5e1', fontSize: '1.05rem', marginBottom: '1.8rem' }}>
+            Speziell designt für die neuen Inhalte – mit transparentem Hintergrund und glowing #7FD049 Akzenten:
           </p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.8rem' }}>
             {/* Slider 2 */}
-            <div style={{ background: 'rgba(15, 23, 42, 0.85)', border: '1px solid rgba(127, 208, 73, 0.4)', borderRadius: '16px', padding: '1.4rem' }}>
-              <h4 style={{ margin: '0 0 0.3rem 0', fontSize: '1.1rem', color: '#7FD049' }}>✨ Slider 2: „Vitalität & Ausstrahlung“</h4>
-              <p style={{ margin: '0 0 1rem 0', fontSize: '0.85rem', color: '#94a3b8' }}>Thema: Jugendliche Frische, Wohlbefinden & Bio-Age</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                <div style={{ background: 'rgba(127, 208, 73, 0.15)', border: '1px solid #7FD049', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#7FD049', fontSize: '0.9rem' }}>
-                  1. VITALITÄT STEIGERN ⭐ (Empfohlen)
+            <div style={{ background: 'rgba(15, 23, 42, 0.85)', border: '1px solid rgba(127, 208, 73, 0.4)', borderRadius: '16px', padding: '1.5rem' }}>
+              <h4 style={{ margin: '0 0 0.4rem 0', fontSize: '1.2rem', color: '#7FD049' }}>✨ Slider 2: „Vitalität, die du spürst. Ausstrahlung, die man sieht.“</h4>
+              <p style={{ margin: '0 0 1.2rem 0', fontSize: '0.88rem', color: '#94a3b8' }}>Neu zugeordnete 3D-Icons mit transparentem Hintergrund:</p>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(127, 208, 73, 0.3)', borderLeft: '4px solid #7FD049', borderRadius: '12px', padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ width: '48px', height: '48px', position: 'relative', flexShrink: 0 }}>
+                    <Image src="/images/slider2_icon1_body_pulse.svg" alt="3D Icon" fill style={{ objectFit: 'contain' }} />
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.9rem', color: '#ffffff', fontWeight: 600, display: 'block', marginBottom: '0.2rem' }}>Verstehe besser, was dein Körper aktuell braucht</span>
+                    <code style={{ fontSize: '0.75rem', color: '#7FD049' }}>slider2_icon1_body_pulse.svg</code>
+                  </div>
                 </div>
-                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
-                  2. JUGENDLICHE FRISCHE ENTDECKEN
+
+                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(127, 208, 73, 0.3)', borderLeft: '4px solid #7FD049', borderRadius: '12px', padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ width: '48px', height: '48px', position: 'relative', flexShrink: 0 }}>
+                    <Image src="/images/slider2_icon2_dna_rejuvenation.svg" alt="3D Icon" fill style={{ objectFit: 'contain' }} />
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.9rem', color: '#ffffff', fontWeight: 600, display: 'block', marginBottom: '0.2rem' }}>Nutze wissenschaftliche Erkenntnisse, um dein biologisches Alter zu senken</span>
+                    <code style={{ fontSize: '0.75rem', color: '#7FD049' }}>slider2_icon2_dna_rejuvenation.svg</code>
+                  </div>
                 </div>
-                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
-                  3. MEINE VITALITÄT AKTIVIEREN
-                </div>
-                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
-                  4. BIOLOGISCHES ALTER VERJÜNGEN
-                </div>
-                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
-                  5. AUSSTRAHLUNG OPTIMIEREN
+
+                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(127, 208, 73, 0.3)', borderLeft: '4px solid #7FD049', borderRadius: '12px', padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ width: '48px', height: '48px', position: 'relative', flexShrink: 0 }}>
+                    <Image src="/images/slider2_icon3_radiant_glow.svg" alt="3D Icon" fill style={{ objectFit: 'contain' }} />
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.9rem', color: '#ffffff', fontWeight: 600, display: 'block', marginBottom: '0.2rem' }}>Erlebe Fortschritte, die du spürst und sehen kannst</span>
+                    <code style={{ fontSize: '0.75rem', color: '#7FD049' }}>slider2_icon3_radiant_glow.svg</code>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* Slider 3 */}
-            <div style={{ background: 'rgba(15, 23, 42, 0.85)', border: '1px solid rgba(0, 110, 167, 0.5)', borderRadius: '16px', padding: '1.4rem' }}>
-              <h4 style={{ margin: '0 0 0.3rem 0', fontSize: '1.1rem', color: '#38bdf8' }}>🧘 Slider 3: „Körper in Balance“</h4>
-              <p style={{ margin: '0 0 1rem 0', fontSize: '0.85rem', color: '#94a3b8' }}>Thema: Ganzheitliche Balance, Hoffnung & Lebensqualität</p>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
-                <div style={{ background: 'rgba(56, 189, 248, 0.15)', border: '1px solid #38bdf8', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#38bdf8', fontSize: '0.9rem' }}>
-                  1. KÖRPER IN BALANCE BRINGEN ⭐ (Empfohlen)
+            <div style={{ background: 'rgba(15, 23, 42, 0.85)', border: '1px solid rgba(56, 189, 248, 0.4)', borderRadius: '16px', padding: '1.5rem' }}>
+              <h4 style={{ margin: '0 0 0.4rem 0', fontSize: '1.2rem', color: '#38bdf8' }}>🧘 Slider 3: „Bring deinen Körper in Balance“</h4>
+              <p style={{ margin: '0 0 1.2rem 0', fontSize: '0.88rem', color: '#94a3b8' }}>Neu zugeordnete 3D-Icons (Gelber Stern entfernt):</p>
+              
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
+                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(56, 189, 248, 0.3)', borderLeft: '4px solid #38bdf8', borderRadius: '12px', padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ width: '48px', height: '48px', position: 'relative', flexShrink: 0 }}>
+                    <Image src="/images/slider3_icon1_vital_scanner.svg" alt="3D Icon" fill style={{ objectFit: 'contain' }} />
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.9rem', color: '#ffffff', fontWeight: 600, display: 'block', marginBottom: '0.2rem' }}>Verstehe besser, was dein Körper aktuell braucht</span>
+                    <code style={{ fontSize: '0.75rem', color: '#38bdf8' }}>slider3_icon1_vital_scanner.svg</code>
+                  </div>
                 </div>
-                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
-                  2. BALANCE JETZT STARTEN
+
+                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(56, 189, 248, 0.3)', borderLeft: '4px solid #38bdf8', borderRadius: '12px', padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ width: '48px', height: '48px', position: 'relative', flexShrink: 0 }}>
+                    <Image src="/images/slider3_icon2_impact_target.svg" alt="3D Icon" fill style={{ objectFit: 'contain' }} />
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.9rem', color: '#ffffff', fontWeight: 600, display: 'block', marginBottom: '0.2rem' }}>Setze dort an, wo Veränderungen am meisten bewirken</span>
+                    <code style={{ fontSize: '0.75rem', color: '#38bdf8' }}>slider3_icon2_impact_target.svg (Kein Stern!)</code>
+                  </div>
                 </div>
-                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
-                  3. MEINEN WEG VERBESSERN
-                </div>
-                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
-                  4. LEBENSQUALITÄT STEIGERN
-                </div>
-                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(255,255,255,0.1)', padding: '0.6rem 0.8rem', borderRadius: '8px', fontWeight: 700, color: '#ffffff', fontSize: '0.9rem' }}>
-                  5. DEINEN BALANCE-CHECK STARTEN
+
+                <div style={{ background: 'rgba(30, 41, 59, 0.7)', border: '1px solid rgba(56, 189, 248, 0.3)', borderLeft: '4px solid #38bdf8', borderRadius: '12px', padding: '0.8rem 1rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+                  <div style={{ width: '48px', height: '48px', position: 'relative', flexShrink: 0 }}>
+                    <Image src="/images/slider3_icon3_hope_rise.svg" alt="3D Icon" fill style={{ objectFit: 'contain' }} />
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '0.9rem', color: '#ffffff', fontWeight: 600, display: 'block', marginBottom: '0.2rem' }}>Entwickle neue Hoffnung auf mehr Lebensqualität</span>
+                    <code style={{ fontSize: '0.75rem', color: '#38bdf8' }}>slider3_icon3_hope_rise.svg</code>
+                  </div>
                 </div>
               </div>
             </div>
