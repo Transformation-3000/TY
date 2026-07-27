@@ -360,6 +360,10 @@ section[id] {
   max-width: 372px;
 }
 
+.slide-id-2 .hero-slide-right {
+  right: 30px !important;
+}
+
 .slide-img-2 img {
   object-position: 68% center !important;
 }
