@@ -316,7 +316,7 @@ section[id] {
   flex-direction: column;
   justify-content: center;
   align-self: center;
-  transform: none;
+  transform: translateY(110px);
 }
 
 .slide-id-1 .hero-btns {
@@ -442,6 +442,10 @@ section[id] {
     margin: 0 auto;
     width: 100% !important;
     max-width: 100% !important;
+  }
+
+  .slide-id-1 .hero-slide-left {
+    transform: none !important;
   }
 
   .hero-text-slide.active {
