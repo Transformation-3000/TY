@@ -95,7 +95,7 @@ const heroSlides = [
     id: 3, 
     image: '/images/slider3_clean_meditation.jpg', 
     alt: 'Bring deinen Körper in Balance',
-    title: 'Bring deinen Körper\nin Balance',
+    title: 'Bring deinen Körper\ndauerhaft in Balance',
     description: 'Ein neuer Blick auf deine Situation,\nganzheitliche Handlungsmöglichkeiten\nund deinen Weg spürbar verbessern.',
     bullets: [
       { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/slider3_icon1_vital_scanner.svg' },
