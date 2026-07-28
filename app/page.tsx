@@ -76,7 +76,6 @@ const heroSlides = [
     title: 'Bleibe auf deinem\nbesten Niveau.',
     description: 'Die neue Generation persönlicher Begleitung, die Wissenschaft und intelligente Datenauswertung verbindet – für Impulse, die dein Leben spürbar leistungsfähiger machen.',
     bullets: [
-      { text: 'Stärke die Faktoren, die dich dauerhaft leistungsfähig halten', icon: '/images/hero_icon_performance_3d_v2.png' },
       { text: 'Reduziere die Auswirkungen anhaltend hoher Belastung', icon: '/images/hero_icon_defense_3d_v2.png' },
       { text: 'Erlebe Fortschritte bei Energie, Konzentration & Resilienz', icon: '/images/hero_icon_resilience_3d_v2.png' }
     ]
