@@ -379,7 +379,8 @@ section[id] {
 
 .slide-id-2 .hero-slide-right {
   right: 30px !important;
-  top: calc(50% + 30px) !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
 }
 
 .slide-id-2 .hero-bullet-item {
