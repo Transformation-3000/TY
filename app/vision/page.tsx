@@ -291,7 +291,7 @@ export default function VisionPage() {
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '2.5rem' }}>
             <span style={{ display: 'inline-block', width: '5px', height: '32px', backgroundColor: '#4498ca', marginRight: '14px', borderRadius: '4px' }}></span>
             <h2 style={{ fontSize: '2.4rem', fontWeight: 400, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif', letterSpacing: '-0.02em' }}>
-              Auf einen Blick: <span style={{ fontWeight: 800 }}>Warum mit uns?</span>
+              Warum mit uns? <span style={{ fontWeight: 800 }}>4 Gründe</span>
             </h2>
           </div>
 
