@@ -299,6 +299,7 @@ export default function VisionPage() {
             gridTemplateColumns: 'repeat(4, 1fr)', 
             gap: '1.2rem' 
           }}>
+            {/* Card 1 */}
             <div style={{
               background: '#ffffff',
               borderRadius: '20px',
@@ -313,27 +314,24 @@ export default function VisionPage() {
               justifyContent: 'space-between'
             }}>
               <div>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.8rem', marginBottom: '1.2rem' }}>
-                  <div style={{
-                    width: '28px',
-                    height: '28px',
-                    minWidth: '28px',
-                    borderRadius: '50%',
-                    background: 'rgba(0, 110, 167, 0.1)',
-                    color: '#006ea7',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '0.85rem',
-                    fontWeight: 800,
-                    marginTop: '2px'
-                  }}>
-                    1
-                  </div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
-                    Du profitierst vom besten weltweit verfügbaren Wissen
-                  </h3>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: 'rgba(0, 110, 167, 0.1)',
+                  color: '#006ea7',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '0.9rem',
+                  fontWeight: 800,
+                  marginBottom: '1.2rem'
+                }}>
+                  1
                 </div>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  Du profitierst vom besten weltweit verfügbaren Wissen
+                </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
                 Neue Erkenntnisse werden fortlaufend ausgewertet und für dich nutzbar gemacht.
@@ -355,27 +353,24 @@ export default function VisionPage() {
               justifyContent: 'space-between'
             }}>
               <div>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.8rem', marginBottom: '1.2rem' }}>
-                  <div style={{
-                    width: '28px',
-                    height: '28px',
-                    minWidth: '28px',
-                    borderRadius: '50%',
-                    background: 'rgba(127, 208, 73, 0.2)',
-                    color: '#497c23',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '0.85rem',
-                    fontWeight: 800,
-                    marginTop: '2px'
-                  }}>
-                    2
-                  </div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
-                    Du wirst als ganzer Mensch verstanden
-                  </h3>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: 'rgba(127, 208, 73, 0.2)',
+                  color: '#497c23',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '0.9rem',
+                  fontWeight: 800,
+                  marginBottom: '1.2rem'
+                }}>
+                  2
                 </div>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  Du wirst als ganzer Mensch verstanden
+                </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
                 Die relevanten Zusammenhänge deines Lebensstils werden miteinander verbunden.
@@ -397,27 +392,24 @@ export default function VisionPage() {
               justifyContent: 'space-between'
             }}>
               <div>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.8rem', marginBottom: '1.2rem' }}>
-                  <div style={{
-                    width: '28px',
-                    height: '28px',
-                    minWidth: '28px',
-                    borderRadius: '50%',
-                    background: 'rgba(0, 110, 167, 0.1)',
-                    color: '#006ea7',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '0.85rem',
-                    fontWeight: 800,
-                    marginTop: '2px'
-                  }}>
-                    3
-                  </div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
-                    Du erkennst, was bei dir am meisten bewirken kann
-                  </h3>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: 'rgba(0, 110, 167, 0.1)',
+                  color: '#006ea7',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '0.9rem',
+                  fontWeight: 800,
+                  marginBottom: '1.2rem'
+                }}>
+                  3
                 </div>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  Du erkennst, was bei dir am meisten bewirken kann
+                </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
                 Persönliche Orientierung, die mit jedem Plattformbesuch genauer und relevanter wird.
@@ -439,27 +431,24 @@ export default function VisionPage() {
               justifyContent: 'space-between'
             }}>
               <div>
-                <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.8rem', marginBottom: '1.2rem' }}>
-                  <div style={{
-                    width: '28px',
-                    height: '28px',
-                    minWidth: '28px',
-                    borderRadius: '50%',
-                    background: 'rgba(127, 208, 73, 0.2)',
-                    color: '#497c23',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '0.85rem',
-                    fontWeight: 800,
-                    marginTop: '2px'
-                  }}>
-                    4
-                  </div>
-                  <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
-                    Du kommst Schritt für Schritt spürbar voran
-                  </h3>
+                <div style={{
+                  width: '32px',
+                  height: '32px',
+                  borderRadius: '50%',
+                  background: 'rgba(127, 208, 73, 0.2)',
+                  color: '#497c23',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '0.9rem',
+                  fontWeight: 800,
+                  marginBottom: '1.2rem'
+                }}>
+                  4
                 </div>
+                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  Du kommst Schritt für Schritt spürbar voran
+                </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
                 True Years macht aus Komplexität einfache Schritte – passend für deinen Alltag.
