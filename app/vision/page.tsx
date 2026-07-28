@@ -406,7 +406,7 @@ export default function VisionPage() {
                 </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
-                Statt allgemeiner Empfehlungen erhältst du persönliche Orientierung. Diese wird im Laufe der Zeit genauer und relevanter – jeder Plattformbesuch zahlt auf dein Entwicklungskonto auf.
+                Persönliche Orientierung, die mit jedem Plattformbesuch genauer und relevanter wird.
               </p>
             </div>
 
