@@ -288,16 +288,10 @@ export default function VisionPage() {
 
         {/* Section: Warum mit uns? */}
         <div style={{ padding: '2rem 2rem 5rem', maxWidth: '1200px', margin: '0 auto' }}>
-          <div className="section-header-modern" style={{ textAlign: 'left', marginBottom: '2.5rem' }}>
-            <h2 style={{ 
-              fontSize: '2.4rem', 
-              fontWeight: 800, 
-              color: '#0f172a', 
-              fontFamily: 'DM Sans, sans-serif',
-              letterSpacing: '-0.02em',
-              margin: 0
-            }}>
-              <span style={{ fontWeight: 400, color: '#475569' }}>Auf einen Blick:</span> Warum mit uns?
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '2.5rem' }}>
+            <span style={{ display: 'inline-block', width: '5px', height: '32px', backgroundColor: '#4498ca', marginRight: '14px', borderRadius: '4px' }}></span>
+            <h2 style={{ fontSize: '2.4rem', fontWeight: 400, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif', letterSpacing: '-0.02em' }}>
+              Auf einen Blick: <span style={{ fontWeight: 800 }}>Warum mit uns?</span>
             </h2>
           </div>
 
