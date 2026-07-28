@@ -447,6 +447,351 @@ export default function VisionPage() {
           </div>
         </div>
 
+        {/* ================= VARIANT A: Neo-Luxe Glassmorphism mit Gradient-Badges ================= */}
+        <div style={{ padding: '3rem 2rem 5rem', maxWidth: '1200px', margin: '0 auto', borderTop: '1px solid rgba(0, 110, 167, 0.1)', marginTop: '2rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+            <span style={{ display: 'inline-block', width: '5px', height: '32px', backgroundColor: '#006ea7', marginRight: '14px', borderRadius: '4px' }}></span>
+            <h2 style={{ fontSize: '2.4rem', fontWeight: 400, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif', letterSpacing: '-0.02em' }}>
+              Variante A: <span style={{ fontWeight: 800 }}>Neo-Luxe Glassmorphism (Heller Premium-Look)</span>
+            </h2>
+          </div>
+          <p style={{ color: '#64748b', fontSize: '1.05rem', marginBottom: '2.5rem', marginLeft: '19px' }}>
+            Clean, hell & extrem hochwertig – mit blauen & grünen Akzent-Rändern und schimmernden 3D-Gradient Zahlen-Badges.
+          </p>
+
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(4, 1fr)', 
+            gap: '1.2rem' 
+          }}>
+            {/* Card 1 */}
+            <div style={{
+              background: 'linear-gradient(160deg, #ffffff 0%, #f8fafc 100%)',
+              borderRadius: '24px',
+              padding: '2.2rem 1.8rem',
+              border: '1px solid rgba(0, 110, 167, 0.12)',
+              borderLeft: '5px solid #006ea7',
+              boxShadow: '0 12px 35px rgba(0, 110, 167, 0.06)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                <div style={{
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '16px',
+                  background: 'linear-gradient(135deg, #006ea7, #0284c7)',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.3rem',
+                  fontWeight: 800,
+                  marginBottom: '1.5rem',
+                  boxShadow: '0 8px 20px rgba(0, 110, 167, 0.25)'
+                }}>
+                  01
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  Du profitierst vom besten verfügbaren Wissen
+                </h3>
+              </div>
+              <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
+                Neue Erkenntnisse werden fortlaufend bewertet und für dich nutzbar gemacht.
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div style={{
+              background: 'linear-gradient(160deg, #ffffff 0%, #f8fafc 100%)',
+              borderRadius: '24px',
+              padding: '2.2rem 1.8rem',
+              border: '1px solid rgba(127, 208, 73, 0.2)',
+              borderLeft: '5px solid #7fd049',
+              boxShadow: '0 12px 35px rgba(127, 208, 73, 0.08)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                <div style={{
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '16px',
+                  background: 'linear-gradient(135deg, #7fd049, #5b9b29)',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.3rem',
+                  fontWeight: 800,
+                  marginBottom: '1.5rem',
+                  boxShadow: '0 8px 20px rgba(127, 208, 73, 0.3)'
+                }}>
+                  02
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  Du wirst als ganzer Mensch verstanden
+                </h3>
+              </div>
+              <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
+                Ziele, Lebensstil, Daten und Fortschritte werden dauerhaft miteinander verbunden.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div style={{
+              background: 'linear-gradient(160deg, #ffffff 0%, #f8fafc 100%)',
+              borderRadius: '24px',
+              padding: '2.2rem 1.8rem',
+              border: '1px solid rgba(0, 110, 167, 0.12)',
+              borderLeft: '5px solid #006ea7',
+              boxShadow: '0 12px 35px rgba(0, 110, 167, 0.06)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                <div style={{
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '16px',
+                  background: 'linear-gradient(135deg, #006ea7, #0284c7)',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.3rem',
+                  fontWeight: 800,
+                  marginBottom: '1.5rem',
+                  boxShadow: '0 8px 20px rgba(0, 110, 167, 0.25)'
+                }}>
+                  03
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  Du erkennst, was bei dir am meisten bewirken kann
+                </h3>
+              </div>
+              <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
+                Statt allgemeiner Empfehlungen erhältst du persönliche Orientierung.
+              </p>
+            </div>
+
+            {/* Card 4 */}
+            <div style={{
+              background: 'linear-gradient(160deg, #ffffff 0%, #f8fafc 100%)',
+              borderRadius: '24px',
+              padding: '2.2rem 1.8rem',
+              border: '1px solid rgba(127, 208, 73, 0.2)',
+              borderLeft: '5px solid #7fd049',
+              boxShadow: '0 12px 35px rgba(127, 208, 73, 0.08)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                <div style={{
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '16px',
+                  background: 'linear-gradient(135deg, #7fd049, #5b9b29)',
+                  color: '#ffffff',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.3rem',
+                  fontWeight: 800,
+                  marginBottom: '1.5rem',
+                  boxShadow: '0 8px 20px rgba(127, 208, 73, 0.3)'
+                }}>
+                  04
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  Du kommst Schritt für Schritt spürbar voran
+                </h3>
+              </div>
+              <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
+                True Years macht Veränderungen machbar und passend für deinen Alltag.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
+
+        {/* ================= VARIANT B: Dark Titanium Glass (Executive Edition) ================= */}
+        <div style={{ padding: '3rem 2rem 6rem', maxWidth: '1200px', margin: '0 auto', borderTop: '1px solid rgba(0, 110, 167, 0.1)', marginTop: '2rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+            <span style={{ display: 'inline-block', width: '5px', height: '32px', backgroundColor: '#38bdf8', marginRight: '14px', borderRadius: '4px' }}></span>
+            <h2 style={{ fontSize: '2.4rem', fontWeight: 400, color: '#0f172a', margin: 0, fontFamily: 'DM Sans, sans-serif', letterSpacing: '-0.02em' }}>
+              Variante B: <span style={{ fontWeight: 800 }}>Dark Titanium Glass (Executive Look)</span>
+            </h2>
+          </div>
+          <p style={{ color: '#64748b', fontSize: '1.05rem', marginBottom: '2.5rem', marginLeft: '19px' }}>
+            Dunkler Premium-Look im Stil der Hero-Slider – extrem edel mit leuchtenden Neon-Glow Badges.
+          </p>
+
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(4, 1fr)', 
+            gap: '1.2rem' 
+          }}>
+            {/* Card 1 */}
+            <div style={{
+              background: 'linear-gradient(145deg, #0f172a 0%, #1e293b 100%)',
+              borderRadius: '24px',
+              padding: '2.2rem 1.8rem',
+              border: '1px solid rgba(56, 189, 248, 0.25)',
+              boxShadow: '0 20px 40px rgba(15, 23, 42, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                <div style={{
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '16px',
+                  background: 'rgba(56, 189, 248, 0.15)',
+                  border: '1px solid rgba(56, 189, 248, 0.4)',
+                  color: '#38bdf8',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.3rem',
+                  fontWeight: 800,
+                  marginBottom: '1.5rem',
+                  boxShadow: '0 0 20px rgba(56, 189, 248, 0.3)'
+                }}>
+                  01
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#f8fafc', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  Du profitierst vom besten verfügbaren Wissen
+                </h3>
+              </div>
+              <p style={{ fontSize: '1.02rem', color: '#94a3b8', lineHeight: '1.6', margin: 0 }}>
+                Neue Erkenntnisse werden fortlaufend bewertet und für dich nutzbar gemacht.
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div style={{
+              background: 'linear-gradient(145deg, #0f172a 0%, #1e293b 100%)',
+              borderRadius: '24px',
+              padding: '2.2rem 1.8rem',
+              border: '1px solid rgba(127, 208, 73, 0.25)',
+              boxShadow: '0 20px 40px rgba(15, 23, 42, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                <div style={{
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '16px',
+                  background: 'rgba(127, 208, 73, 0.15)',
+                  border: '1px solid rgba(127, 208, 73, 0.4)',
+                  color: '#7fd049',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.3rem',
+                  fontWeight: 800,
+                  marginBottom: '1.5rem',
+                  boxShadow: '0 0 20px rgba(127, 208, 73, 0.3)'
+                }}>
+                  02
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#f8fafc', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  Du wirst als ganzer Mensch verstanden
+                </h3>
+              </div>
+              <p style={{ fontSize: '1.02rem', color: '#94a3b8', lineHeight: '1.6', margin: 0 }}>
+                Ziele, Lebensstil, Daten und Fortschritte werden dauerhaft miteinander verbunden.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div style={{
+              background: 'linear-gradient(145deg, #0f172a 0%, #1e293b 100%)',
+              borderRadius: '24px',
+              padding: '2.2rem 1.8rem',
+              border: '1px solid rgba(56, 189, 248, 0.25)',
+              boxShadow: '0 20px 40px rgba(15, 23, 42, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                <div style={{
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '16px',
+                  background: 'rgba(56, 189, 248, 0.15)',
+                  border: '1px solid rgba(56, 189, 248, 0.4)',
+                  color: '#38bdf8',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.3rem',
+                  fontWeight: 800,
+                  marginBottom: '1.5rem',
+                  boxShadow: '0 0 20px rgba(56, 189, 248, 0.3)'
+                }}>
+                  03
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#f8fafc', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  Du erkennst, was bei dir am meisten bewirken kann
+                </h3>
+              </div>
+              <p style={{ fontSize: '1.02rem', color: '#94a3b8', lineHeight: '1.6', margin: 0 }}>
+                Statt allgemeiner Empfehlungen erhältst du persönliche Orientierung.
+              </p>
+            </div>
+
+            {/* Card 4 */}
+            <div style={{
+              background: 'linear-gradient(145deg, #0f172a 0%, #1e293b 100%)',
+              borderRadius: '24px',
+              padding: '2.2rem 1.8rem',
+              border: '1px solid rgba(127, 208, 73, 0.25)',
+              boxShadow: '0 20px 40px rgba(15, 23, 42, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)',
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between'
+            }}>
+              <div>
+                <div style={{
+                  width: '52px',
+                  height: '52px',
+                  borderRadius: '16px',
+                  background: 'rgba(127, 208, 73, 0.15)',
+                  border: '1px solid rgba(127, 208, 73, 0.4)',
+                  color: '#7fd049',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1.3rem',
+                  fontWeight: 800,
+                  marginBottom: '1.5rem',
+                  boxShadow: '0 0 20px rgba(127, 208, 73, 0.3)'
+                }}>
+                  04
+                </div>
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#f8fafc', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  Du kommst Schritt für Schritt spürbar voran
+                </h3>
+              </div>
+              <p style={{ fontSize: '1.02rem', color: '#94a3b8', lineHeight: '1.6', margin: 0 }}>
+                True Years macht Veränderungen machbar und passend für deinen Alltag.
+              </p>
+            </div>
+
+          </div>
+        </div>
+
 
 
       </main>
