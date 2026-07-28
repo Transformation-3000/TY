@@ -315,17 +315,19 @@ export default function VisionPage() {
             }}>
               <div>
                 <div style={{
-                  display: 'inline-block',
-                  padding: '0.35rem 0.85rem',
-                  borderRadius: '100px',
-                  background: 'rgba(0, 110, 167, 0.08)',
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '50%',
+                  background: 'rgba(0, 110, 167, 0.1)',
                   color: '#006ea7',
-                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1rem',
                   fontWeight: 800,
-                  letterSpacing: '0.05em',
                   marginBottom: '1.4rem'
                 }}>
-                  GRUND 01
+                  1
                 </div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
                   Du profitierst vom besten weltweit verfügbaren Wissen
@@ -352,17 +354,19 @@ export default function VisionPage() {
             }}>
               <div>
                 <div style={{
-                  display: 'inline-block',
-                  padding: '0.35rem 0.85rem',
-                  borderRadius: '100px',
-                  background: 'rgba(127, 208, 73, 0.15)',
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '50%',
+                  background: 'rgba(127, 208, 73, 0.2)',
                   color: '#497c23',
-                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1rem',
                   fontWeight: 800,
-                  letterSpacing: '0.05em',
                   marginBottom: '1.4rem'
                 }}>
-                  GRUND 02
+                  2
                 </div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
                   Du wirst als ganzer Mensch verstanden
@@ -389,17 +393,19 @@ export default function VisionPage() {
             }}>
               <div>
                 <div style={{
-                  display: 'inline-block',
-                  padding: '0.35rem 0.85rem',
-                  borderRadius: '100px',
-                  background: 'rgba(0, 110, 167, 0.08)',
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '50%',
+                  background: 'rgba(0, 110, 167, 0.1)',
                   color: '#006ea7',
-                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1rem',
                   fontWeight: 800,
-                  letterSpacing: '0.05em',
                   marginBottom: '1.4rem'
                 }}>
-                  GRUND 03
+                  3
                 </div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
                   Du erkennst, was bei dir am meisten bewirken kann
@@ -426,17 +432,19 @@ export default function VisionPage() {
             }}>
               <div>
                 <div style={{
-                  display: 'inline-block',
-                  padding: '0.35rem 0.85rem',
-                  borderRadius: '100px',
-                  background: 'rgba(127, 208, 73, 0.15)',
+                  width: '38px',
+                  height: '38px',
+                  borderRadius: '50%',
+                  background: 'rgba(127, 208, 73, 0.2)',
                   color: '#497c23',
-                  fontSize: '0.85rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: '1rem',
                   fontWeight: 800,
-                  letterSpacing: '0.05em',
                   marginBottom: '1.4rem'
                 }}>
-                  GRUND 04
+                  4
                 </div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
                   Du kommst Schritt für Schritt spürbar voran
