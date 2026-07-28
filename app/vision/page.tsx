@@ -299,7 +299,6 @@ export default function VisionPage() {
             gridTemplateColumns: 'repeat(4, 1fr)', 
             gap: '1.2rem' 
           }}>
-            {/* Card 1 */}
             <div style={{
               background: '#ffffff',
               borderRadius: '20px',
