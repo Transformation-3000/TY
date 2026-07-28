@@ -347,7 +347,7 @@ section[id] {
 
 /* Slider 1 Specific Customizations */
 .slide-id-1 .hero-slide-left {
-  transform: translateY(10px);
+  transform: translateY(20px);
 }
 
 .slide-id-1 .hero-slide-right {
