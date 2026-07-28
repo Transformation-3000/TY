@@ -328,10 +328,10 @@ export default function VisionPage() {
               }}>
                 01
               </div>
-              <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.4' }}>
+              <h3 style={{ fontSize: '1.21rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.4' }}>
                 Du profitierst vom besten verfügbaren Wissen
               </h3>
-              <p style={{ fontSize: '1.15rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
+              <p style={{ fontSize: '1.01rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
                 Neue Erkenntnisse werden fortlaufend bewertet und für dich nutzbar gemacht.
               </p>
             </div>
@@ -364,10 +364,10 @@ export default function VisionPage() {
               }}>
                 02
               </div>
-              <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.4' }}>
+              <h3 style={{ fontSize: '1.21rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.4' }}>
                 Du wirst als ganzer Mensch verstanden
               </h3>
-              <p style={{ fontSize: '1.15rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
+              <p style={{ fontSize: '1.01rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
                 Ziele, Lebensstil, Daten und Fortschritte werden dauerhaft miteinander verbunden.
               </p>
             </div>
@@ -400,10 +400,10 @@ export default function VisionPage() {
               }}>
                 03
               </div>
-              <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.4' }}>
+              <h3 style={{ fontSize: '1.21rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.4' }}>
                 Du erkennst, was bei dir am meisten bewirken kann
               </h3>
-              <p style={{ fontSize: '1.15rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
+              <p style={{ fontSize: '1.01rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
                 Statt allgemeiner Empfehlungen erhältst du persönliche Orientierung.
               </p>
             </div>
@@ -436,10 +436,10 @@ export default function VisionPage() {
               }}>
                 04
               </div>
-              <h3 style={{ fontSize: '1.35rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.4' }}>
+              <h3 style={{ fontSize: '1.21rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.4' }}>
                 Du kommst Schritt für Schritt spürbar voran
               </h3>
-              <p style={{ fontSize: '1.15rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
+              <p style={{ fontSize: '1.01rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
                 True Years macht Veränderungen machbar und passend für deinen Alltag.
               </p>
             </div>
