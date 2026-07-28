@@ -314,7 +314,7 @@ export default function VisionPage() {
             }}>
               <div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '1.2rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
-                  1. Du profitierst vom besten weltweit verfügbaren Wissen
+                  Du profitierst vom besten weltweit verfügbaren Wissen
                 </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
@@ -338,7 +338,7 @@ export default function VisionPage() {
             }}>
               <div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '1.2rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
-                  2. Du wirst als ganzer Mensch verstanden
+                  Du wirst als ganzer Mensch verstanden
                 </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
@@ -362,7 +362,7 @@ export default function VisionPage() {
             }}>
               <div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '1.2rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
-                  3. Du erkennst, was bei dir am meisten bewirken kann
+                  Du erkennst, was bei dir am meisten bewirken kann
                 </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
@@ -386,7 +386,7 @@ export default function VisionPage() {
             }}>
               <div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '1.2rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
-                  4. Du kommst Schritt für Schritt spürbar voran
+                  Du kommst Schritt für Schritt spürbar voran
                 </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
