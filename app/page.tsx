@@ -98,8 +98,7 @@ const heroSlides = [
     title: 'Bring deinen Körper\ndauerhaft in Balance',
     description: 'Ein neuer Blick auf deine Situation,\nganzheitliche Handlungsmöglichkeiten\nund deinen Weg spürbar verbessern.',
     bullets: [
-      { text: 'Verstehe besser, was dein Körper aktuell braucht', icon: '/images/slider3_icon1_vital_scanner.svg' },
-      { text: 'Setze dort an, wo Veränderungen am meisten bewirken', icon: '/images/slider3_icon2_impact_target.svg' },
+      { text: 'Verstehe, was dein Körper braucht – und wo du am meisten verändern kannst', icon: '/images/slider3_icon1_vital_scanner.svg' },
       { text: 'Erlebe Schritt für Schritt spürbare Verbesserungen', icon: '/images/slider3_icon3_life_quality.svg' }
     ]
   },

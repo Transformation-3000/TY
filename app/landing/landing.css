@@ -408,6 +408,8 @@ section[id] {
 
 .slide-id-3 .hero-slide-right {
   right: 5% !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
 }
 
 .slide-img-3 img {
