@@ -297,7 +297,7 @@ export default function VisionPage() {
               letterSpacing: '-0.02em',
               margin: 0
             }}>
-              <span style={{ fontWeight: 400, color: '#475569' }}>|</span> Warum mit uns?
+              <span style={{ fontWeight: 400, color: '#475569' }}>Auf einen Blick:</span> Warum mit uns?
             </h2>
           </div>
 
