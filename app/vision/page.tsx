@@ -299,7 +299,6 @@ export default function VisionPage() {
             gridTemplateColumns: 'repeat(4, 1fr)', 
             gap: '1.2rem' 
           }}>
-            {/* Card 1 */}
             <div style={{
               background: '#ffffff',
               borderRadius: '20px',
@@ -315,15 +314,15 @@ export default function VisionPage() {
             }}>
               <div>
                 <div style={{
-                  width: '32px',
-                  height: '32px',
+                  width: '40px',
+                  height: '40px',
                   borderRadius: '50%',
                   background: 'rgba(0, 110, 167, 0.1)',
                   color: '#006ea7',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '0.9rem',
+                  fontSize: '1.05rem',
                   fontWeight: 800,
                   marginBottom: '1.2rem'
                 }}>
@@ -354,15 +353,15 @@ export default function VisionPage() {
             }}>
               <div>
                 <div style={{
-                  width: '32px',
-                  height: '32px',
+                  width: '40px',
+                  height: '40px',
                   borderRadius: '50%',
                   background: 'rgba(127, 208, 73, 0.2)',
                   color: '#497c23',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '0.9rem',
+                  fontSize: '1.05rem',
                   fontWeight: 800,
                   marginBottom: '1.2rem'
                 }}>
@@ -393,15 +392,15 @@ export default function VisionPage() {
             }}>
               <div>
                 <div style={{
-                  width: '32px',
-                  height: '32px',
+                  width: '40px',
+                  height: '40px',
                   borderRadius: '50%',
                   background: 'rgba(0, 110, 167, 0.1)',
                   color: '#006ea7',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '0.9rem',
+                  fontSize: '1.05rem',
                   fontWeight: 800,
                   marginBottom: '1.2rem'
                 }}>
@@ -432,15 +431,15 @@ export default function VisionPage() {
             }}>
               <div>
                 <div style={{
-                  width: '32px',
-                  height: '32px',
+                  width: '40px',
+                  height: '40px',
                   borderRadius: '50%',
                   background: 'rgba(127, 208, 73, 0.2)',
                   color: '#497c23',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  fontSize: '0.9rem',
+                  fontSize: '1.05rem',
                   fontWeight: 800,
                   marginBottom: '1.2rem'
                 }}>
