@@ -328,11 +328,11 @@ export default function VisionPage() {
                   GRUND 01
                 </div>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
-                  Du profitierst vom besten verfügbaren Wissen
+                  Du profitierst vom besten weltweit verfügbaren Wissen
                 </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
-                Neue Erkenntnisse werden fortlaufend bewertet und für dich nutzbar gemacht.
+                Neue Erkenntnisse werden fortlaufend ausgewertet und für dich nutzbar gemacht.
               </p>
             </div>
 
@@ -369,7 +369,7 @@ export default function VisionPage() {
                 </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
-                Ziele, Lebensstil, Daten und Fortschritte werden dauerhaft miteinander verbunden.
+                True Years verbindet die relevanten Zusammenhänge deines Lebensstils - Ziele, Daten und Fortschritte werden dauerhaft miteinander verbunden.
               </p>
             </div>
 
@@ -406,7 +406,7 @@ export default function VisionPage() {
                 </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
-                Statt allgemeiner Empfehlungen erhältst du persönliche Orientierung.
+                Statt allgemeiner Empfehlungen erhältst du persönliche Orientierung. Diese wird im Laufe der Zeit genauer und relevanter – jeder Plattformbesuch zahlt auf dein Entwicklungskonto auf.
               </p>
             </div>
 
@@ -443,7 +443,7 @@ export default function VisionPage() {
                 </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
-                True Years macht Veränderungen machbar und passend für deinen Alltag.
+                True Years macht aus Komplexität einfache Schritte – passend für deinen Alltag.
               </p>
             </div>
 
