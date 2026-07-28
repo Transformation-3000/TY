@@ -346,6 +346,10 @@ section[id] {
 }
 
 /* Slider 1 Specific Customizations */
+.slide-id-1 .hero-slide-left {
+  transform: translateY(0px);
+}
+
 .slide-id-1 .hero-slide-right {
   right: 5% !important;
   top: 50% !important;
