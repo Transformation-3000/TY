@@ -313,23 +313,8 @@ export default function VisionPage() {
               justifyContent: 'space-between'
             }}>
               <div>
-                <div style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
-                  background: 'rgba(0, 110, 167, 0.1)',
-                  color: '#006ea7',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1.05rem',
-                  fontWeight: 800,
-                  marginBottom: '1.2rem'
-                }}>
-                  1
-                </div>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
-                  Du profitierst vom besten weltweit verfügbaren Wissen
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '1.2rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  1. Du profitierst vom besten weltweit verfügbaren Wissen
                 </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
@@ -352,23 +337,8 @@ export default function VisionPage() {
               justifyContent: 'space-between'
             }}>
               <div>
-                <div style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
-                  background: 'rgba(127, 208, 73, 0.2)',
-                  color: '#497c23',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1.05rem',
-                  fontWeight: 800,
-                  marginBottom: '1.2rem'
-                }}>
-                  2
-                </div>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
-                  Du wirst als ganzer Mensch verstanden
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '1.2rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  2. Du wirst als ganzer Mensch verstanden
                 </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
@@ -391,23 +361,8 @@ export default function VisionPage() {
               justifyContent: 'space-between'
             }}>
               <div>
-                <div style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
-                  background: 'rgba(0, 110, 167, 0.1)',
-                  color: '#006ea7',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1.05rem',
-                  fontWeight: 800,
-                  marginBottom: '1.2rem'
-                }}>
-                  3
-                </div>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
-                  Du erkennst, was bei dir am meisten bewirken kann
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '1.2rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  3. Du erkennst, was bei dir am meisten bewirken kann
                 </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
@@ -430,23 +385,8 @@ export default function VisionPage() {
               justifyContent: 'space-between'
             }}>
               <div>
-                <div style={{
-                  width: '40px',
-                  height: '40px',
-                  borderRadius: '50%',
-                  background: 'rgba(127, 208, 73, 0.2)',
-                  color: '#497c23',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '1.05rem',
-                  fontWeight: 800,
-                  marginBottom: '1.2rem'
-                }}>
-                  4
-                </div>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.8rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
-                  Du kommst Schritt für Schritt spürbar voran
+                <h3 style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a', marginBottom: '1.2rem', fontFamily: 'DM Sans, sans-serif', lineHeight: '1.35' }}>
+                  4. Du kommst Schritt für Schritt spürbar voran
                 </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
