@@ -369,7 +369,7 @@ export default function VisionPage() {
                 </h3>
               </div>
               <p style={{ fontSize: '1.02rem', color: '#64748b', lineHeight: '1.6', margin: 0 }}>
-                True Years verbindet die relevanten Zusammenhänge deines Lebensstils - Ziele, Daten und Fortschritte werden dauerhaft miteinander verbunden.
+                Die relevanten Zusammenhänge deines Lebensstils werden miteinander verbunden.
               </p>
             </div>
 
