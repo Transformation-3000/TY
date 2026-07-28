@@ -87,7 +87,7 @@ const heroSlides = [
     title: 'Ausstrahlung,\ndie man sieht.',
     description: 'Jugendliche Frische, ein gutes Körpergefühl und sichtbare Vitalität',
     bullets: [
-      { text: 'Nutze wissenschaftliche Erkenntnisse, um deine Vitalität und dein biologisches Alter gezielt zu beeinflussen', icon: '/images/slider2_icon2_dna_rejuvenation.svg' },
+      { text: 'Nutze wissenschaftliche Erkenntnisse, um deine Vitalität und dein biologisches Alter gezielt zu beeinflussen', icon: '/images/slider2_icon1_sparkles.svg' },
       { text: 'Erlebe Fortschritte, die du spürst und sehen kannst', icon: '/images/slider2_icon3_radiant_glow.svg' }
     ]
   },
