@@ -110,6 +110,51 @@ export default function BildauswahlPage() {
           </div>
         </div>
 
+        {/* Bildvorschläge für Fokus-Karte „True Years Prinzip“ */}
+        <div style={{
+          background: 'linear-gradient(135deg, rgba(0, 110, 167, 0.25) 0%, rgba(15, 23, 42, 0.95) 100%)',
+          border: '2px solid #006ea7',
+          borderRadius: '20px',
+          padding: '2rem',
+          marginBottom: '3rem'
+        }}>
+          <h2 style={{ fontSize: '1.6rem', fontWeight: 800, color: '#38bdf8', marginTop: 0, marginBottom: '0.5rem' }}>
+            🔮 Bildvorschläge für Fokus-Karte „True Years Prinzip“
+          </h2>
+          <p style={{ color: '#cbd5e1', fontSize: '1rem', marginBottom: '1.5rem' }}>
+            Diese 3 neu generierten Fotomotive stehen als Visualisierung für die neue Karte „True Years Prinzip“ (Fokus 01) zur Auswahl:
+          </p>
+
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))',
+            gap: '1.5rem'
+          }}>
+            {[
+              { id: 1, name: 'Option A: Sunlit Health Clinic Dashboard', desc: 'High-End Bildschirm mit biologischen Langlebigkeits-Diagrammen in einer sonnendurchfluteten Klinik vor grünem Wald.', file: '/images/vision_prinzip_photo_v1.jpg' },
+              { id: 2, name: 'Option B: Sunlit Health Consultation', desc: 'Ein Experte bespricht wissenschaftliche Langlebigkeits-Ergebnisse mit einer vitalen Frau in hellem Ambiente mit Naturbezug.', file: '/images/vision_prinzip_photo_v2.jpg' },
+              { id: 3, name: 'Option C: Bio-Age Reduction Dashboard', desc: 'Modernes Dashboard zur Reduzierung des biologischen Alters direkt neben einem sonnigen Panoramafenster mit Blick ins Grüne.', file: '/images/vision_prinzip_photo_v3.jpg' }
+            ].map(item => (
+              <div key={item.id} style={{
+                background: 'rgba(15, 23, 42, 0.8)',
+                border: '1px solid rgba(255, 255, 255, 0.15)',
+                borderRadius: '16px',
+                overflow: 'hidden',
+                boxShadow: '0 8px 20px rgba(0,0,0,0.3)'
+              }}>
+                <div style={{ position: 'relative', width: '100%', height: '190px' }}>
+                  <Image src={item.file} alt={item.name} fill style={{ objectFit: 'cover' }} />
+                </div>
+                <div style={{ padding: '1.2rem' }}>
+                  <h4 style={{ margin: '0 0 0.4rem 0', fontSize: '1.1rem', color: '#7FD049' }}>{item.name}</h4>
+                  <p style={{ margin: '0 0 0.8rem 0', fontSize: '0.9rem', color: '#94a3b8' }}>{item.desc}</p>
+                  <code style={{ fontSize: '0.8rem', color: '#38bdf8', background: 'rgba(0,0,0,0.4)', padding: '0.3rem 0.6rem', borderRadius: '6px' }}>{item.file}</code>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Dedicated Brand-New 3D Icons for Slider 2 and Slider 3 */}
         <div style={{
           background: 'linear-gradient(135deg, rgba(127, 208, 73, 0.2) 0%, rgba(0, 110, 167, 0.25) 100%)',
@@ -250,6 +295,8 @@ export default function BildauswahlPage() {
             ))}
           </div>
         </div>
+
+
 
         {/* Dedicated Slider 2 Icon Set Proposals */}
         <div style={{

@@ -86,9 +86,60 @@ export default function VisionPage() {
 
         {/* Pillars Grid */}
         <div style={{ padding: '2rem 2rem 3rem', maxWidth: '1200px', margin: '0 auto' }}>
-          <div className="new-features-grid" style={{ marginBottom: '4rem' }}>
+          <style>{`
+            .responsive-grid-4 {
+              display: grid;
+              grid-template-columns: repeat(4, 1fr);
+              gap: 1.2rem;
+            }
+            @media (max-width: 1024px) {
+              .responsive-grid-4 {
+                grid-template-columns: repeat(2, 1fr);
+              }
+            }
+            @media (max-width: 768px) {
+              .responsive-grid-4 {
+                grid-template-columns: 1fr;
+              }
+              .responsive-grid-4 .new-feature-card p {
+                font-size: 1.1rem !important;
+              }
+              .desktop-only-br {
+                display: none;
+              }
+            }
+          `}</style>
+          <div className="new-features-grid responsive-grid-4" style={{ marginBottom: '4rem' }}>
             
-            {/* Card 1 */}
+            {/* Card 1: Das True Years Prinzip */}
+            <div className="new-feature-card" style={{ display: 'flex', flexDirection: 'column' }}>
+              <div style={{ 
+                width: '100%',
+                height: '220px', 
+                position: 'relative',
+                overflow: 'hidden'
+              }}>
+                <Image 
+                  src="/images/hero_longevity_new_4.png" 
+                  alt="True Years Prinzip" 
+                  fill
+                  style={{ objectFit: 'cover' }}
+                />
+              </div>
+              <div className="new-feature-content-inner" style={{ padding: '2rem 1.6rem' }}>
+                <div style={{ fontSize: '0.98rem', color: '#006ea7', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
+                  Fokus 01
+                </div>
+                <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.75rem 0', fontFamily: 'DM Sans, sans-serif' }}>
+                  True Years <br className="desktop-only-br" />Prinzip
+                </h3>
+                <p style={{ fontSize: '0.95rem', color: '#475569', margin: 0, lineHeight: '1.6' }}>
+                  Weil dein bestmögliches Leben auf belastbaren Erkenntnissen beruhen sollte. Wir trennen fundiertes Wissen von Longevity-Hype. Und zeigen dir, was für dich voraussichtlich den größten Unterschied macht – verständlich, persönlich und sinnvoll priorisiert.
+                </p>
+              </div>
+            </div>
+
+            {/* Card 2: Prävention statt Reaktion */}
             <div className="new-feature-card" style={{ display: 'flex', flexDirection: 'column' }}>
               <div style={{ 
                 width: '100%',
@@ -103,9 +154,9 @@ export default function VisionPage() {
                   style={{ objectFit: 'cover' }}
                 />
               </div>
-              <div className="new-feature-content-inner" style={{ padding: '2rem' }}>
+              <div className="new-feature-content-inner" style={{ padding: '2rem 1.6rem' }}>
                 <div style={{ fontSize: '0.98rem', color: '#4498ca', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-                  Fokus 01
+                  Fokus 02
                 </div>
                 <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.75rem 0', fontFamily: 'DM Sans, sans-serif' }}>
                   Prävention statt Reaktion
@@ -116,7 +167,7 @@ export default function VisionPage() {
               </div>
             </div>
 
-            {/* Card 2 */}
+            {/* Card 3: Intelligente Technologien */}
             <div className="new-feature-card" style={{ display: 'flex', flexDirection: 'column' }}>
               <div style={{ 
                 width: '100%',
@@ -131,9 +182,9 @@ export default function VisionPage() {
                   style={{ objectFit: 'cover' }}
                 />
               </div>
-              <div className="new-feature-content-inner" style={{ padding: '2rem' }}>
+              <div className="new-feature-content-inner" style={{ padding: '2rem 1.6rem' }}>
                 <div style={{ fontSize: '0.98rem', color: '#16a34a', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-                  Fokus 02
+                  Fokus 03
                 </div>
                 <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.75rem 0', fontFamily: 'DM Sans, sans-serif' }}>
                   Intelligente Technologien
@@ -144,7 +195,7 @@ export default function VisionPage() {
               </div>
             </div>
 
-            {/* Card 3 */}
+            {/* Card 4: Wissenschaftliche Exzellenz */}
             <div className="new-feature-card" style={{ display: 'flex', flexDirection: 'column' }}>
               <div style={{ 
                 width: '100%',
@@ -159,20 +210,21 @@ export default function VisionPage() {
                   style={{ objectFit: 'cover' }}
                 />
               </div>
-              <div className="new-feature-content-inner" style={{ padding: '2rem' }}>
+              <div className="new-feature-content-inner" style={{ padding: '2rem 1.6rem' }}>
                 <div style={{ fontSize: '0.98rem', color: '#db2777', fontWeight: 700, letterSpacing: '0.05em', textTransform: 'uppercase', marginBottom: '0.5rem' }}>
-                  Fokus 03
+                  Fokus 04
                 </div>
                 <h3 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a', margin: '0 0 0.75rem 0', fontFamily: 'DM Sans, sans-serif' }}>
                   Wissenschaftliche Exzellenz
                 </h3>
                 <p style={{ fontSize: '0.95rem', color: '#475569', margin: 0, lineHeight: '1.6' }}>
-                  Langlebigkeit ist kein Zufallsprodukt, sondern das Ergebnis evidenzbasierter Alterungs- und Verhaltensforschung. Wir arbeiten eng mit führenden Medizinern, Wissenschaftlern und Forschern zusammen, um die neuesten wissenschaftlichen Durchbrüche direkt in verständliche, alltagstaugliche Habits zu übersetzen.
+                  Longevity ist ein dynamisches, multidisziplinäres Forschungsfeld aus Altersforschung, Verhaltensforschung, Molekularbiologie und Datenwissenschaft. Deshalb bewerten wir Studien und Verfahren nach hohen Qualitätsmaßstäben und arbeiten mit führenden Wissenschaftlern und Experten zusammen.
                 </p>
               </div>
             </div>
 
           </div>
+
         </div>
 
         {/* Vision 1.0: Gründermotivation */}
@@ -395,6 +447,9 @@ export default function VisionPage() {
             </div>
 
           </div>
+
+
+
         </div>
 
       </main>
